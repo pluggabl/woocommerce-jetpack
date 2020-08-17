@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 4.1.0
+ * @version 5.2.0
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 5.2.0
 	 * @since   2.5.2
 	 */
 	function __construct() {
 
 		$this->id         = 'price_formats';
 		$this->short_desc = __( 'Price Formats', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set different price formats for different currencies. Set general price format options.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set different price formats for different currencies (1 price format allowed in free version). Set general price format options.', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set different price formats for different currencies. Set general price format options.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-price-formats';
 		parent::__construct();
 

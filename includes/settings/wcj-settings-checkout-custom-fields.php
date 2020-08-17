@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 3.8.0
+ * @version 5.2.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -324,6 +324,28 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkou
 					__( 'Saturday', 'woocommerce-jetpack' ),
 				),
 			),
+
+			//Block Dates
+			array(
+				'title'             => __( 'Datepicker/Weekpicker: Block Dates Format', 'woocommerce-jetpack' ),
+				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+				'desc_tip'          => __( 'Date format used to block dates.', 'woocommerce-jetpack' ) . '<br />' . __( 'Use yy-mm-dd if you want to include the year.', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_checkout_custom_field_datepicker_blockeddates_format_' . $i,
+				'type'              => 'text',
+				'default'           => 'mm-dd',
+			),
+			array(
+				'title'             => __( 'Datepicker/Weekpicker: Block Dates', 'woocommerce-jetpack' ),
+				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+				'desc_tip'          => __( 'Use one date per line.', 'woocommerce-jetpack' ) . '<br />' . __( 'E.g 12-25 for Christmas, if block dates format is mm-dd', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_checkout_custom_field_datepicker_blockeddates_' . $i,
+				'type'              => 'textarea',
+				'default'           => '',
+			),
+
+			// Timepicker
 			array(
 				'title'    => __( 'Timepicker: Time Format', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats', 'woocommerce-jetpack' ),

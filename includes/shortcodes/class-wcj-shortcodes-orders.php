@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 4.9.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
@@ -23,6 +23,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_billing_address',
 			'wcj_order_billing_country_name',
 			'wcj_order_billing_phone',
+			'wcj_order_billing_email',
 			'wcj_order_checkout_field',
 			'wcj_order_coupons',
 			'wcj_order_currency',
@@ -725,6 +726,15 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_billing_address( $atts ) {
 		return apply_filters( 'wcj_order_billing_address', $this->the_order->get_formatted_billing_address(), $atts );
+	}
+
+	/**
+	 * wcj_order_billing_email.
+	 *
+	 * @version 5.2.0
+	 */
+	function wcj_order_billing_email( $atts ) {
+		return apply_filters( 'wcj_order_billing_email', $this->the_order->get_billing_email(), $atts );
 	}
 
 	/**

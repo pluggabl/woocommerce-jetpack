@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 3.9.0
+ * @version 5.2.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 5.2.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
 
 		$this->id         = 'admin_orders_list';
 		$this->short_desc = __( 'Admin Orders List', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize admin orders list: add custom columns; add multiple status filtering.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize admin orders list: add custom columns (1 allowed in free version); add multiple status filtering (1 allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Customize admin orders list: add custom columns; add multiple status filtering.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-admin-orders-list';
 		parent::__construct();
 

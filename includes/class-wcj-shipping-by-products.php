@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 4.2.0
+ * @version 5.2.0
  * @since   3.2.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 5.2.0
 	 * @since   3.2.0
 	 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 	 */
@@ -24,7 +24,8 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 
 		$this->id         = 'shipping_by_products';
 		$this->short_desc = __( 'Shipping Methods by Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-products';
 
 		$this->condition_options = array(

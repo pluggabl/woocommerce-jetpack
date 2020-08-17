@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 4.7.0
+ * @version 5.2.0
  * @since   2.4.1
  * @author  Pluggabl LLC.
  */
@@ -23,14 +23,15 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.0
+	 * @version 5.2.0
 	 * @since   2.4.1
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_min_max';
 		$this->short_desc = __( 'Gateways Min/Max Amounts', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add min/max amounts for payment gateways to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add min/max amounts for payment gateways to show up (Only Direct bank transfer allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add min/max amounts for payment gateways to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-payment-gateways-min-max-amounts';
 		parent::__construct();
 

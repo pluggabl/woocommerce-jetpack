@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 4.4.0
+ * @version 5.2.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -16,47 +16,94 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.4.0
+	 * @version 5.2.0
 	 * @since   2.8.0
 	 */
 	function __construct() {
 
 		$this->id         = 'emails_verification';
 		$this->short_desc = __( 'Email Verification', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add WooCommerce email verification.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add WooCommerce email verification. Customize verification email subject, content and template (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add WooCommerce email verification.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-email-verification';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'init',                              array( $this, 'process_email_verification' ),                      PHP_INT_MAX );
-			add_filter( 'woocommerce_registration_redirect', array( $this, 'prevent_user_login_automatically_after_register' ), PHP_INT_MAX );
-			add_filter( 'wp_authenticate_user',              array( $this, 'check_if_user_email_is_verified' ),                 PHP_INT_MAX );
-			add_action( 'user_register',                     array( $this, 'reset_and_mail_activation_link' ),                  PHP_INT_MAX );
-			add_filter( 'manage_users_columns',              array( $this, 'add_verified_email_column' ) );
-			add_filter( 'manage_users_custom_column',        array( $this, 'render_verified_email_column' ), 10, 3 );
-			add_action( 'set_current_user',                  array( $this, 'prevent_user_login') );
+			add_action( 'init',                                       array( $this, 'process_email_verification' ),                      PHP_INT_MAX );
+			add_filter( 'woocommerce_registration_redirect',          array( $this, 'prevent_user_login_automatically_after_register' ), PHP_INT_MAX );
+			add_filter( 'wp_authenticate_user',                       array( $this, 'check_if_user_email_is_verified' ),                 PHP_INT_MAX );
+			add_action( 'user_register',                              array( $this, 'reset_and_mail_activation_link' ),                  PHP_INT_MAX );
+			add_filter( 'manage_users_columns',                       array( $this, 'add_verified_email_column' ) );
+			add_filter( 'manage_users_custom_column',                 array( $this, 'render_verified_email_column' ), 10, 3 );
+			add_action( 'wp',                                         array( $this, 'prevent_login' ),                      PHP_INT_MAX );
+			add_filter( 'woocommerce_registration_auth_new_customer', array( $this, 'woocommerce_registration_auth_new_customer' ) );
+			add_filter( 'authenticate',                               array( $this, 'prevent_authenticate' ), PHP_INT_MAX );
 		}
 	}
 
 	/**
-	 * Prevents user login.
+	 * prevent_login.
 	 *
-	 * @version 4.4.0
-	 * @since   4.4.0
+	 * @version 5.2.0
+	 * @since   5.2.0
 	 */
-	function prevent_user_login() {
-		global $current_user;
+	function prevent_login() {
 		if (
-			'yes' === get_option( 'wcj_emails_verification_prevent_user_login', 'no' ) &&
-			0 != $current_user->ID
+			'yes' !== get_option( 'wcj_emails_verification_prevent_user_login', 'no' )
+			|| is_admin()
+			|| ! is_user_logged_in()
+			|| empty( $user = wp_get_current_user() ) ||
+			! is_wp_error( $this->check_if_user_email_is_verified( get_userdata( $user->ID ) ) )
 		) {
-			setup_userdata( $current_user->ID );
-			$user_data = get_userdata( $current_user->ID );
-			$response  = $this->check_if_user_email_is_verified( $user_data );
-			if ( is_wp_error( $response ) ) {
-				wp_logout();
-			}
+			return;
 		}
+		wp_logout();
+	}
+
+	/**
+	 * prevent_authenticate.
+	 *
+	 * @version 5.2.0
+	 * @since   5.2.0
+	 *
+	 * @param $user
+	 *
+	 * @return WP_Error
+	 */
+	function prevent_authenticate( $user ) {
+		if (
+			'yes' !== get_option( 'wcj_emails_verification_prevent_user_login', 'no' )
+			|| is_wp_error( $user )
+			|| is_null( $user )
+			|| 0 == $user->ID
+		) {
+			return $user;
+		}
+		setup_userdata( $user->ID );
+		$user_data = get_userdata( $user->ID );
+		$response  = $this->check_if_user_email_is_verified( $user_data );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+		return $user;
+	}
+
+	/**
+	 * woocommerce_registration_auth_new_customer.
+	 *
+	 * @version 5.2.0
+	 * @since   5.2.0
+	 *
+	 * @param $allowed
+	 *
+	 * @return bool
+	 */
+	function woocommerce_registration_auth_new_customer( $allowed ) {
+		if ( 'yes' !== get_option( 'wcj_emails_verification_prevent_user_login', 'no' ) ) {
+			return $allowed;
+		}
+		$allowed = false;
+		return $allowed;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 3.9.0
+ * @version 5.2.0
  * @since   3.1.3
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 5.2.0
 	 * @since   3.1.3
 	 * @todo    (maybe) if `wcj_track_users_enabled` set to `yes`, check if "General" module is also enabled (when upgrading from version 3.1.2)
 	 */
@@ -24,7 +24,8 @@ class WCJ_User_Tracking extends WCJ_Module {
 
 		$this->id         = 'track_users';
 		$this->short_desc = __( 'User Tracking', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Track your users in WooCommerce.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Track your users in WooCommerce. Track Orders (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Track your users in WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-user-tracking';
 		parent::__construct();
 

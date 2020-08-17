@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 4.1.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -30,13 +30,14 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id         = 'related_products';
 		$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Pro). Hide related products completely.', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-related-products';
 		$this->extra_desc = sprintf(
 			__( 'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),

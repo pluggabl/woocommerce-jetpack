@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Cities
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 5.2.0
 	 * @since   3.6.0
 	 */
 	function __construct() {
 
 		$this->id         = 'shipping_by_cities';
 		$this->short_desc = __( 'Shipping Methods by City or Postcode', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-cities';
 
 		$this->condition_options = array(

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 4.9.0
- * @since   2.8.0
+ * @version 5.2.0
+ * @since   5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -16,14 +16,15 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.1
+	 * @version 5.2.0
 	 * @since   2.8.0
 	 */
 	function __construct() {
 
 		$this->id         = 'shipping_by_user_role';
 		$this->short_desc = __( 'Shipping Methods by Users', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-users';
 
 		$this->condition_options = array(

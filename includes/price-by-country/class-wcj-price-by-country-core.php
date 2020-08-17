@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -152,6 +152,34 @@ class WCJ_Price_by_Country_Core {
 		// Free Shipping
 		add_filter( 'woocommerce_shipping_free_shipping_instance_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
 		add_filter( 'woocommerce_shipping_free_shipping_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
+
+		// WooCommerce Points and Rewards plugin
+		add_filter( 'option_'.'wc_points_rewards_redeem_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
+		add_filter( 'option_'.'wc_points_rewards_earn_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
+	}
+
+	/**
+	 * handle_wc_points_rewards_settings.
+	 *
+	 * @version 5.2.0
+	 * @since   5.2.0
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	function handle_wc_points_rewards_settings( $value ) {
+		if (
+			'yes' !== get_option( 'wcj_price_by_country_comp_woo_points_rewards', 'no' )
+			|| empty( $value )
+			|| false === strpos( $value, ':' )
+		) {
+			return $value;
+		}
+		list( $points, $monetary_value ) = explode( ':', $value );
+		$new_monetary_value = $this->change_price( $monetary_value, null );
+		$value              = $points . ':' . $new_monetary_value;
+		return $value;
 	}
 
 	/**
@@ -574,7 +602,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 4.1.0
+	 * @version 5.2.0
 	 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 	 */
 	function get_customer_country_group_id() {
@@ -585,7 +613,10 @@ class WCJ_Price_by_Country_Core {
 		}
 
 		// We already know the group - nothing to calculate - return group
-		if ( isset( $this->customer_country_group_id ) && null != $this->customer_country_group_id && $this->customer_country_group_id > 0 ) {
+		if (
+			'yes' === get_option( 'wcj_price_by_country_save_country_group_id', 'yes' )
+			&& isset( $this->customer_country_group_id ) && null != $this->customer_country_group_id && $this->customer_country_group_id > 0
+		) {
 			return $this->customer_country_group_id;
 		}
 
@@ -672,6 +703,19 @@ class WCJ_Price_by_Country_Core {
 		}
 		return $currency;
 	}
+	/*function change_currency_code( $currency ) {
+		if (
+			null == ( $group_id = $this->get_customer_country_group_id() )
+			|| ( 'no' === get_option( 'wcj_price_by_country_curr_code_admin', 'no' ) && is_admin() )
+		) {
+			return $currency;
+		}
+		$country_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $group_id );
+		if ( '' != $country_currency_code ) {
+			return $country_currency_code;
+		}
+		return $currency;
+	}*/
 
 	/**
 	 * get_variation_prices_hash.

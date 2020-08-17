@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 4.8.0
+ * @version 5.2.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Admin {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.8.0
+	 * @version 5.2.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
@@ -30,9 +30,45 @@ class WCJ_Admin {
 				add_filter( 'admin_footer_text',                                         array( $this, 'admin_footer_text' ), 2 );
 				if ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ) {
 					add_action( 'admin_notices',                                         array( $this, 'check_plus_version' ) );
+					add_action( 'admin_notices',                                         array( $this, 'create_fixed_notice_about_plus' ) );
 				}
 			}
 		}
+	}
+
+	/**
+	 * create_fixed_notice_about_plus.
+	 *
+	 * @version 5.2.0
+	 * @since   5.2.0
+	 *
+	 */
+	function create_fixed_notice_about_plus() {
+		if (
+			empty( $screen = get_current_screen() )
+			|| 'woocommerce_page_wc-settings' != $screen->base
+			|| ! isset( $_GET['wcj-cat'] )
+		) {
+			return;
+		}
+		$class        = 'notice notice-info';
+		$message      = sprintf( __( 'You\'re using Booster free version. To unlock more features please consider <a target="_blank" href="%s">upgrading to Plus</a>.', 'woocommerce-jetpack' ), 'https://booster.io/shop/booster-for-woocommerce-plus-plugin/' );
+		$booster_icon = '<span class="wcj-booster-logo"></span>';
+		?>
+		<style>
+			.wcj-booster-logo {
+				width: 19px;
+				height: 19px;
+				display: inline-block;
+				background: url('https://ps.w.org/woocommerce-jetpack/assets/icon-128x128.png?rev=1813426') center/cover;
+				vertical-align: middle;
+				position: relative;
+				top: -1px;
+				margin: 0 6px 0 0;
+			}
+		</style>
+		<?php
+		echo '<div class="' . $class . '"><p>' . $booster_icon . $message . '</p></div>';
 	}
 
 	/**
@@ -107,17 +143,19 @@ class WCJ_Admin {
 	/**
 	 * Show action links on the plugin screen
 	 *
-	 * @version 3.3.0
+	 * @version 5.2.0
 	 * @param   mixed $links
 	 * @return  array
 	 */
 	function action_links( $links ) {
 		$custom_links = array(
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
-			'<a href="' . esc_url( 'https://booster.io/' )                      . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
+			'<a href="' . esc_url( 'https://booster.io/' ) . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 		);
 		if ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ) {
-			$custom_links[] = '<a href="' . esc_url( 'https://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
+			$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
+		} else {
+			$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/my-account/booster-contact/' ) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
 		}
 		return array_merge( $custom_links, $links );
 	}

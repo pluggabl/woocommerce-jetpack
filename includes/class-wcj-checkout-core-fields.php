@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 4.9.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 5.2.0
 	 * @see     https://docs.woocommerce.com/document/tutorial-customising-checkout-fields-using-actions-and-filters/
 	 * @todo    (maybe) default overrides should be `disable`
 	 */
@@ -23,7 +23,8 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 
 		$this->id         = 'checkout_core_fields';
 		$this->short_desc = __( 'Checkout Core Fields', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Pro)', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-core-fields';
 		parent::__construct();
 

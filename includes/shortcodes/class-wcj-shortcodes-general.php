@@ -933,6 +933,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @since 2.2.9
 	 */
 	function wcj_text( $atts, $content ) {
+
 		return $content;
 	}
 

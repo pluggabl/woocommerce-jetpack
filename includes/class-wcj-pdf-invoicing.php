@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 4.5.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,14 +15,15 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id            = 'pdf_invoicing';
 		$this->short_desc    = __( 'PDF Invoicing', 'woocommerce-jetpack' );
 		$this->section_title = __( 'General', 'woocommerce-jetpack' );
-		$this->desc          = __( 'Invoices, Proforma Invoices, Credit Notes and Packing Slips.', 'woocommerce-jetpack' );
+		$this->desc          = __( 'Invoices, Proforma Invoices (Pro), Credit Notes (Pro) and Packing Slips (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro      = __( 'Invoices, Proforma Invoices, Credit Notes and Packing Slips.', 'woocommerce-jetpack' );
 		$this->link_slug     = 'woocommerce-pdf-invoicing-and-packing-slips';
 		parent::__construct();
 

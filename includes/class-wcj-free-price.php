@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Free Price
  *
- * @version 2.8.0
+ * @version 5.2.0
  * @since   2.5.9
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 5.2.0
 	 * @since   2.5.9
 	 * @todo    single in grouped is treated as "related"
 	 */
@@ -24,7 +24,8 @@ class WCJ_Free_Price extends WCJ_Module {
 
 		$this->id         = 'free_price';
 		$this->short_desc = __( 'Free Price Labels', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set free price labels.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set free price labels (Variable products allowed in Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set free price labels.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-free-price-labels';
 		parent::__construct();
 

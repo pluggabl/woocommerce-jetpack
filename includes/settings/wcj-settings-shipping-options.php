@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Options
  *
- * @version 3.4.0
+ * @version 5.2.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -91,4 +91,39 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_shipping_free_shipping_by_product_options',
 	),
 ) );
+$shipping_methods_opt = array_map( function ( $item ) {
+	return $item->method_title;
+}, WC()->shipping->get_shipping_methods() );
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Show Only the Most Expensive Shipping', 'woocommerce-jetpack' ),
+		'desc'     => __( 'In this section you can show only the most expensive shipping, ignoring other ones as you wish, like free shipping or local pickup.', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_shipping_most_expensive',
+	),
+	array(
+		'title'    => __( 'Show Only the Most Expensive Shipping', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_shipping_most_expensive_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Ignored Shipping Methods', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_shipping_most_expensive_ignored_methods',
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip' => __( 'Use it if you\'d like to show the most expensive shipping method ignoring some other one.', 'woocommerce-jetpack' ),
+		'default'  => array( 'free_shipping' ),
+		'type'     => 'multiselect',
+		'options'  => $shipping_methods_opt,
+		'class'    => 'chosen_select',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_shipping_most_expensive',
+	),
+) );
 return $settings;
+
+

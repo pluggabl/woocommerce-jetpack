@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.8.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,14 +15,15 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.8.0
+	 * @version 5.2.0
 	 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 	 */
 	function __construct() {
 
 		$this->id         = 'checkout_custom_fields';
 		$this->short_desc = __( 'Checkout Custom Fields', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom fields to the checkout page.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom fields to the checkout page (1 field allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add custom fields to the checkout page.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-custom-fields';
 		parent::__construct();
 
@@ -538,7 +539,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 3.8.0
+	 * @version 5.2.0
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 	 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 	 */
@@ -574,6 +575,11 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							$custom_attributes['yearrange']  = get_option( 'wcj_checkout_custom_field_datepicker_yearrange_' . $i, 'c-10:c+10' );
 						}
 						$custom_attributes['display']    = ( 'datepicker' === $the_type ) ? 'date' : 'week';
+						//Blocked Dates
+						$blocked_dates_format = get_option( 'wcj_checkout_custom_field_datepicker_blockeddates_format_' . $i, 'mm-dd' );
+						$custom_attributes['data-blocked_dates_format']=$blocked_dates_format;
+						$blocked_dates_textarea = get_option( 'wcj_checkout_custom_field_datepicker_blockeddates_' . $i, '' );
+						$custom_attributes['data-blocked_dates'] = implode( ' ', array_map( 'trim', explode( PHP_EOL, $blocked_dates_textarea ) ) );
 					} elseif ( 'timepicker' === $the_type ) {
 						$custom_attributes['timeformat'] = get_option( 'wcj_checkout_custom_field_timepicker_format_' . $i, 'hh:mm p' );
 						$custom_attributes['interval'] = get_option( 'wcj_checkout_custom_field_timepicker_interval_' . $i, 15 );

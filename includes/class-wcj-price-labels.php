@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 3.9.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,13 +15,14 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.3
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id         = 'price_labels';
 		$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Create any custom price label for any product.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Create any custom price label for any product (Just a few positions allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Create any custom price label for any product.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-custom-price-labels';
 		parent::__construct();
 

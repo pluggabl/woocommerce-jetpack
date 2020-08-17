@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Icons
  *
- * @version 3.6.0
+ * @version 5.2.0
  * @since   3.4.0
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ class WCJ_Shipping_Icons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.1
+	 * @version 5.2.0
 	 * @since   3.4.0
 	 */
 	function __construct() {
 
 		$this->id         = 'shipping_icons';
 		$this->short_desc = __( 'Shipping Icons', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add icons to shipping methods on frontend.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add icons to shipping methods on frontend. Icon Visibility (Pro)', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add icons to shipping methods on frontend.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-icons';
 		parent::__construct();
 

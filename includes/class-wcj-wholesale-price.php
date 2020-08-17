@@ -25,7 +25,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 		$this->id         = 'wholesale_price';
 		$this->short_desc = __( 'Wholesale Price', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set wholesale pricing depending on product quantity in cart (buy more pay less).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set wholesale pricing depending on product quantity in cart - buy more pay less (1 level allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set wholesale pricing depending on product quantity in cart - buy more pay less.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-wholesale-price';
 		parent::__construct();
 

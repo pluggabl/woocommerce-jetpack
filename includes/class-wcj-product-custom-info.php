@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Info
  *
- * @version 3.5.0
+ * @version 5.2.0
  * @since   2.4.0
  * @author  Pluggabl LLC.
  */
@@ -16,13 +16,14 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id         = 'product_custom_info';
 		$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add additional info to category and single product pages.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add additional info to category and single product pages (1 block allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add additional info to category and single product pages.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-info';
 		parent::__construct();
 

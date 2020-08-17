@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Breadcrumbs
  *
- * @version 3.2.2
+ * @version 5.2.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 5.2.0
 	 * @since   2.9.0
 	 * @todo    recheck filter: `woocommerce_get_breadcrumb`
 	 * @todo    recheck filter: `woocommerce_structured_data_breadcrumblist`; action: `woocommerce_breadcrumb`;
@@ -26,7 +26,8 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 
 		$this->id         = 'breadcrumbs';
 		$this->short_desc = __( 'Breadcrumbs', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce breadcrumbs.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce breadcrumbs. Hide breadcrumbs (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Customize WooCommerce breadcrumbs.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-breadcrumbs';
 		parent::__construct();
 

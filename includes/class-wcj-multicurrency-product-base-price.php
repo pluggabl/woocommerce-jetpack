@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 5.0.0
+ * @version 5.2.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.0.0
+		 * @version 5.2.0
 		 * @since   2.4.8
 		 */
 		function __construct() {
 
 			$this->id         = 'multicurrency_base_price';
 			$this->short_desc = __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Enter prices for products in different currencies.', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Enter prices for products in different currencies (1 currency allowed in free version).', 'woocommerce-jetpack' );
+			$this->desc_pro   = __( 'Enter prices for products in different currencies.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-multicurrency-product-base-price';
 			parent::__construct();
 

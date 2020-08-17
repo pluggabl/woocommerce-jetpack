@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.1.1
+ * @version 5.2.0
  * @since   2.4.3
  * @author  Pluggabl LLC.
  */
@@ -21,14 +21,15 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.0
+	 * @version 5.2.0
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
 
 		$this->id         = 'multicurrency';
 		$this->short_desc = __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add multiple currencies (currency switcher) to WooCommerce.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add multiple currencies (currency switcher) to WooCommerce (2 currencies allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add multiple currencies (currency switcher) to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-multicurrency-currency-switcher';
 		$this->extra_desc = sprintf( __( 'After setting currencies in the Currencies Options section below, you can add switcher to the frontend with: %s', 'woocommerce-jetpack' ),
 			'<ol>' .
@@ -91,7 +92,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 5.0.0
+	 * @version 5.2.0
 	 * @since   4.3.0
 	 */
 	function handle_compatibility(){
@@ -102,7 +103,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 		// WooCommerce Coupons
 		add_filter( 'woocommerce_coupon_is_valid', array( $this, 'check_woocommerce_coupon_min_max_amount' ), 10, 3 );
-		add_action( 'woocommerce_coupon_get_discount_amount', array( $this, 'fix_wc_coupon_currency' ), 10, 5 );
+		add_filter( 'woocommerce_get_shop_coupon_data', array( $this, 'fix_wc_coupon_discount_amount' ), 10, 3 );
 
 		// WooCommerce Price Filter Widget
 		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_price_filter' , 'no' ) ) {
@@ -351,29 +352,29 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
-	 * fix_wc_coupon_currency.
+	 * fix_wc_coupon_discount_amount.
 	 *
-	 * @version 4.5.0
-	 * @since   4.5.0
+	 * @version 5.2.0
+	 * @since   5.2.0
 	 *
-	 * @param $amount
-	 * @param $discount
-	 * @param $cart_item
-	 * @param $single
-	 * @param $wc_coupon
+	 * @param $false
+	 * @param $data
+	 * @param $coupon
 	 *
-	 * @return float|int
+	 * @return mixed
 	 */
-	function fix_wc_coupon_currency( $amount, $discount, $cart_item, $single, $wc_coupon ) {
+	function fix_wc_coupon_discount_amount( $false, $data, $coupon ) {
 		if (
 			'yes' !== get_option( 'wcj_multicurrency_compatibility_wc_coupons', 'no' ) ||
-			'fixed_cart' !== $wc_coupon->get_discount_type()
+			is_admin() ||
+			empty( $coupon_id = wc_get_coupon_id_by_code( $data ) ) ||
+			'fixed_cart' != get_post_meta( $coupon_id, 'discount_type', true )
 		) {
-			return $amount;
+			return $false;
 		}
-		$amount = $this->change_price( $amount, null );
-
-		return $amount;
+		$current_coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
+		$coupon->set_amount( $this->change_price( $current_coupon_amount, null ) );
+		return $coupon;
 	}
 
 	/**
@@ -585,7 +586,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 *
 	 * @see price-slider.js, init_price_filter()
 	 *
-	 * @version 4.6.0
+	 * @version 5.2.0
 	 * @since   4.3.0
 	 */
 	function add_compatibility_with_price_filter_widget() {
@@ -634,8 +635,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 				update_slider() {
 					jQuery(this.slider).slider("destroy");
-					var current_min_price = Math.floor(this.current_min);
-					var current_max_price = Math.ceil(this.current_max);
+					var current_min_price = this.current_min;
+					var current_max_price = this.current_max;
 
 					jQuery(this.slider).slider({
 						range: true,
@@ -645,15 +646,15 @@ class WCJ_Multicurrency extends WCJ_Module {
 						step: parseFloat(this.step),
 						values: wcj_mc_pf_slider.current_values,
 						create: function () {
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate));
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate));
-							jQuery(document.body).trigger('price_slider_create', [Math.floor(wcj_mc_pf_slider.current_values[0]), Math.ceil(wcj_mc_pf_slider.current_values[1])]);
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val((wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val((wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							jQuery(document.body).trigger('price_slider_create', [(wcj_mc_pf_slider.current_values[0]).toFixed(2), (wcj_mc_pf_slider.current_values[1]).toFixed(2)]);
 						},
 						slide: function (event, ui) {
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(ui.values[0] / wcj_mc_pf_slider.convert_rate));
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(ui.values[1] / wcj_mc_pf_slider.convert_rate));
-							var the_min = ui.values[0] == Math.round(wcj_mc_pf_slider.current_values[0]) ? Math.floor(wcj_mc_pf_slider.current_values[0]) : ui.values[0];
-							var the_max = ui.values[1] == Math.round(wcj_mc_pf_slider.current_values[1]) ? Math.ceil(wcj_mc_pf_slider.current_values[1]) : ui.values[1];
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val((ui.values[0] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val((ui.values[1] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							var the_min = ui.values[0] == wcj_mc_pf_slider.current_values[0] ? (wcj_mc_pf_slider.current_values[0]).toFixed(2) : ui.values[0];
+							var the_max = ui.values[1] == wcj_mc_pf_slider.current_values[1] ? (wcj_mc_pf_slider.current_values[1]).toFixed(2) : ui.values[1];
 							jQuery(document.body).trigger('price_slider_slide', [the_min, the_max]);
 						},
 						change: function (event, ui) {

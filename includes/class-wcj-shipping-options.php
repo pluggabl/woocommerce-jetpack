@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Options
  *
- * @version 3.4.0
+ * @version 5.2.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 5.2.0
 	 * @since   2.9.0
 	 * @todo    (maybe) remove (or at least mark as deprecated) "Grant free shipping on per product basis" (offer to use "Shipping Methods by Products" module instead)
 	 */
@@ -24,8 +24,13 @@ class WCJ_Shipping_Options extends WCJ_Module {
 
 		$this->id         = 'shipping_options';
 		$this->short_desc = __( 'Shipping Options', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Hide shipping when free is available.', 'woocommerce-jetpack') . ' ' .
-			__( 'Grant free shipping on per product basis.', 'woocommerce-jetpack');
+		$this->desc       = __( 'Hide shipping when free is available.', 'woocommerce-jetpack' ) . ' ' .
+		                    __( 'Grant free shipping on per product basis (In free version, all products in cart must grant free shipping).', 'woocommerce-jetpack' ) . ' ' .
+		                    __( 'Show only the most expensive shipping (In free version, only free shipping is allowed to be ignored).', 'woocommerce-jetpack' );
+
+		$this->desc_pro   = __( 'Hide shipping when free is available.', 'woocommerce-jetpack' ) . ' ' .
+		                    __( 'Grant free shipping on per product basis.', 'woocommerce-jetpack' ) . ' ' .
+		                    __( 'Show only the most expensive shipping.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-options';
 		parent::__construct();
 
@@ -42,7 +47,52 @@ class WCJ_Shipping_Options extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_shipping_free_shipping_by_product_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_shipping_free_shipping_is_available', array( $this, 'free_shipping_by_product' ), PHP_INT_MAX, 2 );
 			}
+
+			// Show the most expensive shipping
+			add_action( 'woocommerce_package_rates', array( $this, 'show_most_expensive_shipping' ), 10, 2 );
 		}
+	}
+
+	/**
+	 * show_most_expensive_shipping.
+	 *
+	 * @version 5.2.0
+	 * @since   5.2.0
+	 *
+	 * @param $rates
+	 * @param $package
+	 *
+	 * @return array
+	 */
+	function show_most_expensive_shipping( $rates, $package ) {
+		if ( 'yes' !== get_option( 'wcj_shipping_most_expensive_enabled', 'no' ) ) {
+			return $rates;
+		}
+		$most_expensive_method = '';
+		$ignored_method_ids    = get_option( 'wcj_shipping_most_expensive_ignored_methods', array( 'free_shipping' ) );
+		$returned_rates        = array();
+		if ( is_array( $rates ) ) :
+			foreach ( $rates as $key => $rate ) {
+				if (
+					! in_array( $rate->method_id, $ignored_method_ids ) &&
+					( empty( $most_expensive_method ) || $rate->cost > $most_expensive_method->cost )
+				) {
+					$most_expensive_method = $rate;
+				}
+			}
+		endif;
+		if ( ! empty( $most_expensive_method ) ) {
+			$returned_rates[ $most_expensive_method->id ] = $most_expensive_method;
+		}
+		foreach ( $rates as $key => $rate ) {
+			if ( in_array( $rate->method_id, $ignored_method_ids ) ) {
+				$returned_rates[ $rate->id ] = $rate;
+			}
+		}
+		if ( ! empty( $returned_rates ) ) {
+			return $returned_rates;
+		}
+		return $rates;
 	}
 
 	/**

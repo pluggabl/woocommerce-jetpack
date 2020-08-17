@@ -96,6 +96,14 @@ $settings = array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
+	array(
+		'title'    => __( 'Force Point as Decimal Separator', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Force "." as decimal separator for exchange rates.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_exchange_rates_point_decimal_separator',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
 	/*
 	array(
 		'title'    => __( 'Logging', 'woocommerce-jetpack' ),
@@ -116,7 +124,7 @@ $settings = array(
 		'id'       => 'wcj_currency_exchange_api_key',
 	),
 	array(
-		'title'    => __( 'Free Currency Converter API Key', 'woocommerce-jetpack' ),
+		'title'    => __( 'Free Currency Converter', 'woocommerce-jetpack' ),
 		'desc'     => sprintf(__( 'More information at %s', 'woocommerce-jetpack' ),'<a target="_blank" href="https://free.currencyconverterapi.com/free-api-key">https://free.currencyconverterapi.com/free-api-key</a>'),
 		'type'     => 'text',
 		'id'       => 'wcj_currency_exchange_api_key_fccapi',

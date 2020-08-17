@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Info
  *
- * @version 2.8.0
+ * @version 5.2.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -16,13 +16,14 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id         = 'checkout_custom_info';
 		$this->short_desc = __( 'Checkout Custom Info', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom info to the checkout page.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom info to the checkout page (1 block allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add custom info to the checkout page.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-custom-info';
 		parent::__construct();
 

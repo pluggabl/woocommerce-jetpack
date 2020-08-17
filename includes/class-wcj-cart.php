@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Custom Info
  *
- * @version 3.7.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,13 +15,14 @@ class WCJ_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id         = 'cart';
 		$this->short_desc = __( 'Cart Custom Info', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom info to the cart page.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom info to the cart page (1 cart block allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add custom info to the cart page.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-cart-custom-info';
 		parent::__construct();
 

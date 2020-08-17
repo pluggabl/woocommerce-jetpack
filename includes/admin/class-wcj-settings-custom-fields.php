@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 3.4.5
+ * @version 5.2.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -36,7 +36,7 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * output_exchange_rate_settings_button.
 	 *
-	 * @version 3.4.5
+	 * @version 5.2.0
 	 */
 	function output_exchange_rate_settings_button( $value ) {
 
@@ -51,7 +51,14 @@ class WCJ_Settings_Custom_Fields {
 				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
 			}
 		} else {
-			$custom_attributes = array( 'step="' . sprintf( "%.12f", 1 / pow( 10, 12 ) ) . '"', 'min="0"' );
+			if (
+				! WCJ()->modules['currency_exchange_rates']->is_enabled()
+				|| 'yes' !== get_option( 'wcj_currency_exchange_rates_point_decimal_separator', 'no' )
+			) {
+				$custom_attributes = array( 'step="' . sprintf( "%.12f", 1 / pow( 10, 12 ) ) . '"', 'min="0"' );
+			} else {
+				$custom_attributes = array( 'step="0.00000001"', 'min="0"' );
+			}
 		}
 		$custom_attributes_button = array();
 		if ( ! empty( $value['custom_attributes_button'] ) && is_array( $value['custom_attributes_button'] ) ) {

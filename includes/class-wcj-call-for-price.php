@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Call for Price
  *
- * @version 3.2.4
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Call_For_Price extends WCJ_module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 5.2.0
 	 * @todo    add "per product type" labels
 	 * @todo    add "per product" labels
 	 */
@@ -23,7 +23,8 @@ class WCJ_Call_For_Price extends WCJ_module {
 
 		$this->id         = 'call_for_price';
 		$this->short_desc = __( 'Call for Price', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Create any custom price label for all products with empty price.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Create any custom price label for all products with empty price (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Create any custom price label for all products with empty price.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-call-for-price';
 		parent::__construct();
 

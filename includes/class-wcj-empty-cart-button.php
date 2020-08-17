@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Empty Cart Button
  *
- * @version 3.5.3
+ * @version 5.2.0
  * @since   2.2.1
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.3
+	 * @version 5.2.0
 	 * @since   2.2.1
 	 */
 	function __construct() {
 
 		$this->id         = 'empty_cart';
 		$this->short_desc = __( 'Empty Cart Button', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add (and customize) "Empty Cart" button to the cart and checkout pages.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Pro). Different button positions on the cart page (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add (and customize) "Empty Cart" button to the cart and checkout pages.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-empty-cart-button';
 		parent::__construct();
 

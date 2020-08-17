@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 4.6.1
+ * @version 5.2.0
  * @since   3.7.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.0
+	 * @version 5.2.0
 	 * @since   3.7.0
 	 * @todo    (maybe) rename module to "Cart & Checkout Fees"
 	 */
@@ -24,7 +24,8 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 
 		$this->id         = 'checkout_fees';
 		$this->short_desc = __( 'Checkout Fees', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add fees to WooCommerce cart & checkout.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add fees to WooCommerce cart & checkout (1 fee allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add fees to WooCommerce cart & checkout.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-fees';
 		parent::__construct();
 

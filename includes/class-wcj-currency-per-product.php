@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.9.0
+ * @version 5.2.0
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 5.2.0
 	 * @since   2.5.2
 	 * @todo    (maybe) add `$this->price_hooks_priority`
 	 */
@@ -24,7 +24,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 
 		$this->id         = 'currency_per_product';
 		$this->short_desc = __( 'Currency per Product', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display prices for products in different currencies.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display prices for products in different currencies (1 currency allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Display prices for products in different currencies.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-currency-per-product';
 		parent::__construct();
 

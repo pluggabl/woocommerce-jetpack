@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 4.7.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,13 +15,14 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways';
 		$this->short_desc = __( 'Custom Gateways', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add multiple custom payment gateways to WooCommerce.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add multiple custom payment gateways to WooCommerce (1 custom gateway allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add multiple custom payment gateways to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-custom-payment-gateways';
 		parent::__construct();
 

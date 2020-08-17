@@ -1,9 +1,9 @@
 <?php
 //============================================================+
 // File name   : tcpdf.php
-// Version     : 6.3.0
+// Version     : 6.3.2
 // Begin       : 2002-08-03
-// Last Update : 2019-09-19
+// Last Update : 2019-09-20
 // Author      : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
 // License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
 // -------------------------------------------------------------------
@@ -104,7 +104,7 @@
  * Tools to encode your unicode fonts are on fonts/utils directory.</p>
  * @package com.tecnick.tcpdf
  * @author Nicola Asuni
- * @version 6.3.0
+ * @version 6.3.2
  */
 
 // TCPDF configuration
@@ -128,7 +128,7 @@ require_once(dirname(__FILE__).'/include/tcpdf_static.php');
  * TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
  * @package com.tecnick.tcpdf
  * @brief PHP class for generating PDF documents without requiring external extensions.
- * @version 6.3.0
+ * @version 6.3.2
  * @author Nicola Asuni - info@tecnick.com
  * @IgnoreAnnotation("protected")
  * @IgnoreAnnotation("public")
@@ -4715,14 +4715,14 @@ class TCPDF {
 	 * Defines the page and position a link points to.
 	 * @param $link (int) The link identifier returned by AddLink()
 	 * @param $y (float) Ordinate of target position; -1 indicates the current position. The default value is 0 (top of page)
-	 * @param $page (int) Number of target page; -1 indicates the current page (default value). If you prefix a page number with the * character, then this page will not be changed when adding/deleting/moving pages.
+	 * @param $page (int|string) Number of target page; -1 indicates the current page (default value). If you prefix a page number with the * character, then this page will not be changed when adding/deleting/moving pages.
 	 * @public
 	 * @since 1.5
 	 * @see AddLink()
 	 */
 	public function SetLink($link, $y=0, $page=-1) {
 		$fixed = false;
-		if (!empty($page) AND ($page[0] == '*')) {
+		if (!empty($page) AND (substr($page, 0, 1) == '*')) {
 			$page = intval(substr($page, 1));
 			// this page number will not be changed when moving/add/deleting pages
 			$fixed = true;
@@ -7165,31 +7165,20 @@ class TCPDF {
 			$info['i'] = $this->setImageBuffer($file, $info);
 		}
 		// set alignment
+		$this->img_rb_x = $x + $w;
 		$this->img_rb_y = $y + $h;
+
 		// set alignment
-		if ($this->rtl) {
-			if ($palign == 'L') {
-				$ximg = $this->lMargin;
-			} elseif ($palign == 'C') {
-				$ximg = ($this->w + $this->lMargin - $this->rMargin - $w) / 2;
-			} elseif ($palign == 'R') {
-				$ximg = $this->w - $this->rMargin - $w;
-			} else {
-				$ximg = $x - $w;
-			}
-			$this->img_rb_x = $ximg;
+		if ($palign == 'L') {
+			$ximg = $this->lMargin;
+		} elseif ($palign == 'C') {
+			$ximg = ($this->w + $this->lMargin - $this->rMargin - $w) / 2;
+		} elseif ($palign == 'R') {
+			$ximg = $this->w - $this->rMargin - $w;
 		} else {
-			if ($palign == 'L') {
-				$ximg = $this->lMargin;
-			} elseif ($palign == 'C') {
-				$ximg = ($this->w + $this->lMargin - $this->rMargin - $w) / 2;
-			} elseif ($palign == 'R') {
-				$ximg = $this->w - $this->rMargin - $w;
-			} else {
-				$ximg = $x;
-			}
-			$this->img_rb_x = $ximg + $w;
+			$ximg = $x;
 		}
+		
 		if ($ismask OR $hidden) {
 			// image is not displayed
 			return $info['i'];
@@ -7788,7 +7777,7 @@ class TCPDF {
 		if ($destroyall AND !$preserve_objcopy) {
 			self::$cleaned_ids[$this->file_id] = true;
 			// remove all temporary files
-			if ($handle = opendir(K_PATH_CACHE)) {
+			if ($handle = @opendir(K_PATH_CACHE)) {
 				while ( false !== ( $file_name = readdir( $handle ) ) ) {
 					if (strpos($file_name, '__tcpdf_'.$this->file_id.'_') === 0) {
 						unlink(K_PATH_CACHE.$file_name);
@@ -7796,8 +7785,12 @@ class TCPDF {
 				}
 				closedir($handle);
 			}
-			foreach($this->imagekeys as $file) {
-				unlink($file);
+			if (isset($this->imagekeys)) {
+				foreach($this->imagekeys as $file) {
+					if (strpos($file, K_PATH_CACHE) === 0) {
+						@unlink($file);
+					}
+				}
 			}
 		}
 		$preserve = array(
@@ -7807,6 +7800,7 @@ class TCPDF {
 			'bufferlen',
 			'buffer',
 			'cached_files',
+			'imagekeys',
 			'sign',
 			'signature_data',
 			'signature_max_length',
@@ -9636,6 +9630,16 @@ class TCPDF {
 		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:namespaceURI>http://ns.adobe.com/pdf/1.3/</pdfaSchema:namespaceURI>'."\n";
 		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:prefix>pdf</pdfaSchema:prefix>'."\n";
 		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:schema>Adobe PDF Schema</pdfaSchema:schema>'."\n";
+		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:property>'."\n";
+		$xmp .= "\t\t\t\t\t\t\t".'<rdf:Seq>'."\n";
+		$xmp .= "\t\t\t\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:category>internal</pdfaProperty:category>'."\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:description>Adobe PDF Schema</pdfaProperty:description>'."\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:name>InstanceID</pdfaProperty:name>'."\n";
+		$xmp .= "\t\t\t\t\t\t\t\t\t".'<pdfaProperty:valueType>URI</pdfaProperty:valueType>'."\n";
+		$xmp .= "\t\t\t\t\t\t\t\t".'</rdf:li>'."\n";
+		$xmp .= "\t\t\t\t\t\t\t".'</rdf:Seq>'."\n";
+		$xmp .= "\t\t\t\t\t\t".'</pdfaSchema:property>'."\n";
 		$xmp .= "\t\t\t\t\t".'</rdf:li>'."\n";
 		$xmp .= "\t\t\t\t\t".'<rdf:li rdf:parseType="Resource">'."\n";
 		$xmp .= "\t\t\t\t\t\t".'<pdfaSchema:namespaceURI>http://ns.adobe.com/xap/1.0/mm/</pdfaSchema:namespaceURI>'."\n";
@@ -10928,7 +10932,7 @@ class TCPDF {
 				$this->Error('AES encryption requires MCRYPT_RIJNDAEL_128 cypher.');
 			}
 			if (($mode == 3) AND !function_exists('hash')) {
-				// the Hash extension requires no external libraries and is enabled by default as of PHP 5.1.2.
+				// the Hash extension requires no external libraries and is enabled by default as of PHP 5.2.0.
 				$this->Error('AES 256 encryption requires HASH Message Digest Framework (http://www.php.net/manual/en/book.hash.php).');
 			}
 		}
@@ -12277,7 +12281,7 @@ class TCPDF {
 			$x = $this->w;
 		}
 		$fixed = false;
-		if (!empty($page) AND ($page[0] == '*')) {
+		if (!empty($page) AND (substr($page, 0, 1) == '*')) {
 			$page = intval(substr($page, 1));
 			// this page number will not be changed when moving/add/deleting pages
 			$fixed = true;
@@ -12380,7 +12384,8 @@ class TCPDF {
 			$x = $this->w;
 		}
 		$fixed = false;
-		if (!empty($page) AND ($page[0] == '*')) {
+		$pageAsString = (string) $page;
+		if ($pageAsString && $pageAsString[0] == '*') {
 			$page = intval(substr($page, 1));
 			// this page number will not be changed when moving/add/deleting pages
 			$fixed = true;
@@ -23404,7 +23409,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 */
 	protected function SVGPath($d, $style='') {
 		if ($this->state != 2) {
-			 return;
+			return;
 		}
 		// set fill/stroke style
 		$op = TCPDF_STATIC::getPathPaintOperator($style, '');
@@ -23424,6 +23429,8 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$xmax = 0;
 		$ymin = 2147483647;
 		$ymax = 0;
+		$xinitial = 0;
+		$yinitial = 0;
 		$relcoord = false;
 		$minlen = (0.01 / $this->k); // minimum acceptable length (3 point)
 		$firstcmd = true; // used to print first point
@@ -23468,6 +23475,8 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 								if ($ck == 1) {
 									$this->_outPoint($x, $y);
 									$firstcmd = false;
+									$xinitial = $x;
+									$yinitial = $y;
 								} else {
 									$this->_outLine($x, $y);
 								}
@@ -23655,8 +23664,8 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						if ((($ck + 1) % 7) == 0) {
 							$x0 = $x;
 							$y0 = $y;
-							$rx = abs($params[($ck - 6)]);
-							$ry = abs($params[($ck - 5)]);
+							$rx = max(abs($params[($ck - 6)]), .000000001);
+							$ry = max(abs($params[($ck - 5)]), .000000001);
 							$ang = -$rawparams[($ck - 4)];
 							$angle = deg2rad($ang);
 							$fa = $rawparams[($ck - 3)]; // large-arc-flag
@@ -23743,6 +23752,8 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				}
 				case 'Z': {
 					$this->_out('h');
+					$x = $x0 = $xinitial;
+					$y = $y0 = $yinitial;
 					break;
 				}
 			}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -17,6 +17,9 @@ class WCJ_Module {
 	public $id;
 	public $short_desc;
 	public $desc;
+	public $desc_pro;
+	public $extra_desc;
+	public $extra_desc_pro;
 	public $parent_id; // for `submodule` only
 	public $type;      // `module` or `submodule`
 	public $link;
@@ -876,14 +879,14 @@ class WCJ_Module {
 	 * settings_section.
 	 * only for `module`
 	 *
-	 * @version 4.0.0
+	 * @version 5.2.0
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
 		if ( 'module' != $this->type ) {
 			return $settings;
 		}
-		if ( '' === $module_desc && isset( $this->extra_desc ) ) {
-			$module_desc = '<div style="padding: 15px; background-color: #ffffff; color: #000000;">' . $this->extra_desc . '</div>';
+		if ( '' === $module_desc && ! empty( $this->get_extra_desc() ) ) {
+			$module_desc = '<div style="padding: 15px; background-color: #ffffff; color: #000000;">' . $this->get_extra_desc() . '</div>';
 		}
 		if ( ! isset( $this->link ) && isset( $this->link_slug ) && '' != $this->link_slug ) {
 			$this->link = 'https://booster.io/features/' . $this->link_slug . '/';
@@ -904,11 +907,11 @@ class WCJ_Module {
 			array(
 				'title'    => $this->short_desc,
 				'desc'     => '<strong>' . __( 'Enable Module', 'woocommerce-jetpack' ) . '</strong>',
-				'desc_tip' => $this->desc . $the_link,
+				'desc_tip' => $this->get_desc() . $the_link,
 				'id'       => 'wcj_' . $this->id . '_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'wcj_desc' => $this->desc,
+				'wcj_desc' => apply_filters( 'the_content', $this->get_desc() ),
 				'wcj_link' => ( isset( $this->link ) ? $this->link : '' ),
 			),
 			array(
@@ -917,6 +920,42 @@ class WCJ_Module {
 			),
 		);
 		return array_merge( $enable_module_setting, $settings );
+	}
+
+	/**
+	 * get_desc.
+	 *
+	 * @version 5.2.0
+	 * @since   5.2.0
+	 *
+	 * @return mixed
+	 */
+	function get_desc() {
+		if (
+			empty( $this->desc_pro )
+			|| ! class_exists( 'WCJ_Plus' )
+		) {
+			return $this->desc;
+		}
+		return $this->desc_pro;
+	}
+
+	/**
+	 * get_extra_desc.
+	 *
+	 * @version 5.2.0
+	 * @since   5.2.0
+	 *
+	 * @return mixed
+	 */
+	function get_extra_desc() {
+		if (
+			empty( $this->extra_desc_pro )
+			|| ! class_exists( 'WCJ_Plus' )
+		) {
+			return $this->extra_desc;
+		}
+		return $this->extra_desc_pro;
 	}
 }
 

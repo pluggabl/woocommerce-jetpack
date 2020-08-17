@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon Code Generator
  *
- * @version 3.2.3
+ * @version 5.2.0
  * @since   3.2.3
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.3
+	 * @version 5.2.0
 	 * @since   3.2.3
 	 * @todo    user ID in coupon code
 	 * @todo    add option to generate code only on button (in meta box) pressed
@@ -26,7 +26,8 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 
 		$this->id         = 'coupon_code_generator';
 		$this->short_desc = __( 'Coupon Code Generator', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Coupon code generator.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Coupon code generator (Multiple generation algorithms available in Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Coupon code generator.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-coupon-code-generator';
 		parent::__construct();
 

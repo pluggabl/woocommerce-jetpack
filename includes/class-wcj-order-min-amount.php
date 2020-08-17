@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    order max amount
@@ -19,14 +19,15 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 5.2.0
 	 * @since   2.5.7
 	 */
 	function __construct() {
 
 		$this->id         = 'order_min_amount';
 		$this->short_desc = __( 'Order Minimum Amount', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Minimum order amount (optionally by user role).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Minimum order amount (optionally by user role) .', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-order-minimum-amount';
 		parent::__construct();
 

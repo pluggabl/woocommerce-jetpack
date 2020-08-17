@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 4.4.0
+ * @version 5.2.0
  * @since   2.5.4
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 5.2.0
 	 * @since   2.5.4
 	 * @todo    [feature] import products, customers and (maybe) orders
 	 */
@@ -24,7 +24,8 @@ class WCJ_Export_Import extends WCJ_Module {
 
 		$this->id         = 'export';
 		$this->short_desc = __( 'Export', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce export tools.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'WooCommerce export tools. Additional export fields (1 field allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'WooCommerce export tools.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-export-tools';
 		parent::__construct();
 

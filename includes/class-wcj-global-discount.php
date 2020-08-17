@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 4.9.0
+ * @version 5.2.0
  * @since   2.5.7
  * @author  Pluggabl LLC.
  */
@@ -18,7 +18,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.8.0
+	 * @version 5.2.0
 	 * @since   2.5.7
 	 * @todo    fee instead of discount
 	 * @todo    regular price coefficient
@@ -27,7 +27,8 @@ class WCJ_Global_Discount extends WCJ_Module {
 
 		$this->id         = 'global_discount';
 		$this->short_desc = __( 'Global Discount', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add global discount to all products.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add global discount to all products (1 discount group allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add global discount to all products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shop-global-discount';
 		parent::__construct();
 

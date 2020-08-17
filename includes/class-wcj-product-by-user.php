@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 2.9.0
+ * @version 5.2.0
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 5.2.0
 	 * @since   2.5.2
 	 * @todo    run `add_my_products_endpoint` only if module is enabled
 	 */
@@ -24,7 +24,8 @@ class WCJ_Product_By_User extends WCJ_Module {
 
 		$this->id         = 'product_by_user';
 		$this->short_desc = __( 'User Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Let users add new products from frontend.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Let users add new products from frontend. Image additional field (Pro). Custom Taxonomies (1 allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Let users add new products from frontend.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-by-user';
 		$this->extra_desc = __( 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.', 'woocommerce-jetpack' );
 		parent::__construct();

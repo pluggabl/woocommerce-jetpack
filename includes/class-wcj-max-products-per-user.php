@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 4.2.0
+ * @version 5.2.0
  * @since   3.5.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.0
+	 * @version 5.2.0
 	 * @since   3.5.0
 	 * @todo    (maybe) JS
 	 * @todo    (maybe) zero quantity for "Guest"
@@ -28,7 +28,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 
 		$this->id         = 'max_products_per_user';
 		$this->short_desc = __( 'Maximum Products per User', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Limit number of items your (logged) customers can buy (Free version allows to limit globally).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
 		$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-maximum-products-per-user';
 		parent::__construct();

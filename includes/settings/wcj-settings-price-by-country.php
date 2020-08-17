@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -143,6 +143,14 @@ $settings = array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
+	/*array(
+		'title'    => __( 'Currency Code on Admin', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Changes the currency code on admin based on the current country group id.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_curr_code_admin',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),*/
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_price_by_country_options',
@@ -189,6 +197,15 @@ $settings = array(
 		'type'              => 'checkbox',
 	),
 	array(
+		'title'             => __( 'WooCommerce Points and Rewards', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">WooCommerce Points and Rewards</a> plugin.', 'woocommerce-jetpack' ), 'https://woocommerce.com/products/woocommerce-points-and-rewards/' ),
+		'id'                => 'wcj_price_by_country_comp_woo_points_rewards',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_price_by_country_compatibility',
 	),
@@ -231,6 +248,14 @@ $settings = array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_country_save_prices',
 		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Save Country Group ID', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try to disable it if the country detection is not correct, most probably if "Override Country Options" is enabled.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_save_country_group_id',
+		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),
 	array(

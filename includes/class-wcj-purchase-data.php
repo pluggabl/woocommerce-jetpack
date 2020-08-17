@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 4.5.0
+ * @version 5.2.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 5.2.0
 	 * @todo    (maybe) pre-calculate profit for orders
 	 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 	 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -26,7 +26,8 @@ class WCJ_Purchase_Data extends WCJ_Module {
 
 		$this->id         = 'purchase_data';
 		$this->short_desc = __( 'Cost of Goods', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Save product purchase costs data for admin reports.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Save product purchase costs data for admin reports (1 custom field allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Save product purchase costs data for admin reports.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-cost-of-goods';
 		parent::__construct();
 

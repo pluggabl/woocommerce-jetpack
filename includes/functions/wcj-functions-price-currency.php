@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  */
@@ -406,15 +406,18 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 	/**
 	 * wcj_update_products_price_by_country - all products.
 	 *
-	 * @version 5.1.0
+	 * @version 5.2.0
 	 * @since   2.5.3
 	 */
 	function wcj_update_products_price_by_country() {
-		$offset     = 0;
-		$block_size = 512;
+		$offset      = 0;
+		$block_size  = 512;
 		$bkg_process = WCJ()->modules['price_by_country']->bkg_process_price_updater;
+		if ( empty( $bkg_process ) ) {
+			return;
+		}
 		$bkg_process->cancel_process();
-		while( true ) {
+		while ( true ) {
 			$args = array(
 				'post_type'      => 'product',
 				'post_status'    => 'any',

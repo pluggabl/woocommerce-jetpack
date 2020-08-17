@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon by User Role
  *
- * @version 3.6.0
+ * @version 5.2.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 5.2.0
 	 * @since   3.6.0
 	 * @todo    (maybe) init all options in constructor
 	 * @todo    (maybe) use another error code (instead of 10000)
@@ -25,7 +25,8 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 
 		$this->id         = 'coupon_by_user_role';
 		$this->short_desc = __( 'Coupon by User Role', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Coupons by user roles.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Coupons by user roles. Invalidate per Coupon (Pro). Custom coupon invalid messages (Pro)', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Coupons by user roles.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-coupon-by-user-role';
 		parent::__construct();
 

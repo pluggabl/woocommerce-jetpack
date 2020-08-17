@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 4.6.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,14 +15,15 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.0
+	 * @version 5.2.0
 	 * @todo    (maybe) option to change local and global fields order (i.e. output local fields before the global)
 	 */
 	function __construct() {
 
 		$this->id         = 'product_input_fields';
 		$this->short_desc = __( 'Product Input Fields', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add input fields to the products.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add input fields to the products (1 input field allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add input fields to the products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-input-fields';
 		parent::__construct();
 

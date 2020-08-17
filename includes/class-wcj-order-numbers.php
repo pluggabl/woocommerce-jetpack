@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.1.0
+	 * @version 5.2.0
 	 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 	 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 	 */
@@ -23,7 +23,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 		$this->id         = 'order_numbers';
 		$this->short_desc = __( 'Order Numbers', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Sufix options (Pro). ', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-custom-order-numbers';
 		parent::__construct();
 

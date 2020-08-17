@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Amount
  *
- * @version 3.5.0
+ * @version 5.2.0
  * @since   3.2.1
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 5.2.0
 	 * @since   3.2.1
 	 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 	 */
@@ -24,7 +24,8 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 
 		$this->id         = 'shipping_by_order_amount';
 		$this->short_desc = __( 'Shipping Methods by Min/Max Order Amount', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set minimum and/or maximum order amount for shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set minimum and/or maximum order amount for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-min-max-order-amount';
 		parent::__construct();
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 3.6.0
+ * @version 5.2.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 5.2.0
 	 * @since   2.8.0
 	 * @todo    (maybe) change `link_slug` to "woocommerce-products-stock" or "woocommerce-product-stock"
 	 * @todo    customize "Available on backorder" message in cart
@@ -25,7 +25,8 @@ class WCJ_Stock extends WCJ_Module {
 
 		$this->id         = 'stock';
 		$this->short_desc = __( 'Stock', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Products stock display management.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Products stock display management. Custom Stock HTML (Pro). Remove Stock Display (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Products stock display management.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-stock';
 		parent::__construct();
 

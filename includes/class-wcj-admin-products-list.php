@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Products List
  *
- * @version 3.2.4
+ * @version 5.2.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ class WCJ_Admin_Products_List extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 5.2.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
 
 		$this->id         = 'admin_products_list';
 		$this->short_desc = __( 'Admin Products List', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize admin products list.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize admin products list (1 custom column allowed in free).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Customize admin products list.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-admin-products-list';
 		parent::__construct();
 

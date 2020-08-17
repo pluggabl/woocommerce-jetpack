@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 4.7.1
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -75,7 +75,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 4.4.0
+	 * @version 5.2.0
 	 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 	 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 	 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -92,6 +92,7 @@ class WCJ_Shortcodes {
 
 		// Merge atts with global defaults
 		$global_defaults = array(
+			'plus'                             => 1,
 			'before'                           => '',
 			'after'                            => '',
 			'visibility'                       => '', // user_visibility
@@ -119,6 +120,13 @@ class WCJ_Shortcodes {
 
 		// Check for required atts
 		if ( false === ( $atts = $this->init_atts( $atts ) ) ) {
+			return '';
+		}
+
+		if (
+			false === filter_var( $atts['plus'], FILTER_VALIDATE_BOOLEAN )
+			&& class_exists('WCJ_Plus')
+		) {
 			return '';
 		}
 

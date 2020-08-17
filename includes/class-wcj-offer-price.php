@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.0
+	 * @version 5.2.0
 	 * @since   2.9.0
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
 	 * @todo    (maybe) css - customizable fonts etc.
@@ -34,7 +34,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 
 		$this->id         = 'offer_price';
 		$this->short_desc = __( 'Offer Your Price', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Let your customers to suggest their price for products.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Let your customers to suggest their price for products (Available for all the products in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Let your customers to suggest their price for products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-offer-your-product-price';
 		parent::__construct();
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 4.2.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,14 +15,15 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 5.2.0
 	 * @todo    code refactoring and clean-up
 	 */
 	function __construct() {
 
 		$this->id         = 'product_tabs';
 		$this->short_desc = __( 'Product Tabs', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-custom-product-tabs';
 		parent::__construct();
 

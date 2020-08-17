@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 4.9.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,14 +15,15 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.9.0
+	 * @version 5.2.0
 	 * @todo    [feature] (maybe) add editable (product and order) metas
 	 */
 	function __construct() {
 
 		$this->id         = 'admin_tools';
 		$this->short_desc = __( 'Admin Tools', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Booster for WooCommerce general back-end tools.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Booster for WooCommerce general back-end tools. Enable interface by user roles (Pro). Custom shop manager editable roles (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Booster for WooCommerce general back-end tools.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-booster-admin-tools';
 		parent::__construct();
 

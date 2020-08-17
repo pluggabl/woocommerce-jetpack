@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Emails
  *
- * @version 3.2.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,13 +15,14 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 5.2.0
 	 */
 	function __construct() {
 
 		$this->id         = 'emails';
 		$this->short_desc = __( 'Custom Emails', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom emails to WooCommerce.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom emails to WooCommerce (1 custom email allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add custom emails to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-custom-emails';
 		parent::__construct();
 

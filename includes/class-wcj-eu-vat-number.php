@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 4.9.0
+ * @version 5.2.0
  * @since   2.3.9
  * @author  Pluggabl LLC.
  */
@@ -16,14 +16,15 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.1
+	 * @version 5.2.0
 	 * @todo    [feature] add option to add "Verify" button to frontend
 	 */
 	function __construct() {
 
 		$this->id         = 'eu_vat_number';
 		$this->short_desc = __( 'EU VAT Number', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Pro). Check for IP Location Country  (Pro)', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-eu-vat-number';
 		parent::__construct();
 

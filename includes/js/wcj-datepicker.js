@@ -1,7 +1,7 @@
 /**
  * wcj-datepicker.
  *
- * @version 3.0.0
+ * @version 5.2.0
  * @todo    maybe_exclude_dates: `date.getDate()`, `date.getFullYear()`
  * @see     maybe_exclude_dates: https://stackoverflow.com/questions/501943/can-the-jquery-ui-datepicker-be-made-to-disable-saturdays-and-sundays-and-holid
  */
@@ -43,6 +43,12 @@ jQuery(document).ready(function() {
 						return [false];
 					}
 				}
+			}
+			var blocked_dates = jQuery(this).attr("data-blocked_dates");
+			if (typeof blocked_dates !== typeof undefined && blocked_dates !== false) {
+				var blocked_dates_arr = blocked_dates.split(' ');
+				var datestring = jQuery.datepicker.formatDate(jQuery(this).attr("data-blocked_dates_format"), date);
+				return [ blocked_dates_arr.indexOf(datestring) == -1 ];
 			}
 			return [true];
 		}

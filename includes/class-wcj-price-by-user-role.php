@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 4.7.1
+ * @version 5.2.0
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -17,14 +17,15 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.0
+	 * @version 5.2.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
 
 		$this->id         = 'price_by_user_role';
 		$this->short_desc = __( 'Price based on User Role', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display products prices by user roles.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-price-by-user-role';
 		parent::__construct();
 

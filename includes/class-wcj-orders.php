@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 4.0.0
+ * @version 5.2.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 5.2.0
 	 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 	 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 	 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -24,7 +24,8 @@ class WCJ_Orders extends WCJ_Module {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-orders';
 		parent::__construct();
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 4.8.0
+ * @version 5.2.0
  * @since   2.9.1
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 5.2.0
 	 * @since   2.9.1
 	 * @todo    per category
 	 * @todo    per tag
@@ -27,7 +27,8 @@ class WCJ_Product_By_Date extends WCJ_Module {
 
 		$this->id         = 'product_by_date';
 		$this->short_desc = __( 'Product Availability by Date', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set product availability by date.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set product availability by date (Custom frontend messages available in Pro).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set product availability by date.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-availability-by-date';
 		parent::__construct();
 

@@ -24,7 +24,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 
 		$this->id         = 'product_price_by_formula';
 		$this->short_desc = __( 'Product Price by Formula', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set formula for automatic product price calculation.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set formula for automatic product price calculation (Available per product in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Set formula for automatic product price calculation.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-price-formula';
 		parent::__construct();
 

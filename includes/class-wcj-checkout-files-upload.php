@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 4.2.0
+ * @version 5.2.0
  * @since   2.4.5
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 5.2.0
 	 * @since   2.4.5
 	 * @todo    styling options
 	 */
@@ -24,7 +24,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 
 		$this->id         = 'checkout_files_upload';
 		$this->short_desc = __( 'Checkout Files Upload', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Let customers upload files on (or after) the checkout.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Let customers upload files on (or after) the checkout (1 file allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Let customers upload files on (or after) the checkout.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-files-upload';
 		parent::__construct();
 
