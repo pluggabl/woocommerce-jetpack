@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.2.0
+ * @version 5.2.1
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -879,7 +879,7 @@ class WCJ_Module {
 	 * settings_section.
 	 * only for `module`
 	 *
-	 * @version 5.2.0
+	 * @version 5.2.1
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
 		if ( 'module' != $this->type ) {
@@ -911,7 +911,7 @@ class WCJ_Module {
 				'id'       => 'wcj_' . $this->id . '_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'wcj_desc' => apply_filters( 'the_content', $this->get_desc() ),
+				'wcj_desc' => $this->get_desc(),
 				'wcj_link' => ( isset( $this->link ) ? $this->link : '' ),
 			),
 			array(

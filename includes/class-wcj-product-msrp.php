@@ -31,7 +31,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 		$this->short_desc = __( 'Product MSRP', 'woocommerce-jetpack' );
 		$this->extra_desc = __( 'The <strong>manufacturer\'s suggested retail price</strong> (<strong>MSRP</strong>), also known as the <strong>list price</strong>, or the <strong>recommended retail price</strong> (<strong>RRP</strong>), or the <strong>suggested retail price</strong> (<strong>SRP</strong>), of a product is the price at which the manufacturer recommends that the retailer sell the product.', 'woocommerce-jetpack' ) . '<br>' .
 			sprintf( __( 'Booster stores MSRP as product meta with %s key.', 'woocommerce-jetpack' ), '<code>_wcj_msrp</code>' );
-		$this->desc       = __( 'Save and display product MSRP in WooCommerce (Custom template available in Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Save and display product MSRP in WooCommerce (Custom template available in Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Save and display product MSRP in WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-msrp';
 		parent::__construct();

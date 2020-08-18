@@ -25,7 +25,7 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 
 		$this->id         = 'shipping_by_time';
 		$this->short_desc = __( 'Shipping Methods by Current Date/Time', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Set date and/or time to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-current-date-time';
 

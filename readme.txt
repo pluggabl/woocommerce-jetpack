@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.5
-Stable tag: 5.2.0
+Stable tag: 5.2.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,7 +38,7 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Add to Cart Button Labels* - Change text for Add to Cart button by product type, by product category or for individual products (1 category group allowed in free version).
 * *Call for Price* - Create any custom price label for all products with empty price (Plus).
 * *Custom Price Labels* - Create any custom price label for any product (Just a few positions allowed in free version).
-* *Free Price Labels* - Set free price labels (Variable products allowed in Pro).
+* *Free Price Labels* - Set free price labels (Variable products allowed in Plus).
 * *More Button Labels* - Set "Place order" button label.
 
 **Products**
@@ -51,20 +51,20 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Cross-sells* - Customize cross-sells products display. Global Cross-sells (Plus); Exclude "Not in Stock" Products (Plus); Replace Cart Products with Cross-sells (Plus).
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Addons* - Add (paid/free/discount) addons to products (1 addon allowed in free version).
-* *Product Availability by Date* - Set product availability by date (Custom frontend messages available in Pro).
-* *Product Availability by Time* - Set product availability by time (Custom frontend messages available in Pro).
-* *Product Bulk Meta Editor* - Set products meta with bulk editor (Variations available in Pro).
-* *Product Custom Visibility* - Display products by custom param (Bulk actions available in Pro).
+* *Product Availability by Date* - Set product availability by date (Custom frontend messages available in Plus).
+* *Product Availability by Time* - Set product availability by time (Custom frontend messages available in Plus).
+* *Product Bulk Meta Editor* - Set products meta with bulk editor (Variations available in Plus).
+* *Product Custom Visibility* - Display products by custom param (Bulk actions available in Plus).
 * *Product Images* - Customize products images and thumbnails.
 * *Product Info* - Add additional info to category and single product pages (1 block allowed in free version).
 * *Product Input Fields* - Add input fields to the products (1 input field allowed in free version).
-* *Product Listings* - Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Pro), exclude categories, show/hide empty categories.
-* *Product MSRP* - Save and display product MSRP in WooCommerce (Custom template available in Pro).
+* *Product Listings* - Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Plus), exclude categories, show/hide empty categories.
+* *Product MSRP* - Save and display product MSRP in WooCommerce (Custom template available in Plus).
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).
 * *Product Visibility by Country* - Display products by customer's country. User Country Selection Method (Plus); Admin country list options (Plus); Visibility method options (Plus).
 * *Product Visibility by User Role* - Display products by customer's user role. Visibility method options (Plus)
 * *Products XML Feeds* - Products XML feeds (1 file allowed in free version.).
-* *Products per Page* - Add "products per page" selector to WooCommerce (Select options available in Pro).
+* *Products per Page* - Add "products per page" selector to WooCommerce (Select options available in Plus).
 * *Related Products* - Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Plus). Hide related products completely.
 * *SKU* - Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Plus); Sequential Number Generation (Plus); Variable Products Variations (Plus).
 * *Sale Flash* - Customize products sale flash. Per product (Plus); Per category (Plus); Per tag (Plus).
@@ -81,10 +81,10 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Plus)
 * *Checkout Custom Fields* - Add custom fields to the checkout page (1 field allowed in free version).
 * *Checkout Custom Info* - Add custom info to the checkout page (1 block allowed in free version).
-* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP (Plus); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Pro).
+* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP (Plus); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Plus).
 * *Checkout Fees* - Add fees to WooCommerce cart & checkout (1 fee allowed in free version).
 * *Checkout Files Upload* - Let customers upload files on (or after) the checkout (1 file allowed in free version).
-* *Coupon Code Generator* - Coupon code generator (Multiple generation algorithms available in Pro).
+* *Coupon Code Generator* - Coupon code generator (Multiple generation algorithms available in Plus).
 * *Coupon by User Role* - Coupons by user roles. Invalidate per Coupon (Plus). Custom coupon invalid messages (Plus)
 * *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Plus). Check for IP Location Country  (Plus)
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Plus). Different button positions on the cart page (Plus).
@@ -119,12 +119,12 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Plus). Update totals label (Plus).
 * *Shipping Descriptions* - Add descriptions to shipping methods on frontend. Description visibility (Plus). Description position (Plus).
 * *Shipping Icons* - Add icons to shipping methods on frontend. Icon Visibility (Plus)
-* *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Pro).
-* *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Pro).
-* *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Pro).
-* *Shipping Methods by Min/Max Order Quantity* - Set minimum and/or maximum order quantity for shipping methods to show up (Local pickup available in Pro).
-* *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Pro).
-* *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Pro).
+* *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Plus).
+* *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Plus).
+* *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Plus).
+* *Shipping Methods by Min/Max Order Quantity* - Set minimum and/or maximum order quantity for shipping methods to show up (Local pickup available in Plus).
+* *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Plus).
+* *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Plus).
 * *Shipping Options* - Hide shipping when free is available. Grant free shipping on per product basis (In free version, all products in cart must grant free shipping). Show only the most expensive shipping (In free version, only free shipping is allowed to be ignored).
 * *Shipping Time* - Add delivery time estimation to shipping methods.
 
@@ -192,6 +192,10 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 5.2.1 - 18/08/2020 =
+* Fix - `WCJ_Module` - Fix compatibility issue with Beaver Builder Plugin.
+* Dev - Improve modules description.
 
 = 5.2.0 - 17/08/2020 =
 * Fix - EMAILS & MISC. - Email Verification - Fix `Prevent User Login Globally` option from creating an empty order.
@@ -1820,7 +1824,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_status_label]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
-* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Plus)" tool removed.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
 * Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
@@ -3207,7 +3211,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 1.7.7 - 13/10/2014 =
 * Fix - Custom Price Labels - Bug causing setting checkboxes back to *on*, fixed. Suggested by Erika.
-* Fix - Custom Price Labels - *Migrate from Custom Price Labels (Pro)* tool - new since Custom Price Labels plugin data was missing, fixed. Suggested by Paolo.
+* Fix - Custom Price Labels - *Migrate from Custom Price Labels (Plus)* tool - new since Custom Price Labels plugin data was missing, fixed. Suggested by Paolo.
 
 = 1.7.6 - 09/10/2014 =
 * Fix - Custom Price Labels - Bug causing setting all product's checkbox labels to off, fixed.
@@ -3224,7 +3228,7 @@ You can see the differences between versions in this [table](https://booster.io/
 = 1.7.5 - 08/10/2014 =
 * Feature Upgraded - Custom Price Labels - "Global labels" section extended: `add after price`, `add before price`, `replace in price`.
   `Remove from price` code also have been moved (and now in one place with all Global Labels) - before that it was called multiple times, fixed.
-* Dev - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool added. Suggested by Paolo.
+* Dev - Custom Price Labels - "Migrate from Custom Price Labels (Plus)" tool added. Suggested by Paolo.
 
 = 1.7.4 - 07/10/2014 =
 * Fix - Emails - Bcc and Cc options not working, fixed. Reported by Helpmiphone.

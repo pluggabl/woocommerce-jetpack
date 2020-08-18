@@ -27,7 +27,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 
 		$this->id         = 'product_by_date';
 		$this->short_desc = __( 'Product Availability by Date', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set product availability by date (Custom frontend messages available in Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set product availability by date (Custom frontend messages available in Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Set product availability by date.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-availability-by-date';
 		parent::__construct();

@@ -26,7 +26,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 
 		$this->id         = 'products_per_page';
 		$this->short_desc = __( 'Products per Page', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add "products per page" selector to WooCommerce (Select options available in Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add "products per page" selector to WooCommerce (Select options available in Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Add "products per page" selector to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-products-per-page';
 		parent::__construct();

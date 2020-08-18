@@ -27,7 +27,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 
 		$this->id         = 'product_by_time';
 		$this->short_desc = __( 'Product Availability by Time', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set product availability by time (Custom frontend messages available in Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set product availability by time (Custom frontend messages available in Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Set product availability by time.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-availability-by-time';
 		parent::__construct();
