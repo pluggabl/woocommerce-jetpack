@@ -150,7 +150,25 @@ class WCJ_Multicurrency extends WCJ_Module {
 		add_filter( 'woocommerce_get_item_data', array( $this, 'get_addons_item_data' ), 20, 2 );
 		add_filter( 'woocommerce_product_addons_option_price_raw', array( $this, 'product_addons_option_price_raw' ), 10, 2 );
 		add_filter( 'woocommerce_product_addons_price_raw', array( $this, 'product_addons_price_raw' ), 10, 2 );
+
+		//add_filter( 'wdp_get_product_price', array( $this, 'wdp_get_product_price' ) );
 	}
+
+	/*function wdp_get_product_price( $price, $product, $price_mode, $item_meta ) {
+		error_log('asd');
+		if ( $product->is_on_sale( 'edit' ) ) {
+			if ( 'sale_price' === $price_mode ) {
+				$price = $product->get_sale_price( '' );
+			} elseif ( 'discount_sale' === $price_mode ) {
+				$price = $product->get_sale_price( '' );
+			} else {
+				$price = $product->get_regular_price( '' );
+			}
+		} else {
+			$price = $product->get_price( '' );
+		}
+		return $price;
+	}*/
 
 	/**
 	 * product_addons_price_raw.

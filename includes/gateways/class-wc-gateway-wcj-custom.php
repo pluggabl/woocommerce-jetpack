@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 4.9.0
+ * @version 5.3.0
  * @author  Pluggabl LLC.
  */
 
@@ -172,7 +172,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Check If The Gateway Is Available For Use
 				 *
-				 * @version 2.5.6
+				 * @version 5.3.0
 				 * @return  bool
 				 */
 				function is_available() {
@@ -202,7 +202,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 
 							if ( 0 < sizeof( $order->get_items() ) ) {
 								foreach ( $order->get_items() as $item ) {
-									$_product = $order->get_product_from_item( $item );
+									$_product = $item->get_product();
 
 									if ( $_product->needs_shipping() ) {
 										$needs_shipping = true;

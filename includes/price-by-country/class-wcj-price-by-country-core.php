@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.2.0
+ * @version 5.3.0
  * @author  Pluggabl LLC.
  */
 
@@ -101,7 +101,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 5.1.0
+	 * @version 5.3.0
 	 */
 	function add_hooks() {
 
@@ -156,12 +156,36 @@ class WCJ_Price_by_Country_Core {
 		// WooCommerce Points and Rewards plugin
 		add_filter( 'option_'.'wc_points_rewards_redeem_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
 		add_filter( 'option_'.'wc_points_rewards_earn_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
+
+		// Auto set default checkout billing country
+		add_action( 'default_checkout_billing_country', array( $this, 'set_default_checkout_country' ), 900 );
+	}
+
+	/**
+	 * set_default_checkout_country.
+	 *
+	 * @version 5.3.0
+	 * @since   5.3.0
+	 *
+	 * @param $default_country
+	 *
+	 * @return array|null|string
+	 */
+	function set_default_checkout_country( $default_country ) {
+		if (
+			'yes' != get_option( 'wcj_price_by_country_set_dft_checkout_billing_country', 'no' ) ||
+			empty( $country = null !== ( $country = wcj_session_get( 'wcj-country' ) ) ? $country : ( $country = $this->get_customer_country_by_ip() ) )
+		) {
+			return $default_country;
+		}
+		$default_country = $country;
+		return $default_country;
 	}
 
 	/**
 	 * handle_wc_points_rewards_settings.
 	 *
-	 * @version 5.2.0
+	 * @version 5.3.0
 	 * @since   5.2.0
 	 *
 	 * @param $value
@@ -178,7 +202,10 @@ class WCJ_Price_by_Country_Core {
 		}
 		list( $points, $monetary_value ) = explode( ':', $value );
 		$new_monetary_value = $this->change_price( $monetary_value, null );
-		$value              = $points . ':' . $new_monetary_value;
+		if ( WCJ()->modules['currency_exchange_rates']->is_enabled() ) {
+			$new_monetary_value = WCJ()->modules['currency_exchange_rates']->force_dot_as_exchange_rate_decimal_separator( $new_monetary_value );
+		}
+		$value = $points . ':' . $new_monetary_value;
 		return $value;
 	}
 
@@ -321,7 +348,7 @@ class WCJ_Price_by_Country_Core {
 	 *
 	 * @see price-slider.js->init_price_filter()
 	 *
-	 * @version 5.1.0
+	 * @version 5.5.2
 	 * @since   5.1.0
 	 */
 	function add_compatibility_with_price_filter_widget() {
@@ -360,8 +387,8 @@ class WCJ_Price_by_Country_Core {
 					this.original_values = jQuery(this.slider).slider("option", "values");
 					this.current_min = this.original_min;
 					this.current_max = this.original_max;
-					this.current_values[0] = jQuery(this.slider).parent().find('#min_price').val();
-					this.current_values[1] = jQuery(this.slider).parent().find('#max_price').val();
+					this.current_values[0] = jQuery(this.slider).parent().find('#min_price').val() * 1;
+					this.current_values[1] = jQuery(this.slider).parent().find('#max_price').val() * 1;
 					if (
 						jQuery(this.slider).parent().find('#min_price').val() != this.original_min ||
 						jQuery(this.slider).parent().find('#max_price').val() != this.original_max
@@ -373,8 +400,8 @@ class WCJ_Price_by_Country_Core {
 				},
 				update_slider() {
 					jQuery(this.slider).slider("destroy");
-					var current_min_price = Math.floor(this.current_min);
-					var current_max_price = Math.ceil(this.current_max);
+					var current_min_price = this.current_min;
+					var current_max_price = this.current_max;
 					jQuery(this.slider).slider({
 						range: true,
 						animate: true,
@@ -383,15 +410,15 @@ class WCJ_Price_by_Country_Core {
 						step: parseFloat(this.step),
 						values: wcj_mc_pf_slider.current_values,
 						create: function () {
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate));
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate));
-							jQuery(document.body).trigger('price_slider_create', [Math.floor(wcj_mc_pf_slider.current_values[0]), Math.ceil(wcj_mc_pf_slider.current_values[1])]);
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val((wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val((wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							jQuery(document.body).trigger('price_slider_create', [(wcj_mc_pf_slider.current_values[0]).toFixed(2), (wcj_mc_pf_slider.current_values[1]).toFixed(2)]);
 						},
 						slide: function (event, ui) {
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(ui.values[0] / wcj_mc_pf_slider.convert_rate));
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(ui.values[1] / wcj_mc_pf_slider.convert_rate));
-							var the_min = ui.values[0] == Math.round(wcj_mc_pf_slider.current_values[0]) ? Math.floor(wcj_mc_pf_slider.current_values[0]) : ui.values[0];
-							var the_max = ui.values[1] == Math.round(wcj_mc_pf_slider.current_values[1]) ? Math.ceil(wcj_mc_pf_slider.current_values[1]) : ui.values[1];
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val((ui.values[0] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val((ui.values[1] / wcj_mc_pf_slider.convert_rate).toFixed(2));
+							var the_min = ui.values[0] == wcj_mc_pf_slider.current_values[0] ? (wcj_mc_pf_slider.current_values[0]).toFixed(2) : ui.values[0];
+							var the_max = ui.values[1] == wcj_mc_pf_slider.current_values[1] ? (wcj_mc_pf_slider.current_values[1]).toFixed(2) : ui.values[1];
 							jQuery(document.body).trigger('price_slider_slide', [the_min, the_max]);
 						},
 						change: function (event, ui) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 4.9.0
+ * @version 5.3.0
  * @author  Pluggabl LLC.
  */
 
@@ -248,7 +248,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 3.2.2
+	 * @version 5.3.0
 	 * @todo    `sort_by_column` - fix `item_number`
 	 * @todo    `$item['is_custom']` may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 	 * @todo    `if ( '' !== $column_cell_data )` - this may be optional?
@@ -317,7 +317,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		$item_counter = 0;
 		foreach ( $the_items as $item_id => $item ) {
 			$item['is_custom'] = ( isset( $item['is_custom'] ) );
-			$the_product = ( true === $item['is_custom'] ) ? null : $the_order->get_product_from_item( $item );
+			$the_product = ( true === $item['is_custom'] ) ? null : $item->get_product( $item );
 			// Check if it's not excluded by category
 			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
 				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
@@ -440,9 +440,34 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * get_product_item_name.
+	 *
+	 * @version 5.3.0
+	 * @since   5.3.0
+	 *
+	 * @param $item
+	 *
+	 * @return string
+	 */
+	function get_product_item_name( $item ) {
+		$item_name = $item['name'];
+		if ( 'yes' == get_option( 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_enable', 'no' ) ) {
+			if (
+				'yes' == get_option( 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_wpml', 'no' )
+				&& function_exists( 'icl_object_id' )
+			) {
+				$item_name = get_the_title( icl_object_id( $item->get_product_ID(), 'product', false, ICL_LANGUAGE_CODE ) );
+			} else {
+				$item_name = get_the_title( $item->get_product_ID() );
+			}
+		}
+		return $item_name;
+	}
+
+	/**
 	 * get_cell.
 	 *
-	 * @version 4.9.0
+	 * @version 5.3.0
 	 * @since   3.2.0
 	 * @todo    do we need `pa_` replacement?
 	 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
@@ -490,9 +515,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			case 'item_name':
 			case 'product_name': // "product_" because of possible variation
 				if ( true === $item['is_custom'] ) {
-					return $item['name'];
+					return $this->get_product_item_name( $item );
 				} else {
-					$the_item_title = $item['name'];
+					$the_item_title = $this->get_product_item_name( $item );
 					// Variation (if needed)
 					if ( 'yes' === $atts['add_variation_info_to_item_name'] && isset( $item['variation_id'] ) && 0 != $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
 						$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';

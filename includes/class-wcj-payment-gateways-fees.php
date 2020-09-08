@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 5.2.0
+ * @version 5.3.0
  * @since   2.2.2
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.3.0
 	 * @todo    (maybe) add settings subsections for each gateway
 	 */
 	function __construct() {
@@ -29,7 +29,11 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'init',                            array( $this, 'init_options' ) );
+			if ( 'no' === ( $modules_on_init = get_option( 'wcj_load_modules_on_init', 'no' ) ) ) {
+				add_action( 'init', array( $this, 'init_options' ) );
+			} elseif ( 'yes' === $modules_on_init && 'init' === current_filter() ) {
+				$this->init_options();
+			}
 			add_action( 'woocommerce_cart_calculate_fees', array( $this, 'gateways_fees' ) );
 			add_action( 'wp_enqueue_scripts',              array( $this, 'enqueue_checkout_script' ) );
 		}

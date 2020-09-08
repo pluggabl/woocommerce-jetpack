@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 4.9.0
+ * @version 5.3.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -108,7 +108,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 4.9.0
+	 * @version 5.3.0
 	 * @since   2.5.9
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null, $exclude_meta = array() ) {
@@ -164,7 +164,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 					if ( is_object( $_product ) ) {
 						$the_product = $_product;
 					} elseif ( is_object( $item ) ) {
-						$the_product = $_order->get_product_from_item( $item );
+						$the_product = $item->get_product();
 					}
 					$_meta_key   = ( is_object( $the_product ) ) ? wc_attribute_label( $_meta_key, $the_product ) : $_meta_key;
 				}

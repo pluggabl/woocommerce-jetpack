@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 4.7.1
+ * @version 5.3.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -126,6 +126,24 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_price_by_user_role_options_adv',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_price_by_user_role_compatibility',
+	),
+	array(
+		'title'             => __( 'WooCommerce Product Bundles', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">WooCommerce Product Bundles</a> plugin.', 'woocommerce-jetpack' ), 'https://woocommerce.com/products/product-bundles/' ),
+		'id'                => 'wcj_price_by_user_role_compatibility_wc_product_bundles',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_price_by_user_role_compatibility',
 	),
 	array(
 		'title'    => __( 'Roles & Multipliers', 'woocommerce-jetpack' ),

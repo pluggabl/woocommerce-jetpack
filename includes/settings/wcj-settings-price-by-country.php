@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 5.2.0
+ * @version 5.3.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -69,6 +69,13 @@ $settings = array(
 		'title'    => __( 'Revert Currency to Default on Checkout', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_country_revert',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Auto set default checkout billing country', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_set_dft_checkout_billing_country',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

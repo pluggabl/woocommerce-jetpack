@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.3.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -49,7 +49,36 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
 			add_filter( 'woocommerce_hide_invisible_variations', array( $this, 'show_empty_price_variations' ) );
 			add_action( 'woocommerce_before_single_variation', array( $this, 'remove_single_variation_hooks' ) );
+
+			// WooCommerce Product Bundles compatibility
+			add_filter( 'wcj_price_by_user_role_do_change_price', array( $this, 'change_bundle_product_price' ), 10, 3 );
 		}
+	}
+
+	/**
+	 * change_bundle_product_price.
+	 *
+	 * @version 5.3.0
+	 * @since   5.3.0
+	 *
+	 * @param $change
+	 * @param $price
+	 * @param $_product
+	 *
+	 * @return bool
+	 */
+	function change_bundle_product_price( $change, $price, $_product ) {
+		if (
+			'yes' !== get_option( 'wcj_price_by_user_role_compatibility_wc_product_bundles', 'no' )
+			|| ! function_exists( 'wc_pb_get_bundled_product_map' )
+			|| ! $_product
+			|| $price > 0
+			|| empty( wc_pb_get_bundled_product_map( $_product ) )
+		) {
+			return $change;
+		}
+		$change = false;
+		return $change;
 	}
 
 	/**

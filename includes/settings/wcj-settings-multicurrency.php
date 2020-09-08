@@ -216,6 +216,15 @@ $settings = array(
 		'default'           => 'no',
 		'type'              => 'checkbox',
 	),
+	/*array(
+		'title'             => __( 'Advanced Dynamic Pricing For Woocommerce', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Advanced Dynamic Pricing For Woocommerce</a> plugin.', 'woocommerce-jetpack' ), 'https://algolplus.com/plugins/downloads/advanced-dynamic-pricing-woocommerce-pro/' ) . '<br />' . __( 'Calculation option <code>Use prices modified by other plugins</code> must be ON.', 'woocommerce-jetpack' ). '<br />' . __( 'System option <code>Suppress other pricing plugins in frontend</code> must be OFF.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_multicurrency_compatibility_adv_dyn_pricing_wc',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),*/
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_multicurrency_compatibility',

@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.5
-Stable tag: 5.2.1
+Stable tag: 5.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -113,7 +113,7 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Maximum Products per User* - Limit number of items your (logged) customers can buy (Free version allows to limit globally).
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus).
 * *Order Minimum Amount* - Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).
-* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Plus). 
+* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Plus).
 * *Order Quantities* - Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.
 * *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Plus).
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Plus). Update totals label (Plus).
@@ -192,6 +192,22 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 5.3.0 - 08/09/2020 =
+* Fix - Replace `WC_Abstract_Legacy_Order::get_product_from_item()` deprecated function by `$item->get_product()`.
+* Fix - PAYMENT GATEWAYS - Gateways Fees and Discounts - Add compatibility with "Load Modules on Init Hook" option.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Improve compatibility between 'WooCommerce Points and Rewards' option and 'Force Point as Decimal Separator' from 'Currency Exchange Rates' module.
+* Fix - PRODUCTS - Product by Condition - Fix shipping removing algorithm.
+* Dev - PDF INVOICING & PACKING SLIPS - Advanced - Add 'Item Name as Product Title' option allowing to replace `item_name` by product title when using `[wcj_order_items_table columns="item_name"]`.
+* Dev - PDF INVOICING & PACKING SLIPS - Advanced - Add 'Translate WPML Title' option allowing to translate the product title to the current WPML language.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Improve inconsistency on the price filter by adding decimal places to the query string.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Create 'Auto set default checkout billing country' option.
+* Dev - PRICES & CURRENCIES - Price by User Role - Add compatibility option with 'WooCommerce Product Bundles' plugin.
+* Dev - PRICES & CURRENCIES - Product Price by Formula - Create 'Reset products' option.
+* Dev - Create notice on free version asking for a review on WordPress.org.
+* Dev - Create fixed notice on free version asking for a review.
+* Dev - Create fixed notice on free version regarding reasons to upgrade to Plus.
+* WC tested up to: 4.4
 
 = 5.2.1 - 18/08/2020 =
 * Fix - `WCJ_Module` - Fix compatibility issue with Beaver Builder Plugin.

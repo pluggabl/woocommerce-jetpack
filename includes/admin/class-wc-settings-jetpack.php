@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 4.4.0
+ * @version 5.3.0
  * @since   1.0.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.0
+	 * @version 5.3.0
 	 */
 	function __construct() {
 
@@ -33,7 +33,153 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		add_action( 'woocommerce_sections_' . $this->id,       array( $this, 'output_cats_submenu' ) );
 		add_action( 'woocommerce_sections_' . $this->id,       array( $this, 'output_sections_submenu' ) );
 
+		// Create free version notices
+		add_action( 'woocommerce_after_settings_' . $this->id, array( $this, 'create_free_version_footer_review_notice' ) );
+		add_action( 'woocommerce_settings_' . $this->id, array( $this, 'create_free_version_notice_about_plus' ) );
+		add_action( 'woocommerce_after_settings_' . $this->id, array( $this, 'create_free_version_notice_about_reasons_to_upgrade' ) );
+
 		require_once( 'class-wcj-settings-custom-fields.php' );
+	}
+
+	/**
+	 * create_free_version_notice_about_reasons_to_upgrade.
+	 *
+	 * @version 5.3.0
+	 * @since   5.3.0
+	 */
+	function create_free_version_notice_about_reasons_to_upgrade() {
+		if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			return;
+		}
+		$notice_class  = 'notice notice-info inline';
+		$texts         = array(
+			'title'   => __( 'Upgrade today to unlock these popular premium features:', 'woocommerce-jetpack' ),
+			'reasons' => array(
+				__( 'Add ability to create Proforma Invoices, Credit Notes and Packing slips', 'woocommerce-jetpack' ),
+				__( '<strong>Cart and checkout</strong> – add multiple – custom fields, custom info blocks, check out file uploads', 'woocommerce-jetpack' ),
+				__( '<strong>Prices and currencies</strong> – add more unlimited number of currencies to WooCommerce', 'woocommerce-jetpack' ),
+				__( '<strong>Add to cart</strong> – customize add to cart messages, Button labels - multiple category groups allowed', 'woocommerce-jetpack' ),
+				__( '<strong>Empty Cart</strong> – customize empty cart button text, different button positions on cart page', 'woocommerce-jetpack' ),
+				__( '<strong>Mini cart</strong> – More custom information options', 'woocommerce-jetpack' ),
+				__( '<strong>Export options</strong> – more fields enabled', 'woocommerce-jetpack' ),
+				__( 'More configuration options for payments and shipping', 'woocommerce-jetpack' ),
+			)
+		);
+		$reasons_left  = array_slice( $texts['reasons'], 0, ceil( count( $texts['reasons'] ) / 2 ) );
+		$reasons_right = array_slice( $texts['reasons'], count( $texts['reasons'] ) - floor( count( $texts['reasons'] ) / 2 ) );
+		$template      = '<div class="wcj-notice-wrapper">{title}{reasons_left}{reasons_right}{upgrade_btn}</div>';
+		$array_from_to = array(
+			'{title}'         => '<h3 class="wcj-notice-title">' . $texts['title'] . '</h3>',
+			'{reasons_left}'  => '<ul class="wcj-list wcj-list-left">' . '<li>' . implode( '</li><li>', $reasons_left ) . '</ul>',
+			'{reasons_right}' => '<ul class="wcj-list wcj-list-right">' . '<li>' . implode( '</li><li>', $reasons_right ) . '</ul>',
+			'{upgrade_btn}'   => '<a class="wcj-button button" href="https://booster.io/buy-booster/" target="_blank">' . __( 'Upgrade to Booster Plus', 'woocommerce-jetpack' ) . '</a>'
+		);
+		$html          = str_replace( array_keys( $array_from_to ), $array_from_to, $template );
+		?>
+		<style>
+			.wcj-button.button {
+				margin: 2px 0 14px 0;
+			}
+
+			.wcj-list {
+				vertical-align: top;
+				width: 47%;
+				display: inline-block;
+				margin: 0 3% 10px 0;
+			}
+
+			@media screen and (max-width: 782px) {
+				.wcj-list {
+					width: 100%;
+				}
+
+				.wcj-list {
+					margin-bottom: 0;
+				}
+
+				.wcj-list-right {
+					margin-bottom: 10px;
+				}
+			}
+
+			.wcj-list li:before {
+				content: '+';
+				margin: 0 5px 0 0;
+			}
+
+			.wcj-list-right {
+
+			}
+
+			.wcj-notice-title {
+				margin: 5px 0 15px 0;
+			}
+
+			.wcj-notice-wrapper {
+				margin: 0.5em 0;
+				padding: 2px;
+				font-size: 13px;
+				line-height: 1.5;
+			}
+		</style>
+		<?php
+		echo '<div class="' . $notice_class . '">' . $html . '</div>';
+	}
+
+	/**
+	 * create_free_version_notice_about_plus.
+	 *
+	 * @version 5.3.0
+	 * @since   5.3.0
+	 */
+	function create_free_version_notice_about_plus() {
+		if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			return;
+		}
+		$class        = 'notice notice-info';
+		$message      = sprintf( __( 'You\'re using Booster free version. To unlock more features please consider <a target="_blank" href="%s">upgrading to Plus</a>.', 'woocommerce-jetpack' ), 'https://booster.io/buy-booster/' );
+		$booster_icon = '<span class="wcj-booster-logo"></span>';
+		?>
+		<style>
+			.wcj-booster-logo {
+				width: 19px;
+				height: 19px;
+				display: inline-block;
+				background: url('https://ps.w.org/woocommerce-jetpack/assets/icon-128x128.png?rev=1813426') center/cover;
+				vertical-align: middle;
+				position: relative;
+				top: -1px;
+				margin: 0 6px 0 0;
+			}
+		</style>
+		<?php
+		echo '<div class="' . $class . '"><p>' . $booster_icon . $message . '</p></div>';
+	}
+
+	/**
+	 * create_free_version_footer_review_notice.
+	 *
+	 * @version 5.3.0
+	 * @since   5.3.0
+	 */
+	function create_free_version_footer_review_notice() {
+		if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			return;
+		}
+		$class      = 'notice notice-info inline';
+		$link       = 'https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?filter=5';
+		$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
+		$stars_link = '<a href="' . $link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
+		$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %s on <a href="%s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
+		?>
+		<style>
+			.wcj-review-icon {
+				vertical-align: middle;
+				margin:-6px 0 0 0;
+			}
+		</style>
+		<?php
+		echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
 	}
 
 	/**

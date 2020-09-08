@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Shipping
  *
- * @version 4.0.0
+ * @version 5.3.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  */
@@ -37,7 +37,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * check_if_enabled_for_methods.
 	 *
-	 * @version 4.0.0
+	 * @version 5.3.0
 	 * @since   2.7.0
 	 * @see     `is_available()` function in WooCommerce `WC_Gateway_COD` class
 	 * @todo    (maybe) virtual orders (`enable_for_virtual`)
@@ -57,7 +57,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 			// Test if order needs shipping.
 			if ( 0 < sizeof( $order->get_items() ) ) {
 				foreach ( $order->get_items() as $item ) {
-					$_product = $order->get_product_from_item( $item );
+					$_product = $item->get_product();
 					if ( $_product && $_product->needs_shipping() ) {
 						$needs_shipping = true;
 						break;

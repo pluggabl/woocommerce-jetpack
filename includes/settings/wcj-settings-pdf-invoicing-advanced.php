@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 4.9.0
+ * @version 5.3.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -119,6 +119,32 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_pdf_invoicing_advanced_options',
+	),
+	array(
+		'type'     => 'title',
+		'title'    => __( 'Item Name as Product Title', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Replaces <code>item_name</code> by product title when using <code>[wcj_order_items_table columns="item_name"]</code>.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_pdf_invoicing_advanced_item_name_as_prod_title',
+	),
+	array(
+		'title'    => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_enable',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Translate WPML Title', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( 'Tries to translate the product title to the current WPML language.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_wpml',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_pdf_invoicing_advanced_item_name_as_prod_title',
 	),
 	array(
 		'title'    => __( 'Fonts Manager', 'woocommerce-jetpack' ),
