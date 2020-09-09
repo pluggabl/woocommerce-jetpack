@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.5
-Stable tag: 5.3.1
+Stable tag: 5.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,9 +192,6 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
-
-= 5.3.1 - 09/09/2020 =
-* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - My new feature.
 
 = 5.3.0 - 08/09/2020 =
 * Fix - Replace `WC_Abstract_Legacy_Order::get_product_from_item()` deprecated function by `$item->get_product()`.
