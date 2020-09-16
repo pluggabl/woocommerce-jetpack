@@ -8,7 +8,7 @@
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
  */
 
-$wcj_modules = apply_filters( 'wcj_modules', array(
+return apply_filters( 'wcj_modules', array(
 
 	'dashboard' => array(
 		'label'          => __( 'Dashboard', 'woocommerce-jetpack' ),
@@ -203,5 +203,3 @@ $wcj_modules = apply_filters( 'wcj_modules', array(
 	),
 
 ) );
-
-return $wcj_modules;
