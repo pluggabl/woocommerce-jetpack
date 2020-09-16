@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.3.0
+ * @version 5.3.1
  * @since   1.0.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.3.0
+	 * @version 5.3.1
 	 */
 	function __construct() {
 
@@ -37,7 +37,10 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		add_action( 'woocommerce_after_settings_' . $this->id, array( $this, 'create_free_version_footer_review_notice' ) );
 		add_action( 'woocommerce_settings_' . $this->id, array( $this, 'create_free_version_notice_about_plus' ) );
 		add_action( 'woocommerce_after_settings_' . $this->id, array( $this, 'create_free_version_notice_about_reasons_to_upgrade' ) );
-
+		
+		// Create a PRO version ratting notice
+		add_action( 'woocommerce_after_settings_' . $this->id, array( $this, 'create_pro_version_footer_review_notice' ) );
+		
 		require_once( 'class-wcj-settings-custom-fields.php' );
 	}
 
@@ -171,6 +174,32 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
 		$stars_link = '<a href="' . $link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
 		$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %s on <a href="%s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
+		?>
+		<style>
+			.wcj-review-icon {
+				vertical-align: middle;
+				margin:-6px 0 0 0;
+			}
+		</style>
+		<?php
+		echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
+	}
+	/**
+	 * create_pro_version_footer_review_notice.
+	 *
+	 * @version 5.3.1
+	 * @since   5.3.1
+	 */
+	function create_pro_version_footer_review_notice() {
+		if ( 'booster-plus-for-woocommerce.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			return;
+		}
+		$class      = 'notice notice-info inline';
+		$link       = 'https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?filter=5';
+		$pro_link   = 'https://booster.io/reviews/';
+		$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
+		$stars_link = '<a href="' . $pro_link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
+		$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %s on <a href="%s" target="_blank">booster.io</a> or <a href="%s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link,$pro_link, $link );
 		?>
 		<style>
 			.wcj-review-icon {

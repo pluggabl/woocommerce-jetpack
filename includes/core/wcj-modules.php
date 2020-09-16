@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 4.5.0
+ * @version 5.3.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -143,3 +143,4 @@ foreach ( $wcj_module_files as $wcj_module_file ) {
 	$module = include_once( $wcj_modules_dir . $wcj_module_file );
 	$this->modules[ $module->id ] = $module;
 }
+$this->modules = apply_filters( 'wcj_modules_loaded', $this->modules );

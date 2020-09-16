@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.5
-Stable tag: 5.3.0
+Stable tag: 5.3.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,12 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 5.3.1 - 16/09/2020 =
+* Fix - PDF INVOICING & PACKING SLIPS - Fix `Call to undefined method get_product()` error by fixing `discount_as_item` and `shipping_as_item` parameters from `[wcj_order_items_table]` shortcode.
+* Fix - PDF INVOICING & PACKING SLIPS - Page Settings - Improve 'Parse Background Image URL' option.
+* Dev - Add filter `wcj_modules_loaded` on wcj-modules.
+* Dev - Create notice on PRO version asking for a review on WordPress.org and booster.io.
 
 = 5.3.0 - 08/09/2020 =
 * Fix - Replace `WC_Abstract_Legacy_Order::get_product_from_item()` deprecated function by `$item->get_product()`.

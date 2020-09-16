@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 4.4.0
+ * @version 5.3.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -49,6 +49,9 @@ require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-module-product-by-c
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-module-shipping-by-condition.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-invoice.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-pdf-invoice.php' );
+
+// Mini Plugin
+require_once( WCJ_PLUGIN_PATH . '/includes/mini-plugin/wcj-mini-plugin.php' );
 
 // Plus
 if ( 'booster-plus-for-woocommerce.php' === basename( WCJ_PLUGIN_FILE ) && apply_filters( 'wcj_full_pack', true ) ) {

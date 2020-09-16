@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 5.3.0
+ * @version 5.3.1
  * @author  Pluggabl LLC.
  */
 
@@ -248,7 +248,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 5.3.0
+	 * @version 5.3.1
 	 * @todo    `sort_by_column` - fix `item_number`
 	 * @todo    `$item['is_custom']` may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 	 * @todo    `if ( '' !== $column_cell_data )` - this may be optional?
@@ -317,7 +317,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		$item_counter = 0;
 		foreach ( $the_items as $item_id => $item ) {
 			$item['is_custom'] = ( isset( $item['is_custom'] ) );
-			$the_product = ( true === $item['is_custom'] ) ? null : $item->get_product( $item );
+			$the_product = ( true === $item['is_custom'] ) ? null : ( method_exists( $item, 'get_product' ) ? $item->get_product( $item ) : null );
 			// Check if it's not excluded by category
 			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
 				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
