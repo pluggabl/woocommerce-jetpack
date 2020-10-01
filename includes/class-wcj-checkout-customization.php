@@ -30,7 +30,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// "Create an account?" Checkbox
-			if ( 'default' != ( $create_account_default = get_option( 'wcj_checkout_create_account_default_checked', 'default' ) ) ) {
+			if ( 'default' != ( $create_account_default = wcj_get_option( 'wcj_checkout_create_account_default_checked', 'default' ) ) ) {
 				if ( 'checked' === $create_account_default ) {
 					add_filter( 'woocommerce_create_account_default_checked', '__return_true' );
 				} elseif ( 'not_checked' === $create_account_default ) {
@@ -38,7 +38,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 				}
 			}
 			// Hide "Order Again" button
-			if ( 'yes' === get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
 				add_action( 'init', array( $this, 'checkout_hide_order_again' ), PHP_INT_MAX );
 			}
 			// Disable Fields on Checkout for Logged Users
@@ -60,26 +60,26 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 				add_filter( 'woocommerce_form_field_' . $checkout_fields_type, array( $this, 'maybe_add_description' ), PHP_INT_MAX, 4 );
 			}
 			// Custom "order received" message text
-			if ( 'yes' === get_option( 'wcj_checkout_customization_order_received_message_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_checkout_customization_order_received_message_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_thankyou_order_received_text', array( $this, 'customize_order_received_message' ), PHP_INT_MAX, 2 );
 			}
 			// Custom checkout login message
-			if ( 'yes' === get_option( 'wcj_checkout_customization_checkout_login_message_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_checkout_customization_checkout_login_message_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_checkout_login_message', array( $this, 'checkout_login_message' ), PHP_INT_MAX );
 			}
 			// Restrict countries by customer's IP
-			if ( 'yes' === get_option( 'wcj_checkout_restrict_countries_by_customer_ip_billing', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_checkout_restrict_countries_by_customer_ip_billing', 'no' ) ) {
 				add_filter( 'woocommerce_countries_allowed_countries', array( $this, 'restrict_countries_by_customer_ip' ), PHP_INT_MAX );
 			}
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_checkout_restrict_countries_by_customer_ip_shipping', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_checkout_restrict_countries_by_customer_ip_shipping', 'no' ) ) ) {
 				add_filter( 'woocommerce_countries_shipping_countries', array( $this, 'restrict_countries_by_customer_ip' ), PHP_INT_MAX );
 			}
 			// Recalculate Checkout
-			if ( 'yes' === get_option( 'wcj_checkout_recalculate_checkout_update_enable', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_checkout_recalculate_checkout_update_enable', 'no' ) ) {
 				add_action( 'wp_footer', array( $this, 'recalculate_checkout' ), 50 );
 			}
 			// Update Checkout
-			if ( 'yes' === get_option( 'wcj_checkout_force_checkout_update_enable', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_checkout_force_checkout_update_enable', 'no' ) ) {
 				add_action( 'wp_footer', array( $this, 'update_checkout' ), 50 );
 			}
 		}
@@ -98,7 +98,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 		?>
 		<script type="text/javascript">
 			jQuery(function ($) {
-				var selector = <?php echo wp_json_encode( get_option( 'wcj_checkout_force_checkout_update_fields', '' ) ); ?>;
+				var selector = <?php echo wp_json_encode( wcj_get_option( 'wcj_checkout_force_checkout_update_fields', '' ) ); ?>;
 				jQuery(selector).on('change', function () {
 					$('body').trigger('update_checkout');
 				});
@@ -121,7 +121,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 		<script type="text/javascript">
 			jQuery(function ($) {
 				var old_values = [];
-				var selector = <?php echo wp_json_encode( get_option( 'wcj_checkout_recalculate_checkout_update_fields', '#billing_country, #shipping_country' ) ); ?>;
+				var selector = <?php echo wp_json_encode( wcj_get_option( 'wcj_checkout_recalculate_checkout_update_fields', '#billing_country, #shipping_country' ) ); ?>;
 				jQuery(document.body).on("updated_checkout", function () {
 					jQuery(selector).each(function (index) {
 						if (old_values[index] != $(this).val()) {
@@ -145,7 +145,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 */
 	function are_conditions_valid() {
 		$valid      = false;
-		$conditions = $this->get_option( 'wcj_checkout_restrict_countries_by_customer_ip_conditions', array() );
+		$conditions = wcj_get_option( 'wcj_checkout_restrict_countries_by_customer_ip_conditions', array() );
 		foreach ( $conditions as $key => $condition ) {
 			$function = $condition;
 			$valid    = $function();
@@ -166,8 +166,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 */
 	function restrict_countries_by_customer_ip( $countries ) {
 		if (
-			( 'yes' === $this->get_option( 'wcj_checkout_restrict_countries_by_customer_ip_ignore_admin', 'no' ) && is_admin() ) ||
-			( ! empty( $this->get_option( 'wcj_checkout_restrict_countries_by_customer_ip_conditions', array() ) ) && ! $this->are_conditions_valid() )
+			( 'yes' === wcj_get_option( 'wcj_checkout_restrict_countries_by_customer_ip_ignore_admin', 'no' ) && is_admin() ) ||
+			( ! empty( wcj_get_option( 'wcj_checkout_restrict_countries_by_customer_ip_conditions', array() ) ) && ! $this->are_conditions_valid() )
 		) {
 			return $countries;
 		}
@@ -175,14 +175,14 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 
 		// Get country from 'billing_country' user meta
 		if (
-			'yes' === get_option( 'wcj_checkout_restrict_countries_by_user_billing_country', 'no' ) &&
+			'yes' === wcj_get_option( 'wcj_checkout_restrict_countries_by_user_billing_country', 'no' ) &&
 			0 != ( $user_id = get_current_user_id() )
 		) {
 			$user_country = ! empty( $user_billing_country = get_user_meta( $user_id, 'billing_country', true ) ) ? $user_billing_country : wcj_get_country_by_ip();
 		}
 
 		// Get country from a manual order ID created by YITH Request a Quote plugin
-		if ( 'yes' === get_option( 'wcj_checkout_restrict_countries_based_on_yith_raq', 'no' ) && class_exists( 'YITH_Request_Quote' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_checkout_restrict_countries_based_on_yith_raq', 'no' ) && class_exists( 'YITH_Request_Quote' ) ) {
 			$yith_order_id = WC()->session->get( 'order_awaiting_payment' );
 			if ( ! empty( $yith_order_id ) ) {
 				$user_country = ! empty( $order_billing_country = get_post_meta( $yith_order_id, '_billing_country', true ) ) ? $order_billing_country : wcj_get_country_by_ip();
@@ -198,7 +198,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 * @since   3.3.0
 	 */
 	function checkout_login_message( $message ) {
-		return get_option( 'wcj_checkout_customization_checkout_login_message', __( 'Returning customer?', 'woocommerce' ) );
+		return wcj_get_option( 'wcj_checkout_customization_checkout_login_message', __( 'Returning customer?', 'woocommerce' ) );
 	}
 
 	/**
@@ -213,7 +213,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			$post = get_post( wcj_get_order_id( $_order ) );
 			setup_postdata( $post );
 		}
-		$message = do_shortcode( get_option( 'wcj_checkout_customization_order_received_message', __( 'Thank you. Your order has been received.', 'woocommerce' ) ) );
+		$message = do_shortcode( wcj_get_option( 'wcj_checkout_customization_order_received_message', __( 'Thank you. Your order has been received.', 'woocommerce' ) ) );
 		if ( null != $_order ) {
 			wp_reset_postdata();
 		}
@@ -228,16 +228,16 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 */
 	function maybe_add_description( $field, $key, $args, $value ) {
 		if ( is_user_logged_in() ) {
-			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', array() );
+			$fields_to_disable          = wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged', array() );
 			if ( empty( $fields_to_disable ) ) {
 				$fields_to_disable = array();
 			}
-			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
-			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
+			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
+			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 			$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
 			if ( ! empty( $fields_to_disable ) ) {
 				if ( in_array( $key, $fields_to_disable ) ) {
-					$desc = get_option( 'wcj_checkout_customization_disable_fields_for_logged_message',
+					$desc = wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_message',
 						'<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>' );
 					if ( '' != $desc ) {
 						$field = str_replace( '__WCJ_TEMPORARY_VALUE_TO_REPLACE__', $desc, $field );
@@ -259,15 +259,15 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 */
 	function maybe_disable_fields( $checkout_fields ) {
 		if ( is_user_logged_in() ) {
-			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', array() );
+			$fields_to_disable          = wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged', array() );
 			if ( empty( $fields_to_disable ) ) {
 				$fields_to_disable = array();
 			}
-			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
-			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
+			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
+			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 			$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
 			$disable_type_fields        = array_merge( array( 'billing_country', 'shipping_country' ), $fields_to_disable_custom_d );
-			$do_add_desc_placeholder    = ( '' != get_option( 'wcj_checkout_customization_disable_fields_for_logged_message',
+			$do_add_desc_placeholder    = ( '' != wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_message',
 				'<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>' ) );
 			if ( ! empty( $fields_to_disable ) ) {
 				foreach ( $fields_to_disable as $field_to_disable ) {

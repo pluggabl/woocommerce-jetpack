@@ -30,7 +30,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_available_payment_gateways_per_category' ), 100 );
-			$this->do_use_variations = ( 'yes' === get_option( 'wcj_gateways_per_category_use_variations', 'no' ) );
+			$this->do_use_variations = ( 'yes' === wcj_get_option( 'wcj_gateways_per_category_use_variations', 'no' ) );
 		}
 
 	}
@@ -48,7 +48,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	 */
 	function is_gateway_allowed( $gateway_id, $products = array() ) {
 		// Including by categories
-		$categories_in = $this->get_option( 'wcj_gateways_per_category_' . $gateway_id );
+		$categories_in = wcj_get_option( 'wcj_gateways_per_category_' . $gateway_id );
 		if ( ! empty( $categories_in ) ) {
 			$current_check = false;
 			foreach ( $products as $product_id ) {
@@ -69,7 +69,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		}
 
 		// Excluding by categories
-		$categories_excl = $this->get_option( 'wcj_gateways_per_category_excl_' . $gateway_id );
+		$categories_excl = wcj_get_option( 'wcj_gateways_per_category_excl_' . $gateway_id );
 		if ( ! empty( $categories_excl ) ) {
 			$current_check = true;
 			foreach ( $products as $product_id ) {
@@ -90,7 +90,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		}
 
 		// Including by products
-		$products_in = wcj_maybe_convert_string_to_array( apply_filters( 'booster_option', array(), $this->get_option( 'wcj_gateways_per_products_' . $gateway_id ) ) );
+		$products_in = wcj_maybe_convert_string_to_array( apply_filters( 'booster_option', array(), wcj_get_option( 'wcj_gateways_per_products_' . $gateway_id ) ) );
 		if ( ! empty( $products_in ) ) {
 			$current_check = false;
 			foreach ( $products as $product_id ) {
@@ -106,7 +106,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		}
 
 		// Excluding by products
-		$products_excl = wcj_maybe_convert_string_to_array( apply_filters( 'booster_option', array(), $this->get_option( 'wcj_gateways_per_products_excl_' . $gateway_id ) ) );
+		$products_excl = wcj_maybe_convert_string_to_array( apply_filters( 'booster_option', array(), wcj_get_option( 'wcj_gateways_per_products_excl_' . $gateway_id ) ) );
 		if ( ! empty( $products_excl ) ) {
 			$current_check = true;
 			foreach ( $products as $product_id ) {

@@ -32,7 +32,7 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 				add_filter( 'woocommerce_shipping_methods', array( $this, 'add_wc_shipping_wcj_custom_class' ) );
 
 				// Custom Shipping
-				if ( 'yes' === get_option( 'wcj_shipping_custom_shipping_w_zones_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_shipping_custom_shipping_w_zones_enabled', 'no' ) ) {
 					add_action( 'woocommerce_shipping_init', array( $this, 'init_shipping_zones_class' ) );
 					add_filter( 'woocommerce_shipping_methods', array( $this, 'add_wc_shipping_wcj_custom_w_zones_class' ) );
 				}
@@ -61,7 +61,7 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		 * @version 4.7.0
 		 */
 		function add_wc_shipping_wcj_custom_class( $methods ) {
-			$total_number = get_option( 'wcj_shipping_custom_shipping_total_number', 1 );
+			$total_number = wcj_get_option( 'wcj_shipping_custom_shipping_total_number', 1 );
 			if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) {
 				$this->init_template_class();
 			}

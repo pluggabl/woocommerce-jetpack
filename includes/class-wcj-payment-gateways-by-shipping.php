@@ -29,7 +29,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			$this->use_shipping_instance = ( 'yes' === get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
+			$this->use_shipping_instance = ( 'yes' === wcj_get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX, 1 );
 		}
 	}

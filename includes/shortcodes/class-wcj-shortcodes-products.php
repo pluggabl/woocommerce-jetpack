@@ -603,8 +603,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @todo    explode "from-to"
 	 */
 	function wcj_product_shipping_time_table( $atts ) {
-		$do_use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
-		$do_use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
+		$do_use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
+		$do_use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
 		$option_id_shipping_class  = ( $do_use_shipping_classes ? '_class_' . wcj_get_product_shipping_class_term_id( $this->the_product ) : '' );
 		return wcj_get_shipping_time_table( $do_use_shipping_instances, $option_id_shipping_class );
 	}
@@ -870,7 +870,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 
 		// Check for user role options
 		$role_option_name_addon = '';
-		$user_roles = get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
+		$user_roles = wcj_get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
 		if ( ! empty( $user_roles ) ) {
 			$current_user_role = wcj_get_current_user_first_role();
 			foreach ( $user_roles as $user_role_key ) {
@@ -894,9 +894,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => (float) $discount, );
 			}
 		} else {
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
-				$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
-				$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
+				$level_qty                = wcj_get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
+				$discount                 = wcj_get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
 				$discount                 = ! empty( $discount ) ? $discount : 0;
 				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => (float) $discount, );
 			}
@@ -970,7 +970,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 
 			// Heading Format
-			$atts['heading_format'] = 'from %level_min_qty% pcs.' === $atts['heading_format'] ? get_option( 'wcj_wholesale_price_table_sc_title_format', __( 'from %level_min_qty% pcs.', 'woocommerce-jetpack' ) ) : $atts['heading_format'];
+			$atts['heading_format'] = 'from %level_min_qty% pcs.' === $atts['heading_format'] ? wcj_get_option( 'wcj_wholesale_price_table_sc_title_format', __( 'from %level_min_qty% pcs.', 'woocommerce-jetpack' ) ) : $atts['heading_format'];
 
 			$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ?
 				$atts['before_level_max_qty'] . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : $atts['last_level_max_qty'];

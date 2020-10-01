@@ -90,11 +90,11 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	 * @todo    (maybe) if needed, prepare `$products_variations` earlier (and only once)
 	 */
 	function check( $options_id, $values, $include_or_exclude, $package ) {
-		$cart_instead_of_package = ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_cart_not_package', 'yes' ) );
+		$cart_instead_of_package = ( 'yes' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_cart_not_package', 'yes' ) );
 		if ( ! $this->check_for_data( $cart_instead_of_package, $package ) ) {
 			return true;
 		}
-		if ( 'products' === $options_id && ( $do_add_variations = ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ) ) ) {
+		if ( 'products' === $options_id && ( $do_add_variations = ( 'yes' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ) ) ) {
 			$products_variations = array();
 			foreach ( $values as $_product_id ) {
 				$_product = wc_get_product( $_product_id );
@@ -106,7 +106,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 			}
 			$values = array_unique( $products_variations );
 		}
-		$validate_all_for_include = ( 'include' === $include_or_exclude && 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_validate_all_enabled', 'no' ) );
+		$validate_all_for_include = ( 'include' === $include_or_exclude && 'yes' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_validate_all_enabled', 'no' ) );
 		foreach ( $this->get_items( $cart_instead_of_package, $package ) as $item ) {
 			switch( $options_id ) {
 				case 'products':
@@ -158,7 +158,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	function get_condition_options( $options_id ) {
 		switch( $options_id ) {
 			case 'products':
-				return wcj_get_products( array(), 'any', 1024, ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ) );
+				return wcj_get_products( array(), 'any', 1024, ( 'yes' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ) );
 			case 'product_cats':
 				return wcj_get_terms( 'product_cat' );
 			case 'product_tags':

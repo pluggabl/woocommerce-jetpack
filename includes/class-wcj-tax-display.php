@@ -30,18 +30,18 @@ class WCJ_Tax_Display extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Tax Incl./Excl. by product/category
-			if ( 'yes' === get_option( 'wcj_product_listings_display_taxes_by_products_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_listings_display_taxes_by_products_enabled', 'no' ) ) {
 				add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display_by_product' ), PHP_INT_MAX );
 			}
 
 			// Tax Incl./Excl. by user role
-			if ( 'yes' === get_option( 'wcj_product_listings_display_taxes_by_user_role_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_listings_display_taxes_by_user_role_enabled', 'no' ) ) {
 				add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display_by_user_role' ), PHP_INT_MAX );
 				add_filter( 'option_woocommerce_tax_display_cart', array( $this, 'tax_display_by_user_role' ), PHP_INT_MAX );
 			}
 
 			// Tax toggle
-			if ( 'yes' === get_option( 'wcj_tax_display_toggle_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_tax_display_toggle_enabled', 'no' ) ) {
 				add_action( 'init',                                array( $this, 'tax_display_toggle_param' ), PHP_INT_MAX );
 				add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display_toggle' ), PHP_INT_MAX );
 			}
@@ -57,7 +57,7 @@ class WCJ_Tax_Display extends WCJ_Module {
 	function tax_display_toggle_param() {
 		wcj_session_maybe_start();
 		if ( isset( $_REQUEST['wcj_button_toggle_tax_display'] ) ) {
-			$current_value = ( '' == ( $session_value = wcj_session_get( 'wcj_toggle_tax_display' ) ) ? get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+			$current_value = ( '' == ( $session_value = wcj_session_get( 'wcj_toggle_tax_display' ) ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
 			wcj_session_set( 'wcj_toggle_tax_display', ( 'incl' === $current_value ? 'excl' : 'incl' ) );
 		}
 	}
@@ -91,12 +91,12 @@ class WCJ_Tax_Display extends WCJ_Module {
 		if ( ! wcj_is_frontend() ) {
 			return $value;
 		}
-		if ( '' != ( $display_taxes_by_user_role_roles = get_option( 'wcj_product_listings_display_taxes_by_user_role_roles', '' ) ) ) {
+		if ( '' != ( $display_taxes_by_user_role_roles = wcj_get_option( 'wcj_product_listings_display_taxes_by_user_role_roles', '' ) ) ) {
 			$current_user_roles = wcj_get_current_user_all_roles();
 			foreach ( $current_user_roles as $current_user_first_role ) {
 				if ( in_array( $current_user_first_role, $display_taxes_by_user_role_roles ) ) {
 					$option_name = 'option_woocommerce_tax_display_shop' === current_filter() ? 'wcj_product_listings_display_taxes_by_user_role_' . $current_user_first_role : 'wcj_product_listings_display_taxes_on_cart_by_user_role_' . $current_user_first_role;
-					if ( 'no_changes' != ( $tax_display = get_option( $option_name, 'no_changes' ) ) ) {
+					if ( 'no_changes' != ( $tax_display = wcj_get_option( $option_name, 'no_changes' ) ) ) {
 						return $tax_display;
 					}
 				}
@@ -117,10 +117,10 @@ class WCJ_Tax_Display extends WCJ_Module {
 		}
 		$product_id = get_the_ID();
 		if ( 'product' === get_post_type( $product_id ) ) {
-			$products_incl_tax     = get_option( 'wcj_product_listings_display_taxes_products_incl_tax', '' );
-			$products_excl_tax     = get_option( 'wcj_product_listings_display_taxes_products_excl_tax', '' );
-			$product_cats_incl_tax = get_option( 'wcj_product_listings_display_taxes_product_cats_incl_tax', '' );
-			$product_cats_excl_tax = get_option( 'wcj_product_listings_display_taxes_product_cats_excl_tax', '' );
+			$products_incl_tax     = wcj_get_option( 'wcj_product_listings_display_taxes_products_incl_tax', '' );
+			$products_excl_tax     = wcj_get_option( 'wcj_product_listings_display_taxes_products_excl_tax', '' );
+			$product_cats_incl_tax = wcj_get_option( 'wcj_product_listings_display_taxes_product_cats_incl_tax', '' );
+			$product_cats_excl_tax = wcj_get_option( 'wcj_product_listings_display_taxes_product_cats_excl_tax', '' );
 			if ( '' != $products_incl_tax || '' != $products_incl_tax || '' != $products_incl_tax || '' != $products_incl_tax ) {
 				// Products
 				if ( ! empty( $products_incl_tax ) ) {

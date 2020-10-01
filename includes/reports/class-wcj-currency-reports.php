@@ -45,14 +45,14 @@ class WCJ_Currency_Reports {
 			$currency_symbols[ $the_current_code ] = $the_current_code;
 			$currency_symbols[ get_woocommerce_currency() ] = get_woocommerce_currency();
 			if ( wcj_is_module_enabled( 'price_by_country' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
-					$the_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+					$the_code = wcj_get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 					$currency_symbols[ $the_code ] = $the_code;
 				}
 			}
 			if ( wcj_is_module_enabled( 'multicurrency' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
-					$the_code = get_option( 'wcj_multicurrency_currency_' . $i );
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
+					$the_code = wcj_get_option( 'wcj_multicurrency_currency_' . $i );
 					$currency_symbols[ $the_code ] = $the_code;
 				}
 			}
@@ -60,7 +60,7 @@ class WCJ_Currency_Reports {
 				global $woocommerce;
 				$available_gateways = $woocommerce->payment_gateways->payment_gateways();
 				foreach ( $available_gateways as $key => $gateway ) {
-					$the_code = get_option( 'wcj_gateways_currency_' . $key );
+					$the_code = wcj_get_option( 'wcj_gateways_currency_' . $key );
 					if ( 'no_changes' != $the_code ) {
 						$currency_symbols[ $the_code ] = $the_code;
 					}

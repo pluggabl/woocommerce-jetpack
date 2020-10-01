@@ -51,8 +51,8 @@ $settings = array(
 		),
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
-	$currency_symbol = get_woocommerce_currency_symbol( get_option( 'wcj_price_formats_currency_' . $i, get_woocommerce_currency() ) );
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+	$currency_symbol = get_woocommerce_currency_symbol( wcj_get_option( 'wcj_price_formats_currency_' . $i, get_woocommerce_currency() ) );
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Format', 'woocommerce-jetpack' ) . ' #' . $i,
@@ -66,7 +66,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_f
 		array(
 			'desc'     => __( 'Currency Position', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_price_formats_currency_position_' . $i,
-			'default'  => get_option( 'woocommerce_currency_pos' ),
+			'default'  => wcj_get_option( 'woocommerce_currency_pos' ),
 			'type'     => 'select',
 			'options'  => array(
 				'left'        => __( 'Left', 'woocommerce' ) . ' (' . $currency_symbol . '99.99)',
@@ -108,7 +108,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_f
 		array(
 			'desc'     => __( 'Number of Decimals', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_price_formats_number_of_decimals_' . $i,
-			'default'  => get_option( 'woocommerce_price_num_decimals', 2 ),
+			'default'  => wcj_get_option( 'woocommerce_price_num_decimals', 2 ),
 			'type'     => 'number',
 			'custom_attributes' => array( 'min'  => 0, 'step' => 1 ),
 			'css'      => 'width:300px;',

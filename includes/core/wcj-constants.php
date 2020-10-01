@@ -16,7 +16,7 @@ if ( ! defined( 'WCJ_WC_VERSION' ) ) {
 	 * @version 2.7.0
 	 * @since   2.7.0
 	 */
-	define( 'WCJ_WC_VERSION', get_option( 'woocommerce_version', null ) );
+	define( 'WCJ_WC_VERSION', wcj_get_option( 'woocommerce_version', null ) );
 }
 
 if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3' ) ) {
@@ -97,7 +97,7 @@ if ( ! defined( 'WCJ_SESSION_TYPE' ) ) {
 	 * @since   3.1.0
 	 * @todo    (maybe) set default to `wc`
 	 */
-	define( 'WCJ_SESSION_TYPE', ( 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? get_option( 'wcj_general_advanced_session_type', 'standard' ) : 'standard' ) );
+	define( 'WCJ_SESSION_TYPE', ( 'yes' === wcj_get_option( 'wcj_general_enabled', 'no' ) ? wcj_get_option( 'wcj_general_advanced_session_type', 'standard' ) : 'standard' ) );
 }
 
 if ( ! defined( 'WCJ_VERSION_OPTION' ) ) {

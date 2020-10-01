@@ -32,15 +32,15 @@ class WCJ_Stock extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Custom "In Stock", "Out of Stock", "Available on backorder"
-			$this->is_custom_in_stock           = ( 'yes' === get_option( 'wcj_stock_custom_in_stock_section_enabled', 'no' ) );
-			$this->is_custom_in_stock_text      = ( 'yes' === get_option( 'wcj_stock_custom_in_stock_enabled', 'no' ) );
-			$this->is_custom_in_stock_class     = ( 'yes' === get_option( 'wcj_stock_custom_in_stock_class_enabled', 'no' ) );
-			$this->is_custom_out_of_stock       = ( 'yes' === get_option( 'wcj_stock_custom_out_of_stock_section_enabled', 'no' ) );
-			$this->is_custom_out_of_stock_text  = ( 'yes' === get_option( 'wcj_stock_custom_out_of_stock_enabled', 'no' ) );
-			$this->is_custom_out_of_stock_class = ( 'yes' === get_option( 'wcj_stock_custom_out_of_stock_class_enabled', 'no' ) );
-			$this->is_custom_backorder          = ( 'yes' === get_option( 'wcj_stock_custom_backorder_section_enabled', 'no' ) );
-			$this->is_custom_backorder_text     = ( 'yes' === get_option( 'wcj_stock_custom_backorder_enabled', 'no' ) );
-			$this->is_custom_backorder_class    = ( 'yes' === get_option( 'wcj_stock_custom_backorder_class_enabled', 'no' ) );
+			$this->is_custom_in_stock           = ( 'yes' === wcj_get_option( 'wcj_stock_custom_in_stock_section_enabled', 'no' ) );
+			$this->is_custom_in_stock_text      = ( 'yes' === wcj_get_option( 'wcj_stock_custom_in_stock_enabled', 'no' ) );
+			$this->is_custom_in_stock_class     = ( 'yes' === wcj_get_option( 'wcj_stock_custom_in_stock_class_enabled', 'no' ) );
+			$this->is_custom_out_of_stock       = ( 'yes' === wcj_get_option( 'wcj_stock_custom_out_of_stock_section_enabled', 'no' ) );
+			$this->is_custom_out_of_stock_text  = ( 'yes' === wcj_get_option( 'wcj_stock_custom_out_of_stock_enabled', 'no' ) );
+			$this->is_custom_out_of_stock_class = ( 'yes' === wcj_get_option( 'wcj_stock_custom_out_of_stock_class_enabled', 'no' ) );
+			$this->is_custom_backorder          = ( 'yes' === wcj_get_option( 'wcj_stock_custom_backorder_section_enabled', 'no' ) );
+			$this->is_custom_backorder_text     = ( 'yes' === wcj_get_option( 'wcj_stock_custom_backorder_enabled', 'no' ) );
+			$this->is_custom_backorder_class    = ( 'yes' === wcj_get_option( 'wcj_stock_custom_backorder_class_enabled', 'no' ) );
 			if ( $this->is_custom_in_stock || $this->is_custom_out_of_stock || $this->is_custom_backorder ) {
 				if ( $this->is_custom_in_stock_text || $this->is_custom_out_of_stock_text || $this->is_custom_backorder_text ) {
 					add_filter( 'woocommerce_get_availability_text', array( $this, 'custom_availability_text' ), PHP_INT_MAX, 2 );
@@ -50,7 +50,7 @@ class WCJ_Stock extends WCJ_Module {
 				}
 			}
 			// Custom stock HTML
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_stock_custom_stock_html_section_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_stock_custom_stock_html_section_enabled', 'no' ) ) ) {
 				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 					add_filter( 'woocommerce_stock_html',     array( $this, 'custom_stock_html_below_wc_3' ), PHP_INT_MAX, 3 );
 				} else {
@@ -58,7 +58,7 @@ class WCJ_Stock extends WCJ_Module {
 				}
 			}
 			// Remove stock display
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_stock_remove_frontend_display_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_stock_remove_frontend_display_enabled', 'no' ) ) ) {
 				add_filter( ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_stock_html' : 'woocommerce_get_stock_html' ), '__return_empty_string', PHP_INT_MAX );
 			}
 		}
@@ -79,29 +79,29 @@ class WCJ_Stock extends WCJ_Module {
 		if ( ! $_product->is_in_stock() ) {
 			if ( $this->is_custom_out_of_stock && $this->is_custom_out_of_stock_text ) {
 				// Out of stock
-				return do_shortcode( get_option( 'wcj_stock_custom_out_of_stock', '' ) );
+				return do_shortcode( wcj_get_option( 'wcj_stock_custom_out_of_stock', '' ) );
 			}
 		} elseif ( $_product->managing_stock() && $_product->is_on_backorder( 1 ) ) {
 			if ( $this->is_custom_backorder && $this->is_custom_backorder_text ) {
 				// Available on backorder
-				return $_product->backorders_require_notification() ? do_shortcode( get_option( 'wcj_stock_custom_backorder', '' ) ) : '';
+				return $_product->backorders_require_notification() ? do_shortcode( wcj_get_option( 'wcj_stock_custom_backorder', '' ) ) : '';
 			}
 		} elseif ( $_product->managing_stock() ) {
 			if ( $this->is_custom_in_stock && $this->is_custom_in_stock_text ) {
 				// In stock
 				if (
-					'' != ( $low_amount_text = get_option( 'wcj_stock_custom_in_stock_low_amount', '' ) ) &&
-					'low_amount' === get_option( 'woocommerce_stock_format' ) && $_product->get_stock_quantity() <= get_option( 'woocommerce_notify_low_stock_amount' )
+					'' != ( $low_amount_text = wcj_get_option( 'wcj_stock_custom_in_stock_low_amount', '' ) ) &&
+					'low_amount' === wcj_get_option( 'woocommerce_stock_format' ) && $_product->get_stock_quantity() <= wcj_get_option( 'woocommerce_notify_low_stock_amount' )
 				) {
 					// Only %s left in stock
 					$return = sprintf( do_shortcode( $low_amount_text ),
 						wc_format_stock_quantity_for_display( $_product->get_stock_quantity(), $_product ) );
 				} else {
 					// %s in stock && In stock
-					$return = sprintf( do_shortcode( get_option( 'wcj_stock_custom_in_stock', '' ) ),
+					$return = sprintf( do_shortcode( wcj_get_option( 'wcj_stock_custom_in_stock', '' ) ),
 						wc_format_stock_quantity_for_display( $_product->get_stock_quantity(), $_product ) );
 				}
-				if ( '' != ( $can_be_backordered_text = get_option( 'wcj_stock_custom_in_stock_can_be_backordered', '' ) ) &&
+				if ( '' != ( $can_be_backordered_text = wcj_get_option( 'wcj_stock_custom_in_stock_can_be_backordered', '' ) ) &&
 					$_product->backorders_allowed() && $_product->backorders_require_notification()
 				) {
 					// (can be backordered)
@@ -125,17 +125,17 @@ class WCJ_Stock extends WCJ_Module {
 		if ( ! $_product->is_in_stock() ) {
 			if ( $this->is_custom_out_of_stock && $this->is_custom_out_of_stock_class ) {
 				// 'out-of-stock'
-				return get_option( 'wcj_stock_custom_out_of_stock_class', '' );
+				return wcj_get_option( 'wcj_stock_custom_out_of_stock_class', '' );
 			}
 		} elseif ( $_product->managing_stock() && $_product->is_on_backorder( 1 ) ) {
 			if ( $this->is_custom_backorder && $this->is_custom_backorder_class ) {
 				// 'available-on-backorder'
-				return get_option( 'wcj_stock_custom_backorder_class', '' );
+				return wcj_get_option( 'wcj_stock_custom_backorder_class', '' );
 			}
 		} else {
 			if ( $this->is_custom_in_stock && $this->is_custom_in_stock_class ) {
 				// 'in-stock'
-				return get_option( 'wcj_stock_custom_in_stock_class', '' );
+				return wcj_get_option( 'wcj_stock_custom_in_stock_class', '' );
 			}
 		}
 		return $class;

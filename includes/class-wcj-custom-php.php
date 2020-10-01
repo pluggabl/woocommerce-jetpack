@@ -70,7 +70,7 @@ class WCJ_Custom_PHP extends WCJ_Module {
 	 */
 	function create_php_file( $sections, $current_section ) {
 		if ( $this->id === $current_section ) {
-			$file_content = get_option( 'wcj_custom_php', '' );
+			$file_content = wcj_get_option( 'wcj_custom_php', '' );
 			if ( '' !== $file_content ) {
 				$file_path = wcj_get_wcj_uploads_dir( 'custom_php' ) . DIRECTORY_SEPARATOR . 'booster.php';
 				file_put_contents( $file_path, '<?php' . PHP_EOL . $file_content );

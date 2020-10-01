@@ -15,8 +15,8 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
-$use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
+$use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
+$use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
 $shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
 $shipping_classes_data  = ( $use_shipping_classes ? wcj_get_shipping_classes() : array( '' => '' ) );
 $settings = array();

@@ -164,7 +164,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 * @return array
 	 */
 	function smart_format_fields( $row ) {
-		if ( 'no' === get_option( 'wcj_export_csv_smart_formatting', 'no' ) ) {
+		if ( 'no' === wcj_get_option( 'wcj_export_csv_smart_formatting', 'no' ) ) {
 			return $row;
 		}
 		$row = array_map( function ( $item ) {
@@ -193,9 +193,9 @@ class WCJ_Export_Import extends WCJ_Module {
 				$csv = '';
 				foreach ( $data as $row ) {
 					$row = $this->smart_format_fields( $row );
-					$csv .= implode( get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
+					$csv .= implode( wcj_get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 				}
-				if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
 					$csv = "\xEF\xBB\xBF" . $csv; // UTF-8 BOM
 				}
 				header( "Content-Disposition: attachment; filename=" . $_POST['wcj_export'] . ".csv" );

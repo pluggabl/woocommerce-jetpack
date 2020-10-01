@@ -53,8 +53,8 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 		}
 		WC()->payment_gateways->get_available_payment_gateways();
 		$notices = $this->notices;
-		if ( function_exists( 'is_checkout' ) && is_checkout() && 'yes' === get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
-			$notice_type = get_option( 'wcj_payment_gateways_min_max_notices_type', 'notice' );
+		if ( function_exists( 'is_checkout' ) && is_checkout() && 'yes' === wcj_get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
+			$notice_type = wcj_get_option( 'wcj_payment_gateways_min_max_notices_type', 'notice' );
 			foreach ( $notices as $notice ) {
 				if ( ! wc_has_notice( $notice, $notice_type ) ) {
 					wc_add_notice( $notice, $notice_type );
@@ -81,18 +81,18 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 			);
 		}
 		$total_in_cart = WC()->cart->cart_contents_total;
-		if ( 'no' === get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) {
+		if ( 'no' === wcj_get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) {
 			$total_in_cart += WC()->cart->shipping_total;
 		}
 		$notices              = array();
-		$notices_template_min = get_option( 'wcj_payment_gateways_min_max_notices_template_min', __( 'Minimum amount for %gateway_title% is %min_amount%', 'woocommerce-jetpack' ) );
-		$notices_template_max = get_option( 'wcj_payment_gateways_min_max_notices_template_max', __( 'Maximum amount for %gateway_title% is %max_amount%', 'woocommerce-jetpack' ) );
+		$notices_template_min = wcj_get_option( 'wcj_payment_gateways_min_max_notices_template_min', __( 'Minimum amount for %gateway_title% is %min_amount%', 'woocommerce-jetpack' ) );
+		$notices_template_max = wcj_get_option( 'wcj_payment_gateways_min_max_notices_template_max', __( 'Maximum amount for %gateway_title% is %max_amount%', 'woocommerce-jetpack' ) );
 		foreach ( $_available_gateways as $key => $gateway ) {
-			$min = get_option( 'wcj_payment_gateways_min_' . $key, 0 );
-			$max = get_option( 'wcj_payment_gateways_max_' . $key, 0 );
+			$min = wcj_get_option( 'wcj_payment_gateways_min_' . $key, 0 );
+			$max = wcj_get_option( 'wcj_payment_gateways_max_' . $key, 0 );
 
 			// Compatibility with other modules
-			if ( 'yes' === get_option( 'wcj_payment_gateways_min_max_comp_mc', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_payment_gateways_min_max_comp_mc', 'no' ) ) {
 				if ( wcj_is_module_enabled( 'multicurrency' ) ) {
 					$min = WCJ()->modules['multicurrency']->change_price( $min, null );
 					$max = WCJ()->modules['multicurrency']->change_price( $max, null );

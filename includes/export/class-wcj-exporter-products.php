@@ -65,17 +65,17 @@ class WCJ_Exporter_Products {
 
 		// Standard Fields
 		$all_fields = $fields_helper->get_product_export_fields();
-		$fields_ids = get_option( 'wcj_export_products_fields', $fields_helper->get_product_export_default_fields_ids() );
+		$fields_ids = wcj_get_option( 'wcj_export_products_fields', $fields_helper->get_product_export_default_fields_ids() );
 		$titles = array();
 		foreach( $fields_ids as $field_id ) {
 			$titles[] = $all_fields[ $field_id ];
 		}
 
 		// Additional Fields
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( 'yes' === get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
-				$titles[] = get_option( 'wcj_export_products_fields_additional_title_' . $i, '' );
+			if ( 'yes' === wcj_get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
+				$titles[] = wcj_get_option( 'wcj_export_products_fields_additional_title_' . $i, '' );
 			}
 		}
 
@@ -104,7 +104,7 @@ class WCJ_Exporter_Products {
 				$parent_product_id = '';
 				if ( $_product->is_type( 'variable' ) ) {
 					$parent_product_id = $product_id;
-					$export_products_variable = get_option( 'wcj_export_products_variable', 'variable_only' );
+					$export_products_variable = wcj_get_option( 'wcj_export_products_variable', 'variable_only' );
 					if ( 'variations_only' === $export_products_variable || 'variable_and_variations' === $export_products_variable ) {
 						if ( 'variations_only' === $export_products_variable ) {
 							$products = array();
@@ -261,11 +261,11 @@ class WCJ_Exporter_Products {
 					}
 
 					// Additional Fields
-					$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
+					$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 					for ( $i = 1; $i <= $total_number; $i++ ) {
-						if ( 'yes' === get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
-							if ( '' != ( $additional_field_value = get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ) ) ) {
-								if ( 'meta' === get_option( 'wcj_export_products_fields_additional_type_' . $i, 'meta' ) ) {
+						if ( 'yes' === wcj_get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
+							if ( '' != ( $additional_field_value = wcj_get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ) ) ) {
+								if ( 'meta' === wcj_get_option( 'wcj_export_products_fields_additional_type_' . $i, 'meta' ) ) {
 									$row[] = get_post_meta( $product_id, $additional_field_value, true );
 								} else {
 									global $post;

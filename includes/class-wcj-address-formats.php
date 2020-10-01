@@ -38,7 +38,7 @@ class WCJ_Address_Formats extends WCJ_Module {
 	 * @version 2.7.0
 	 */
 	function customize_force_country_display( $display ) {
-		return ( 'yes' === get_option( 'wcj_address_formats_force_country_display', 'no' ) );
+		return ( 'yes' === wcj_get_option( 'wcj_address_formats_force_country_display', 'no' ) );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class WCJ_Address_Formats extends WCJ_Module {
 		$default_formats = $this->get_default_address_formats();
 		foreach ( $default_formats as $country_code => $format ) {
 			$default_format = isset( $formats[ $country_code ] ) ? $formats[ $country_code ] : $format;
-			$format = get_option( 'wcj_address_formats_country_' . $country_code, $default_format );
+			$format = wcj_get_option( 'wcj_address_formats_country_' . $country_code, $default_format );
 			$modified_formats[ $country_code ] = $format;
 		}
 		return $modified_formats;

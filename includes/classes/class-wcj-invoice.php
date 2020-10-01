@@ -38,9 +38,9 @@ class WCJ_Invoice {
 	function delete() {
 		update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', 0 );
 		update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', '' );
-		if ( 'yes' === get_option( 'wcj_invoicing_' . $this->invoice_type . '_sequential_enabled', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_sequential_enabled', 'no' ) ) {
 			$option_name = 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter';
-			$the_invoice_counter = get_option( $option_name, 1 );
+			$the_invoice_counter = wcj_get_option( $option_name, 1 );
 			update_option( $option_name, ( $the_invoice_counter - 1 ) );
 		}
 	}
@@ -54,14 +54,14 @@ class WCJ_Invoice {
 	function create( $date = '' ) {
 		$order_id = $this->order_id;
 		$invoice_type = $this->invoice_type;
-		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_skip_zero_total', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_skip_zero_total', 'no' ) ) {
 			$_order = wc_get_order( $order_id );
 			if ( 0 == $_order->get_total() ) {
 				return;
 			}
 		}
-		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled', 'no' ) ) {
-			$the_invoice_number = get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
+		if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled', 'no' ) ) {
+			$the_invoice_number = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
 			update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', ( $the_invoice_number + 1 ) );
 		} else {
 			$the_invoice_number = $order_id;
@@ -77,7 +77,7 @@ class WCJ_Invoice {
 	 * @version 3.5.0
 	 */
 	function get_file_name() {
-		$_file_name = sanitize_file_name( do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_file_name', '' ) ) );
+		$_file_name = sanitize_file_name( do_shortcode( wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_file_name', '' ) ) );
 		if ( '' === $_file_name ) {
 			$_file_name = $this->invoice_type . '-' . $this->order_id;
 		}
@@ -99,10 +99,10 @@ class WCJ_Invoice {
 	 */
 	function get_invoice_number() {
 		$replaced_values = array(
-			'%prefix%'  => get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix', '' ),
-			'%counter%' => sprintf( '%0' . get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ) . 'd',
+			'%prefix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix', '' ),
+			'%counter%' => sprintf( '%0' . wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ) . 'd',
 				get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', true ) ),
-			'%suffix%'  => get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix', '' ),
+			'%suffix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix', '' ),
 		);
 		return apply_filters( 'wcj_get_' . $this->invoice_type . '_number',
 			do_shortcode( str_replace( array_keys( $replaced_values ), $replaced_values,

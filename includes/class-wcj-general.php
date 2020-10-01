@@ -40,36 +40,36 @@ class WCJ_General extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// PHP Memory Limit
-			if ( 0 != ( $php_memory_limit = get_option( 'wcj_admin_tools_php_memory_limit', 0 ) ) ) {
+			if ( 0 != ( $php_memory_limit = wcj_get_option( 'wcj_admin_tools_php_memory_limit', 0 ) ) ) {
 				ini_set( 'memory_limit', $php_memory_limit . 'M' );
 			}
 			$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
 
 			// PHP Time Limit
-			if ( 0 != ( $php_time_limit = get_option( 'wcj_admin_tools_php_time_limit', 0 ) ) ) {
+			if ( 0 != ( $php_time_limit = wcj_get_option( 'wcj_admin_tools_php_time_limit', 0 ) ) ) {
 				set_time_limit( $php_time_limit );
 			}
 			$this->current_php_time_limit = sprintf( ' ' . __( 'Current PHP time limit: %s seconds.', 'woocommerce-jetpack' ), ini_get( 'max_execution_time' ) );
 
 			// Recalculate cart totals
-			if ( 'yes' === get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
 				add_action( 'wp_loaded', array( $this, 'fix_mini_cart' ), PHP_INT_MAX );
 			}
 
 			// Shortcodes in text widgets
-			if ( 'yes' === get_option( 'wcj_general_shortcodes_in_text_widgets_enabled' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_general_shortcodes_in_text_widgets_enabled' ) ) {
 				add_filter( 'widget_text', 'do_shortcode' );
 			}
 
 			// PayPal email per product
-			if ( 'yes' === get_option( 'wcj_paypal_email_per_product_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_paypal_email_per_product_enabled', 'no' ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'maybe_change_paypal_email' ) );
 			}
 
 			// Session expiration
-			if ( 'yes' === get_option( 'wcj_session_expiration_section_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_session_expiration_section_enabled', 'no' ) ) {
 				add_filter( 'wc_session_expiring',   array( $this, 'change_session_expiring' ),   PHP_INT_MAX );
 				add_filter( 'wc_session_expiration', array( $this, 'change_session_expiration' ), PHP_INT_MAX );
 			}
@@ -81,7 +81,7 @@ class WCJ_General extends WCJ_Module {
 			}
 
 			// Try to overwrite WooCommerce IP detection
-			if ( 'yes' === get_option( 'wcj_general_overwrite_wc_ip', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_general_overwrite_wc_ip', 'no' ) ) {
 				if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
 					$_SERVER['HTTP_X_REAL_IP'] = wcj_get_the_ip();
 				}
@@ -159,7 +159,7 @@ class WCJ_General extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function change_session_expiring( $the_time ) {
-		return get_option( 'wcj_session_expiring', 47 * 60 * 60 );
+		return wcj_get_option( 'wcj_session_expiring', 47 * 60 * 60 );
 	}
 
 	/**
@@ -169,7 +169,7 @@ class WCJ_General extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function change_session_expiration( $the_time ) {
-		return get_option( 'wcj_session_expiration', 48 * 60 * 60 );
+		return wcj_get_option( 'wcj_session_expiration', 48 * 60 * 60 );
 	}
 
 	/**
@@ -191,7 +191,7 @@ class WCJ_General extends WCJ_Module {
 					$caps      = ( ! empty( $caps_role->capabilities ) && is_array( $caps_role->capabilities ) ? $caps_role->capabilities : array() );
 					$result    = add_role( $role_id, $_POST['wcj_custom_role_name'], $caps );
 					if ( null !== $result ) {
-						$custom_roles = get_option( 'wcj_custom_roles', array() ); // `wcj_custom_roles` option added since Booster v4.0.0
+						$custom_roles = wcj_get_option( 'wcj_custom_roles', array() ); // `wcj_custom_roles` option added since Booster v4.0.0
 						$custom_roles[ $role_id ] = array( 'display_name' => $_POST['wcj_custom_role_name'], 'caps_role' => $_POST['wcj_custom_role_caps'] );
 						update_option( 'wcj_custom_roles', $custom_roles );
 						echo '<p style="color:green;font-weight:bold;">' . __( 'Role successfully added!', 'woocommerce-jetpack') . '</p>';
@@ -204,7 +204,7 @@ class WCJ_General extends WCJ_Module {
 
 		if ( isset( $_GET['wcj_delete_role'] ) && '' != $_GET['wcj_delete_role'] ) {
 			remove_role( $_GET['wcj_delete_role'] );
-			$custom_roles = get_option( 'wcj_custom_roles', array() );
+			$custom_roles = wcj_get_option( 'wcj_custom_roles', array() );
 			if ( isset( $custom_roles[ $_GET['wcj_delete_role'] ] ) ) {
 				unset( $custom_roles[ $_GET['wcj_delete_role'] ] );
 				update_option( 'wcj_custom_roles', $custom_roles );
@@ -218,7 +218,7 @@ class WCJ_General extends WCJ_Module {
 		$table_data[] = array( __( 'ID', 'woocommerce-jetpack'), __( 'Name', 'woocommerce-jetpack'), __( 'Capabilities', 'woocommerce-jetpack'), __( 'Actions', 'woocommerce-jetpack') );
 		$existing_roles = wcj_get_user_roles();
 		$default_wp_wc_roles = array( 'guest', 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'customer', 'shop_manager' );
-		$custom_roles = get_option( 'wcj_custom_roles', array() );
+		$custom_roles = wcj_get_option( 'wcj_custom_roles', array() );
 		foreach ( $existing_roles as $role_key => $role_data ) {
 			$delete_html = ( in_array( $role_key, $default_wp_wc_roles ) )
 				? ''

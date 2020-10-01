@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_shortcodes_disable_booster_shortcodes', 'no' ) ) ) {
+if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === wcj_get_option( 'wcj_general_shortcodes_disable_booster_shortcodes', 'no' ) ) ) {
 
 	include_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-shortcodes.php' );
 

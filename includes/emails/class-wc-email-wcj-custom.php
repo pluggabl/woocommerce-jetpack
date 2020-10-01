@@ -26,16 +26,16 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	function __construct( $id = 1 ) {
 
 		$this->id               = 'wcj_custom' . '_' . $id;
-		$this->customer_email   = ( '%customer%' === $this->get_option( 'recipient' ) );
-		$this->original_recipient = $this->get_option( 'recipient' );
-		$this->title            = get_option( 'wcj_emails_custom_emails_admin_title_' . $id, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $id );
+		$this->customer_email   = ( '%customer%' === wcj_get_option( 'recipient' ) );
+		$this->original_recipient = wcj_get_option( 'recipient' );
+		$this->title            = wcj_get_option( 'wcj_emails_custom_emails_admin_title_' . $id, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $id );
 		$this->description      = __( 'Custom emails are sent to the recipient list when selected triggers are called.', 'woocommerce-jetpack' );
 
 		$this->heading          = __( 'Custom Heading', 'woocommerce' );
 		$this->subject          = __( '[{site_title}] Custom Subject - Order ({order_number}) - {order_date}', 'woocommerce-jetpack' );
 
 		// Triggers for this email
-		$trigger_hooks = $this->get_option( 'trigger' );
+		$trigger_hooks = wcj_get_option( 'trigger' );
 		if ( ! empty( $trigger_hooks ) && is_array( $trigger_hooks ) ) {
 			$is_woocommerce_checkout_order_processed_notification_added = false;
 			foreach ( $trigger_hooks as $trigger_hook ) {
@@ -53,10 +53,10 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 		// Other settings
 		if ( ! $this->customer_email ) {
-			$this->recipient = $this->get_option( 'recipient' );
+			$this->recipient = wcj_get_option( 'recipient' );
 
 			if ( ! $this->recipient ) {
-				$this->recipient = get_option( 'admin_email' );
+				$this->recipient = wcj_get_option( 'admin_email' );
 			}
 		}
 	}
@@ -121,7 +121,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			if ( 'woocommerce_checkout_order_processed_notification' === current_filter() ) {
 				// Check status
 				$is_status_found = false;
-				$trigger_hooks = $this->get_option( 'trigger' );
+				$trigger_hooks = wcj_get_option( 'trigger' );
 				foreach ( $trigger_hooks as $trigger_hook ) {
 					if ( false !== ( $pos = strpos( $trigger_hook, 'woocommerce_new_order_notification' ) ) ) {
 						$the_status = 'wc-' . substr( $trigger_hook, 35 );
@@ -184,8 +184,8 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * @todo    (maybe) use `wc_get_template` for custom templates (same for `get_content_plain()`)
 	 */
 	function get_content_html() {
-		$content = $this->get_option( 'content_html_template' );
-		if ( 'yes' === $this->get_option( 'wrap_in_wc_template' ) ) {
+		$content = wcj_get_option( 'content_html_template' );
+		if ( 'yes' === wcj_get_option( 'wrap_in_wc_template' ) ) {
 			$content = wcj_wrap_in_wc_email_template( $content, $this->get_heading() );
 		}
 		return do_shortcode( $content );
@@ -199,7 +199,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * @return  string
 	 */
 	function get_content_plain() {
-		return do_shortcode( $this->get_option( 'content_plain_template' ) );
+		return do_shortcode( wcj_get_option( 'content_plain_template' ) );
 	}
 
 	/**
@@ -267,7 +267,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			'recipient' => array(
 				'title'         => __( 'Recipient(s)', 'woocommerce' ),
 				'type'          => 'text',
-				'description'   => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to <code>%s</code>.', 'woocommerce' ), esc_attr( get_option( 'admin_email' ) ) ) . ' ' .
+				'description'   => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to <code>%s</code>.', 'woocommerce' ), esc_attr( wcj_get_option( 'admin_email' ) ) ) . ' ' .
 					__( 'Or enter <code>%customer%</code> to send to customer billing email.', 'woocommerce-jetpack' ),
 				'placeholder'   => '',
 				'default'       => '',

@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $new_paths         = $this->get_paths();
 $templates         = array();
-$templates_by_path = get_option( 'wcj_template_editor_templates_by_path', array() );
+$templates_by_path = wcj_get_option( 'wcj_template_editor_templates_by_path', array() );
 foreach ( $new_paths as $path ) {
 	$scanned_templates          = $this->scan_templates( $path, $path );
 	$templates_by_path[ $path ] = $scanned_templates;
@@ -55,7 +55,7 @@ $settings = array(
 		'options'  => $templates,
 	),
 );
-foreach ( get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
+foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
 	$default_template_path  = wc_locate_template( $template, '', $this->get_path_by_template( $template ) );
 	$replaced_template_path = wcj_get_wcj_uploads_dir( 'templates', false ) . DIRECTORY_SEPARATOR . $template;
 	$style                  = 'style="color:' . ( file_exists( $replaced_template_path ) ? 'green' : 'red' ) . ';"';

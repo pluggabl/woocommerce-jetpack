@@ -70,7 +70,7 @@ $settings = array(
 		),
 	),
 );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -138,7 +138,7 @@ $settings = array_merge( $settings, array(
 		),
 	),
 ) );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -220,7 +220,7 @@ $settings = array_merge( $settings, array(
 		),
 	),
 ) );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(

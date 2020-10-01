@@ -121,10 +121,10 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 		$invoice_types = wcj_get_enabled_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
 			if ( wcj_is_invoice_created( wcj_get_order_id( $the_order ), $invoice_type['id'] ) ) {
-				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn', 'no' ) ) {
 					// Document (View) button
 					$query_args = array( 'order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
-					if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
+					if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 						$query_args['save_pdf_invoice'] = '1';
 					}
 					$the_url       = add_query_arg( $query_args, remove_query_arg( array ( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) );
@@ -133,22 +133,22 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					$the_action_id = $invoice_type['id'];
 					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action );
 				}
-				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn', 'yes' ) ) {
 					// Delete button
 					$query_args = array( 'delete_invoice_for_order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'create_invoice_for_order_id' ) );
 					$the_name      = __( 'Delete', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
-					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'delete' . ( ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn_confirm', 'yes' ) ) ? ' wcj_need_confirmation' : '' );
+					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'delete' . ( ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn_confirm', 'yes' ) ) ? ' wcj_need_confirmation' : '' );
 					$the_action_id = $invoice_type['id'] . '_' . 'delete';
 					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action );
 				}
 			} else {
-				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn', 'yes' ) ) {
 					// Create button
 					$query_args = array( 'create_invoice_for_order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'delete_invoice_for_order_id' ) );
 					$the_name      = __( 'Create', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
-					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'create' . ( ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn_confirm', 'yes' ) ) ? ' wcj_need_confirmation' : '' );
+					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'create' . ( ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn_confirm', 'yes' ) ) ? ' wcj_need_confirmation' : '' );
 					$the_action_id = $invoice_type['id'] . '_' . 'create';
 					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action );
 				}
@@ -165,8 +165,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	function add_order_column( $columns ) {
 		$invoice_types = wcj_get_enabled_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
-			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_page_column', 'yes' ) ) {
-				$columns[ $invoice_type['id'] ] = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_page_column_text', $invoice_type['title'] );
+			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_page_column', 'yes' ) ) {
+				$columns[ $invoice_type['id'] ] = wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_page_column_text', $invoice_type['title'] );
 			}
 		}
 		return $columns;
@@ -192,7 +192,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 
 			// Document Link
 			$query_args = array( 'order_id' => $order_id, 'invoice_type_id' => $invoice_type_id, 'get_invoice' => '1', );
-			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ) {
 				$query_args['save_pdf_invoice'] = '1';
 			}
 			$html .= '<a href="' . add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) ) . '">' .
@@ -214,12 +214,12 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			if ( ! wcj_is_invoice_created( $order_id, $invoice_type['id'] ) ) {
 				continue;
 			}
-			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_on_thankyou_page', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_on_thankyou_page', 'no' ) ) {
 				$query_args = array( 'order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
-				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 					$query_args['save_pdf_invoice'] = '1';
 				}
-				if ( '' == ( $title = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_thankyou_page_link_text', $invoice_type['title'] ) ) ) {
+				if ( '' == ( $title = wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_thankyou_page_link_text', $invoice_type['title'] ) ) ) {
 					$title = $invoice_type['title'];
 				}
 				echo str_replace( '%link%', '<a target="_blank" href="' . add_query_arg( $query_args ) . '">' . $title . '</a>',
@@ -241,14 +241,14 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				continue;
 			}
 			$my_account_option_name = 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_for_customers';
-			if ( 'yes' === get_option( $my_account_option_name, 'no' ) ) {
+			if ( 'yes' === wcj_get_option( $my_account_option_name, 'no' ) ) {
 				$the_action_id = $invoice_type['id'];
 				$query_args = array( 'order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
-				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 					$query_args['save_pdf_invoice'] = '1';
 				}
 				$the_url = add_query_arg( $query_args );
-				$the_name = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_link_text' );
+				$the_name = wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_link_text' );
 				if ( '' == $the_name ) {
 					$the_name = $invoice_type['title'];
 				}
@@ -266,7 +266,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	 * @since   2.8.0
 	 */
 	function add_invoices_meta_box() {
-		if ( 'yes' === get_option( 'wcj_invoicing_add_order_meta_box', 'yes' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box', 'yes' ) ) {
 			add_meta_box(
 				'wc-booster-pdf-invoicing',
 				'<span class="dashicons dashicons-media-default" style="color:#23282d;"></span>' . ' ' . __( 'Booster: PDF Invoices', 'woocommerce-jetpack' ),
@@ -298,8 +298,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				if ( wcj_is_invoice_created( $order_id, $invoice_type['id'] ) ) {
 					// "Document (View)" link
 					$query_args    = array( 'order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
-					$target        = ( 'yes' === get_option( 'wcj_invoicing_order_meta_box_open_in_new_window', 'yes' ) ? ' target="_blank"' : '' );
-					if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
+					$target        = ( 'yes' === wcj_get_option( 'wcj_invoicing_order_meta_box_open_in_new_window', 'yes' ) ? ' target="_blank"' : '' );
+					if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 						$query_args['save_pdf_invoice'] = '1';
 						$target = '';
 					}
@@ -316,7 +316,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					$delete_link   = '<a class="wcj_need_confirmation" href="' .  $the_url . '">' . $the_name . '</a>';
 					// Numbering & date
 					$number_input  = '';
-					if ( 'yes' === get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
+					if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
 						$number_option = 'wcj_invoicing_' . $invoice_type['id'] . '_number_id';
 						$date_option   = 'wcj_invoicing_' . $invoice_type['id'] . '_date';
 						$number_input  = '<br>' .

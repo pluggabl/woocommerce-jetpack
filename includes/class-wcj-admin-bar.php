@@ -33,16 +33,16 @@ class WCJ_Admin_Bar extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_admin_bar_wc_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_admin_bar_wc_enabled', 'yes' ) ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_woocommerce_admin_bar' ), PHP_INT_MAX );
 				add_action( 'wp_head',        array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
 				add_action( 'admin_head',     array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
 			}
-			if ( 'yes' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) || 'yes' === get_option( 'wcj_admin_bar_booster_active_enabled', 'yes' ) ) {
-				if ( 'yes' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) || 'yes' === wcj_get_option( 'wcj_admin_bar_booster_active_enabled', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
 					add_action( 'admin_bar_menu', array( $this, 'add_booster_admin_bar' ), PHP_INT_MAX );
 				}
-				if ( 'yes' === get_option( 'wcj_admin_bar_booster_active_enabled', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_admin_bar_booster_active_enabled', 'yes' ) ) {
 					add_action( 'admin_bar_menu', array( $this, 'add_booster_active_admin_bar' ), PHP_INT_MAX );
 				}
 				add_action( 'wp_head',        array( $this, 'add_booster_admin_bar_icon_style' ) );
@@ -237,7 +237,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
-		if ( 'no' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
+		if ( 'no' === wcj_get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
 			$this->get_nodes_booster_modules();
 		}
 		$tools = array(
@@ -477,12 +477,12 @@ class WCJ_Admin_Bar extends WCJ_Module {
 							'categories' => array(
 								'title'  => __( 'Categories', 'woocommerce' ),
 								'href'   => admin_url( 'edit-tags.php?taxonomy=product_cat&post_type=product' ),
-								'nodes'  => ( 'no' === get_option( 'wcj_admin_bar_wc_list_cats', 'no' ) ? array() : $this->get_nodes_product_taxonomy( 'product_cat' ) ),
+								'nodes'  => ( 'no' === wcj_get_option( 'wcj_admin_bar_wc_list_cats', 'no' ) ? array() : $this->get_nodes_product_taxonomy( 'product_cat' ) ),
 							),
 							'tags' => array(
 								'title'  => __( 'Tags', 'woocommerce' ),
 								'href'   => admin_url( 'edit-tags.php?taxonomy=product_tag&post_type=product' ),
-								'nodes'  => ( 'no' === get_option( 'wcj_admin_bar_wc_list_tags', 'no' ) ? array() : $this->get_nodes_product_taxonomy( 'product_tag' ) ),
+								'nodes'  => ( 'no' === wcj_get_option( 'wcj_admin_bar_wc_list_tags', 'no' ) ? array() : $this->get_nodes_product_taxonomy( 'product_tag' ) ),
 							),
 							'attributes' => array(
 								'title'  => __( 'Attributes', 'woocommerce' ),

@@ -31,7 +31,7 @@ $settings = array(
 		),
 	),
 );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -267,7 +267,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Send Additional Email to Admin on User Actions', 'woocommerce-jetpack' ),
-		'desc_tip' => sprintf( __( 'Admin email: <em>%s</em>.', 'woocommerce-jetpack' ), get_option( 'admin_email' ) ),
+		'desc_tip' => sprintf( __( 'Admin email: <em>%s</em>.', 'woocommerce-jetpack' ), wcj_get_option( 'admin_email' ) ),
 		'id'       => 'wcj_checkout_files_upload_additional_admin_emails[actions]',
 		'default'  => array(),
 		'type'     => 'multiselect',

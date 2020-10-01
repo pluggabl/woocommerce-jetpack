@@ -30,11 +30,11 @@ class WCJ_Price_Formats extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Trim Zeros
-			if ( 'yes' === get_option( 'wcj_price_formats_general_trim_zeros', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_price_formats_general_trim_zeros', 'no' ) ) {
 				add_filter( 'woocommerce_price_trim_zeros', '__return_true', PHP_INT_MAX );
 			}
 			// Price Formats by Currency (or WPML)
-			if ( 'yes' === get_option( 'wcj_price_formats_by_currency_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_price_formats_by_currency_enabled', 'yes' ) ) {
 				add_filter( 'wc_price_args',         array( $this, 'price_format' ), PHP_INT_MAX );
 				add_action( 'init',                  array( $this, 'add_hooks' ), PHP_INT_MAX );
 			}
@@ -59,15 +59,15 @@ class WCJ_Price_Formats extends WCJ_Module {
 	 * @todo    code refactoring
 	 */
 	function price_decimals( $price_decimals_num ) {
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
-			if ( get_woocommerce_currency() === get_option( 'wcj_price_formats_currency_' . $i ) ) {
-				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+			if ( get_woocommerce_currency() === wcj_get_option( 'wcj_price_formats_currency_' . $i ) ) {
+				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = wcj_get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
 					$wpml_language = explode( ',', trim( str_replace( ' ', '', $wpml_language ), ',' ) );
 					if ( ! in_array( ICL_LANGUAGE_CODE, $wpml_language ) ) {
 						continue;
 					}
 				}
-				$price_decimals_num = get_option( 'wcj_price_formats_number_of_decimals_' . $i );
+				$price_decimals_num = wcj_get_option( 'wcj_price_formats_number_of_decimals_' . $i );
 				break;
 			}
 		}
@@ -82,20 +82,20 @@ class WCJ_Price_Formats extends WCJ_Module {
 	 */
 	function price_format( $args ) {
 		$current_currency = ( '' !== $args['currency'] ? $args['currency'] : get_woocommerce_currency() );
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
-			if ( $current_currency === get_option( 'wcj_price_formats_currency_' . $i ) ) {
-				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+			if ( $current_currency === wcj_get_option( 'wcj_price_formats_currency_' . $i ) ) {
+				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = wcj_get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
 					$wpml_language = explode( ',', trim( str_replace( ' ', '', $wpml_language ), ',' ) );
 					if ( ! in_array( ICL_LANGUAGE_CODE, $wpml_language ) ) {
 						continue;
 					}
 				}
-				$args['price_format']       = $this->get_woocommerce_price_format( get_option( 'wcj_price_formats_currency_position_' . $i ) );
+				$args['price_format']       = $this->get_woocommerce_price_format( wcj_get_option( 'wcj_price_formats_currency_position_' . $i ) );
 				$args['price_format']       = $this->get_woocommerce_price_format_currency_code(
-					get_option( 'wcj_price_formats_currency_code_position_' . $i, 'none' ), get_option( 'wcj_price_formats_currency_' . $i ), $args['price_format'] );
-				$args['decimal_separator']  = get_option( 'wcj_price_formats_decimal_separator_'  . $i );
-				$args['thousand_separator'] = get_option( 'wcj_price_formats_thousand_separator_' . $i );
-				$args['decimals']           = absint( get_option( 'wcj_price_formats_number_of_decimals_' . $i ) );
+					get_option( 'wcj_price_formats_currency_code_position_' . $i, 'none' ), wcj_get_option( 'wcj_price_formats_currency_' . $i ), $args['price_format'] );
+				$args['decimal_separator']  = wcj_get_option( 'wcj_price_formats_decimal_separator_'  . $i );
+				$args['thousand_separator'] = wcj_get_option( 'wcj_price_formats_thousand_separator_' . $i );
+				$args['decimals']           = absint( wcj_get_option( 'wcj_price_formats_number_of_decimals_' . $i ) );
 				break;
 			}
 		}

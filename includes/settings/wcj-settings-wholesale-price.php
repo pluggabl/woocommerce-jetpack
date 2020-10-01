@@ -201,7 +201,7 @@ $settings = array(
 		'css'      => 'width:100px;',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Min Quantity', 'woocommerce-jetpack' ) . ' #' . $i,
@@ -242,7 +242,7 @@ $settings = array_merge( $settings, array(
 		'options'  => wcj_get_user_roles_options(),
 	),
 ) );
-$user_roles = get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
+$user_roles = wcj_get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
 if ( ! empty( $user_roles ) ) {
 	foreach ( $user_roles as $user_role_key ) {
 		$settings = array_merge( $settings, array(
@@ -258,7 +258,7 @@ if ( ! empty( $user_roles ) ) {
 				'css'     => 'width:100px;',
 			),
 		) );
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number_' . $user_role_key, 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number_' . $user_role_key, 1 ) ); $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(
 					'title'   => __( 'Min Quantity', 'woocommerce-jetpack' ) . ' #' . $i . ' [' . $user_role_key . ']',

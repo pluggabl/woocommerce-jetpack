@@ -33,7 +33,7 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 			// Core function
 			add_action( 'woocommerce_cart_calculate_fees', array( $this, 'add_fees' ), PHP_INT_MAX );
 			// Checkout fields
-			$this->checkout_fields = $this->get_option( 'wcj_checkout_fees_data_checkout_fields', array() );
+			$this->checkout_fields = wcj_get_option( 'wcj_checkout_fees_data_checkout_fields', array() );
 			$this->checkout_fields = array_filter( $this->checkout_fields );
 			if ( ! empty( $this->checkout_fields ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -69,8 +69,8 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	 */
 	function is_fee_valid( $fee_id, \WC_Cart $cart ) {
 		$fees    = $this->get_fees();
-		$enabled = $this->get_option( 'wcj_checkout_fees_data_enabled', array() );
-		$values  = $this->get_option( 'wcj_checkout_fees_data_values', array() );
+		$enabled = wcj_get_option( 'wcj_checkout_fees_data_enabled', array() );
+		$values  = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
 
 		// Check if is active and empty value
 		if (
@@ -144,19 +144,19 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	 * @return array
 	 */
 	function get_fees( $only_enabled = true, $adjust_priority = true ) {
-		$total_number    = apply_filters( 'booster_option', 1, $this->get_option( 'wcj_checkout_fees_total_number', 1 ) );
-		$titles          = $this->get_option( 'wcj_checkout_fees_data_titles', array() );
-		$types           = $this->get_option( 'wcj_checkout_fees_data_types', array() );
-		$values          = $this->get_option( 'wcj_checkout_fees_data_values', array() );
-		$cart_min        = $this->get_option( 'wcj_checkout_fees_cart_min_amount', array() );
-		$cart_min_total  = $this->get_option( 'wcj_checkout_fees_cart_min_total_amount', array() );
-		$cart_max        = $this->get_option( 'wcj_checkout_fees_cart_max_amount', array() );
-		$cart_max_total  = $this->get_option( 'wcj_checkout_fees_cart_max_total_amount', array() );
-		$taxable         = $this->get_option( 'wcj_checkout_fees_data_taxable', array() );
-		$checkout_fields = $this->get_option( 'wcj_checkout_fees_data_values', array() );
-		$enabled         = $this->get_option( 'wcj_checkout_fees_data_enabled', array() );
-		$overlap_opt     = $this->get_option( 'wcj_checkout_fees_overlap', array() );
-		$priorities      = $this->get_option( 'wcj_checkout_fees_priority', array() );
+		$total_number    = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_fees_total_number', 1 ) );
+		$titles          = wcj_get_option( 'wcj_checkout_fees_data_titles', array() );
+		$types           = wcj_get_option( 'wcj_checkout_fees_data_types', array() );
+		$values          = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
+		$cart_min        = wcj_get_option( 'wcj_checkout_fees_cart_min_amount', array() );
+		$cart_min_total  = wcj_get_option( 'wcj_checkout_fees_cart_min_total_amount', array() );
+		$cart_max        = wcj_get_option( 'wcj_checkout_fees_cart_max_amount', array() );
+		$cart_max_total  = wcj_get_option( 'wcj_checkout_fees_cart_max_total_amount', array() );
+		$taxable         = wcj_get_option( 'wcj_checkout_fees_data_taxable', array() );
+		$checkout_fields = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
+		$enabled         = wcj_get_option( 'wcj_checkout_fees_data_enabled', array() );
+		$overlap_opt     = wcj_get_option( 'wcj_checkout_fees_overlap', array() );
+		$priorities      = wcj_get_option( 'wcj_checkout_fees_priority', array() );
 
 		$fees = array();
 		for ( $i = 1; $i <= $total_number; $i ++ ) {
@@ -202,12 +202,12 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	 * @return array
 	 */
 	function get_valid_fees( $cart, $ignore_overlapped = true ) {
-		$titles  = $this->get_option( 'wcj_checkout_fees_data_titles', array() );
-		$types   = $this->get_option( 'wcj_checkout_fees_data_types', array() );
-		$values  = $this->get_option( 'wcj_checkout_fees_data_values', array() );
-		$taxable = $this->get_option( 'wcj_checkout_fees_data_taxable', array() );
+		$titles  = wcj_get_option( 'wcj_checkout_fees_data_titles', array() );
+		$types   = wcj_get_option( 'wcj_checkout_fees_data_types', array() );
+		$values  = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
+		$taxable = wcj_get_option( 'wcj_checkout_fees_data_taxable', array() );
 
-		//$total_number = apply_filters( 'booster_option', 1, $this->get_option( 'wcj_checkout_fees_total_number', 1 ) );
+		//$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_fees_total_number', 1 ) );
 		$fees = $this->get_fees();
 
 		$fees_to_add  = array();

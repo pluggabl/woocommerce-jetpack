@@ -30,13 +30,13 @@ class WCJ_Admin_Products_List extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Admin list - custom columns
-			if ( 'yes' === get_option( 'wcj_products_admin_list_custom_columns_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_products_admin_list_custom_columns_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
 			}
 
 			// Admin list - columns order
-			if ( 'yes' === get_option( 'wcj_products_admin_list_columns_order_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_products_admin_list_columns_order_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-product_columns', array( $this, 'rearange_product_columns' ), PHP_INT_MAX );
 			}
 		}
@@ -49,7 +49,7 @@ class WCJ_Admin_Products_List extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function rearange_product_columns( $columns ) {
-		$reordered_columns = get_option( 'wcj_products_admin_list_columns_order', $this->get_products_default_columns_in_order() );
+		$reordered_columns = wcj_get_option( 'wcj_products_admin_list_columns_order', $this->get_products_default_columns_in_order() );
 		$reordered_columns = explode( PHP_EOL, $reordered_columns );
 		$reordered_columns_result = array();
 		if ( ! empty( $reordered_columns ) ) {
@@ -95,10 +95,10 @@ class WCJ_Admin_Products_List extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function add_product_columns( $columns ) {
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_products_admin_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_products_admin_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( 'yes' === get_option( 'wcj_products_admin_list_custom_columns_enabled_' . $i, 'no' ) ) {
-				$columns[ 'wcj_products_custom_column_' . $i ] = get_option( 'wcj_products_admin_list_custom_columns_label_' . $i, '' );
+			if ( 'yes' === wcj_get_option( 'wcj_products_admin_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				$columns[ 'wcj_products_custom_column_' . $i ] = wcj_get_option( 'wcj_products_admin_list_custom_columns_label_' . $i, '' );
 			}
 		}
 		return $columns;
@@ -111,11 +111,11 @@ class WCJ_Admin_Products_List extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function render_product_column( $column ) {
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_products_admin_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_products_admin_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( 'yes' === get_option( 'wcj_products_admin_list_custom_columns_enabled_' . $i, 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_products_admin_list_custom_columns_enabled_' . $i, 'no' ) ) {
 				if ( 'wcj_products_custom_column_' . $i === $column ) {
-					echo do_shortcode( get_option( 'wcj_products_admin_list_custom_columns_value_' . $i, '' ) );
+					echo do_shortcode( wcj_get_option( 'wcj_products_admin_list_custom_columns_value_' . $i, '' ) );
 				}
 			}
 		}

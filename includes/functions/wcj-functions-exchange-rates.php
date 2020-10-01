@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
 			$active_currencies_settings = WCJ()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
 			$active_currencies          = array();
 			foreach ( $active_currencies_settings as $currency ) {
-				$active_currencies[ str_replace( 'wcj_currency_exchange_rates_', '', $currency['id'] ) ] = get_option( $currency['id'] );
+				$active_currencies[ str_replace( 'wcj_currency_exchange_rates_', '', $currency['id'] ) ] = wcj_get_option( $currency['id'] );
 			}
 			WCJ()->modules['currency_exchange_rates']->active_currencies = $active_currencies;
 		} else {
@@ -46,7 +46,7 @@ if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
 		}
 		// Getting exchange rate - shop base
 		if ( 0 == $exchange_rate ) {
-			$shop_currency      = get_option( 'woocommerce_currency' );
+			$shop_currency      = wcj_get_option( 'woocommerce_currency' );
 			$exchange_rate_from = ( isset( $active_currencies[ sanitize_title( $shop_currency . $from ) ] ) ? $active_currencies[ sanitize_title( $shop_currency . $from ) ] : 0 );
 			$exchange_rate_to   = ( isset( $active_currencies[ sanitize_title( $shop_currency . $to ) ] )   ? $active_currencies[ sanitize_title( $shop_currency . $to ) ]   : 0 );
 			if ( 0 != $exchange_rate_from ) {
@@ -84,8 +84,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_server' ) ) {
 	 * @since   3.2.4
 	 */
 	function wcj_get_currency_exchange_rate_server( $currency_from, $currency_to ) {
-		if ( 'default_server' === ( $server = get_option( 'wcj_currency_exchange_rates_server_' . sanitize_title( $currency_from . $currency_to ), 'default_server' ) ) ) {
-			return get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
+		if ( 'default_server' === ( $server = wcj_get_option( 'wcj_currency_exchange_rates_server_' . sanitize_title( $currency_from . $currency_to ), 'default_server' ) ) ) {
+			return wcj_get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
 		}
 		return $server;
 	}
@@ -100,10 +100,10 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_offset_percent' ) ) {
 	 */
 	function wcj_get_currency_exchange_rate_offset_percent( $currency_from, $currency_to ) {
 		$field_id = 'wcj_currency_exchange_rates_offset_percent_' . sanitize_title( $currency_from . $currency_to );
-		if ( 'default_offset' === get_option( $field_id, 'default_offset' ) ) {
-			return get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
+		if ( 'default_offset' === wcj_get_option( $field_id, 'default_offset' ) ) {
+			return wcj_get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
 		}
-		return get_option( $field_id . '_' . 'custom_offset', 0 );
+		return wcj_get_option( $field_id . '_' . 'custom_offset', 0 );
 	}
 }
 
@@ -133,7 +133,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 			return 1;
 		}
 		$exchange_rates_server = wcj_get_currency_exchange_rate_server( $currency_from, $currency_to );
-		if ( 'yes' === ( $calculate_by_invert = get_option( 'wcj_currency_exchange_rates_calculate_by_invert', 'no' ) ) ) {
+		if ( 'yes' === ( $calculate_by_invert = wcj_get_option( 'wcj_currency_exchange_rates_calculate_by_invert', 'no' ) ) ) {
 			$_currency_to  = $currency_to;
 			$currency_to   = $currency_from;
 			$currency_from = $_currency_to;
@@ -175,7 +175,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	 */
 	function wcj_get_currency_exchange_rates_url_response( $url, $do_json_decode = true ) {
 		$response = '';
-		if ( 'no' === get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
+		if ( 'no' === wcj_get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
 			$response = file_get_contents( $url );
 		} elseif ( function_exists( 'curl_version' ) ) {
 			$curl = curl_init( $url );
@@ -198,7 +198,7 @@ if ( ! function_exists( 'wcj_currencyconverterapi_get_exchange_rate' ) ) {
 	function wcj_currencyconverterapi_get_exchange_rate( $currency_from, $currency_to ) {
 		$pair    = $currency_from . '_' . $currency_to;
 		$url     = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=y';
-		$api_key = get_option( 'wcj_currency_exchange_api_key_fccapi' );
+		$api_key = wcj_get_option( 'wcj_currency_exchange_api_key_fccapi' );
 		if ( ! empty( $api_key ) ) {
 			$url = add_query_arg( array(
 				'apiKey' => $api_key
@@ -513,7 +513,7 @@ if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' 
 		$date_ranges           = wcj_get_date_ranges( $start_date, $end_date, 8 );
 		foreach ( $date_ranges as $range ) {
 			$url     = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=ultra&date=' . $range['start_date'] . '&endDate=' . $range['end_date'];
-			$api_key = get_option( 'wcj_currency_exchange_api_key_fccapi' );
+			$api_key = wcj_get_option( 'wcj_currency_exchange_api_key_fccapi' );
 			if ( ! empty( $api_key ) ) {
 				$url = add_query_arg( array(
 					'apiKey' => $api_key

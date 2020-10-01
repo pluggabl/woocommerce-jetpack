@@ -40,12 +40,12 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			add_action( 'wp_insert_post',           array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
 			// Order tracking
-			if ( 'yes' === get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
 				add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'add_order_number_to_tracking' ), PHP_INT_MAX );
 				add_action( 'init',                                          array( $this, 'remove_order_tracking_sanitize_order_id_filter' ) );
 			}
 			// Search by custom number
-			if ( 'yes' === get_option( 'wcj_order_number_search_by_custom_number_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_number_search_by_custom_number_enabled', 'yes' ) ) {
 				add_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
 			}
 			// "WooCommerce Subscriptions" plugin
@@ -54,7 +54,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				add_filter( 'wcs_' . $woocommerce_subscriptions_type . '_meta', array( $this, 'woocommerce_subscriptions_remove_meta_copy' ), PHP_INT_MAX, 3 );
 			}
 			// Editable order number
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_number_editable_order_number_meta_box_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_order_number_editable_order_number_meta_box_enabled', 'no' ) ) ) {
 				$this->meta_box_screen   = 'shop_order';
 				$this->meta_box_context  = 'side';
 				$this->meta_box_priority = 'high';
@@ -64,7 +64,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 			// Compatibility with WPNotif plugin
 			add_action( 'admin_init', function () {
-				if ( 'yes' === get_option( 'wcj_order_numbers_compatibility_wpnotif', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_order_numbers_compatibility_wpnotif', 'no' ) ) {
 					remove_filter( 'wpnotif_filter_message', 'wpnotif_add_tracking_details', 10, 2 );
 					add_filter( 'wpnotif_filter_message', array( $this, 'wpnotif_add_tracking_details' ), 10, 2 );
 				}
@@ -194,10 +194,10 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		remove_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
 
 		// Get prefix and suffix options
-		$prefix = do_shortcode( get_option( 'wcj_order_number_prefix', '' ) );
-		$prefix .= date_i18n( get_option( 'wcj_order_number_date_prefix', '' ) );
-		$suffix = do_shortcode( get_option( 'wcj_order_number_suffix', '' ) );
-		$suffix .= date_i18n( get_option( 'wcj_order_number_date_suffix', '' ) );
+		$prefix = do_shortcode( wcj_get_option( 'wcj_order_number_prefix', '' ) );
+		$prefix .= date_i18n( wcj_get_option( 'wcj_order_number_date_prefix', '' ) );
+		$suffix = do_shortcode( wcj_get_option( 'wcj_order_number_suffix', '' ) );
+		$suffix .= date_i18n( wcj_get_option( 'wcj_order_number_date_suffix', '' ) );
 
 		// Ignore suffix and prefix from search input
 		$search_no_suffix            = preg_replace( "/\A{$prefix}/i", '', $search );
@@ -283,18 +283,18 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	function display_order_number( $order_number, $order ) {
 		$order_id = wcj_get_order_id( $order );
 		$order_number_meta = get_post_meta( $order_id , '_wcj_order_number', true );
-		if ( '' == $order_number_meta || 'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+		if ( '' == $order_number_meta || 'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 			$order_number_meta = $order_id;
 		}
 		$order_timestamp = strtotime( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->post->post_date : $order->get_date_created() ) );
 		$order_number = apply_filters( 'booster_option',
-			sprintf( '%s%s', do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ), $order_number_meta ),
-			sprintf( '%s%s%0' . get_option( 'wcj_order_number_min_width', 0 ) . 's%s%s',
-				do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ),
-				date_i18n( get_option( 'wcj_order_number_date_prefix', '' ), $order_timestamp ),
+			sprintf( '%s%s', do_shortcode( wcj_get_option( 'wcj_order_number_prefix', '' ) ), $order_number_meta ),
+			sprintf( '%s%s%0' . wcj_get_option( 'wcj_order_number_min_width', 0 ) . 's%s%s',
+				do_shortcode( wcj_get_option( 'wcj_order_number_prefix', '' ) ),
+				date_i18n( wcj_get_option( 'wcj_order_number_date_prefix', '' ), $order_timestamp ),
 				$order_number_meta,
-				do_shortcode( get_option( 'wcj_order_number_suffix', '' ) ),
-				date_i18n( get_option( 'wcj_order_number_date_suffix', '' ), $order_timestamp )
+				do_shortcode( wcj_get_option( 'wcj_order_number_suffix', '' ) ),
+				date_i18n( wcj_get_option( 'wcj_order_number_date_suffix', '' ), $order_timestamp )
 			)
 		);
 		if ( false !== strpos( $order_number, '%order_items_skus%' ) ) {
@@ -316,9 +316,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			$this->renumerate_orders();
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		} else {
-			if ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 				$result_message .= '<p>' . sprintf( __( 'Sequential number generation is enabled. Next order number will be %s.', 'woocommerce-jetpack' ),
-					'<code>' . get_option( 'wcj_order_number_counter', 1 ) . '</code>' ) . '</p>';
+					'<code>' . wcj_get_option( 'wcj_order_number_counter', 1 ) . '</code>' ) . '</p>';
 			}
 		}
 		$html = '';
@@ -354,8 +354,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * @todo    use transactions on `wcj_order_number_use_mysql_transaction_enabled`
 	 */
 	function maybe_reset_sequential_counter( $current_order_number, $order_id ) {
-		if ( 'no' != ( $reset_period = get_option( 'wcj_order_number_counter_reset_enabled', 'no' ) ) ) {
-			$previous_order_date = get_option( 'wcj_order_number_counter_previous_order_date', 0 );
+		if ( 'no' != ( $reset_period = wcj_get_option( 'wcj_order_number_counter_reset_enabled', 'no' ) ) ) {
+			$previous_order_date = wcj_get_option( 'wcj_order_number_counter_previous_order_date', 0 );
 			$current_order_date  = strtotime( wcj_get_order_date( wc_get_order( $order_id ) ) );
 			update_option( 'wcj_order_number_counter_previous_order_date', $current_order_date );
 			if ( 0 != $previous_order_date ) {
@@ -392,17 +392,17 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * Add/update order_number meta to order.
 	 *
 	 * @version 4.0.0
-	 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
+	 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {
 			return;
 		}
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
-			if ( $order_id < get_option( 'wcj_order_numbers_min_order_id', 0 ) ) {
+			if ( $order_id < wcj_get_option( 'wcj_order_numbers_min_order_id', 0 ) ) {
 				return;
 			}
-			if ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'yes' === wcj_get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
 				global $wpdb;
 				$wpdb->query( 'START TRANSACTION' );
 				$wp_options_table = $wpdb->prefix . 'options';
@@ -420,12 +420,12 @@ class WCJ_Order_Numbers extends WCJ_Module {
 					$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback
 				}
 			} else {
-				if ( 'hash_crc32' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+				if ( 'hash_crc32' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 					$current_order_number = sprintf( "%u", crc32( $order_id ) );
-				} elseif ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
-					$current_order_number = $this->maybe_reset_sequential_counter( get_option( 'wcj_order_number_counter', 1 ), $order_id );
+				} elseif ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+					$current_order_number = $this->maybe_reset_sequential_counter( wcj_get_option( 'wcj_order_number_counter', 1 ), $order_id );
 					update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
-				} else { // 'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) // order ID
+				} else { // 'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) // order ID
 					$current_order_number = '';
 				}
 				update_post_meta( $order_id, '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
@@ -442,7 +442,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * @todo    (maybe) set default value for `wcj_order_numbers_renumerate_tool_orderby` to `ID` (instead of `date`)
 	 */
 	function renumerate_orders() {
-		if ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'no' != get_option( 'wcj_order_number_counter_reset_enabled', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'no' != wcj_get_option( 'wcj_order_number_counter_reset_enabled', 'no' ) ) {
 			update_option( 'wcj_order_number_counter_previous_order_date', 0 );
 		}
 		$offset     = 0;
@@ -452,8 +452,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'post_type'      => 'shop_order',
 				'post_status'    => 'any',
 				'posts_per_page' => $block_size,
-				'orderby'        => get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
-				'order'          => get_option( 'wcj_order_numbers_renumerate_tool_order',   'ASC' ),
+				'orderby'        => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
+				'order'          => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order',   'ASC' ),
 				'offset'         => $offset,
 				'fields'         => 'ids',
 			);

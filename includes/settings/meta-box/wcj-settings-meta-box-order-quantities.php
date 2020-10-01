@@ -25,7 +25,7 @@ if ( $_product->is_type( 'variable' ) ) {
 } else {
 	$products[ $main_product_id ] = '';
 }
-$qty_step_settings = ( 'yes' === get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ? '0.000001' : '1' );
+$qty_step_settings = ( 'yes' === wcj_get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ? '0.000001' : '1' );
 $quantities = array();
 foreach ( $products as $product_id => $desc ) {
 	if ( $this->is_min_per_product_enabled ) {

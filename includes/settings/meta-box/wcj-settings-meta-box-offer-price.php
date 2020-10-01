@@ -26,7 +26,7 @@ return array(
 		'name'     => 'wcj_offer_price_price_step',
 		'default'  => '',
 		'type'     => 'number',
-		'placeholder' => get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ),
+		'placeholder' => wcj_get_option( 'wcj_offer_price_price_step', wcj_get_option( 'woocommerce_price_num_decimals' ) ),
 		'custom_attributes' => 'min="0"',
 	),
 	array(
@@ -35,7 +35,7 @@ return array(
 		'name'     => 'wcj_offer_price_min_price',
 		'default'  => '',
 		'type'     => 'number',
-		'placeholder' => get_option( 'wcj_offer_price_min_price', 0 ),
+		'placeholder' => wcj_get_option( 'wcj_offer_price_min_price', 0 ),
 		'custom_attributes' => 'min="0"',
 	),
 	array(
@@ -44,7 +44,7 @@ return array(
 		'name'     => 'wcj_offer_price_max_price',
 		'default'  => '',
 		'type'     => 'number',
-		'placeholder' => get_option( 'wcj_offer_price_max_price', 0 ),
+		'placeholder' => wcj_get_option( 'wcj_offer_price_max_price', 0 ),
 		'custom_attributes' => 'min="0"',
 	),
 	array(
@@ -53,7 +53,7 @@ return array(
 		'name'     => 'wcj_offer_price_default_price',
 		'default'  => '',
 		'type'     => 'number',
-		'placeholder' => get_option( 'wcj_offer_price_default_price', 0 ),
+		'placeholder' => wcj_get_option( 'wcj_offer_price_default_price', 0 ),
 		'custom_attributes' => 'min="0"',
 	),
 );

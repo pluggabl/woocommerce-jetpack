@@ -74,11 +74,11 @@ $settings = array(
 		'id'       => 'wcj_product_input_fields_global_options',
 	),
 );
-$is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
+$is_multiselect_products     = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
 $product_cats                = wcj_get_terms( 'product_cat' );
 $product_tags                = wcj_get_terms( 'product_tag' );
 $options                     = $this->get_global_product_fields_options();
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i,

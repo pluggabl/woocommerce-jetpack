@@ -38,7 +38,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 */
 		function init( $instance_id ) {
 			$this->id                 = 'booster_custom_shipping_w_zones';
-			$this->method_title       = get_option( 'wcj_shipping_custom_shipping_w_zones_admin_title', __( 'Booster: Custom Shipping', 'woocommerce-jetpack' ) );
+			$this->method_title       = wcj_get_option( 'wcj_shipping_custom_shipping_w_zones_admin_title', __( 'Booster: Custom Shipping', 'woocommerce-jetpack' ) );
 			$this->method_description = __( 'Booster: Custom Shipping Method', 'woocommerce-jetpack' );
 
 			$this->instance_id = absint( $instance_id );
@@ -52,14 +52,14 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 			$this->init_instance_form_fields();
 
 			// Define user set variables
-			$this->title                      = $this->get_option( 'title' );
-			$this->cost                       = $this->get_option( 'cost' );
-			$this->min_weight                 = $this->get_option( 'min_weight' );
-			$this->max_weight                 = $this->get_option( 'max_weight' );
-			$this->type                       = $this->get_option( 'type' );
-			$this->apply_formula              = apply_filters( 'booster_option', 'no', $this->get_option( 'apply_formula' ) );
-			$this->cost_rounding              = apply_filters( 'booster_option', 'no_round', $this->get_option( 'cost_rounding', 'no_round' ) );
-			$this->weight_table_total_rows    = $this->get_option( 'weight_table_total_rows' );
+			$this->title                      = wcj_get_option( 'title' );
+			$this->cost                       = wcj_get_option( 'cost' );
+			$this->min_weight                 = wcj_get_option( 'min_weight' );
+			$this->max_weight                 = wcj_get_option( 'max_weight' );
+			$this->type                       = wcj_get_option( 'type' );
+			$this->apply_formula              = apply_filters( 'booster_option', 'no', wcj_get_option( 'apply_formula' ) );
+			$this->cost_rounding              = apply_filters( 'booster_option', 'no_round', wcj_get_option( 'cost_rounding', 'no_round' ) );
+			$this->weight_table_total_rows    = wcj_get_option( 'weight_table_total_rows' );
 
 			// Save settings in admin
 			add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 			if ( $this->instance_id ) {
 				$settings_name = 'woocommerce_' . $this->id . '_' . $this->instance_id . '_settings';
 				if ( ! isset( self::$wcj_settings[ $settings_name ] ) ) {
-					$settings = get_option( $settings_name );
+					$settings = wcj_get_option( $settings_name );
 					self::$wcj_settings[ $settings_name ] = $settings;
 				} else {
 					$settings = self::$wcj_settings[ $settings_name ];
@@ -280,11 +280,11 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 			for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 				$option_name_weight = 'weight_table_weight_row_' . $i;
 				$option_name_cost = 'weight_table_cost_row_' . $i;
-				if ( $weight <= $this->get_option( $option_name_weight ) ) {
-					return $this->get_option( $option_name_cost );
+				if ( $weight <= wcj_get_option( $option_name_weight ) ) {
+					return wcj_get_option( $option_name_cost );
 				}
 			}
-			return $this->get_option( $option_name_cost ); // fallback - last row
+			return wcj_get_option( $option_name_cost ); // fallback - last row
 		}
 
 		/**

@@ -99,7 +99,7 @@ class WCJ_Admin {
 			'woocommerce',
 			__( 'Booster for WooCommerce', 'woocommerce-jetpack' ),
 			__( 'Booster Settings', 'woocommerce-jetpack' ) ,
-			( 'yes' === get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
+			( 'yes' === wcj_get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
 			'admin.php?page=wc-settings&tab=jetpack'
 		);
 	}

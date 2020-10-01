@@ -66,7 +66,7 @@ $settings = array_merge( $settings, array(
 			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 ) );
-$custom_currency_total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+$custom_currency_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
 for ( $i = 1; $i <= $custom_currency_total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(

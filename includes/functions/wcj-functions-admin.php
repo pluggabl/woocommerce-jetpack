@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 4.9.0
+ * @version 5.3.3
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -109,7 +109,7 @@ if ( ! function_exists( 'wcj_admin_notices_version_updated' ) ) {
 	 * @since   2.8.0
 	 */
 	function wcj_admin_notices_version_updated() {
-		if ( get_option( WCJ_VERSION_OPTION ) === WCJ()->version ) {
+		if ( wcj_get_option( WCJ_VERSION_OPTION ) === WCJ()->version ) {
 			$class   = 'notice notice-success is-dismissible';
 			$message = sprintf( __( '<strong>Booster for WooCommerce</strong> plugin was successfully updated to version <strong>%s</strong>.', 'woocommerce-jetpack' ), WCJ()->version );
 			echo sprintf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
@@ -121,7 +121,7 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	/**
 	 * wcj_get_ajax_settings
 	 *
-	 * @version 4.9.0
+	 * @version 5.3.3
 	 * @since   4.3.0
 	 *
 	 * @param $values
@@ -131,15 +131,18 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	 * @return array
 	 */
 	function wcj_get_ajax_settings( $values, $allow_multiple_values = false, $search_type = 'woocommerce_json_search_products' ) {
-		$options_raw = get_option( $values['id'], isset( $values['default'] ) ? $values['default'] : '' );
+		$options_raw = wcj_get_option( $values['id'], isset( $values['default'] ) ? $values['default'] : '' );
+		$options_raw = empty( $options_raw ) ? array() : $options_raw;
 		$options     = array();
 		$class       = '';
 		if ( $search_type == 'woocommerce_json_search_products' || $search_type == 'woocommerce_json_search_products_and_variations' ) {
 			$class = 'wc-product-search';
-			foreach ( $options_raw as $product_id ) {
-				$product = wc_get_product( $product_id );
-				if ( is_a( $product, 'WC_Product' ) ) {
-					$options[ $product_id ] = wp_kses_post( $product->get_formatted_name() );
+			if( $options_raw ) {
+				foreach ( $options_raw as $product_id ) {
+					$product = wc_get_product( $product_id );
+					if ( is_a( $product, 'WC_Product' ) ) {
+						$options[ $product_id ] = wp_kses_post( $product->get_formatted_name() );
+					}
 				}
 			}
 		} elseif ( $search_type == 'woocommerce_json_search_categories' ) {
@@ -229,7 +232,7 @@ if ( ! function_exists( 'wcj_maybe_convert_and_update_option_value' ) ) {
 	 */
 	function wcj_maybe_convert_and_update_option_value( $options, $is_multiselect ) {
 		foreach ( $options as $option ) {
-			$value = get_option( $option['id'], $option['default'] );
+			$value = wcj_get_option( $option['id'], $option['default'] );
 			if ( ! $is_multiselect ) {
 				if ( is_array( $value ) ) {
 					$value = implode( ',', $value );

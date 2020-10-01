@@ -33,7 +33,7 @@ if ( ! function_exists( 'wcj_get_shipping_time_table' ) ) {
 			}
 			$option_id_shipping_method = ( $do_use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 			$option_id                 = 'wcj_shipping_time_' . $option_id_shipping_method . $option_id_shipping_class;
-			if ( '' !== ( $time = get_option( $option_id, '' ) ) ) {
+			if ( '' !== ( $time = wcj_get_option( $option_id, '' ) ) ) {
 				$method_title = ( $do_use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() );
 				$table_data[] = array( $method_title, sprintf( __( '%s day(s)' ), $time ) );
 			}
@@ -191,7 +191,7 @@ if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priorit
 			'shipping_by_user_role'                => PHP_INT_MAX - 100,
 			'shipping_by_cities'                   => PHP_INT_MAX - 100,
 		);
-		return ( 0 != ( $priority = get_option( 'wcj_' . $module_id . '_filter_priority', 0 ) ) ?
+		return ( 0 != ( $priority = wcj_get_option( 'wcj_' . $module_id . '_filter_priority', 0 ) ) ?
 			$priority :
 			( isset( $modules_priorities[ $module_id ] ) ? $modules_priorities[ $module_id ] : PHP_INT_MAX )
 		);
@@ -219,7 +219,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 					foreach ( $available_shipping_methods as $available_shipping_method ) {
 						$method_id = ( WCJ_IS_WC_VERSION_BELOW_3_2_0 ? $available_shipping_method->method_id : $available_shipping_method->get_method_id() );
 						if ( 'free_shipping' === $method_id ) {
-							return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
+							return do_shortcode( wcj_get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
 						}
 					}
 				}
@@ -276,7 +276,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 				}
 				// Final message
 				if ( $total >= $min_free_shipping_amount ) {
-					return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
+					return do_shortcode( wcj_get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
 				} else {
 					return wcj_handle_replacements( array(
 						'%left_to_free%'             => wc_price( ( $min_free_shipping_amount - $total ) * $multiply_by ),

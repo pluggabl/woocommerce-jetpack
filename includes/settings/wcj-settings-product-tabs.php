@@ -64,7 +64,7 @@ $settings = array(
 $product_tags_options = wcj_get_terms( 'product_tag' );
 $product_cats_options = wcj_get_terms( 'product_cat' );
 $products_options     = wcj_get_products();
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings,
 		array(
 			array(
@@ -166,7 +166,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_
 			),
 		)
 	);
-	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_hide_in_product_ids_' . $i, '' ) ) {
+	if ( '' != wcj_get_option( 'wcj_custom_product_tabs_title_global_hide_in_product_ids_' . $i, '' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated PRODUCT IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
@@ -178,7 +178,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_
 			),
 		) );
 	}
-	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i, '' ) ) {
+	if ( '' != wcj_get_option( 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i, '' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated PRODUCT IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
@@ -190,7 +190,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_
 			),
 		) );
 	}
-	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i, '' ) ) {
+	if ( '' != wcj_get_option( 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i, '' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated CATEGORY IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
@@ -202,7 +202,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_
 			),
 		) );
 	}
-	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i, '' ) ) {
+	if ( '' != wcj_get_option( 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i, '' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated CATEGORY IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
@@ -264,7 +264,7 @@ $settings = array_merge( $settings, array(
 		),
 	),
 ) );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'     => __( 'Custom Product Tab', 'woocommerce-jetpack' ) . ' #' . $i,

@@ -30,7 +30,7 @@ $settings = array(
 			apply_filters( 'booster_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '1' ),
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_payment_gateways_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_custom_payment_gateways_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Admin Title Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $i,

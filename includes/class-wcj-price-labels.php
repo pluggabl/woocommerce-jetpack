@@ -50,7 +50,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( 'yes' === get_option( 'wcj_local_price_labels_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_local_price_labels_enabled', 'yes' ) ) {
 				// Meta box (admin)
 				add_action( 'add_meta_boxes',    array( $this, 'add_price_label_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_custom_price_labels' ), 999, 2 );
@@ -270,16 +270,16 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 		// Global
 		$do_apply_global = true;
-		$products_incl = get_option( 'wcj_global_price_labels_products_incl', array() );
+		$products_incl = wcj_get_option( 'wcj_global_price_labels_products_incl', array() );
 		if ( ! empty( $products_incl ) ) {
 			$do_apply_global = (   in_array( $_product_id, $products_incl ) );
 		}
-		$products_excl = get_option( 'wcj_global_price_labels_products_excl', array() );
+		$products_excl = wcj_get_option( 'wcj_global_price_labels_products_excl', array() );
 		if ( ! empty( $products_excl ) ) {
 			$do_apply_global = ( ! in_array( $_product_id, $products_excl ) );
 		}
 		$product_categories = get_the_terms( $_product_id, 'product_cat' );
-		$product_categories_incl = get_option( 'wcj_global_price_labels_product_cats_incl', array() );
+		$product_categories_incl = wcj_get_option( 'wcj_global_price_labels_product_cats_incl', array() );
 		if ( ! empty( $product_categories_incl ) ) {
 			$do_apply_global = false;
 			if ( ! empty( $product_categories ) ) {
@@ -291,7 +291,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				}
 			}
 		}
-		$product_categories_excl = get_option( 'wcj_global_price_labels_product_cats_excl', array() );
+		$product_categories_excl = wcj_get_option( 'wcj_global_price_labels_product_cats_excl', array() );
 		if ( ! empty( $product_categories_excl ) ) {
 			$do_apply_global = true;
 			if ( ! empty( $product_categories ) ) {
@@ -305,7 +305,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 		}
 		if ( $do_apply_global ) {
 			// Check product type
-			$product_types_incl = get_option( 'wcj_global_price_labels_product_types_incl', '' );
+			$product_types_incl = wcj_get_option( 'wcj_global_price_labels_product_types_incl', '' );
 			if ( ! empty( $product_types_incl ) ) {
 				$do_apply_global = false;
 				foreach ( $product_types_incl as $product_type_incl ) {
@@ -318,43 +318,43 @@ class WCJ_Price_Labels extends WCJ_Module {
 		}
 		if ( $do_apply_global ) {
 			// Global price labels - Add text before price
-			$text_to_add_before = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_add_before_text' ) );
+			$text_to_add_before = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_add_before_text' ) );
 			if ( '' != $text_to_add_before ) {
 				if ( apply_filters( 'wcj_price_labels_check_on_applying_label', true, $price, $text_to_add_before ) ) {
 					$price = $text_to_add_before . $price;
 				}
 			}
 			// Global price labels - Add text after price
-			$text_to_add_after = get_option( 'wcj_global_price_labels_add_after_text' );
+			$text_to_add_after = wcj_get_option( 'wcj_global_price_labels_add_after_text' );
 			if ( '' != $text_to_add_after ) {
 				if ( apply_filters( 'wcj_price_labels_check_on_applying_label', true, $price, $text_to_add_after ) ) {
 					$price = $price . $text_to_add_after;
 				}
 			}
 			// Global price labels - Between regular and sale prices
-			$text_to_add_between_regular_and_sale = get_option( 'wcj_global_price_labels_between_regular_and_sale_text' );
+			$text_to_add_between_regular_and_sale = wcj_get_option( 'wcj_global_price_labels_between_regular_and_sale_text' );
 			if ( '' != $text_to_add_between_regular_and_sale ) {
 				$price = apply_filters( 'booster_option', $price, str_replace( '</del> <ins>', '</del>' . $text_to_add_between_regular_and_sale . '<ins>', $price ) );
 			}
 			// Global price labels - Remove text from price
-			$text_to_remove = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_remove_text' ) );
+			$text_to_remove = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_remove_text' ) );
 			if ( '' != $text_to_remove ) {
 				$price = str_replace( $text_to_remove, '', $price );
 			}
 			// Global price labels - Replace in price
-			$text_to_replace = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_replace_text' ) );
-			$text_to_replace_with = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_replace_with_text' ) );
+			$text_to_replace = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_replace_text' ) );
+			$text_to_replace_with = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_replace_with_text' ) );
 			if ( '' != $text_to_replace && '' != $text_to_replace_with ) {
 				$price = str_replace( $text_to_replace, $text_to_replace_with, $price );
 			}
 			// Global price labels - Instead of the price
-			if ( '' != ( $text_instead = get_option( 'wcj_global_price_labels_instead_text', '' ) ) ) {
+			if ( '' != ( $text_instead = wcj_get_option( 'wcj_global_price_labels_instead_text', '' ) ) ) {
 				$price = $text_instead;
 			}
 		}
 
 		// Per product
-		if ( 'yes' === get_option( 'wcj_local_price_labels_enabled', 'yes' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_local_price_labels_enabled', 'yes' ) ) {
 			foreach ( $this->custom_tab_sections as $custom_tab_section ) {
 				$labels_array = array();
 				foreach ( $this->custom_tab_section_variations as $custom_tab_section_variation ) {

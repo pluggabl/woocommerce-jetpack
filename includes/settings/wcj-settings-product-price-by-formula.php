@@ -41,7 +41,7 @@ $settings = array(
 		'type'     => 'custom_number',
 	),
 );
-$total_number = get_option( 'wcj_product_price_by_formula_total_params', 1 );
+$total_number = wcj_get_option( 'wcj_product_price_by_formula_total_params', 1 );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings[] = array(
 		'title'    => 'p' . $i,

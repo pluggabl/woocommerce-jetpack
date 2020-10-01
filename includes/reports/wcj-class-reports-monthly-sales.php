@@ -33,7 +33,7 @@ class WCJ_Reports_Monthly_Sales {
 		$html = '';
 		if ( isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
 			// Save rates
-			update_option( 'wcj_reports_currency_rates', array_replace_recursive( get_option( 'wcj_reports_currency_rates', array() ), $_POST['wcj_save_currency_rates_array'] ) );
+			update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), $_POST['wcj_save_currency_rates_array'] ) );
 			$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates saved.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 		} elseif ( isset( $_POST['wcj_reset_currency_rates'] ) ) {
 			// Delete rates
@@ -58,7 +58,7 @@ class WCJ_Reports_Monthly_Sales {
 			return 1.0;
 		}
 		// Saved values
-		$saved_rates = get_option( 'wcj_reports_currency_rates', array() );
+		$saved_rates = wcj_get_option( 'wcj_reports_currency_rates', array() );
 		if ( ! empty( $saved_rates ) ) {
 			if ( isset( $saved_rates[ $currency_from ][ $currency_to ][ $start_date ][ $end_date ] ) ) {
 				return $saved_rates[ $currency_from ][ $currency_to ][ $start_date ][ $end_date ];
@@ -101,8 +101,8 @@ class WCJ_Reports_Monthly_Sales {
 		$report_currency                 = ( isset( $_GET['currency'] ) && 'merge' != $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency();
 		$block_size                      = 256;
 		$table_data                      = array();
-		$do_forecast                     = ( 'yes' === get_option( 'wcj_reports_orders_monthly_sales_forecast', 'no' ) );
-		$do_include_today                = ( 'yes' === get_option( 'wcj_reports_orders_monthly_sales_include_today', 'no' ) );
+		$do_forecast                     = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_forecast', 'no' ) );
+		$do_include_today                = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_include_today', 'no' ) );
 		for ( $i = 1; $i <= 12; $i++ ) {
 			$current_months_averages = array();
 			$total_orders              = 0;

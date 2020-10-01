@@ -152,21 +152,21 @@ $settings = array(
 		),
 	),
 );
-if ( 'yes' === get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) ) {
 	$users_as_options = wcj_get_users_as_options();
 }
-if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) ) {
 	$user_roles_as_options = wcj_get_user_roles_options();
 }
-if ( 'yes' === get_option( 'wcj_currency_per_product_by_product_cats_enabled', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_product_cats_enabled', 'no' ) ) {
 	$product_cats_as_options = wcj_get_terms( 'product_cat' );
 }
-if ( 'yes' === get_option( 'wcj_currency_per_product_by_product_tags_enabled', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_product_tags_enabled', 'no' ) ) {
 	$product_tags_as_options = wcj_get_terms( 'product_tag' );
 }
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_per_product_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
-	$currency_to = get_option( 'wcj_currency_per_product_currency_' . $i, $currency_from );
+	$currency_to = wcj_get_option( 'wcj_currency_per_product_currency_' . $i, $currency_from );
 	$custom_attributes = array(
 		'currency_from'        => $currency_from,
 		'currency_to'          => $currency_to,
@@ -193,7 +193,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'value'                    => $currency_from . '/' . $currency_to,
 		),
 	) );
-	if ( 'yes' === get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) ) {
+	if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'     => __( 'Product Authors', 'woocommerce-jetpack' ),
@@ -205,7 +205,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			),
 		) );
 	}
-	if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) ) {
+	if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'     => __( 'Product Authors User Roles', 'woocommerce-jetpack' ),
@@ -217,7 +217,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			),
 		) );
 	}
-	if ( 'yes' === get_option( 'wcj_currency_per_product_by_product_cats_enabled', 'no' ) ) {
+	if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_product_cats_enabled', 'no' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'     => __( 'Product Categories', 'woocommerce-jetpack' ),
@@ -229,7 +229,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			),
 		) );
 	}
-	if ( 'yes' === get_option( 'wcj_currency_per_product_by_product_tags_enabled', 'no' ) ) {
+	if ( 'yes' === wcj_get_option( 'wcj_currency_per_product_by_product_tags_enabled', 'no' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'desc'     => __( 'Product Tags', 'woocommerce-jetpack' ),

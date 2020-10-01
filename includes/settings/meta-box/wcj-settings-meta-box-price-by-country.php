@@ -11,20 +11,20 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $products     = wcj_get_product_ids_for_meta_box_options( get_the_ID() );
 $groups       = array();
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
-	$group_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
-	$admin_title = get_option( 'wcj_price_by_country_countries_group_admin_title_' . $i, __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i );
+	$group_currency_code = wcj_get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
+	$admin_title = wcj_get_option( 'wcj_price_by_country_countries_group_admin_title_' . $i, __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i );
 	$countries = '';
-	switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+	switch ( wcj_get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 		case 'comma_list':
-			$countries .= get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
+			$countries .= wcj_get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
 			break;
 		case 'multiselect':
-			$countries .= ( '' != ( $group = get_option( 'wcj_price_by_country_countries_group_' . $i, '' ) ) ? implode( ',', $group ) : '' );
+			$countries .= ( '' != ( $group = wcj_get_option( 'wcj_price_by_country_countries_group_' . $i, '' ) ) ? implode( ',', $group ) : '' );
 			break;
 		case 'chosen_select':
-			$countries .= ( '' != ( $group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' ) ) ? implode( ',', $group ) : '' );
+			$countries .= ( '' != ( $group = wcj_get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' ) ) ? implode( ',', $group ) : '' );
 			break;
 	}
 	$admin_title = '<details>' . '<summary>' . $admin_title . ' [' . $group_currency_code . ']' . '</summary>' .

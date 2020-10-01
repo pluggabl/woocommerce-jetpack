@@ -10,7 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $options = array();
-if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ) {
+if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ) {
 	$options = array_merge( $options, array(
 		array(
 			'name'       => 'wcj_add_to_cart_redirect_enabled',
@@ -32,7 +32,7 @@ if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_ca
 		),
 	) );
 }
-if ( 'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
+if ( 'per_product' === wcj_get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
 	$options = array_merge( $options, array(
 		array(
 			'name'       => 'wcj_add_to_cart_on_visit_enabled',
@@ -46,7 +46,7 @@ if ( 'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) 
 		),
 	) );
 }
-if ( 'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ) {
 	$options = array_merge( $options, array(
 		array(
 			'name'       => 'wcj_add_to_cart_button_loop_custom_url',
@@ -56,7 +56,7 @@ if ( 'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_e
 		),
 	) );
 }
-if ( 'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ) {
 	$options = array_merge( $options, array(
 		array(
 			'name'       => 'wcj_add_to_cart_button_ajax_disable',

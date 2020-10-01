@@ -41,7 +41,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	function get_location( $type ) {
 		switch ( $type ) {
 			case 'country':
-				$country_type = get_option( 'wcj_gateways_by_location_country_type', 'billing' );
+				$country_type = wcj_get_option( 'wcj_gateways_by_location_country_type', 'billing' );
 				switch( $country_type ) {
 					case 'by_ip':
 						return wcj_get_country_by_ip();
@@ -51,7 +51,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 						return ( ! empty( $_REQUEST['country'] )    ? $_REQUEST['country']                  : ( isset( WC()->customer ) ? wcj_customer_get_country()             : '' ) );
 				}
 			case 'state':
-				$state_type = get_option( 'wcj_gateways_by_location_state_type', 'billing' );
+				$state_type = wcj_get_option( 'wcj_gateways_by_location_state_type', 'billing' );
 				switch( $state_type ) {
 					case 'shipping':
 						return ( ! empty( $_REQUEST['s_state'] )    ? $_REQUEST['s_state']                  : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state()   : '' ) );
@@ -59,7 +59,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 						return ( ! empty( $_REQUEST['state'] )      ? $_REQUEST['state']                    : ( isset( WC()->customer ) ? wcj_customer_get_country_state()       : '' ) );
 				}
 			case 'postcode':
-				$postcodes_type = get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' );
+				$postcodes_type = wcj_get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' );
 				switch ( $postcodes_type ) {
 					case 'shipping':
 						return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( $_REQUEST['s_postcode'] ) : ( ! empty( $_REQUEST['shipping_postcode'] ) ? strtoupper( $_REQUEST['shipping_postcode'] ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
@@ -85,31 +85,31 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 		$postcode         = $this->get_location( 'postcode' );
 		foreach ( $_available_gateways as $key => $gateway ) {
 			if ( '' != $customer_country ) {
-				$include_countries = wcj_maybe_add_european_union_countries( get_option( 'wcj_gateways_countries_include_' . $key, '' ) );
+				$include_countries = wcj_maybe_add_european_union_countries( wcj_get_option( 'wcj_gateways_countries_include_' . $key, '' ) );
 				if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
-				$exclude_countries = get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
+				$exclude_countries = wcj_get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
 				if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries ) ) {
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
 			}
 			if ( '' != $customer_state ) {
-				$include_states = get_option( 'wcj_gateways_states_include_' . $key, '' );
+				$include_states = wcj_get_option( 'wcj_gateways_states_include_' . $key, '' );
 				if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states ) ) {
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
-				$exclude_states = get_option( 'wcj_gateways_states_exclude_' . $key, '' );
+				$exclude_states = wcj_get_option( 'wcj_gateways_states_exclude_' . $key, '' );
 				if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states ) ) {
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
 			}
 			if ( '' != $postcode ) {
-				$include_postcodes = get_option( 'wcj_gateways_postcodes_include_' . $key, '' );
+				$include_postcodes = wcj_get_option( 'wcj_gateways_postcodes_include_' . $key, '' );
 				if ( ! empty( $include_postcodes ) ) {
 					$include_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $include_postcodes ) ) ) );
 					if ( ! wcj_check_postcode( $postcode, $include_postcodes ) ) {
@@ -117,7 +117,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 						continue;
 					}
 				}
-				$exclude_postcodes = get_option( 'wcj_gateways_postcodes_exclude_' . $key, '' );
+				$exclude_postcodes = wcj_get_option( 'wcj_gateways_postcodes_exclude_' . $key, '' );
 				if ( ! empty( $exclude_postcodes ) ) {
 					$exclude_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $exclude_postcodes ) ) ) );
 					if ( wcj_check_postcode( $postcode, $exclude_postcodes ) ) {

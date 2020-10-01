@@ -57,9 +57,9 @@ class WCJ_Reports_Product_Sales_Daily {
 	 * @todo    recheck if `wc_get_product_purchase_price()` working correctly for variations
 	 */
 	function get_report_data() {
-		$include_taxes    = ( 'yes' === get_option( 'wcj_reports_products_sales_daily_include_taxes', 'no' ) );
-		$count_variations = ( 'yes' === get_option( 'wcj_reports_products_sales_daily_count_variations', 'no' ) );
-		$order_statuses   = get_option( 'wcj_reports_products_sales_daily_order_statuses', '' );
+		$include_taxes    = ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_daily_include_taxes', 'no' ) );
+		$count_variations = ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_daily_count_variations', 'no' ) );
+		$order_statuses   = wcj_get_option( 'wcj_reports_products_sales_daily_order_statuses', '' );
 		if ( empty( $order_statuses ) ) {
 			$order_statuses = 'any';
 		} elseif ( 1 == count( $order_statuses ) ) {
@@ -202,7 +202,7 @@ class WCJ_Reports_Product_Sales_Daily {
 		$table_data = array();
 		$table_header   = array();
 		$all_columns    = wcj_get_product_sales_daily_report_columns();
-		$report_columns = get_option( 'wcj_reports_products_sales_daily_columns', '' );
+		$report_columns = wcj_get_option( 'wcj_reports_products_sales_daily_columns', '' );
 		if ( empty( $report_columns ) ) {
 			$report_columns = array_keys( $all_columns );
 		}

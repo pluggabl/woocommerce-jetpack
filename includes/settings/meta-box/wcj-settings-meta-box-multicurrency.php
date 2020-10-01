@@ -16,7 +16,7 @@ if ( ! $_product ) {
 }
 $products = array();
 if ( $_product->is_type( 'variable' ) ) {
-	$list_available_variations_only = ( 'yes' === get_option( 'wcj_multicurrency_per_product_list_available_variations_only', 'yes' ) );
+	$list_available_variations_only = ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_list_available_variations_only', 'yes' ) );
 	$available_variations = ( $list_available_variations_only ? $_product->get_available_variations() : $_product->get_children() );
 	foreach ( $available_variations as $variation ) {
 		$variation_id      = ( $list_available_variations_only ? $variation['variation_id'] : $variation );
@@ -27,10 +27,10 @@ if ( $_product->is_type( 'variable' ) ) {
 	$products[ $main_product_id ] = '';
 }
 $currencies = array();
-$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+$total_number = apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) );
 foreach ( $products as $product_id => $desc ) {
 	for ( $i = 1; $i <= $total_number; $i++ ) {
-		$currency_code = get_option( 'wcj_multicurrency_currency_' . $i );
+		$currency_code = wcj_get_option( 'wcj_multicurrency_currency_' . $i );
 		$currencies = array_merge( $currencies, array(
 			array(
 				'name'       => 'wcj_multicurrency_per_product_regular_price_' . $currency_code . '_' . $product_id,
@@ -51,7 +51,7 @@ foreach ( $products as $product_id => $desc ) {
 				'meta_name'  => '_' . 'wcj_multicurrency_per_product_sale_price_' . $currency_code,
 			),
 		) );
-		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) ) {
 			$currencies[] = array(
 				'name'       => 'wcj_multicurrency_per_product_make_empty_' . $currency_code . '_' . $product_id,
 				'default'    => 'no',

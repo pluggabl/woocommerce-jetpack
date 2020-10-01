@@ -34,7 +34,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'global_discount' );
-			if ( 'yes' === get_option( 'wcj_global_discount_enabled_in_admin', 'no' ) || wcj_is_frontend() ) {
+			if ( 'yes' === wcj_get_option( 'wcj_global_discount_enabled_in_admin', 'no' ) || wcj_is_frontend() ) {
 				wcj_add_change_price_hooks( $this, $this->price_hooks_priority, false );
 			}
 
@@ -59,7 +59,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	function add_wcj_sale_ids_to_products_shortcode( $args, $atts, $type ) {
 		if (
 			'sale_products' != $type ||
-			'yes' != get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' )
+			'yes' != wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' )
 		) {
 			return $args;
 		}
@@ -77,7 +77,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 */
 	function regenerate_wcj_sale_products_in_cache() {
 		if (
-			'yes' != get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' ) ||
+			'yes' != wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' ) ||
 			! isset( $_REQUEST['page'] ) || 'wc-settings' !== $_REQUEST['page'] ||
 			! isset( $_REQUEST['tab'] ) || 'jetpack' !== $_REQUEST['tab'] ||
 			! isset( $_REQUEST['wcj-cat'] ) || 'prices_and_currencies' !== $_REQUEST['wcj-cat'] ||
@@ -107,16 +107,16 @@ class WCJ_Global_Discount extends WCJ_Module {
 				'posts_per_page' => - 1,
 				'fields'         => 'ids',
 			);
-			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i ++ ) {
-				$enabled = get_option( 'wcj_global_discount_sale_enabled_' . $i, 'yes' );
+				$enabled = wcj_get_option( 'wcj_global_discount_sale_enabled_' . $i, 'yes' );
 				if ( 'yes' !== $enabled ) {
 					continue;
 				}
 
 				// Categories
-				$include_cats = get_option( 'wcj_global_discount_sale_categories_incl_' . $i, array() );
-				$exclude_cats = get_option( 'wcj_global_discount_sale_categories_excl_' . $i, array() );
+				$include_cats = wcj_get_option( 'wcj_global_discount_sale_categories_incl_' . $i, array() );
+				$exclude_cats = wcj_get_option( 'wcj_global_discount_sale_categories_excl_' . $i, array() );
 				$cats         = array();
 				if ( ! empty( $include_cats ) || ! empty( $exclude_cats ) ) {
 					$cats = array(
@@ -142,8 +142,8 @@ class WCJ_Global_Discount extends WCJ_Module {
 				}
 
 				// Tags
-				$include_tags = get_option( 'wcj_global_discount_sale_tags_incl_' . $i, array() );
-				$exclude_tags = get_option( 'wcj_global_discount_sale_tags_excl_' . $i, array() );
+				$include_tags = wcj_get_option( 'wcj_global_discount_sale_tags_incl_' . $i, array() );
+				$exclude_tags = wcj_get_option( 'wcj_global_discount_sale_tags_excl_' . $i, array() );
 				$tags         = array();
 				if ( ! empty( $include_tags ) || ! empty( $exclude_tags ) ) {
 					$tags = array(
@@ -180,8 +180,8 @@ class WCJ_Global_Discount extends WCJ_Module {
 				}
 
 				// Products
-				$products_incl = get_option( 'wcj_global_discount_sale_products_incl_' . $i, array() );
-				$products_excl = get_option( 'wcj_global_discount_sale_products_excl_' . $i, array() );
+				$products_incl = wcj_get_option( 'wcj_global_discount_sale_products_incl_' . $i, array() );
+				$products_excl = wcj_get_option( 'wcj_global_discount_sale_products_excl_' . $i, array() );
 				if ( ! empty( $products_incl ) || ! empty( $products_excl ) ) {
 					if ( ! empty( $products_incl ) ) {
 						$args['post__in'] = $products_incl;
@@ -192,7 +192,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 				}
 
 				// Scope
-				$scope = get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' );
+				$scope = wcj_get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' );
 				if ( 'all' != $scope ) {
 					$wc_sale_products = wc_get_product_ids_on_sale();
 					if ( 'only_on_sale' == $scope ) {
@@ -276,12 +276,12 @@ class WCJ_Global_Discount extends WCJ_Module {
 		if ( '' === $price ) {
 			return $price;
 		}
-		$return_price = ( 'percent' === get_option( 'wcj_global_discount_sale_coefficient_type_' . $group, 'percent' ) ) ?
+		$return_price = ( 'percent' === wcj_get_option( 'wcj_global_discount_sale_coefficient_type_' . $group, 'percent' ) ) ?
 			( $price + $price * ( $coefficient / 100 ) ) :
 			( $price + $coefficient );
 		$return_price = ( $return_price >= 0 ? $return_price : 0 );
-		if ( 'none' != ( $final_correction_function = get_option( 'wcj_global_discount_sale_final_correction_func_' . $group, 'none' ) ) ) {
-			$final_correction_coef = get_option( 'wcj_global_discount_sale_final_correction_coef_' . $group, 1 );
+		if ( 'none' != ( $final_correction_function = wcj_get_option( 'wcj_global_discount_sale_final_correction_func_' . $group, 'none' ) ) ) {
+			$final_correction_coef = wcj_get_option( 'wcj_global_discount_sale_final_correction_coef_' . $group, 1 );
 			$return_price          = $final_correction_function( $return_price / $final_correction_coef ) * $final_correction_coef;
 		}
 		return $return_price;
@@ -295,7 +295,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @return  bool
 	 */
 	function check_if_applicable( $_product, $group ) {
-		return ( 'yes' === get_option( 'wcj_global_discount_sale_enabled_' . $group, 'yes' ) && $this->is_enabled_for_product( $_product, $group ) );
+		return ( 'yes' === wcj_get_option( 'wcj_global_discount_sale_enabled_' . $group, 'yes' ) && $this->is_enabled_for_product( $_product, $group ) );
 	}
 
 	/**
@@ -307,12 +307,12 @@ class WCJ_Global_Discount extends WCJ_Module {
 	function is_enabled_for_product( $_product, $group ) {
 		$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
 		return wcj_is_enabled_for_product( $product_id, array(
-			'include_products'   => get_option( 'wcj_global_discount_sale_products_incl_'   . $group, '' ),
-			'exclude_products'   => get_option( 'wcj_global_discount_sale_products_excl_'   . $group, '' ),
-			'include_categories' => get_option( 'wcj_global_discount_sale_categories_incl_' . $group, '' ),
-			'exclude_categories' => get_option( 'wcj_global_discount_sale_categories_excl_' . $group, '' ),
-			'include_tags'       => get_option( 'wcj_global_discount_sale_tags_incl_'       . $group, '' ),
-			'exclude_tags'       => get_option( 'wcj_global_discount_sale_tags_excl_'       . $group, '' ),
+			'include_products'   => wcj_get_option( 'wcj_global_discount_sale_products_incl_'   . $group, '' ),
+			'exclude_products'   => wcj_get_option( 'wcj_global_discount_sale_products_excl_'   . $group, '' ),
+			'include_categories' => wcj_get_option( 'wcj_global_discount_sale_categories_incl_' . $group, '' ),
+			'exclude_categories' => wcj_get_option( 'wcj_global_discount_sale_categories_excl_' . $group, '' ),
+			'include_tags'       => wcj_get_option( 'wcj_global_discount_sale_tags_incl_'       . $group, '' ),
+			'exclude_tags'       => wcj_get_option( 'wcj_global_discount_sale_tags_excl_'       . $group, '' ),
 		) );
 	}
 
@@ -358,14 +358,14 @@ class WCJ_Global_Discount extends WCJ_Module {
 		if ( 'price' === $price_type && '' === $price ) {
 			return $price; // no changes
 		}
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( ! $this->check_if_applicable( $_product, $i ) ) {
 				continue; // no changes by current discount group
 			}
-			$coefficient = get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
+			$coefficient = wcj_get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
 			if ( 0 != $coefficient ) {
-				if ( ! $this->check_if_applicable_by_product_scope( $_product, $price, $price_type, get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) ) ) {
+				if ( ! $this->check_if_applicable_by_product_scope( $_product, $price, $price_type, wcj_get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) ) ) {
 					continue; // no changes by current discount group
 				}
 				if ( 'sale_price' === $price_type && 0 == $price ) {
@@ -388,19 +388,19 @@ class WCJ_Global_Discount extends WCJ_Module {
 	function get_global_discount_options() {
 		$options = $this->wcj_global_options;
 		if ( empty( $options ) ) {
-			$total_number            = apply_filters( 'booster_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+			$total_number            = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 			$options['total_number'] = $total_number;
 			for ( $i = 1; $i <= $total_number; $i ++ ) {
-				$options['enabled'][ $i ]     = get_option( 'wcj_global_discount_sale_enabled_' . $i, 'yes' );
-				$options['type'][ $i ]        = get_option( 'wcj_global_discount_sale_coefficient_type_' . $i, 'percent' );
-				$options['value'][ $i ]       = get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
-				$options['scope'][ $i ]       = get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' );
-				$options['cats_in'][ $i ]     = get_option( 'wcj_global_discount_sale_categories_incl_' . $i, array() );
-				$options['cats_ex'][ $i ]     = get_option( 'wcj_global_discount_sale_categories_excl_' . $i, array() );
-				$options['tags_in'][ $i ]     = get_option( 'wcj_global_discount_sale_tags_incl_' . $i, array() );
-				$options['tags_ex'][ $i ]     = get_option( 'wcj_global_discount_sale_tags_excl_' . $i, array() );
-				$options['products_in'][ $i ] = get_option( 'wcj_global_discount_sale_products_incl_' . $i, array() );
-				$options['products_ex'][ $i ] = get_option( 'wcj_global_discount_sale_products_excl_' . $i, array() );
+				$options['enabled'][ $i ]     = wcj_get_option( 'wcj_global_discount_sale_enabled_' . $i, 'yes' );
+				$options['type'][ $i ]        = wcj_get_option( 'wcj_global_discount_sale_coefficient_type_' . $i, 'percent' );
+				$options['value'][ $i ]       = wcj_get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
+				$options['scope'][ $i ]       = wcj_get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' );
+				$options['cats_in'][ $i ]     = wcj_get_option( 'wcj_global_discount_sale_categories_incl_' . $i, array() );
+				$options['cats_ex'][ $i ]     = wcj_get_option( 'wcj_global_discount_sale_categories_excl_' . $i, array() );
+				$options['tags_in'][ $i ]     = wcj_get_option( 'wcj_global_discount_sale_tags_incl_' . $i, array() );
+				$options['tags_ex'][ $i ]     = wcj_get_option( 'wcj_global_discount_sale_tags_excl_' . $i, array() );
+				$options['products_in'][ $i ] = wcj_get_option( 'wcj_global_discount_sale_products_incl_' . $i, array() );
+				$options['products_ex'][ $i ] = wcj_get_option( 'wcj_global_discount_sale_products_excl_' . $i, array() );
 			}
 			$this->wcj_global_options = $options;
 		}

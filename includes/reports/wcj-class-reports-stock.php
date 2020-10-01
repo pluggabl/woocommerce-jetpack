@@ -21,7 +21,7 @@ class WCJ_Reports_Stock {
 	 * @version 3.9.0
 	 * @todo    (maybe) `most_stock_price`, `sales_up`, `good_sales_low_stock`
 	 * @todo    (maybe) `echo __( 'Here you can generate reports. Some reports are generated using all your orders and products, so if you have a lot of them - it may take a while.', 'woocommerce-jetpack' );`
-	 * @todo    (maybe) get_option( 'woocommerce_manage_stock' ) -> `echo __( 'Please enable stock management in <strong>WooCommerce > Settings > Products > Inventory</strong> to generate stock based reports.', 'woocommerce-jetpack' );`
+	 * @todo    (maybe) wcj_get_option( 'woocommerce_manage_stock' ) -> `echo __( 'Please enable stock management in <strong>WooCommerce > Settings > Products > Inventory</strong> to generate stock based reports.', 'woocommerce-jetpack' );`
 	 */
 	function __construct( $args = null ) {
 		$this->ranges_in_days             = array( 7, 14, 30, 60, 90, 180, 360 );
@@ -45,8 +45,8 @@ class WCJ_Reports_Stock {
 				'desc'      => __( 'Report shows all products that are on stock, but have no sales in selected period. Only products added before the start date of selected period are accounted.', 'woocommerce-jetpack' ),
 			),
 		);
-		$this->product_type               = get_option( 'wcj_reports_stock_product_type', 'product' );
-		$this->include_deleted_products   = ( 'yes' === get_option( 'wcj_reports_stock_include_deleted_products', 'yes' ) );
+		$this->product_type               = wcj_get_option( 'wcj_reports_stock_product_type', 'product' );
+		$this->include_deleted_products   = ( 'yes' === wcj_get_option( 'wcj_reports_stock_include_deleted_products', 'yes' ) );
 		$this->start_time                 = microtime( true );
 		$products_info                    = array();
 		$this->gather_products_data( $products_info );
@@ -114,7 +114,7 @@ class WCJ_Reports_Stock {
 				$the_price          = $the_product->get_price();
 				$the_stock          = wcj_get_product_total_stock( $the_product );
 				$the_categories     = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $product_id ) );
-				$the_date           = get_the_date( get_option( 'date_format' ), $product_id );
+				$the_date           = get_the_date( wcj_get_option( 'date_format' ), $product_id );
 				$the_permalink      = get_the_permalink( $product_id );
 				$post_custom        = get_post_custom( $product_id );
 				$total_sales        = isset( $post_custom['total_sales'][0] ) ? $post_custom['total_sales'][0] : 0;
@@ -314,7 +314,7 @@ class WCJ_Reports_Stock {
 				$html .= '<td>' . wc_price( $product_info['stock_price'] ) . $purchase_stock_price_html . '</td>';
 				$html .= '<td>' . wc_price( $total_current_stock_price ) . '</td>';
 				$html .= '<td class="wcj_report_table_sales_columns">';
-				$html .= ( 0 == $product_info['last_sale'] ? __( 'No sales yet', 'woocommerce-jetpack' ) : date_i18n( get_option( 'date_format' ), $product_info['last_sale'] ) );
+				$html .= ( 0 == $product_info['last_sale'] ? __( 'No sales yet', 'woocommerce-jetpack' ) : date_i18n( wcj_get_option( 'date_format' ), $product_info['last_sale'] ) );
 				$html .= '</td>';
 				$profit_html = ( $product_info['purchase_price'] > 0 && $product_info['sales_in_period'][ $this->range_days ] > 0 ) ?
 					'<br><em>' . __( 'profit:', 'woocommerce-jetpack' ) . '</em>' . ' '

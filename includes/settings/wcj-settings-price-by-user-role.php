@@ -225,7 +225,7 @@ foreach ( $taxonomies as $taxonomy ) {
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 	) );
-	$_taxonomies = apply_filters( 'booster_option', '', get_option( 'wcj_price_by_user_role_' . $taxonomy['name'], '' ) );
+	$_taxonomies = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_' . $taxonomy['name'], '' ) );
 	if ( ! empty( $_taxonomies ) ) {
 		foreach ( $_taxonomies as $_taxonomy ) {
 			foreach ( wcj_get_user_roles() as $role_key => $role_data ) {

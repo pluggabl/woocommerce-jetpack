@@ -49,7 +49,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	 * @return bool
 	 */
 	function update_order_review_expired( $update ) {
-		if ( 'yes' !== get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
+		if ( 'yes' !== wcj_get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
 			return $update;
 		}
 		$update = false;
@@ -63,7 +63,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	 * @since   3.6.0
 	 */
 	function get_options_list() {
-		return ( 'wc' === apply_filters( 'booster_option', 'all', get_option( 'wcj_product_by_country_country_list', 'all' ) ) ?
+		return ( 'wc' === apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list', 'all' ) ) ?
 			WC()->countries->get_allowed_countries() : wcj_get_countries() );
 	}
 
@@ -74,7 +74,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	 * @since   3.6.0
 	 */
 	function get_check_option() {
-		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
+		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', wcj_get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
 				$country = wcj_get_country_by_ip();
 				wcj_session_set( 'wcj_selected_country', $country );
@@ -85,7 +85,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 		} else {
 			$check_option = wcj_get_country_by_ip();
 		}
-		if ( 'yes' === get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
 			$billing_country = ! empty( $_REQUEST['country'] ) ? $_REQUEST['country'] : '';
 			if ( ! empty( $billing_country ) ) {
 				$check_option = $billing_country;
@@ -101,7 +101,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	 * @since   3.6.0
 	 */
 	function maybe_add_extra_frontend_filters() {
-		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
+		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', wcj_get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 			add_action( 'init', array( $this, 'save_country_in_session' ), PHP_INT_MAX ) ;
 		}
 	}

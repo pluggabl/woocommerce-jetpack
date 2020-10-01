@@ -31,10 +31,10 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Custom columns
-			if ( 'yes' === get_option( 'wcj_order_admin_list_custom_columns_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_custom_columns_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),   PHP_INT_MAX - 1 );
 				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_column' ), PHP_INT_MAX );
-				if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) || 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) || 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 					// Billing country or Currency filtering
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 					add_filter( 'parse_query',           array( $this, 'parse_query' ) );
@@ -45,25 +45,25 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 			}
 
 			// Multiple status
-			if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_enabled', 'no' ) ) {
-				if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_not_completed_link', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_not_completed_link', 'no' ) ) {
 					add_filter( 'views_edit-shop_order', array( $this, 'add_shop_order_multiple_statuses_not_completed_link' ) );
 					add_action( 'pre_get_posts',         array( $this, 'filter_shop_order_multiple_statuses_not_completed_link' ), PHP_INT_MAX, 1 );
 				}
-				if ( 'no' != get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) ) {
+				if ( 'no' != wcj_get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) ) {
 					add_action( 'restrict_manage_posts', array( $this, 'add_shop_order_multiple_statuses' ), PHP_INT_MAX, 2 );
 					add_action( 'pre_get_posts',         array( $this, 'filter_shop_order_multiple_statuses' ), PHP_INT_MAX, 1 );
 				}
-				if ( 'yes' === get_option( 'wcj_order_admin_list_hide_default_statuses_menu', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_hide_default_statuses_menu', 'no' ) ) {
 					add_action( 'admin_head', array( $this, 'hide_default_statuses_menu' ), PHP_INT_MAX );
 				}
-				if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_admin_menu', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_admin_menu', 'no' ) ) {
 					add_action( 'admin_menu', array( $this, 'admin_menu_multiple_status' ) );
 				}
 			}
 
 			// Columns Order
-			if ( 'yes' === get_option( 'wcj_order_admin_list_columns_order_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_columns_order_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-shop_order_columns', array( $this, 'rearange_order_columns' ), PHP_INT_MAX - 1 );
 			}
 
@@ -82,13 +82,13 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		// Remove "Coupons" menu (to get "Orders" menus on top)
 		$coupons_menu = remove_submenu_page( 'woocommerce', 'edit.php?post_type=shop_coupon' );
 		// Maybe remove original "Orders" menu
-		if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_admin_menu_remove_original', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_admin_menu_remove_original', 'no' ) ) {
 			remove_submenu_page( 'woocommerce', 'edit.php?post_type=shop_order' );
 		}
 		// Add presets
-		$titles       = get_option( 'wcj_order_admin_list_multiple_status_presets_titles',   array() );
-		$statuses     = get_option( 'wcj_order_admin_list_multiple_status_presets_statuses', array() );
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_order_admin_list_multiple_status_presets_total_number', 1 ) );
+		$titles       = wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_titles',   array() );
+		$statuses     = wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_statuses', array() );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( ! empty( $titles[ $i ] ) && ! empty( $statuses[ $i ] ) ) {
 				$menu_slug = 'edit.php?post_type=shop_order';
@@ -96,7 +96,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 					$menu_slug .= "&wcj_admin_filter_statuses[{$x}]={$status}";
 				}
 				$orders_count_html = '';
-				if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_admin_menu_counter', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_admin_menu_counter', 'no' ) ) {
 					$order_count = 0;
 					foreach ( $statuses[ $i ] as $x => $status ) {
 						$order_count += wc_orders_count( substr( $status, 3 ) );
@@ -128,8 +128,8 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		) {
 			if ( 'wcj_orders_custom_column_' === substr( $orderby, 0, 25 ) ) {
 				$index = substr( $orderby, 25 );
-				$query->set( 'orderby',  get_option( 'wcj_orders_list_custom_columns_sortable_'     . $index, 'no' ) ); // 'meta_value' or 'meta_value_num'
-				$query->set( 'meta_key', get_option( 'wcj_orders_list_custom_columns_sortable_key_' . $index, '' ) );
+				$query->set( 'orderby',  wcj_get_option( 'wcj_orders_list_custom_columns_sortable_'     . $index, 'no' ) ); // 'meta_value' or 'meta_value_num'
+				$query->set( 'meta_key', wcj_get_option( 'wcj_orders_list_custom_columns_sortable_key_' . $index, '' ) );
 			}
 		}
 	}
@@ -144,10 +144,10 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	 */
 	function shop_order_sortable_columns( $columns ) {
 		$custom = array();
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
-				if ( 'no' != get_option( 'wcj_orders_list_custom_columns_sortable_' . $i, 'no' ) && '' != get_option( 'wcj_orders_list_custom_columns_sortable_key_' . $i, '' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				if ( 'no' != wcj_get_option( 'wcj_orders_list_custom_columns_sortable_' . $i, 'no' ) && '' != wcj_get_option( 'wcj_orders_list_custom_columns_sortable_key_' . $i, '' ) ) {
 					$custom[ 'wcj_orders_custom_column_' . $i ] = 'wcj_orders_custom_column_' . $i;
 				}
 			}
@@ -265,7 +265,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	 */
 	function add_shop_order_multiple_statuses( $post_type, $which ) {
 		if ( 'shop_order' === $post_type ) {
-			echo $this->multiple_shop_order_statuses( get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) );
+			echo $this->multiple_shop_order_statuses( wcj_get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) );
 		}
 	}
 
@@ -300,13 +300,13 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		if ( $typenow != 'shop_order' ) {
 			return;
 		}
-		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) && isset( $_GET['country'] ) && 'all' != $_GET['country'] ) {
+		if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) && isset( $_GET['country'] ) && 'all' != $_GET['country'] ) {
 			$query->query_vars['meta_query'][] = array(
 				'key'   => '_billing_country',
 				'value' => $_GET['country'],
 			);
 		}
-		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) && isset( $_GET['currency'] ) && 'all' != $_GET['currency'] ) {
+		if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) && isset( $_GET['currency'] ) && 'all' != $_GET['currency'] ) {
 			$query->query_vars['meta_query'][] = array(
 				'key'   => '_order_currency',
 				'value' => $_GET['currency'],
@@ -322,7 +322,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	function restrict_manage_posts() {
 		global $typenow, $wp_query;
 		if ( in_array( $typenow, wc_get_order_types( 'order-meta-boxes' ) ) ) {
-			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 				$selected_coutry = isset( $_GET['country'] ) ? $_GET['country'] : 'all';
 				$countries = array_merge( array( 'all' => __( 'All countries', 'woocommerce-jetpack' ) ), wcj_get_countries() );
 				echo '<select id="country" name="country">';
@@ -331,7 +331,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 				}
 				echo '</select>';
 			}
-			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 				$selected_currency = isset( $_GET['currency'] ) ? $_GET['currency'] : 'all';
 				$currencies = array_merge( array( 'all' => __( 'All currencies', 'woocommerce-jetpack' ) ), wcj_get_woocommerce_currencies_and_symbols() );
 				echo '<select id="currency" name="currency">';
@@ -350,7 +350,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	 * @version 2.5.7
 	 */
 	function rearange_order_columns( $columns ) {
-		$reordered_columns = get_option( 'wcj_order_admin_list_columns_order', $this->get_orders_default_columns_in_order() );
+		$reordered_columns = wcj_get_option( 'wcj_order_admin_list_columns_order', $this->get_orders_default_columns_in_order() );
 		$reordered_columns = explode( PHP_EOL, $reordered_columns );
 		$reordered_columns_result = array();
 		if ( ! empty( $reordered_columns ) ) {
@@ -372,16 +372,16 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	 * @version 2.8.0
 	 */
 	function add_order_columns( $columns ) {
-		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 			$columns['country'] = __( 'Billing Country', 'woocommerce-jetpack' );
 		}
-		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 			$columns['currency'] = __( 'Currency Code', 'woocommerce-jetpack' );
 		}
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
-				$columns[ 'wcj_orders_custom_column_' . $i ] = get_option( 'wcj_orders_list_custom_columns_label_' . $i, '' );
+			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				$columns[ 'wcj_orders_custom_column_' . $i ] = wcj_get_option( 'wcj_orders_list_custom_columns_label_' . $i, '' );
 			}
 		}
 		return $columns;
@@ -394,19 +394,19 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	 * @param   string $column
 	 */
 	function render_order_column( $column ) {
-		if ( 'country' === $column && 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
+		if ( 'country' === $column && 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 			$country_code = do_shortcode( '[wcj_order_checkout_field field_id="billing_country"]' );
 			echo ( 2 == strlen( $country_code ) )
 				? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
 				: wcj_get_country_name_by_code( $country_code );
-		} elseif ( 'currency' === $column && 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+		} elseif ( 'currency' === $column && 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 			echo do_shortcode( '[wcj_order_currency]' );
 		} else {
-			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
-				if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
 					if ( 'wcj_orders_custom_column_' . $i === $column ) {
-						echo do_shortcode( get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' ) );
+						echo do_shortcode( wcj_get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' ) );
 					}
 				}
 			}

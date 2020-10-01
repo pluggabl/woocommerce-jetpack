@@ -30,11 +30,11 @@ class WCJ_Custom_JS extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( '' != get_option( 'wcj_custom_js_frontend', '' ) ) {
-				add_action( 'wp_'    . get_option( 'wcj_custom_js_hook', 'head' ), array( $this, 'custom_frontend_js' ) );
+			if ( '' != wcj_get_option( 'wcj_custom_js_frontend', '' ) ) {
+				add_action( 'wp_'    . wcj_get_option( 'wcj_custom_js_hook', 'head' ), array( $this, 'custom_frontend_js' ) );
 			}
-			if ( '' != get_option( 'wcj_custom_js_backend', '' ) ) {
-				add_action( 'admin_' . get_option( 'wcj_custom_js_hook', 'head' ), array( $this, 'custom_backend_js' ) );
+			if ( '' != wcj_get_option( 'wcj_custom_js_backend', '' ) ) {
+				add_action( 'admin_' . wcj_get_option( 'wcj_custom_js_hook', 'head' ), array( $this, 'custom_backend_js' ) );
 			}
 		}
 	}
@@ -46,7 +46,7 @@ class WCJ_Custom_JS extends WCJ_Module {
 	 * @since   2.8.0
 	 */
 	function custom_frontend_js() {
-		echo '<script>' . do_shortcode( get_option( 'wcj_custom_js_frontend', '' ) ) . '</script>';
+		echo '<script>' . do_shortcode( wcj_get_option( 'wcj_custom_js_frontend', '' ) ) . '</script>';
 	}
 
 	/**
@@ -56,7 +56,7 @@ class WCJ_Custom_JS extends WCJ_Module {
 	 * @since   2.8.0
 	 */
 	function custom_backend_js() {
-		echo '<script>' . do_shortcode( get_option( 'wcj_custom_js_backend', '' ) ) . '</script>';
+		echo '<script>' . do_shortcode( wcj_get_option( 'wcj_custom_js_backend', '' ) ) . '</script>';
 	}
 
 }

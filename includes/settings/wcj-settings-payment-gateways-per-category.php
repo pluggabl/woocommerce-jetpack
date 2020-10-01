@@ -10,8 +10,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $product_cats                = wcj_get_terms( 'product_cat' );
-$is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
-$do_use_variations           = ( 'yes' === get_option( 'wcj_gateways_per_category_use_variations', 'no' ) );
+$is_multiselect_products     = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
+$do_use_variations           = ( 'yes' === wcj_get_option( 'wcj_gateways_per_category_use_variations', 'no' ) );
 $products                    = ( $is_multiselect_products ? wcj_get_products( array(), 'any', 512, $do_use_variations, $do_use_variations ) : false );
 $available_gateways          = WC()->payment_gateways->payment_gateways();
 $settings = array(

@@ -10,7 +10,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$use_shipping_instance = ( 'yes' === get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
+$use_shipping_instance = ( 'yes' === wcj_get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
 $shipping_methods = ( $use_shipping_instance ? wcj_get_shipping_methods_instances() : wcj_get_shipping_methods() );
 $settings = array(
 	array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 5.2.0
+ * @version 5.3.3
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -109,7 +109,7 @@ $settings = array(
 		'id'       => 'wcj_checkout_custom_fields_options',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings,
 		array(
 			array(
@@ -121,7 +121,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkou
 				'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
 				'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 				'desc_tip' => __( 'Key', 'woocommerce-jetpack' ) . ': ' .
-					'<code>' . get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i . '</code>',
+					'<code>' . wcj_get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i . '</code>',
 				'id'       => 'wcj_checkout_custom_field_enabled_' . $i,
 				'default'  => 'no',
 				'type'     => 'checkbox',
@@ -277,7 +277,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkou
 			array(
 				'title'    => __( 'Datepicker/Weekpicker: Date Format', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
+				'desc_tip' => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ) . "</br>" . __( 'Use Y-m-d format if you want to use this field for sorting', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_checkout_custom_field_datepicker_format_' . $i,
 				'type'     => 'text',
 				'default'  => '',
@@ -288,6 +288,14 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkou
 				'id'       => 'wcj_checkout_custom_field_datepicker_mindate_' . $i,
 				'type'     => 'number',
 				'default'  => -365,
+			),
+			array(
+				'title'    => __( 'Datepicker/Weekpicker: Current day time limit', 'woocommerce-jetpack' ),
+				'desc_tip'     => __( 'If the Min Date is 0, Today\'s date will be no longer available after selected time limit.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_datepicker_current_day_time_limit_' . $i,
+				'type'     => 'time',
+				'default'  => "10:00",
+				'css'      => "width:400px",
 			),
 			array(
 				'title'    => __( 'Datepicker/Weekpicker: Max Date', 'woocommerce-jetpack' ),

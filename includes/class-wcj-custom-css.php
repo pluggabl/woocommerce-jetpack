@@ -32,16 +32,16 @@ class WCJ_Custom_CSS extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Frontend
-			if ( '' != get_option( 'wcj_general_custom_css', '' ) ) {
-				add_action( 'wp_'    . get_option( 'wcj_custom_css_hook', 'head' ), array( $this, 'hook_custom_css' ) );
+			if ( '' != wcj_get_option( 'wcj_general_custom_css', '' ) ) {
+				add_action( 'wp_'    . wcj_get_option( 'wcj_custom_css_hook', 'head' ), array( $this, 'hook_custom_css' ) );
 			}
 			// Admin
-			if ( '' != get_option( 'wcj_general_custom_admin_css', '' ) ) {
-				add_action( 'admin_' . get_option( 'wcj_custom_css_hook', 'head' ), array( $this, 'hook_custom_admin_css' ) );
+			if ( '' != wcj_get_option( 'wcj_general_custom_admin_css', '' ) ) {
+				add_action( 'admin_' . wcj_get_option( 'wcj_custom_css_hook', 'head' ), array( $this, 'hook_custom_admin_css' ) );
 			}
 			// Per product
-			if ( 'yes' === get_option( 'wcj_custom_css_per_product', 'no' ) ) {
-				add_action( 'wp_'    . get_option( 'wcj_custom_css_hook', 'head' ), array( $this, 'maybe_add_per_product_css' ) );
+			if ( 'yes' === wcj_get_option( 'wcj_custom_css_per_product', 'no' ) ) {
+				add_action( 'wp_'    . wcj_get_option( 'wcj_custom_css_hook', 'head' ), array( $this, 'maybe_add_per_product_css' ) );
 				// Settings
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
@@ -71,7 +71,7 @@ class WCJ_Custom_CSS extends WCJ_Module {
 	 * @since   2.7.0
 	 */
 	function hook_custom_css() {
-		echo '<style>' . get_option( 'wcj_general_custom_css', '' ) . '</style>';
+		echo '<style>' . wcj_get_option( 'wcj_general_custom_css', '' ) . '</style>';
 	}
 
 	/**
@@ -81,7 +81,7 @@ class WCJ_Custom_CSS extends WCJ_Module {
 	 * @since   2.7.0
 	 */
 	function hook_custom_admin_css() {
-		echo '<style>' . get_option( 'wcj_general_custom_admin_css', '' ) . '</style>';
+		echo '<style>' . wcj_get_option( 'wcj_general_custom_admin_css', '' ) . '</style>';
 	}
 
 }

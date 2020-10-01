@@ -23,7 +23,7 @@ return array(
 	array(
 		'title'   => __( 'CSS', 'woocommerce-jetpack' ),
 		'name'    => 'wcj_product_css',
-		'default' => get_option( 'wcj_custom_css_per_product_default_value', '' ),
+		'default' => wcj_get_option( 'wcj_custom_css_per_product_default_value', '' ),
 		'type'    => 'textarea',
 		'css'     => 'width:100%;min-height:100px;',
 	),

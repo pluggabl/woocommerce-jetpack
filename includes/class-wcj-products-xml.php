@@ -35,7 +35,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			add_action( 'admin_init',     array( $this, 'wcj_create_products_xml' ) );
 			add_action( 'admin_notices',  array( $this, 'admin_notices' ) );
 			add_filter( 'cron_schedules', array( $this, 'cron_add_custom_intervals' ) );
-			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_products_xml_total_files', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				add_action( 'wcj_create_products_xml_hook_' . $i, array( $this, 'create_products_xml_cron' ), PHP_INT_MAX, 2 );
 			}
@@ -56,11 +56,11 @@ class WCJ_Products_XML extends WCJ_Module {
 			'daily',
 			'weekly',
 		);
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_products_xml_total_files', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$event_hook = 'wcj_create_products_xml_hook_' . $i;
-			if ( 'yes' === get_option( 'wcj_products_xml_enabled_' . $i, 'yes' ) ) {
-				$selected_interval = apply_filters( 'booster_option', 'weekly', get_option( 'wcj_create_products_xml_period_' . $i, 'weekly' ) );
+			if ( 'yes' === wcj_get_option( 'wcj_products_xml_enabled_' . $i, 'yes' ) ) {
+				$selected_interval = apply_filters( 'booster_option', 'weekly', wcj_get_option( 'wcj_create_products_xml_period_' . $i, 'weekly' ) );
 				foreach ( $update_intervals as $interval ) {
 					$event_timestamp = wp_next_scheduled( $event_hook, array( $interval, $i ) );
 					if ( $selected_interval === $interval ) {
@@ -172,20 +172,20 @@ class WCJ_Products_XML extends WCJ_Module {
 	 */
 	function create_products_xml( $file_num ) {
 		$xml_items = '';
-		$xml_header_template  = get_option( 'wcj_products_xml_header_'        . $file_num, '' );
-		$xml_footer_template  = get_option( 'wcj_products_xml_footer_'        . $file_num, '' );
-		$xml_item_template    = get_option( 'wcj_products_xml_item_'          . $file_num, '' );
-		$products_in_ids      = wcj_maybe_convert_string_to_array( get_option( 'wcj_products_xml_products_incl_' . $file_num, '' ) );
-		$products_ex_ids      = wcj_maybe_convert_string_to_array( get_option( 'wcj_products_xml_products_excl_' . $file_num, '' ) );
-		$products_cats_in_ids = get_option( 'wcj_products_xml_cats_incl_'     . $file_num, '' );
-		$products_cats_ex_ids = get_option( 'wcj_products_xml_cats_excl_'     . $file_num, '' );
-		$products_tags_in_ids = get_option( 'wcj_products_xml_tags_incl_'     . $file_num, '' );
-		$products_tags_ex_ids = get_option( 'wcj_products_xml_tags_excl_'     . $file_num, '' );
-		$products_scope       = get_option( 'wcj_products_xml_scope_'         . $file_num, 'all' );
-		$order_by             = get_option( 'wcj_products_xml_orderby_'       . $file_num, 'date' );
-		$order                = get_option( 'wcj_products_xml_order_'         . $file_num, 'DESC' );
-		$max                  = get_option( 'wcj_products_xml_max_'           . $file_num, -1 );
-		$block_size           = get_option( 'wcj_products_xml_block_size', 256 );
+		$xml_header_template  = wcj_get_option( 'wcj_products_xml_header_'        . $file_num, '' );
+		$xml_footer_template  = wcj_get_option( 'wcj_products_xml_footer_'        . $file_num, '' );
+		$xml_item_template    = wcj_get_option( 'wcj_products_xml_item_'          . $file_num, '' );
+		$products_in_ids      = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_products_xml_products_incl_' . $file_num, '' ) );
+		$products_ex_ids      = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_products_xml_products_excl_' . $file_num, '' ) );
+		$products_cats_in_ids = wcj_get_option( 'wcj_products_xml_cats_incl_'     . $file_num, '' );
+		$products_cats_ex_ids = wcj_get_option( 'wcj_products_xml_cats_excl_'     . $file_num, '' );
+		$products_tags_in_ids = wcj_get_option( 'wcj_products_xml_tags_incl_'     . $file_num, '' );
+		$products_tags_ex_ids = wcj_get_option( 'wcj_products_xml_tags_excl_'     . $file_num, '' );
+		$products_scope       = wcj_get_option( 'wcj_products_xml_scope_'         . $file_num, 'all' );
+		$order_by             = wcj_get_option( 'wcj_products_xml_orderby_'       . $file_num, 'date' );
+		$order                = wcj_get_option( 'wcj_products_xml_order_'         . $file_num, 'DESC' );
+		$max                  = wcj_get_option( 'wcj_products_xml_max_'           . $file_num, -1 );
+		$block_size           = wcj_get_option( 'wcj_products_xml_block_size', 256 );
 		$offset               = 0;
 		$counter              = 0;
 		while( true ) {
@@ -283,7 +283,7 @@ class WCJ_Products_XML extends WCJ_Module {
 		}
 		wp_reset_postdata();
 		return file_put_contents(
-			ABSPATH . get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 == $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
+			ABSPATH . wcj_get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 == $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
 			$this->process_shortcode( $xml_header_template ) . $xml_items . $this->process_shortcode( $xml_footer_template )
 		);
 	}

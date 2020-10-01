@@ -26,11 +26,11 @@ class WCJ_Product_Input_Fields_Core {
 	 */
 	function __construct( $scope ) {
 		$this->scope = $scope;
-		if ( 'yes' === get_option( 'wcj_product_input_fields_' . $this->scope . '_enabled', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_product_input_fields_' . $this->scope . '_enabled', 'no' ) ) {
 
 			// Show fields at frontend
-			add_action( get_option( 'wcj_product_input_fields_position', 'woocommerce_before_add_to_cart_button' ),
-				array( $this, 'add_product_input_fields_to_frontend' ), get_option( 'wcj_product_input_fields_position_priority', 100 ) );
+			add_action( wcj_get_option( 'wcj_product_input_fields_position', 'woocommerce_before_add_to_cart_button' ),
+				array( $this, 'add_product_input_fields_to_frontend' ), wcj_get_option( 'wcj_product_input_fields_position_priority', 100 ) );
 
 			// Process from $_POST to cart item data
 			add_filter( 'woocommerce_add_to_cart_validation',       array( $this, 'validate_product_input_fields_on_add_to_cart' ), 100, 2 );
@@ -39,7 +39,7 @@ class WCJ_Product_Input_Fields_Core {
 			add_filter( 'woocommerce_get_cart_item_from_session',   array( $this, 'get_cart_item_product_input_fields_from_session' ), 100, 3 );
 
 			// Show details at cart, order details, emails
-			if ( 'data' === get_option( 'wcj_product_input_fields_display_options', 'name' ) ) {
+			if ( 'data' === wcj_get_option( 'wcj_product_input_fields_display_options', 'name' ) ) {
 				add_filter( 'woocommerce_get_item_data',            array( $this, 'add_product_input_fields_to_cart_item_display_data' ), PHP_INT_MAX, 2 );
 			} else {
 				add_filter( 'woocommerce_cart_item_name',           array( $this, 'add_product_input_fields_to_cart_item_name' ), 100, 3 );
@@ -60,7 +60,7 @@ class WCJ_Product_Input_Fields_Core {
 
 			// Make nicer name for product input fields in order at backend (shop manager)
 			add_action( 'woocommerce_after_order_itemmeta',         array( $this, 'output_custom_input_fields_in_admin_order' ), 100, 3 );
-			if ( 'yes' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
 				add_filter( 'woocommerce_hidden_order_itemmeta',    array( $this, 'hide_custom_input_fields_default_output_in_admin_order' ), 100 );
 			}
 
@@ -137,7 +137,7 @@ class WCJ_Product_Input_Fields_Core {
 			return;
 		}
 		// Save values
-		$default_total_input_fields       = apply_filters( 'booster_option', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
+		$default_total_input_fields       = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
 		$total_input_fields_before_saving = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_local_total_number', $post_id, 1 ) );
 		$total_input_fields_before_saving = ( '' != $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
 		$options                          = $this->get_options();
@@ -192,7 +192,7 @@ class WCJ_Product_Input_Fields_Core {
 		$option_name = 'wcj_' . $meta_box_id . '_local_total_number';
 		// If none total number set - check for the default
 		if ( ! ( $total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_local_total_number', $current_post_id, 1 ) ) ) ) {
-			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
 		}
 
 		// Start html
@@ -285,12 +285,12 @@ class WCJ_Product_Input_Fields_Core {
 	 */
 	function is_enabled_for_product_global( $field_nr, $product_id ) {
 		return wcj_is_enabled_for_product( $product_id, array(
-			'include_products'   => get_option( 'wcj_product_input_fields_in_products_' . 'global' . '_' . $field_nr, '' ),
-			'exclude_products'   => get_option( 'wcj_product_input_fields_ex_products_' . 'global' . '_' . $field_nr, '' ),
-			'include_categories' => get_option( 'wcj_product_input_fields_in_cats_'     . 'global' . '_' . $field_nr, '' ),
-			'exclude_categories' => get_option( 'wcj_product_input_fields_ex_cats_'     . 'global' . '_' . $field_nr, '' ),
-			'include_tags'       => get_option( 'wcj_product_input_fields_in_tags_'     . 'global' . '_' . $field_nr, '' ),
-			'exclude_tags'       => get_option( 'wcj_product_input_fields_ex_tags_'     . 'global' . '_' . $field_nr, '' ),
+			'include_products'   => wcj_get_option( 'wcj_product_input_fields_in_products_' . 'global' . '_' . $field_nr, '' ),
+			'exclude_products'   => wcj_get_option( 'wcj_product_input_fields_ex_products_' . 'global' . '_' . $field_nr, '' ),
+			'include_categories' => wcj_get_option( 'wcj_product_input_fields_in_cats_'     . 'global' . '_' . $field_nr, '' ),
+			'exclude_categories' => wcj_get_option( 'wcj_product_input_fields_ex_cats_'     . 'global' . '_' . $field_nr, '' ),
+			'include_tags'       => wcj_get_option( 'wcj_product_input_fields_in_tags_'     . 'global' . '_' . $field_nr, '' ),
+			'exclude_tags'       => wcj_get_option( 'wcj_product_input_fields_ex_tags_'     . 'global' . '_' . $field_nr, '' ),
 		) );
 	}
 
@@ -317,8 +317,8 @@ class WCJ_Product_Input_Fields_Core {
 		}
 
 		if (
-			( 'new_order'                 === $status && 'yes' === get_option( 'wcj_product_input_fields_attach_to_admin_new_order',           'yes' ) ) ||
-			( 'customer_processing_order' === $status && 'yes' === get_option( 'wcj_product_input_fields_attach_to_customer_processing_order', 'yes' ) )
+			( 'new_order'                 === $status && 'yes' === wcj_get_option( 'wcj_product_input_fields_attach_to_admin_new_order',           'yes' ) ) ||
+			( 'customer_processing_order' === $status && 'yes' === wcj_get_option( 'wcj_product_input_fields_attach_to_customer_processing_order', 'yes' ) )
 		) {
 			foreach ( $order->get_items() as $item_key => $item ) {
 				$product_id = $item['product_id'];
@@ -389,7 +389,7 @@ class WCJ_Product_Input_Fields_Core {
 					}
 				}
 			} else {
-				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
+				if ( 'no' === wcj_get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
 					continue;
 				}
 			}
@@ -411,7 +411,7 @@ class WCJ_Product_Input_Fields_Core {
 	 */
 	function get_value( $option_name, $product_id, $default ) {
 		if ( 'global' === $this->scope ) {
-			return get_option( $option_name, $default );
+			return wcj_get_option( $option_name, $default );
 		} else { // local
 			if ( '' != ( $options = get_post_meta( $product_id, '_' . 'wcj_product_input_fields', true ) ) ) {
 				$option_name = str_replace( 'wcj_product_input_fields_', '', $option_name );
@@ -524,7 +524,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @since   3.9.1
 	 */
 	function maybe_stripslashes( $str ) {
-		return ( 'yes' === get_option( 'wcj_product_input_fields_stripslashes', 'no' ) ? stripslashes( $str ) : $str );
+		return ( 'yes' === wcj_get_option( 'wcj_product_input_fields_stripslashes', 'no' ) ? stripslashes( $str ) : $str );
 	}
 
 	/**
@@ -536,7 +536,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @todo    add `required` attributes
 	 */
 	function add_product_input_fields_to_frontend() {
-		if ( isset( $this->are_product_input_fields_displayed ) && 'yes' === get_option( 'wcj_product_input_fields_check_for_outputted_data', 'yes' ) ) {
+		if ( isset( $this->are_product_input_fields_displayed ) && 'yes' === wcj_get_option( 'wcj_product_input_fields_check_for_outputted_data', 'yes' ) ) {
 			return;
 		}
 		global $product;
@@ -556,7 +556,7 @@ class WCJ_Product_Input_Fields_Core {
 
 			$datepicker_format = $this->get_value( 'wcj_product_input_fields_type_datepicker_format_'  . $this->scope . '_' . $i, $_product_id, '' );
 			if ( '' == $datepicker_format ) {
-				$datepicker_format = get_option( 'date_format' );
+				$datepicker_format = wcj_get_option( 'date_format' );
 			}
 			$datepicker_format     = wcj_date_format_php_to_js( $datepicker_format );
 			$datepicker_mindate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $_product_id, -365 );
@@ -586,7 +586,7 @@ class WCJ_Product_Input_Fields_Core {
 			$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
 
 			if ( 'on' === $is_required || 'yes' === $is_required ) {
-				$title .= get_option( 'wcj_product_input_fields_frontend_view_required_html', '&nbsp;<abbr class="required" title="required">*</abbr>' );
+				$title .= wcj_get_option( 'wcj_product_input_fields_frontend_view_required_html', '&nbsp;<abbr class="required" title="required">*</abbr>' );
 			}
 
 			if ( $this->is_enabled( $i, $_product_id ) ) {
@@ -680,7 +680,7 @@ class WCJ_Product_Input_Fields_Core {
 						if ( ! empty( $select_options ) ) {
 							reset( $select_options );
 							$value = ( '' != $set_value ? $set_value : key( $select_options ) );
-							$template = get_option( 'wcj_product_input_fields_field_template_radio',
+							$template = wcj_get_option( 'wcj_product_input_fields_field_template_radio',
 								'%radio_field_html%<label for="%radio_field_id%" class="radio">%radio_field_title%</label><br>' );
 							foreach ( $select_options as $option_key => $option_text ) {
 								$replaced_values = array(
@@ -729,7 +729,7 @@ class WCJ_Product_Input_Fields_Core {
 		}
 		ksort( $fields );
 		if ( ! empty ( $fields ) ) {
-			echo get_option( 'wcj_product_input_fields_start_template', '' ) . implode( $fields ) . get_option( 'wcj_product_input_fields_end_template', '' );
+			echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . implode( $fields ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' );
 			$this->are_product_input_fields_displayed = true;
 		}
 	}
@@ -789,10 +789,10 @@ class WCJ_Product_Input_Fields_Core {
 			return $name;
 		}
 		if ( $is_cart ) {
-			$name .= get_option( 'wcj_product_input_fields_cart_start_template', '<dl style="font-size:smaller;">' );
-			$item_template = get_option( 'wcj_product_input_fields_cart_field_template', '<dt>%title%</dt><dd>%value%</dd>' );
+			$name .= wcj_get_option( 'wcj_product_input_fields_cart_start_template', '<dl style="font-size:smaller;">' );
+			$item_template = wcj_get_option( 'wcj_product_input_fields_cart_field_template', '<dt>%title%</dt><dd>%value%</dd>' );
 		} else {
-			$item_template = get_option( 'wcj_product_input_fields_frontend_view_order_table_format', '&nbsp;| %title% %value%' );
+			$item_template = wcj_get_option( 'wcj_product_input_fields_frontend_view_order_table_format', '&nbsp;| %title% %value%' );
 		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( ! $this->is_enabled( $i, $item['product_id'] ) ) {
@@ -827,7 +827,7 @@ class WCJ_Product_Input_Fields_Core {
 			}
 		}
 		if ( $is_cart ) {
-			$name .= get_option( 'wcj_product_input_fields_cart_end_template', '</dl>' );
+			$name .= wcj_get_option( 'wcj_product_input_fields_cart_end_template', '</dl>' );
 		}
 		return $name;
 	}

@@ -28,7 +28,7 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_order_button_text', array( $this, 'set_order_button_text' ), PHP_INT_MAX );
-			if ( 'yes' === get_option( 'wcj_checkout_place_order_button_override', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_checkout_place_order_button_override', 'no' ) ) {
 				add_action( 'init', array( $this, 'override_order_button_text' ), PHP_INT_MAX );
 			}
 		}
@@ -54,7 +54,7 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 	 * @version 2.8.0
 	 */
 	function set_order_button_text( $current_text ) {
-		return ( '' != ( $new_text = get_option( 'wcj_checkout_place_order_button_text', '' ) ) ) ? $new_text : $current_text;
+		return ( '' != ( $new_text = wcj_get_option( 'wcj_checkout_place_order_button_text', '' ) ) ) ? $new_text : $current_text;
 	}
 
 }

@@ -38,7 +38,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 			$this->global_product_fields = new WCJ_Product_Input_Fields_Core( 'global' );
 			$this->local_product_fields  = new WCJ_Product_Input_Fields_Core( 'local' );
 
-			if ( 'yes' === get_option( 'wcj_product_input_fields_global_enabled', 'no' ) || 'yes' === get_option( 'wcj_product_input_fields_local_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_input_fields_global_enabled', 'no' ) || 'yes' === wcj_get_option( 'wcj_product_input_fields_local_enabled', 'no' ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 				add_action( 'init',               array( $this, 'register_scripts' ) );
 			}
@@ -55,7 +55,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * @since   4.5.0
 	 */
 	function preserve_linebreaks_admin() {
-		if ( 'yes' !== get_option( 'wcj_product_input_fields_admin_linebreaks', 'no' ) ) {
+		if ( 'yes' !== wcj_get_option( 'wcj_product_input_fields_admin_linebreaks', 'no' ) ) {
 			return;
 		}
 		?>
@@ -74,7 +74,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * @since   4.5.0
 	 */
 	function preserve_linebreaks_frontend() {
-		if ( 'yes' !== get_option( 'wcj_product_input_fields_frontend_linebreaks', 'no' ) ) {
+		if ( 'yes' !== wcj_get_option( 'wcj_product_input_fields_frontend_linebreaks', 'no' ) ) {
 			return;
 		}
 		?>

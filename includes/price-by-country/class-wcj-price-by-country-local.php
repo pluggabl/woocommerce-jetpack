@@ -4,7 +4,7 @@
  *
  * @version 4.0.0
  * @author  Pluggabl LLC.
- * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
+ * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === wcj_get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -79,7 +79,7 @@ class WCJ_Price_by_Country_Local {
 	 * get_total_country_groups_number.
 	 */
 	function get_total_country_groups_number() {
-		return apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
+		return apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
 	}
 
 	/**
@@ -201,18 +201,18 @@ class WCJ_Price_by_Country_Local {
 			}
 
 			$countries = '';
-			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+			switch ( wcj_get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 				case 'comma_list':
-					$countries .= get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' );
+					$countries .= wcj_get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' );
 					break;
 				case 'multiselect':
-					$countries .= ( '' != ( $group = get_option( 'wcj_price_by_country_countries_group_' . $i, '' ) ) ? implode( ',', $group ) : '' );
+					$countries .= ( '' != ( $group = wcj_get_option( 'wcj_price_by_country_countries_group_' . $i, '' ) ) ? implode( ',', $group ) : '' );
 					break;
 				case 'chosen_select':
-					$countries .= ( '' != ( $group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' ) ) ? implode( ',', $group ) : '' );
+					$countries .= ( '' != ( $group = wcj_get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' ) ) ? implode( ',', $group ) : '' );
 					break;
 			}
-			$admin_title = get_option( 'wcj_price_by_country_countries_group_admin_title_' . $i, __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i );
+			$admin_title = wcj_get_option( 'wcj_price_by_country_countries_group_admin_title_' . $i, __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i );
 			$html .= '<details style="float: left; border-top: 1px dashed #cccccc; width: 100%; padding-top: 10px;">' .
 				'<summary style="font-weight:bold;">' . $admin_title . '</summary><p>' . $countries . '</p>' .
 			'</details>';
@@ -228,7 +228,7 @@ class WCJ_Price_by_Country_Local {
 					}
 					$html .= '<p class="form-row form-row-' . $column_position . '">';
 				}
-				$group_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
+				$group_currency_code = wcj_get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 				$currency_code_html = ( 'checkbox' != $option['type'] ) ? ' (' . get_woocommerce_currency_symbol( $group_currency_code ) . ')' : '';
 				$html .= '<label for="' . $option_id . $variation_id_addon . '">' . $option['title'] . $currency_code_html . '</label>';
 				$html .= $this->get_option_field_html( $current_post_id, $option_id, $option, $variation_id_addon );

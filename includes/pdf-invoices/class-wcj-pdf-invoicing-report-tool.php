@@ -49,7 +49,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 * @todo    this function is similar to `WCJ_PDF_Invoicing::check_user_roles()` - maybe it should be just one function for both classes..
 	 */
 	function check_user_roles( $invoice_type_id ) {
-		$allowed_user_roles = get_option( 'wcj_invoicing_' . $invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
+		$allowed_user_roles = wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
 		if ( empty( $allowed_user_roles ) ) {
 			$allowed_user_roles = array( 'administrator' );
 		}
@@ -64,7 +64,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 */
 	function generate_report_zip() {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
-			if ( 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 				$this->notice = '<div class="error"><p><strong>' . sprintf(
 					__( 'This option is disabled with "Disable Saving PDFs in PHP directory for temporary files" checkbox in <a href="%s" target="_blank">WooCommerce > Settings > Booster > PDF Invoicing & Packing Slips > Advanced</a>.', 'woocommerce-jetpack' ),
 					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' ) ) .
@@ -274,15 +274,15 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				return false;
 			}
 			$csv  = '';
-			$sep  = get_option( 'wcj_pdf_invoicing_report_tool_csv_separator', ';' );
-			$replace_periods_with_commas = ( 'yes' === get_option( 'wcj_pdf_invoicing_report_tool_csv_replace_periods_w_commas', 'yes' ) );
+			$sep  = wcj_get_option( 'wcj_pdf_invoicing_report_tool_csv_separator', ';' );
+			$replace_periods_with_commas = ( 'yes' === wcj_get_option( 'wcj_pdf_invoicing_report_tool_csv_replace_periods_w_commas', 'yes' ) );
 			foreach ( $data as $row ) {
 				if ( $replace_periods_with_commas ) {
 					$row = str_replace( '.', ',', $row );
 				}
 				$csv .= implode( $sep, $row ) . PHP_EOL;
 			}
-			if ( 'yes' === get_option( 'wcj_pdf_invoicing_report_tool_csv_add_utf_8_bom', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_pdf_invoicing_report_tool_csv_add_utf_8_bom', 'yes' ) ) {
 				$csv = "\xEF\xBB\xBF" . $csv; // UTF-8 BOM
 			}
 			$filename = $this->get_report_file_name( $_year, $_month, $_invoice_type, 'csv' );
@@ -315,7 +315,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 */
 	function get_invoices_report_data( $year, $month, $invoice_type_id ) {
 
-		$columns = get_option( 'wcj_pdf_invoicing_report_tool_columns', '' );
+		$columns = wcj_get_option( 'wcj_pdf_invoicing_report_tool_columns', '' );
 		if ( empty( $columns ) ) {
 			$columns = array_keys( WCJ()->modules['pdf_invoicing_advanced']->get_report_columns() );
 		}
@@ -327,7 +327,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$first_minute = mktime( 0, 0, 0, $month, 1, $year );
 		$last_minute  = mktime( 23, 59, 59, $month, date( 't', $first_minute ), $year );
 
-		$tax_percent_format = '%.' . get_option( 'wcj_pdf_invoicing_report_tool_tax_percent_precision', 0 ) . 'f %%';
+		$tax_percent_format = '%.' . wcj_get_option( 'wcj_pdf_invoicing_report_tool_tax_percent_precision', 0 ) . 'f %%';
 
 		$data       = array();
 		$offset     = 0;
@@ -395,7 +395,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 								$row[] = wcj_get_invoice_number( $order_id, $invoice_type_id );
 								break;
 							case 'document_date':
-								$row[] = wcj_get_invoice_date( $order_id, $invoice_type_id, 0, get_option( 'date_format' ) );
+								$row[] = wcj_get_invoice_date( $order_id, $invoice_type_id, 0, wcj_get_option( 'date_format' ) );
 								break;
 							case 'order_id':
 								$row[] = $order_id;

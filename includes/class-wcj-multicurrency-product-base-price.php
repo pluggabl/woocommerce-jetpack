@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 
-				$this->do_convert_in_back_end = ( 'yes' === get_option( 'wcj_multicurrency_base_price_do_convert_in_back_end', 'no' ) );
+				$this->do_convert_in_back_end = ( 'yes' === wcj_get_option( 'wcj_multicurrency_base_price_do_convert_in_back_end', 'no' ) );
 
 				if ( $this->do_convert_in_back_end || wcj_is_frontend() ) {
 					$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'multicurrency_base_price' );
@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		function handle_wc_price_sorting() {
 			add_filter( 'woocommerce_get_catalog_ordering_args', function ( $args, $orderby, $order ) {
 				if (
-					'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ||
+					'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ||
 					is_admin()
 				) {
 					return $args;
@@ -106,7 +106,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function modify_default_price_filter_hook( $query ) {
 			if (
-				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
+				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				! isset( $_GET['min_price'] ) ||
 				! isset( $_GET['max_price'] )
 			) {
@@ -157,7 +157,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			}
 			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
 			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX; // WPCS: input var ok, CSRF ok.
-			if ( wc_tax_enabled() && 'incl' === get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
+			if ( wc_tax_enabled() && 'incl' === wcj_get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
 				$tax_class = apply_filters( 'woocommerce_price_filter_widget_tax_class', '' ); // Uses standard tax class.
 				$tax_rates = WC_Tax::get_rates( $tax_class );
 				if ( $tax_rates ) {
@@ -202,7 +202,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			if (
 				is_admin() ||
 				( ! is_shop() && ! is_product_taxonomy() ) ||
-				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' )
+				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' )
 			) {
 				return $sql;
 			}
@@ -255,7 +255,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function update_base_price_meta_on_base_price_currency_update( $meta_id, $object_id, $meta_key ) {
 			if (
-				( 'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
+				( 'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_wcj_multicurrency_base_price_currency' !== $meta_key ||
 				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
@@ -277,7 +277,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function update_base_price_meta_on_price_update( $meta_id, $object_id, $meta_key ){
 			if (
-				( 'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
+				( 'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_price' !== $meta_key ||
 				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
@@ -299,13 +299,13 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function update_products_base_price_on_exchange_rate_change( $option_name, $old_value, $option_value ){
 			if (
-				( 'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
+				( 'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				false === strpos( $option_name, 'wcj_multicurrency_base_price_exchange_rate_' )
 			) {
 				return;
 			}
 			$currency_number = substr( $option_name, strrpos( $option_name, '_' ) + 1 );
-			$currency        = get_option( 'wcj_multicurrency_base_price_currency_' . $currency_number );
+			$currency        = wcj_get_option( 'wcj_multicurrency_base_price_currency_' . $currency_number );
 			$the_query       = $this->get_products_by_base_price_currency( '=', $currency );
 			if ( $the_query->have_posts() ) {
 				foreach ( $the_query->posts as $post_id ) {
@@ -328,14 +328,14 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function handle_price_filter_compatibility_flag_on_base_price_currency_update( $meta_id, $object_id, $meta_key, $meta_value ) {
 			if (
-				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
+				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_wcj_multicurrency_base_price_currency' !== $meta_key ||
 				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
 			) {
 				return;
 			}
-			if ( $meta_value === get_option( 'woocommerce_currency' ) ) {
+			if ( $meta_value === wcj_get_option( 'woocommerce_currency' ) ) {
 				delete_post_meta( $product->get_id(), '_wcj_multicurrency_base_price_comp_pf' );
 			} else {
 				update_post_meta( $product->get_id(), '_wcj_multicurrency_base_price_comp_pf', true );
@@ -355,7 +355,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function handle_price_filter_compatibility_flag_on_base_price_update( $meta_id, $object_id, $meta_key, $meta_value ) {
 			if (
-				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
+				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_wcj_multicurrency_base_price' !== $meta_key ||
 				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
@@ -382,7 +382,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function get_products_by_base_price_currency( $compare = '=', $currency = '' ) {
 			if ( empty( $currency ) ) {
-				$currency = get_option( 'woocommerce_currency' );
+				$currency = wcj_get_option( 'woocommerce_currency' );
 			}
 			$args  = array(
 				'post_type'              => 'product',
@@ -469,9 +469,9 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			$price_hash['wcj_multicurrency_base_price'] = array(
 				'currency'           => $multicurrency_base_price_currency,
 				'exchange_rate'      => wcj_get_currency_exchange_rate_product_base_currency( $multicurrency_base_price_currency ),
-				'rounding'           => get_option( 'wcj_multicurrency_base_price_round_enabled', 'no' ),
-				'rounding_precision' => get_option( 'wcj_multicurrency_base_price_round_precision', get_option( 'woocommerce_price_num_decimals' ) ),
-				'save_prices'        => get_option( 'wcj_multicurrency_base_price_save_prices', 'no' ),
+				'rounding'           => wcj_get_option( 'wcj_multicurrency_base_price_round_enabled', 'no' ),
+				'rounding_precision' => wcj_get_option( 'wcj_multicurrency_base_price_round_precision', wcj_get_option( 'woocommerce_price_num_decimals' ) ),
+				'save_prices'        => wcj_get_option( 'wcj_multicurrency_base_price_save_prices', 'no' ),
 			);
 			return $price_hash;
 		}

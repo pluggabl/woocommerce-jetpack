@@ -170,7 +170,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 				}
 				$meta_info[] = wp_kses_post( rawurldecode( $_meta_key ) ) . ': ' . wp_kses_post( rawurldecode( $_meta_value ) );
 			}
-			$meta_info = implode( get_option( 'wcj_general_item_meta_separator', ', ' ), $meta_info );
+			$meta_info = implode( wcj_get_option( 'wcj_general_item_meta_separator', ', ' ), $meta_info );
 		}
 		return $meta_info;
 	}

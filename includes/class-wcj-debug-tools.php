@@ -56,7 +56,7 @@ class WCJ_Debug_Tools extends WCJ_Module {
 		// Log
 		$the_log = '';
 		$the_log .= '<p style="font-style:italic;color:gray;">' . sprintf( __( 'Now: %s', 'woocommerce-jetpack' ), date( 'Y-m-d H:i:s' ) ) . '</p>';
-		if ( '' != ( $log = get_option( 'wcj_log', '' ) ) ) {
+		if ( '' != ( $log = wcj_get_option( 'wcj_log', '' ) ) ) {
 			$the_log .= '<pre style="color:green;background-color:black;padding:5px;">' . $log . '</pre>';
 		} else {
 			$the_log .= '<p style="font-style:italic;color:gray;">' . __( 'Log is empty.', 'woocommerce-jetpack' ) . '</p>';

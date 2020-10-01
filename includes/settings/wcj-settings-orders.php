@@ -10,7 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $bulk_regenerate_download_permissions_all_orders_cron_desc = '';
-if ( $this->is_enabled() && 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
+if ( $this->is_enabled() && 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
 	$bulk_regenerate_download_permissions_all_orders_cron_desc = wcj_crons_get_next_event_time_message( 'wcj_bulk_regenerate_download_permissions_all_orders_cron_time' );
 }
 

@@ -37,7 +37,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 
 		$this->the_atts = array(
 			'order_id'     => 0,
-			'date_format'  => get_option( 'date_format' ),
+			'date_format'  => wcj_get_option( 'date_format' ),
 			'days'         => 0,
 			'invoice_type' => 'invoice',
 			'doc_nr'       => 1,

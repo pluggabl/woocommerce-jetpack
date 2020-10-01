@@ -74,8 +74,8 @@ if ( ! function_exists( 'wcj_crons_get_next_event_time_message' ) ) {
 	 * @todo    (maybe) move to "date-time" functions
 	 */
 	function wcj_crons_get_next_event_time_message( $time_option_name ) {
-		if ( '' != get_option( $time_option_name, '' ) ) {
-			$scheduled_time_diff = get_option( $time_option_name, '' ) - time();
+		if ( '' != wcj_get_option( $time_option_name, '' ) ) {
+			$scheduled_time_diff = wcj_get_option( $time_option_name, '' ) - time();
 			if ( $scheduled_time_diff > 60 ) {
 				return '<br><em>' . sprintf( __( '%s till next run.', 'woocommerce-jetpack' ), human_time_diff( 0, $scheduled_time_diff ) ) . '</em>';
 			} elseif ( $scheduled_time_diff > 0 ) {

@@ -104,7 +104,7 @@ class WCJ_Settings_Manager {
 			foreach ( $values as $value ) {
 				if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
 					if ( isset ( $_POST['booster_export_settings'] ) ) {
-						$export_settings[ $value['id'] ] = get_option( $value['id'], $value['default'] );
+						$export_settings[ $value['id'] ] = wcj_get_option( $value['id'], $value['default'] );
 						if ( ! isset( $export_counter[ $module->short_desc ] ) ) {
 							$export_counter[ $module->short_desc ] = 0;
 						}
@@ -114,7 +114,7 @@ class WCJ_Settings_Manager {
 			}
 		}
 		$export_settings = json_encode( $export_settings );
-		$export_settings = 'Booster for WooCommerce v' . get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
+		$export_settings = 'Booster for WooCommerce v' . wcj_get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
 		header( "Content-Type: application/download" );
 		header( "Content-Disposition: attachment; filename=booster_settings.txt" );
 		echo $export_settings;

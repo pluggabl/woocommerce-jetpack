@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Order Custom Statuses
  *
- * @version 4.8.0
+ * @version 5.3.3
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -23,6 +23,14 @@ return array(
 		'default'  => 'wcj_no_changes',
 		'type'     => 'select',
 		'options'  => array_merge( array( 'wcj_no_changes' => __( 'No changes', 'woocommerce-jetpack' ) ), wcj_get_order_statuses() ),
+	),
+	array(
+		'title'    => __( 'Set Default Order Status Forcefully', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'You can set the default order status forcefully from here. Forcing the status can result in unpredictable consequences, enable the checkbox here.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_orders_custom_statuses_default_status_forcefully',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Add All Statuses to Admin Order Bulk Actions', 'woocommerce-jetpack' ),

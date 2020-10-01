@@ -77,3 +77,23 @@ if ( ! function_exists( 'wcj_is_plugin_activated' ) ) {
 		}
 	}
 }
+
+if ( ! function_exists( 'wcj_get_option' ) ) {
+	/**
+	 * wcj_get_option.
+	 *
+	 * @version 5.3.3
+	 * @since   5.3.3
+	 *
+	 * @param $option_name
+	 * @param null $default
+	 *
+	 * @return  bool
+	 */
+	function wcj_get_option( $option_name, $default = null ) {
+		if ( ! isset( WCJ()->options[ $option_name ] ) ) {
+			WCJ()->options[ $option_name ] = get_option( $option_name, $default );
+		}
+		return apply_filters( $option_name, WCJ()->options[ $option_name ] );
+	}
+}

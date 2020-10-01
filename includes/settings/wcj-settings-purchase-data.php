@@ -68,7 +68,7 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(

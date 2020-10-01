@@ -35,7 +35,7 @@ class WCJ_Call_For_Price extends WCJ_module {
 			add_action( 'admin_head',                            array( $this, 'hide_variation_price_required_placeholder' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_variation_is_visible',      array( $this, 'make_variation_visible_with_empty_price' ),   PHP_INT_MAX, 4 );
 			add_action( 'wp_head',                               array( $this, 'hide_disabled_variation_add_to_cart_button' ) );
-			if ( 'yes' === get_option( 'wcj_call_for_price_make_all_empty', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_call_for_price_make_all_empty', 'no' ) ) {
 				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                  array( $this, 'make_empty_price' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_variation_prices_price',          array( $this, 'make_empty_price' ), PHP_INT_MAX, 2 );
 				if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -139,7 +139,7 @@ class WCJ_Call_For_Price extends WCJ_module {
 	 * @todo    recheck if we really need this
 	 */
 	function hide_sales_flash( $onsale_html, $post, $product ) {
-		if ( 'yes' === get_option( 'wcj_call_for_price_hide_sale_sign', 'yes' ) && '' === $product->get_price() ) {
+		if ( 'yes' === wcj_get_option( 'wcj_call_for_price_hide_sale_sign', 'yes' ) && '' === $product->get_price() ) {
 			return '';
 		}
 		return $onsale_html;
@@ -152,16 +152,16 @@ class WCJ_Call_For_Price extends WCJ_module {
 	 * @todo    `is_page()`
 	 */
 	function on_empty_price( $price, $_product ) {
-		if ( '' !== get_option( 'wcj_call_for_price_text_variation' ) && $_product->is_type( 'variation' ) ) {
-			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_variation' ) ) );
-		} elseif ( '' !== get_option( 'wcj_call_for_price_text' ) && is_single( get_the_ID() ) ) {
-			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text' ) ) );
-		} elseif ( '' !== get_option( 'wcj_call_for_price_text_on_related' ) && is_single() && ! is_single( get_the_ID() ) ) {
-			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_related' ) ) );
-		} elseif ( '' !== get_option( 'wcj_call_for_price_text_on_archive' ) && is_archive() ) {
-			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_archive' ) ) );
-		} elseif ( '' !== get_option( 'wcj_call_for_price_text_on_home' ) && is_front_page() ) {
-			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_home' ) ) );
+		if ( '' !== wcj_get_option( 'wcj_call_for_price_text_variation' ) && $_product->is_type( 'variation' ) ) {
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', wcj_get_option( 'wcj_call_for_price_text_variation' ) ) );
+		} elseif ( '' !== wcj_get_option( 'wcj_call_for_price_text' ) && is_single( get_the_ID() ) ) {
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', wcj_get_option( 'wcj_call_for_price_text' ) ) );
+		} elseif ( '' !== wcj_get_option( 'wcj_call_for_price_text_on_related' ) && is_single() && ! is_single( get_the_ID() ) ) {
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', wcj_get_option( 'wcj_call_for_price_text_on_related' ) ) );
+		} elseif ( '' !== wcj_get_option( 'wcj_call_for_price_text_on_archive' ) && is_archive() ) {
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', wcj_get_option( 'wcj_call_for_price_text_on_archive' ) ) );
+		} elseif ( '' !== wcj_get_option( 'wcj_call_for_price_text_on_home' ) && is_front_page() ) {
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', wcj_get_option( 'wcj_call_for_price_text_on_home' ) ) );
 		} else {
 			return $price;
 		}

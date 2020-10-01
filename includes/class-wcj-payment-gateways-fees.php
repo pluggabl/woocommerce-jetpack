@@ -29,7 +29,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( 'no' === ( $modules_on_init = get_option( 'wcj_load_modules_on_init', 'no' ) ) ) {
+			if ( 'no' === ( $modules_on_init = wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) ) {
 				add_action( 'init', array( $this, 'init_options' ) );
 			} elseif ( 'yes' === $modules_on_init && 'init' === current_filter() ) {
 				$this->init_options();
@@ -47,19 +47,19 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 */
 	function init_options() {
 		$this->options = array(
-			'text'               => get_option( 'wcj_gateways_fees_text', array() ),
-			'type'               => get_option( 'wcj_gateways_fees_type', array() ),
-			'value'              => get_option( 'wcj_gateways_fees_value', array() ),
-			'min_cart_amount'    => get_option( 'wcj_gateways_fees_min_cart_amount', array() ),
-			'max_cart_amount'    => get_option( 'wcj_gateways_fees_max_cart_amount', array() ),
-			'round'              => get_option( 'wcj_gateways_fees_round', array() ),
-			'round_precision'    => get_option( 'wcj_gateways_fees_round_precision', array() ),
-			'is_taxable'         => get_option( 'wcj_gateways_fees_is_taxable', array() ),
-			'tax_class_id'       => get_option( 'wcj_gateways_fees_tax_class_id', array() ),
-			'exclude_shipping'   => get_option( 'wcj_gateways_fees_exclude_shipping', array() ),
-			'include_taxes'      => get_option( 'wcj_gateways_fees_include_taxes', array() ),
-			'include_products'   => apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_fees_include_products', array() ) ),
-			'exclude_products'   => apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_fees_exclude_products', array() ) ),
+			'text'               => wcj_get_option( 'wcj_gateways_fees_text', array() ),
+			'type'               => wcj_get_option( 'wcj_gateways_fees_type', array() ),
+			'value'              => wcj_get_option( 'wcj_gateways_fees_value', array() ),
+			'min_cart_amount'    => wcj_get_option( 'wcj_gateways_fees_min_cart_amount', array() ),
+			'max_cart_amount'    => wcj_get_option( 'wcj_gateways_fees_max_cart_amount', array() ),
+			'round'              => wcj_get_option( 'wcj_gateways_fees_round', array() ),
+			'round_precision'    => wcj_get_option( 'wcj_gateways_fees_round_precision', array() ),
+			'is_taxable'         => wcj_get_option( 'wcj_gateways_fees_is_taxable', array() ),
+			'tax_class_id'       => wcj_get_option( 'wcj_gateways_fees_tax_class_id', array() ),
+			'exclude_shipping'   => wcj_get_option( 'wcj_gateways_fees_exclude_shipping', array() ),
+			'include_taxes'      => wcj_get_option( 'wcj_gateways_fees_include_taxes', array() ),
+			'include_products'   => apply_filters( 'booster_option', array(), wcj_get_option( 'wcj_gateways_fees_include_products', array() ) ),
+			'exclude_products'   => apply_filters( 'booster_option', array(), wcj_get_option( 'wcj_gateways_fees_exclude_products', array() ) ),
 		);
 		$this->defaults = array(
 			'text'               => '',
@@ -68,7 +68,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 			'min_cart_amount'    => 0,
 			'max_cart_amount'    => 0,
 			'round'              => 'no',
-			'round_precision'    => get_option( 'woocommerce_price_num_decimals', 2 ),
+			'round_precision'    => wcj_get_option( 'woocommerce_price_num_decimals', 2 ),
 			'is_taxable'         => 'no',
 			'tax_class_id'       => '',
 			'exclude_shipping'   => 'no',
@@ -154,7 +154,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		// Pre-sets the default available payment gateway on cart and checkout pages.
 		if (
 			empty( $gateway ) &&
-			'yes' === get_option( 'wcj_gateways_fees_force_default_payment_gateway', 'no' ) &&
+			'yes' === wcj_get_option( 'wcj_gateways_fees_force_default_payment_gateway', 'no' ) &&
 			( is_checkout() || is_cart() )
 		) {
 			$gateways = WC()->payment_gateways->get_available_payment_gateways();

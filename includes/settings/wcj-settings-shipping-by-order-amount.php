@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_by_order_amount_use_shipping_instance', 'no' ) );
+$use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_by_order_amount_use_shipping_instance', 'no' ) );
 $settings = array(
 	array(
 		'title'    => __( 'General Options', 'woocommerce-jetpack' ),

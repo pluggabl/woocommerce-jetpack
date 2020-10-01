@@ -32,7 +32,7 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_coupons_code_generator_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_coupons_code_generator_enabled', 'no' ) ) {
 				add_action( 'wp_ajax_wcj_generate_coupon_code', array( $this, 'ajax_generate_coupon_code' ) );
 				add_action( 'admin_enqueue_scripts',            array( $this, 'enqueue_generate_coupon_code_script' ) );
 			}
@@ -81,7 +81,7 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 			$str = time();
 		}
 		if ( '' === $algorithm ) {
-			$algorithm = apply_filters( 'booster_option', 'crc32', get_option( 'wcj_coupons_code_generator_algorithm', 'crc32' ) );
+			$algorithm = apply_filters( 'booster_option', 'crc32', wcj_get_option( 'wcj_coupons_code_generator_algorithm', 'crc32' ) );
 		}
 		switch ( $algorithm ) {
 			case 'random_letters_and_numbers':
@@ -104,7 +104,7 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 				break;
 		}
 		if ( '' === $length ) {
-			$length = apply_filters( 'booster_option', 0, get_option( 'wcj_coupons_code_generator_length', 0 ) );
+			$length = apply_filters( 'booster_option', 0, wcj_get_option( 'wcj_coupons_code_generator_length', 0 ) );
 		}
 		if ( $length > 0 && strlen( $code ) > $length ) {
 			$code = substr( $code, 0, $length );

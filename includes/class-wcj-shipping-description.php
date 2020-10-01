@@ -29,8 +29,8 @@ class WCJ_Shipping_Descriptions extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			$this->shipping_descriptions_visibility = apply_filters( 'booster_option', 'both', get_option( 'wcj_shipping_descriptions_visibility', 'both' ) );
-			$this->shipping_descriptions_position   = apply_filters( 'booster_option', 'after', get_option( 'wcj_shipping_descriptions_position', 'after' ) );
+			$this->shipping_descriptions_visibility = apply_filters( 'booster_option', 'both', wcj_get_option( 'wcj_shipping_descriptions_visibility', 'both' ) );
+			$this->shipping_descriptions_position   = apply_filters( 'booster_option', 'after', wcj_get_option( 'wcj_shipping_descriptions_position', 'after' ) );
 			add_filter( 'woocommerce_cart_shipping_method_full_label', array( $this, 'shipping_description' ), PHP_INT_MAX, 2 );
 		}
 	}
@@ -49,9 +49,9 @@ class WCJ_Shipping_Descriptions extends WCJ_Module {
 		if ( 'cart_only' === $this->shipping_descriptions_visibility && is_checkout() ) {
 			return $label;
 		}
-		$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_descriptions_use_shipping_instance', 'no' ) );
+		$use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_descriptions_use_shipping_instance', 'no' ) );
 		$option_id              = 'wcj_shipping_description_' . ( $use_shipping_instances ? 'instance_' . $method->instance_id : $method->method_id );
-		if ( '' != ( $desc = get_option( $option_id, '' ) ) ) {
+		if ( '' != ( $desc = wcj_get_option( $option_id, '' ) ) ) {
 			switch ( $this->shipping_descriptions_position ) {
 				case 'before':
 					return $desc . $label;

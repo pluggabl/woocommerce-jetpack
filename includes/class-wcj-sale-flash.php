@@ -32,17 +32,17 @@ class WCJ_Sale_Flash extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			$this->globally_enabled     = ( 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ) );
-			$this->per_product_enabled  = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_product_enabled', 'no' ) ) );
-			$this->per_category_enabled = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_cat' . '_enabled', 'no' ) ) );
-			$this->per_tag_enabled      = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_tag' . '_enabled', 'no' ) ) );
+			$this->globally_enabled     = ( 'yes' === wcj_get_option( 'wcj_product_images_sale_flash_enabled', 'no' ) );
+			$this->per_product_enabled  = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sale_flash_per_product_enabled', 'no' ) ) );
+			$this->per_category_enabled = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sale_flash_per_' . 'product_cat' . '_enabled', 'no' ) ) );
+			$this->per_tag_enabled      = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sale_flash_per_' . 'product_tag' . '_enabled', 'no' ) ) );
 			if ( $this->per_category_enabled ) {
-				$this->sale_flash_per_taxonomy['product_cat']['terms'] = get_option( 'wcj_sale_flash_per_product_cat_terms', array() );
-				$this->sale_flash_per_taxonomy['product_cat']['html']  = get_option( 'wcj_sale_flash_per_product_cat',       array() );
+				$this->sale_flash_per_taxonomy['product_cat']['terms'] = wcj_get_option( 'wcj_sale_flash_per_product_cat_terms', array() );
+				$this->sale_flash_per_taxonomy['product_cat']['html']  = wcj_get_option( 'wcj_sale_flash_per_product_cat',       array() );
 			}
 			if ( $this->per_tag_enabled ) {
-				$this->sale_flash_per_taxonomy['product_tag']['terms'] = get_option( 'wcj_sale_flash_per_product_tag_terms', array() );
-				$this->sale_flash_per_taxonomy['product_tag']['html']  = get_option( 'wcj_sale_flash_per_product_tag',       array() );
+				$this->sale_flash_per_taxonomy['product_tag']['terms'] = wcj_get_option( 'wcj_sale_flash_per_product_tag_terms', array() );
+				$this->sale_flash_per_taxonomy['product_tag']['html']  = wcj_get_option( 'wcj_sale_flash_per_product_tag',       array() );
 			}
 			add_filter( 'woocommerce_sale_flash', array( $this, 'customize_sale_flash' ), PHP_INT_MAX, 3 );
 			if ( $this->per_product_enabled ) {
@@ -108,17 +108,17 @@ class WCJ_Sale_Flash extends WCJ_Module {
 			}
 		} elseif ( $this->globally_enabled ) {
 			// Hiding
-			if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_everywhere', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_images_sale_flash_hide_everywhere', 'no' ) ) {
 				return '';
 			}
-			if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_archives', 'no' ) && is_archive() ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_images_sale_flash_hide_on_archives', 'no' ) && is_archive() ) {
 				return '';
 			}
-			if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_single', 'no' )   && is_single() && get_the_ID() === $product_id ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_images_sale_flash_hide_on_single', 'no' )   && is_single() && get_the_ID() === $product_id ) {
 				return '';
 			}
 			// Content
-			return do_shortcode( get_option( 'wcj_product_images_sale_flash_html', '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' ) );
+			return do_shortcode( wcj_get_option( 'wcj_product_images_sale_flash_html', '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' ) );
 		}
 		return $sale_flash_html;
 	}

@@ -37,7 +37,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 		add_action( 'init',                   array( $this, 'add_my_products_endpoint' ) );
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
 				add_filter( 'woocommerce_account_menu_items',               array( $this, 'add_my_products_tab_my_account_page' ) );
 				add_action( 'woocommerce_account_wcj-my-products_endpoint', array( $this, 'add_my_products_content_my_account_page' ) );
 				add_filter( 'the_title',                                    array( $this, 'change_my_products_endpoint_title' ) );

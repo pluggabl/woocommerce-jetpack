@@ -14,7 +14,7 @@ if ( ! function_exists( 'wcj_get_invoicing_temp_dir' ) ) {
 	 * @since   3.5.0
 	 */
 	function wcj_get_invoicing_temp_dir() {
-		return ( '' === ( $tmp_dir = get_option( 'wcj_invoicing_general_tmp_dir', '' ) ) ? sys_get_temp_dir() : $tmp_dir );
+		return ( '' === ( $tmp_dir = wcj_get_option( 'wcj_invoicing_general_tmp_dir', '' ) ) ? sys_get_temp_dir() : $tmp_dir );
 	}
 }
 
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_get_invoicing_current_image_path_desc' ) ) {
 	 * @since   3.4.3
 	 */
 	function wcj_get_invoicing_current_image_path_desc( $option_name ) {
-		if ( '' != ( $current_image = get_option( $option_name, '' ) ) ) {
+		if ( '' != ( $current_image = wcj_get_option( $option_name, '' ) ) ) {
 			if ( false !== ( $default_images_directory = wcj_get_invoicing_default_images_directory() ) ) {
 				$image_path = $default_images_directory . parse_url( $current_image, PHP_URL_PATH );
 				$style      = ( file_exists( $image_path ) ? ' style="color:green;"' : '' );
@@ -47,7 +47,7 @@ if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
 	 * @since   3.4.2
 	 */
 	function wcj_get_invoicing_default_images_directory() {
-		switch ( get_option( 'wcj_invoicing_general_header_images_path', 'document_root' ) ) {
+		switch ( wcj_get_option( 'wcj_invoicing_general_header_images_path', 'document_root' ) ) {
 			case 'empty':
 				return '';
 			case 'document_root':
@@ -176,10 +176,10 @@ if ( ! function_exists( 'wcj_check_tcpdf_fonts_version' ) ) {
 	 * @since   2.9.0
 	 */
 	function wcj_check_tcpdf_fonts_version( $force_file_check = false ) {
-		if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
 			return false;
 		}
-		$result = ( 0 == version_compare( get_option( 'wcj_invoicing_fonts_version', null ), wcj_get_tcpdf_fonts_version() ) );
+		$result = ( 0 == version_compare( wcj_get_option( 'wcj_invoicing_fonts_version', null ), wcj_get_tcpdf_fonts_version() ) );
 		if ( $result && $force_file_check ) {
 			$tcpdf_fonts_dir       = wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/';
 			$tcpdf_fonts_dir_files = scandir( $tcpdf_fonts_dir );
@@ -204,14 +204,14 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 	 * @todo    (maybe) use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)
 	 */
 	function wcj_check_and_maybe_download_tcpdf_fonts( $force_download = false ) {
-		if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
 			return false;
 		}
 		if ( ! $force_download ) {
 			if ( wcj_check_tcpdf_fonts_version( true ) ) {
 				return true;
 			}
-			if ( ( (int) current_time( 'timestamp' ) - get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
+			if ( ( (int) current_time( 'timestamp' ) - wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
 				return false;
 			}
 		}
@@ -263,34 +263,34 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 		$invoice_types = array(
 			array(
 				'id'       => 'invoice',
-				'title'    => get_option( 'wcj_invoicing_' . 'invoice' . '_admin_title', __( 'Invoice', 'woocommerce-jetpack' ) ),
+				'title'    => wcj_get_option( 'wcj_invoicing_' . 'invoice' . '_admin_title', __( 'Invoice', 'woocommerce-jetpack' ) ),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'green',
 			),
 			array(
 				'id'       => 'proforma_invoice',
-				'title'    => get_option( 'wcj_invoicing_' . 'proforma_invoice' . '_admin_title', __( 'Proforma Invoice', 'woocommerce-jetpack' ) ),
+				'title'    => wcj_get_option( 'wcj_invoicing_' . 'proforma_invoice' . '_admin_title', __( 'Proforma Invoice', 'woocommerce-jetpack' ) ),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'orange',
 			),
 			array(
 				'id'       => 'packing_slip',
-				'title'    => get_option( 'wcj_invoicing_' . 'packing_slip' . '_admin_title', __( 'Packing Slip', 'woocommerce-jetpack' ) ),
+				'title'    => wcj_get_option( 'wcj_invoicing_' . 'packing_slip' . '_admin_title', __( 'Packing Slip', 'woocommerce-jetpack' ) ),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'blue',
 			),
 			array(
 				'id'       => 'credit_note',
-				'title'    => get_option( 'wcj_invoicing_' . 'credit_note' . '_admin_title', __( 'Credit Note', 'woocommerce-jetpack' ) ),
+				'title'    => wcj_get_option( 'wcj_invoicing_' . 'credit_note' . '_admin_title', __( 'Credit Note', 'woocommerce-jetpack' ) ),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'red',
 			),
 		);
-		$total_custom_docs = min( get_option( 'wcj_invoicing_custom_doc_total_number', 1 ), 100 );
+		$total_custom_docs = min( wcj_get_option( 'wcj_invoicing_custom_doc_total_number', 1 ), 100 );
 		for ( $i = 1; $i <= $total_custom_docs; $i++ ) {
 			$invoice_types[] = array(
 				'id'       => ( 1 == $i ? 'custom_doc' : 'custom_doc' . '_' . $i ),
-				'title'    => get_option( 'wcj_invoicing_' . ( 1 == $i ? 'custom_doc' : 'custom_doc' . '_' . $i ) . '_admin_title',
+				'title'    => wcj_get_option( 'wcj_invoicing_' . ( 1 == $i ? 'custom_doc' : 'custom_doc' . '_' . $i ) . '_admin_title',
 					__( 'Custom Document', 'woocommerce-jetpack' ) . ' #' . $i ),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'gray',
@@ -310,7 +310,7 @@ if ( ! function_exists( 'wcj_get_invoice_create_on' ) ) {
 	 * @since   3.2.0
 	 */
 	function wcj_get_invoice_create_on( $invoice_type ) {
-		$create_on = get_option( 'wcj_invoicing_' . $invoice_type . '_create_on', '' );
+		$create_on = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_create_on', '' );
 		if ( empty( $create_on ) ) {
 			return array();
 		}

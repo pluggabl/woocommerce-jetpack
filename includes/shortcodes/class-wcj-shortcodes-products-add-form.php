@@ -29,42 +29,42 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 
 		$this->the_atts = array(
 			'product_id'             => 0,
-			'post_status'            => get_option( 'wcj_product_by_user_status', 'draft' ),
+			'post_status'            => wcj_get_option( 'wcj_product_by_user_status', 'draft' ),
 
-			'desc_enabled'           => get_option( 'wcj_product_by_user_desc_enabled', 'no' ),
-			'short_desc_enabled'     => get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
-			'regular_price_enabled'  => get_option( 'wcj_product_by_user_regular_price_enabled', 'no' ),
-			'sale_price_enabled'     => get_option( 'wcj_product_by_user_sale_price_enabled', 'no' ),
-			'external_url_enabled'   => get_option( 'wcj_product_by_user_external_url_enabled', 'no' ),
-			'cats_enabled'           => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
-			'tags_enabled'           => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
-			'image_enabled'          => apply_filters( 'booster_option', 'no', get_option( 'wcj_product_by_user_image_enabled', 'no' ) ),
+			'desc_enabled'           => wcj_get_option( 'wcj_product_by_user_desc_enabled', 'no' ),
+			'short_desc_enabled'     => wcj_get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
+			'regular_price_enabled'  => wcj_get_option( 'wcj_product_by_user_regular_price_enabled', 'no' ),
+			'sale_price_enabled'     => wcj_get_option( 'wcj_product_by_user_sale_price_enabled', 'no' ),
+			'external_url_enabled'   => wcj_get_option( 'wcj_product_by_user_external_url_enabled', 'no' ),
+			'cats_enabled'           => wcj_get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
+			'tags_enabled'           => wcj_get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
+			'image_enabled'          => apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_by_user_image_enabled', 'no' ) ),
 
-			'desc_required'          => get_option( 'wcj_product_by_user_desc_required', 'no' ),
-			'short_desc_required'    => get_option( 'wcj_product_by_user_short_desc_required', 'no' ),
-			'regular_price_required' => get_option( 'wcj_product_by_user_regular_price_required', 'no' ),
-			'sale_price_required'    => get_option( 'wcj_product_by_user_sale_price_required', 'no' ),
-			'external_url_required'  => get_option( 'wcj_product_by_user_external_url_required', 'no' ),
-			'cats_required'          => get_option( 'wcj_product_by_user_cats_required', 'no' ),
-			'tags_required'          => get_option( 'wcj_product_by_user_tags_required', 'no' ),
-			'image_required'         => apply_filters( 'booster_option', 'no', get_option( 'wcj_product_by_user_image_required', 'no' ) ),
+			'desc_required'          => wcj_get_option( 'wcj_product_by_user_desc_required', 'no' ),
+			'short_desc_required'    => wcj_get_option( 'wcj_product_by_user_short_desc_required', 'no' ),
+			'regular_price_required' => wcj_get_option( 'wcj_product_by_user_regular_price_required', 'no' ),
+			'sale_price_required'    => wcj_get_option( 'wcj_product_by_user_sale_price_required', 'no' ),
+			'external_url_required'  => wcj_get_option( 'wcj_product_by_user_external_url_required', 'no' ),
+			'cats_required'          => wcj_get_option( 'wcj_product_by_user_cats_required', 'no' ),
+			'tags_required'          => wcj_get_option( 'wcj_product_by_user_tags_required', 'no' ),
+			'image_required'         => apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_by_user_image_required', 'no' ) ),
 
-			'visibility'             => implode( ',', get_option( 'wcj_product_by_user_user_visibility', array() ) ),
+			'visibility'             => implode( ',', wcj_get_option( 'wcj_product_by_user_user_visibility', array() ) ),
 			'module'                 => 'product_by_user',
 			'module_name'            => __( 'Product by User', 'woocommerce-jetpack' ),
 		);
 
-		if ( 'external' !== get_option( 'wcj_product_by_user_product_type', 'simple' ) ) {
+		if ( 'external' !== wcj_get_option( 'wcj_product_by_user_product_type', 'simple' ) ) {
 			$this->the_atts['external_url_enabled']  = 'no';
 			$this->the_atts['external_url_required'] = 'no';
 		}
 
-		$this->the_atts['custom_taxonomies_total'] = apply_filters( 'booster_option', 1, get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) );
+		$this->the_atts['custom_taxonomies_total'] = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) );
 		for ( $i = 1; $i <= $this->the_atts['custom_taxonomies_total']; $i++ ) {
-			$this->the_atts[ 'custom_taxonomy_' . $i . '_enabled' ]  = get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_enabled',  'no' );
-			$this->the_atts[ 'custom_taxonomy_' . $i . '_required' ] = get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_required', 'no' );
-			$this->the_atts[ 'custom_taxonomy_' . $i . '_id' ]       = get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_id',       '' );
-			$this->the_atts[ 'custom_taxonomy_' . $i . '_title' ]    = get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_title',    '' );
+			$this->the_atts[ 'custom_taxonomy_' . $i . '_enabled' ]  = wcj_get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_enabled',  'no' );
+			$this->the_atts[ 'custom_taxonomy_' . $i . '_required' ] = wcj_get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_required', 'no' );
+			$this->the_atts[ 'custom_taxonomy_' . $i . '_id' ]       = wcj_get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_id',       '' );
+			$this->the_atts[ 'custom_taxonomy_' . $i . '_title' ]    = wcj_get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_title',    '' );
 		}
 
 		parent::__construct();
@@ -97,7 +97,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		// Insert the post into the database
 		if ( 0 != $product_id ) {
 
-			wp_set_object_terms( $product_id, get_option( 'wcj_product_by_user_product_type', 'simple' ), 'product_type' );
+			wp_set_object_terms( $product_id, wcj_get_option( 'wcj_product_by_user_product_type', 'simple' ), 'product_type' );
 			wp_set_object_terms( $product_id, $args['cats'], 'product_cat' );
 			wp_set_object_terms( $product_id, $args['tags'], 'product_tag' );
 
@@ -117,7 +117,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			update_post_meta( $product_id, '_visibility', 'visible' );
 			update_post_meta( $product_id, '_stock_status', 'instock' );
 
-			if ( 'external' === get_option( 'wcj_product_by_user_product_type', 'simple' ) ) {
+			if ( 'external' === wcj_get_option( 'wcj_product_by_user_product_type', 'simple' ) ) {
 				update_post_meta( $product_id, '_product_url', $args['external_url'] );
 			}
 
@@ -163,7 +163,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			$errors .= '<li>' . __( 'Title is required!', 'woocommerce-jetpack' ) . '</li>';
 		}
 
-		if ( 'yes' === get_option( 'wcj_product_by_user_require_unique_title', 'no' ) && 0 == $shortcode_atts['product_id'] ) {
+		if ( 'yes' === wcj_get_option( 'wcj_product_by_user_require_unique_title', 'no' ) && 0 == $shortcode_atts['product_id'] ) {
 			if ( ! function_exists( 'post_exists' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/post.php' );
 			}
@@ -326,7 +326,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 
 		$required_mark_html_template = '&nbsp;<abbr class="required" title="' . __( 'required', 'woocommerce-jetpack' ) . '">*</abbr>';
 
-		$price_step = sprintf( "%f", ( 1 / pow( 10, get_option( 'wcj_product_by_user_price_step', get_option( 'woocommerce_price_num_decimals', 2 ) ) ) ) );
+		$price_step = sprintf( "%f", ( 1 / pow( 10, wcj_get_option( 'wcj_product_by_user_price_step', wcj_get_option( 'woocommerce_price_num_decimals', 2 ) ) ) ) );
 
 		$table_data = array();
 		$input_style = 'width:100%;';

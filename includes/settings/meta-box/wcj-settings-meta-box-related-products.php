@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $product_id       = get_the_ID();
 $products         = wcj_get_products( array(), 'publish' );
-$is_chosen_select = ( 'chosen_select' === get_option( 'wcj_product_info_related_products_per_product_box_type', 'chosen_select' ) );
-$default_value    = get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' );
+$is_chosen_select = ( 'chosen_select' === wcj_get_option( 'wcj_product_info_related_products_per_product_box_type', 'chosen_select' ) );
+$default_value    = wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' );
 unset( $products[ $product_id  ] );
 $options = array(
 	array(

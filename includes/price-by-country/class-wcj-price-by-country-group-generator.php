@@ -86,7 +86,7 @@ class WCJ_Price_By_Country_Group_Generator {
 		$i = 0;
 		foreach ( $currencies as $group_currency => $countries ) {
 			$i++;
-			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+			switch ( wcj_get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 				case 'comma_list':
 					update_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, implode( ',', $countries ) );
 					break;

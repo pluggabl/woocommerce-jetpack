@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
+$is_multiselect_products     = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
 $products                    = ( $is_multiselect_products ? wcj_get_products() : false );
 $product_cats                = wcj_get_terms( 'product_cat' );
 $product_tags                = wcj_get_terms( 'product_tag' );

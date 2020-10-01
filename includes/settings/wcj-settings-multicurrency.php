@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 5.1.0
+ * @version 5.3.3
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    "pretty prices"
@@ -85,7 +85,7 @@ $settings = array(
 		'title'    => __( 'Rounding Precision', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'If rounding is enabled, set rounding precision here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_rounding_precision',
-		'default'  => absint( get_option( 'woocommerce_price_num_decimals', 2 ) ),
+		'default'  => absint( wcj_get_option( 'woocommerce_price_num_decimals', 2 ) ),
 		'type'     => 'number',
 		'custom_attributes' => array( 'min' => 0 ),
 	),
@@ -115,6 +115,15 @@ $settings = array(
 		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_multicurrency_compatibility',
+	),
+	array(
+		'title'             => __( 'Free Shipping', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( 'Converts minimum amount from WooCommerce Free Shipping native method.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_multicurrency_compatibility_free_shipping',
+		'default'           => 'no',
+		'type'              => 'checkbox',
 	),
 	/*array(
 		'title'    => __( 'Prices and Currencies by Country Module', 'woocommerce-jetpack' ),
@@ -289,9 +298,9 @@ $settings = array(
 		),
 	),
 );
-$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+$total_number = apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
-	$currency_to = get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
+	$currency_to = wcj_get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
 	$custom_attributes = array(
 		'currency_from'        => $currency_from,
 		'currency_to'          => $currency_to,
@@ -325,6 +334,7 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_multicurrency_currencies_options',
 	),
 ) );
+
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Role Defaults', 'woocommerce-jetpack' ),
@@ -345,11 +355,11 @@ $settings = array_merge( $settings, array(
 ) );
 $module_currencies = array();
 for ( $i = 1; $i <= $total_number; $i++ ) {
-	$currency_code = get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
+	$currency_code = wcj_get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
 	$module_currencies[ $currency_code ] = $all_currencies[ $currency_code ];
 }
 $module_currencies = array_unique( $module_currencies );
-$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 if ( ! empty( $module_roles ) ) {
 	foreach ( $module_roles as $role_key ) { // wcj_get_user_roles() as $role_key => $role_data
 		$settings = array_merge( $settings, array(

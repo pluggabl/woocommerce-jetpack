@@ -55,7 +55,7 @@ $settings = array_merge( $settings, array(
 		'custom_attributes' => array( 'step' => '1', 'min' => '0' ),
 	),
 ) );
-for ( $i = 1; $i <= get_option( 'wcj_shipping_custom_shipping_total_number', 1 ); $i++ ) {
+for ( $i = 1; $i <= wcj_get_option( 'wcj_shipping_custom_shipping_total_number', 1 ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Admin Title Custom Shipping', 'woocommerce-jetpack' ) . ' #' . $i,

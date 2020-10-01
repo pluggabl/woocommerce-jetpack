@@ -57,10 +57,10 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			if ( is_admin() ) {
 				// Backend
 				include_once( 'reports/class-wcj-currency-reports.php' );
-				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
-					$backend_user_roles = get_option( 'wcj_price_by_country_backend_user_roles', '' );
+				if ( 'yes' === wcj_get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
+					$backend_user_roles = wcj_get_option( 'wcj_price_by_country_backend_user_roles', '' );
 					if ( empty( $backend_user_roles ) || wcj_is_user_role( $backend_user_roles ) ) {
-						if ( 'inline' === get_option( 'wcj_price_by_country_local_options_style', 'inline' ) ) {
+						if ( 'inline' === wcj_get_option( 'wcj_price_by_country_local_options_style', 'inline' ) ) {
 							include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
 						} else {
 							add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
@@ -74,7 +74,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			}
 
 			// Price Filter Widget
-			if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
 				add_action( 'save_post_product', array( $this, 'update_products_price_by_country_product_saved' ), PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_ajax_save_product_variations', array( $this, 'update_products_price_by_country_product_saved_ajax' ), PHP_INT_MAX, 1 );
 			}
@@ -91,7 +91,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 		}
 
 		// Price Filter Widget
-		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
 			add_action( 'woojetpack_after_settings_save', array( $this, 'update_products_price_by_country_module_saved' ), PHP_INT_MAX, 2  );
 		}
 
@@ -127,7 +127,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	 */
 	function fix_wc_coupon_currency( $amount, $discount, $cart_item, $single, $wc_coupon ) {
 		if (
-			'yes' !== get_option( 'wcj_price_by_country_compatibility_wc_coupons', 'no' ) ||
+			'yes' !== wcj_get_option( 'wcj_price_by_country_compatibility_wc_coupons', 'no' ) ||
 			'fixed_cart' !== $wc_coupon->get_discount_type()
 		) {
 			return $amount;

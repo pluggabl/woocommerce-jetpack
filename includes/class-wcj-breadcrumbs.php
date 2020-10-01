@@ -33,13 +33,13 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Hide Breadcrumbs
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_breadcrumbs_hide', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_breadcrumbs_hide', 'no' ) ) ) {
 				add_filter( 'woocommerce_get_breadcrumb', '__return_false', PHP_INT_MAX );
 				add_action( 'wp_head',   array( $this, 'hide_breadcrumbs_with_css' ) );
 				add_action( 'wp_loaded', array( $this, 'hide_breadcrumbs_by_removing_action' ), PHP_INT_MAX );
 			}
 			// Home URL
-			if ( 'yes' === get_option( 'wcj_breadcrumbs_change_home_url_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_breadcrumbs_change_home_url_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_breadcrumb_home_url', array( $this, 'change_home_url' ), PHP_INT_MAX );
 			}
 		}
@@ -52,7 +52,7 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function change_home_url( $_url ) {
-		return get_option( 'wcj_breadcrumbs_home_url', home_url() );
+		return wcj_get_option( 'wcj_breadcrumbs_home_url', home_url() );
 	}
 
 	/**

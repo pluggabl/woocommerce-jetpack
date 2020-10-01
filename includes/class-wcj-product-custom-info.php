@@ -31,7 +31,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 			$single_or_archive_array = array( 'single', 'archive' );
 			foreach ( $single_or_archive_array as $single_or_archive ) {
 				$default_hook = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
-				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 					add_action(
 						get_option( 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i, $default_hook ),
 						array( $this, 'add_product_custom_info' ),
@@ -63,9 +63,9 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	 */
 	function check_content_and_filter( $current_filter, $current_filter_priority, $default_hook, $single_or_archive, $i ) {
 		return (
-			''                       != get_option( 'wcj_product_custom_info_content_'  . $single_or_archive . '_' . $i ) &&
-			$current_filter         === get_option( 'wcj_product_custom_info_hook_'     . $single_or_archive . '_' . $i, $default_hook ) &&
-			$current_filter_priority == get_option( 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i, 10 )
+			''                       != wcj_get_option( 'wcj_product_custom_info_content_'  . $single_or_archive . '_' . $i ) &&
+			$current_filter         === wcj_get_option( 'wcj_product_custom_info_hook_'     . $single_or_archive . '_' . $i, $default_hook ) &&
+			$current_filter_priority == wcj_get_option( 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i, 10 )
 		);
 	}
 
@@ -76,12 +76,12 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function check_included_and_excluded( $product_id, $single_or_archive, $i ) {
-		$product_cats_to_include = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_product_cats_to_include_' . $single_or_archive . '_' . $i ) );
-		$product_cats_to_exclude = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_product_cats_to_exclude_' . $single_or_archive . '_' . $i ) );
-		$product_tags_to_include = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_product_tags_to_include_' . $single_or_archive . '_' . $i ) );
-		$product_tags_to_exclude = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_product_tags_to_exclude_' . $single_or_archive . '_' . $i ) );
-		$products_to_exclude     = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i ) );
-		$products_to_include     = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i ) );
+		$product_cats_to_include = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_product_custom_info_product_cats_to_include_' . $single_or_archive . '_' . $i ) );
+		$product_cats_to_exclude = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_product_custom_info_product_cats_to_exclude_' . $single_or_archive . '_' . $i ) );
+		$product_tags_to_include = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_product_custom_info_product_tags_to_include_' . $single_or_archive . '_' . $i ) );
+		$product_tags_to_exclude = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_product_custom_info_product_tags_to_exclude_' . $single_or_archive . '_' . $i ) );
+		$products_to_exclude     = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i ) );
+		$products_to_include     = wcj_maybe_convert_string_to_array( wcj_get_option( 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i ) );
 		return (
 			( empty( $product_cats_to_exclude ) || ! wcj_is_product_term( $product_id, $product_cats_to_exclude, 'product_cat' ) ) &&
 			( empty( $product_cats_to_include ) ||   wcj_is_product_term( $product_id, $product_cats_to_include, 'product_cat' ) ) &&
@@ -104,9 +104,9 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 		$single_or_archive_array = array( 'single', 'archive' );
 		foreach ( $single_or_archive_array as $single_or_archive ) {
 			$default_hook = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 				if ( $this->is_visible( $product_id, $current_filter, $current_filter_priority, $default_hook, $single_or_archive, $i ) ) {
-					echo do_shortcode( get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) );
+					echo do_shortcode( wcj_get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) );
 				}
 			}
 		}

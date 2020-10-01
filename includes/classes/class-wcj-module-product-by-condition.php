@@ -29,15 +29,15 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			// Core
 			if ( wcj_is_frontend() ) {
-				if ( 'yes' === get_option( 'wcj_' . $this->id . '_visibility', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_' . $this->id . '_visibility', 'yes' ) ) {
 					add_filter( 'woocommerce_product_is_visible', array( $this, 'is_visible' ), PHP_INT_MAX, 2 );
 				}
-				if ( 'yes' === get_option( 'wcj_' . $this->id . '_purchasable', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_' . $this->id . '_purchasable', 'no' ) ) {
 					add_filter( 'woocommerce_is_purchasable',     array( $this, 'is_purchasable' ), PHP_INT_MAX, 2 );
 				}
-				if ( 'yes' === get_option( 'wcj_' . $this->id . '_query', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_' . $this->id . '_query', 'no' ) ) {
 					add_action( 'pre_get_posts',                  array( $this, 'pre_get_posts' ) );
-					if ( 'yes' === get_option( 'wcj_' . $this->id . '_query_widgets', 'no' ) ) {
+					if ( 'yes' === wcj_get_option( 'wcj_' . $this->id . '_query_widgets', 'no' ) ) {
 						add_filter( 'woocommerce_products_widget_query_args', array( $this, 'products_widget_query' ), PHP_INT_MAX );
 					}
 				}
@@ -45,19 +45,19 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 			}
 			// Quick and bulk edit
 			if (
-				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ||
-				'yes' === get_option( 'wcj_' . $this->id . '_admin_quick_edit', 'no' )
+				'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ||
+				'yes' === wcj_get_option( 'wcj_' . $this->id . '_admin_quick_edit', 'no' )
 			) {
-				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ) {
 					add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
 				}
-				if ( 'yes' === get_option( 'wcj_' . $this->id . '_admin_quick_edit', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_' . $this->id . '_admin_quick_edit', 'no' ) ) {
 					add_action( 'woocommerce_product_quick_edit_end', array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
 				}
 				add_action( 'woocommerce_product_bulk_and_quick_edit', array( $this, 'save_bulk_and_quick_edit_fields' ), PHP_INT_MAX, 2 );
 			}
 			// Admin products list
-			if ( 'yes' === get_option( 'wcj_' . $this->id . '_admin_add_column', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_' . $this->id . '_admin_add_column', 'no' ) ) {
 				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
 			}
@@ -113,14 +113,14 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	 */
 	function get_invisible_products_query_args() {
 		$meta_query = array();
-		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'invisible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			$meta_query[] = array(
 				'key'     => '_' . 'wcj_' . $this->id . '_visible',
 				'value'   => '',
 				'compare' => '!=',
 			);
 		}
-		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'visible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			$meta_query[] = array(
 				'key'     => '_' . 'wcj_' . $this->id . '_invisible',
 				'value'   => '',
@@ -228,14 +228,14 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	function render_product_column( $column ) {
 		if ( 'wcj_' . $this->id === $column ) {
 			$result = '';
-			if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+			if ( 'invisible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 				if ( $visible = get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_' . $this->id . '_visible', true ) ) {
 					if ( is_array( $visible ) ) {
 						$result .= '<span style="color:green;">' . implode( ', ', $visible ) . '</span>';
 					}
 				}
 			}
-			if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+			if ( 'visible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 				if ( $invisible = get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_' . $this->id . '_invisible', true ) ) {
 					if ( is_array( $invisible ) ) {
 						if ( '' != $result ) {
@@ -261,7 +261,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 		foreach ( $this->get_options_list() as $id => $desc ) {
 			$all_options .= '<option value="' . $id . '">' . $desc . '</option>';
 		}
-		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'invisible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			?><br class="clear" />
 			<label>
 				<span class="title"><?php echo $this->title . ': ' . esc_html_e( 'Visible', 'woocommerce-jetpack' ); ?></span>
@@ -270,7 +270,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 				</select>
 			</label><?php
 		}
-		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'visible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			?><br class="clear" />
 			<label>
 				<span class="title"><?php echo $this->title . ': ' . esc_html_e( 'Invisible', 'woocommerce-jetpack' ); ?></span>
@@ -302,23 +302,23 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 		}
 		// Check bulk or quick edit.
 		if ( ! empty( $_REQUEST['woocommerce_quick_edit'] ) ) { // WPCS: input var ok.
-			if ( 'no' === get_option( 'wcj_' . $this->id . '_admin_quick_edit', 'no' ) ) {
+			if ( 'no' === wcj_get_option( 'wcj_' . $this->id . '_admin_quick_edit', 'no' ) ) {
 				return $post_id;
 			}
 		} else {
-			if ( 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ) {
+			if ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ) {
 				return $post_id;
 			}
 		}
 		// Save.
-		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'invisible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) {
 				update_post_meta( $post_id, '_' . 'wcj_' . $this->id . '_visible', array() );
 			} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) {
 				update_post_meta( $post_id, '_' . 'wcj_' . $this->id . '_visible', $_REQUEST[ 'wcj_' . $this->id . '_visible' ] );
 			}
 		}
-		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'visible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) {
 				update_post_meta( $post_id, '_' . 'wcj_' . $this->id . '_invisible', array() );
 			} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) {
@@ -407,7 +407,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	 * @todo    (maybe) replace with `abstract is_product_visible()`
 	 */
 	function is_product_visible( $product_id, $option_to_check ) {
-		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'invisible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			$visible = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_' . $this->id . '_visible', true );
 			if ( ! empty( $visible ) && is_array( $visible ) ) {
 				if ( is_array( $option_to_check ) ) {
@@ -422,7 +422,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 				}
 			}
 		}
-		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+		if ( 'visible' != apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			$invisible = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_' . $this->id . '_invisible', true );
 			if ( ! empty( $invisible ) && is_array( $invisible ) ) {
 				if ( is_array( $option_to_check ) ) {

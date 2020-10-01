@@ -12,26 +12,26 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $is_full_fonts = wcj_check_and_maybe_download_tcpdf_fonts();
-if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
 	$fonts_manager_desc = __( 'Fonts download is disabled.', 'woocommerce-jetpack' );
 } else {
 	if ( $is_full_fonts ) {
 		$fonts_manager_desc = __( 'Fonts are up to date.', 'woocommerce-jetpack' ) . ' ' . sprintf(
 			__( 'Latest successful download or version check was on %s.', 'woocommerce-jetpack' ),
-			date( 'Y-m-d H:i:s', get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
+			date( 'Y-m-d H:i:s', wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
 		);
 	} else {
 		$fonts_manager_desc = __( 'Fonts are NOT up to date. Please try downloading by pressing the button below.', 'woocommerce-jetpack' );
-		if ( null != get_option( 'wcj_invoicing_fonts_version', null ) ) {
+		if ( null != wcj_get_option( 'wcj_invoicing_fonts_version', null ) ) {
 			$fonts_manager_desc .= ' ' . sprintf(
 				__( 'Latest successful downloaded version is %s.', 'woocommerce-jetpack' ),
 				get_option( 'wcj_invoicing_fonts_version', null )
 			);
 		}
-		if ( null != get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) {
+		if ( null != wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) {
 			$fonts_manager_desc .= ' ' . sprintf(
 				__( 'Latest download executed on %s.', 'woocommerce-jetpack' ),
-				date( 'Y-m-d H:i:s', get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
+				date( 'Y-m-d H:i:s', wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
 			);
 		}
 	}

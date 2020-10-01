@@ -18,7 +18,7 @@ $options = array(
 	array(
 		'title'    => __( 'Order Currency', 'woocommerce-jetpack' ),
 		'tooltip'  => __( 'Save order after you change this field.', 'woocommerce-jetpack' ),
-		'name'     => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
+		'name'     => ( 'filter' === wcj_get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
 		'default'  => wcj_get_order_currency( $_order ),
 		'type'     => 'select',
 		'options'  => wcj_get_woocommerce_currencies_and_symbols(),

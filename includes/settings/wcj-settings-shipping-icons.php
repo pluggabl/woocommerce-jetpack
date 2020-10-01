@@ -66,7 +66,7 @@ $settings = array(
 		'default'  => 'no',
 	),
 );
-$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_icons_use_shipping_instance', 'no' ) );
+$use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_icons_use_shipping_instance', 'no' ) );
 $shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->get_shipping_methods() );
 foreach ( $shipping_methods as $method ) {
 	$settings = array_merge( $settings, array(

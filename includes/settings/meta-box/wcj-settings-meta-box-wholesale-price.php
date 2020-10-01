@@ -73,7 +73,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_post_meta( $product_
 		),
 	) );
 }
-$user_roles = get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
+$user_roles = wcj_get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
 if ( ! empty( $user_roles ) ) {
 	foreach ( $user_roles as $user_role_key ) {
 		$options = array_merge( $options, array(

@@ -16,7 +16,7 @@ class WCJ_Add_To_Cart_Per_Product {
 	 * Constructor.
 	 */
 	function __construct() {
-		if ( 'yes' === get_option( 'wcj_add_to_cart_per_product_enabled' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_add_to_cart_per_product_enabled' ) ) {
 			add_filter( 'woocommerce_product_single_add_to_cart_text', array( $this, 'change_add_to_cart_button_text_single' ),  PHP_INT_MAX );
 			add_filter( 'woocommerce_product_add_to_cart_text',        array( $this, 'change_add_to_cart_button_text_archive' ), PHP_INT_MAX );
 			add_action( 'add_meta_boxes',                              array( $this, 'add_custom_add_to_cart_meta_box' ) );

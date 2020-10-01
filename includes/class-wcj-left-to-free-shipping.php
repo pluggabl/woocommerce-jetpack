@@ -28,21 +28,21 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_shipping_left_to_free_info_enabled_cart', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_shipping_left_to_free_info_enabled_cart', 'no' ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_cart', 'woocommerce_after_cart_totals' ),
 					array( $this, 'show_left_to_free_shipping_info_cart' ),
 					get_option( 'wcj_shipping_left_to_free_info_priority_cart', 10 )
 				);
 			}
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_mini_cart', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_shipping_left_to_free_info_enabled_mini_cart', 'no' ) ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_mini_cart', 'woocommerce_after_mini_cart' ),
 					array( $this, 'show_left_to_free_shipping_info_mini_cart' ),
 					get_option( 'wcj_shipping_left_to_free_info_priority_mini_cart', 10 )
 				);
 			}
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_checkout', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_shipping_left_to_free_info_enabled_checkout', 'no' ) ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_checkout', 'woocommerce_checkout_after_order_review' ),
 					array( $this, 'show_left_to_free_shipping_info_checkout' ),
@@ -59,7 +59,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 	 * @since   2.4.4
 	 */
 	function show_left_to_free_shipping_info_checkout() {
-		$this->show_left_to_free_shipping_info( do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_checkout', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
+		$this->show_left_to_free_shipping_info( do_shortcode( wcj_get_option( 'wcj_shipping_left_to_free_info_content_checkout', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
 	}
 
 	/**
@@ -69,7 +69,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 	 * @since   2.4.4
 	 */
 	function show_left_to_free_shipping_info_mini_cart() {
-		$this->show_left_to_free_shipping_info( do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_mini_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
+		$this->show_left_to_free_shipping_info( do_shortcode( wcj_get_option( 'wcj_shipping_left_to_free_info_content_mini_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
 	}
 
 	/**
@@ -79,7 +79,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 	 * @since   2.4.4
 	 */
 	function show_left_to_free_shipping_info_cart() {
-		$this->show_left_to_free_shipping_info( do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
+		$this->show_left_to_free_shipping_info( do_shortcode( wcj_get_option( 'wcj_shipping_left_to_free_info_content_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
 	}
 
 	/**

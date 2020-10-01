@@ -30,7 +30,7 @@ class WCJ_Cart extends WCJ_Module {
 			// Cart items table custom info
 			add_filter( 'woocommerce_cart_item_name', array( $this, 'add_custom_info_to_cart_item_name' ), PHP_INT_MAX, 3 );
 			// Cart custom info
-			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_cart_custom_info_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cart_custom_info_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++) {
 				add_action(
 					get_option( 'wcj_cart_custom_info_hook_' . $i, 'woocommerce_after_cart_totals' ),
@@ -49,7 +49,7 @@ class WCJ_Cart extends WCJ_Module {
 	 * @todo    (maybe) `wc_setup_product_data( $post );`
 	 */
 	function add_custom_info_to_cart_item_name( $product_title, $cart_item, $cart_item_key ) {
-		$custom_content = get_option( 'wcj_cart_custom_info_item' );
+		$custom_content = wcj_get_option( 'wcj_cart_custom_info_item' );
 		if ( '' != $custom_content ) {
 			global $post;
 			$product_id = ( ! empty( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : $cart_item['product_id'] );
@@ -69,14 +69,14 @@ class WCJ_Cart extends WCJ_Module {
 	function add_cart_custom_info() {
 		$current_filter = current_filter();
 		$current_filter_priority = wcj_current_filter_priority();
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_cart_custom_info_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cart_custom_info_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
-				''                       != get_option( 'wcj_cart_custom_info_content_'  . $i ) &&
-				$current_filter         === get_option( 'wcj_cart_custom_info_hook_'     . $i, 'woocommerce_after_cart_totals' ) &&
-				$current_filter_priority == get_option( 'wcj_cart_custom_info_priority_' . $i, 10 )
+				''                       != wcj_get_option( 'wcj_cart_custom_info_content_'  . $i ) &&
+				$current_filter         === wcj_get_option( 'wcj_cart_custom_info_hook_'     . $i, 'woocommerce_after_cart_totals' ) &&
+				$current_filter_priority == wcj_get_option( 'wcj_cart_custom_info_priority_' . $i, 10 )
 			) {
-				echo do_shortcode( get_option( 'wcj_cart_custom_info_content_' . $i ) );
+				echo do_shortcode( wcj_get_option( 'wcj_cart_custom_info_content_' . $i ) );
 			}
 		}
 	}

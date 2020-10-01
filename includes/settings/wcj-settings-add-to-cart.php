@@ -44,7 +44,7 @@ if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
 		$product_cats[ $product_category->term_id ] = $product_category->name;
 	}
 }
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,

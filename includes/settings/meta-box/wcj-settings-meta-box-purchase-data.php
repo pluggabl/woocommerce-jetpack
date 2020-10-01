@@ -16,7 +16,7 @@ if ( ! $_product ) {
 	return array();
 }
 $products = array();
-if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) ) {
+if ( $_product->is_type( 'variable' ) && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) ) {
 	$available_variations = $_product->get_available_variations();
 	foreach ( $available_variations as $variation ) {
 		$variation_product = wc_get_product( $variation['variation_id'] );
@@ -36,7 +36,7 @@ foreach ( $products as $product_id => $desc ) {
 			'desc'       => $desc,
 			'product_id' => $product_id,
 			'meta_name'  => '_' . 'wcj_purchase_price',
-			'enabled'    => get_option( 'wcj_purchase_price_enabled', 'yes' ),
+			'enabled'    => wcj_get_option( 'wcj_purchase_price_enabled', 'yes' ),
 		),
 		array(
 			'name'       => 'wcj_purchase_price_extra_' . $product_id,
@@ -46,7 +46,7 @@ foreach ( $products as $product_id => $desc ) {
 			'desc'       => $desc,
 			'product_id' => $product_id,
 			'meta_name'  => '_' . 'wcj_purchase_price_extra',
-			'enabled'    => get_option( 'wcj_purchase_price_extra_enabled', 'yes' ),
+			'enabled'    => wcj_get_option( 'wcj_purchase_price_extra_enabled', 'yes' ),
 		),
 		array(
 			'name'       => 'wcj_purchase_price_affiliate_commission_' . $product_id,
@@ -56,17 +56,17 @@ foreach ( $products as $product_id => $desc ) {
 			'desc'       => $desc,
 			'product_id' => $product_id,
 			'meta_name'  => '_' . 'wcj_purchase_price_affiliate_commission',
-			'enabled'    => get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ),
+			'enabled'    => wcj_get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ),
 		),
 	);
-	$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+	$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
 	for ( $i = 1; $i <= $total_number; $i++ ) {
-		$the_title = get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' );
+		$the_title = wcj_get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' );
 		if ( '' == $the_title ) {
 			continue;
 		}
-		$the_type           = get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' );
-		$the_default_value  = get_option( 'wcj_purchase_data_custom_price_field_default_value_' . $i, 0 );
+		$the_type           = wcj_get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' );
+		$the_default_value  = wcj_get_option( 'wcj_purchase_data_custom_price_field_default_value_' . $i, 0 );
 		$the_title .= ( 'fixed' === $the_type ) ? ' (' . get_woocommerce_currency_symbol() . ')'  : ' (' . '%' . ')';
 		$product_options[] = array(
 			'name'       => 'wcj_purchase_price_custom_field_' . $i . '_' . $product_id,
@@ -88,7 +88,7 @@ foreach ( $products as $product_id => $desc ) {
 			'desc'       => $desc,
 			'product_id' => $product_id,
 			'meta_name'  => '_' . 'wcj_purchase_date',
-			'enabled'    => get_option( 'wcj_purchase_date_enabled', 'yes' ),
+			'enabled'    => wcj_get_option( 'wcj_purchase_date_enabled', 'yes' ),
 		),
 		array(
 			'name'       => 'wcj_purchase_partner_' . $product_id,
@@ -98,7 +98,7 @@ foreach ( $products as $product_id => $desc ) {
 			'desc'       => $desc,
 			'product_id' => $product_id,
 			'meta_name'  => '_' . 'wcj_purchase_partner',
-			'enabled'    => get_option( 'wcj_purchase_partner_enabled', 'yes' ),
+			'enabled'    => wcj_get_option( 'wcj_purchase_partner_enabled', 'yes' ),
 		),
 		array(
 			'name'       => 'wcj_purchase_info_' . $product_id,
@@ -108,7 +108,7 @@ foreach ( $products as $product_id => $desc ) {
 			'desc'       => $desc,
 			'product_id' => $product_id,
 			'meta_name'  => '_' . 'wcj_purchase_info',
-			'enabled'    => get_option( 'wcj_purchase_info_enabled', 'yes' ),
+			'enabled'    => wcj_get_option( 'wcj_purchase_info_enabled', 'yes' ),
 		),
 	) );
 	$product_options = apply_filters( 'wcj_purchase_data_product_options', $product_options, $product_id, $desc );

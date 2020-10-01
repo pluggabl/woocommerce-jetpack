@@ -75,7 +75,7 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
 		switch( $options_id ) {
 			case 'user_roles':
 				if ( empty( $this->customer_roles ) ) {
-					$this->customer_roles = 'no' === ( $multi_role_check = get_option( 'wcj_' . $this->id . '_check_multiple_roles', 'no' ) ) ? array( wcj_get_current_user_first_role() ) : wcj_get_current_user_all_roles();
+					$this->customer_roles = 'no' === ( $multi_role_check = wcj_get_option( 'wcj_' . $this->id . '_check_multiple_roles', 'no' ) ) ? array( wcj_get_current_user_first_role() ) : wcj_get_current_user_all_roles();
 				}
 				return count( array_intersect( $this->customer_roles, $user_roles_or_ids_or_membership_plans ) ) > 0;
 			case 'user_id':

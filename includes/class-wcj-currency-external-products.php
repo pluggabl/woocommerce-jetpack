@@ -26,7 +26,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( '' != get_option( 'wcj_currency_external_products_symbol', 'EUR' ) ) {
+			if ( '' != wcj_get_option( 'wcj_currency_external_products_symbol', 'EUR' ) ) {
 				add_filter( 'woocommerce_currency', array( $this, 'change_currency_code' ), PHP_INT_MAX, 1 );
 			}
 		}
@@ -41,7 +41,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	function change_currency_code( $currency ) {
 		global $product;
 		if ( is_object( $product ) && $product->is_type( 'external' ) ) {
-			return get_option( 'wcj_currency_external_products_symbol', 'EUR' );
+			return wcj_get_option( 'wcj_currency_external_products_symbol', 'EUR' );
 		}
 		return $currency;
 	}

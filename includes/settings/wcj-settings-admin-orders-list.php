@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Orders List
  *
- * @version 3.7.0
+ * @version 5.3.3
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -49,7 +49,7 @@ $settings = array(
 		),
 	),
 );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -76,7 +76,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'css'      => 'width:100%;',
 		),
 		array(
-			'desc'     => __( 'Sortable', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Sortable , Select "By meta (as text)" for date sorting', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_orders_list_custom_columns_sortable_' . $i,
 			'default'  => 'no',
 			'type'     => 'select',
@@ -87,7 +87,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			),
 		),
 		array(
-			'desc'     => __( 'Key (if sortable)', 'woocommerce-jetpack' ),
+			'desc'     => sprintf( __( 'Key (if sortable) %s Add "_" (underscore) before key if the key is from "Checkout Custom Fields module"') , '</br>' , 'woocommerce-jetpack' ),
 			'id'       => 'wcj_orders_list_custom_columns_sortable_key_' . $i,
 			'default'  => '',
 			'type'     => 'text',
@@ -165,7 +165,7 @@ $settings = array_merge( $settings, array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 ) );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_order_admin_list_multiple_status_presets_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(

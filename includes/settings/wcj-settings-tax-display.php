@@ -115,7 +115,7 @@ $settings = array(
 		'options'  => wcj_get_user_roles_options(),
 	),
 );
-if ( '' != ( $display_taxes_by_user_role_roles = get_option( 'wcj_product_listings_display_taxes_by_user_role_roles', '' ) ) ) {
+if ( '' != ( $display_taxes_by_user_role_roles = wcj_get_option( 'wcj_product_listings_display_taxes_by_user_role_roles', '' ) ) ) {
 	foreach ( $display_taxes_by_user_role_roles as $display_taxes_by_user_role_role ) {
 		$settings = array_merge( $settings, array(
 			array(

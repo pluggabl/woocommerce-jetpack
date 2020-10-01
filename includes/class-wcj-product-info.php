@@ -146,14 +146,14 @@ class WCJ_Product_Info extends WCJ_Module {
 	 */
 	function add_product_info_filters( $single_or_archive ) {
 		// Product Info
-		if ( ( 'yes' === get_option( 'wcj_product_info_on_' . $single_or_archive . '_enabled' ) ) &&
-			 ( '' != get_option( 'wcj_product_info_on_' . $single_or_archive ) ) &&
-			 ( '' != get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ) ) &&
-			 ( '' != get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) ) )
-				add_action( get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ), array( $this, 'product_info' ), get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) );
+		if ( ( 'yes' === wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_enabled' ) ) &&
+			 ( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive ) ) &&
+			 ( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ) ) &&
+			 ( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) ) )
+				add_action( wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ), array( $this, 'product_info' ), wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) );
 		// More product Info
-		if ( 'yes' === get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_enabled' ) ) {
-				add_action( get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_filter' ), array( $this, 'more_product_info' ), get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_filter_priority' ) );
+		if ( 'yes' === wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_enabled' ) ) {
+				add_action( wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_filter' ), array( $this, 'more_product_info' ), wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_filter_priority' ) );
 		}
 	}
 
@@ -165,12 +165,12 @@ class WCJ_Product_Info extends WCJ_Module {
 	function product_info() {
 		$the_action_name = current_filter();
 		if ( array_key_exists( $the_action_name, $this->product_info_on_archive_filters_array ) ) {
-			$the_product_info = get_option( 'wcj_product_info_on_archive' );
+			$the_product_info = wcj_get_option( 'wcj_product_info_on_archive' );
 			$the_product_info = $this->search_and_replace_deprecated_shortcodes( $the_product_info );
 			$this->apply_product_info_short_codes( $the_product_info, false );
 		}
 		else if ( array_key_exists( $the_action_name, $this->product_info_on_single_filters_array ) ) {
-			$the_product_info = get_option( 'wcj_product_info_on_single' );
+			$the_product_info = wcj_get_option( 'wcj_product_info_on_single' );
 			$the_product_info = $this->search_and_replace_deprecated_shortcodes( $the_product_info );
 			$this->apply_product_info_short_codes( $the_product_info, false );
 		}
@@ -193,9 +193,9 @@ class WCJ_Product_Info extends WCJ_Module {
 	 * @version 2.4.0
 	 */
 	function add_more_product_info( $single_or_archive ) {
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 4, get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
 			$field_id = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i ;
-			$the_product_info = get_option( $field_id );
+			$the_product_info = wcj_get_option( $field_id );
 			$the_product_info = $this->search_and_replace_deprecated_shortcodes( $the_product_info );
 			$this->apply_product_info_short_codes( $the_product_info, true );
 		}
@@ -208,7 +208,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	 */
 	function apply_product_info_short_codes( $the_product_info, $remove_on_empty ) {
 
-		$product_ids_to_exclude = get_option( 'wcj_product_info_products_to_exclude', '' );
+		$product_ids_to_exclude = wcj_get_option( 'wcj_product_info_products_to_exclude', '' );
 		if ( '' != $product_ids_to_exclude ) {
 			$product_ids_to_exclude = str_replace( ' ', '', $product_ids_to_exclude );
 			$product_ids_to_exclude = explode( ',', $product_ids_to_exclude );
@@ -274,7 +274,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	 * @version 2.4.0
 	 */
 	function admin_add_product_info_fields( &$settings, $single_or_archive ) {
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 4, get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
 			$field_id = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i ;
 			$default_value = '';
 			switch ( $i ) {

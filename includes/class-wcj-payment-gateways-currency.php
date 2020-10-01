@@ -29,12 +29,12 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			$this->page_scope = get_option( 'wcj_gateways_currency_page_scope', 'cart_and_checkout' );
+			$this->page_scope = wcj_get_option( 'wcj_gateways_currency_page_scope', 'cart_and_checkout' );
 			$this->add_hooks();
 			if ( is_admin() ) {
 				include_once( 'reports/class-wcj-currency-reports.php' );
 			}
-			if ( 'yes' === get_option( 'wcj_gateways_currency_fix_chosen_payment_method', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_gateways_currency_fix_chosen_payment_method', 'no' ) ) {
 				add_action( 'woocommerce_checkout_update_order_review', array( $this, 'fix_chosen_payment_method' ) );
 			}
 		}
@@ -99,7 +99,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		if ( $this->is_cart_or_checkout() ) {
 			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
-				$gateway_currency_exchange_rate = get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
+				$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 				return wcj_change_price_shipping_package_rates( $package_rates, $gateway_currency_exchange_rate );
 			}
 		}
@@ -138,7 +138,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		if ( $this->is_cart_or_checkout() ) {
 			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
-				$gateway_currency_exchange_rate = get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
+				$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 				$gateway_currency_exchange_rate = str_replace( ',', '.', $gateway_currency_exchange_rate );
 				$price                          = $price * $gateway_currency_exchange_rate;
 			}
@@ -156,7 +156,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		if ( $this->is_cart_or_checkout() ) {
 			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
-				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
+				$gateway_currency = wcj_get_option( 'wcj_gateways_currency_' . $current_gateway );
 				if ( 'no_changes' != $gateway_currency ) {
 					$supported_currencies[] = $gateway_currency;
 				}
@@ -175,7 +175,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		if ( $this->is_cart_or_checkout() ) {
 			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
-				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
+				$gateway_currency = wcj_get_option( 'wcj_gateways_currency_' . $current_gateway );
 				if ( 'no_changes' != $gateway_currency ) {
 					return $gateway_currency;
 				}

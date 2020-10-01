@@ -40,7 +40,7 @@ $options = array(
 	),
 );
 if ( 'yes' === get_post_meta( wcj_get_product_id( $_product ), '_' . 'wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
-	$visible_roles = get_option( 'wcj_price_by_user_role_per_product_show_roles', '' );
+	$visible_roles = wcj_get_option( 'wcj_price_by_user_role_per_product_show_roles', '' );
 	foreach ( $products as $product_id => $desc ) {
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			if ( ! empty( $visible_roles ) ) {
@@ -83,7 +83,7 @@ if ( 'yes' === get_post_meta( wcj_get_product_id( $_product ), '_' . 'wcj_price_
 			$copy_buttons_regular = $copy_to_roles_regular . $copy_to_variations_regular . $copy_to_roles_and_variations_regular;
 			$copy_buttons_sale    = $copy_to_roles_sale    . $copy_to_variations_sale    . $copy_to_roles_and_variations_sale;
 			// Settings
-			if ( 'fixed' === get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) ) {
+			if ( 'fixed' === wcj_get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) ) {
 				$prices_or_multiplier = array(
 					array(
 						'name'       => 'wcj_price_by_user_role_regular_price_' . $role_key . '_' . $product_id,

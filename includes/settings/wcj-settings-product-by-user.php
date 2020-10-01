@@ -70,7 +70,7 @@ $settings = array_merge(
 			'desc'     => __( 'Number of decimals', 'woocommerce' ),
 			'desc_tip' => __( 'Used for price fields only.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_by_user_price_step',
-			'default'  => get_option( 'woocommerce_price_num_decimals', 2 ),
+			'default'  => wcj_get_option( 'woocommerce_price_num_decimals', 2 ),
 			'type'     => 'number',
 			'custom_attributes' => array( 'step' => '1', 'min'  => '0' ),
 		),
@@ -142,7 +142,7 @@ $settings = array_merge(
 		),
 	)
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Custom Taxonomy', 'woocommerce-jetpack' ) . ' #' . $i,

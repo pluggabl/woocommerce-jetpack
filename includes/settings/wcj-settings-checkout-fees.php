@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Fees
  *
- * @version 4.6.1
+ * @version 5.3.3
  * @since   3.7.0
  * @author  Pluggabl LLC.
  */
@@ -28,11 +28,11 @@ $settings = array(
 		'id'       => 'wcj_checkout_fees_general_options',
 	),
 );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_fees_total_number', 1 ) );
-$fees_titles = get_option( 'wcj_checkout_fees_data_titles', array() );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_fees_total_number', 1 ) );
+$fees_titles = wcj_get_option( 'wcj_checkout_fees_data_titles', array() );
 $fees = array();
 for ( $i = 1; $i <= $total_number; $i ++ ) {
-	$fees[ $i ] = $fees_titles[ $i ];
+	$fees[ $i ] = $fees_titles != null ? $fees_titles[ $i ] : '';
 }
 
 for ( $i = 1; $i <= $total_number; $i++ ) {

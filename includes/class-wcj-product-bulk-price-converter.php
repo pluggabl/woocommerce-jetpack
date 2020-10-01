@@ -42,7 +42,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		$the_price = get_post_meta( $product_id, '_' . $price_type, true );
 		$the_modified_price = $the_price;
 		if ( '' != $the_price && 0 != $the_price ) {
-			$precision = get_option( 'woocommerce_price_num_decimals', 2 );
+			$precision = wcj_get_option( 'woocommerce_price_num_decimals', 2 );
 			$the_modified_price = round( $the_price * $multiply_price_by, $precision );
 			if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'booster_option', 0, $_POST['make_pretty_prices_threshold'] ) > 0 ) {
 				$the_modified_price = $this->make_pretty_price( $the_modified_price );

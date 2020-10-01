@@ -32,7 +32,7 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 			// compatibility with 2.3.0 or below
 			$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
 			foreach ( $default_gateways as $key ) {
-				$deprecated_option = get_option( 'wcj_payment_gateways_icons_' . 'woocommerce_' . $key . '_icon', '' );
+				$deprecated_option = wcj_get_option( 'wcj_payment_gateways_icons_' . 'woocommerce_' . $key . '_icon', '' );
 				if ( '' != $deprecated_option ) {
 					update_option( 'wcj_gateways_icons_' . $key . '_icon', $deprecated_option );
 					delete_option( 'wcj_payment_gateways_icons_' . 'woocommerce_' . $key . '_icon' );
@@ -51,10 +51,10 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 		if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
 			return $icon;
 		}
-		if ( 'yes' === get_option( 'wcj_gateways_icons_' . $key . '_icon_remove', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_gateways_icons_' . $key . '_icon_remove', 'no' ) ) {
 			return '';
 		}
-		$custom_icon_url = get_option( 'wcj_gateways_icons_' . $key . '_icon', '' );
+		$custom_icon_url = wcj_get_option( 'wcj_gateways_icons_' . $key . '_icon', '' );
 		return ( '' == $custom_icon_url ) ? $icon : '<img src="' . $custom_icon_url . '" alt="' . $key . '" />';
 	}
 

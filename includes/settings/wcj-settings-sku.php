@@ -153,7 +153,7 @@ $settings = array(
 		'title'    => __( 'Salt', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'A random string that will make your SKUs really unique.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_sku_hashids_salt',
-		'default'  => get_option( 'wcj_sku_hashids_salt_default', '' ),
+		'default'  => wcj_get_option( 'wcj_sku_hashids_salt_default', '' ),
 		'type'     => 'text',
 	),
 	array(

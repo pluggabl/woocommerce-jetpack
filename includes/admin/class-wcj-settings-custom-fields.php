@@ -42,7 +42,7 @@ class WCJ_Settings_Custom_Fields {
 
 		$value['type'] = 'number';
 
-		$option_value = get_option( $value['id'], $value['default'] );
+		$option_value = wcj_get_option( $value['id'], $value['default'] );
 
 		// Custom attribute handling
 		$custom_attributes = array();
@@ -53,7 +53,7 @@ class WCJ_Settings_Custom_Fields {
 		} else {
 			if (
 				! WCJ()->modules['currency_exchange_rates']->is_enabled()
-				|| 'yes' !== get_option( 'wcj_currency_exchange_rates_point_decimal_separator', 'no' )
+				|| 'yes' !== wcj_get_option( 'wcj_currency_exchange_rates_point_decimal_separator', 'no' )
 			) {
 				$custom_attributes = array( 'step="' . sprintf( "%.12f", 1 / pow( 10, 12 ) ) . '"', 'min="0"' );
 			} else {
@@ -227,7 +227,7 @@ class WCJ_Settings_Custom_Fields {
 	 * @since   2.2.6
 	 */
 	function output_custom_textarea( $value ) {
-		$option_value = get_option( $value['id'], $value['default'] );
+		$option_value = wcj_get_option( $value['id'], $value['default'] );
 		$custom_attributes = ( isset( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) ?
 			$value['custom_attributes'] : array();
 		$description = ' <p class="description">' . $value['desc'] . '</p>';
@@ -298,7 +298,7 @@ class WCJ_Settings_Custom_Fields {
 	 */
 	function output_custom_number( $value ) {
 		$type         = 'number';
-		$option_value = get_option( $value['id'], $value['default'] );
+		$option_value = wcj_get_option( $value['id'], $value['default'] );
 		$tooltip_html = ( isset( $value['desc_tip'] ) && '' != $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 		$description  = ' <span class="description">' . $value['desc'] . '</span>';

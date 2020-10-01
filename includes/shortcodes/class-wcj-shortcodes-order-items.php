@@ -451,9 +451,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function get_product_item_name( $item ) {
 		$item_name = $item['name'];
-		if ( 'yes' == get_option( 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_enable', 'no' ) ) {
+		if ( 'yes' == wcj_get_option( 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_enable', 'no' ) ) {
 			if (
-				'yes' == get_option( 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_wpml', 'no' )
+				'yes' == wcj_get_option( 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_wpml', 'no' )
 				&& function_exists( 'icl_object_id' )
 			) {
 				$item_name = get_the_title( icl_object_id( $item->get_product_ID(), 'product', false, ICL_LANGUAGE_CODE ) );
@@ -529,7 +529,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$the_item_title .= '</div>';
 					}
 					// "WooCommerce TM Extra Product Options" plugin options
-					if ( 'yes' === get_option( 'wcj_general_advanced_wcepo_enable', 'yes' ) ) {
+					if ( 'yes' === wcj_get_option( 'wcj_general_advanced_wcepo_enable', 'yes' ) ) {
 						$tmcartepo_data = ( WCJ_IS_WC_VERSION_BELOW_3 ?
 							( isset( $item['tmcartepo_data'] ) ? maybe_unserialize( $item['tmcartepo_data'] ) : '' ) :
 							$item->get_meta( '_tmcartepo_data' )

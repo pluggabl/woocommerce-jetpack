@@ -44,7 +44,7 @@ $settings = array(
 		'desc'     => __( 'rounding precision', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Number of decimals.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_round_precision',
-		'default'  => get_option( 'woocommerce_price_num_decimals' ),
+		'default'  => wcj_get_option( 'woocommerce_price_num_decimals' ),
 		'type'     => 'number',
 		'custom_attributes' => array( 'min' => 0 ),
 	),
@@ -126,9 +126,9 @@ $settings = array(
 		),
 	),
 );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
-	$currency_to = get_option( 'wcj_multicurrency_base_price_currency_' . $i, $currency_from );
+	$currency_to = wcj_get_option( 'wcj_multicurrency_base_price_currency_' . $i, $currency_from );
 	$custom_attributes = array(
 		'currency_from'        => $currency_from,
 		'currency_to'          => $currency_to,

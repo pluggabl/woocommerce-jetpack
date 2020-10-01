@@ -72,7 +72,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module_Product_By_Condition {
 	 * @since   3.6.0
 	 */
 	function get_options_list() {
-		$user_roles_options_args = 'no' === get_option( 'wcj_' . $this->id . '_user_options_skip_editable_roles', 'no' ) ? null : array( 'skip_editable_roles_filter' => true );
+		$user_roles_options_args = 'no' === wcj_get_option( 'wcj_' . $this->id . '_user_options_skip_editable_roles', 'no' ) ? null : array( 'skip_editable_roles_filter' => true );
 		return wcj_get_user_roles_options( $user_roles_options_args );
 	}
 

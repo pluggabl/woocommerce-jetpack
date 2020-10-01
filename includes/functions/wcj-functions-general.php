@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.8.0
+ * @version 5.3.3
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -320,7 +320,7 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 				break;
 			default:
 				if ( session_status() == PHP_SESSION_NONE && ! headers_sent() ) {
-					$read_and_close = ( 'yes' === get_option( 'wcj_general_advanced_session_read_and_close', 'no' ) ) && PHP_VERSION_ID > 70000 ? array( 'read_and_close' => true ) : array();
+					$read_and_close = ( 'yes' === wcj_get_option( 'wcj_general_advanced_session_read_and_close', 'no' ) ) && PHP_VERSION_ID > 70000 ? array( 'read_and_close' => true ) : array();
 					session_start( $read_and_close );
 				}
 				break;
@@ -376,7 +376,7 @@ if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
 	function wcj_wrap_in_wc_email_template( $content, $email_heading = '' ) {
 		return wcj_get_wc_email_part( 'header', $email_heading ) .
 			$content .
-		str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), wcj_get_wc_email_part( 'footer' ) );
+		str_replace( '{site_title}', wp_specialchars_decode( wcj_get_option( 'blogname' ), ENT_QUOTES ), wcj_get_wc_email_part( 'footer' ) );
 	}
 }
 
@@ -435,7 +435,7 @@ if ( ! function_exists( 'wcj_is_module_deprecated' ) ) {
 	function wcj_is_module_deprecated( $module_id, $by_module_option = false, $check_for_disabled = false ) {
 		if ( $check_for_disabled ) {
 			$module_option = ( $by_module_option ? $module_id : 'wcj_' . $module_id . '_enabled' );
-			if ( 'yes' === get_option( $module_option, 'no' ) ) {
+			if ( 'yes' === wcj_get_option( $module_option, 'no' ) ) {
 				return false;
 			}
 		}
@@ -559,13 +559,13 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 		$variation_label = wcj_replace_values_in_template( array(
 			'%variation_title%' => implode( ', ', $variation_attributes_display_values ),
 			'%variation_price%' => wc_price( $variation['display_price'] ),
-		), get_option( 'wcj_add_to_cart_variable_as_radio_variation_label_template', '%variation_title% (%variation_price%)' ) );
+		), wcj_get_option( 'wcj_add_to_cart_variable_as_radio_variation_label_template', '%variation_title% (%variation_price%)' ) );
 		// Variation ID and "is checked"
 		$variation_id    = $variation['variation_id'];
 		$is_checked      = checked( $is_checked, true, false );
 		// Final HTML
 		$html = '';
-		$html .= '<td class="wcj_variable_as_radio_input_td" style="' . get_option( 'wcj_add_to_cart_variable_as_radio_input_td_style', 'width:10%;' ) . '">';
+		$html .= '<td class="wcj_variable_as_radio_input_td" style="' . wcj_get_option( 'wcj_add_to_cart_variable_as_radio_input_td_style', 'width:10%;' ) . '">';
 		$html .= '<input id="wcj_variation_' . $variation_id . '" name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' .
 			$variation_id . '"' . $is_checked . '>';
 		$html .= '</td>';
@@ -575,7 +575,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 		if ( '' != ( $variation_description = get_post_meta( $variation_id, '_variation_description', true ) ) ) {
 			$html .= wcj_replace_values_in_template( array(
 				'%variation_description%' => $variation_description,
-			), get_option( 'wcj_add_to_cart_variable_as_radio_variation_desc_template', '<br><small>%variation_description%</small>' ) );
+			), wcj_get_option( 'wcj_add_to_cart_variable_as_radio_variation_desc_template', '<br><small>%variation_description%</small>' ) );
 		}
 		$html .= '</label>';
 		$html .= '</td>';
@@ -802,7 +802,7 @@ if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 	function wcj_get_the_ip() {
 		$ip                   = null;
 		$ip_detection_methods = array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' );
-		$ip_detection_methods = 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? explode( PHP_EOL, get_option( 'wcj_general_advanced_ip_detection', implode( PHP_EOL, array( 'REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR' ) ) ) ) : $ip_detection_methods;
+		$ip_detection_methods = 'yes' === wcj_get_option( 'wcj_general_enabled', 'no' ) ? explode( PHP_EOL, wcj_get_option( 'wcj_general_advanced_ip_detection', implode( PHP_EOL, array( 'REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR' ) ) ) ) : $ip_detection_methods;
 		foreach ( $ip_detection_methods as $method ) {
 			if ( empty( $_SERVER[ sanitize_text_field( $method ) ] ) ) {
 				continue;

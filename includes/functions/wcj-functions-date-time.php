@@ -249,9 +249,9 @@ if ( ! function_exists( 'wcj_timezone' ) ) {
 		if ( version_compare( $wp_version, '5.3.0', '>=' ) ) {
 			return wp_timezone();
 		}
-		$timezone = get_option( 'timezone_string' );
+		$timezone = wcj_get_option( 'timezone_string' );
 		if ( ! $timezone ) {
-			$offset   = (float) get_option( 'gmt_offset' );
+			$offset   = (float) wcj_get_option( 'gmt_offset' );
 			$hours    = (int) $offset;
 			$minutes  = ( $offset - $hours );
 			$sign     = ( $offset < 0 ) ? '-' : '+';
@@ -286,7 +286,7 @@ if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
 			( new DateTime( $date_in_local_timezone, new DateTimeZone( 'UTC' ) ) )
 				->getTimestamp();
 		if ( empty( $format ) ) {
-			$format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+			$format = wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' );
 		}
 		return date_i18n( $format, $seconds_since_local_1_jan_1970 );
 	}

@@ -168,7 +168,7 @@ return array(
 		'desc_tip' => __( 'Number of decimals', 'woocommerce' ),
 		'id'       => 'wcj_offer_price_price_step',
 		'type'     => 'number',
-		'default'  => get_option( 'woocommerce_price_num_decimals' ),
+		'default'  => wcj_get_option( 'woocommerce_price_num_decimals' ),
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
@@ -316,7 +316,7 @@ return array(
 			sprintf(
 				__( 'Use %s to send to administrator email: %s.',
 				'woocommerce-jetpack' ), '<code>' . '%admin_email%' . '</code>',
-				'<code>' . get_option( 'admin_email' ) . '</code>'
+				'<code>' . wcj_get_option( 'admin_email' ) . '</code>'
 			) . ' ' .
 			wcj_message_replaced_values( array( '%admin_email%', '%product_author_email%' ) ),
 		'id'       => 'wcj_offer_price_email_address',

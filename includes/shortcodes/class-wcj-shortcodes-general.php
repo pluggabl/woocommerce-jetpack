@@ -66,9 +66,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'date_format'           => get_option( 'date_format' ),
-			'time_format'           => get_option( 'time_format' ),
-			'datetime_format'       => get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
+			'date_format'           => wcj_get_option( 'date_format' ),
+			'time_format'           => wcj_get_option( 'time_format' ),
+			'datetime_format'       => wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' ),
 			'lang'                  => '',
 			'form_method'           => 'post',
 			'class'                 => '',
@@ -133,7 +133,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @todo    [dev] maybe also add `get_site_option()`
 	 */
 	function wcj_get_option( $atts ) {
-		$result = ( isset( $atts['name'] ) ? get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
+		$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
 		return ( is_array( $result ) ?
 			( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
 			$result );
@@ -251,8 +251,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @todo    `$atts['shipping_class_term_id']` - class term ID is not visible anywhere for admin, so probably need to use `slug` instead
 	 */
 	function wcj_shipping_time_table( $atts ) {
-		$do_use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
-		$do_use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
+		$do_use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
+		$do_use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
 		$shipping_class_term_id    = ( isset( $atts['shipping_class_term_id'] ) ? $atts['shipping_class_term_id'] : '0' );
 		$option_id_shipping_class  = ( $do_use_shipping_classes ? '_class_' . $shipping_class_term_id : '' );
 		return wcj_get_shipping_time_table( $do_use_shipping_instances, $option_id_shipping_class );
@@ -371,7 +371,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @todo    (maybe) `get` instead of `post`
 	 */
 	function wcj_button_toggle_tax_display( $atts ) {
-		$current_value = ( '' == ( $session_value = wcj_session_get( 'wcj_toggle_tax_display' ) ) ? get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+		$current_value = ( '' == ( $session_value = wcj_session_get( 'wcj_toggle_tax_display' ) ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
 		$label         = $atts[ 'label_' . $current_value ];
 		return '<form method="post" action=""><input type="submit" name="wcj_button_toggle_tax_display"' .
 			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';
@@ -407,7 +407,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @since   3.2.1
 	 */
 	function wcj_wp_option( $atts ) {
-		return ( '' != $atts['option'] ? get_option( $atts['option'], $atts['default'] ) : '' );
+		return ( '' != $atts['option'] ? wcj_get_option( $atts['option'], $atts['default'] ) : '' );
 	}
 
 	/**
@@ -448,7 +448,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		);
 		switch ( $atts['selector_type'] ) {
 			case 'product_custom_visibility':
-				$options = wcj_get_select_options( get_option( 'wcj_product_custom_visibility_options_list', '' ) );
+				$options = wcj_get_select_options( wcj_get_option( 'wcj_product_custom_visibility_options_list', '' ) );
 				break;
 			default: // 'country'
 				$options = wcj_get_countries();
@@ -483,7 +483,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @todo    (maybe) add similar function
 	 */
 	function wcj_currency_exchange_rate( $atts ) {
-		return ( '' != $atts['from'] && '' != $atts['to'] ) ? get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $atts['from'] . $atts['to'] ) ) : '';
+		return ( '' != $atts['from'] && '' != $atts['to'] ) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $atts['from'] . $atts['to'] ) ) : '';
 	}
 
 	/**
@@ -497,7 +497,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$all_currencies = WCJ()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
 		$table_data = array();
 		foreach ( $all_currencies as $currency ) {
-			$table_data[] = array( $currency['title'], get_option( $currency['id'] ) );
+			$table_data[] = array( $currency['title'], wcj_get_option( $currency['id'] ) );
 		}
 		if ( ! empty( $table_data ) ) {
 			return wcj_get_table_html( $table_data, array( 'table_class' => 'wcj_currency_exchange_rates_table', 'table_heading_type' => 'vertical' ) );
@@ -654,9 +654,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			$shortcode_currencies = explode( ',', $shortcode_currencies );
 		}
 		if ( empty( $shortcode_currencies ) ) {
-			$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+			$total_number = apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
-				$shortcode_currencies[] = get_option( 'wcj_multicurrency_currency_' . $i );
+				$shortcode_currencies[] = wcj_get_option( 'wcj_multicurrency_currency_' . $i );
 			}
 		}
 		return $shortcode_currencies;
@@ -676,7 +676,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		// Check for user role options
 		$role_option_name_addon = '';
-		$user_roles = get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
+		$user_roles = wcj_get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
 		if ( ! empty( $user_roles ) ) {
 			$current_user_role = wcj_get_current_user_first_role();
 			foreach ( $user_roles as $user_role_key ) {
@@ -688,9 +688,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		$wholesale_price_levels = array();
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
-			$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
-			$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
+			$level_qty                = wcj_get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
+			$discount                 = wcj_get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
 			$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
 		}
 
@@ -709,7 +709,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				array( $wholesale_price_level['quantity'], $wholesale_price_level['quantity'], $level_max_qty ),
 				$atts['heading_format']
 			);
-			$data_discount[]         = ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type', 'percent' ) )
+			$data_discount[]         = ( 'fixed' === wcj_get_option( 'wcj_wholesale_price_discount_type', 'percent' ) )
 				? '-' . wc_price( $wholesale_price_level['discount'] ) : '-' . $wholesale_price_level['discount'] . '%';
 			$columns_styles[]        = $atts['columns_style'];
 		}
@@ -744,11 +744,11 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
 			$selected_currency = $session_value;
 		} else {
-			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+			$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 			if ( ! empty( $module_roles ) ) {
 				$current_user_role = wcj_get_current_user_first_role();
 				if ( in_array( $current_user_role, $module_roles ) ) {
-					$selected_currency = get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
+					$selected_currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
 				}
 			}
 		}
@@ -757,7 +757,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 		$links = array();
 		$first_link = '';
-		$switcher_template = get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );
+		$switcher_template = wcj_get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );
 		foreach ( $shortcode_currencies as $currency_code ) {
 			if ( isset( $currencies[ $currency_code ] ) ) {
 				$template_replaced_values = array(
@@ -824,11 +824,11 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
 			$selected_currency = $session_value;
 		} else {
-			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+			$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 			if ( ! empty( $module_roles ) ) {
 				$current_user_role = wcj_get_current_user_first_role();
 				if ( in_array( $current_user_role, $module_roles ) ) {
-					$selected_currency = get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
+					$selected_currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
 				}
 			}
 		}
@@ -836,7 +836,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			wcj_session_set( 'wcj-currency', $atts['default'] );
 			$selected_currency = $atts['default'];
 		}
-		$switcher_template = get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );
+		$switcher_template = wcj_get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );
 		foreach ( $shortcode_currencies as $currency_code ) {
 			if ( isset( $currencies[ $currency_code ] ) ) {
 				$template_replaced_values = array(
@@ -909,14 +909,14 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$html .= '<select name="wcj-country" id="wcj-country" style="' . $select_style . '" class="' . $select_class . '" onchange="this.form.submit()">';
 		if ( empty( $shortcode_countries ) ) {
 			foreach ( $countries as $country_code => $country_name ) {
-				$data_icon    = ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ? ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"' : '' );
+				$data_icon    = ( 'yes' === wcj_get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ? ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"' : '' );
 				$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $country_name;
 				$html        .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
 			}
 		} else {
 			foreach ( $shortcode_countries as $country_code ) {
 				if ( isset( $countries[ $country_code ] ) ) {
-					$data_icon    = ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ? ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"' : '' );
+					$data_icon    = ( 'yes' === wcj_get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ? ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"' : '' );
 					$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $countries[ $country_code ];
 					$html        .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
 				}

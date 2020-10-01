@@ -84,7 +84,7 @@ class WCJ_Scripts {
 	 * @since   2.4.0
 	 */
 	function maybe_enqueue_datepicker_scripts() {
-		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_datepicker_js', 'no' ) ) ) {
+		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === wcj_get_option( 'wcj_general_advanced_disable_datepicker_js', 'no' ) ) ) {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_script( 'wcj-datepicker', wcj_plugin_url() . '/includes/js/wcj-datepicker.js',
 				array( 'jquery' ),
@@ -104,7 +104,7 @@ class WCJ_Scripts {
 	 * @since   2.4.0
 	 */
 	function maybe_enqueue_timepicker_scripts() {
-		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_timepicker_js', 'no' ) ) ) {
+		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === wcj_get_option( 'wcj_general_advanced_disable_timepicker_js', 'no' ) ) ) {
 			wp_enqueue_script( 'jquery-ui-timepicker',
 				wcj_plugin_url() . '/includes/lib/timepicker/jquery.timepicker.min.js',
 				array( 'jquery' ),
@@ -124,10 +124,10 @@ class WCJ_Scripts {
 	 * @since   2.4.0
 	 */
 	function maybe_enqueue_datepicker_style() {
-		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_datepicker_css', 'no' ) ) ) {
+		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === wcj_get_option( 'wcj_general_advanced_disable_datepicker_css', 'no' ) ) ) {
 			$datepicker_css_path = '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css';
 			if ( wcj_is_module_enabled( 'general' ) ) {
-				$datepicker_css_path = get_option( 'wcj_general_advanced_datepicker_css', $datepicker_css_path );
+				$datepicker_css_path = wcj_get_option( 'wcj_general_advanced_datepicker_css', $datepicker_css_path );
 			}
 			wp_enqueue_style( 'jquery-ui-style', $datepicker_css_path );
 		}
@@ -140,7 +140,7 @@ class WCJ_Scripts {
 	 * @since   2.4.0
 	 */
 	function maybe_enqueue_timepicker_style() {
-		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_timepicker_css', 'no' ) ) ) {
+		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === wcj_get_option( 'wcj_general_advanced_disable_timepicker_css', 'no' ) ) ) {
 			wp_enqueue_style( 'wcj-timepicker-style', wcj_plugin_url() . '/includes/lib/timepicker/jquery.timepicker.min.css', array(), WCJ()->version );
 		}
 	}

@@ -9,9 +9,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
-$is_multiselect_cats         = ( 'yes' === get_option( 'wcj_list_for_products_cats', 'yes' ) );
-$is_multiselect_tags         = ( 'yes' === get_option( 'wcj_list_for_products_tags', 'yes' ) );
+$is_multiselect_products     = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
+$is_multiselect_cats         = ( 'yes' === wcj_get_option( 'wcj_list_for_products_cats', 'yes' ) );
+$is_multiselect_tags         = ( 'yes' === wcj_get_option( 'wcj_list_for_products_tags', 'yes' ) );
 $product_cats                = ( $is_multiselect_cats     ? wcj_get_terms( 'product_cat' ) : false );
 $product_tags                = ( $is_multiselect_tags     ? wcj_get_terms( 'product_tag' ) : false );
 $settings                    = array();
@@ -19,7 +19,7 @@ $single_or_archive_array     = array( 'single', 'archive' );
 
 foreach ( $single_or_archive_array as $single_or_archive ) {
 
-	if ( '' == ( $extra_filters = get_option( 'wcj_product_custom_info_extra_filters_' . $single_or_archive, '' ) ) ) {
+	if ( '' == ( $extra_filters = wcj_get_option( 'wcj_product_custom_info_extra_filters_' . $single_or_archive, '' ) ) ) {
 		$extra_filters = array();
 	} else {
 		$extra_filters = explode( PHP_EOL, $extra_filters );
@@ -61,7 +61,7 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 			'id'       => 'wcj_product_custom_info_options_' . $single_or_archive,
 		),
 	) );
-	for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+	for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 
 		wcj_maybe_convert_and_update_option_value( array(
 			array( 'id' => 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i, 'default' => '' ),

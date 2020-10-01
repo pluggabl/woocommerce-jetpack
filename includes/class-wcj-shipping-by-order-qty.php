@@ -30,15 +30,15 @@ class WCJ_Shipping_By_Order_Qty extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			$this->use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_by_order_qty_use_shipping_instance', 'no' ) );
+			$this->use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_by_order_qty_use_shipping_instance', 'no' ) );
 			$min_option_name = 'wcj_shipping_by_order_qty_min';
 			$max_option_name = 'wcj_shipping_by_order_qty_max';
 			if ( $this->use_shipping_instances ) {
 				$min_option_name .= '_instance';
 				$max_option_name .= '_instance';
 			}
-			$this->min_qty = get_option( $min_option_name, array() );
-			$this->max_qty = get_option( $max_option_name, array() );
+			$this->min_qty = wcj_get_option( $min_option_name, array() );
+			$this->max_qty = wcj_get_option( $max_option_name, array() );
 			add_filter( 'woocommerce_package_rates', array( $this, 'available_shipping_methods' ), PHP_INT_MAX, 2 );
 		}
 	}

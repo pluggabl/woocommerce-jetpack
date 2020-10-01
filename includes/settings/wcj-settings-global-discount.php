@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
+$is_multiselect_products     = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
 
 do_action( 'wcj_before_get_terms', $this->id );
 do_action( 'wcj_before_get_products', $this->id );
@@ -40,7 +40,7 @@ $settings = array(
 		'id'       => 'wcj_global_discount_options',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_global_discount_groups_total_number', 1 ) ); $i++ ) {
 	wcj_maybe_convert_and_update_option_value( array(
 		array( 'id' => 'wcj_global_discount_sale_products_incl_' . $i, 'default' => '' ),
 		array( 'id' => 'wcj_global_discount_sale_products_excl_' . $i, 'default' => '' ),

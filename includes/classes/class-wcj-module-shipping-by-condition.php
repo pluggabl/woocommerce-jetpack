@@ -22,7 +22,7 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	function __construct( $type = 'module' ) {
 		parent::__construct( $type );
 		if ( $this->is_enabled() ) {
-			$this->use_shipping_instances = ( 'yes' === get_option( 'wcj_' . $this->id . '_use_shipping_instance', 'no' ) );
+			$this->use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_' . $this->id . '_use_shipping_instance', 'no' ) );
 			add_filter( 'woocommerce_package_rates', array( $this, 'available_shipping_methods' ), wcj_get_woocommerce_package_rates_module_filter_priority( $this->id ) , 2 );
 		}
 	}
@@ -51,7 +51,7 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 		$exclude_arr = array();
 		foreach ( $rates as $rate_key => $rate ) {
 			foreach ( $this->condition_options as $options_id => $options_data ) {
-				if ( 'no' === get_option( 'wcj_shipping_by_' . $options_id . '_section_enabled', 'yes' ) ) {
+				if ( 'no' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_section_enabled', 'yes' ) ) {
 					continue;
 				}
 				$include = ( $this->use_shipping_instances ?

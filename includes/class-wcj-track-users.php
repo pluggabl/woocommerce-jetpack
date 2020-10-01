@@ -43,13 +43,13 @@ class WCJ_User_Tracking extends WCJ_Module {
 			add_action( 'wp_ajax_'        . 'wcj_track_users', array( $this, 'track_users' ) );
 			add_action( 'wp_ajax_nopriv_' . 'wcj_track_users', array( $this, 'track_users' ) );
 			// Stats in dashboard widgets
-			if ( 'yes' === get_option( 'wcj_track_users_by_country_widget_enabled', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_track_users_by_country_widget_enabled', 'yes' ) ) {
 				add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widgets' ) );
 				add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
 				add_action( 'admin_init',         array( $this, 'track_users_update_county_stats' ) );
 			}
 			// Order tracking
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) ) {
 				add_action( 'woocommerce_new_order', array( $this, 'add_http_referer_to_order' ) );
 				add_action( 'add_meta_boxes',        array( $this, 'add_http_referer_order_meta_box' ) );
 			}
@@ -59,8 +59,8 @@ class WCJ_User_Tracking extends WCJ_Module {
 			add_action( 'wcj_track_users_generate_stats', array( $this, 'track_users_generate_stats_cron' ) );
 			// Orders columns
 			if (
-				'yes' === get_option( 'wcj_track_users_shop_order_columns_referer', 'no' ) ||
-				'yes' === get_option( 'wcj_track_users_shop_order_columns_referer_type', 'no' )
+				'yes' === wcj_get_option( 'wcj_track_users_shop_order_columns_referer', 'no' ) ||
+				'yes' === wcj_get_option( 'wcj_track_users_shop_order_columns_referer_type', 'no' )
 			) {
 				add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),    PHP_INT_MAX - 2 );
 				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
@@ -75,10 +75,10 @@ class WCJ_User_Tracking extends WCJ_Module {
 	 * @since   3.6.0
 	 */
 	function add_order_columns( $columns ) {
-		if ( 'yes' === get_option( 'wcj_track_users_shop_order_columns_referer', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_track_users_shop_order_columns_referer', 'no' ) ) {
 			$columns['wcj_track_users_referer'] = __( 'Referer', 'woocommerce-jetpack' );
 		}
-		if ( 'yes' === get_option( 'wcj_track_users_shop_order_columns_referer_type', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_track_users_shop_order_columns_referer_type', 'no' ) ) {
 			$columns['wcj_track_users_referer_type'] = __( 'Referer Type', 'woocommerce-jetpack' );
 		}
 		return $columns;
@@ -145,7 +145,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	 */
 	function track_users_generate_stats_cron( $interval ) {
 		update_option( 'wcj_track_users_cron_time_last_run', time() );
-		$stats = get_option( 'wcj_track_users_stats_by_country', array() );
+		$stats = wcj_get_option( 'wcj_track_users_stats_by_country', array() );
 		foreach ( $this->track_users_scopes as $scope => $scope_title ) {
 			$stats[ $scope ] = $this->generate_track_users_stats_by_country( $scope );
 		}
@@ -262,7 +262,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	 * @since   2.9.1
 	 */
 	function get_saved_track_users_stats_by_country( $scope ) {
-		$stats = get_option( 'wcj_track_users_stats_by_country', array() );
+		$stats = wcj_get_option( 'wcj_track_users_stats_by_country', array() );
 		return ( isset( $stats[ $scope ] ) ? $stats[ $scope ] : array() );
 	}
 
@@ -308,9 +308,9 @@ class WCJ_User_Tracking extends WCJ_Module {
 	 * @todo    (maybe) display stats by state
 	 */
 	function track_users_by_country_dashboard_widget( $post, $args ) {
-		$top_count = get_option( 'wcj_track_users_by_country_widget_top_count', 10 );
+		$top_count = wcj_get_option( 'wcj_track_users_by_country_widget_top_count', 10 );
 		foreach ( $this->track_users_scopes as $scope => $scope_title ) {
-			if ( ! in_array( $scope, get_option( 'wcj_track_users_by_country_widget_scopes', array( '1', '28' ) ) ) ) {
+			if ( ! in_array( $scope, wcj_get_option( 'wcj_track_users_by_country_widget_scopes', array( '1', '28' ) ) ) ) {
 				continue;
 			}
 			$totals = $this->get_saved_track_users_stats_by_country( $scope );
@@ -335,8 +335,8 @@ class WCJ_User_Tracking extends WCJ_Module {
 				'onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"' .
 			'>' . __( 'Delete all tracking data', 'woocommerce-jetpack' ) . '</a>' .
 		'</p>';
-		$cron_last_run      = ( '' != ( $_time = get_option( 'wcj_track_users_cron_time_last_run', '' ) ) ? date( 'Y-m-d H:i:s', $_time ) : '-' );
-		$cron_next_schedule = ( '' != ( $_time = get_option( 'wcj_track_users_cron_time_schedule', '' ) ) ? date( 'Y-m-d H:i:s', $_time ) : '-' );
+		$cron_last_run      = ( '' != ( $_time = wcj_get_option( 'wcj_track_users_cron_time_last_run', '' ) ) ? date( 'Y-m-d H:i:s', $_time ) : '-' );
+		$cron_next_schedule = ( '' != ( $_time = wcj_get_option( 'wcj_track_users_cron_time_schedule', '' ) ) ? date( 'Y-m-d H:i:s', $_time ) : '-' );
 		echo '<p>' .
 			sprintf( __( 'Stats generated at %s. Next update is scheduled at %s.', 'woocommerce-jetpack' ), $cron_last_run, $cron_next_schedule ) . ' ' .
 			'<a href="' . add_query_arg( 'wcj_track_users_update_county_stats', '1' ) . '">' . __( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .

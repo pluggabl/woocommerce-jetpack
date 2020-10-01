@@ -107,7 +107,7 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 	 * @since   4.0.0
 	 */
 	function get_extra_option_desc( $option_id ) {
-		$values = get_option( $option_id, '' );
+		$values = wcj_get_option( $option_id, '' );
 		if ( ! empty( $values ) ) {
 			if ( $parsed_time = $this->parse_time( $values ) ) {
 				return '. ' . sprintf( __( 'According to current time, your time input will be parsed as: from %s to %s.', 'woocommerce-jetpack' ),

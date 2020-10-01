@@ -30,14 +30,14 @@ class WCJ_Email_Options extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Email Forwarding
-			if ( '' != get_option( 'wcj_emails_bcc_email', '' ) ) {
+			if ( '' != wcj_get_option( 'wcj_emails_bcc_email', '' ) ) {
 				add_filter( 'woocommerce_email_headers', array( $this, 'add_bcc_email' ), PHP_INT_MAX, 3 );
 			}
-			if ( '' != get_option( 'wcj_emails_cc_email', '' ) ) {
+			if ( '' != wcj_get_option( 'wcj_emails_cc_email', '' ) ) {
 				add_filter( 'woocommerce_email_headers', array( $this, 'add_cc_email' ), PHP_INT_MAX, 3 );
 			}
 			// Product Info
-			if ( 'yes' === get_option( 'wcj_product_info_in_email_order_item_name_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_info_in_email_order_item_name_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_order_item_name', array( $this, 'add_product_info_to_email_order_item_name' ), PHP_INT_MAX, 2 );
 			}
 			// Settings
@@ -57,7 +57,7 @@ class WCJ_Email_Options extends WCJ_Module {
 			$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
 			$post       = get_post( $product_id );
 			setup_postdata( $post );
-			$item_name .= do_shortcode( get_option( 'wcj_product_info_in_email_order_item_name', '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]' ) );
+			$item_name .= do_shortcode( wcj_get_option( 'wcj_product_info_in_email_order_item_name', '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]' ) );
 			wp_reset_postdata();
 		}
 		return $item_name;
@@ -70,7 +70,7 @@ class WCJ_Email_Options extends WCJ_Module {
 	 * @since   3.5.0
 	 */
 	function maybe_check_order_status( $_object ) {
-		$enable_order_statuses = apply_filters( 'booster_option', '', get_option( 'wcj_emails_forwarding_enable_order_status', '' ) );
+		$enable_order_statuses = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_emails_forwarding_enable_order_status', '' ) );
 		if ( ! empty( $enable_order_statuses ) && isset( $_object ) && is_object( $_object ) && 'WC_Order' === get_class( $_object ) ) {
 			if ( ! in_array( $_object->get_status(), $enable_order_statuses ) ) {
 				return false;
@@ -85,7 +85,7 @@ class WCJ_Email_Options extends WCJ_Module {
 	 * @version 3.5.0
 	 */
 	function add_bcc_email( $email_headers, $id, $_object ) {
-		return ( $this->maybe_check_order_status( $_object ) ? $email_headers . "Bcc: " . get_option( 'wcj_emails_bcc_email', '' ) . "\r\n" : $email_headers );
+		return ( $this->maybe_check_order_status( $_object ) ? $email_headers . "Bcc: " . wcj_get_option( 'wcj_emails_bcc_email', '' ) . "\r\n" : $email_headers );
 	}
 
 	/**
@@ -94,7 +94,7 @@ class WCJ_Email_Options extends WCJ_Module {
 	 * @version 3.5.0
 	 */
 	function add_cc_email( $email_headers, $id, $_object ) {
-		return ( $this->maybe_check_order_status( $_object ) ? $email_headers . "Cc: " . get_option( 'wcj_emails_cc_email', '' ) . "\r\n" : $email_headers );
+		return ( $this->maybe_check_order_status( $_object ) ? $email_headers . "Cc: " . wcj_get_option( 'wcj_emails_cc_email', '' ) . "\r\n" : $email_headers );
 	}
 
 	/**

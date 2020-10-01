@@ -34,7 +34,7 @@ if ( ! function_exists( 'wcj_get_country_by_ip' ) ) {
 		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip() : array( 'country' => '' ) );
 		// Base fallback
 		if ( empty( $location['country'] ) ) {
-			$location = apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) );
+			$location = apply_filters( 'woocommerce_customer_default_location', wcj_get_option( 'woocommerce_default_country' ) );
 			if ( function_exists( 'wc_format_country_state_string' ) ) {
 				$location = wc_format_country_state_string( $location );
 			}

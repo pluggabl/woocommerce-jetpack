@@ -37,14 +37,14 @@ class WCJ_Shipping_Options extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Hide if free is available
-			if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) ) {
 				add_filter( 'woocommerce_package_rates', array( $this, 'hide_shipping_when_free_is_available' ),
 					wcj_get_woocommerce_package_rates_module_filter_priority( 'shipping_options_hide_free_shipping' ), 2 );
 			}
 			add_filter( 'woocommerce_shipping_settings', array( $this, 'add_hide_shipping_if_free_available_fields' ), PHP_INT_MAX );
 
 			// Free shipping by product
-			if ( 'yes' === get_option( 'wcj_shipping_free_shipping_by_product_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_shipping_free_shipping_by_product_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_shipping_free_shipping_is_available', array( $this, 'free_shipping_by_product' ), PHP_INT_MAX, 2 );
 			}
 
@@ -65,11 +65,11 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	 * @return array
 	 */
 	function show_most_expensive_shipping( $rates, $package ) {
-		if ( 'yes' !== get_option( 'wcj_shipping_most_expensive_enabled', 'no' ) ) {
+		if ( 'yes' !== wcj_get_option( 'wcj_shipping_most_expensive_enabled', 'no' ) ) {
 			return $rates;
 		}
 		$most_expensive_method = '';
-		$ignored_method_ids    = get_option( 'wcj_shipping_most_expensive_ignored_methods', array( 'free_shipping' ) );
+		$ignored_method_ids    = wcj_get_option( 'wcj_shipping_most_expensive_ignored_methods', array( 'free_shipping' ) );
 		$returned_rates        = array();
 		if ( is_array( $rates ) ) :
 			foreach ( $rates as $key => $rate ) {
@@ -103,11 +103,11 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	 * @return  bool
 	 */
 	function free_shipping_by_product( $is_available, $package ) {
-		$free_shipping_granting_products = get_option( 'wcj_shipping_free_shipping_by_product_products', '' );
+		$free_shipping_granting_products = wcj_get_option( 'wcj_shipping_free_shipping_by_product_products', '' );
 		if ( empty( $free_shipping_granting_products ) ) {
 			return $is_available;
 		}
-		$free_shipping_granting_products_type = apply_filters( 'booster_option', 'all', get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' ) );
+		$free_shipping_granting_products_type = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' ) );
 		$package_grants_free_shipping = false;
 		foreach( $package['contents'] as $item ) {
 			if ( in_array( $item['product_id'], $free_shipping_granting_products ) ) {
@@ -139,12 +139,12 @@ class WCJ_Shipping_Options extends WCJ_Module {
 				$free_shipping_rates[ $rate_key ] = $rate;
 			} else {
 				if (
-					'except_local_pickup' === apply_filters( 'booster_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
+					'except_local_pickup' === apply_filters( 'booster_option', 'hide_all', wcj_get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
 					false !== strpos( $rate_key, 'local_pickup' )
 				) {
 					$free_shipping_rates[ $rate_key ] = $rate;
 				} elseif (
-					'flat_rate_only' === apply_filters( 'booster_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
+					'flat_rate_only' === apply_filters( 'booster_option', 'hide_all', wcj_get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
 					false === strpos( $rate_key, 'flat_rate' )
 				) {
 					$free_shipping_rates[ $rate_key ] = $rate;

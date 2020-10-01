@@ -18,7 +18,7 @@ if ( ! function_exists( 'wcj_get_wc_price_step' ) ) {
 	 * @todo    use this where needed
 	 */
 	function wcj_get_wc_price_step() {
-		return ( 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ) );
+		return ( 1 / pow( 10, absint( wcj_get_option( 'woocommerce_price_num_decimals', 2 ) ) ) );
 	}
 }
 
@@ -41,7 +41,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 			'wholesale_price'            => PHP_INT_MAX,
 			'global_discount'            => PHP_INT_MAX,
 		);
-		return ( 0 != ( $priority = get_option( 'wcj_' . $module_id . '_advanced_price_hooks_priority', 0 ) ) ? $priority : $modules_priorities[ $module_id ] );
+		return ( 0 != ( $priority = wcj_get_option( 'wcj_' . $module_id . '_advanced_price_hooks_priority', 0 ) ) ? $priority : $modules_priorities[ $module_id ] );
 	}
 }
 
@@ -151,10 +151,10 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_product_base_currency' )
 	 * @since   2.5.6
 	 */
 	function wcj_get_currency_exchange_rate_product_base_currency( $currency_code ) {
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( $currency_code === get_option( 'wcj_multicurrency_base_price_currency_' . $i ) ) {
-				return get_option( 'wcj_multicurrency_base_price_exchange_rate_' . $i );
+			if ( $currency_code === wcj_get_option( 'wcj_multicurrency_base_price_currency_' . $i ) ) {
+				return wcj_get_option( 'wcj_multicurrency_base_price_exchange_rate_' . $i );
 			}
 		}
 		return 1; // fallback
@@ -172,7 +172,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 		if ( '' == $price ) {
 			return $price;
 		}
-		$do_save = ( 'yes' === get_option( 'wcj_multicurrency_base_price_save_prices', 'no' ) );
+		$do_save = ( 'yes' === wcj_get_option( 'wcj_multicurrency_base_price_save_prices', 'no' ) );
 		if ( $do_save ) {
 			$_current_filter = current_filter();
 			if ( '' == $_current_filter ) {
@@ -186,8 +186,8 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 		if ( '' != $multicurrency_base_price_currency ) {
 			if ( 1 != ( $currency_exchange_rate = wcj_get_currency_exchange_rate_product_base_currency( $multicurrency_base_price_currency ) ) && 0 != $currency_exchange_rate ) {
 				$_price = $price / $currency_exchange_rate;
-				if ( 'yes' === get_option( 'wcj_multicurrency_base_price_round_enabled', 'no' ) ) {
-					$_price = round( $_price, get_option( 'wcj_multicurrency_base_price_round_precision', get_option( 'woocommerce_price_num_decimals' ) ) );
+				if ( 'yes' === wcj_get_option( 'wcj_multicurrency_base_price_round_enabled', 'no' ) ) {
+					$_price = round( $_price, wcj_get_option( 'wcj_multicurrency_base_price_round_precision', wcj_get_option( 'woocommerce_price_num_decimals' ) ) );
 				}
 				if ( $do_save ) {
 					WCJ()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] = $_price;
@@ -210,7 +210,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 
 		$is_price_modified = false;
 
-		if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
 			// Per product
 			$meta_box_id = 'price_by_country';
 			$scope = 'local';
@@ -274,22 +274,22 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 		}
 
 		if ( ! $is_price_modified ) {
-			if ( 'yes' === get_option( 'wcj_price_by_country_make_empty_price_group_' . $group_id, 1 ) || '' === $price ) {
+			if ( 'yes' === wcj_get_option( 'wcj_price_by_country_make_empty_price_group_' . $group_id, 1 ) || '' === $price ) {
 				return '';
 			}
 		}
 
 		if ( ! $is_price_modified ) {
 			// Globally
-			$precision             = get_option( 'woocommerce_price_num_decimals', 2 );
-			$rounding              = get_option( 'wcj_price_by_country_rounding', 'none' );
-			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
+			$precision             = wcj_get_option( 'woocommerce_price_num_decimals', 2 );
+			$rounding              = wcj_get_option( 'wcj_price_by_country_rounding', 'none' );
+			$country_exchange_rate = wcj_get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
 			$modified_price        = $price * $country_exchange_rate;
 			$is_price_modified     = true;
 
-			if ( 'get_price' === get_option( 'wcj_price_by_country_price_format_method', 'get_price' ) ) {
+			if ( 'get_price' === wcj_get_option( 'wcj_price_by_country_price_format_method', 'get_price' ) ) {
 				$modified_price = wcj_price_by_country_rounding( $modified_price, $precision, $rounding );
-				if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $modified_price >= 0.5 && $precision > 0 ) {
+				if ( 'yes' === wcj_get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $modified_price >= 0.5 && $precision > 0 ) {
 					$modified_price = wcj_price_by_country_pretty_price( $modified_price, $precision );
 				}
 			}
@@ -313,8 +313,8 @@ if ( ! function_exists( 'wcj_price_by_country_pretty_price' ) ) {
 	 * @return float|int
 	 */
 	function wcj_price_by_country_pretty_price( $price, $precision = - 1, $multiplier = - 1 ) {
-		$precision  = - 1 === $precision ? get_option( 'woocommerce_price_num_decimals', 2 ) : $precision;
-		$multiplier = - 1 === $multiplier ? get_option( 'wcj_price_by_country_make_pretty_min_amount_multiplier', 1 ) : $multiplier;
+		$precision  = - 1 === $precision ? wcj_get_option( 'woocommerce_price_num_decimals', 2 ) : $precision;
+		$multiplier = - 1 === $multiplier ? wcj_get_option( 'wcj_price_by_country_make_pretty_min_amount_multiplier', 1 ) : $multiplier;
 		return round( $price ) - ( $multiplier / pow( 10, $precision ) );
 	}
 }
@@ -333,8 +333,8 @@ if ( ! function_exists( 'wcj_price_by_country_rounding' ) ) {
 	 * @return float
 	 */
 	function wcj_price_by_country_rounding( $price, $precision = - 1, $rounding = '' ) {
-		$rounding  = empty( $rounding ) ? get_option( 'wcj_price_by_country_rounding', 'none' ) : $rounding;
-		$precision = - 1 === $precision ? get_option( 'woocommerce_price_num_decimals', 2 ) : $precision;
+		$rounding  = empty( $rounding ) ? wcj_get_option( 'wcj_price_by_country_rounding', 'none' ) : $rounding;
+		$precision = - 1 === $precision ? wcj_get_option( 'woocommerce_price_num_decimals', 2 ) : $precision;
 		switch ( $rounding ) {
 			case 'round':
 				$modified_price = round( $price );
@@ -365,7 +365,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product
 		$_product = wc_get_product( $product_id );
 		if ( $_product->is_type( 'variable' ) ) {
 			$available_variations = $_product->get_available_variations();
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 				$min_variation_price = PHP_INT_MAX;
 				$max_variation_price = 0;
 				foreach ( $available_variations as $variation ) {
@@ -394,7 +394,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product
 			if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
 				$_old_price = wcj_price_by_product_base_currency( $_old_price, $product_id );
 			}
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 				$price_by_country = wcj_price_by_country( $_old_price, $product_id, $i, WCJ_PRODUCT_GET_PRICE_FILTER );
 				update_post_meta( $product_id, '_' . 'wcj_price_by_country_' . $i, $price_by_country );
 			}
@@ -467,32 +467,32 @@ if ( ! function_exists( 'wcj_get_currency_by_country' ) ) {
 	 */
 	function wcj_get_currency_by_country( $country_code ) {
 		$currency_code = '';
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
-			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			switch ( wcj_get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 				case 'comma_list':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
+					$country_exchange_rate_group = wcj_get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
 					$country_exchange_rate_group = str_replace( ' ', '', $country_exchange_rate_group );
 					$country_exchange_rate_group = explode( ',', $country_exchange_rate_group );
 					break;
 				case 'multiselect':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_' . $i, '' );
+					$country_exchange_rate_group = wcj_get_option( 'wcj_price_by_country_countries_group_' . $i, '' );
 					if ( '' === $country_exchange_rate_group ) {
 						$country_exchange_rate_group = array();
 					}
 					break;
 				case 'chosen_select':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' );
+					$country_exchange_rate_group = wcj_get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' );
 					if ( '' === $country_exchange_rate_group ) {
 						$country_exchange_rate_group = array();
 					}
 					break;
 			}
 			if ( in_array( $country_code, $country_exchange_rate_group ) ) {
-				$currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
+				$currency_code = wcj_get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 				break;
 			}
 		}
-		return ( '' == $currency_code ) ? get_option( 'woocommerce_currency' ) : $currency_code;
+		return ( '' == $currency_code ) ? wcj_get_option( 'woocommerce_currency' ) : $currency_code;
 	}
 }
 
@@ -507,10 +507,10 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
 		$currency_exchange_rate = 1;
 		if ( wcj_is_module_enabled( $module ) ) {
 			if ( 'multicurrency' === $module ) {
-				$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+				$total_number = apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
-					if ( $currency_code === get_option( 'wcj_multicurrency_currency_' . $i ) ) {
-						$currency_exchange_rate = get_option( 'wcj_multicurrency_exchange_rate_' . $i );
+					if ( $currency_code === wcj_get_option( 'wcj_multicurrency_currency_' . $i ) ) {
+						$currency_exchange_rate = wcj_get_option( 'wcj_multicurrency_exchange_rate_' . $i );
 						break;
 					}
 				}
@@ -578,23 +578,23 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 			return 0;
 		}
 		$purchase_price = 0;
-		if ( 'yes' === get_option( 'wcj_purchase_price_enabled', 'yes' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_purchase_price_enabled', 'yes' ) ) {
 			$purchase_price += (float) get_post_meta( $product_id, '_' . 'wcj_purchase_price' , true );
 		}
-		if ( 'yes' === get_option( 'wcj_purchase_price_extra_enabled', 'yes' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_purchase_price_extra_enabled', 'yes' ) ) {
 			$purchase_price += (float) get_post_meta( $product_id, '_' . 'wcj_purchase_price_extra', true );
 		}
-		if ( 'yes' === get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ) ) {
 			$purchase_price += (float) get_post_meta( $product_id, '_' . 'wcj_purchase_price_affiliate_commission', true );
 		}
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( '' == get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' ) ) {
+			if ( '' == wcj_get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' ) ) {
 				continue;
 			}
 			$meta_value = (float) get_post_meta( $product_id, '_' . 'wcj_purchase_price_custom_field_' . $i, true );
 			if ( 0 != $meta_value ) {
-				$purchase_price += ( 'fixed' === get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' ) ) ? $meta_value : $purchase_price * $meta_value / 100.0;
+				$purchase_price += ( 'fixed' === wcj_get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' ) ) ? $meta_value : $purchase_price * $meta_value / 100.0;
 			}
 		}
 		if ( $product->is_type( 'variable' ) ) {

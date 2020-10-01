@@ -93,7 +93,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 			'desc'     => __( 'Number of decimals', 'woocommerce-jetpack' ),
 			'desc_tip' => __( 'If rounding is enabled, set precision (i.e. number of decimals) here.', 'woocommerce-jetpack' ),
 			'id'       => "wcj_gateways_fees_round_precision[{$key}]",
-			'default'  => get_option( 'woocommerce_price_num_decimals', 2 ),
+			'default'  => wcj_get_option( 'woocommerce_price_num_decimals', 2 ),
 			'type'     => 'number',
 			'custom_attributes' => array( 'step' => '1', 'min' => '0' ),
 		),

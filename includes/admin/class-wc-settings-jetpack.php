@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.3.1
+ * @version 5.3.3
  * @since   1.0.0
  * @author  Pluggabl LLC.
  */
@@ -246,7 +246,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			$active = 0;
 			foreach ( $this->module_statuses as $module_status ) {
 				if ( isset( $module_status['id'] ) && isset( $module_status['default'] ) ) {
-					if ( 'yes' === get_option( $module_status['id'], $module_status['default'] ) ) {
+					if ( 'yes' === wcj_get_option( $module_status['id'], $module_status['default'] ) ) {
 						$active++;
 					} elseif ( wcj_is_module_deprecated( $module_status['id'], true ) ) {
 						continue;
@@ -384,7 +384,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '</div>';
 		}
 
-		if ( 'yes' === get_option( 'wcj_debug_tools_enabled', 'no' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_debug_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_debuging_enabled', 'no' ) ) {
 			// Breadcrumbs
 			$breadcrumbs_html = '';
 			$breadcrumbs_html .= '<p>';
@@ -492,7 +492,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				$table_data[] = array(
 					'<label for="' . $manager_settings_field['id'] . '">' .
 						'<input name="' . $manager_settings_field['id'] . '" id="' . $manager_settings_field['id'] . '" type="' . $manager_settings_field['type'] . '"' .
-							' class="" value="1" ' . checked( get_option( $manager_settings_field['id'], $manager_settings_field['default'] ), 'yes', false ) . '>' .
+							' class="" value="1" ' . checked( wcj_get_option( $manager_settings_field['id'], $manager_settings_field['default'] ), 'yes', false ) . '>' .
 						' ' . '<strong>' . $manager_settings_field['title'] . '</strong>' .
 					'</label>',
 					'<em>' . $manager_settings_field['desc'] . '</em>',
@@ -511,7 +511,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 							'" id="'    . $_settings['id'] .
 							'" type="'  . $_settings['type'] .
 							'" class="' . $_settings['class'] .
-							'" value="' . get_option( $_settings['id'], $_settings['default'] )
+							'" value="' . wcj_get_option( $_settings['id'], $_settings['default'] )
 						. '">' . ' ' . '<em>' . $_settings['desc'] . '</em>' .
 					'</label>',
 				);
@@ -522,7 +522,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$plugin_data  = get_plugin_data( WCJ_PLUGIN_FILE );
 		$plugin_title = ( isset( $plugin_data['Name'] ) ? '[' . $plugin_data['Name'] . '] ' : '' );
 		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . $plugin_title .
-			__( 'Version', 'woocommerce-jetpack' ) . ': ' . get_option( WCJ_VERSION_OPTION, 'N/A' ) . '</p>';
+			__( 'Version', 'woocommerce-jetpack' ) . ': ' . wcj_get_option( WCJ_VERSION_OPTION, 'N/A' ) . '</p>';
 
 	}
 
@@ -571,7 +571,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					}
 					if ( '' != $cat_id ) {
 						if ( 'active_modules_only' === $cat_id ) {
-							if ( 'no' === get_option( $the_feature['id'], 'no' ) ) {
+							if ( 'no' === wcj_get_option( $the_feature['id'], 'no' ) ) {
 								continue;
 							}
 						} elseif ( $cat_id != $this->get_cat_by_section( $section ) ) {
@@ -579,10 +579,10 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						}
 					}
 					$total_modules++;
-					$html .= '<tr id="' . $the_feature['id'] . '" ' . 'class="' . $this->active( get_option( $the_feature['id'] ) ) . '">';
+					$html .= '<tr id="' . $the_feature['id'] . '" ' . 'class="' . $this->active( wcj_get_option( $the_feature['id'] ) ) . '">';
 					$html .= '<th scope="row" class="check-column">';
 					$html .= '<label class="screen-reader-text" for="' . $the_feature['id'] . '">' . $the_feature['desc'] . '</label>';
-					$html .= '<input type="checkbox" name="' . $the_feature['id'] . '" value="1" id="' . $the_feature['id'] . '" ' . checked( get_option( $the_feature['id'] ), 'yes', false ) . '>';
+					$html .= '<input type="checkbox" name="' . $the_feature['id'] . '" value="1" id="' . $the_feature['id'] . '" ' . checked( wcj_get_option( $the_feature['id'] ), 'yes', false ) . '>';
 					$html .= '</th>';
 					$html .= '<td class="plugin-title">' . '<strong>' . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
@@ -608,14 +608,37 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Save settings.
 	 *
-	 * @version 3.6.0
+	 * @version 5.3.3
 	 */
 	function save() {
 		global $current_section;
 		$settings = $this->get_settings( $current_section );
 		WC_Admin_Settings::save_fields( $settings );
+		$this->disable_autoload_options_from_section( $settings );
 		add_action( 'admin_notices', array( $this, 'booster_message_global' ) );
 		do_action( 'woojetpack_after_settings_save', $this->get_sections(), $current_section );
+	}
+
+	/**
+	 * disable_autoload_options.
+	 *
+	 * @version 5.3.3
+	 * @since   5.3.3
+	 *
+	 * @param $settings
+	 */
+	function disable_autoload_options_from_section( $settings ) {
+		$fields         = wp_list_filter( $settings, array( 'autoload' => false ) );
+		$fields         = wp_list_filter( $fields, array( 'type' => 'title' ), 'NOT' );
+		$fields         = wp_list_filter( $fields, array( 'type' => 'sectionend' ), 'NOT' );
+		$field_ids      = wp_list_pluck( $fields, 'id' );
+		$fields_ids_str = '\'' . implode( '\',\'', $field_ids ) . '\'';
+		global $wpdb;
+		$sql = "
+			UPDATE {$wpdb->options} SET autoload = 'no'
+			WHERE option_name IN ({$fields_ids_str}) AND autoload != 'no'
+			";
+		$wpdb->query( $sql );
 	}
 
 	/**

@@ -18,7 +18,7 @@ if ( ! $_product ) {
 $products = array();
 $options = array();
 
-if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_product_msrp_variable_as_simple_enabled', 'no' ) ) {
+if ( $_product->is_type( 'variable' ) && 'no' === wcj_get_option( 'wcj_product_msrp_variable_as_simple_enabled', 'no' ) ) {
 	$available_variations = $_product->get_available_variations();
 	foreach ( $available_variations as $variation ) {
 		$variation_product = wc_get_product( $variation['variation_id'] );
@@ -29,7 +29,7 @@ if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_product_msrp_
 }
 
 // Archive Page Field
-if ( 'yes' === get_option( 'wcj_product_msrp_archive_page_field', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_product_msrp_archive_page_field', 'no' ) ) {
 	$options[] = array(
 		'name'       => 'wcj_msrp_archive_' . $main_product_id,
 		'default'    => 0,

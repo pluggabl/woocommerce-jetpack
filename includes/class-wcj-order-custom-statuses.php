@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 5.2.0
+ * @version 5.3.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.3.3
 	 * @todo    [feature] add options to change icon and icon's color for all statuses (i.e. not only custom)
 	 * @todo    [dev] maybe rename module to "Custom Order Statuses"
 	 */
@@ -40,7 +40,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 
 			// Core
 			add_filter( 'wc_order_statuses', array( $this, 'add_custom_statuses_to_filter' ), PHP_INT_MAX );
-			if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+			if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 				add_action( 'init', array( $this, 'register_custom_post_statuses' ) );
 			} else {
 				$this->register_custom_post_statuses();
@@ -48,7 +48,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 
 			// CSS
 			add_action( 'admin_head',                         array( $this, 'hook_statuses_icons_css' ) );
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_column_colored', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_orders_custom_statuses_column_colored', 'no' ) ) ) {
 				add_action( 'admin_head',                     array( $this, 'hook_statuses_column_css' ) );
 			}
 
@@ -56,33 +56,33 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			add_filter( 'woocommerce_default_order_status',   array( $this, 'set_default_order_status' ), PHP_INT_MAX );
 
 			// Add custom statuses to admin reports
-			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_reports' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_custom_statuses_add_to_reports' ) ) {
 				add_filter( 'woocommerce_reports_order_statuses', array( $this, 'add_custom_order_statuses_to_reports' ), PHP_INT_MAX );
 			}
 
 			// Add all statuses to admin order bulk actions
-			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_bulk_actions' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_custom_statuses_add_to_bulk_actions' ) ) {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
 			}
 
 			// Order list actions
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_actions_buttons' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
 			}
 
 			// Order preview actions
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_preview_actions', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_orders_custom_statuses_add_to_order_preview_actions', 'no' ) ) ) {
 				add_filter( 'woocommerce_admin_order_preview_actions', array( $this, 'add_custom_order_statuses_order_preview_actions' ), PHP_INT_MAX, 2 );
 			}
 
 			// "Processing" and "Complete" action buttons
-			if ( 'hide' != apply_filters( 'booster_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) ) ) {
+			if ( 'hide' != apply_filters( 'booster_option', 'hide', wcj_get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_to_processing_and_completed_actions' ), PHP_INT_MAX, 2 );
 			}
 
 			// Is order editable
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_is_order_editable', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_orders_custom_statuses_is_order_editable', 'no' ) ) ) {
 				add_filter( 'wc_order_is_editable', array( $this, 'add_custom_order_statuses_to_order_editable' ), PHP_INT_MAX, 2 );
 			}
 
@@ -90,6 +90,10 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			include_once( 'tools/class-wcj-order-statuses-tool.php' );
 			$this->custom_statuses_tool = new WCJ_Order_Statuses_Tool( 'custom_statuses', $this );
 
+			// Default order status forcefully
+			if ( 'yes' === wcj_get_option( 'wcj_orders_custom_statuses_default_status_forcefully', 'no' ) ) {
+				add_action( 'woocommerce_thankyou', array( $this, 'set_default_order_status_forcefully' ), PHP_INT_MAX, 1 );
+			}
 		}
 	}
 
@@ -100,7 +104,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 * @since   3.1.2
 	 */
 	function get_custom_order_statuses( $cut_prefix = false ) {
-		$orders_custom_statuses = get_option( 'wcj_orders_custom_statuses_array', '' );
+		$orders_custom_statuses = wcj_get_option( 'wcj_orders_custom_statuses_array', '' );
 		if ( empty( $orders_custom_statuses ) ) {
 			return array();
 		} else {
@@ -203,7 +207,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			}
 			global $post;
 			$default_actions = array();
-			$show = apply_filters( 'booster_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) );
+			$show = apply_filters( 'booster_option', 'hide', wcj_get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) );
 			if (
 				( 'show_both' === $show || 'show_processing' === $show ) &&
 				$_order->has_status( array_merge( array( 'pending', 'on-hold' ), $custom_order_statuses_without_wc_prefix ) )
@@ -262,7 +266,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			'color'      => '#999999',
 			'text_color' => '#000000',
 		);
-		if ( '' != ( $icon_data = get_option( 'wcj_orders_custom_status_icon_data_' . $status_slug_without_wc_prefix, '' ) ) ) {
+		if ( '' != ( $icon_data = wcj_get_option( 'wcj_orders_custom_status_icon_data_' . $status_slug_without_wc_prefix, '' ) ) ) {
 			$return['content'] = $icon_data['content'];
 			$return['color']   = $icon_data['color'];
 			if ( isset( $icon_data['text_color'] ) ) {
@@ -282,7 +286,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 		$custom_order_statuses = $this->get_custom_order_statuses( true );
 		foreach ( $custom_order_statuses as $slug => $label ) {
 			$icon_data   = $this->get_status_icon_data( $slug );
-			$color_style = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'no' ) ) ) ?
+			$color_style = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'no' ) ) ) ?
 				' color: ' . $icon_data['color'] . ' !important;' : '';
 			echo '<style>.view.' . $slug . '::after { font-family: WooCommerce !important;' . $color_style .
 				' content: "\\' . $icon_data['content'] . '" !important; }</style>';
@@ -308,7 +312,19 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 * @version 3.2.2
 	 */
 	function set_default_order_status( $status ) {
-		return ( 'wcj_no_changes' != ( $default_status = get_option( 'wcj_orders_custom_statuses_default_status', 'pending' ) ) ? $default_status : $status );
+		return ( 'wcj_no_changes' != ( $default_status = wcj_get_option( 'wcj_orders_custom_statuses_default_status', 'pending' ) ) ? $default_status : $status );
+	}
+
+	/**
+	 * set_default_order_status_forcefully.
+	 *
+	 * @version 5.3.3
+	 * @since   5.3.3
+	 */
+	function set_default_order_status_forcefully( $order_id ){
+		if( ! $order_id ) return;
+		$order = wc_get_order( $order_id );
+		$order->update_status( wcj_get_option( 'wcj_orders_custom_statuses_default_status' ) );
 	}
 
 	/**
@@ -339,7 +355,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 * @return mixed
 	 */
 	function cut_prefix() {
-		return filter_var( get_option( 'wcj_orders_custom_statuses_remove_prefix', 'no' ), FILTER_VALIDATE_BOOLEAN );
+		return filter_var( wcj_get_option( 'wcj_orders_custom_statuses_remove_prefix', 'no' ), FILTER_VALIDATE_BOOLEAN );
 	}
 
 	/**

@@ -33,7 +33,7 @@ class WCJ_WPML extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_action( 'init', array( $this, 'create_wpml_xml_file_tool' ), PHP_INT_MAX );
-			if ( 'yes' === get_option( 'wcj_wpml_config_xml_auto_regenerate', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_wpml_config_xml_auto_regenerate', 'no' ) ) {
 				add_action( 'wcj_version_updated', array( $this, 'create_wpml_xml_file' ) );
 			}
 			add_action( 'wcml_switch_currency', array( $this, 'switch_currency_using_multicurrency' ) );
@@ -63,7 +63,7 @@ class WCJ_WPML extends WCJ_Module {
 	function update_meta_on_correspondent_language_product( $meta_id, $object_id, $meta_key, $meta_value ) {
 		$allowed_metas_like = array( '_wcj_price_by_country_' );
 		if (
-			'no' === get_option( 'wcj_wpml_sync_metas', 'no' )
+			'no' === wcj_get_option( 'wcj_wpml_sync_metas', 'no' )
 			|| ( 'product' != get_post_type( $object_id ) && 'product_variation' != get_post_type( $object_id ) )
 			|| count( array_filter( $allowed_metas_like, function ( $item ) use ( $meta_key ) {
 				return strpos( $meta_key, $item ) !== false;
@@ -100,7 +100,7 @@ class WCJ_WPML extends WCJ_Module {
 	 */
 	function switch_currency_using_multicurrency( $currency ) {
 		if (
-			'no' === get_option( 'wcj_wpml_switch_booster_currency', 'no' ) ||
+			'no' === wcj_get_option( 'wcj_wpml_switch_booster_currency', 'no' ) ||
 			! WCJ()->modules['multicurrency']->is_enabled()
 		) {
 			return;
@@ -239,7 +239,7 @@ class WCJ_WPML extends WCJ_Module {
 	 * @since   2.4.4
 	 */
 	function is_wpml_section( $section ) {
-		return ( ! in_array( $section, get_option( 'wcj_wpml_config_xml_modules_to_skip', $this->get_default_modules_to_skip() ) ) );
+		return ( ! in_array( $section, wcj_get_option( 'wcj_wpml_config_xml_modules_to_skip', $this->get_default_modules_to_skip() ) ) );
 	}
 
 	/**
@@ -253,7 +253,7 @@ class WCJ_WPML extends WCJ_Module {
 		$is_type_ok = ( 'textarea' === $value['type'] || 'custom_textarea' === $value['type'] || 'text' === $value['type'] );
 
 		// ID
-		$values_to_skip = array_filter( array_map( 'trim', explode( '|', get_option( 'wcj_wpml_config_xml_values_to_skip', $this->get_default_values_to_skip() ) ) ) );
+		$values_to_skip = array_filter( array_map( 'trim', explode( '|', wcj_get_option( 'wcj_wpml_config_xml_values_to_skip', $this->get_default_values_to_skip() ) ) ) );
 		$is_id_ok       = true;
 		foreach ( $values_to_skip as $value_to_skip ) {
 			if ( false !== strpos( $value['id'], $value_to_skip ) ) {

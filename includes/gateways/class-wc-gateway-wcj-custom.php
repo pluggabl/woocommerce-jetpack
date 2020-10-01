@@ -36,7 +36,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					}
 
 					$desc = '';
-					$icon_url = $this->get_option( 'icon', '' );
+					$icon_url = wcj_get_option( 'icon', '' );
 					if ( $icon_url !== '' ) {
 						$desc = '<img src="' . $icon_url . '" alt="' . $this->title . '" title="' . $this->title . '" />';
 					}
@@ -344,7 +344,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
 					$this->has_fields               = false;
-					$this->method_title             = get_option( 'wcj_custom_payment_gateways_admin_title_' . $id_count,
+					$this->method_title             = wcj_get_option( 'wcj_custom_payment_gateways_admin_title_' . $id_count,
 						__( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count );
 					$this->method_description       = __( 'Booster for WooCommerce: Custom Payment Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
 					$this->id_count = $id_count;
@@ -352,19 +352,19 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					$this->init_form_fields();
 					$this->init_settings();
 					// Define user set variables
-					$this->title                    = $this->get_option( 'title' );
+					$this->title                    = wcj_get_option( 'title' );
 					$this->description              = do_shortcode( str_replace( '[wcj_input_field', '[wcj_input_field name_array="' . $this->id . '" attach_to="' . $this->id . '"',
-						$this->get_option( 'description' ) ) );
-					$this->instructions             = $this->get_option( 'instructions', '' );
-					$this->instructions_in_email    = $this->get_option( 'instructions_in_email', '' );
-					$this->icon                     = $this->get_option( 'icon', '' );
-					$this->min_amount               = $this->get_option( 'min_amount', 0 );
-					$this->enable_for_methods       = $this->get_option( 'enable_for_methods', array() );
-					$this->enable_for_virtual       = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes';
-					$this->default_order_status     = $this->get_option( 'default_order_status', 'pending' );
-					$this->send_email_to_admin      = $this->get_option( 'send_email_to_admin', 'no' );
-					$this->send_email_to_customer   = $this->get_option( 'send_email_to_customer', 'no' );
-					$this->custom_return_url        = $this->get_option( 'custom_return_url', '' );
+						wcj_get_option( 'description' ) ) );
+					$this->instructions             = wcj_get_option( 'instructions', '' );
+					$this->instructions_in_email    = wcj_get_option( 'instructions_in_email', '' );
+					$this->icon                     = wcj_get_option( 'icon', '' );
+					$this->min_amount               = wcj_get_option( 'min_amount', 0 );
+					$this->enable_for_methods       = wcj_get_option( 'enable_for_methods', array() );
+					$this->enable_for_virtual       = wcj_get_option( 'enable_for_virtual', 'yes' ) === 'yes';
+					$this->default_order_status     = wcj_get_option( 'default_order_status', 'pending' );
+					$this->send_email_to_admin      = wcj_get_option( 'send_email_to_admin', 'no' );
+					$this->send_email_to_customer   = wcj_get_option( 'send_email_to_customer', 'no' );
+					$this->custom_return_url        = wcj_get_option( 'custom_return_url', '' );
 					// Actions
 					add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 					add_action( 'woocommerce_thankyou_'                        . $this->id, array( $this, 'thankyou_page' ) );
@@ -385,7 +385,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			 * @version 2.5.6
 			 */
 			function add_wc_gateway_wcj_custom_classes( $methods ) {
-				$the_number = apply_filters( 'booster_option', 1, get_option( 'wcj_custom_payment_gateways_number', 1 ) );
+				$the_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_custom_payment_gateways_number', 1 ) );
 				for ( $i = 1; $i <= $the_number; $i++ ) {
 					$the_method = new WC_Gateway_WCJ_Custom_Template();
 					$the_method->init( $i );
@@ -398,7 +398,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 	}
 }
 
-if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 	add_action( 'plugins_loaded', 'init_wc_gateway_wcj_custom_class' );
 } else {
 	init_wc_gateway_wcj_custom_class();

@@ -34,7 +34,7 @@ class WCJ_Tools {
 				'woocommerce',
 				__( 'Booster for WooCommerce Tools', 'woocommerce-jetpack' ),
 				__( 'Booster Tools', 'woocommerce-jetpack' ),
-				( 'yes' === get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
+				( 'yes' === wcj_get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
 				'wcj-tools',
 				array( $this, 'create_tools_page' )
 			);

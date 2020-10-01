@@ -104,7 +104,7 @@ foreach ( $product_terms as $id => $_product_terms ) {
 			'options'  => $_product_terms,
 		),
 	) );
-	foreach ( get_option( 'wcj_sale_flash_per_' . $id . '_terms', array() ) as $term_id ) {
+	foreach ( wcj_get_option( 'wcj_sale_flash_per_' . $id . '_terms', array() ) as $term_id ) {
 		$settings = array_merge( $settings, array(
 			array(
 				'title'    => ( isset( $_product_terms[ $term_id ] ) ? $_product_terms[ $term_id ] : sprintf( __( 'Term #%s', 'woocommerce-jetpack' ), $term_id ) ),

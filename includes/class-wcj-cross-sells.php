@@ -42,20 +42,20 @@ class WCJ_Cross_Sells extends WCJ_Module {
 				add_filter( 'woocommerce_cross_sells_order', array( $this, 'cross_sells_order' ),   PHP_INT_MAX );
 			}
 			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
-				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_cross_sells_global_enabled', 'no' ) ) ) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_cross_sells_global_enabled', 'no' ) ) ) {
 					add_filter( 'woocommerce_product_get_cross_sell_ids', array( $this, 'cross_sells_ids' ), PHP_INT_MAX, 2 );
 				}
-				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_cross_sells_exclude_not_in_stock', 'no' ) ) ) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_cross_sells_exclude_not_in_stock', 'no' ) ) ) {
 					add_filter( 'woocommerce_product_get_cross_sell_ids', array( $this, 'cross_sells_exclude_not_in_stock' ), PHP_INT_MAX, 2 );
 				}
 			}
-			if ( 'yes' === get_option( 'wcj_cross_sells_hide', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_cross_sells_hide', 'no' ) ) {
 				add_action( 'init', array( $this, 'hide_cross_sells' ), PHP_INT_MAX );
 			}
-			if ( 'no_changes' != get_option( 'wcj_cross_sells_position', 'no_changes' ) ) {
+			if ( 'no_changes' != wcj_get_option( 'wcj_cross_sells_position', 'no_changes' ) ) {
 				add_action( 'init', array( $this, 'reposition_cross_sells' ), PHP_INT_MAX );
 			}
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_cross_sells_replace_with_cross_sells', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_cross_sells_replace_with_cross_sells', 'no' ) ) ) {
 				add_filter( 'woocommerce_product_add_to_cart_url',  array( $this, 'replace_with_cross_sells_to_url' ), PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'remove_from_cart_by_product_id' ) );
 			}
@@ -119,7 +119,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	 */
 	function reposition_cross_sells() {
 		$this->hide_cross_sells();
-		add_action( get_option( 'wcj_cross_sells_position', 'no_changes' ), 'woocommerce_cross_sell_display', get_option( 'wcj_cross_sells_position_priority', 10 ) );
+		add_action( wcj_get_option( 'wcj_cross_sells_position', 'no_changes' ), 'woocommerce_cross_sell_display', wcj_get_option( 'wcj_cross_sells_position_priority', 10 ) );
 	}
 
 	/**
@@ -158,7 +158,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	 * @todo    [feature] (maybe) on per category/tag basis
 	 */
 	function cross_sells_ids( $ids, $_product ) {
-		$global_cross_sells = get_option( 'wcj_cross_sells_global_ids', '' );
+		$global_cross_sells = wcj_get_option( 'wcj_cross_sells_global_ids', '' );
 		if ( ! empty( $global_cross_sells ) ) {
 			$global_cross_sells = array_unique( $global_cross_sells );
 			$product_id         = wcj_get_product_id_or_variation_parent_id( $_product );
@@ -176,7 +176,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	 * @since   3.5.3
 	 */
 	function cross_sells_order( $order ) {
-		return ( 'no_changes' != ( $_order = get_option( 'wcj_cross_sells_order', 'no_changes' ) ) ? $_order : $order );
+		return ( 'no_changes' != ( $_order = wcj_get_option( 'wcj_cross_sells_order', 'no_changes' ) ) ? $_order : $order );
 	}
 
 	/**
@@ -186,7 +186,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	 * @since   3.5.3
 	 */
 	function cross_sells_orderby( $orderby ) {
-		return ( 'no_changes' != ( $_orderby = get_option( 'wcj_cross_sells_orderby', 'no_changes' ) ) ? $_orderby : $orderby );
+		return ( 'no_changes' != ( $_orderby = wcj_get_option( 'wcj_cross_sells_orderby', 'no_changes' ) ) ? $_orderby : $orderby );
 	}
 
 	/**
@@ -196,7 +196,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	 * @since   3.5.3
 	 */
 	function cross_sells_columns( $columns ) {
-		return ( 0 != ( $_columns = get_option( 'wcj_cross_sells_columns', 0 ) ) ? $_columns : $columns );
+		return ( 0 != ( $_columns = wcj_get_option( 'wcj_cross_sells_columns', 0 ) ) ? $_columns : $columns );
 	}
 
 	/**
@@ -206,7 +206,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	 * @since   3.5.3
 	 */
 	function cross_sells_total( $limit ) {
-		return ( 0 != ( $_limit = get_option( 'wcj_cross_sells_total', 0 ) ) ? $_limit : $limit );
+		return ( 0 != ( $_limit = wcj_get_option( 'wcj_cross_sells_total', 0 ) ) ? $_limit : $limit );
 	}
 
 }

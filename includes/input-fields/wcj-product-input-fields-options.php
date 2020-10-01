@@ -129,7 +129,7 @@ return array(
 	array(
 		'id'                => 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_',
 		'title'             => __( 'If datepicker/weekpicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats', 'woocommerce-jetpack' ),
-		'desc_tip'          => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
+		'desc_tip'          => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . wcj_get_option( 'date_format' ),
 		'short_title'       => __( 'Datepicker/Weekpicker: Date format', 'woocommerce-jetpack' ),
 		'type'              => 'text',
 		'default'           => '',

@@ -18,14 +18,14 @@ if ( is_admin() ) {
 			$status_settings = $module->add_enable_module_setting( array() );
 			$this->module_statuses[] = $status_settings[1];
 		}
-		if ( get_option( WCJ_VERSION_OPTION ) === $this->version ) {
+		if ( wcj_get_option( WCJ_VERSION_OPTION ) === $this->version ) {
 			continue;
 		}
 		$values = $module->get_settings();
 		// Adding options
 		foreach ( $values as $value ) {
 			if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
-				if ( 'yes' === get_option( 'wcj_autoload_options', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_autoload_options', 'yes' ) ) {
 					$autoload = isset( $value['autoload'] ) ? (bool) $value['autoload'] : true;
 				} else {
 					$autoload = false;
@@ -34,7 +34,7 @@ if ( is_admin() ) {
 			}
 		}
 	}
-	if ( get_option( WCJ_VERSION_OPTION ) !== $this->version ) {
+	if ( wcj_get_option( WCJ_VERSION_OPTION ) !== $this->version ) {
 		// "Version updated" stuff...
 		update_option( WCJ_VERSION_OPTION, $this->version );
 		add_action( 'admin_notices', 'wcj_admin_notices_version_updated' );

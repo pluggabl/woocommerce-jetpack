@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Debug Mode
-if ( 'yes' === get_option( 'wcj_debug_tools_enabled', 'no' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
+if ( 'yes' === wcj_get_option( 'wcj_debug_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_debuging_enabled', 'no' ) ) {
 	error_reporting( E_ALL );
 }
 
@@ -27,7 +27,7 @@ if ( ! defined( 'WCJ_PLUGIN_PATH' ) ) {
 }
 
 // Set up localisation
-if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 	load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( WCJ_PLUGIN_FILE ) ) . '/langs/' );
 } else {
 	add_action( 'init', function () {
@@ -75,7 +75,7 @@ require_once( WCJ_PLUGIN_PATH . '/includes/widgets/class-wcj-widget-selector.php
 require_once( 'class-wcj-scripts.php' );
 
 // Modules and Submodules
-if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 	require_once( 'wcj-modules.php' );
 
 	// Add and Manage options

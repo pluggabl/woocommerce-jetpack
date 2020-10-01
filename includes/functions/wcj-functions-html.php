@@ -113,11 +113,11 @@ if ( ! function_exists( 'wcj_empty_cart_button_html' ) ) {
 	 * @todo    optional function parameters instead of default `get_option()` calls
 	 */
 	function wcj_empty_cart_button_html() {
-		$confirmation_html = ( 'confirm_with_pop_up_box' == get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ?
-			' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text', __( 'Are you sure?', 'woocommerce-jetpack' ) ) . '\')"' : '';
-		return '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '">' .
-			'<form action="" method="post"><input type="submit" class="' . get_option( 'wcj_empty_cart_button_class', 'button' ) . '" name="wcj_empty_cart" value="' .
-				apply_filters( 'booster_option', 'Empty Cart', get_option( 'wcj_empty_cart_text', 'Empty Cart' ) ) . '"' . $confirmation_html . '>' .
+		$confirmation_html = ( 'confirm_with_pop_up_box' == wcj_get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ?
+			' onclick="return confirm(\'' . wcj_get_option( 'wcj_empty_cart_confirmation_text', __( 'Are you sure?', 'woocommerce-jetpack' ) ) . '\')"' : '';
+		return '<div style="' . wcj_get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '">' .
+			'<form action="" method="post"><input type="submit" class="' . wcj_get_option( 'wcj_empty_cart_button_class', 'button' ) . '" name="wcj_empty_cart" value="' .
+				apply_filters( 'booster_option', 'Empty Cart', wcj_get_option( 'wcj_empty_cart_text', 'Empty Cart' ) ) . '"' . $confirmation_html . '>' .
 			'</form>' .
 		'</div>';
 	}

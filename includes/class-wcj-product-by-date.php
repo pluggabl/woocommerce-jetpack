@@ -36,19 +36,19 @@ class WCJ_Product_By_Date extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Per product meta box
-			if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) ) {
 				add_action( 'add_meta_boxes',          array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product',       array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_validate_value' ), PHP_INT_MAX, 3 );
 				add_action( 'admin_notices',           array( $this, 'validate_value_admin_notices' ) );
 				$this->meta_box_validate_value = 'wcj_product_by_date_enabled';
 			}
-			if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) || 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) || 'yes' === wcj_get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
 				// Time now
 				$this->day_now   = intval( date( 'j', $this->time_now ) ); // Day of the month without leading zeros: 1 to 31
 				$this->month_now = intval( date( 'n', $this->time_now ) ); // Numeric representation of a month, without leading zeros: 1 through 12
 				// Filters
-				if ( 'non_purchasable' === get_option( 'wcj_product_by_date_action', 'non_purchasable' ) ) {
+				if ( 'non_purchasable' === wcj_get_option( 'wcj_product_by_date_action', 'non_purchasable' ) ) {
 					add_filter( 'woocommerce_is_purchasable', array( $this, 'check_is_purchasable_by_date' ), PHP_INT_MAX, 2 );
 				}
 				add_action( 'woocommerce_single_product_summary', array( $this, 'maybe_add_unavailable_by_date_message' ), 30 );
@@ -88,7 +88,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 */
 	function maybe_get_direct_date( $product_id ) {
 		return (
-			'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) &&
+			'yes' === wcj_get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) &&
 			'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_date_enabled', true ) &&
 			'' != ( $direct_date = get_post_meta( $product_id, '_' . 'wcj_product_by_date_direct_date', true ) )
 		) ? $direct_date : false;
@@ -107,7 +107,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 				$replaceable_values = array(
 					'%direct_date%' => $direct_date,
 				);
-				$message = get_option( 'wcj_product_by_date_unavailable_message_direct_date',
+				$message = wcj_get_option( 'wcj_product_by_date_unavailable_message_direct_date',
 					'<p style="color:red;">' . __( '%product_title% is not available until %direct_date%.', 'woocommerce-jetpack' ) . '</p>' );
 			} else {
 				$_date = $this->get_product_availability_this_month( $_product );
@@ -136,10 +136,10 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 */
 	function get_product_availability_this_month( $_product ) {
 		$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
-		if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) && 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_date_enabled', true ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) && 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_date_enabled', true ) ) {
 			return get_post_meta( $product_id, '_' . 'wcj_product_by_date_' . $this->month_now, true );
-		} elseif ( 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
-			return get_option( 'wcj_product_by_date_' . $this->month_now, $this->get_default_date( $this->month_now ) );
+		} elseif ( 'yes' === wcj_get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
+			return wcj_get_option( 'wcj_product_by_date_' . $this->month_now, $this->get_default_date( $this->month_now ) );
 		} else {
 			return '';
 		}
@@ -155,7 +155,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	function check_is_purchasable_by_date( $purchasable, $_product ) {
 		if ( $purchasable ) {
 			if ( false !== ( $direct_date = $this->maybe_get_direct_date( wcj_get_product_id_or_variation_parent_id( $_product ) ) ) ) {
-				$date = DateTime::createFromFormat( get_option( 'wcj_product_by_date_direct_date_format', 'm/d/Y' ), $direct_date, wcj_timezone() );
+				$date = DateTime::createFromFormat( wcj_get_option( 'wcj_product_by_date_direct_date_format', 'm/d/Y' ), $direct_date, wcj_timezone() );
 				if ( false === $date ) {
 					return false;
 				}

@@ -56,7 +56,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				add_action( 'wp_footer',                                array( $this, 'maybe_add_js_conformation' ) );
 				add_action( 'init',                                     array( $this, 'process_woocommerce_mark_order_status' ) );
 				// Custom pages
-				if ( 'yes' === get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
 					add_action( 'woocommerce_account_' . 'page' . '_endpoint', array( $this, 'customize_dashboard' ), PHP_INT_MAX );
 					add_filter( 'the_title',                                   array( $this, 'set_custom_page_title' ), PHP_INT_MAX );
 					add_filter( 'the_title',                                   array( $this, 'set_custom_page_title_with_endpoint' ) );
@@ -66,8 +66,8 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					$this->customize_dashboard_for_endpoints();
 				}
 				// Custom info
-				if ( 'yes' === get_option( 'wcj_my_account_custom_info_enabled', 'no' ) ) {
-					$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_info_total_number', 1 ) );
+				if ( 'yes' === wcj_get_option( 'wcj_my_account_custom_info_enabled', 'no' ) ) {
+					$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_my_account_custom_info_total_number', 1 ) );
 					for ( $i = 1; $i <= $total_number; $i++ ) {
 						add_action(
 							get_option( 'wcj_my_account_custom_info_hook_' . $i, 'woocommerce_account_dashboard' ),
@@ -77,22 +77,22 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					}
 				}
 				// Registration extra fields
-				if ( 'yes' === get_option( 'wcj_my_account_registration_extra_fields_user_role_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_enabled', 'no' ) ) {
 					add_action( 'woocommerce_register_form',    array( $this, 'add_registration_extra_fields' ), PHP_INT_MAX );
 					add_action( 'woocommerce_created_customer', array( $this, 'process_registration_extra_fields' ), PHP_INT_MAX, 3 );
 				}
 				// Menu & Endpoints
-				if ( 'yes' === get_option( 'wcj_my_account_menu_customize_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_my_account_menu_customize_enabled', 'no' ) ) {
 					foreach ( $this->account_menu_endpoints as $account_menu_endpoint_id => $account_menu_endpoint_title ) {
 						add_filter( 'woocommerce_endpoint_' . $account_menu_endpoint_id . '_title', array( $this, 'customize_endpoint_title' ), PHP_INT_MAX, 2 );
 					}
 					add_filter( 'woocommerce_account_menu_items', array( $this, 'customize_menu' ), PHP_INT_MAX );
-					if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_custom_items_enabled', 'no' ) ) ) {
+					if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_my_account_menu_order_custom_items_enabled', 'no' ) ) ) {
 						add_filter( 'woocommerce_get_endpoint_url', array( $this, 'customize_menu_custom_endpoints' ), PHP_INT_MAX, 4 );
 					}
 				}
 				// Dashboard customization
-				if ( 'yes' === get_option( 'wcj_my_account_custom_dashboard_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_my_account_custom_dashboard_enabled', 'no' ) ) {
 					add_action( 'woocommerce_account_' . 'page' . '_endpoint', array( $this, 'customize_dashboard' ), PHP_INT_MAX );
 				}
 			}
@@ -142,10 +142,10 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				return $this->custom_pages;
 			}
 			$this->custom_pages = array();
-			$title              = get_option( 'wcj_my_account_custom_pages_title', array() );
-			$content            = get_option( 'wcj_my_account_custom_pages_content', array() );
-			$endpoint           = get_option( 'wcj_my_account_custom_pages_endpoint', array() );
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_pages_total_number', 1 ) ); $i ++ ) {
+			$title              = wcj_get_option( 'wcj_my_account_custom_pages_title', array() );
+			$content            = wcj_get_option( 'wcj_my_account_custom_pages_content', array() );
+			$endpoint           = wcj_get_option( 'wcj_my_account_custom_pages_endpoint', array() );
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_my_account_custom_pages_total_number', 1 ) ); $i ++ ) {
 				if ( ! empty( $title[ $i ] ) && ! empty( $content[ $i ] ) ) {
 					$endpoint[ $i ]                                       = isset( $endpoint[ $i ] ) ? $endpoint[ $i ] : '';
 					$this->custom_pages[ sanitize_title( $title[ $i ] ) ] = array( 'endpoint' => $endpoint[ $i ], 'title' => $title[ $i ], 'content' => $content[ $i ] );
@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			if ( ! isset( $this->custom_pages ) ) {
 				$this->get_custom_pages();
 			}
-			return ( isset( $this->custom_pages[ $endpoint ] ) && empty( $this->custom_pages[ $endpoint ]['endpoint'] ) && ( $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' ) ) ? add_query_arg( 'section', $endpoint, get_permalink( $myaccount_page_id ) ) : $url );
+			return ( isset( $this->custom_pages[ $endpoint ] ) && empty( $this->custom_pages[ $endpoint ]['endpoint'] ) && ( $myaccount_page_id = wcj_get_option( 'woocommerce_myaccount_page_id' ) ) ? add_query_arg( 'section', $endpoint, get_permalink( $myaccount_page_id ) ) : $url );
 		}
 
 		/**
@@ -246,7 +246,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @since   3.8.0
 		 */
 		function customize_menu_custom_endpoints( $url, $endpoint, $value, $permalink ) {
-			$custom_items = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
+			$custom_items = array_map( 'trim', explode( PHP_EOL, wcj_get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
 			foreach ( $custom_items as $custom_item ) {
 				$parts = array_map( 'trim', explode( '|', $custom_item, 3 ) );
 				if ( 3 === count( $parts ) && $parts[0] === $endpoint ) {
@@ -266,7 +266,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		function customize_dashboard( $value ) {
 
 			// Custom pages
-			if ( 'yes' === get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
 				if ( isset( $_GET['section'] ) || 'woocommerce_account_page_endpoint' != current_filter() ) {
 					if ( ! isset( $this->custom_pages ) ) {
 						$this->get_custom_pages();
@@ -281,7 +281,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 						return;
 					}
 				}
-				if ( 'no' === get_option( 'wcj_my_account_custom_dashboard_enabled', 'no' ) ) {
+				if ( 'no' === wcj_get_option( 'wcj_my_account_custom_dashboard_enabled', 'no' ) ) {
 					wc_get_template( 'myaccount/dashboard.php', array(
 						'current_user' => get_user_by( 'id', get_current_user_id() ),
 					) );
@@ -292,11 +292,11 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			// Dashboard customization
 			$current_user = get_user_by( 'id', get_current_user_id() );
 
-			if ( '' != ( $custom_content = get_option( 'wcj_my_account_custom_dashboard_content', '' ) ) ) {
+			if ( '' != ( $custom_content = wcj_get_option( 'wcj_my_account_custom_dashboard_content', '' ) ) ) {
 				echo do_shortcode( $custom_content );
 			}
 
-			if ( 'no' === get_option( 'wcj_my_account_custom_dashboard_hide_hello', 'no' ) ) {
+			if ( 'no' === wcj_get_option( 'wcj_my_account_custom_dashboard_hide_hello', 'no' ) ) {
 				echo '<p>';
 				/* translators: 1: user display name 2: logout url */
 				printf(
@@ -307,7 +307,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				echo '</p>';
 			}
 
-			if ( 'no' === get_option( 'wcj_my_account_custom_dashboard_hide_info', 'no' ) ) {
+			if ( 'no' === wcj_get_option( 'wcj_my_account_custom_dashboard_hide_info', 'no' ) ) {
 				echo '<p>';
 				printf(
 					__( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' ),
@@ -352,7 +352,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @todo    (maybe) 'order-received' => __( 'Order received', 'woocommerce' )
 		 */
 		function customize_endpoint_title( $title, $endpoint ) {
-			$menu_titles = get_option( 'wcj_my_account_menu_title', array() );
+			$menu_titles = wcj_get_option( 'wcj_my_account_menu_title', array() );
 			if ( ! empty( $menu_titles[ $endpoint ] ) ) {
 				return $menu_titles[ $endpoint ];
 			}
@@ -367,14 +367,14 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @todo    (maybe) option to disable menu
 		 */
 		function customize_menu( $items ) {
-			$menu_titles = get_option( 'wcj_my_account_menu_title', array() );
+			$menu_titles = wcj_get_option( 'wcj_my_account_menu_title', array() );
 			foreach ( $items as $item_id => $item_title ) {
 				if ( ! empty( $menu_titles[ $item_id ] ) ) {
 					$items[ $item_id ] = $menu_titles[ $item_id ];
 				}
 			}
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_custom_items_enabled', 'no' ) ) ) {
-				$custom_items = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_my_account_menu_order_custom_items_enabled', 'no' ) ) ) {
+				$custom_items = array_map( 'trim', explode( PHP_EOL, wcj_get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
 				foreach ( $custom_items as $custom_item ) {
 					$parts = array_map( 'trim', explode( '|', $custom_item, 3 ) );
 					if ( 3 === count( $parts ) ) {
@@ -382,8 +382,8 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					}
 				}
 			}
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_customize_enabled', 'no' ) ) ) {
-				$menu_order = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order', $this->menu_order_default ) ) );
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_my_account_menu_order_customize_enabled', 'no' ) ) ) {
+				$menu_order = array_map( 'trim', explode( PHP_EOL, wcj_get_option( 'wcj_my_account_menu_order', $this->menu_order_default ) ) );
 				$menu_order = array_map( 'strtolower', $menu_order );
 				$menu_order = array_filter( $menu_order, function ( $item ) use ( $items ) {
 					return in_array( $item, array_keys( $items ) );
@@ -406,7 +406,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			$user_roles_options_html = '';
 			$current_user_role_input = ! empty( $_POST['wcj_user_role'] ) ? $_POST['wcj_user_role'] :
 				get_option( 'wcj_my_account_registration_extra_fields_user_role_default', 'customer' );
-			$user_roles_options      = get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
+			$user_roles_options      = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
 			$all_user_roles          = wcj_get_user_roles_options();
 			foreach ( $user_roles_options as $user_role_id ) {
 				$user_roles_options_html .= '<option value="' . $user_role_id . '" ' . selected( $user_role_id, $current_user_role_input, false ) . '>' .
@@ -427,7 +427,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 */
 		function process_registration_extra_fields( $customer_id, $new_customer_data, $password_generated ) {
 			if ( isset( $_POST['wcj_user_role'] ) && '' != $_POST['wcj_user_role'] ) {
-				$user_roles_options = get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
+				$user_roles_options = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
 				if ( ! empty( $user_roles_options ) && in_array( $_POST['wcj_user_role'], $user_roles_options ) ) {
 					wp_update_user( array( 'ID' => $customer_id, 'role' => $_POST['wcj_user_role'] ) );
 				}
@@ -443,14 +443,14 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		function add_my_account_custom_info() {
 			$current_filter          = current_filter();
 			$current_filter_priority = wcj_current_filter_priority();
-			$total_number            = apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_info_total_number', 1 ) );
+			$total_number            = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_my_account_custom_info_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if (
-					''                       != get_option( 'wcj_my_account_custom_info_content_'  . $i ) &&
-					$current_filter         === get_option( 'wcj_my_account_custom_info_hook_'     . $i, 'woocommerce_account_dashboard' ) &&
-					$current_filter_priority == get_option( 'wcj_my_account_custom_info_priority_' . $i, 10 )
+					''                       != wcj_get_option( 'wcj_my_account_custom_info_content_'  . $i ) &&
+					$current_filter         === wcj_get_option( 'wcj_my_account_custom_info_hook_'     . $i, 'woocommerce_account_dashboard' ) &&
+					$current_filter_priority == wcj_get_option( 'wcj_my_account_custom_info_priority_' . $i, 10 )
 				) {
-					echo do_shortcode( get_option( 'wcj_my_account_custom_info_content_' . $i ) );
+					echo do_shortcode( wcj_get_option( 'wcj_my_account_custom_info_content_' . $i ) );
 				}
 			}
 		}
@@ -463,7 +463,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @see     http://snippet.fm/snippets/add-order-complete-action-to-woocommerce-my-orders-customer-table/
 		 */
 		function maybe_add_my_account_order_actions( $actions, $order ) {
-			$statuses_to_add = get_option( 'wcj_my_account_add_order_status_actions', '' );
+			$statuses_to_add = wcj_get_option( 'wcj_my_account_add_order_status_actions', '' );
 			if ( ! empty( $statuses_to_add ) ) {
 				$all_statuses = wcj_get_order_statuses();
 				foreach ( $statuses_to_add as $status_to_add ) {
@@ -488,7 +488,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @since   2.9.0
 		 */
 		function maybe_add_js_conformation() {
-			$statuses_to_add = get_option( 'wcj_my_account_add_order_status_actions', '' );
+			$statuses_to_add = wcj_get_option( 'wcj_my_account_add_order_status_actions', '' );
 			if ( ! empty( $statuses_to_add ) ) {
 				echo '<script>';
 				foreach ( $statuses_to_add as $status_to_add ) {

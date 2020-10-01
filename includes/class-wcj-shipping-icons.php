@@ -40,19 +40,19 @@ class WCJ_Shipping_Icons extends WCJ_Module {
 	 * @since   2.5.6
 	 */
 	function shipping_icon( $label, $method ) {
-		$shipping_icons_visibility = apply_filters( 'booster_option', 'both', get_option( 'wcj_shipping_icons_visibility', 'both' ) );
+		$shipping_icons_visibility = apply_filters( 'booster_option', 'both', wcj_get_option( 'wcj_shipping_icons_visibility', 'both' ) );
 		if ( 'checkout_only' === $shipping_icons_visibility && is_cart() ) {
 			return $label;
 		}
 		if ( 'cart_only' === $shipping_icons_visibility && is_checkout() ) {
 			return $label;
 		}
-		$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_icons_use_shipping_instance', 'no' ) );
+		$use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_icons_use_shipping_instance', 'no' ) );
 		$option_id              = 'wcj_shipping_icon_' . ( $use_shipping_instances ? 'instance_' . $method->instance_id : $method->method_id );
-		if ( '' != ( $icon_url = get_option( $option_id, '' ) ) ) {
-			$style_html = ( '' != ( $style = get_option( 'wcj_shipping_icons_style', 'display:inline;' ) ) ) ?  'style="' . $style . '" ' : '';
+		if ( '' != ( $icon_url = wcj_get_option( $option_id, '' ) ) ) {
+			$style_html = ( '' != ( $style = wcj_get_option( 'wcj_shipping_icons_style', 'display:inline;' ) ) ) ?  'style="' . $style . '" ' : '';
 			$img = '<img ' . $style_html . 'class="wcj_shipping_icon" id="' . $option_id . '" src="' . $icon_url . '">';
-			$label = ( 'before' === get_option( 'wcj_shipping_icons_position', 'before' ) ) ? $img . ' ' . $label : $label . ' ' . $img;
+			$label = ( 'before' === wcj_get_option( 'wcj_shipping_icons_position', 'before' ) ) ? $img . ' ' . $label : $label . ' ' . $img;
 		}
 		return $label;
 	}

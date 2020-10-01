@@ -57,10 +57,10 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_checkout_fields' ,            array( $this, 'custom_override_checkout_fields' ),        PHP_INT_MAX );
-			if ( 'disable' != ( $this->country_locale_override = get_option( 'wcj_checkout_core_fields_override_country_locale_fields', 'billing' ) ) ) {
+			if ( 'disable' != ( $this->country_locale_override = wcj_get_option( 'wcj_checkout_core_fields_override_country_locale_fields', 'billing' ) ) ) {
 				add_filter( 'woocommerce_get_country_locale',      array( $this, 'custom_override_country_locale_fields' ),  PHP_INT_MAX );
 			}
-			if ( 'disable' != ( $this->default_address_override = get_option( 'wcj_checkout_core_fields_override_default_address_fields', 'billing' ) ) ) {
+			if ( 'disable' != ( $this->default_address_override = wcj_get_option( 'wcj_checkout_core_fields_override_default_address_fields', 'billing' ) ) ) {
 				add_filter( 'woocommerce_default_address_fields',  array( $this, 'custom_override_default_address_fields' ), PHP_INT_MAX );
 			}
 		}
@@ -103,7 +103,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 				$default_value = $option_data['default'];
 				$option_id     = ( isset( $option_data['option_id'] ) ? $option_data['option_id'] : $option );
 				$option_id     = 'wcj_checkout_fields_' . $field . '_' . $option_id;
-				if ( $default_value != ( $value = get_option( $option_id, $default_value ) ) ) {
+				if ( $default_value != ( $value = wcj_get_option( $option_id, $default_value ) ) ) {
 					$value = ( isset( $option_data['values'][ $value ] ) ? $option_data['values'][ $value ] : $value );
 					$fields[ $field_key ][ $option ] = $value;
 				}
@@ -148,7 +148,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 			$field_parts = explode( '_', $field, 2 );
 			$section     = ( ! empty( $field_parts ) && is_array( $field_parts ) ? $field_parts[0] : '' ); // billing or shipping
 			// enabled
-			if ( 'no' === ( $is_enabled = get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_enabled', 'default' ) ) ) {
+			if ( 'no' === ( $is_enabled = wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_enabled', 'default' ) ) ) {
 				if ( isset( $checkout_fields[ $section ][ $field ] ) ) {
 					unset( $checkout_fields[ $section ][ $field ] ); // e.g. unset( $checkout_fields['billing']['billing_country'] );
 					continue;
@@ -158,43 +158,43 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 			if ( ! $this->is_visible( array(
 					'include_products'   => '',
 					'exclude_products'   => '',
-					'include_categories' => apply_filters( 'booster_option', '', get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_incl', '' ) ),
-					'exclude_categories' => apply_filters( 'booster_option', '', get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_excl', '' ) ),
+					'include_categories' => apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_incl', '' ) ),
+					'exclude_categories' => apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_excl', '' ) ),
 					'include_tags'       => '',
 					'exclude_tags'       => '',
-				), get_option( 'wcj_checkout_core_fields_checking_relation', 'all' ) )
+				), wcj_get_option( 'wcj_checkout_core_fields_checking_relation', 'all' ) )
 			) {
 				unset( $checkout_fields[ $section ][ $field ] );
 				continue;
 			}
 			if ( isset( $checkout_fields[ $section ][ $field ] ) ) {
 				// required
-				if ( 'default' != ( $is_required = get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_required', 'default' ) ) ) {
+				if ( 'default' != ( $is_required = wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_required', 'default' ) ) ) {
 					$checkout_fields[ $section ][ $field ]['required'] = ( 'yes' === $is_required );
 				}
 				// label
-				if ( '' != ( $label = get_option( 'wcj_checkout_fields_' . $field . '_' . 'label', '' ) ) ) {
+				if ( '' != ( $label = wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'label', '' ) ) ) {
 					$checkout_fields[ $section ][ $field ]['label'] = $label;
 				}
 				// placeholder
-				if ( '' != ( $placeholder = get_option( 'wcj_checkout_fields_' . $field . '_' . 'placeholder', '' ) ) ) {
+				if ( '' != ( $placeholder = wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'placeholder', '' ) ) ) {
 					$checkout_fields[ $section ][ $field ]['placeholder'] = $placeholder;
 				}
 				// description
-				if ( '' != ( $description = get_option( 'wcj_checkout_fields_' . $field . '_' . 'description', '' ) ) ) {
+				if ( '' != ( $description = wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'description', '' ) ) ) {
 					$checkout_fields[ $section ][ $field ]['description'] = $description;
 				}
 				// class
-				if ( 'default' != ( $class = get_option( 'wcj_checkout_fields_' . $field . '_' . 'class', 'default' ) ) ) {
+				if ( 'default' != ( $class = wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'class', 'default' ) ) ) {
 					$checkout_fields[ $section ][ $field ]['class'] = array( $class );
 				}
 				// priority
-				if ( 0 != ( $priority = apply_filters( 'booster_option', 0, get_option( 'wcj_checkout_fields_' . $field . '_' . 'priority', 0 ) ) ) ) {
+				if ( 0 != ( $priority = apply_filters( 'booster_option', 0, wcj_get_option( 'wcj_checkout_fields_' . $field . '_' . 'priority', 0 ) ) ) ) {
 					$checkout_fields[ $section ][ $field ]['priority'] = $priority;
 				}
 			}
 		}
-		if ( 'yes' === get_option( 'wcj_checkout_core_fields_force_sort_by_priority', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_checkout_core_fields_force_sort_by_priority', 'no' ) ) {
 			$field_sets = array( 'billing', 'shipping', 'account', 'order' );
 			foreach ( $field_sets as $field_set ) {
 				if ( isset( $checkout_fields[ $field_set ] ) ) {

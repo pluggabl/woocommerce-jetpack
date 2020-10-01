@@ -41,12 +41,12 @@ class WCJ_Payment_Gateways_By_Currency extends WCJ_Module {
 	function available_payment_gateways( $_available_gateways ) {
 		$current_currency = get_woocommerce_currency();
 		foreach ( $_available_gateways as $key => $gateway ) {
-			$allowed_currencies = get_option( 'wcj_gateways_by_currency_allowed_' . $key, '' );
+			$allowed_currencies = wcj_get_option( 'wcj_gateways_by_currency_allowed_' . $key, '' );
 			if ( ! empty( $allowed_currencies ) && ! in_array( $current_currency, $allowed_currencies ) ) {
 				unset( $_available_gateways[ $key ] );
 				continue;
 			}
-			$denied_currencies = get_option( 'wcj_gateways_by_currency_denied_' . $key, '' );
+			$denied_currencies = wcj_get_option( 'wcj_gateways_by_currency_denied_' . $key, '' );
 			if ( ! empty( $denied_currencies ) && in_array( $current_currency, $denied_currencies ) ) {
 				unset( $_available_gateways[ $key ] );
 				continue;

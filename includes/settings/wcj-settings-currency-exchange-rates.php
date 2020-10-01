@@ -12,8 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $desc = '';
 if ( $this->is_enabled() ) {
-	if ( '' != get_option( 'wcj_currency_exchange_rate_cron_time', '' ) ) {
-		$scheduled_time_diff = get_option( 'wcj_currency_exchange_rate_cron_time', '' ) - time();
+	if ( '' != wcj_get_option( 'wcj_currency_exchange_rate_cron_time', '' ) ) {
+		$scheduled_time_diff = wcj_get_option( 'wcj_currency_exchange_rate_cron_time', '' ) - time();
 		if ( $scheduled_time_diff > 60 ) {
 			$desc = '<br><em>' . sprintf( __( '%s till next update.', 'woocommerce-jetpack' ), human_time_diff( 0, $scheduled_time_diff ) ) . '</em>';
 		} elseif ( $scheduled_time_diff > 0 ) {
@@ -155,7 +155,7 @@ $settings = array_merge( $settings, array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 ) );
-$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(

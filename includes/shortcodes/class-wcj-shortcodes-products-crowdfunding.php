@@ -187,7 +187,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_startdate( $atts ) {
-		return date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_startdate', true ) ) );
+		return date_i18n( wcj_get_option( 'date_format' ), strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_startdate', true ) ) );
 	}
 
 	/**
@@ -197,7 +197,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_deadline( $atts ) {
-		return date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_deadline', true ) ) );
+		return date_i18n( wcj_get_option( 'date_format' ), strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_deadline', true ) ) );
 	}
 
 	/**

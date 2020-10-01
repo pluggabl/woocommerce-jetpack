@@ -32,26 +32,26 @@ class WCJ_Orders extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Order auto complete
-			if ( 'yes' === get_option( 'wcj_order_auto_complete_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_auto_complete_enabled', 'no' ) ) {
 				add_action( 'woocommerce_thankyou',         array( $this, 'auto_complete_order' ), PHP_INT_MAX );
 				add_action( 'woocommerce_payment_complete', array( $this, 'auto_complete_order' ), PHP_INT_MAX );
 			}
 
 			// Order currency
-			if ( 'yes' === get_option( 'wcj_order_admin_currency', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_order_admin_currency', 'no' ) ) {
 				$this->meta_box_screen = 'shop_order';
 				add_action( 'add_meta_boxes',       array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-				if ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ) {
+				if ( 'filter' === wcj_get_option( 'wcj_order_admin_currency_method', 'filter' ) ) {
 					$woocommerce_get_order_currency_filter = ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_get_order_currency' : 'woocommerce_order_get_currency' );
 					add_filter( $woocommerce_get_order_currency_filter, array( $this, 'change_order_currency' ), PHP_INT_MAX, 2 );
 				}
 			}
 
 			// Bulk Regenerate Download Permissions
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
 				// Actions
-				if ( 'yes' === get_option( 'wcj_order_bulk_regenerate_download_permissions_actions', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_actions', 'no' ) ) {
 					add_filter( 'bulk_actions-edit-shop_order',        array( $this, 'register_bulk_actions_regenerate_download_permissions' ), PHP_INT_MAX );
 					add_filter( 'handle_bulk_actions-edit-shop_order', array( $this, 'handle_bulk_actions_regenerate_download_permissions' ), 10, 3 );
 				}
@@ -60,7 +60,7 @@ class WCJ_Orders extends WCJ_Module {
 				// Admin notices
 				add_filter( 'admin_notices', array( $this, 'admin_notice_regenerate_download_permissions' ) );
 				// All orders - Cron
-				if ( 'disabled' != apply_filters( 'booster_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
+				if ( 'disabled' != apply_filters( 'booster_option', 'disabled', wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
 					add_action( 'init',       array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
 					add_action( 'admin_init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
 					add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' );
@@ -69,18 +69,18 @@ class WCJ_Orders extends WCJ_Module {
 			}
 
 			// Country by IP
-			if ( 'yes' === get_option( 'wcj_orders_country_by_ip_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_country_by_ip_enabled', 'no' ) ) {
 				add_action( 'add_meta_boxes', array( $this, 'add_country_by_ip_meta_box' ) );
 			}
 
 			// Orders navigation
-			if ( 'yes' === get_option( 'wcj_orders_navigation_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_navigation_enabled', 'no' ) ) {
 				add_action( 'add_meta_boxes', array( $this, 'add_orders_navigation_meta_box' ) );
 				add_action( 'admin_init',     array( $this, 'handle_orders_navigation' ) );
 			}
 
 			// Editable orders
-			if ( 'yes' === get_option( 'wcj_orders_editable_status_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_editable_status_enabled', 'no' ) ) {
 				add_filter( 'wc_order_is_editable', array( $this, 'editable_status' ), PHP_INT_MAX, 2 );
 			}
 
@@ -94,7 +94,7 @@ class WCJ_Orders extends WCJ_Module {
 	 * @since   4.0.0
 	 */
 	function editable_status( $is_editable, $order ) {
-		return in_array( $order->get_status(), get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ), true );
+		return in_array( $order->get_status(), wcj_get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ), true );
 	}
 
 	/**
@@ -191,7 +191,7 @@ class WCJ_Orders extends WCJ_Module {
 	function schedule_bulk_regenerate_download_permissions_all_orders_cron() {
 		wcj_crons_schedule_the_events(
 			'wcj_bulk_regenerate_download_permissions_all_orders_cron',
-			apply_filters( 'booster_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) )
+			apply_filters( 'booster_option', 'disabled', wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) )
 		);
 	}
 
@@ -286,7 +286,7 @@ class WCJ_Orders extends WCJ_Module {
 	 * @since   3.2.0
 	 */
 	function maybe_bulk_regenerate_download_permissions_all_orders() {
-		if ( 'yes' === get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' ) ) {
 			update_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' );
 			$total_orders = $this->bulk_regenerate_download_permissions_all_orders();
 			wp_safe_redirect( add_query_arg( 'wcj_bulk_regenerated_download_permissions', $total_orders ) );
@@ -316,7 +316,7 @@ class WCJ_Orders extends WCJ_Module {
 			return;
 		}
 		$order = wc_get_order( $order_id );
-		$payment_methods = apply_filters( 'booster_option', '', get_option( 'wcj_order_auto_complete_payment_methods', array() ) );
+		$payment_methods = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_order_auto_complete_payment_methods', array() ) );
 		if ( ! empty( $payment_methods ) && ! in_array( $order->get_payment_method(), $payment_methods ) ) {
 			return;
 		}

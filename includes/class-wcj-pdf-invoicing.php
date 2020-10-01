@@ -71,7 +71,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 			}
 
 			// Editable numbers in meta box
-			if ( 'yes' === get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
 				add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 
@@ -273,7 +273,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				$fpdi_pdf->useImportedPage( $page_id );
 			}
 		}
-		$fpdi_pdf->Output( 'docs.pdf', ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ? 'D' : 'I' ) );
+		$fpdi_pdf->Output( 'docs.pdf', ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ? 'D' : 'I' ) );
 		die();
 	}
 
@@ -417,7 +417,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		if ( $allow_order_owner && get_current_user_id() == intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {
 			return true;
 		}
-		$allowed_user_roles = get_option( 'wcj_invoicing_' . $this->invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
+		$allowed_user_roles = wcj_get_option( 'wcj_invoicing_' . $this->invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
 		if ( empty( $allowed_user_roles ) ) {
 			$allowed_user_roles = array( 'administrator' );
 		}
@@ -452,7 +452,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		// Get PDF
 		$the_invoice = wcj_get_pdf_invoice( $this->order_id, $this->invoice_type_id );
 		$dest        = ( true === $this->save_as_pdf ? 'D' : 'I' );
-		if ( 'yes' === get_option( 'wcj_general_advanced_disable_output_buffer', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_output_buffer', 'no' ) ) {
 			ob_clean();
 			ob_flush();
 			$the_invoice->get_pdf( $dest );

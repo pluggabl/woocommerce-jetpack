@@ -26,7 +26,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 		parent::__construct( 'submodule' );
 
 		if ( $this->is_enabled() ) {
-			if ( 'no' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
+			if ( 'no' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 				add_filter( 'woocommerce_email_attachments', array( $this, 'add_pdf_invoice_email_attachment' ), PHP_INT_MAX, 3 );
 			}
 		}
@@ -38,7 +38,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	 * @version 2.8.0
 	 */
 	function do_attach_for_payment_method( $invoice_type_id, $payment_method ) {
-		$included_gateways = get_option( 'wcj_invoicing_' . $invoice_type_id . '_payment_gateways', array() );
+		$included_gateways = wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_payment_gateways', array() );
 		if ( empty ( $included_gateways ) ) {
 			return true; // include all
 		}
@@ -69,7 +69,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 			if ( ! wcj_is_invoice_created( $order_id, $invoice_type_id ) ) {
 				continue;
 			}
-			$send_on_statuses = get_option( 'wcj_invoicing_' . $invoice_type_id . '_attach_to_emails', array() );
+			$send_on_statuses = wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_attach_to_emails', array() );
 			if ( '' == $send_on_statuses ) {
 				$send_on_statuses = array();
 			}

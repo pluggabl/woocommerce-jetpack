@@ -33,27 +33,27 @@ $options = array(
 	),
 	array(
 		'name'       => 'wcj_product_price_by_formula_eval',
-		'default'    => get_option( 'wcj_product_price_by_formula_eval', '' ),
+		'default'    => wcj_get_option( 'wcj_product_price_by_formula_eval', '' ),
 		'type'       => 'text',
 		'title'      => __( 'Formula', 'woocommerce-jetpack' ),
 	),
 	array(
 		'name'       => 'wcj_product_price_by_formula_total_params',
-		'default'    => get_option( 'wcj_product_price_by_formula_total_params', 1 ),
+		'default'    => wcj_get_option( 'wcj_product_price_by_formula_total_params', 1 ),
 		'type'       => 'number',
 		'title'      => __( 'Number of Parameters', 'woocommerce-jetpack' ),
 	),
 );
 $total_params = get_post_meta( get_the_ID(), '_' . 'wcj_product_price_by_formula_total_params', false );
 if ( empty( $total_params ) ) {
-	$total_params = get_option( 'wcj_product_price_by_formula_total_params', 1 );
+	$total_params = wcj_get_option( 'wcj_product_price_by_formula_total_params', 1 );
 } else {
 	$total_params = $total_params[0];
 }
 for ( $i = 1; $i <= $total_params; $i++ ) {
 	$options[] = array(
 		'name'       => 'wcj_product_price_by_formula_param_' . $i,
-		'default'    => get_option( 'wcj_product_price_by_formula_param_' . $i, '' ),
+		'default'    => wcj_get_option( 'wcj_product_price_by_formula_param_' . $i, '' ),
 		'type'       => 'text',
 		'title'      => 'p' . $i,
 	);

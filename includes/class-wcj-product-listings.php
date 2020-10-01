@@ -37,17 +37,17 @@ class WCJ_Product_Listings extends WCJ_Module {
 			add_filter( 'woocommerce_product_subcategories_hide_empty', array( $this, 'filter_subcategories_hide_empty' ), 100 );
 
 			// Hide Count
-			if ( 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) || 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) || 'yes' === wcj_get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) {
 				add_filter( 'woocommerce_subcategory_count_html', array( $this, 'remove_subcategory_count' ), 100 );
 			}
 
 			// Product visibility by price
-			if ( 'yes' === get_option( 'wcj_product_listings_product_visibility_by_price_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_listings_product_visibility_by_price_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_visibility_by_price' ), PHP_INT_MAX, 2 );
 			}
 
 			// Product visibility by category
-			$this->cats_products_to_hide_on_shop = get_option( 'wcj_product_listings_exclude_cats_products_on_shop', '' );
+			$this->cats_products_to_hide_on_shop = wcj_get_option( 'wcj_product_listings_exclude_cats_products_on_shop', '' );
 			if ( ! empty( $this->cats_products_to_hide_on_shop ) ) {
 				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_visibility_by_category' ), PHP_INT_MAX, 2 );
 			}
@@ -82,8 +82,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 			$min_price = $product->get_price();
 			$max_price = $product->get_price();
 		}
-		$min_price_limit = get_option( 'wcj_product_listings_product_visibility_by_price_min', 0 );
-		$max_price_limit = get_option( 'wcj_product_listings_product_visibility_by_price_max', 0 );
+		$min_price_limit = wcj_get_option( 'wcj_product_listings_product_visibility_by_price_min', 0 );
+		$max_price_limit = wcj_get_option( 'wcj_product_listings_product_visibility_by_price_max', 0 );
 		return ( ( 0 != $min_price_limit && $min_price < $min_price_limit ) || ( 0 != $max_price_limit && $max_price > $max_price_limit ) ? false : $visible );
 	}
 
@@ -92,8 +92,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	 */
 	function remove_subcategory_count( $count_html ) {
 		if (
-			( is_shop() && 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) ) ||
-			( ! is_shop() && 'yes' === apply_filters( 'booster_option', 'wcj', get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) )
+			( is_shop() && 'yes' === wcj_get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) ) ||
+			( ! is_shop() && 'yes' === apply_filters( 'booster_option', 'wcj', wcj_get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) )
 		) {
 			return '';
 		}
@@ -121,7 +121,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 		if (
 			is_product_category() &&
 			get_option( 'woocommerce_category_archive_display' ) == 'subcategories' &&
-			'no' === get_option( 'wcj_product_listings_show_products_if_no_cats_on_archives' )
+			'no' === wcj_get_option( 'wcj_product_listings_show_products_if_no_cats_on_archives' )
 		) {
 			$wp_query->post_count    = 0;
 			$wp_query->max_num_pages = 0;
@@ -129,7 +129,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 		if (
 			is_shop() &&
 			get_option( 'woocommerce_shop_page_display' ) == 'subcategories' &&
-			'no' === get_option( 'wcj_product_listings_show_products_if_no_cats_on_shop' )
+			'no' === wcj_get_option( 'wcj_product_listings_show_products_if_no_cats_on_shop' )
 		) {
 			$wp_query->post_count    = 0;
 			$wp_query->max_num_pages = 0;
@@ -147,8 +147,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 		$this->hide_products_by_disabling_loop();
 
 		$hide_empty = ( is_shop() ) ?
-			( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop',     'yes' ) ) :
-			( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives', 'yes' ) );
+			( 'yes' === wcj_get_option( 'wcj_product_listings_hide_empty_cats_on_shop',     'yes' ) ) :
+			( 'yes' === wcj_get_option( 'wcj_product_listings_hide_empty_cats_on_archives', 'yes' ) );
 
 		return $hide_empty;
 	}

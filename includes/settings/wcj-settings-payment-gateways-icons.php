@@ -27,7 +27,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 		$custom_attributes = array();
 		$desc_tip = '';
 	}
-	$current_icon_url = get_option( 'wcj_gateways_icons_' . $key . '_icon', '' );
+	$current_icon_url = wcj_get_option( 'wcj_gateways_icons_' . $key . '_icon', '' );
 	$desc = ( '' != $current_icon_url ) ? '<img width="16" src="' . $current_icon_url . '" alt="' . $gateway->title . '" title="' . $gateway->title . '" />' : '';
 	$settings = array_merge( $settings, array(
 		array(

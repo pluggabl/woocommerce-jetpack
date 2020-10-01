@@ -93,8 +93,8 @@ if ( ! function_exists( 'wcj_check_modules_by_user_roles' ) ) {
 			$wcj_modules_by_user_roles_data['role'] = ( isset( $current_user->roles ) && is_array( $current_user->roles ) && ! empty( $current_user->roles ) ?
 				reset( $current_user->roles ) : 'guest' );
 			$wcj_modules_by_user_roles_data['role'] = ( '' != $wcj_modules_by_user_roles_data['role'] ? $wcj_modules_by_user_roles_data['role'] : 'guest' );
-			$wcj_modules_by_user_roles_data['modules_incl'] = get_option( 'wcj_modules_by_user_roles_incl_' . $wcj_modules_by_user_roles_data['role'], '' );
-			$wcj_modules_by_user_roles_data['modules_excl'] = get_option( 'wcj_modules_by_user_roles_excl_' . $wcj_modules_by_user_roles_data['role'], '' );
+			$wcj_modules_by_user_roles_data['modules_incl'] = wcj_get_option( 'wcj_modules_by_user_roles_incl_' . $wcj_modules_by_user_roles_data['role'], '' );
+			$wcj_modules_by_user_roles_data['modules_excl'] = wcj_get_option( 'wcj_modules_by_user_roles_excl_' . $wcj_modules_by_user_roles_data['role'], '' );
 		}
 		return (
 			( ! empty( $wcj_modules_by_user_roles_data['modules_incl'] ) && ! in_array( $module_id, $wcj_modules_by_user_roles_data['modules_incl'] ) ) ||
@@ -113,6 +113,6 @@ if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
 	 */
 	function wcj_is_module_enabled( $module_id ) {
 		return ( 'modules_by_user_roles' != $module_id && wcj_is_module_enabled( 'modules_by_user_roles' ) && ! wcj_is_rest() && ! wcj_check_modules_by_user_roles( $module_id ) ?
-			false : ( 'yes' === get_option( 'wcj_' . $module_id . '_enabled', 'no' ) ) );
+			false : ( 'yes' === wcj_get_option( 'wcj_' . $module_id . '_enabled', 'no' ) ) );
 	}
 }

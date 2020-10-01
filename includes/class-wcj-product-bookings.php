@@ -62,7 +62,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 					add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'add_info_to_order_item_meta_wc3' ), PHP_INT_MAX, 4 );
 				}
 				// Hide quantity
-				if ( 'yes' === get_option( 'wcj_product_bookings_hide_quantity', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_product_bookings_hide_quantity', 'yes' ) ) {
 					add_filter( 'woocommerce_is_sold_individually',       array( $this, 'sold_individually' ), PHP_INT_MAX, 2 );
 				}
 				// Disable AJAX add to cart
@@ -128,7 +128,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		if (
 			! is_product() ||
 			! $this->is_bookings_product( $the_product = wc_get_product() ) ||
-			( 'no' === get_option( 'wcj_product_bookings_price_per_day_variable_products', 'yes' ) && ( $the_product->is_type( 'variable' ) || $the_product->is_type( 'variation' ) ) )
+			( 'no' === wcj_get_option( 'wcj_product_bookings_price_per_day_variable_products', 'yes' ) && ( $the_product->is_type( 'variable' ) || $the_product->is_type( 'variation' ) ) )
 		) {
 			return;
 		}
@@ -137,7 +137,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		wp_localize_script( 'wcj-bookings', 'ajax_object', array(
 			'ajax_url'            => admin_url( 'admin-ajax.php' ),
 			'product_id'          => get_the_ID(),
-			'wrong_dates_message' => get_option( 'wcj_product_bookings_message_date_to_before_date_from', __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ) ),
+			'wrong_dates_message' => wcj_get_option( 'wcj_product_bookings_message_date_to_before_date_from', __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ) ),
 		) );
 	}
 
@@ -202,7 +202,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		}
 		if ( isset( $item['wcj_bookings_price'] ) ) {
 			if ( $is_cart ) {
-				$name .= '<dt>' . get_option( 'wcj_product_bookings_label_period', __( 'Period', 'woocommerce-jetpack' ) ) . ':' . '</dt>';
+				$name .= '<dt>' . wcj_get_option( 'wcj_product_bookings_label_period', __( 'Period', 'woocommerce-jetpack' ) ) . ':' . '</dt>';
 				$name .= '<dd>' . $item['wcj_bookings_date_from'] . ' - ' . $item['wcj_bookings_date_to'] . '</dd>';
 			} else {
 				$name .= ' | ' . $item['wcj_bookings_date_from'] . ' - ' . $item['wcj_bookings_date_to'];
@@ -234,17 +234,17 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		$the_product = wc_get_product( $product_id );
 		if ( $this->is_bookings_product( $the_product ) ) {
 			if ( ! isset( $_POST['wcj_product_bookings_date_from'] ) || '' == $_POST['wcj_product_bookings_date_from'] ) {
-				wc_add_notice( get_option( 'wcj_product_bookings_message_no_date_from', __( '"Date from" must be set', 'woocommerce-jetpack' ) ), 'error' );
+				wc_add_notice( wcj_get_option( 'wcj_product_bookings_message_no_date_from', __( '"Date from" must be set', 'woocommerce-jetpack' ) ), 'error' );
 				return false;
 			}
 			if ( ! isset( $_POST['wcj_product_bookings_date_to'] ) || '' == $_POST['wcj_product_bookings_date_to'] ) {
-				wc_add_notice( get_option( 'wcj_product_bookings_message_no_date_to', __( '"Date to" must be set', 'woocommerce-jetpack' ) ), 'error' );
+				wc_add_notice( wcj_get_option( 'wcj_product_bookings_message_no_date_to', __( '"Date to" must be set', 'woocommerce-jetpack' ) ), 'error' );
 				return false;
 			}
 			$date_to   = strtotime( $_POST['wcj_product_bookings_date_to'] );
 			$date_from = strtotime( $_POST['wcj_product_bookings_date_from'] );
 			if ( $date_from >= $date_to ) {
-				wc_add_notice( get_option( 'wcj_product_bookings_message_date_to_before_date_from', __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ) ), 'error' );
+				wc_add_notice( wcj_get_option( 'wcj_product_bookings_message_date_to_before_date_from', __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ) ), 'error' );
 				return false;
 			}
 		}
@@ -350,7 +350,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 * @todo    more options: exclude days (1-31), exact availability dates, mindate, maxdate, firstday, dateformat etc.
 	 */
 	function add_input_fields_to_frontend() {
-		if ( isset( $this->are_bookings_input_fields_displayed ) && 'yes' === get_option( 'wcj_product_bookings_check_for_outputted_data', 'yes' ) ) {
+		if ( isset( $this->are_bookings_input_fields_displayed ) && 'yes' === wcj_get_option( 'wcj_product_bookings_check_for_outputted_data', 'yes' ) ) {
 			return;
 		}
 		if ( $this->is_bookings_product( wc_get_product() ) ) {
@@ -358,20 +358,20 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			$data_table = array();
 			$date_from_value = ( isset( $_POST['wcj_product_bookings_date_from'] ) ) ? $_POST['wcj_product_bookings_date_from'] : '';
 			$date_to_value   = ( isset( $_POST['wcj_product_bookings_date_to'] ) )   ? $_POST['wcj_product_bookings_date_to']   : '';
-			$date_from_exclude_days = ( '' != ( $exclude = get_option( 'wcj_product_bookings_datepicker_date_from_exclude_days', '' ) ) ?
+			$date_from_exclude_days = ( '' != ( $exclude = wcj_get_option( 'wcj_product_bookings_datepicker_date_from_exclude_days', '' ) ) ?
 				' excludedays="[' . str_replace( 'S', '0', implode( ',', $exclude ) ) . ']"' : '' );
-			$date_to_exclude_days   = ( '' != ( $exclude = get_option( 'wcj_product_bookings_datepicker_date_to_exclude_days', '' ) ) ?
+			$date_to_exclude_days   = ( '' != ( $exclude = wcj_get_option( 'wcj_product_bookings_datepicker_date_to_exclude_days', '' ) ) ?
 				' excludedays="[' . str_replace( 'S', '0', implode( ',', $exclude ) ) . ']"' : '' );
-			$date_from_exclude_months = ( '' != ( $exclude = get_option( 'wcj_product_bookings_datepicker_date_from_exclude_months', '' ) ) ?
+			$date_from_exclude_months = ( '' != ( $exclude = wcj_get_option( 'wcj_product_bookings_datepicker_date_from_exclude_months', '' ) ) ?
 				' excludemonths="[' . implode( ',', $exclude ) . ']"' : '' );
-			$date_to_exclude_months   = ( '' != ( $exclude = get_option( 'wcj_product_bookings_datepicker_date_to_exclude_months', '' ) ) ?
+			$date_to_exclude_months   = ( '' != ( $exclude = wcj_get_option( 'wcj_product_bookings_datepicker_date_to_exclude_months', '' ) ) ?
 				' excludemonths="[' . implode( ',', $exclude ) . ']"' : '' );
 			$data_table[] = array(
-				'<label for="wcj_product_bookings_date_from">' . get_option( 'wcj_product_bookings_label_date_from', __( 'Date from' ) ) . '</label>',
+				'<label for="wcj_product_bookings_date_from">' . wcj_get_option( 'wcj_product_bookings_label_date_from', __( 'Date from' ) ) . '</label>',
 				'<input firstday="0"' . $date_from_exclude_days . $date_from_exclude_months . ' dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_from" name="wcj_product_bookings_date_from" placeholder="" value="' . $date_from_value . '">',
 			);
 			$data_table[] = array(
-				'<label for="wcj_product_bookings_date_to">' . get_option( 'wcj_product_bookings_label_date_to', __( 'Date to' ) ) . '</label>',
+				'<label for="wcj_product_bookings_date_to">' . wcj_get_option( 'wcj_product_bookings_label_date_to', __( 'Date to' ) ) . '</label>',
 				'<input firstday="0"' . $date_to_exclude_days   . $date_to_exclude_months   . ' dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_to" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
 			);
 			echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', ) );
@@ -389,12 +389,12 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 */
 	function add_per_day_label( $price_html, $_product ) {
 		if (
-			'no' === get_option( 'wcj_product_bookings_price_per_day_variable_products', 'yes' ) &&
+			'no' === wcj_get_option( 'wcj_product_bookings_price_per_day_variable_products', 'yes' ) &&
 			( $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) )
 		) {
 			return $price_html;
 		}
-		return ( $this->is_bookings_product( $_product ) ) ? $price_html . ' ' . get_option( 'wcj_product_bookings_label_per_day', __( '/ day', 'woocommerce-jetpack' ) ) : $price_html;
+		return ( $this->is_bookings_product( $_product ) ) ? $price_html . ' ' . wcj_get_option( 'wcj_product_bookings_label_per_day', __( '/ day', 'woocommerce-jetpack' ) ) : $price_html;
 	}
 
 	/**
@@ -405,7 +405,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 */
 	function change_price( $price, $_product ) {
 		if (
-			'no' === get_option( 'wcj_product_bookings_price_per_day_variable_products', 'yes' ) &&
+			'no' === wcj_get_option( 'wcj_product_bookings_price_per_day_variable_products', 'yes' ) &&
 			( $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) )
 		) {
 			return $price;

@@ -15,7 +15,7 @@ $options = array(
 	'wcj_product_listings_exclude_cats_on_archives',
 );
 foreach ( $options as $option ) {
-	$value = get_option( $option, '' );
+	$value = wcj_get_option( $option, '' );
 	if ( ! is_array( $value ) ) {
 		$value = explode( ',', str_replace( ' ', '', $value ) );
 		update_option( $option, $value );

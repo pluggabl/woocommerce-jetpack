@@ -45,7 +45,7 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 	 * @since   3.6.0
 	 */
 	function get_options_list() {
-		return wcj_get_select_options( get_option( 'wcj_product_custom_visibility_options_list', '' ) );
+		return wcj_get_select_options( wcj_get_option( 'wcj_product_custom_visibility_options_list', '' ) );
 	}
 
 	/**

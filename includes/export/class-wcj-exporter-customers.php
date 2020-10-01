@@ -33,7 +33,7 @@ class WCJ_Exporter_Customers {
 
 		// Standard Fields
 		$all_fields = $fields_helper->get_customer_export_fields();
-		$fields_ids = get_option( 'wcj_export_customers_fields', $fields_helper->get_customer_export_default_fields_ids() );
+		$fields_ids = wcj_get_option( 'wcj_export_customers_fields', $fields_helper->get_customer_export_default_fields_ids() );
 		$titles = array();
 		foreach( $fields_ids as $field_id ) {
 			$titles[] = $all_fields[ $field_id ];
@@ -97,7 +97,7 @@ class WCJ_Exporter_Customers {
 
 		// Standard Fields
 		$all_fields = $fields_helper->get_customer_from_order_export_fields();
-		$fields_ids = get_option( 'wcj_export_customers_from_orders_fields', $fields_helper->get_customer_from_order_export_default_fields_ids() );
+		$fields_ids = wcj_get_option( 'wcj_export_customers_from_orders_fields', $fields_helper->get_customer_from_order_export_default_fields_ids() );
 		$titles = array();
 		foreach( $fields_ids as $field_id ) {
 			$titles[] = $all_fields[ $field_id ];
@@ -172,7 +172,7 @@ class WCJ_Exporter_Customers {
 									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_phone : $order->get_billing_phone() );
 									break;
 								case 'customer-last-order-date':
-									$row[] = get_the_date( get_option( 'date_format' ), $order_id );
+									$row[] = get_the_date( wcj_get_option( 'date_format' ), $order_id );
 									break;
 							}
 						}

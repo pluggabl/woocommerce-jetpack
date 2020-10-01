@@ -33,7 +33,7 @@ $settings = array(
 		'id'       => 'wcj_cart_custom_info_options',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_cart_custom_info_total_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cart_custom_info_total_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i,

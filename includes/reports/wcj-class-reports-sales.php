@@ -111,7 +111,7 @@ class WCJ_Reports_Sales {
 						continue;
 					}
 					$product_ids = array( $item['product_id'] );
-					if ( 0 != $item['variation_id'] && 'yes' === get_option( 'wcj_reports_products_sales_count_variations', 'no' ) ) {
+					if ( 0 != $item['variation_id'] && 'yes' === wcj_get_option( 'wcj_reports_products_sales_count_variations', 'no' ) ) {
 						$product_ids[] = $item['variation_id'];
 					}
 					foreach ( $product_ids as $product_id ) {
@@ -147,7 +147,7 @@ class WCJ_Reports_Sales {
 						if ( ! isset( $products_data[ $product_id ][ 'total_sum' ] ) ) {
 							$products_data[ $product_id ][ 'total_sum' ] = 0;
 						}
-						$products_data[ $product_id ][ 'total_sum' ] += ( $item['line_total'] + ( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ?
+						$products_data[ $product_id ][ 'total_sum' ] += ( $item['line_total'] + ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ?
 							$item['line_tax'] : 0 ) );
 						// Sales by Month
 						$month = date( 'n', get_the_time( 'U', $order_id ) );
@@ -162,7 +162,7 @@ class WCJ_Reports_Sales {
 							$products_data[ $product_id ][ 'sales_by_month_sum' ][ $year ][ $month ] = 0;
 						}
 						$products_data[ $product_id ][ 'sales_by_month_sum' ][ $year ][ $month ] += $item['line_total'] +
-							( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
+							( 'yes' === wcj_get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
 						// Sales by Month (Totals)
 						if ( ! isset( $totals_data[ 'sales_by_month' ][ $year ][ $month ] ) ) {
 							$totals_data[ 'sales_by_month' ][ $year ][ $month ] = 0;
@@ -173,7 +173,7 @@ class WCJ_Reports_Sales {
 							$totals_data[ 'sales_by_month_sum' ][ $year ][ $month ] = 0;
 						}
 						$totals_data[ 'sales_by_month_sum' ][ $year ][ $month ] += $item['line_total'] +
-							( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
+							( 'yes' === wcj_get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
 						// Last Sale Time
 						if ( ! isset( $products_data[ $product_id ][ 'last_sale' ] ) ) {
 							$products_data[ $product_id ][ 'last_sale' ] = date( 'Y-m-d H:i:s', get_the_time( 'U', $order_id ) );
@@ -274,13 +274,13 @@ class WCJ_Reports_Sales {
 					}
 				}
 			}
-			if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_display_sales', 'yes' ) ) {
 				$table_data[] = $the_row;
 			}
-			if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales_sum', 'yes' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_display_sales_sum', 'yes' ) ) {
 				$table_data[] = $the_row2;
 			}
-			if ( 'yes' === get_option( 'wcj_reports_products_sales_display_profit', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_display_profit', 'no' ) ) {
 				$table_data[] = $the_row3;
 			}
 		}
@@ -307,15 +307,15 @@ class WCJ_Reports_Sales {
 				}
 			}
 		}
-		if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales', 'yes' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_display_sales', 'yes' ) ) {
 			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Items', 'woocommerce-jetpack' ) . '</strong>',
 				'<strong>' . $totals_sales_by_month . '</strong>' ), $totals_row );
 		}
-		if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales_sum', 'yes' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_display_sales_sum', 'yes' ) ) {
 			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Sum', 'woocommerce-jetpack' ) . '</strong>',
 				'<strong>' . wc_price( $totals_sales_by_month_sum . '</strong>' ) ), $totals_row2 );
 		}
-		if ( 'yes' === get_option( 'wcj_reports_products_sales_display_profit', 'no' ) ) {
+		if ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_display_profit', 'no' ) ) {
 			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Profit', 'woocommerce-jetpack' ) .
 				'</strong>', '<strong>' . wc_price( $total_profit . '</strong>' ) ), $totals_row3 );
 		}

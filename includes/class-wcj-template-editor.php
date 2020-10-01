@@ -30,7 +30,7 @@ class WCJ_Template_Editor extends WCJ_Module {
 		add_action( 'woojetpack_after_settings_save',  array( $this, 'create_templates' ), PHP_INT_MAX, 2 );
 
 		if ( $this->is_enabled() ) {
-			$this->templates_to_edit = get_option( 'wcj_template_editor_templates_to_edit', array() );
+			$this->templates_to_edit = wcj_get_option( 'wcj_template_editor_templates_to_edit', array() );
 			add_filter( 'wc_get_template', array( $this, 'replace_template' ), PHP_INT_MAX, 5 );
 		}
 
@@ -46,8 +46,8 @@ class WCJ_Template_Editor extends WCJ_Module {
 	function create_templates( $sections, $current_section ) {
 		if ( $this->id === $current_section ) {
 			$this->delete_dir( wcj_get_wcj_uploads_dir( 'templates' ) );
-			$templates_content = get_option( 'wcj_template_editor_templates_content', array() );
-			foreach ( get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
+			$templates_content = wcj_get_option( 'wcj_template_editor_templates_content', array() );
+			foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
 				if ( isset( $templates_content[ $template ] ) ) {
 					$_template        = explode( '/', $template );
 					$_template_file   = $_template[ count( $_template ) - 1 ];
@@ -84,7 +84,7 @@ class WCJ_Template_Editor extends WCJ_Module {
 	 * @return int|string
 	 */
 	function get_path_by_template( $template ) {
-		$templates_by_path = get_option( 'wcj_template_editor_templates_by_path', array() );
+		$templates_by_path = wcj_get_option( 'wcj_template_editor_templates_by_path', array() );
 		foreach ( $templates_by_path as $path => $templates ) {
 			if ( in_array( $template, $templates ) ) {
 				return $path;
@@ -102,7 +102,7 @@ class WCJ_Template_Editor extends WCJ_Module {
 	 * @return array
 	 */
 	function get_paths() {
-		$paths_arr = explode( "\n", str_replace( "\r", "", get_option( 'wcj_template_editor_paths', '/woocommerce/templates/' ) ) );
+		$paths_arr = explode( "\n", str_replace( "\r", "", wcj_get_option( 'wcj_template_editor_paths', '/woocommerce/templates/' ) ) );
 		return array_map( function ( $path ) {
 			return trailingslashit( str_replace( '\\', '/', WP_PLUGIN_DIR . $path ) );
 		}, $paths_arr );

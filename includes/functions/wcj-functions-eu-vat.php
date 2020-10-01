@@ -111,7 +111,7 @@ if ( ! function_exists( 'wcj_validate_vat' ) ) {
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
 	function wcj_validate_vat( $country_code, $vat_number ) {
-		if ( '' != ( $skip_countries = get_option( 'wcj_eu_vat_number_advanced_skip_countries', array() ) ) ) {
+		if ( '' != ( $skip_countries = wcj_get_option( 'wcj_eu_vat_number_advanced_skip_countries', array() ) ) ) {
 			$skip_countries = array_map( 'trim', explode( ',', $skip_countries ) );
 			$skip_countries = array_map( 'strtoupper', $skip_countries );
 			if ( in_array( strtoupper( $country_code ), $skip_countries ) ) {
@@ -119,7 +119,7 @@ if ( ! function_exists( 'wcj_validate_vat' ) ) {
 			}
 		}
 		$methods = array();
-		switch ( get_option( 'wcj_eu_vat_number_first_method', 'soap' ) ) {
+		switch ( wcj_get_option( 'wcj_eu_vat_number_first_method', 'soap' ) ) {
 			case 'curl':
 				$methods = array( 'curl', 'file_get_contents', 'soap' );
 				break;

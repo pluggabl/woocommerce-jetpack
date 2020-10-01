@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $product_cats_options    = wcj_get_terms( 'product_cat' );
 $product_tags_options    = wcj_get_terms( 'product_tag' );
 $products_options        = wcj_get_products();
-$is_multiselect_products = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
+$is_multiselect_products = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -44,7 +44,7 @@ $settings = array(
 		'id'       => 'wcj_products_xml_options',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_products_xml_total_files', 1 ) ); $i++ ) {
 	wcj_maybe_convert_and_update_option_value( array(
 		array( 'id' => 'wcj_products_xml_products_incl_' . $i, 'default' => '' ),
 		array( 'id' => 'wcj_products_xml_products_excl_' . $i, 'default' => '' ),
@@ -58,10 +58,10 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product
 		wcj_crons_get_next_event_time_message( 'wcj_create_products_xml_cron_time_' . $i );
 	}
 	$products_time_file_created_desc = '';
-	if ( '' != get_option( 'wcj_products_time_file_created_' . $i, '' ) ) {
+	if ( '' != wcj_get_option( 'wcj_products_time_file_created_' . $i, '' ) ) {
 		$products_time_file_created_desc = sprintf(
 			__( 'Recent file was created on %s', 'woocommerce-jetpack' ),
-			'<code>' . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), get_option( 'wcj_products_time_file_created_' . $i, '' ) ) . '</code>'
+			'<code>' . date_i18n( wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' ), wcj_get_option( 'wcj_products_time_file_created_' . $i, '' ) ) . '</code>'
 		);
 	}
 	$default_file_name = ( ( 1 == $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
@@ -116,10 +116,10 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product
 		),
 		array(
 			'title'    => __( 'XML File Path and Name', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Path on server:', 'woocommerce-jetpack' ) . ' ' . ABSPATH . get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ),
+			'desc_tip' => __( 'Path on server:', 'woocommerce-jetpack' ) . ' ' . ABSPATH . wcj_get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ),
 			'desc'     => __( 'URL:', 'woocommerce-jetpack' ) . ' ' .
-				'<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ) . '">' .
-					site_url() . '/' . get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ) . '</a>',
+				'<a target="_blank" href="' . site_url() . '/' . wcj_get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ) . '">' .
+					site_url() . '/' . wcj_get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ) . '</a>',
 			'id'       => 'wcj_products_xml_file_path_' . $i,
 			'default'  => $default_file_name,
 			'type'     => 'text',

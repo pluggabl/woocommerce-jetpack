@@ -108,9 +108,9 @@ if ( ! function_exists( 'wcj_is_booster_role_changer_enabled' ) ) {
 	 */
 	function wcj_is_booster_role_changer_enabled() {
 		return (
-			'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_general_user_role_changer_enabled', 'no' ) ) &&
+			'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_general_user_role_changer_enabled', 'no' ) ) &&
 			wcj_is_user_logged_in() &&
-			wcj_is_user_role( get_option( 'wcj_general_user_role_changer_enabled_for', array( 'administrator', 'shop_manager' ) ) )
+			wcj_is_user_role( wcj_get_option( 'wcj_general_user_role_changer_enabled_for', array( 'administrator', 'shop_manager' ) ) )
 		);
 	}
 }

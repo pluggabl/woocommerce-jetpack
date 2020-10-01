@@ -29,7 +29,7 @@ class WCJ_Sorting extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_remove_all_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_remove_all_enabled', 'no' ) ) ) {
 				// Remove All Sorting
 				add_action( 'wp_loaded',       array( $this, 'remove_sorting' ),          PHP_INT_MAX );
 				add_filter( 'wc_get_template', array( $this, 'remove_sorting_template' ), PHP_INT_MAX, 5 );
@@ -37,27 +37,27 @@ class WCJ_Sorting extends WCJ_Module {
 			} else {
 
 				// Add Custom Sorting
-				if ( 'yes' === get_option( 'wcj_more_sorting_enabled', 'yes' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_more_sorting_enabled', 'yes' ) ) {
 					add_filter( 'woocommerce_get_catalog_ordering_args',       array( $this, 'custom_woocommerce_get_catalog_ordering_args' ), PHP_INT_MAX ); // Sorting
 					add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'custom_woocommerce_catalog_orderby' ), PHP_INT_MAX ); // Front end
 					add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'custom_woocommerce_catalog_orderby' ), PHP_INT_MAX ); // Back end (default sorting)
 				}
 
 				// Remove or Rename Default Sorting
-				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_default_sorting_enabled', 'no' ) ) ) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_default_sorting_enabled', 'no' ) ) ) {
 					add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'remove_default_sortings' ), PHP_INT_MAX );
 					add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'rename_default_sortings' ), PHP_INT_MAX );
 					add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'remove_default_sortings' ), PHP_INT_MAX );
 				}
 
 				// Rearrange All Sorting
-				if ( 'yes' === get_option( 'wcj_sorting_rearrange_enabled', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_sorting_rearrange_enabled', 'no' ) ) {
 					add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'rearrange_sorting' ), PHP_INT_MAX );
 					add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'rearrange_sorting' ), PHP_INT_MAX );
 				}
 
 				// Restore Default WooCommerce Sorting
-				if ( 'yes' === get_option( 'wcj_sorting_restore_default_sorting', 'no' ) ) {
+				if ( 'yes' === wcj_get_option( 'wcj_sorting_restore_default_sorting', 'no' ) ) {
 					$this->restore_default_sorting();
 				}
 			}
@@ -100,7 +100,7 @@ class WCJ_Sorting extends WCJ_Module {
 	 * @since   4.3.0
 	 */
 	function restore_default_sorting() {
-		$theme = get_option( 'wcj_sorting_restore_default_sorting_theme', 'avada' );
+		$theme = wcj_get_option( 'wcj_sorting_restore_default_sorting_theme', 'avada' );
 		switch ( $theme ) {
 			case 'avada':
 				$this->restore_default_sorting_on_avada();
@@ -128,7 +128,7 @@ class WCJ_Sorting extends WCJ_Module {
 	 * @since   2.6.0
 	 */
 	function rearrange_sorting( $sortby ) {
-		$rearranged_sorting = get_option( 'wcj_sorting_rearrange', false );
+		$rearranged_sorting = wcj_get_option( 'wcj_sorting_rearrange', false );
 		if ( false === $rearranged_sorting ) {
 			$rearranged_sorting = $this->get_woocommerce_sortings_order();
 		} else {
@@ -156,7 +156,7 @@ class WCJ_Sorting extends WCJ_Module {
 		$default_sortings = $this->get_woocommerce_default_sortings();
 		foreach ( $default_sortings as $sorting_key => $sorting_desc ) {
 			$option_key = str_replace( '-', '_', $sorting_key );
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_default_sorting_' . $option_key . '_disable', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_default_sorting_' . $option_key . '_disable', 'no' ) ) ) {
 				unset( $sortby[ $sorting_key ] );
 			}
 		}
@@ -240,8 +240,8 @@ class WCJ_Sorting extends WCJ_Module {
 	 * @since   2.2.4
 	 */
 	function maybe_add_sorting( $sortby, $option_name, $key ) {
-		if ( '' != get_option( $option_name ) ) {
-			$sortby[ $key ] = get_option( $option_name );
+		if ( '' != wcj_get_option( $option_name ) ) {
+			$sortby[ $key ] = wcj_get_option( $option_name );
 		}
 		return $sortby;
 	}
@@ -291,13 +291,13 @@ class WCJ_Sorting extends WCJ_Module {
 				$args['meta_key'] = '';
 			break;
 			case 'sku_asc':
-				$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 				$args['order']    = 'asc';
 				$args['meta_key'] = '_sku';
 			break;
 			case 'sku_desc':
-				$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 				$args['order']    = 'desc';
 				$args['meta_key'] = '_sku';

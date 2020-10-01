@@ -39,7 +39,7 @@ class WCJ_Widget_Country_Switcher extends WCJ_Widget {
 	function get_content( $instance ) {
 		if ( ! wcj_is_module_enabled( 'price_by_country' ) ) {
 			return __( 'Prices and Currencies by Country module not enabled!', 'woocommerce-jetpack' );
-		} elseif ( 'by_ip' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
+		} elseif ( 'by_ip' === wcj_get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 			return __( 'Customer Country Detection Method must include "by user selection"!', 'woocommerce-jetpack' );
 		} else {
 			if ( ! isset( $instance['replace_with_currency'] ) ) {
