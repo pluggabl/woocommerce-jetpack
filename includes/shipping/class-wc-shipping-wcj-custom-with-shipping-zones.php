@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 4.6.0
+ * @version 5.3.4
  * @since   2.5.6
  * @author  Pluggabl LLC.
  */
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Init settings
 		 *
-		 * @version 4.6.0
+		 * @version 5.3.4
 		 * @since   2.5.6
 		 * @access  public
 		 * @return  void
@@ -52,14 +52,14 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 			$this->init_instance_form_fields();
 
 			// Define user set variables
-			$this->title                      = wcj_get_option( 'title' );
-			$this->cost                       = wcj_get_option( 'cost' );
-			$this->min_weight                 = wcj_get_option( 'min_weight' );
-			$this->max_weight                 = wcj_get_option( 'max_weight' );
-			$this->type                       = wcj_get_option( 'type' );
-			$this->apply_formula              = apply_filters( 'booster_option', 'no', wcj_get_option( 'apply_formula' ) );
-			$this->cost_rounding              = apply_filters( 'booster_option', 'no_round', wcj_get_option( 'cost_rounding', 'no_round' ) );
-			$this->weight_table_total_rows    = wcj_get_option( 'weight_table_total_rows' );
+			$this->title                      = $this->get_option( 'title' );
+			$this->cost                       = $this->get_option( 'cost' );
+			$this->min_weight                 = $this->get_option( 'min_weight' );
+			$this->max_weight                 = $this->get_option( 'max_weight' );
+			$this->type                       = $this->get_option( 'type' );
+			$this->apply_formula              = apply_filters( 'booster_option', 'no', $this->get_option( 'apply_formula' ) );
+			$this->cost_rounding              = apply_filters( 'booster_option', 'no_round', $this->get_option( 'cost_rounding', 'no_round' ) );
+			$this->weight_table_total_rows    = $this->get_option( 'weight_table_total_rows' );
 
 			// Save settings in admin
 			add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * sanitize_settings.
 		 *
-		 * @version 4.6.0
+		 * @version 5.3.4
 		 * @since   4.5.0
 		 *
 		 * @param $settings
@@ -91,7 +91,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 */
 		function sanitize_settings( $settings, $shipping_method ) {
 			$settings       = array_filter( $settings );
-			$total_rows     = $settings['weight_table_total_rows'];
+			$total_rows     = isset( $settings['weight_table_total_rows'] ) ? $settings['weight_table_total_rows'] : 0;
 			$keys_to_remove = array();
 			foreach ( $settings as $key => $value ) {
 				if (

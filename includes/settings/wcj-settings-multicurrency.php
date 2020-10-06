@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 5.3.3
+ * @version 5.3.4
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    "pretty prices"
@@ -334,6 +334,42 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_multicurrency_currencies_options',
 	),
 ) );
+
+// Default currency
+$currencies = array();
+for ( $i = 1; $i <= $total_number; $i ++ ) {
+	$currency_to             = wcj_get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
+	$currencies[ $i ] = $all_currencies[ $currency_to ];
+}
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Default Currency', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'desc'     => __( 'The default currency displayed on frontend.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_default_currency_opt',
+	),
+	array(
+		'title'    => __( 'Currency', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_default_currency',
+		'default'  => 1,
+		'type'     => 'select',
+		'options'  => $currencies,
+		'desc'     => '',
+		'desc_tip' => __( 'The default currency will only be set if the current user hasn\'t selected it yet.', 'woocommerce-jetpack' ),
+	),
+	array(
+		'title'    => __( 'Force', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_default_currency_force',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If enabled, the default currency will be fixed and users won\'t be able to change it.', 'woocommerce-jetpack' ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_multicurrency_default_currency_opt',
+	),
+));
 
 $settings = array_merge( $settings, array(
 	array(

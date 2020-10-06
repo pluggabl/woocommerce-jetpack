@@ -3272,6 +3272,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency.php:222
 #: includes/settings/wcj-settings-multicurrency.php:264
 #: includes/settings/wcj-settings-multicurrency.php:273
+#: includes/settings/wcj-settings-multicurrency.php:365
 #: includes/settings/wcj-settings-my-account.php:29
 #: includes/settings/wcj-settings-my-account.php:87
 #: includes/settings/wcj-settings-my-account.php:104
@@ -5069,7 +5070,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-shipping-by-user-role.php:34
-#: includes/settings/wcj-settings-multicurrency.php:369
+#: includes/settings/wcj-settings-multicurrency.php:378
 #: includes/settings/wcj-settings-order-min-amount.php:131
 #: includes/settings/wcj-settings-price-by-user-role.php:151
 #, php-format
@@ -11732,6 +11733,7 @@ msgstr ""
 #: includes/settings/wcj-settings-currency-per-product.php:180
 #: includes/settings/wcj-settings-multicurrency-base-price.php:142
 #: includes/settings/wcj-settings-multicurrency.php:314
+#: includes/settings/wcj-settings-multicurrency.php:352
 #: includes/settings/wcj-settings-price-by-country.php:353
 #: includes/settings/wcj-settings-price-formats.php:59
 msgid "Currency"
@@ -13459,20 +13461,44 @@ msgid ""
 "added."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:367
+#: includes/settings/wcj-settings-multicurrency.php:346
+msgid "Default Currency"
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:348
+msgid "The default currency displayed on frontend."
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:358
+msgid ""
+"The default currency will only be set if the current user hasn't selected it "
+"yet."
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:361
+msgid "Force"
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:366
+msgid ""
+"If enabled, the default currency will be fixed and users won't be able to "
+"change it."
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:376
 msgid "Role Defaults"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:374
+#: includes/settings/wcj-settings-multicurrency.php:383
 msgid "Roles"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:375
+#: includes/settings/wcj-settings-multicurrency.php:384
 #: includes/settings/wcj-settings-wholesale-price.php:237
 msgid "Save settings after you change this option. Leave blank to disable."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:398
+#: includes/settings/wcj-settings-multicurrency.php:407
 msgid "No default currency"
 msgstr ""
 

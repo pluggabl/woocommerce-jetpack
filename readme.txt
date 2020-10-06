@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.5
-Stable tag: 5.3.3
+Stable tag: 5.3.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,12 +193,18 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 5.3.4 - 06/10/2020 =
+* Fix - Improper replacement of `get_option()` by `wcj_option()`.
+* Fix - SHIPPING & ORDERS - Custom Shipping - Created custom shipping name as `null`.
+* Fix - Undefined index: weight_table_total_rows.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Default currency - Add 'Currency' and 'Force' options.
+
 = 5.3.3 - 01/10/2020 =
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Changed instructions in tip for Datepicker/Weekpicker: Date Format about date formatting for sorting.
 * Fix - CART & CHECKOUT - Checkout Fees - "Notice: Undefined offset: 1 " bug fixed (message if debug enabled).
 * Fix - PRICES & CURRENCIES - Wholesale Price - "Warning: Invalid argument supplied for foreach() in..." bug fixed (message if debug enabled).
 * Fix - PRODUCTS - Product Addons - Fix incompatibility problem with 'Save Calculated Products Prices' from Multicurrency module by disabling price saving.
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount doesn't apply if 'Product Categories to Include' option is empty.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Changed instructions in tip for Datepicker/Weekpicker: Date Format about date formatting for sorting.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Created a time limit option "Datepicker/Weekpicker: Current day time limit" for today’s date availability.
 * Dev - Disable autoload by default on all settings.
 * Dev - Functions - General - Create `wcj_get_option()` function in order to improve performance getting options from the database once the autoload option is now disabled by default.

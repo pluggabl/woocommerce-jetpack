@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping
  *
- * @version 3.4.0
+ * @version 5.3.4
  * @since   2.4.8
  * @author  Pluggabl LLC.
  */
@@ -27,7 +27,7 @@ class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 2.8.0
+	 * @version 5.3.4
 	 * @access  public
 	 * @return  void
 	 */
@@ -42,18 +42,18 @@ class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 		$this->init_settings();
 
 		// Define user set variables
-		$this->enabled    = wcj_get_option( 'enabled' );
-		$this->title      = wcj_get_option( 'title' );
-		$this->cost       = wcj_get_option( 'cost' );
-		$this->min_weight = wcj_get_option( 'min_weight' );
-		$this->max_weight = wcj_get_option( 'max_weight' );
-		$this->type       = wcj_get_option( 'type' );
-		$this->weight_table_total_rows = wcj_get_option( 'weight_table_total_rows' );
+		$this->enabled    = $this->get_option( 'enabled' );
+		$this->title      = $this->get_option( 'title' );
+		$this->cost       = $this->get_option( 'cost' );
+		$this->min_weight = $this->get_option( 'min_weight' );
+		$this->max_weight = $this->get_option( 'max_weight' );
+		$this->type       = $this->get_option( 'type' );
+		$this->weight_table_total_rows = $this->get_option( 'weight_table_total_rows' );
 		for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 			$option_name = 'weight_table_weight_row_' . $i;
-			$this->{$option_name} = wcj_get_option( $option_name );
+			$this->{$option_name} = $this->get_option( $option_name );
 			$option_name = 'weight_table_cost_row_' . $i;
-			$this->{$option_name} = wcj_get_option( $option_name );
+			$this->{$option_name} = $this->get_option( $option_name );
 		}
 
 		// Save settings in admin
@@ -84,7 +84,7 @@ class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 	/**
 	 * Initialise Settings Form Fields
 	 *
-	 * @version 2.8.0
+	 * @version 5.3.4
 	 */
 	function init_form_fields() {
 		$type_options = array(
@@ -151,7 +151,7 @@ class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 				'custom_attributes' => array( 'min'  => '0', ),
 			),
 		);
-		for ( $i = 1; $i <= wcj_get_option( 'weight_table_total_rows' ); $i++ ) {
+		for ( $i = 1; $i <= $this->get_option( 'weight_table_total_rows' ); $i++ ) {
 			$this->form_fields = array_merge( $this->form_fields, array(
 				'weight_table_weight_row_' . $i => array(
 					'title'       => __( 'Max Weight or Quantity', 'woocommerce' ) . ' #' . $i,

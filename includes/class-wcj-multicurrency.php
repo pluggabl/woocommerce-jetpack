@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.3.3
+ * @version 5.3.4
  * @since   2.4.3
  * @author  Pluggabl LLC.
  */
@@ -949,14 +949,37 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * init.
 	 *
-	 * @version 3.4.5
+	 * @version 5.3.4
 	 * @since   3.4.5
 	 */
 	function init() {
 		wcj_session_maybe_start();
-		if ( isset( $_REQUEST['wcj-currency'] ) ) {
-			wcj_session_set( 'wcj-currency', $_REQUEST['wcj-currency'] );
+		if ( null == ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
+			$currency = $this->get_default_currency();
 		}
+		if ( isset( $_REQUEST['wcj-currency'] ) ) {
+			$currency = sanitize_text_field( $_REQUEST['wcj-currency'] );
+		}
+		if ( 'yes' === wcj_get_option( 'wcj_multicurrency_default_currency_force', 'no' ) ) {
+			$currency = $this->get_default_currency();
+		}
+		if ( isset( $currency ) ) {
+			wcj_session_set( 'wcj-currency', $currency );
+		}
+	}
+
+	/**
+	 * get_default_currency.
+	 *
+	 * @version 5.3.4
+	 * @since   5.3.4
+	 *
+	 * @return bool
+	 */
+	function get_default_currency() {
+		$default_currency_number = wcj_get_option( 'wcj_multicurrency_default_currency', 1 );
+		$currency                = wcj_get_option( 'wcj_multicurrency_currency_' . $default_currency_number, apply_filters( 'woocommerce_currency', get_option( 'woocommerce_currency' ) ) );
+		return $currency;
 	}
 
 	/**
