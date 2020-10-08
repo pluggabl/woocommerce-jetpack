@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 5.3.0
+ * @version 5.3.5
  * @since   3.2.0
  * @author  Pluggabl LLC.
  */
@@ -42,7 +42,7 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 5.3.0
+	 * @version 5.3.5
 	 * @since   3.2.0
 	 * @todo    apply_filters( 'booster_option' )
 	 */
@@ -58,8 +58,12 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 					get_option( 'wcj_shipping_' . $options_id . '_include_' . 'instance_' . $rate->instance_id, '' ) :
 					get_option( 'wcj_shipping_' . $options_id . '_include_' . $rate->method_id, '' )
 				);
-				if ( ! empty( $include ) && $this->check( $options_id, $include, 'include', $package ) ) {
-					$include_arr[] = $rate_key;
+				if ( ! empty( $include ) ) {
+					if ( $this->check( $options_id, $include, 'include', $package ) ) {
+						//$include_arr[] = $rate_key;
+					} else {
+						unset( $rates[ $rate_key ] );
+					}
 				}
 				$exclude = ( $this->use_shipping_instances ?
 					get_option( 'wcj_shipping_' . $options_id . '_exclude_' . 'instance_' . $rate->instance_id, '' ) :
@@ -72,7 +76,7 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 		}
 		foreach ( $rates as $rate_key => $rate ) {
 			if (
-				( ! empty( $include_arr ) && ! in_array( $rate_key, $include_arr ) ) ||
+				//( ! empty( $include_arr ) && ! in_array( $rate_key, $include_arr ) ) ||
 				( ! empty( $exclude_arr ) && in_array( $rate_key, $exclude_arr ) )
 			) {
 				unset( $rates[ $rate_key ] );

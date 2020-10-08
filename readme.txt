@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.5
-Stable tag: 5.3.4
+Stable tag: 5.3.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,9 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 5.3.5 - 08/10/2020 =
+* Fix - PRODUCTS - Product by Condition - Fix shipping removing algorithm.
 
 = 5.3.4 - 06/10/2020 =
 * Fix - Improper replacement of `get_option()` by `wcj_option()`.
