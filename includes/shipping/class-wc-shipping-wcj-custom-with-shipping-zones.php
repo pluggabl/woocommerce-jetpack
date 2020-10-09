@@ -269,7 +269,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * calculate_shipping_by_table.
 		 *
-		 * @version 2.8.0
+		 * @version 5.3.5
 		 * @since   2.5.6
 		 */
 		function calculate_shipping_by_table( $weight ) {
@@ -280,11 +280,11 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 			for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 				$option_name_weight = 'weight_table_weight_row_' . $i;
 				$option_name_cost = 'weight_table_cost_row_' . $i;
-				if ( $weight <= wcj_get_option( $option_name_weight ) ) {
-					return wcj_get_option( $option_name_cost );
+				if ( $weight <= $this->get_option( $option_name_weight ) ) {
+					return $this->get_option( $option_name_cost );
 				}
 			}
-			return wcj_get_option( $option_name_cost ); // fallback - last row
+			return $this->get_option( $option_name_cost ); // fallback - last row
 		}
 
 		/**

@@ -193,8 +193,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 5.3.5 - 08/10/2020 =
+= 5.3.5 - 09/10/2020 =
 * Fix - PRODUCTS - Product by Condition - Fix shipping removing algorithm.
+* Fix - Improper replacement of `get_option()` by `wcj_option()`.
 
 = 5.3.4 - 06/10/2020 =
 * Fix - Improper replacement of `get_option()` by `wcj_option()`.
