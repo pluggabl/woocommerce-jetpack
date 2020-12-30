@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.3.3
+ * @version 5.3.6
  * @author  Pluggabl LLC.
  */
 
@@ -539,7 +539,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 5.3.3
+	 * @version 5.3.6
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 	 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 	 */
@@ -564,10 +564,16 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						$custom_attributes['mindate']    = wcj_get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
 						if ( 0 == $custom_attributes['mindate'] ) {
 							$custom_attributes['mindate'] = 'zero';
-
 							$custom_attributes['currentday_time_limit']   = wcj_get_option( 'wcj_checkout_custom_field_datepicker_current_day_time_limit_' . $i, 0 );
-							if( date( 'H:i',strtotime( $custom_attributes[ 'currentday_time_limit' ] ) ) < date( "H:i" ) ) {
-								$custom_attributes[ 'mindate' ] = 1;
+							$current_datetime = current_datetime();
+							$time_limit_datetime = new \DateTime(null, $current_datetime->getTimezone());
+							$time_limit_datetime->setTimestamp($current_datetime->getTimestamp());
+							if ( ! empty( $custom_attributes['currentday_time_limit'] ) ) {
+								$time = explode( ':', $custom_attributes['currentday_time_limit'] );
+								$time_limit_datetime->setTime( $time[0], $time[1] );
+							}
+							if ( $time_limit_datetime < $current_datetime ) {
+								$custom_attributes['mindate'] = 1;
 							}
 						}
 						$custom_attributes['maxdate']    = wcj_get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );

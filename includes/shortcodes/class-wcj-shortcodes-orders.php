@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.2.0
+ * @version 5.3.6
  * @author  Pluggabl LLC.
  */
 
@@ -1314,11 +1314,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * mb_ucfirst - for wcj_order_total_in_words.
 	 *
-	 * @version 2.5.9
+	 * @version 5.3.6
 	 * @since   2.5.9
 	 */
 	function mb_ucfirst( $string ) {
-		return mb_strtoupper( mb_substr( $string, 0, 1 ) ) . mb_substr( $string, 1 );
+		return ucfirst( mb_substr( $string, 0, 1 ) ) . mb_substr( $string, 1 );
 	}
 
 	/**

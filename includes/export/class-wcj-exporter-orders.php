@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 5.1.0
+ * @version 5.3.6
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -27,11 +27,26 @@ class WCJ_Exporter_Orders {
 	/**
 	 * get_export_orders_row.
 	 *
-	 * @version 2.7.0
+	 * @version 5.3.6
 	 * @since   2.5.9
+	 * @todo    added precisions to the price fields. 
 	 */
 	function get_export_orders_row( $fields_ids, $order_id, $order, $items, $items_product_input_fields, $item, $item_id ) {
-		$row = array();
+		$row 		= array();
+
+		/* Woocommerce default precision */
+		$precision 	= !isset( $precision ) || is_null( $precision ) ? wc_get_price_decimals() : intval( $precision );
+		
+		/* Precision from Booster's Price formats module */
+		if ( 'yes' === wcj_get_option( 'wcj_price_formats_enabled', 'no' ) ) {
+			$order_curr	= wcj_get_order_currency ( $order );
+			for ( $i = 1; $i <=  wcj_get_option ( 'wcj_price_formats_total_number', 1 ) ; $i++ ) {
+				if ( $order_curr ===  wcj_get_option ( 'wcj_price_formats_currency_' . $i ) ) {
+					$precision = absint( wcj_get_option( 'wcj_price_formats_number_of_decimals_' . $i ) );
+					break;
+				}
+			}
+		}
 		foreach( $fields_ids as $field_id ) {
 			switch ( $field_id ) {
 				case 'item-product-input-fields':
@@ -62,22 +77,22 @@ class WCJ_Exporter_Orders {
 					$row[] = $item['variation_id'];
 					break;
 				case 'item-line-subtotal':
-					$row[] = $item['line_subtotal'];
+					$row[] = round( $item['line_subtotal'], $precision );
 					break;
 				case 'item-line-total':
-					$row[] = $item['line_total'];
+					$row[] = round( $item['line_total'], $precision );
 					break;
 				case 'item-line-subtotal-tax':
-					$row[] = $item['line_subtotal_tax'];
+					$row[] = round( $item['line_subtotal_tax'], $precision );
 					break;
 				case 'item-line-tax':
-					$row[] = $item['line_tax'];
+					$row[] = round( $item['line_tax'], $precision );
 					break;
 				case 'item-line-total-plus-tax':
-					$row[] = $item['line_total'] + $item['line_tax'];
+					$row[] = round( $item['line_total'] + $item['line_tax'], $precision );
 					break;
 				case 'item-line-subtotal-plus-tax':
-					$row[] = $item['line_subtotal'] + $item['line_subtotal_tax'];
+					$row[] = round( $item['line_subtotal'] + $item['line_subtotal_tax'], $precision );
 					break;
 				case 'order-id':
 					$row[] = $order_id;
@@ -107,10 +122,10 @@ class WCJ_Exporter_Orders {
 					$row[] = wcj_get_order_currency( $order );
 					break;
 				case 'order-total':
-					$row[] = $order->get_total();
+					$row[] = round( $order->get_total(), $precision );
 					break;
 				case 'order-total-tax':
-					$row[] = $order->get_total_tax();
+					$row[] = round( $order->get_total_tax(), $precision );
 					break;
 				case 'order-payment-method':
 					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->payment_method_title : $order->get_payment_method_title() );

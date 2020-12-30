@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -42,8 +42,8 @@ msgstr ""
 #: includes/class-wcj-orders.php:125 includes/class-wcj-orders.php:154
 #: includes/class-wcj-payment-gateways.php:92
 #: includes/class-wcj-track-users.php:164 includes/class-wcj-track-users.php:252
-#: includes/classes/class-wcj-module.php:561
-#: includes/classes/class-wcj-module.php:761
+#: includes/classes/class-wcj-module.php:582
+#: includes/classes/class-wcj-module.php:782
 #: includes/settings/wcj-settings-price-by-country.php:238
 msgid "Booster"
 msgstr ""
@@ -256,7 +256,7 @@ msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:591
 #: includes/class-wcj-admin-bar.php:172
-#: includes/classes/class-wcj-module.php:901
+#: includes/classes/class-wcj-module.php:922
 msgid "Documentation"
 msgstr ""
 
@@ -589,7 +589,7 @@ msgstr ""
 
 #: includes/class-wcj-admin-bar.php:245 includes/class-wcj-admin-bar.php:288
 #: includes/class-wcj-admin-bar.php:632
-#: includes/classes/class-wcj-module.php:734
+#: includes/classes/class-wcj-module.php:755
 #: includes/settings/wcj-settings-wpml.php:91
 msgid "Tools"
 msgstr ""
@@ -2402,7 +2402,7 @@ msgstr ""
 #: includes/class-wcj-product-by-user.php:207
 #: includes/class-wcj-purchase-data.php:95
 #: includes/class-wcj-track-users.php:335
-#: includes/classes/class-wcj-module.php:870
+#: includes/classes/class-wcj-module.php:891
 #: includes/functions/wcj-functions-general.php:189
 #: includes/functions/wcj-functions-html.php:117
 #: includes/reports/wcj-class-reports-monthly-sales.php:351
@@ -5505,30 +5505,30 @@ msgid ""
 "\" products."
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:653
+#: includes/classes/class-wcj-module.php:674
 #, php-format
 msgid "Selected: %s."
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:722
+#: includes/classes/class-wcj-module.php:743
 msgid "Back to Module Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:740
+#: includes/classes/class-wcj-module.php:761
 #: includes/settings/wcj-settings-wpml.php:96
 msgid "Module Tools"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:813
+#: includes/classes/class-wcj-module.php:834
 #: includes/settings/wcj-settings-checkout-core-fields.php:77
 msgid "enabled"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:814
+#: includes/classes/class-wcj-module.php:835
 msgid "disabled"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:822
+#: includes/classes/class-wcj-module.php:843
 #: includes/settings/wcj-settings-product-tabs.php:172
 #: includes/settings/wcj-settings-product-tabs.php:184
 #: includes/settings/wcj-settings-product-tabs.php:196
@@ -5536,27 +5536,27 @@ msgstr ""
 msgid "Deprecated"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:860
+#: includes/classes/class-wcj-module.php:881
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:866
+#: includes/classes/class-wcj-module.php:887
 msgid "Reset Module to Default Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:867
+#: includes/classes/class-wcj-module.php:888
 msgid "Reset Submodule to Default Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:871
+#: includes/classes/class-wcj-module.php:892
 msgid "Reset settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:905
+#: includes/classes/class-wcj-module.php:926
 msgid "Module Options"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:912
+#: includes/classes/class-wcj-module.php:933
 msgid "Enable Module"
 msgstr ""
 
@@ -8376,95 +8376,6 @@ msgstr ""
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-templates.php:23
 #: includes/settings/wcj-settings-template-editor.php:44
 msgid "Templates"
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-manager.php:79
-#, php-format
-msgid "Status last checked at %s."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-manager.php:80
-#, php-format
-msgid "Cron scheduled at %s."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-manager.php:81
-#, php-format
-msgid "Cron last run at %s."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-manager.php:122
-msgid "No key set."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-manager.php:123
-#, php-format
-msgid ""
-"To get the key, please visit <a target=\"_blank\" href=\"%s\">your account "
-"page at %s</a>."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-manager.php:126
-#, php-format
-msgid "No response from server. Please <a href=\"%s\">try again</a> later."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-manager.php:128
-#, php-format
-msgid "Server error. Please <a href=\"%s\">try again</a> later."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-section.php:46
-msgid "Manage site key"
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-section.php:59
-#: includes/plus/class-wcj-plus-site-key-section.php:73
-#: includes/plus/class-wcj-plus-site-key-section.php:81
-msgid "Site Key"
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-section.php:74
-msgid ""
-"This section lets you manage site key for paid Booster Plus for WooCommerce "
-"plugin."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-section.php:75
-#, php-format
-msgid ""
-"To get the key, please go to <a target=\"_blank\" href=\"%s\">your account "
-"page at %s</a>."
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-section.php:78
-msgid "Check site key now"
-msgstr ""
-
-#: includes/plus/class-wcj-plus-site-key-section.php:82
-#, php-format
-msgid "Site URL: %s"
-msgstr ""
-
-#: includes/plus/lib/plugin-update-checker/github-checker.php:119
-msgid "There is no changelog available."
-msgstr ""
-
-#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:763
-msgid "Check for updates"
-msgstr ""
-
-#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:807
-msgid "This plugin is up to date."
-msgstr ""
-
-#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:809
-msgid "A new version of this plugin is available."
-msgstr ""
-
-#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:811
-#, php-format
-msgid "Unknown update checker status \"%s\""
 msgstr ""
 
 #: includes/price-by-country/class-wcj-price-by-country-group-generator.php:34

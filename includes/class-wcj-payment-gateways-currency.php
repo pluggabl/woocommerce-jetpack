@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency Converter
  *
- * @version 5.2.0
+ * @version 5.3.6
  * @since   2.3.0
  * @author  Pluggabl LLC.
  */
@@ -109,20 +109,25 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * is_cart_or_checkout.
 	 *
-	 * @version 4.0.0
+	 * @version 5.3.6
 	 * @since   2.3.0
 	 * @todo    [dev] rename function to `do_apply_by_page_scope()`
 	 */
 	function is_cart_or_checkout() {
-		if ( ! is_admin() ) {
-			if ( 'cart_and_checkout' === $this->page_scope ) {
-				if ( is_cart() || is_checkout() ) {
-					return true;
-				}
-			} elseif ( 'checkout_only' === $this->page_scope ) {
-				if ( is_checkout() ) {
-					return true;
-				}
+		if (
+			is_admin()
+			|| ! function_exists( 'is_checkout' )
+			|| ! function_exists( 'is_cart' )
+		) {
+			return false;
+		}
+		if ( 'cart_and_checkout' === $this->page_scope ) {
+			if ( is_cart() || is_checkout() ) {
+				return true;
+			}
+		} elseif ( 'checkout_only' === $this->page_scope ) {
+			if ( is_checkout() ) {
+				return true;
 			}
 		}
 		return false;

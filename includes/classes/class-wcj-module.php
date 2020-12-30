@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.3.3
+ * @version 5.3.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -499,11 +499,32 @@ class WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.7.0
+	 * @version 5.3.6
 	 * @since   2.2.6
 	 */
 	function get_settings() {
-		return $this->add_standard_settings( apply_filters( 'wcj_' . $this->id . '_settings', array() ) );
+		$settings = apply_filters( 'wcj_' . $this->id . '_settings', array() );
+		$settings = $this->add_standard_settings( $settings );
+		$settings = $this->handle_hide_on_free_parameter( $settings );
+		return $settings;
+	}
+
+	/**
+	 * handle_hide_on_free_parameter.
+	 *
+	 * @version 5.3.6
+	 * @since   5.3.6
+	 *
+	 * @param $settings
+	 *
+	 * @return array
+	 */
+	function handle_hide_on_free_parameter( $settings ) {
+		if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			return $settings;
+		}
+		$settings = wp_list_filter( $settings, array( 'hide_on_free' => true ), 'NOT' );
+		return $settings;
 	}
 
 	/**
