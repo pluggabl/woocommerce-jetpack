@@ -2,8 +2,8 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 5.5
-Stable tag: 5.3.5
+Tested up to: 5.6
+Stable tag: 5.3.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,86 +18,86 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 **Prices & Currencies**
 
 * *Bulk Price Converter* - Multiply all products prices by set value.
-* *Currencies* - Add all world currencies and cryptocurrencies to your store; change currency symbol (Plus); add custom currencies (1 allowed in free version).
-* *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce (1 allowed in free version).
+* *Currencies* - Add all world currencies and cryptocurrencies to your store; change currency symbol.
+* *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce.
 * *Currency for External Products* - Set different currency for external products.
-* *Currency per Product* - Display prices for products in different currencies (1 currency allowed in free version).
-* *Global Discount* - Add global discount to all products (1 discount group allowed in free version).
-* *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce (2 currencies allowed in free version).
-* *Multicurrency Product Base Price* - Enter prices for products in different currencies (1 currency allowed in free version).
-* *Offer Your Price* - Let your customers suggest their price for products (Available for all the products in free version).
-* *Price Formats* - Set different price formats for different currencies (1 price format allowed in free version). Set general price format options.
-* *Price based on User Role* - Display products prices by user roles. Price based on User Role by Products Categories or Tags (Plus).
-* *Prices and Currencies by Country* - Change product price and currency automatically by customer's country (1 country group allowed in free version).
+* *Currency per Product* - Display prices for products in different currencies.
+* *Global Discount* - Add global discount to all products.
+* *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce.
+* *Multicurrency Product Base Price* - Enter prices for products in different currencies.
+* *Offer Your Price* - Let your customers to suggest their price for products.
+* *Price Formats* - Set different price formats for different currencies. Set general price format options.
+* *Price based on User Role* - Display products prices by user roles.
+* *Prices and Currencies by Country* - Change product price and currency automatically by customer's country.
 * *Product Open Pricing (Name Your Price)* - Let your store customers enter price for the product manually.
-* *Product Price by Formula* - Set formula for automatic product price calculation (Available per product in free version).
-* *Wholesale Price* - Set wholesale pricing depending on product quantity in cart - buy more pay less (1 level allowed in free version).
+* *Product Price by Formula* - Set formula for automatic product price calculation.
+* *Wholesale Price* - Set wholesale pricing depending on product quantity in cart (buy more pay less).
 
 **Button & Price Labels**
 
-* *Add to Cart Button Labels* - Change text for Add to Cart button by product type, by product category or for individual products (1 category group allowed in free version).
-* *Call for Price* - Create any custom price label for all products with empty price (Plus).
-* *Custom Price Labels* - Create any custom price label for any product (Just a few positions allowed in free version).
-* *Free Price Labels* - Set free price labels (Variable products allowed in Plus).
+* *Add to Cart Button Labels* - Change text for Add to Cart button by product type, by product category or for individual products.
+* *Call for Price* - Create any custom price label for all products with empty price.
+* *Custom Price Labels* - Create any custom price label for any product.
+* *Free Price Labels* - Set free price labels.
 * *More Button Labels* - Set "Place order" button label.
 
 **Products**
 
-* *Add to Cart* - Set any local URL to redirect to on Add to Cart (Per product not allowed in free version). Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products (Plus). Disable quantity input. Open external products on the add to cart in the new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages (Plus).
+* *Add to Cart* - Set any local url to redirect to on Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages.
 * *Add to Cart Button Visibility* - Enable/disable Add to Cart button globally or on per product basis.
-* *Admin Products List* - Customize admin products list (1 custom column allowed in free).
+* *Admin Products List* - Customize admin products list.
 * *Bookings* - Add bookings products to WooCommerce.
-* *Cost of Goods* - Save product purchase costs data for admin reports (1 custom field allowed in free version).
-* *Cross-sells* - Customize cross-sells products display. Global Cross-sells (Plus); Exclude "Not in Stock" Products (Plus); Replace Cart Products with Cross-sells (Plus).
+* *Cost of Goods* - Save product purchase costs data for admin reports.
+* *Cross-sells* - Customize cross-sells products display.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
-* *Product Addons* - Add (paid/free/discount) addons to products (1 addon allowed in free version).
-* *Product Availability by Date* - Set product availability by date (Custom frontend messages available in Plus).
-* *Product Availability by Time* - Set product availability by time (Custom frontend messages available in Plus).
-* *Product Bulk Meta Editor* - Set products meta with bulk editor (Variations available in Plus).
-* *Product Custom Visibility* - Display products by custom param (Bulk actions available in Plus).
+* *Product Addons* - Add (paid/free/discount) addons to products.
+* *Product Availability by Date* - Set product availability by date.
+* *Product Availability by Time* - Set product availability by time.
+* *Product Bulk Meta Editor* - Set products meta with bulk editor.
+* *Product Custom Visibility* - Display products by custom param.
 * *Product Images* - Customize products images and thumbnails.
-* *Product Info* - Add additional info to category and single product pages (1 block allowed in free version).
-* *Product Input Fields* - Add input fields to the products (1 input field allowed in free version).
-* *Product Listings* - Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Plus), exclude categories, show/hide empty categories.
-* *Product MSRP* - Save and display product MSRP in WooCommerce (Custom template available in Plus).
-* *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).
-* *Product Visibility by Country* - Display products by customer's country. User Country Selection Method (Plus); Admin country list options (Plus); Visibility method options (Plus).
-* *Product Visibility by User Role* - Display products by customer's user role. Visibility method options (Plus)
-* *Products XML Feeds* - Products XML feeds (1 file allowed in free version.).
-* *Products per Page* - Add "products per page" selector to WooCommerce (Select options available in Plus).
-* *Related Products* - Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Plus). Hide related products completely.
-* *SKU* - Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Plus); Sequential Number Generation (Plus); Variable Products Variations (Plus).
-* *Sale Flash* - Customize products sale flash. Per product (Plus); Per category (Plus); Per tag (Plus).
-* *Sorting* - Add more sorting options; rename or remove default sorting options (Plus); rearrange sorting options on frontend. Sort SKUs as numbers (Plus)
-* *Stock* - Products stock display management. Custom Stock HTML (Plus). Remove Stock Display (Plus).
+* *Product Info* - Add additional info to category and single product pages.
+* *Product Input Fields* - Add input fields to the products.
+* *Product Listings* - Change display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
+* *Product MSRP* - Save and display product MSRP in WooCommerce.
+* *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
+* *Product Visibility by Country* - Display products by customer's country.
+* *Product Visibility by User Role* - Display products by customer's user role.
+* *Products XML Feeds* - Products XML feeds.
+* *Products per Page* - Add "products per page" selector to WooCommerce.
+* *Related Products* - Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.
+* *SKU* - Generate SKUs automatically. Search by SKU on frontend.
+* *Sale Flash* - Customize products sale flash.
+* *Sorting* - Add more sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
+* *Stock* - Products stock display management.
 * *Tax Display* - Customize WooCommerce tax display.
-* *Upsells* - Customize upsells products display. Global upsells (Plus).
-* *User Products* - Let users add new products from the frontend. Image additional field (Plus). Custom Taxonomies (1 allowed in free version).
+* *Upsells* - Customize upsells products display.
+* *User Products* - Let users add new products from frontend.
 
 **Cart & Checkout**
 
-* *Cart Custom Info* - Add custom info to the cart page (1 cart block allowed in free version).
+* *Cart Custom Info* - Add custom info to the cart page.
 * *Cart Customization* - Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.
-* *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Plus)
-* *Checkout Custom Fields* - Add custom fields to the checkout page (1 field allowed in free version).
-* *Checkout Custom Info* - Add custom info to the checkout page (1 block allowed in free version).
-* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP (Plus); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Plus).
-* *Checkout Fees* - Add fees to WooCommerce cart & checkout (1 fee allowed in free version).
-* *Checkout Files Upload* - Let customers upload files on (or after) the checkout (1 file allowed in free version).
-* *Coupon Code Generator* - Coupon code generator (Multiple generation algorithms available in Plus).
-* *Coupon by User Role* - Coupons by user roles. Invalidate per Coupon (Plus). Custom coupon invalid messages (Plus)
-* *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Plus). Check for IP Location Country  (Plus)
-* *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Plus). Different button positions on the cart page (Plus).
-* *Mini Cart Custom Info* - Add custom info to the mini cart widget (1 block allowed in free version).
-* *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Plus).
+* *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.
+* *Checkout Custom Fields* - Add custom fields to the checkout page.
+* *Checkout Custom Info* - Add custom info to the checkout page.
+* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.
+* *Checkout Fees* - Add fees to WooCommerce cart & checkout.
+* *Checkout Files Upload* - Let customers upload files on (or after) the checkout.
+* *Coupon Code Generator* - Coupon code generator.
+* *Coupon by User Role* - Coupons by user roles.
+* *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
+* *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages.
+* *Mini Cart Custom Info* - Add custom info to the mini cart widget.
+* *URL Coupons* - WooCommerce URL coupons.
 
 **Payment Gateways**
 
-* *Custom Gateways* - Add multiple custom payment gateways to WooCommerce (1 custom gateway allowed in free version).
-* *Gateways Currency Converter* - Currency converter for payment gateways. Update exchange rates automatically (Plus).
-* *Gateways Fees and Discounts* - Enable extra fees or discounts for payment gateways. Force Default Payment Gateway (Plus). Apply fees depending on specific products (Plus).
+* *Custom Gateways* - Add multiple custom payment gateways to WooCommerce.
+* *Gateways Currency Converter* - Currency converter for payment gateways.
+* *Gateways Fees and Discounts* - Enable extra fees or discounts for payment gateways.
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) payment gateway.
-* *Gateways Min/Max Amounts* - Add min/max amounts for payment gateways to show up (Only Direct bank transfer allowed in free version).
+* *Gateways Min/Max Amounts* - Add min/max amounts for payment gateways to show up.
 * *Gateways by Country, State or Postcode* - Set countries, states or postcodes to include/exclude for payment gateways to show up.
 * *Gateways by Currency* - Set allowed currencies for payment gateways to show up.
 * *Gateways by Shipping* - Set "enable for shipping methods" for payment gateways.
@@ -107,52 +107,52 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 **Shipping & Orders**
 
 * *Address Formats* - Set address format in orders on per country basis. Force base country display.
-* *Admin Orders List* - Customize admin orders list: add custom columns (1 allowed in free version); add multiple status filtering (1 allowed in free version).
+* *Admin Orders List* - Customize admin orders list: add custom columns; add multiple status filtering.
 * *Custom Shipping* - Add multiple custom shipping methods to WooCommerce.
 * *Left to Free Shipping* - Display "left to free shipping" info.
-* *Maximum Products per User* - Limit number of items your (logged) customers can buy (Free version allows to limit globally).
-* *Order Custom Statuses* - Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus).
-* *Order Minimum Amount* - Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).
-* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Plus). 
+* *Maximum Products per User* - Limit number of items your (logged) customers can buy.
+* *Order Custom Statuses* - Custom statuses for WooCommerce orders.
+* *Order Minimum Amount* - Minimum order amount (optionally by user role).
+* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width.
 * *Order Quantities* - Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.
-* *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Plus).
-* *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Plus). Update totals label (Plus).
-* *Shipping Descriptions* - Add descriptions to shipping methods on frontend. Description visibility (Plus). Description position (Plus).
-* *Shipping Icons* - Add icons to shipping methods on frontend. Icon Visibility (Plus)
-* *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Plus).
-* *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Plus).
-* *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Plus).
-* *Shipping Methods by Min/Max Order Quantity* - Set minimum and/or maximum order quantity for shipping methods to show up (Local pickup available in Plus).
-* *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Plus).
-* *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Plus).
-* *Shipping Options* - Hide shipping when free is available. Grant free shipping on per product basis (In free version, all products in cart must grant free shipping). Show only the most expensive shipping (In free version, only free shipping is allowed to be ignored).
+* *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.
+* *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
+* *Shipping Descriptions* - Add descriptions to shipping methods on frontend.
+* *Shipping Icons* - Add icons to shipping methods on frontend.
+* *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up.
+* *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up.
+* *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up.
+* *Shipping Methods by Min/Max Order Quantity* - Set minimum and/or maximum order quantity for shipping methods to show up.
+* *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.
+* *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up.
+* *Shipping Options* - Hide shipping when free is available. Grant free shipping on per product basis.
 * *Shipping Time* - Add delivery time estimation to shipping methods.
 
 **PDF Invoicing & Packing Slips**
 
-* *PDF Invoicing* - Invoices, Proforma Invoices (Plus), Credit Notes (Plus) and Packing Slips (Plus).
+* *PDF Invoicing* - Invoices, Proforma Invoices, Credit Notes and Packing Slips.
 
 **Emails & Misc.**
 
 * *Admin Bar* - WooCommerce admin bar.
-* *Admin Tools* - Booster for WooCommerce general back-end tools. Enable interface by user roles (Plus). Custom shop manager editable roles (Plus).
+* *Admin Tools* - Booster for WooCommerce general back-end tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
-* *Breadcrumbs* - Customize WooCommerce breadcrumbs. Hide breadcrumbs (Plus).
+* *Breadcrumbs* - Customize WooCommerce breadcrumbs.
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
-* *Custom Emails* - Add custom emails to WooCommerce (1 custom email allowed in free version).
+* *Custom Emails* - Add custom emails to WooCommerce.
 * *Custom JS* - Separate custom JS for front and back end.
 * *Custom PHP* - Custom PHP tool.
 * *Debug Tools* - Booster for WooCommerce debug and log tools.
 * *Email Options* - WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.
-* *Email Verification* - Add WooCommerce email verification. Customize verification email subject, content and template (Plus).
-* *Export* - WooCommerce export tools. Additional export fields (1 field allowed in free version).
+* *Email Verification* - Add WooCommerce email verification.
+* *Export* - WooCommerce export tools.
 * *General* - Booster for WooCommerce general front-end tools.
 * *Modules By User Roles* - Enable/disable Booster for WooCommerce modules by user roles.
-* *My Account* - WooCommerce "My Account" page customization. Customize Menu Order (Plus). Add Custom Menu Items (Plus). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).
+* *My Account* - WooCommerce "My Account" page customization.
 * *Old Slugs* - Remove old products slugs.
 * *Reports* - Stock, sales, customers etc. reports.
 * *Template Editor* - WooCommerce template editor.
-* *User Tracking* - Track your users in WooCommerce. Track Orders (Plus).
+* *User Tracking* - Track your users in WooCommerce.
 
 = Feedback =
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
@@ -192,6 +192,18 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 5.3.6 - 30/12/2020 =
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fix "Datepicker/Weekpicker: Current day time limit" timezone.
+* Fix - PAYMENT GATEWAYS - Gateways Currency Converter - Call to undefined function `is_cart()`.
+* Fix - PRICES & CURRENCIES - Wholesale Price - Fix "conflict between include/exclude product and include/exclude categories".
+* Fix - PRODUCTS - Product Input Fields - Fixed the Uncaught TypeError: jQuery(...).live is not a function error
+* Fix - PRODUCTS - Product Listings - Fixed the product visibility by category. Remove the woocommerce_product_is_visible filter and added woocommerce_product_query.
+* Fix - Shortcodes - Orders - Add `[wcj_order_total_in_words]` shortcode. "Fixed issue for Lithuanian characters (LT) lang paramater. 
+* Dev - EMAILS & MISC. - Export - Round the amount added precision to amount values for export the csv file
+* Dev - Classes - `WCJ_Module` - Add "hide_on_free" parameter allowing to create a feature hidden on free version.
+* Fix - PDF Invoicing - Numbering - Fixed the numbering counter issue for bulk pdf generation.
+* Fix - PDF Invoicing - Numbering - Fixed the numbering counter issue for pdf delete.
 
 = 5.3.5 - 09/10/2020 =
 * Fix - PRODUCTS - Product by Condition - Fix shipping removing algorithm.

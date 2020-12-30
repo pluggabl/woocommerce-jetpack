@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 5.3.3
+ * @version 5.3.6
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -424,38 +424,40 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	/**
 	 * wcj_is_product_wholesale_enabled.
 	 *
-	 * @version 5.3.3
+	 * @version 5.3.6
 	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {
 		if ( wcj_is_module_enabled( 'wholesale_price' ) ) {
 			if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
 				return true;
 			} else {
-				$products_to_include_passed = false;
-				$products_to_include        = wcj_get_option( 'wcj_wholesale_price_products_to_include', array() );
-				if ( ! empty( $products_to_include ) && in_array( $product_id, $products_to_include ) ) {
-					$products_to_include_passed = true;
-				}
-				$product_cats_to_include_passed = true;
-				$product_cats_to_include        = wcj_get_option( 'wcj_wholesale_price_product_cats_to_include', array() );
+				$is_product_eligible 		= true;
+
+				$product_cats_to_include	= wcj_get_option( 'wcj_wholesale_price_product_cats_to_include', array() );
 				if ( ! empty( $product_cats_to_include ) && ! wcj_is_product_term( $product_id, $product_cats_to_include, 'product_cat' ) ) {
-					$product_cats_to_include_passed = false;
+					$is_product_eligible 	= false;
 				}
-				$products_to_exclude_passed     = false;
-				$product_cats_to_exclude_passed = false;
+
 				if ( 'no' === wcj_get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) ) {
-					$products_to_exclude_passed = true;
-					$products_to_exclude        = wcj_get_option( 'wcj_wholesale_price_products_to_exclude', array() );
-					if ( ! empty( $products_to_exclude ) && in_array( $product_id, $products_to_exclude ) ) {
-						$products_to_exclude_passed = false;
-					}
-					$product_cats_to_exclude_passed = true;
 					$product_cats_to_exclude        = wcj_get_option( 'wcj_wholesale_price_product_cats_to_exclude', array() );
 					if ( ! empty( $product_cats_to_exclude ) && wcj_is_product_term( $product_id, $product_cats_to_exclude, 'product_cat' ) ) {
-						$product_cats_to_exclude_passed = false;
+						$is_product_eligible = false;
 					}
 				}
-				return ( $products_to_include_passed || $product_cats_to_include_passed || ( $products_to_exclude_passed && $product_cats_to_exclude_passed ) );
+
+				$products_to_include        = wcj_get_option( 'wcj_wholesale_price_products_to_include', array() );
+				if ( ! empty( $products_to_include ) && in_array( $product_id, $products_to_include ) ) {
+					$is_product_eligible = true;
+				}
+				
+				if ( 'no' === wcj_get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) ) {
+					$products_to_exclude        = wcj_get_option( 'wcj_wholesale_price_products_to_exclude', array() );
+					if ( ! empty( $products_to_exclude ) && in_array( $product_id, $products_to_exclude ) ) {
+						$is_product_eligible = false;
+					}
+				}
+				
+				return $is_product_eligible;
 			}
 		}
 		return false;

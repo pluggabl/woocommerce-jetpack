@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 3.5.0
+ * @version 5.3.6
  * @author  Pluggabl LLC.
  */
 
@@ -33,7 +33,8 @@ class WCJ_Invoice {
 	/**
 	 * delete.
 	 *
-	 * @version 3.2.2
+	 * @version 5.3.6
+	 * @todo    removed update_option( $option_name, ( $the_invoice_counter - 1 ) ); It was causing the issue on the count.
 	 */
 	function delete() {
 		update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', 0 );
@@ -41,15 +42,15 @@ class WCJ_Invoice {
 		if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_sequential_enabled', 'no' ) ) {
 			$option_name = 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter';
 			$the_invoice_counter = wcj_get_option( $option_name, 1 );
-			update_option( $option_name, ( $the_invoice_counter - 1 ) );
 		}
 	}
 
 	/**
 	 * create.
 	 *
-	 * @version 3.2.2
+	 * @version 5.3.6
 	 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
+	 * @todo    used get_option instead wcj_get_option to get current numbering_counter. 
 	 */
 	function create( $date = '' ) {
 		$order_id = $this->order_id;
@@ -61,7 +62,7 @@ class WCJ_Invoice {
 			}
 		}
 		if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled', 'no' ) ) {
-			$the_invoice_number = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
+			$the_invoice_number = get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
 			update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', ( $the_invoice_number + 1 ) );
 		} else {
 			$the_invoice_number = $order_id;

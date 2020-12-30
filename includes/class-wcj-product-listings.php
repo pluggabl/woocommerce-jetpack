@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 5.2.0
+ * @version 5.3.6
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.3.6
 	 * @todo    more descriptions in settings (i.e. Storefront etc.)
 	 * @todo    add deprecated options (which were moved to Storefront)
 	 * @todo    add options to enable/disable each section
@@ -49,7 +49,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 			// Product visibility by category
 			$this->cats_products_to_hide_on_shop = wcj_get_option( 'wcj_product_listings_exclude_cats_products_on_shop', '' );
 			if ( ! empty( $this->cats_products_to_hide_on_shop ) ) {
-				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_visibility_by_category' ), PHP_INT_MAX, 2 );
+				add_action( 'woocommerce_product_query', array( $this, 'product_visibility_by_category' ), PHP_INT_MAX, 1 );
 			}
 
 		}
@@ -58,11 +58,18 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * product_visibility_by_category.
 	 *
-	 * @version 3.5.0
+	 * @version 5.3.6
 	 * @since   3.5.0
 	 */
-	function product_visibility_by_category( $visible, $product_id ) {
-		return ( ! isset( $_GET['s'] ) && is_shop() && wcj_is_product_term( $product_id, $this->cats_products_to_hide_on_shop, 'product_cat' ) ? false : $visible );
+	function product_visibility_by_category( $query ) {
+		$tax_query = (array) $query->get( 'tax_query' );
+		$tax_query[] = array(
+			'taxonomy' => 'product_cat',
+			'field' => 'ID',
+			'terms' => wcj_get_option( 'wcj_product_listings_exclude_cats_products_on_shop', '' ),
+			'operator' => 'NOT IN'
+		);
+		$query->set( 'tax_query', $tax_query );
 	}
 
 	/**
