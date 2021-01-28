@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.0.0
+ * @version 5.3.7
  * @author  Pluggabl LLC.
  */
 
@@ -755,7 +755,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get product meta.
 	 *
-	 * @version 2.7.0
+	 * @version 5.3.7
 	 * @since   2.5.7
 	 * @return  string
 	 */
@@ -763,8 +763,15 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		if ( '' == $atts['name'] ) {
 			return '';
 		}
+		//Checking get_post_meta type ie. Array or String
+		$checking_Postmeta_value=gettype(get_post_meta( $atts['product_id'], $atts['name'], true ));
+		// if get_post_meta return Array
+		if ($checking_Postmeta_value =='array') {
+			//convert Array To String
+	 		return implode(",",get_post_meta( $atts['product_id'], $atts['name'], true ));
+		}
 		return get_post_meta( $atts['product_id'], $atts['name'], true );
-	}
+   }
 
 	/**
 	 * Get product custom field.

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -193,7 +193,7 @@ msgid "Export all Booster's options to a file."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:473
-#: includes/class-wcj-purchase-data.php:94
+#: includes/class-wcj-purchase-data.php:97
 msgid "Import"
 msgstr ""
 
@@ -699,7 +699,7 @@ msgstr ""
 #: includes/class-wcj-admin-bar.php:440
 #: includes/settings/wcj-settings-offer-price.php:49
 #: includes/settings/wcj-settings-stock.php:101
-#: includes/shortcodes/class-wcj-shortcodes-products.php:565
+#: includes/shortcodes/class-wcj-shortcodes-products.php:593
 msgid "Out of stock"
 msgstr ""
 
@@ -1043,17 +1043,17 @@ msgstr ""
 msgid "Add custom info to the cart page."
 msgstr ""
 
-#: includes/class-wcj-checkout-core-fields.php:25
+#: includes/class-wcj-checkout-core-fields.php:27
 msgid "Checkout Core Fields"
 msgstr ""
 
-#: includes/class-wcj-checkout-core-fields.php:26
+#: includes/class-wcj-checkout-core-fields.php:28
 msgid ""
 "Customize core checkout fields. Disable/enable fields, set required, change "
 "labels and/or placeholders; Setup fields by category (Plus)"
 msgstr ""
 
-#: includes/class-wcj-checkout-core-fields.php:27
+#: includes/class-wcj-checkout-core-fields.php:29
 msgid ""
 "Customize core checkout fields. Disable/enable fields, set required, change "
 "labels and/or placeholders etc."
@@ -1881,27 +1881,27 @@ msgstr ""
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:406
+#: includes/class-wcj-eu-vat-number.php:407
 #: includes/settings/wcj-settings-eu-vat-number.php:189
 msgid "Validating VAT. Please wait..."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:407
+#: includes/class-wcj-eu-vat-number.php:408
 #: includes/settings/wcj-settings-eu-vat-number.php:196
 msgid "VAT is valid."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:408
+#: includes/class-wcj-eu-vat-number.php:409
 #: includes/settings/wcj-settings-eu-vat-number.php:203
 msgid "VAT is not valid."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:409
+#: includes/class-wcj-eu-vat-number.php:410
 #: includes/settings/wcj-settings-eu-vat-number.php:211
 msgid "Validation failed. Please try again."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:537
+#: includes/class-wcj-eu-vat-number.php:539
 #: includes/settings/wcj-settings-eu-vat-number.php:83
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
@@ -2400,7 +2400,7 @@ msgstr ""
 #: includes/class-wcj-my-account.php:496
 #: includes/class-wcj-product-bulk-meta-editor.php:280
 #: includes/class-wcj-product-by-user.php:207
-#: includes/class-wcj-purchase-data.php:95
+#: includes/class-wcj-purchase-data.php:98
 #: includes/class-wcj-track-users.php:335
 #: includes/classes/class-wcj-module.php:891
 #: includes/functions/wcj-functions-general.php:189
@@ -3726,7 +3726,7 @@ msgid "Save"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-meta-editor.php:390
-#: includes/class-wcj-purchase-data.php:78
+#: includes/class-wcj-purchase-data.php:81
 #: includes/export/class-wcj-fields-helper.php:280
 #: includes/functions/wcj-functions-reports.php:24
 #: includes/settings/wcj-settings-product-bulk-meta-editor.php:42
@@ -3805,7 +3805,7 @@ msgid "Products category"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-price-converter.php:262
-#: includes/shortcodes/class-wcj-shortcodes-products.php:354
+#: includes/shortcodes/class-wcj-shortcodes-products.php:369
 msgid "Any"
 msgstr ""
 
@@ -4435,6 +4435,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-product-price-by-formula.php:241
+#: includes/class-wcj-purchase-data.php:256
 msgid "Error in formula"
 msgstr ""
 
@@ -4667,41 +4668,41 @@ msgstr ""
 msgid "Products XML file #%s created successfully."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:28
+#: includes/class-wcj-purchase-data.php:30
 msgid "Cost of Goods"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:29
+#: includes/class-wcj-purchase-data.php:31
 msgid ""
 "Save product purchase costs data for admin reports (1 custom field allowed in "
 "free version)."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:30
+#: includes/class-wcj-purchase-data.php:32
 msgid "Save product purchase costs data for admin reports."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:36
+#: includes/class-wcj-purchase-data.php:38
 msgid "\"WooCommerce Cost of Goods\" Data Import"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:37
+#: includes/class-wcj-purchase-data.php:39
 msgid "Import products costs from \"WooCommerce Cost of Goods\"."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:79
+#: includes/class-wcj-purchase-data.php:82
 msgid "Product Title"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:80
+#: includes/class-wcj-purchase-data.php:83
 msgid "WooCommerce Cost of Goods (source)"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:81
+#: includes/class-wcj-purchase-data.php:84
 msgid "Booster: Product cost (destination)"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:116
+#: includes/class-wcj-purchase-data.php:120
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:139
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:209
 #: includes/shipping/class-wc-shipping-wcj-custom.php:122
@@ -4709,30 +4710,30 @@ msgstr ""
 msgid "Cost"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:119
-#: includes/class-wcj-purchase-data.php:182
-#: includes/class-wcj-purchase-data.php:269
+#: includes/class-wcj-purchase-data.php:123
+#: includes/class-wcj-purchase-data.php:188
+#: includes/class-wcj-purchase-data.php:455
 #: includes/functions/wcj-functions-reports.php:28
 #: includes/settings/wcj-settings-purchase-data.php:144
 #: includes/settings/wcj-settings-purchase-data.php:172
 msgid "Profit"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:185
+#: includes/class-wcj-purchase-data.php:191
 #: includes/settings/wcj-settings-purchase-data.php:153
 #: includes/settings/wcj-settings-purchase-data.php:179
 msgid "Purchase Cost"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:267
+#: includes/class-wcj-purchase-data.php:453
 msgid "Selling"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:268
+#: includes/class-wcj-purchase-data.php:454
 msgid "Buying"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:276
+#: includes/class-wcj-purchase-data.php:462
 msgid "Report"
 msgstr ""
 
@@ -8376,6 +8377,95 @@ msgstr ""
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-templates.php:23
 #: includes/settings/wcj-settings-template-editor.php:44
 msgid "Templates"
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-manager.php:79
+#, php-format
+msgid "Status last checked at %s."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-manager.php:80
+#, php-format
+msgid "Cron scheduled at %s."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-manager.php:81
+#, php-format
+msgid "Cron last run at %s."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-manager.php:122
+msgid "No key set."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-manager.php:123
+#, php-format
+msgid ""
+"To get the key, please visit <a target=\"_blank\" href=\"%s\">your account "
+"page at %s</a>."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-manager.php:126
+#, php-format
+msgid "No response from server. Please <a href=\"%s\">try again</a> later."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-manager.php:128
+#, php-format
+msgid "Server error. Please <a href=\"%s\">try again</a> later."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-section.php:46
+msgid "Manage site key"
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-section.php:59
+#: includes/plus/class-wcj-plus-site-key-section.php:73
+#: includes/plus/class-wcj-plus-site-key-section.php:81
+msgid "Site Key"
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-section.php:74
+msgid ""
+"This section lets you manage site key for paid Booster Plus for WooCommerce "
+"plugin."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-section.php:75
+#, php-format
+msgid ""
+"To get the key, please go to <a target=\"_blank\" href=\"%s\">your account "
+"page at %s</a>."
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-section.php:78
+msgid "Check site key now"
+msgstr ""
+
+#: includes/plus/class-wcj-plus-site-key-section.php:82
+#, php-format
+msgid "Site URL: %s"
+msgstr ""
+
+#: includes/plus/lib/plugin-update-checker/github-checker.php:119
+msgid "There is no changelog available."
+msgstr ""
+
+#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:763
+msgid "Check for updates"
+msgstr ""
+
+#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:807
+msgid "This plugin is up to date."
+msgstr ""
+
+#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:809
+msgid "A new version of this plugin is available."
+msgstr ""
+
+#: includes/plus/lib/plugin-update-checker/plugin-update-checker.php:811
+#, php-format
+msgid "Unknown update checker status \"%s\""
 msgstr ""
 
 #: includes/price-by-country/class-wcj-price-by-country-group-generator.php:34
@@ -19976,7 +20066,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-orders.php:336
+#: includes/shortcodes/class-wcj-shortcodes-orders.php:348
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""
@@ -20019,20 +20109,20 @@ msgstr ""
 msgid "Edit Product"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:328
+#: includes/shortcodes/class-wcj-shortcodes-products.php:342
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:335
+#: includes/shortcodes/class-wcj-shortcodes-products.php:349
 msgid "No sales yet."
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:562
+#: includes/shortcodes/class-wcj-shortcodes-products.php:590
 msgid "In stock"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:973
+#: includes/shortcodes/class-wcj-shortcodes-products.php:1020
 msgid "from %level_min_qty% pcs."
 msgstr ""
 

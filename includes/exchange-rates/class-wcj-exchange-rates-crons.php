@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Exchange Rates - Crons
  *
- * @version 3.4.5
+ * @version 5.3.7
  * @author  Pluggabl LLC.
  */
 
@@ -55,7 +55,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * get_currency_pair.
 	 *
-	 * @version 2.3.0
+	 * @version 5.3.7
 	 * @since   2.3.0
 	 */
 	function get_currency_pair( $currency_pairs, $currency_to, $option_name ) {
@@ -66,7 +66,7 @@ class WCJ_Exchange_Rates_Crons {
 			}
 		}
 		$currency_pairs[] = array(
-			'currency_from' => wcj_get_option( 'woocommerce_currency' ),
+			'currency_from' => get_option( 'woocommerce_currency' ),
 			'currency_to'   => $currency_to,
 			'option_name'   => array( $option_name, ),
 		);
