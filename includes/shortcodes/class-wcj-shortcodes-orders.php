@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.3.6
+ * @version 5.3.7
  * @author  Pluggabl LLC.
  */
 
@@ -1290,9 +1290,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_total.
+	 * 
+	 * @version 5.3.7
+	 * 
 	 */
 	function wcj_order_total( $atts ) {
 		$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
+		$order_total_after_refund = $this->the_order->get_total() - $this->the_order->get_total_refunded();
+		if (!empty($order_total_after_refund)) {
+			return $this->wcj_price_shortcode($order_total_after_refund, $atts);
+		}
 		return $this->wcj_price_shortcode( $order_total, $atts );
 	}
 

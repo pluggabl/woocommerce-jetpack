@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 5.2.0
+ * @version 5.3.7
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.3.7
 	 * @see     https://docs.woocommerce.com/document/tutorial-customising-checkout-fields-using-actions-and-filters/
 	 * @todo    (maybe) default overrides should be `disable`
 	 */
@@ -56,6 +56,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 		);
 
 		if ( $this->is_enabled() ) {
+			add_action('woocommerce_checkout_fields', array($this, 'enqueue_scripts'), PHP_INT_MAX);
 			add_filter( 'woocommerce_checkout_fields' ,            array( $this, 'custom_override_checkout_fields' ),        PHP_INT_MAX );
 			if ( 'disable' != ( $this->country_locale_override = wcj_get_option( 'wcj_checkout_core_fields_override_country_locale_fields', 'billing' ) ) ) {
 				add_filter( 'woocommerce_get_country_locale',      array( $this, 'custom_override_country_locale_fields' ),  PHP_INT_MAX );
@@ -138,7 +139,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * custom_override_checkout_fields.
 	 *
-	 * @version 4.9.0
+	 * @version 5.3.7
 	 * @todo    add "per products", "per products tags"
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Custom Fields module)
 	 * @todo    (maybe) enable if was not enabled by default, i.e. `! isset( $checkout_fields[ $section ][ $field ] )`
@@ -202,6 +203,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 				}
 			}
 		}
+		wcj_session_set("wcj_checkout_fields", $checkout_fields);
 		return $checkout_fields;
 	}
 
@@ -257,6 +259,19 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 			return 0;
 		}
 		return ( $a < $b ) ? -1 : 1;
+	}
+	/**
+	 * enqueue_scripts.
+	 *
+	 * @version 5.3.7
+	 */
+	function enqueue_scripts($checkout_fields)
+	{
+		wp_enqueue_script('wcj-checkout-core-fields', wcj_plugin_url() . '/includes/js/wcj-checkout-core-fields.js', array(), wcj()->version, false);
+		wp_localize_script('wcj-checkout-core-fields', 'wcj_checkout_core_fields', array(
+			'checkout_fields' => wcj_session_get("wcj_checkout_fields")
+		));
+		return $checkout_fields;
 	}
 
 }
