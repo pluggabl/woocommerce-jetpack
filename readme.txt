@@ -2,7 +2,7 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 5.7
+Tested up to: 5.6
 Stable tag: 5.3.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -198,7 +198,6 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Fix "Woocommerce store base currency Exchange rate" issue.
 * Dev - EMAILS & MISC. - Export - Added feature to export new column for 'allowed_user_roles' and 'not_allowed_user_roles'.
 * Fix - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fix "Order total after refund" shortcode with new attribute.
-* Fix - PRODUCTS - Cost of Goods - Fix "Profit" amount to consider "Wholesale discount","product price by formula" and also made it compatible with multi-currency.
 * Fix - CART & CHECKOUT - EU VAT Number - Fix "EU VAT Number" should be required for EU countries only.
 
 = 5.3.6 - 30/12/2020 =
