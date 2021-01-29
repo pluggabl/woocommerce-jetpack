@@ -188,121 +188,6 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	}
 
 	/**
-	 * For Getting The Price by Formulla Apply.
-	 *
-	 * @version 5.3.7
-	 * @since   2.2.4
-	 * 
-	 */
-	public function is_price_by_formula_product($_product)
-	{
-		return (
-			'yes' === apply_filters('booster_option', 'no', wcj_get_option(' wcj_product_price_by_formula_enable_for_all_products', ' no ')) ||
-			'yes' === get_post_meta(wcj_get_product_id_or_variation_parent_id($_product), '_' . 'wcj_product_price_by_formula_enabled', true)
-
-		);
-	}
-
-	/**
-	 * For Getting The Wholesale Value If enable.
-	 *
-	 * @version 5.3.7
-	 * @since   5.3.7
-	 * 
-	 */
-
-	public function change_price($price, $_product, $output_errors = false)
-	{
-		if ($this->is_price_by_formula_product($_product) && '' != $price) {
-			$_product_id = wcj_get_product_id_or_variation_parent_id($_product);
-			$is_per_product = ('per_product' === get_post_meta($_product_id, '_' . 'wcj_product_price_by_formula_calculation', true));
-			$the_formula = ($is_per_product)
-				? get_post_meta($_product_id, '_' . 'wcj_product_price_by_formula_eval', true)
-				: wcj_get_option('wcj_product_price_by_formula_eval', '');
-			//$the_formula = do_shortcode( $the_formula );
-			if ('' != $the_formula) {
-				$total_params = ($is_per_product)
-					? get_post_meta($_product_id, '_' . 'wcj_product_price_by_formula_total_params', true)
-					: wcj_get_option('wcj_product_price_by_formula_total_params', 1);
-				if ($total_params > 0) {
-					$the_current_filter = current_filter();
-					if ('woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter) {
-						$price = wcj_get_product_display_price($_product);
-						$this->save_price($_product_id, $price);
-						return $price;
-					}
-					$math = new WCJ_Math();
-					$math->registerVariable('x', $price);
-					for ($i = 1; $i <= $total_params; $i++) {
-						$the_param = ($is_per_product)
-							? get_post_meta($_product_id, '_' . 'wcj_product_price_by_formula_param_' . $i, true)
-							: wcj_get_option('wcj_product_price_by_formula_param_' . $i, '');
-						$the_param = do_shortcode($the_param);
-						if ('' != $the_param) {
-							$math->registerVariable('p' . $i, $the_param);
-						}
-					}
-					$the_formula = str_replace('x', '$x', $the_formula);
-					$the_formula = str_replace('p', '$p', $the_formula);
-					try {
-						$price = $math->evaluate($the_formula);
-					} catch (Exception $e) {
-						if ($output_errors) {
-							echo '<p style="color:red;">' . __('Error in formula', 'woocommerce-jetpack') . ': ' . $e->getMessage() . '</p>';
-						}
-					}
-				}
-			}
-		}
-		return $price;
-	}
-
-	/**
-	 * get_discount_by_quantity.
-	 *
-	 * @version 5.3.7
-	 * @since   5.3.7
-	 * 
-	 */
-
-	private function get_discount_by_quantity($quantity, $product_id)
-	{
-		// Check for user role options
-		$role_option_name_addon = '';
-		$user_roles = wcj_get_option('wcj_wholesale_price_by_user_role_roles', '');
-		if (!empty($user_roles)) {
-			$current_user_role = wcj_get_current_user_first_role();
-			foreach ($user_roles as $user_role_key) {
-				if ($current_user_role === $user_role_key) {
-					$role_option_name_addon = '_' . $user_role_key;
-					break;
-				}
-			}
-		}
-		// Get discount
-		$max_qty_level = wcj_get_option('wcj_wholesale_price_max_qty_level', 1);
-		$discount = 0;
-		if (wcj_is_product_wholesale_enabled_per_product($product_id)) {
-			for ($i = 1; $i <= apply_filters('booster_option', 1, get_post_meta($product_id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true)); $i++) {
-				$level_qty = get_post_meta($product_id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true);
-				if ($quantity >= $level_qty && $level_qty >= $max_qty_level) {
-					$max_qty_level = $level_qty;
-					$discount = get_post_meta($product_id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true);
-				}
-			}
-		} else {
-			for ($i = 1; $i <= apply_filters('booster_option', 1, wcj_get_option('wcj_wholesale_price_levels_number' . $role_option_name_addon, 1)); $i++) {
-				$level_qty = wcj_get_option('wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX);
-				if ($quantity >= $level_qty && $level_qty >= $max_qty_level) {
-					$max_qty_level = $level_qty;
-					$discount = wcj_get_option('wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0);
-				}
-			}
-		}
-		return $discount;
-	}
-
-	/**
 	 * Output custom columns for orders.
 	 *
 	 * @param   string $column
@@ -311,88 +196,22 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * @todo    forecasted profit `$value = $line_total * $average_profit_margin`
 	 * @todo    (maybe) use `[wcj_order_profit]` and `[wcj_order_items_cost]`
 	 */
-	public function render_order_columns($column) {
-		if ('profit' === $column || 'purchase_cost' === $column) {
+	function render_order_columns( $column ) {
+		if ( 'profit' === $column || 'purchase_cost' === $column ) {
 			$total = 0;
-			$the_order = wc_get_order(get_the_ID());
-			if (!in_array($the_order->get_status(), array('cancelled', 'refunded', 'failed'))) {
+			$the_order = wc_get_order( get_the_ID() );
+			if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ) ) ) {
 				$is_forecasted = false;
-				foreach ($the_order->get_items() as $item_id => $item) {
+				foreach ( $the_order->get_items() as $item_id => $item ) {
 					$value = 0;
-					$product_id = (isset($item['variation_id']) && 0 != $item['variation_id'] && 'no' === wcj_get_option('wcj_purchase_data_variable_as_simple_enabled', 'no')
-						? $item['variation_id'] : $item['product_id']);
-					if (0 != ($purchase_price = wc_get_product_purchase_price($product_id))) {
-						if ('profit' === $column) {
-							//Get The Coupon Code if apply customer
-							$coupon_code_apply = $the_order->get_coupon_codes();
-							$get_coupon_discount_total = $the_order->get_discount_total();
-
-							//Get The Store Default Currency with default Price Of Product.
-							$the_product = wc_get_product($product_id);
-							$the_price = $the_product->get_price();
-							$original_price = $the_price - $purchase_price;
-
-							//Wholesale price
-							//Checking the Wholesale Discount Type
-							$discount_type = (wcj_is_product_wholesale_enabled_per_product($item['product_id']))
-								? get_post_meta($item['product_id'], '_' . 'wcj_wholesale_price_discount_type', true)
-								: wcj_get_option('wcj_wholesale_price_discount_type', 'percent');
-							$product_meta_data_info = get_post_meta($product_id);
-							$discount = $this->get_discount_by_quantity($item['qty'], $product_id);
-							if ($discount_type == 'fixed') {
-								$per_product_price = $the_price - $discount;
-								$per_product_qty = $per_product_price;
-								$discount_qty = $discount;
-								$total_sum_of_ammount = $discount_qty * $item['qty'];
-								$original_price = $per_product_qty - $total_sum_of_ammount;
-							}
-							if ($discount_type == 'percent') {
-
-								$count = number_format($discount / 100, 8) . '%';
-								$percentage = $the_price * $count;
-								$per_product_price = $the_price - $percentage;
-								$sum_of_the_qty = $per_product_price;
-								$original_price = $sum_of_the_qty - $original_price;
-							}
-							if ($discount_type == 'price_directly') {
-								$original_price = $discount;
-							}
-							// Price By Formula...
-							if ("yes" === wcj_get_option('wcj_product_price_by_formula_enabled', 'yes')) {
-								if ($this->is_price_by_formula_product($the_product)) {
-									if ("yes" === wcj_get_option('wcj_product_price_by_formula_admin_scope', 'yes')) {
-										$the_price = $this->change_price($the_price, $the_product, true);
-									}
-									$discount_type = (wcj_is_product_wholesale_enabled_per_product($item['product_id']))
-										? get_post_meta($item['product_id'], '_' . 'wcj_wholesale_price_discount_type', true)
-										: wcj_get_option('wcj_wholesale_price_discount_type', 'percent');
-									$product_meta_data_info = get_post_meta($product_id);
-									$discount = $this->get_discount_by_quantity($item['qty'], $product_id);
-									//print_r($discount);
-									if ($discount_type == 'fixed') {
-										$per_product_price = $the_price - $discount;
-										$per_product_qty = $per_product_price;
-										$discount_qty = $discount;
-										$total_sum_of_ammount = $discount_qty * $item['qty'];
-										$original_price = $per_product_qty - $total_sum_of_ammount;
-									}
-									if ($discount_type == 'percent') {
-										$count = number_format($discount / 100, 8) . '%';
-										$percentage = $the_price * $count;
-										$per_product_price = $the_price - $percentage;
-										$sum_of_the_qty = $per_product_price;
-										$purchase_total_qty = $purchase_price;
-										$original_price = $sum_of_the_qty - $purchase_total_qty;
-									}
-									if ($discount_type == 'price_directly') {
-										$original_price = $discount;
-									}
-								}
-							}
-							// Price By Formula END...
-							$value = $original_price * $item['qty'] - $get_coupon_discount_total;
-
-						} else {
+					$product_id = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
+						? $item['variation_id'] : $item['product_id'] );
+					if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
+						if ( 'profit' === $column ) {
+							$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->prices_include_tax : $the_order->get_prices_include_tax() );
+							$line_total = ( $_order_prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
+							$value = $line_total - $purchase_price * $item['qty'];
+						} else { // if ( 'purchase_cost' === $column )
 							$value = $purchase_price * $item['qty'];
 						}
 					} else {
@@ -401,17 +220,17 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					$total += $value;
 				}
 			}
-			if (0 != $total) {
-				if (!$is_forecasted) {
+			if ( 0 != $total ) {
+				if ( ! $is_forecasted ) {
 					echo '<span style="color:green;">';
 				}
-				echo wc_price($total);
-				if (!$is_forecasted) {
+				echo wc_price( $total );
+				if ( ! $is_forecasted ) {
 					echo '</span>';
 				}
 			}
 		}
-    }
+	}
 
 	/**
 	 * create_meta_box.
