@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.6
-Stable tag: 5.3.7
+Stable tag: 5.3.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,11 +193,24 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 5.3.8 - 24/02/2021 =
+
+* PHP 8.0.2 tested
+* WooCommerce 5.0 tested
+* Dev - PRODUCTS - Stock - For Variable product, custom stock message should be shown before option selection, if stock management is set at product level.
+* Dev - PRODUCTS - Stock - Show product availability message on shop/loop/search etc.
+* Fix - PRICES & CURRENCIES - Global Discount - Discount conflict when we enable global and wholesale both discounts.
+* Dev - SHIPPING & ORDERS - Order Minimum Amount - Compatibility issue has been resolved with Woocommerce Blocks plugin
+* Fix - SHIPPING & ORDERS - Order Numbers - Custom order number search is not working when date parameter is set
+* Dev - PDF INVOICING & PACKING SLIPS - Add addition, subtraction, division attributes to shortcodes like multiply_by
+* Dev - PRODUCTS - Shortcodes - Exclude Item_total from order total and order subtotal if product has been excluded by tag, category or attributes name in invoice pdf.
+
 = 5.3.7 - 28/01/2021 =
 * Fix - CART & CHECKOUT - Checkout Core Fields - Fix "Checkout Field arragement not working" issue.
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Fix "Woocommerce store base currency Exchange rate" issue.
 * Dev - EMAILS & MISC. - Export - Added feature to export new column for 'allowed_user_roles' and 'not_allowed_user_roles'.
 * Fix - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fix "Order total after refund" shortcode with new attribute.
+* Fix - PRODUCTS - Cost of Goods - Fix "Profit" amount to consider "Wholesale discount","product price by formula" and also made it compatible with multi-currency.
 * Fix - CART & CHECKOUT - EU VAT Number - Fix "EU VAT Number" should be required for EU countries only.
 
 = 5.3.6 - 30/12/2020 =

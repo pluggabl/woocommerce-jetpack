@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.2.0
+ * @version 5.3.8
  * @since   2.5.7
  * @author  Pluggabl LLC.
  */
@@ -231,13 +231,17 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.1.0
+	 * @version 5.3.8
 	 * @since   3.1.0
 	 * @todo    `WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER, 'woocommerce_variation_prices_regular_price', 'woocommerce_product_variation_get_regular_price'`
 	 */
 	function change_price( $price, $_product ) {
 		$_current_filter = current_filter();
 		if ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_PRICE_FILTER, 'woocommerce_variation_prices_price', 'woocommerce_product_variation_get_price' ) ) ) {
+			if(isset($_product->wcj_wholesale_price)){
+
+				return $_product->wcj_wholesale_price;
+			}
 			return $this->add_global_discount( $price, $_product, 'price' );
 		} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_SALE_PRICE_FILTER, 'woocommerce_variation_prices_sale_price', 'woocommerce_product_variation_get_sale_price' ) ) ) {
 			return $this->add_global_discount( $price, $_product, 'sale_price' );
@@ -355,6 +359,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function add_global_discount( $price, $_product, $price_type ) {
+		
 		if ( 'price' === $price_type && '' === $price ) {
 			return $price; // no changes
 		}

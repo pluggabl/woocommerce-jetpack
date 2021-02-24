@@ -193,7 +193,7 @@ msgid "Export all Booster's options to a file."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:473
-#: includes/class-wcj-purchase-data.php:97
+#: includes/class-wcj-purchase-data.php:94
 msgid "Import"
 msgstr ""
 
@@ -699,7 +699,7 @@ msgstr ""
 #: includes/class-wcj-admin-bar.php:440
 #: includes/settings/wcj-settings-offer-price.php:49
 #: includes/settings/wcj-settings-stock.php:101
-#: includes/shortcodes/class-wcj-shortcodes-products.php:593
+#: includes/shortcodes/class-wcj-shortcodes-products.php:594
 msgid "Out of stock"
 msgstr ""
 
@@ -1043,17 +1043,17 @@ msgstr ""
 msgid "Add custom info to the cart page."
 msgstr ""
 
-#: includes/class-wcj-checkout-core-fields.php:27
+#: includes/class-wcj-checkout-core-fields.php:25
 msgid "Checkout Core Fields"
 msgstr ""
 
-#: includes/class-wcj-checkout-core-fields.php:28
+#: includes/class-wcj-checkout-core-fields.php:26
 msgid ""
 "Customize core checkout fields. Disable/enable fields, set required, change "
 "labels and/or placeholders; Setup fields by category (Plus)"
 msgstr ""
 
-#: includes/class-wcj-checkout-core-fields.php:29
+#: includes/class-wcj-checkout-core-fields.php:27
 msgid ""
 "Customize core checkout fields. Disable/enable fields, set required, change "
 "labels and/or placeholders etc."
@@ -2400,7 +2400,7 @@ msgstr ""
 #: includes/class-wcj-my-account.php:496
 #: includes/class-wcj-product-bulk-meta-editor.php:280
 #: includes/class-wcj-product-by-user.php:207
-#: includes/class-wcj-purchase-data.php:98
+#: includes/class-wcj-purchase-data.php:95
 #: includes/class-wcj-track-users.php:335
 #: includes/classes/class-wcj-module.php:891
 #: includes/functions/wcj-functions-general.php:189
@@ -2741,23 +2741,23 @@ msgstr ""
 msgid "Tool renumerates all orders."
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:317
+#: includes/class-wcj-order-numbers.php:326
 msgid "Orders successfully renumerated!"
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:320
+#: includes/class-wcj-order-numbers.php:329
 #, php-format
 msgid "Sequential number generation is enabled. Next order number will be %s."
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:329
+#: includes/class-wcj-order-numbers.php:338
 #, php-format
 msgid ""
 "Press the button below to renumerate all existing orders starting from order "
 "counter settings in <a href=\"%s\">Order Numbers</a> module."
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:336
+#: includes/class-wcj-order-numbers.php:345
 msgid "Renumerate orders"
 msgstr ""
 
@@ -3726,7 +3726,7 @@ msgid "Save"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-meta-editor.php:390
-#: includes/class-wcj-purchase-data.php:81
+#: includes/class-wcj-purchase-data.php:78
 #: includes/export/class-wcj-fields-helper.php:280
 #: includes/functions/wcj-functions-reports.php:24
 #: includes/settings/wcj-settings-product-bulk-meta-editor.php:42
@@ -3805,7 +3805,7 @@ msgid "Products category"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-price-converter.php:262
-#: includes/shortcodes/class-wcj-shortcodes-products.php:369
+#: includes/shortcodes/class-wcj-shortcodes-products.php:357
 msgid "Any"
 msgstr ""
 
@@ -3950,19 +3950,19 @@ msgstr ""
 msgid "Set product availability by date."
 msgstr ""
 
-#: includes/class-wcj-product-by-date.php:111
+#: includes/class-wcj-product-by-date.php:114
 #: includes/settings/wcj-settings-product-by-date.php:107
 msgid "%product_title% is not available until %direct_date%."
 msgstr ""
 
-#: includes/class-wcj-product-by-date.php:118
-#: includes/class-wcj-product-by-date.php:120
+#: includes/class-wcj-product-by-date.php:121
+#: includes/class-wcj-product-by-date.php:123
 #: includes/settings/wcj-settings-product-by-date.php:95
 msgid "<p style=\"color:red;\">%product_title% is not available this month.</p>"
 msgstr ""
 
-#: includes/class-wcj-product-by-date.php:121
-#: includes/class-wcj-product-by-date.php:123
+#: includes/class-wcj-product-by-date.php:124
+#: includes/class-wcj-product-by-date.php:126
 #: includes/settings/wcj-settings-product-by-date.php:83
 msgid ""
 "<p style=\"color:red;\">%product_title% is available only on %date_this_month"
@@ -4435,7 +4435,6 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-product-price-by-formula.php:241
-#: includes/class-wcj-purchase-data.php:256
 msgid "Error in formula"
 msgstr ""
 
@@ -4668,41 +4667,41 @@ msgstr ""
 msgid "Products XML file #%s created successfully."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:30
+#: includes/class-wcj-purchase-data.php:28
 msgid "Cost of Goods"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:31
+#: includes/class-wcj-purchase-data.php:29
 msgid ""
 "Save product purchase costs data for admin reports (1 custom field allowed in "
 "free version)."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:32
+#: includes/class-wcj-purchase-data.php:30
 msgid "Save product purchase costs data for admin reports."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:38
+#: includes/class-wcj-purchase-data.php:36
 msgid "\"WooCommerce Cost of Goods\" Data Import"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:39
+#: includes/class-wcj-purchase-data.php:37
 msgid "Import products costs from \"WooCommerce Cost of Goods\"."
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:82
+#: includes/class-wcj-purchase-data.php:79
 msgid "Product Title"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:83
+#: includes/class-wcj-purchase-data.php:80
 msgid "WooCommerce Cost of Goods (source)"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:84
+#: includes/class-wcj-purchase-data.php:81
 msgid "Booster: Product cost (destination)"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:120
+#: includes/class-wcj-purchase-data.php:116
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:139
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:209
 #: includes/shipping/class-wc-shipping-wcj-custom.php:122
@@ -4710,30 +4709,30 @@ msgstr ""
 msgid "Cost"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:123
-#: includes/class-wcj-purchase-data.php:188
-#: includes/class-wcj-purchase-data.php:455
+#: includes/class-wcj-purchase-data.php:119
+#: includes/class-wcj-purchase-data.php:182
+#: includes/class-wcj-purchase-data.php:269
 #: includes/functions/wcj-functions-reports.php:28
 #: includes/settings/wcj-settings-purchase-data.php:144
 #: includes/settings/wcj-settings-purchase-data.php:172
 msgid "Profit"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:191
+#: includes/class-wcj-purchase-data.php:185
 #: includes/settings/wcj-settings-purchase-data.php:153
 #: includes/settings/wcj-settings-purchase-data.php:179
 msgid "Purchase Cost"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:453
+#: includes/class-wcj-purchase-data.php:267
 msgid "Selling"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:454
+#: includes/class-wcj-purchase-data.php:268
 msgid "Buying"
 msgstr ""
 
-#: includes/class-wcj-purchase-data.php:462
+#: includes/class-wcj-purchase-data.php:276
 msgid "Report"
 msgstr ""
 
@@ -16850,18 +16849,30 @@ msgid "Message when product is not available by direct date."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-by-date.php:122
-msgid "Action"
+msgid "Show Message on Category/shop Page"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-by-date.php:123
+msgid "Show Message on shop Page"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-by-date.php:124
+msgid "Enable this if you also want to show message on shop page."
+msgstr ""
+
+#: includes/settings/wcj-settings-product-by-date.php:130
+msgid "Action"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-by-date.php:131
 msgid "Action to be taken, when product is not available by date."
 msgstr ""
 
-#: includes/settings/wcj-settings-product-by-date.php:128
+#: includes/settings/wcj-settings-product-by-date.php:136
 msgid "Make product non-purchasable"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-by-date.php:129
+#: includes/settings/wcj-settings-product-by-date.php:137
 msgid "Only output message"
 msgstr ""
 
@@ -20066,7 +20077,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-orders.php:348
+#: includes/shortcodes/class-wcj-shortcodes-orders.php:339
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""
@@ -20109,20 +20120,20 @@ msgstr ""
 msgid "Edit Product"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:342
+#: includes/shortcodes/class-wcj-shortcodes-products.php:331
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:349
+#: includes/shortcodes/class-wcj-shortcodes-products.php:338
 msgid "No sales yet."
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:590
+#: includes/shortcodes/class-wcj-shortcodes-products.php:591
 msgid "In stock"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:1020
+#: includes/shortcodes/class-wcj-shortcodes-products.php:1009
 msgid "from %level_min_qty% pcs."
 msgstr ""
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Availability by Date
  *
- * @version 4.7.0
+ * @version 5.3.8
  * @since   2.9.1
  * @author  Pluggabl LLC.
  */
@@ -117,6 +117,14 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_by_date_advanced_options',
+	),
+	array(
+		'title'    => __( 'Show Message on Category/shop Page', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Show Message on shop Page', 'woocommerce-jetpack' ) . '</strong>',
+		'desc_tip' => __( 'Enable this if you also want to show message on shop page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_by_date_show_message_on_shop_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Action', 'woocommerce-jetpack' ),

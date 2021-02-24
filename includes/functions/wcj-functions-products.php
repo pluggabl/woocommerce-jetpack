@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 5.3.6
+ * @version 5.3.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -151,7 +151,7 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	/**
 	 * wcj_get_product_display_price.
 	 *
-	 * @version 3.8.0
+	 * @version 5.3.8
 	 * @since   2.7.0
 	 * @todo    `$scope` in `WCJ_IS_WC_VERSION_BELOW_3` (i.e. `cart`)
 	 */
@@ -163,9 +163,9 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 			return $_product->get_display_price( $price, $qty );
 		} else {
 			$minus_sign = '';
-			if ( $price < 0 ) {
-				$minus_sign = '-';
-				$price *= -1;
+			if ( $price < 0  && is_numeric($price) ) {
+					$minus_sign = '-';
+					$price *= -1;
 			}
 			if ( 'cart' === $scope ) {
 				$display_price = ( 'incl' === wcj_get_option( 'woocommerce_tax_display_cart' ) ?

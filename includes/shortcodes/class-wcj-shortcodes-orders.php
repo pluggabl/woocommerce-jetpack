@@ -144,6 +144,9 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'color'                       => 'black',
 			'currency'                    => '',
 			'doc_type'                    => 'invoice',
+			'exclude_by_categories'       => '',
+			'exclude_by_tags'             => '',
+			'exclude_by_attribute__name'  => '', 
 			'show_label'                  => true
 		), $atts );
 
@@ -1199,9 +1202,50 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.1.2
 	 */
+	
 	function wcj_order_total_tax( $atts ) {
-		return $this->wcj_price_shortcode( apply_filters( 'wcj_order_total_tax', $this->the_order->get_total_tax(), $this->the_order ), $atts );
+		$the_items          = $this->the_order->get_items();
+		$exclude_item_total = 0;
+  
+		foreach ( $the_items as $item_id => $item ) {
+			$the_product = $item->get_product( $item );
+		   
+			// Check if it's not excluded by category
+			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
+					$exclude_item_tax += $item->get_subtotal_tax();
+				}
+			}
+  
+			// Check if it's not excluded by tag
+			if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
+					$exclude_item_tax += $item->get_subtotal_tax();
+				}
+			}
+  
+			// Check if it's not excluded by product attribute
+			if ( $the_product && '' != $atts['exclude_by_attribute__name'] ) {
+				$product_attributes = $the_product->get_attributes();
+				if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
+					$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
+					if ( is_object( $product_attribute ) ) {
+						if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+							$exclude_item_tax += $item->get_subtotal_tax();
+						}
+					} elseif ( $atts['exclude_by_attribute__name'] ) {
+						$exclude_item_tax += $item->get_subtotal_tax();
+					}
+				}
+			}
+		}
+		$total_tax = $this->the_order->get_total_tax();
+		$total_tax -= $exclude_item_tax;
+		$total_tax = $this->wcj_price_shortcode( apply_filters( 'wcj_order_total_tax', $total_tax, $this->the_order ), $atts );
+		//$total_tax -= $exclude_item_tax;
+		return $total_tax;
 	}
+ 
 
 	/**
 	 * wcj_order_total_tax_after_refund.
@@ -1232,18 +1276,84 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_order_subtotal.
 	 */
 	function wcj_order_subtotal( $atts ) {
+	
+ 
+       if ( 'yes' === $atts['round_by_line'] ) {
+           $the_subtotal = 0;
+           foreach ( $this->the_order->get_items() as $item ) {
+               $the_product = $item->get_product( $item ) ;
+           // Check if it's not excluded by category
+           if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+               if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
+                   continue;
+               }
+           }
+           // Check if it's not excluded by tag
+           if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+               if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
+                   continue;
+               }
+           }
+           // Check if it's not excluded by product attribute
+           if ( '' != $atts['exclude_by_attribute__name'] && $the_product   ) {
+               $product_attributes = $the_product->get_attributes();
+               if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
+                   $product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
+                   if ( is_object( $product_attribute ) ) {
+                       if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+                           continue;
+                       }
+                   } elseif ( $atts['exclude_by_attribute__name'] ) {
+                       continue;
+                   }
+               }
+           }
+ 
+               $the_subtotal += $this->the_order->get_line_subtotal( $item, false, true );
+           }
+       } else {
+           $the_items          = $this->the_order->get_items();
+           $exclude_item_total = 0;
+  
+           foreach ( $the_items as $item_id => $item ) {
+               $the_product = $item->get_product( $item );
+              
+               // Check if it's not excluded by category
+               if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+                   if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
+                       $exclude_item_subtotal += $item['total'];  
+                   }
+               }
+  
+               // Check if it's not excluded by tag
+               if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+                   if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
+                       $exclude_item_subtotal += $item['total'];  
+                   }
+               }
+  
+               // Check if it's not excluded by product attribute
+               if ( $the_product && '' != $atts['exclude_by_attribute__name'] ) {
+                   $product_attributes = $the_product->get_attributes();
+                   if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
+                       $product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
+                       if ( is_object( $product_attribute ) ) {
+                           if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+                               $exclude_item_subtotal += $item['total'];;
+                           }
+                       } elseif ( $atts['exclude_by_attribute__name'] ) {
+                           $exclude_item_subtotal += $item['total'];
+                       }
+                   }
+               }
+           }
+           $the_subtotal = $this->the_order->get_subtotal();
+           $the_subtotal -= $exclude_item_subtotal;
+       }
+ 
+       return $this->wcj_price_shortcode( $the_subtotal, $atts );
+   }
 
-		if ( 'yes' === $atts['round_by_line'] ) {
-			$the_subtotal = 0;
-			foreach ( $this->the_order->get_items() as $item ) {
-				$the_subtotal += $this->the_order->get_line_subtotal( $item, false, true );
-			}
-		} else {
-			$the_subtotal = $this->the_order->get_subtotal();
-		}
-
-		return $this->wcj_price_shortcode( $the_subtotal, $atts );
-	}
 
 	/**
 	 * wcj_order_subtotal_to_display.
@@ -1294,14 +1404,58 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 * @version 5.3.7
 	 * 
 	 */
+
+
 	function wcj_order_total( $atts ) {
-		$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
-		$order_total_after_refund = $this->the_order->get_total() - $this->the_order->get_total_refunded();
-		if (!empty($order_total_after_refund)) {
-			return $this->wcj_price_shortcode($order_total_after_refund, $atts);
+		$the_items          = $this->the_order->get_items();
+		$exclude_item_total = 0;
+  
+		foreach ( $the_items as $item_id => $item ) {
+			$the_product = $item->get_product( $item );
+		   
+			// Check if it's not excluded by category
+			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
+					$exclude_item_total += $item->get_total(); 
+				}
+			}
+  
+			// Check if it's not excluded by tag
+			if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
+					$exclude_item_total += $item->get_total(); 
+				}
+			}
+  
+			// Check if it's not excluded by product attribute
+			if ( $the_product && '' != $atts['exclude_by_attribute__name'] ) {
+				$product_attributes = $the_product->get_attributes();
+				if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
+					$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
+					if ( is_object( $product_attribute ) ) {
+						if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+							$exclude_item_total += $item->get_total();
+						}
+					} elseif ( $atts['exclude_by_attribute__name']) {
+						$exclude_item_total += $item->get_total();
+					}
+				}
+			}
 		}
+  
+		$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
+  
+		$order_total -= $exclude_item_total;
+  
 		return $this->wcj_price_shortcode( $order_total, $atts );
 	}
+ 
+
+
+
+
+
+	
 
 	/**
 	 * wcj_order_total_after_refund.

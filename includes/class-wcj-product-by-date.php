@@ -52,6 +52,9 @@ class WCJ_Product_By_Date extends WCJ_Module {
 					add_filter( 'woocommerce_is_purchasable', array( $this, 'check_is_purchasable_by_date' ), PHP_INT_MAX, 2 );
 				}
 				add_action( 'woocommerce_single_product_summary', array( $this, 'maybe_add_unavailable_by_date_message' ), 30 );
+				if('yes' === wcj_get_option( 'wcj_product_by_date_show_message_on_shop_enabled', 'no' )){
+					add_action( 'woocommerce_shop_loop_item_title', array( $this, 'maybe_add_unavailable_by_date_message' ), 30 );
+				}	
 			}
 		}
 	}

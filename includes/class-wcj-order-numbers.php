@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.2.0
+ * @version 5.3.8
  * @author  Pluggabl LLC.
  */
 
@@ -204,6 +204,15 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		$search_no_suffix_and_prefix = preg_replace( "/{$suffix}\z/i", '', $search_no_suffix );
 		$final_search                = empty( $search_no_suffix_and_prefix ) ? $search : $search_no_suffix_and_prefix;
 
+		if($search == $final_search){
+
+			$final_search = substr($final_search,strlen( $prefix ));
+			$final_search = ltrim($final_search,0);
+			if(strlen( $suffix ) > 0)
+			{
+				$final_search = substr($final_search,0,-strlen( $suffix ));
+			}
+		}
 		// Post Status
 		$post_status = isset( $_GET['post_status'] ) ? $_GET['post_status'] : 'any';
 

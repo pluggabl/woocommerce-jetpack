@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.3.7
+ * @version 5.3.8
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.6.1
 	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
@@ -78,6 +78,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'image_nr'              => 1,
 			'multiply_by'           => '',
 			'multiply_by_meta'      => '',
+			'addition_by'			=>'',
+			'subtraction_by'		=>'',
+			'division_by'		    =>'',
 			'hide_currency'         => 'no',
 			'excerpt_length'        => 0, // deprecated
 			'length'                => 0,
@@ -386,7 +389,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_price_including_or_excluding_tax.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.1
 	 * @since   2.5.7
 	 */
 	function get_product_price_including_or_excluding_tax( $atts, $including_or_excluding ) {
@@ -410,6 +413,23 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 					$min = $min * $atts['multiply_by'];
 					$max = $max * $atts['multiply_by'];
 				}
+				// For Additon
+				if ( 0 != $atts['addition_by'] && is_numeric( $atts['addition_by'] ) ) {
+					$min = $min + $atts['addition_by'];
+					$max = $max + $atts['addition_by'];
+				}
+				
+				//For Subsaction
+				if ( 0 != $atts['subtraction_by'] && is_numeric( $atts['subtraction_by'] ) ) {
+					$min = $min - $atts['subtraction_by'];
+					$max = $max - $atts['subtraction_by'];
+				}
+
+				//For Division
+				if ( 0 != $atts['division_by'] && is_numeric( $atts['division_by'] ) ) {
+					$min = $min / $atts['division_by'];
+					$max = $max / $atts['division_by'];
+				}	
 				if ( 'yes' !== $atts['hide_currency'] ) {
 					$min = wc_price( $min );
 					$max = wc_price( $max );
@@ -425,6 +445,15 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 			if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
 				$the_price = $the_price * $atts['multiply_by'];
+			}
+			if ( 0 != $atts['addition_by'] && is_numeric( $atts['addition_by'] ) ) {
+				$the_price = $the_price + $atts['addition_by'];
+			}	
+			if ( 0 != $atts['subtraction_by'] && is_numeric( $atts['subtraction_by'] ) ) {
+				$the_price = $the_price - $atts['subtraction_by'];
+			}
+			if ( 0 != $atts['division_by'] && is_numeric( $atts['division_by'] ) ) {
+				$the_price = $the_price / $atts['division_by'];
 			}
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
 		}
@@ -630,13 +659,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_sales.
 	 *
-	 * @version 2.7.0
+	 * @version 5.3.8
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_sales( $atts ) {
 		$product_custom_fields = get_post_custom( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
 		$total_sales = ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
-		if ( 0 != $atts['offset'] ) {
+		if ( 0 != $atts['offset'] && !is_numeric($total_sales) ) {
 			$total_sales += $atts['offset'];
 		}
 		return ( 0 == $total_sales && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_sales;
