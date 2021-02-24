@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 5.2.0
+ * @version 5.3.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.3.8
 	 * @since   2.8.0
 	 * @todo    (maybe) change `link_slug` to "woocommerce-products-stock" or "woocommerce-product-stock"
 	 * @todo    customize "Available on backorder" message in cart
@@ -44,6 +44,7 @@ class WCJ_Stock extends WCJ_Module {
 			if ( $this->is_custom_in_stock || $this->is_custom_out_of_stock || $this->is_custom_backorder ) {
 				if ( $this->is_custom_in_stock_text || $this->is_custom_out_of_stock_text || $this->is_custom_backorder_text ) {
 					add_filter( 'woocommerce_get_availability_text', array( $this, 'custom_availability_text' ), PHP_INT_MAX, 2 );
+					add_filter( 'woocommerce_before_variations_form', array( $this, 'custom_availability_for_variable_product' ), PHP_INT_MAX, 2 );
 				}
 				if ( $this->is_custom_in_stock_class || $this->is_custom_out_of_stock_class || $this->is_custom_backorder_class ) {
 					add_filter( 'woocommerce_get_availability_class', array( $this, 'custom_availability_class' ), PHP_INT_MAX, 2 );
@@ -64,7 +65,60 @@ class WCJ_Stock extends WCJ_Module {
 		}
 
 	}
-
+	/**
+	 * custom_availability_for_variable_product.
+	 *
+	 * @version 5.3.8
+	 * @since   3.6.0
+	 * @see     `wc_format_stock_for_display()`
+	 * */
+	function custom_availability_for_variable_product(){
+		global $product;
+		$_product = $product;
+			if( $_product->is_type( 'variable' )) {	
+				$stock = get_post_meta( $_product->get_id(), '_manage_stock', true );
+				if($stock ==='yes'){
+					if ( !$_product->is_in_stock() ) {
+						if($this->is_custom_out_of_stock && $this->is_custom_out_of_stock_text){
+							$variable="<div class='stock'>".do_shortcode( wcj_get_option( 'wcj_stock_custom_out_of_stock', '' ) )."</div>";
+							echo $variable;
+						}						
+					}
+					elseif ( $_product->managing_stock() && $_product->is_on_backorder( 1 ) ) {
+						if ( $this->is_custom_backorder && $this->is_custom_backorder_text ) {
+							// Available on backorder
+							echo $_product->backorders_require_notification() ? do_shortcode( wcj_get_option( 'wcj_stock_custom_backorder', '' ) ) : '';	
+						}
+					}
+					elseif ( $_product->managing_stock() ) {
+						if ( $this->is_custom_in_stock && $this->is_custom_in_stock_text ) {
+							// In stock
+							if (
+								'' != ( $low_amount_text = wcj_get_option( 'wcj_stock_custom_in_stock_low_amount', '' ) ) &&
+								'low_amount' === wcj_get_option( 'woocommerce_stock_format' ) && $_product->get_stock_quantity() <= wcj_get_option( 'woocommerce_notify_low_stock_amount' )
+							) {
+								// Only %s left in stock
+								$return = sprintf( do_shortcode( $low_amount_text ),
+									wc_format_stock_quantity_for_display( $_product->get_stock_quantity(), $_product ) );
+							} else {
+								// %s in stock && In stock
+								$return = sprintf( do_shortcode( wcj_get_option( 'wcj_stock_custom_in_stock', '' ) ),
+									wc_format_stock_quantity_for_display( $_product->get_stock_quantity(), $_product ) );
+							}
+							if ( '' != ( $can_be_backordered_text = wcj_get_option( 'wcj_stock_custom_in_stock_can_be_backordered', '' ) ) &&
+								$_product->backorders_allowed() && $_product->backorders_require_notification()
+							) {
+								// (can be backordered)
+								$return .= $can_be_backordered_text;
+							}
+							echo $return;
+						}
+					}
+					
+				}
+		}	
+		
+	}
 	/**
 	 * custom_availability_text.
 	 *
@@ -82,8 +136,10 @@ class WCJ_Stock extends WCJ_Module {
 				return do_shortcode( wcj_get_option( 'wcj_stock_custom_out_of_stock', '' ) );
 			}
 		} elseif ( $_product->managing_stock() && $_product->is_on_backorder( 1 ) ) {
+			
 			if ( $this->is_custom_backorder && $this->is_custom_backorder_text ) {
 				// Available on backorder
+				
 				return $_product->backorders_require_notification() ? do_shortcode( wcj_get_option( 'wcj_stock_custom_backorder', '' ) ) : '';
 			}
 		} elseif ( $_product->managing_stock() ) {

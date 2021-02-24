@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 5.2.0
+ * @version 5.3.8
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    order max amount
@@ -39,7 +39,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * add_order_minimum_amount_hooks.
 	 *
-	 * @version 4.9.0
+	 * @version 5.3.8
 	 * @since   2.5.3
 	 * @todo    (maybe) `template_redirect` instead of `wp`
 	 */
@@ -58,6 +58,10 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		if ( $is_order_minimum_amount_enabled ) {
 			add_action( 'woocommerce_checkout_process', array( $this, 'order_minimum_amount' ) );
 			add_action( 'woocommerce_before_cart',      array( $this, 'order_minimum_amount' ) );
+			if( wcj_is_plugin_activated( 'woo-gutenberg-products-block', 'woocommerce-gutenberg-products-block.php' ) ){
+				// For the Woocommerce blocks plugin
+				add_action( 'wooocommerce_store_api_validate_cart_item',      array( $this, 'order_minimum_amount' ) );
+			}	
 			if ( 'yes' === wcj_get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout', 'no' ) ) {
 				add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), 100 );
 			}

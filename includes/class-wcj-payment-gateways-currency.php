@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency Converter
  *
- * @version 5.3.6
+ * @version 5.3.8
  * @since   2.3.0
  * @author  Pluggabl LLC.
  */
@@ -136,7 +136,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_price_by_gateway.
 	 *
-	 * @version 4.3.0
+	 * @version 5.3.8
 	 * @since   2.3.0
 	 */
 	function change_price_by_gateway( $price, $product ) {
@@ -145,7 +145,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 			if ( '' != $current_gateway ) {
 				$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 				$gateway_currency_exchange_rate = str_replace( ',', '.', $gateway_currency_exchange_rate );
-				$price                          = $price * $gateway_currency_exchange_rate;
+				if(is_numeric($price)){
+					$price                          = $price * $gateway_currency_exchange_rate;
+				}	
 			}
 		}
 		return $price;
