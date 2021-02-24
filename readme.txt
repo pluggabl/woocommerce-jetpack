@@ -197,13 +197,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 * PHP 8.0.2 tested
 * WooCommerce 5.0 tested
-* Dev - PRODUCTS - Stock - For Variable product, custom stock message should be shown before option selection, if stock management is set at product level.
+* Dev - PRODUCTS - Stock - For a Variable product, the custom stock message should be shown before option selection, if stock management is set at the product level.
 * Dev - PRODUCTS - Stock - Show product availability message on shop/loop/search etc.
 * Fix - PRICES & CURRENCIES - Global Discount - Discount conflict when we enable global and wholesale both discounts.
 * Dev - SHIPPING & ORDERS - Order Minimum Amount - Compatibility issue has been resolved with Woocommerce Blocks plugin
-* Fix - SHIPPING & ORDERS - Order Numbers - Custom order number search is not working when date parameter is set
+* Fix - SHIPPING & ORDERS - Order Numbers - Custom order number search is not working when the date parameter is set
 * Dev - PDF INVOICING & PACKING SLIPS - Add addition, subtraction, division attributes to shortcodes like multiply_by
-* Dev - PRODUCTS - Shortcodes - Exclude Item_total from order total and order subtotal if product has been excluded by tag, category or attribute name in invoice pdf.
+* Dev - PRODUCTS - Shortcodes - Exclude Item_total from order total and order subtotal if the product has been excluded by tag, category or attribute name in invoice pdf.
 
 = 5.3.7 - 28/01/2021 =
 * Fix - CART & CHECKOUT - Checkout Core Fields - Fix "Checkout Field arragement not working" issue.
