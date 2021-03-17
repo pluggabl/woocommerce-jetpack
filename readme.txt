@@ -249,7 +249,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 5.3.9 - 16/03/2021 =
+= 5.3.9 - 17/03/2021 =
 * PHP 8.0.2 tested
 * WooCommerce 5.1.0 tested
 * Wordpress 5.7 tested
