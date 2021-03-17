@@ -4,7 +4,7 @@ Tags: woocommerce bundle, woocommerce product addon, woocommerce integration, wo
 
 Requires at least: 4.4
 Tested up to: 5.7
-Stable tag: 5.3.9-dev
+Stable tag: 5.3.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
