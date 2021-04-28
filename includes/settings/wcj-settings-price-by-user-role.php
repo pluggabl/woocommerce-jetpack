@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 5.3.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -109,7 +109,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. If you face pricing issues while using another plugin or booster module, You can change the Priority, Greater value for high priority & Lower value for low priority. Set to zero to use default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
@@ -136,7 +136,7 @@ $settings = array(
 		'title'             => __( 'WooCommerce Product Bundles', 'woocommerce-jetpack' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
-		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">WooCommerce Product Bundles</a> plugin.', 'woocommerce-jetpack' ), 'https://woocommerce.com/products/product-bundles/' ),
+		'desc_tip'          => sprintf( __( 'Enable this option if there is compatibility with <a href="%s" target="_blank">WooCommerce Product Bundles</a> plugin.', 'woocommerce-jetpack' ), 'https://woocommerce.com/products/product-bundles/' ),
 		'id'                => 'wcj_price_by_user_role_compatibility_wc_product_bundles',
 		'default'           => 'no',
 		'type'              => 'checkbox',

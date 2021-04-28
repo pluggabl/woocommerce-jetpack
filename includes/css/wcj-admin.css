@@ -8,3 +8,168 @@
 img.wcj-rocket-icon:hover {
 	box-shadow: 0 1px 0 #C43F15;
 }
+
+/* start admin getting strted welcome page */
+.wcj-welcome-page{
+    padding-top: 110px;
+}
+.wcj-welcome-container{
+    width: 750px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+.wcj-welcome-content-main{
+    padding-top: 50px;
+    background: #fff;
+    border: 1px solid #d6e2ed;
+    margin: 25px 0;
+    position: relative;
+    text-align: center; 
+}
+.wcj-welcome-content-inner{
+    padding:25px;
+}
+.wcj-welcome-content-inner h3{
+    color: #393f4c;
+    font-size: 24px;
+    margin: 0 0 20px;
+    line-height: 1.4;
+}
+.wcj-welcome-content-inner p{
+    font-size: 16px;
+}
+.wcj-welcome-content-logo-main{
+    position: absolute;
+    top: -60px;
+    width: 120px;
+    height: 120px;
+    left: 50%;
+    margin-left: -60px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid #d6e2ed;
+}
+.wcj-welcome-content-logo-main .wcj-welcome-content-logo{
+    width: 100%;
+    padding-top: 66%;
+    position: relative;
+}
+.wcj-welcome-content-logo::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 82px;
+    padding-top: 68%;
+    background-image: url(../../assets/images/plugin_logo.png);
+    margin: 15px 19px 19px;
+}
+.wcj-welcome-padding-top-0{
+    padding-top: 0px;
+}
+.wcj-buy-puls-btn-main {
+    width: 100%;
+}
+.wcj-buy-puls-btn{
+    background: #f46c5e;
+    border-width: 1px 1px 2px;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 15px 30px;
+    text-decoration: none;
+}
+.wcj-buy-puls-btn:hover{
+    color: #fff;
+    text-decoration:underline;
+}
+.wcj-buy-puls-content-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0px;
+}
+.wcj-buy-puls-content-col-4{
+    text-align: left;
+    width: 33%;
+    float: left;
+    display: flex;    
+}
+.wcj-buy-puls-content-col-4 .wcj-badge{
+    border: 1px solid #d4ddf2;
+    border-radius: 50px;
+    text-align: left;
+    padding: 8px;
+    width: 100%;
+    box-shadow: 0 0 6px #d4ddf2;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.wcj-badge img{
+    float: left;
+    width: 55px;
+    height: auto;
+    display: block;
+    margin: 0 10px;
+}
+.wcj-badge span{
+    font-size: 16px;
+    white-space: normal;
+    line-height: normal;
+    top: auto;
+}
+.wcj-buy-puls-content-col-6{
+    text-align: left;
+    width: 50%;
+    float: left;
+    display: flex;
+}
+.wcj-feature-img img{
+    float: left;
+    width: 55px;
+    height: auto;
+    display: block;
+    margin:15px;
+
+}
+.wcj-feature-text h4{
+    font-size: 16px;
+}
+.wcj-feature-text p{
+    font-size: 14px;
+    margin-top: -15px;
+
+}
+.wcj-welcome-subscribe-email{
+    margin-top: 30px;
+}
+.wcj-welcome-subscribe-email .user_email{
+    width: 50%;
+    height: 35px;
+}
+.subscribe-email-btn{
+    background: #f46c5e;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px 20px;
+    border: 0;
+}
+.wcj-support{
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+.wcj-support a{
+    color: #f46c5e;
+    font-size: 16px;
+}
+/* end admin getting strted welcome page */

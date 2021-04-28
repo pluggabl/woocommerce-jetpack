@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 4.3.0
+ * @version 5.4.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -42,7 +42,6 @@ return apply_filters( 'wcj_modules', array(
 			'price_formats',
 		),
 	),
-
 	'labels' => array(
 		'label'          => __( 'Button & Price Labels', 'woocommerce-jetpack' ),
 		'desc'           => __( 'Add to Cart Labels, Call for Price, Custom Price Labels and more.', 'woocommerce-jetpack' ),
@@ -88,7 +87,7 @@ return apply_filters( 'wcj_modules', array(
 			'product_by_user',
 			'products_xml',
 			'product_bulk_meta_editor',
-			'product_msrp',
+			'product_msrp'
 		),
 	),
 

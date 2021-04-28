@@ -15,7 +15,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.3.7
+	 * @version 5.4.0
 	 * @see     https://docs.woocommerce.com/document/tutorial-customising-checkout-fields-using-actions-and-filters/
 	 * @todo    (maybe) default overrides should be `disable`
 	 */
@@ -56,8 +56,8 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 		);
 
 		if ( $this->is_enabled() ) {
-			add_action('woocommerce_checkout_fields', array($this, 'enqueue_scripts'), PHP_INT_MAX);
 			add_filter( 'woocommerce_checkout_fields' ,            array( $this, 'custom_override_checkout_fields' ),        PHP_INT_MAX );
+			add_action('woocommerce_checkout_fields', array($this, 'enqueue_scripts'), PHP_INT_MAX);
 			if ( 'disable' != ( $this->country_locale_override = wcj_get_option( 'wcj_checkout_core_fields_override_country_locale_fields', 'billing' ) ) ) {
 				add_filter( 'woocommerce_get_country_locale',      array( $this, 'custom_override_country_locale_fields' ),  PHP_INT_MAX );
 			}

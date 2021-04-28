@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Shipping Methods by Min/Max Order Amount
  *
- * @version 3.5.0
+ * @version 5.4.0
  * @since   3.2.1
  * @author  Pluggabl LLC.
  */
@@ -32,7 +32,7 @@ $settings = array(
 	array(
 		'title'   => __( 'Shipping Methods by Min/Max Order Amount', 'woocommerce-jetpack' ),
 		'type'    => 'title',
-		'desc'    => __( 'Set to zero to disable.', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Set to zero to disable. Allows only non-decimal value.', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_shipping_by_order_amount_options',
 	),
 );

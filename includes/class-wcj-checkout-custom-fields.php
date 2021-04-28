@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.3.6
+ * @version 5.4.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.4.0
 	 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 	 */
 	function __construct() {
@@ -25,6 +25,17 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 		$this->desc       = __( 'Add custom fields to the checkout page (1 field allowed in free version).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Add custom fields to the checkout page.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-custom-fields';
+		$this->extra_desc = sprintf( __( 'After setting Checkout Custom Fields, you can use below shortcode with meta_key to display the Product Input Fields value: %s', 'woocommerce-jetpack' ),
+			'<ol>' .
+				'<li>' . sprintf( __( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<code>[wcj_order_checkout_field meta_key = "billing_wcj_checkout_field_&lt;field_id&gt;"]</code><br>field_id is the key of your Checkout Custom Fields, You will find key from Option Custom Field' ) .
+				'</li>' .
+				'<li>' . sprintf( __( '<strong>PHP code:</strong> by using %s function,<br> e.g.: %s', 'woocommerce-jetpack' ),
+					'<code>do_shortcode()</code>',
+					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_checkout_field meta_key = "billing_wcj_checkout_field_1]\'&nbsp;);</code>' ) .
+				'</li>' .
+			'</ol>' );
+
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -271,11 +282,11 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 3.8.0
+	 * @version 5.4.0
 	 * @since   2.3.0
 	 * @todo    convert from before version 2.3.0
 	 */
-	function add_custom_fields_to_order_display( $order, $section = '', $templates ) {
+	function add_custom_fields_to_order_display( $order, string $section =null, $templates ) {
 		$post_meta    = get_post_meta( wcj_get_order_id( $order ) );
 		$final_output = '';
 		foreach( $post_meta as $key => $values ) {

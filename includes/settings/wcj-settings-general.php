@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 4.5.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -84,6 +84,7 @@ $settings = array(
 			'standard' => __( 'Standard PHP sessions', 'woocommerce-jetpack' ),
 			'wc'       => __( 'WC sessions', 'woocommerce-jetpack' ),
 		),
+		'desc'     => __( 'If you are having issues with currency related modules, You can change the session type', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'    => __( 'Read and Close', 'woocommerce-jetpack' ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 4.5.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
@@ -22,7 +22,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Product Input Fields - per Product', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
-		'desc_tip' => __( 'Add custom input field on per product basis.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Add custom input field on per product basis. <br>key: <code>_wcj_product_input_fields_global_&ltfield_id&gt</code><br> field_id will available in meta box of <b>Booster: Product Input Fields</b> on product page ', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_input_fields_local_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -87,6 +87,9 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_pro
 		),
 	) );
 	foreach( $options as $option ) {
+		if( !isset( $option['desc_tip'] ) && $option['id'] == 'wcj_product_input_fields_enabled_global_' ){
+			$option['desc_tip'] = __('key: <code>_wcj_product_input_fields_global_' . $i . '</code>' , 'woocommerce-jetpack' );
+		}
 		$settings = array_merge( $settings, array(
 			array(
 				'title'    => ( isset( $option['short_title'] ) ? $option['short_title'] : $option['title'] ),

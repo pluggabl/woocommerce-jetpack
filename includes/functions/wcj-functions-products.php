@@ -163,10 +163,12 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 			return $_product->get_display_price( $price, $qty );
 		} else {
 			$minus_sign = '';
-			if ( $price < 0  && is_numeric($price) ) {
-					$minus_sign = '-';
-					$price *= -1;
-			}
+			if ( $price < 0 ) {
+				if(is_numeric($price)){
+			   $minus_sign = '-';
+			   $price *= -1;
+				}
+		   }
 			if ( 'cart' === $scope ) {
 				$display_price = ( 'incl' === wcj_get_option( 'woocommerce_tax_display_cart' ) ?
 					wc_get_price_including_tax( $_product, array( 'price' => $price, 'qty' => $qty ) ) :
@@ -183,7 +185,7 @@ if ( ! function_exists( 'wcj_get_product_formatted_variation' ) ) {
 	/**
 	 * wcj_get_product_formatted_variation.
 	 *
-	 * @version 2.7.0
+	 * @version 5.4.0
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_formatted_variation( $variation, $flat = false, $include_names = true ) {

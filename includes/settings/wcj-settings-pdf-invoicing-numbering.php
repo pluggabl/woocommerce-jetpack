@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Numbering
  *
- * @version 3.2.2
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -36,6 +36,8 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_counter_width',
 			'default'  => 0,
 			'type'     => 'number',
+			'desc'     => __( 'Counter Width is the min width of the document length.<br>
+               For Ex. If you set 2, It will show the counter in 2 digit (15). If you set 3, It will show counter in 3 digit (015),', 'woocommerce-jetpack' ),
 		),
 		array(
 			'title'    => __( 'Prefix', 'woocommerce-jetpack' ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Core Fields
  *
- * @version 4.9.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -132,6 +132,7 @@ foreach ( $this->woocommerce_core_checkout_fields as $field ) {
 				'form-row-first' => __( 'Align Left', 'woocommerce-jetpack' ),
 				'form-row-last'  => __( 'Align Right', 'woocommerce-jetpack' ),
 				'form-row-full'  => __( 'Full Row', 'woocommerce-jetpack' ),
+				'form-row-wide'  => __( 'Wide Row', 'woocommerce-jetpack' ),
 			),
 			'css'      => 'min-width:300px;width:50%;',
 		),

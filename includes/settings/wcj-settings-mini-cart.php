@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Mini Cart Custom Info
  *
- * @version 3.5.1
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -58,6 +58,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_min
 			'id'       => 'wcj_mini_cart_custom_info_priority_' . $i,
 			'default'  => 10,
 			'type'     => 'number',
+			'desc'    => __( 'Change the Priority to sequence of your custom blocks, Greater value for high priority & Lower value for low priority.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'type'     => 'sectionend',

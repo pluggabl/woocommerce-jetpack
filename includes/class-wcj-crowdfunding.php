@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Crowdfunding
  *
- * @version 2.8.0
+ * @version 5.4.0
  * @since   2.2.6
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Crowdfunding extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 5.4.0
 	 * @since   2.2.6
 	 */
 	function __construct() {
@@ -26,18 +26,32 @@ class WCJ_Crowdfunding extends WCJ_Module {
 		$this->desc       = __( 'Add crowdfunding products to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-crowdfunding';
 		$this->extra_desc = __( 'When enabled, module will add Crowdfunding metabox to product edit.', 'woocommerce-jetpack' ) . '<br>' .
+		'<ol>' .
+			'<li>' .
 			sprintf(
 				__( 'To add crowdfunding info to the product, use <a href="%s" target="_blank">Booster\'s crowdfunding shortcodes</a>.', 'woocommerce-jetpack' ),
 				'https://booster.io/category/shortcodes/products-crowdfunding/'
-			) . ' ' .
+			) .
+			'</li>' .
+			'<li>' .
 			sprintf(
 				__( 'Shortcodes could be used for example in <a href="%s">Product Info module</a>.', 'woocommerce-jetpack' ),
 				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_custom_info' )
-			) . '<br>' .
+			) .
+			'</li>' .
+			'<li>' .
 			sprintf(
 				__( 'To change add to cart button labels use <a href="%s">Add to Cart Labels module</a>.', 'woocommerce-jetpack' ),
 				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=labels&section=add_to_cart' )
-			);
+			).
+			'</li>' .
+			'<li>' .
+			sprintf(
+				__( 'If you want to allow customers to choose dynamic price, Use <a href="%s">Product Open Pricing (Name Your Price) module</a>.', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=product_open_pricing' )
+			).
+			'</li>' .
+		'</ol>';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

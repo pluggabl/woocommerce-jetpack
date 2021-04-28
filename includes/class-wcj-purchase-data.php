@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.2.0
+ * @version 5.4.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.4.0
 	 * @todo    (maybe) pre-calculate profit for orders
 	 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 	 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -29,6 +29,16 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		$this->desc       = __( 'Save product purchase costs data for admin reports (1 custom field allowed in free version).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Save product purchase costs data for admin reports.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-cost-of-goods';
+		$this->extra_desc = sprintf( __( 'After setting cost of goods section below, Admin can export the Cost & Profit column from admin order list: %s', 'woocommerce-jetpack' ),
+		'<ol>' .
+			'<li>' . sprintf( __( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+				'Profit: <code>[wcj_order_profit]</code>, Item Cost: <code>[wcj_order_items_cost]</code>' ) .
+			'</li>' .
+			'<li>' . sprintf( __( '<strong>PHP code:</strong> by using %s function, e.g.: %s', 'woocommerce-jetpack' ),
+				'<code>do_shortcode()</code>',
+				'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_profit]\'&nbsp;);</code>' ) .
+			'</li>' .
+		'</ol>' );
 		parent::__construct();
 
 		$this->add_tools( array(

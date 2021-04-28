@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 5.1.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)
@@ -31,6 +31,7 @@ $settings = array(
 		'title'    => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_exchange_rates_auto',
 		'default'  => 'daily',
+		'desc_tip' => __( 'How frequently do you want to update currency rates. ', 'woocommerce-jetpack' ),
 		'type'     => 'select',
 		'options'  => array(
 			'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
@@ -46,6 +47,7 @@ $settings = array(
 		'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_exchange_rates_server',
 		'default'  => 'ecb',
+		'desc_tip' => __( 'If rates are not updated then re-enable the cron system open your wp-config.php file located in the base root of your WordPress directory and look for a PHP Constant named define("ALTERNATE_WP_CRON", true);and set it’s value to true..', 'woocommerce-jetpack' ),
 		'type'     => 'select',
 		'options'  => wcj_get_currency_exchange_rate_servers(),
 	),

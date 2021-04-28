@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 5.3.4
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    "pretty prices"
@@ -57,7 +57,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Revert Currency to Shop\'s Default', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Enable this if you want prices to revert back to your shop\'s default currency, when customer reaches the cart and/or checkout page.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want to revert the prices to your shop default currency, when customer reaches the cart and / or checkout page', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_revert',
 		'default'  => 'no',
 		'type'     => 'select',
@@ -67,6 +67,7 @@ $settings = array(
 			'yes'               => __( 'Revert on checkout page only', 'woocommerce-jetpack' ),
 			'cart_and_checkout' => __( 'Revert on both cart & checkout pages', 'woocommerce-jetpack' ),
 		),
+		'desc' => __( 'The customer selected currency as &#8364; and your shop currency is &#36;, So if you want to show &#36; on cart and / or checkout page you can use the above option.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'    => __( 'Rounding', 'woocommerce-jetpack' ),
@@ -254,7 +255,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. If you face pricing issues while using another plugin or booster module, You can change the Priority, Greater value for high priority & Lower value for low priority. Set to zero to use default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',

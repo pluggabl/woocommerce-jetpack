@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Stock
  *
- * @version 3.6.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -126,6 +126,7 @@ return array(
 		'title'    => __( 'Custom "Available on backorder" Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_stock_custom_backorder_options',
+		'desc'     => __( 'This option is used if the "Allow backorders?" is "Allow, but notify customer" in the product.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'    => __( 'Custom "Available on backorder"', 'woocommerce-jetpack' ),

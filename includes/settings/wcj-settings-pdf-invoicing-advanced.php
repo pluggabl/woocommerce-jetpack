@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 5.3.0
+ * @version 5.4.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -49,6 +49,7 @@ return array(
 		'id'       => 'wcj_invoicing_hide_disabled_docs_settings',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => __( 'This option will hide the disabled Documents sections. For ex. If you have only <strong>Invoice</strong> document is enabled and you don\'t want another document setting in this module or anywhere in admin.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'    => __( 'Replace Admin Order Search with Invoice Search', 'woocommerce-jetpack' ),

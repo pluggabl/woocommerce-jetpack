@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 4.6.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -103,6 +103,7 @@ return array(
 		'id'       => 'wcj_product_open_price_enable_js_validation',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => __( 'To do validation by JS instead of page load, Enable this if you want to validate the price box by Javascript', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'    => __( 'Display Product Price Info in Archives', 'woocommerce-jetpack' ),
@@ -157,7 +158,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Product Bundles', 'woocommerce-jetpack' ),
-		'desc'     => sprintf( __( 'For <a href="%s">"WPC Product Bundles for WooCommerce"</a> plugin.', 'woocommerce-jetpack' ), 'https://wordpress.org/plugins/woo-product-bundle/' ),
+		'desc'     => sprintf( __( 'Change below settings if there are compatibility issues with <a href="%s">"WPC Product Bundles for WooCommerce"</a> plugin.', 'woocommerce-jetpack' ), 'https://wordpress.org/plugins/woo-product-bundle/' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_open_price_woosb_product_bundles',
 	),

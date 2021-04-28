@@ -84,10 +84,10 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_orders_data.
 	 *
-	 * @version 4.1.0
+	 * @version 5.4.0
 	 * @since   2.2.6
 	 */
-	function get_product_orders_data( $return_value = 'total_orders', $atts ) {
+	function get_product_orders_data( string $return_value = null, $atts ) {
 		$product_ids      = ( $this->the_product->is_type( 'grouped' ) ? $this->the_product->get_children() : array( wcj_get_product_id_or_variation_parent_id( $this->the_product ) ) );
 		$total_orders     = 0;
 		$total_qty        = 0;
@@ -143,8 +143,10 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 				$return = $total_orders;
 				break;
 		}
-		if ( 0 != $atts['offset'] ) {
-			$return += $atts['offset'];
+		if (0 != $atts['offset']) {
+			if (!is_numeric($return)) {
+				$return += $atts['offset'];
+			}
 		}
 		return $return;
 	}

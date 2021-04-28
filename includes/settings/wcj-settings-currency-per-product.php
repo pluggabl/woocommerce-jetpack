@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 3.9.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -254,7 +254,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Advanced: Save Calculated Products Prices', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins. If you are facing your price will not be displayed properly then enable this option.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_per_product_save_prices',
 		'default'  => 'no',

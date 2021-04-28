@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by Condition
  *
- * @version 3.6.0
+ * @version 5.4.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  */
@@ -70,7 +70,10 @@ $settings = array_merge( $settings, array(
 			'invisible' => __( 'Set invisible', 'woocommerce-jetpack' ),
 			'both'      => __( 'Set both', 'woocommerce-jetpack' ),
 		),
-		'desc'     => '<br>' . apply_filters( 'booster_message', '', 'desc' ),
+		'desc'     => __( 'Set Visible: Select values in which you want to visible product', 'woocommerce-jetpack' ) .
+			'<br>'. __( 'Set Invisible: Select values in which you want an invisible product', 'woocommerce-jetpack' ) .
+			'<br>'. __( 'Set Both: There will be 2 select box for each above option Visible & Invisible', 'woocommerce-jetpack' ) .
+			'<br>' . apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(

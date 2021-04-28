@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 4.6.1
+ * @version 5.4.0
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -205,7 +205,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Initialise settings form fields.
 	 *
-	 * @version 3.1.0
+	 * @version 5.4.0
 	 * @todo    (maybe) `chosen_select` class in `trigger`
 	 */
 	function init_form_fields() {
@@ -244,6 +244,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'placeholder'   => '',
 				'default'       => array(),
 				'desc_tip'      => __( 'Please note, that all new orders in WooCommerce by default are created with Pending Payment status. If you want to change the default order status - you can use Booster\'s "Order Custom Statuses" module (in WooCommerce > Settings > Booster > Shipping & Orders > Order Custom Statuses).', 'woocommerce-jetpack' ),
+				'description'   => __( 'Hold the <code>ctrl</code> key and select the options if you want to trigger mail on more than one option.', 'woocommerce-jetpack' ),
 				'options'       => array_merge(
 					array(
 						'woocommerce_new_order_notification_wcj_any_status'           => __( 'New order (Any status)', 'woocommerce-jetpack' ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Product Tabs
  *
- * @version 3.4.5
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -77,13 +77,14 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cus
 			),
 			array(
 				'desc'      => __( 'Key', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Make sure it\'s unique for each tab.', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'The unique key for each product tab.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_key_global_' . $i,
 				'default'   => 'global_' . $i,
 				'type'      => 'text',
 			),
 			array(
 				'desc'      => __( 'Priority (i.e. Order)', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Change the Priority to sequence of your product tabs, Greater value for high priority & Lower value for low priority.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_priority_global_' . $i,
 				'default'   => ( 40 + $i - 1 ),
 				'type'      => 'number',
@@ -276,7 +277,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cus
 		),
 		array(
 			'desc'      => __( 'Default Key', 'woocommerce-jetpack' ),
-			'desc_tip'  => __( 'Make sure it\'s unique for each tab.', 'woocommerce-jetpack' ),
+			'desc_tip'  => __( 'The Default unique key for each product tab.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_key_local_default_' . $i,
 			'default'   => 'local_' . $i,
 			'type'      => 'text',

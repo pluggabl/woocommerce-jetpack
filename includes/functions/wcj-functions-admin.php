@@ -101,6 +101,29 @@ if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
 	}
 }
 
+
+if ( ! function_exists( 'wcj_is_admin_product_quick_edit_page' ) ) {
+	/**
+	 * wcj_is_admin_product_quick_edit_page.
+	 *
+	 * @version 5.4.0
+	 * @since   3.2.5
+	 * @todo    use where appropriate
+	 * @todo    (maybe) move to `wcj-functions-conditional.php`
+	 */
+	function wcj_is_admin_product_quick_edit_page() {
+		global $pagenow;
+		if (( $pagenow == 'admin-ajax.php' ) && is_admin()) {
+			return true;
+		}
+		 else {
+		return false;
+		}
+	}
+}
+
+
+
 if ( ! function_exists( 'wcj_admin_notices_version_updated' ) ) {
 	/**
 	 * wcj_admin_notices_version_updated.

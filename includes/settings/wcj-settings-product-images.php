@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Images
  *
- * @version 3.9.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -112,6 +112,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Loop Thumbnail Priority', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Priority for Loop Thumbnail. If you want to change the priority you can set Greater value for high priority & Lower value for low priority. Set to zero to use default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_images_cb_loop_product_thumbnail_priority',
 		'default'  => 10,
 		'type'     => 'text',
@@ -125,6 +126,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Show Images Priority', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Priority for Show Images. If you want to change the priority you can set Greater value for high priority & Lower value for low priority. Set to zero to use default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_images_cb_show_product_images_priority',
 		'default'  => 20,
 		'type'     => 'text',
