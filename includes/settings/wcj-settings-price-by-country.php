@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 5.3.0
- * @since   2.8.0
+ * @version 5.4.0
+ * @since   2.8.1
  * @author  Pluggabl LLC.
  */
 
@@ -71,6 +71,7 @@ $settings = array(
 		'id'       => 'wcj_price_by_country_revert',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => __( 'If selected currency is &#8364; and your shop currency is &#36;, So if you want to show &#36; on the checkout page you can enable the option.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'    => __( 'Auto set default checkout billing country', 'woocommerce-jetpack' ),
@@ -167,6 +168,17 @@ $settings = array(
 		'type'     => 'title',
 		'id'       => 'wcj_price_by_country_compatibility',
 	),
+
+
+    array(
+        'title' => __('Disable Quick Edit Product For Admin Scope', 'woocommerce-jetpack'),
+        'desc' => __('Disable For Admin Quick Edit Scope.', 'woocommerce-jetpack'),
+        'desc_tip' => __("Disable module on Edit Product For Admin scope.", 'woocommerce-jetpack') . '<br />' . __('For example if you use Quick Edit Product  and donot want change the deafult price then the  box ticked', 'woocommerce-jetpack'),
+        'type' => 'checkbox',
+        'id' => 'wcj_price_by_country_admin_quick_edit_product_scope',
+        'default' => 'no',
+    ),
+
 	array(
 		'title'             => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
 		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
@@ -223,7 +235,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. If you face pricing issues while using another plugin or booster module, You can change the Priority, Greater value for high priority & Lower value for low priority. Set to zero to use default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_country_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',

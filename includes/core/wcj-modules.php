@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 5.3.1
+ * @version 5.4.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -134,7 +134,7 @@ $wcj_module_files = array(
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-emails.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-advanced.php',
-	'class-wcj-pdf-invoicing.php',
+	'class-wcj-pdf-invoicing.php'
 );
 
 $this->modules = array();

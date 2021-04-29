@@ -49,7 +49,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_price_excluding_tax',
 			'wcj_product_price_including_tax',
 			'wcj_product_purchase_price', // Product Cost Price
+			'wcj_product_purchase_price_without_html_custom', // Product Cost Price
 			'wcj_product_regular_price',
+			'wcj_product_regular_price_without_html_custom',
 			'wcj_product_sale_price',
 			'wcj_product_shipping_class',
 			'wcj_product_shipping_time_table',
@@ -477,6 +479,24 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * wcj_product_regular_price_without_html_custom.
+	 *
+	 * @version 5.4.0
+	 * @since   2.4.1
+	 */
+	function wcj_product_regular_price_without_html_custom( $atts ) {
+		if ( $this->the_product->is_on_sale() || 'yes' === $atts['show_always'] ) {
+			$the_price = $this->the_product->get_regular_price();
+			if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
+				$the_price = $the_price * $atts['multiply_by'];
+			}
+			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : $the_price;
+		}
+		return '';
+	}
+
+
+	/**
 	 * wcj_product_sale_price.
 	 *
 	 * @version 2.8.0
@@ -708,6 +728,48 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 		}
 	}
+
+	/**
+	 * wcj_product_purchase_price_without_html_custom.
+	 *
+	 * @version 5.4.0
+	 */
+    function wcj_product_purchase_price_without_html_custom( $atts ) {
+		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
+		$atts = shortcode_atts( array(
+			'search'        => 'min_variation',
+			'hide_currency' => 'no',
+			'format'        => 'yes'
+		), $atts );
+
+		if ( ! $this->the_product->is_type( 'variable' ) ) {
+			$purchase_price = wc_get_product_purchase_price( wcj_get_product_id( $this->the_product ) );
+			return ( 'yes' === $atts['hide_currency'] ? $purchase_price : $purchase_price );
+		} else {
+			$purchase_price = wc_get_variable_product_purchase_price( wcj_get_product_id( $this->the_product ), $atts );
+			if ( $atts['format'] === 'yes' ) {
+				if ( is_array( $purchase_price ) ) {
+					if ( count( $purchase_price ) == 1 ) {
+						return $purchase_price[0];
+					} else if ( count( $purchase_price ) == 2 ) {
+						return wc_format_price_range( $purchase_price[0], $purchase_price[1] );
+					}
+				} else {
+					return $purchase_price;
+				}
+			} else {
+				if ( is_array( $purchase_price ) && count( $purchase_price ) == 1 ) {
+					return $purchase_price[0];
+				} elseif ( ! is_array( $purchase_price ) ) {
+					return $purchase_price;
+				}
+			}
+		}
+	}
+
+
+
+
 
 	/**
 	 * wcj_product_tags.

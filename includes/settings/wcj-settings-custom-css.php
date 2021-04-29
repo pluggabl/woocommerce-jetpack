@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Custom CSS
  *
- * @version 4.0.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -31,6 +31,7 @@ return array(
 		'default'  => '',
 		'type'     => 'custom_textarea',
 		'css'      => 'width:100%;min-height:300px;font-family:monospace;',
+		'desc'     => sprintf( __( 'Without the %s tag.', 'woocommerce-jetpack' ), '<code>' . esc_html( '<style></style>' ) . '</code>' )
 	),
 	array(
 		'title'    => __( 'Custom CSS - Back end (Admin)', 'woocommerce-jetpack' ),
@@ -38,6 +39,7 @@ return array(
 		'default'  => '',
 		'type'     => 'custom_textarea',
 		'css'      => 'width:100%;min-height:300px;font-family:monospace;',
+		'desc'     => sprintf( __( 'Without the %s tag.', 'woocommerce-jetpack' ), '<code>' . esc_html( '<style></style>' ) . '</code>' )
 	),
 	array(
 		'title'    => __( 'Custom CSS on per Product Basis', 'woocommerce-jetpack' ),

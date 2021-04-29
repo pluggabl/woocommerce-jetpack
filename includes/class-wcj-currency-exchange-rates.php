@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency Exchange Rates
  *
- * @version 5.2.0
+ * @version 5.4.0
  * @since   2.3.0
  * @author  Pluggabl LLC.
  */
@@ -22,8 +22,8 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		$this->id         = 'currency_exchange_rates';
 		$this->short_desc = __( 'Currency Exchange Rates', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Automatic currency exchange rates for WooCommerce (1 allowed in free version).', 'woocommerce-jetpack' );
-		$this->desc_pro   = __( 'Automatic currency exchange rates for WooCommerce.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Automatic currency exchange rates for WooCommerce (1 allowed in free version). If you want to change the currency rate with real conversion then enable it', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Automatic currency exchange rates for WooCommerce. If you want to change the currency rate with real conversion then enable it', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-currency-exchange-rates';
 		parent::__construct();
 

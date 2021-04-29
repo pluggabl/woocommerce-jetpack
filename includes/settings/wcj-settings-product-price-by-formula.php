@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 5.1.1
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -88,6 +88,16 @@ $settings = array_merge( $settings, array(
 		'default'  => 'yes',
 	),
 	array(
+        'title' => __('Disable Quick Edit Product For Admin Scope', 'woocommerce-jetpack'),
+        'desc' => __('Disable For Admin Quick Edit Scope.', 'woocommerce-jetpack'),
+        'desc_tip' => __("Disable if you are facing any compatibility issue in product quick/bulk edit. ", 'woocommerce-jetpack') . '<br />' . __('For example if you use Quick Edit Product  and donot want change the deafult price then the  box ticked', 'woocommerce-jetpack'),
+        'type' => 'checkbox',
+        'id' => 'wcj_product_price_by_formula_admin_quick_edit_product_scope',
+        'default' => 'no',
+    ),
+
+
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_price_by_formula_general_options',
 	),
@@ -98,7 +108,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. If you face pricing issues while using another plugin or booster module, You can change the Priority, Greater value for high priority & Lower value for low priority. Set to zero to use default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_price_by_formula_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',

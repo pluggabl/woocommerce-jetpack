@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 4.9.0
+ * @version 5.4.0
  * @since   3.2.1
  * @author  Pluggabl LLC.
  * @todo    [dev] hide settings for the disabled subsection
@@ -153,6 +153,7 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_' . $this->id . '_filter_priority',
 		'default'  => 0,
 		'type'     => 'number',
+		'desc'    => __( 'Change the Priority of the current module\'s execution, Greater value for late execution & Lower value for early execution.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'type'     => 'sectionend',

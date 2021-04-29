@@ -3,7 +3,8 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
 Tested up to: 5.7
-Stable tag: 5.3.9
+Requires PHP: 5.6
+Stable tag: 5.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -250,10 +251,24 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
 * If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](https://booster.io/submit-idea/).
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
-
 == Changelog ==
 
-= 5.3.9 - 17/03/2021 =
+= 5.4.0 29/04/2021 =
+* Dev - Add Tooltip & Suggestion for fields
+* Dev - Shortcodes - Orders - Add `[Wcj_order_shipping_price_without_html_custom]` shortcode.
+* Dev - Shortcodes - Orders - Add `[Wcj_order_total_without_html_custom]` shortcode.
+* Dev - Shortcodes - Orders - Add `[Wcj_order_total_fees_incl_tax_without_html_custom]` shortcode.
+* Dev - Shortcodes - Orders - Add `[Wcj_order_total_tax_without_html_custom]` shortcode.
+* Dev - Shortcodes - Product - Add `[wcj_product_regular_price_without_html_custom]` shortcode.
+* Dev - Shortcodes - Product - Add `[wcj_product_purchase_price_without_html_custom]` shortcode.
+* Fix - CART & CHECKOUT - Checkout Core Fields - Fix "Checkout Field arragement & Lable for required field" issue.
+* Fix - PRICES & CURRENCIES - Product Price by Formula - Quick edit issue fixed
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Quick edit issue fixed
+* PHP 8.0.3 tested
+* WooCommerce 5.2.2 tested
+* Wordpress 5.7.1 tested
+
+= 5.3.9 17/03/2021 =
 * PHP 8.0.2 tested
 * WooCommerce 5.1.0 tested
 * Wordpress 5.7 tested
@@ -275,7 +290,6 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Fix "Woocommerce store base currency Exchange rate" issue.
 * Dev - EMAILS & MISC. - Export - Added feature to export new column for 'allowed_user_roles' and 'not_allowed_user_roles'.
 * Fix - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fix "Order total after refund" shortcode with new attribute.
-* Fix - PRODUCTS - Cost of Goods - Fix "Profit" amount to consider "Wholesale discount","product price by formula" and also made it compatible with multi-currency.
 * Fix - CART & CHECKOUT - EU VAT Number - Fix "EU VAT Number" should be required for EU countries only.
 
 = 5.3.6 - 30/12/2020 =

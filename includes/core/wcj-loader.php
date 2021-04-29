@@ -49,6 +49,7 @@ require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-module-product-by-c
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-module-shipping-by-condition.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-invoice.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-pdf-invoice.php' );
+require_once( WCJ_PLUGIN_PATH . '/includes/admin/class-wcj-welcome.php' );
 
 // Mini Plugin
 require_once( WCJ_PLUGIN_PATH . '/includes/mini-plugin/wcj-mini-plugin.php' );

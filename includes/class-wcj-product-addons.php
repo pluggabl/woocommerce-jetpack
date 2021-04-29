@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 5.3.3
+ * @version 5.4.0
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -18,7 +18,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.4.0
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -29,7 +29,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$this->id         = 'product_addons';
 		$this->short_desc = __( 'Product Addons', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add (paid/free/discount) addons to products (1 addon allowed in free version).', 'woocommerce-jetpack' );
-		$this->desc_pro   = __( 'Add (paid/free/discount) addons to products.', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Add (paid/free/discount) addons to products.<br>
+							You can add <code>item_product_addons</code> into columns parameter of <code>[wcj_order_items_table]</code> to show selected product addon in pdf.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-addons';
 
 		parent::__construct();

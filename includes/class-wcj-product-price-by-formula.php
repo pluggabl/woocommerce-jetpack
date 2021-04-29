@@ -194,10 +194,15 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 5.1.1
+	 * @version 5.4.0
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {
+		if ('yes' === wcj_get_option('wcj_product_price_by_formula_admin_quick_edit_product_scope', 'no')) {
+			if (wcj_is_admin_product_quick_edit_page()) {
+				return $price;
+			}
+		}
 		if ( $this->is_price_by_formula_product( $_product ) && '' != $price ) {
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
 			$saved_price = $this->get_saved_price( $_product_id );

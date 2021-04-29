@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 5.2.0
+ * @version 5.4.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.4.0
 	 * @todo    (maybe) option to change local and global fields order (i.e. output local fields before the global)
 	 */
 	function __construct() {
@@ -25,6 +25,16 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 		$this->desc       = __( 'Add input fields to the products (1 input field allowed in free version).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Add input fields to the products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-input-fields';
+		$this->extra_desc = sprintf( __( 'After setting Product Input Fields, you can use below shortcode with meta_key to display the Product Input Fields value: %s', 'woocommerce-jetpack' ),
+			'<ol>' .
+				'<li>' . sprintf( __( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<code>[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_&lt;field_id&gt;"]</code>, <code>[wcj_order_items_meta meta_key = "_wcj_product_input_fields_local_&lt;field_id&gt;"]</code><br>field_id is the Id of your Product Input Field' ) .
+				'</li>' .
+				'<li>' . sprintf( __( '<strong>PHP code:</strong> by using %s function,<br> e.g.: %s', 'woocommerce-jetpack' ),
+					'<code>do_shortcode()</code>',
+					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_1]\'&nbsp;);</code>' ) .
+				'</li>' .
+			'</ol>' );
 		parent::__construct();
 
 		require_once( 'input-fields/class-wcj-product-input-fields-core.php' );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 5.0.0
+ * @version 5.4.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
@@ -66,7 +66,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Save Calculated Products Prices', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.  If you are facing your price will not be displayed properly then enable this option', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_save_prices',
 		'default'  => 'no',
@@ -74,7 +74,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.','woocommerce-jetpack' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. If you face pricing issues while using another plugin or booster module, You can change the Priority, Greater value for high priority & Lower value for low priority. Set to zero to use default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
