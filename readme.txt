@@ -254,8 +254,18 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 5.4.0 29/04/2021 =
-* Feature - PRODUCTS - Product Extra Fees - Added new module to allow store owner to charge extra fees on particular product.
-* Feature - Add Tooltip & Suggestion for fields
+* Dev - Add Tooltip & Suggestion for fields
+* Dev - Shortcodes - Orders - Add `[Wcj_order_shipping_price_without_html_custom]` shortcode.
+* Dev - Shortcodes - Orders - Add `[Wcj_order_total_without_html_custom]` shortcode.
+* Dev - Shortcodes - Orders - Add `[Wcj_order_total_fees_incl_tax_without_html_custom]` shortcode.
+* Dev - Shortcodes - Orders - Add `[Wcj_order_total_tax_without_html_custom]` shortcode.
+* Dev - Shortcodes - Product - Add `[wcj_product_regular_price_without_html_custom]` shortcode.
+* Dev - Shortcodes - Product - Add `[wcj_product_purchase_price_without_html_custom]` shortcode.
+* Fix - CART & CHECKOUT - Checkout Core Fields - Fix "Checkout Field arragement & Lable for required field" issue.
+* Fix - PRICES & CURRENCIES - Product Price by Formula - Quick edit issue fixed
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Quick edit issue fixed
+* PHP 8.0.3 tested
+* WooCommerce 5.2.2 tested
 
 = 5.3.9 17/03/2021 =
 * PHP 8.0.2 tested
