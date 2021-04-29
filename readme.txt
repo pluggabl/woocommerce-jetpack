@@ -266,6 +266,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Quick edit issue fixed
 * PHP 8.0.3 tested
 * WooCommerce 5.2.2 tested
+* Wordpress 5.7.1 tested
 
 = 5.3.9 17/03/2021 =
 * PHP 8.0.2 tested
