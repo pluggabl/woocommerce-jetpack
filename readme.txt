@@ -136,6 +136,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 **Products**
 
+* *WooCommerce Product Extra Fees* - Lets you set extra fees for all your shop’s products. Fees can be fixed or calculated as percent from the price. (Plus only)
 * *Add to Cart* - Set any local URL to redirect to on Add to Cart (Per product not allowed in free version). Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products (Plus). Disable quantity input. Open external products on the add to cart in the new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages (Plus).
 * *Add to Cart Button Visibility* - Enable/disable Add to Cart button globally or on per product basis.
 * *Admin Products List* - Customize admin products list (1 custom column allowed in free).
