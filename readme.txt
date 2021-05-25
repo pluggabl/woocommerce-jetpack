@@ -30,7 +30,7 @@ Multiple WordPress WooCommerce plugins are a thing of the past! Boost the functi
 
 **Key Features of Booster for WooCommerce**
 <ul>
-<li><a href="https://booster.io/features/woocommerce-pdf-invoicing-and-packing-slips/"><strong>PDF Invoicing and Packing slips:</strong></a> Streamline WooCommerce orders and paperwork by adding professional WooCommerce PDF invoices and offline packing docs. </li>
+<li><a href="https://booster.io/woocommerce-pdf-invoicing-and-packing-slips/"><strong>PDF Invoicing and Packing slips:</strong></a> Streamline WooCommerce orders and paperwork by adding professional WooCommerce PDF invoices and offline packing docs. </li>
 <li><a href="https://booster.io/features/woocommerce-product-input-fields/"><strong>Product Input fields:</strong></a> Add additional custom input fields on all products or per product and allow customers to add more information for the perfect custom product. If you’re selling customized products, this is a must! </li>
 <li><a href="https://booster.io/category/features/prices-currencies/"><strong>Prices and Currencies:</strong></a> Attract international customers to your site by displaying their currency with automatic exchange rates.  Define price rules with WooCommerce Dynamic Pricing and offer global discounts. </li>
 <li><a href="https://booster.io/category/features/cart-checkout/"><strong>Cart and Checkout:</strong></a> Customize the shopping cart and checkout experience for your customers. Create and add custom fields, coupons, additional fees, buttons, and more. Customize the checkout experience with WooCommerce custom fields, like VAT for EU countries, coupon codes, and checkout fees. Reduce cart abandonment with WooCommerce One Page Checkout.</li> 
