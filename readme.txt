@@ -2,9 +2,9 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 5.7.1
+Tested up to: 5.7.2
 Requires PHP: 5.6
-Stable tag: 5.4.0
+Stable tag: 5.4.1-dev
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -253,6 +253,12 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](https://booster.io/submit-idea/).
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 == Changelog ==
+
+= 5.4.1-dev 25/05/2021 =
+* PHP 8.0.6 tested
+* WooCommerce 5.3.0 tested
+* Wordpress 5.7.2 tested
+
 
 = 5.4.0 29/04/2021 =
 * Dev - Add Tooltip & Suggestion for fields

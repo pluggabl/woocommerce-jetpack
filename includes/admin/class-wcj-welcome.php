@@ -2,7 +2,7 @@
 /**
  * Booster getting started
  *
- * @version 5.3.6
+ * @version 5.4.1-dev
  * @author  Pluggabl LLC.
  */
 
@@ -30,8 +30,8 @@ class WCJ_Welcome {
 			add_action( 'admin_head', array( $this, 'wcj_hide_menu' ) );
 
 			if(isset($_POST['submit_email_to_klaviyo']) && $_POST['user_email'] != "" ){
-				$API_KEY         = "pk_d60b7aac8e2d8cf8cfada30a0d13bade1f";
-		        $list_id         = "Y7yRgG";
+				$API_KEY         = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4"; 
+		        $list_id         = "RQJNvK";
 		        $email           = $_POST['user_email']; 
 		        $check_subscribe = $this->check_email_exist_in_klaviyo_subscribe_list( $list_id, $email );
 		        // Subscribe to List
@@ -116,10 +116,10 @@ class WCJ_Welcome {
     /**
 	 * check_email_exist_in_klaviyo_subscribe_list
 	 * 
-	 * @version 5.3.6
+	 * @version 5.4.1-dev
 	 */
 	public function check_email_exist_in_klaviyo_subscribe_list($list_id,$email){
-		$API_KEY        = "pk_d60b7aac8e2d8cf8cfada30a0d13bade1f";
+		$API_KEY        = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4";  
 	    $data_to_post   = "?api_key=".$API_KEY."&emails=".$email;
 	    $URL            = "https://a.klaviyo.com/api/v2/list/".$list_id."/subscribe".$data_to_post;
 	    $curlSession    = curl_init();    
@@ -135,10 +135,10 @@ class WCJ_Welcome {
     /**
 	 * add_email_to_klaviyo_subscribe_list
 	 * 
-	 * @version 5.3.6
+	 * @version 5.4.1-dev
 	 */
 	public function add_email_to_klaviyo_subscribe_list($list_id,$email){
-		$API_KEY            = "pk_d60b7aac8e2d8cf8cfada30a0d13bade1f";
+		$API_KEY            = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4"; 
 		$URL = "https://a.klaviyo.com/api/v2/list/".$list_id."/subscribe";
 		$subscribe_to_plan  = array( 
 		    "api_key"       => $API_KEY,
