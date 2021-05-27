@@ -9,7 +9,7 @@ Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
 Domain Path: /langs
 Copyright: © 2020 Pluggabl LLC.
-WC tested up to: 5.1.0
+WC tested up to: 5.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
