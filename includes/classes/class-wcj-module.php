@@ -913,7 +913,14 @@ class WCJ_Module {
 			$module_desc = '<div style="padding: 15px; background-color: #ffffff; color: #000000;">' . $this->get_extra_desc() . '</div>';
 		}
 		if ( ! isset( $this->link ) && isset( $this->link_slug ) && '' != $this->link_slug ) {
-			$this->link = 'https://booster.io/features/' . $this->link_slug . '/';
+			if($this->link_slug == "woocommerce-pdf-invoicing-and-packing-slips")
+			{
+				$this->link = 'https://booster.io/' . $this->link_slug . '/';
+			}
+			else
+			{
+				$this->link = 'https://booster.io/features/' . $this->link_slug . '/';
+			}
 		}
 		$the_link = '';
 		if ( isset( $this->link ) && '' != $this->link ) {
