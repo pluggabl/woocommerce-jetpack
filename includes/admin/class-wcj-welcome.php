@@ -2,7 +2,7 @@
 /**
  * Booster getting started
  *
- * @version 5.4.1-dev
+ * @version 5.4.1
  * @author  Pluggabl LLC.
  */
 
@@ -53,7 +53,7 @@ class WCJ_Welcome {
     /**
 	 * wcj_register_welcome_page
 	 *
-	 * @version 5.3.6
+	 * @version 5.4.1
 	 */
 	public function wcj_register_welcome_page() {
 		add_dashboard_page(
@@ -68,7 +68,7 @@ class WCJ_Welcome {
     /**
 	 * wcj_redirect_to_getting_started_msg
 	 *
-	 * @version 5.3.6
+	 * @version 5.4.1
 	 */
 	public function wcj_redirect_to_getting_started_msg() {
 		$msg = get_transient( '_wcj_redirect_to_getting_started_msg' );
@@ -81,7 +81,7 @@ class WCJ_Welcome {
 	/**
 	 * wcj_hide_menu
 	 *
-	 * @version 5.3.6
+	 * @version 5.4.1
 	 */
 	public function wcj_hide_menu() {
 		remove_submenu_page( 'index.php', 'jetpack-getting-started' );
@@ -90,7 +90,7 @@ class WCJ_Welcome {
 	/**
 	 * wcj_redirect_to_getting_started
 	 *
-	 * @version 5.3.6
+	 * @version 5.4.1
 	 */
 	public function wcj_redirect_to_getting_started() {
 		if ( ! get_transient( '_wcj_activation_redirect' ) || isset( $_GET['wcj-redirect'] ) ) {
@@ -107,7 +107,7 @@ class WCJ_Welcome {
 	/**
 	 * wcj_welcome_screen_content
 	 * 
-	 * @version 5.3.6
+	 * @version 5.4.1
 	 */
 	public function wcj_welcome_screen_content() {
 		require_once( WCJ_PLUGIN_PATH . '/includes/admin/wcj-welcome-screen-content.php' );
@@ -116,7 +116,7 @@ class WCJ_Welcome {
     /**
 	 * check_email_exist_in_klaviyo_subscribe_list
 	 * 
-	 * @version 5.4.1-dev
+	 * @version 5.4.1
 	 */
 	public function check_email_exist_in_klaviyo_subscribe_list($list_id,$email){
 		$API_KEY        = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4";  
@@ -135,7 +135,7 @@ class WCJ_Welcome {
     /**
 	 * add_email_to_klaviyo_subscribe_list
 	 * 
-	 * @version 5.4.1-dev
+	 * @version 5.4.1
 	 */
 	public function add_email_to_klaviyo_subscribe_list($list_id,$email){
 		$API_KEY            = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4"; 
