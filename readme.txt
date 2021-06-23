@@ -252,13 +252,15 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
 * If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](https://booster.io/submit-idea/).
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
-== Changelog ==
 
-= 5.4.1-dev 27/05/2021 =
+== Changelog ==
+= 5.4.2-dev 24/06/2021 =
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed duplicate meta key issue.
+
+= 5.4.1 27/05/2021 =
 * PHP 8.0.6 tested
 * WooCommerce 5.3.0 tested
 * Wordpress 5.7.2 tested
-
 
 = 5.4.0 29/04/2021 =
 * Dev - Add Tooltip & Suggestion for fields
