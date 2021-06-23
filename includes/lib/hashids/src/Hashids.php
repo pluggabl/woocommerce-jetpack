@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of Hashids.
  *
@@ -11,9 +10,16 @@
 
 namespace Hashids;
 
+require_once('HashidsInterface.php');
+require_once('Math/Bc.php');
+require_once('Math/Gmp.php');
+
+
 use Hashids\Math\Bc;
 use Hashids\Math\Gmp;
 use RuntimeException;
+
+
 
 /**
  * This is the hashids class.
