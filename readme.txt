@@ -184,6 +184,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Plus). Different button positions on the cart page (Plus).
 * *Mini Cart Custom Info* - Add custom info to the mini cart widget (1 block allowed in free version).
 * *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Plus).
+* *Frequently Bought Together* - Add Frequently Bought Together section with suggest items usually bought together with the product watched by your customer. (Plus only)
+* *One Page Checkout* - One Page Checkout make easier for customers to buy from custom checkout pages by displaying both product selection and checkout forms on a single page. (Plus only)
+
 
 **Payment Gateways**
 
@@ -256,6 +259,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 = 5.4.2-dev 24/06/2021 =
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed duplicate meta key issue.
+* Fix - SHIPPING & ORDERS - Order Numbers - Fixed hashid dependency issue.
+* Feature - SUPPORT OPTION BOOSTER -flyout menu - plus or free customer can directly contact to conatct page.
+* PHP 8.0.6 tested
+* WooCommerce 5.4.1 tested
+* Wordpress 5.7.2 tested
 
 = 5.4.1 27/05/2021 =
 * PHP 8.0.6 tested
