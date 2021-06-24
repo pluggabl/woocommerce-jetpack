@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.7.2
 Requires PHP: 5.6
-Stable tag: 5.4.1
+Stable tag: 5.4.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -257,10 +257,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
-= 5.4.2-dev 24/06/2021 =
+= 5.4.2 24/06/2021 =
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed duplicate meta key issue.
 * Fix - SHIPPING & ORDERS - Order Numbers - Fixed hashid dependency issue.
-* Feature - SUPPORT OPTION BOOSTER -flyout menu - plus or free customer can directly contact to conatct page.
+* Fix - PRODUCTS - SKU - Fixed hashid dependency issue.
+* Feature - CONTACT SUPPORT - Quick link to reach us for technical support or suggest an idea.
 * PHP 8.0.6 tested
 * WooCommerce 5.4.1 tested
 * Wordpress 5.7.2 tested
