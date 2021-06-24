@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.7.2
 Requires PHP: 5.6
-Stable tag: 5.4.1
+Stable tag: 5.4.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -184,6 +184,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Plus). Different button positions on the cart page (Plus).
 * *Mini Cart Custom Info* - Add custom info to the mini cart widget (1 block allowed in free version).
 * *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Plus).
+* *Frequently Bought Together* - Add Frequently Bought Together section with suggest items usually bought together with the product watched by your customer. (Plus only)
+* *One Page Checkout* - One Page Checkout make easier for customers to buy from custom checkout pages by displaying both product selection and checkout forms on a single page. (Plus only)
+
 
 **Payment Gateways**
 
@@ -252,13 +255,21 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
 * If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](https://booster.io/submit-idea/).
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
-== Changelog ==
 
-= 5.4.1-dev 27/05/2021 =
+== Changelog ==
+= 5.4.2 24/06/2021 =
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed duplicate meta key issue.
+* Fix - SHIPPING & ORDERS - Order Numbers - Fixed hashid dependency issue.
+* Fix - PRODUCTS - SKU - Fixed hashid dependency issue.
+* Feature - CONTACT SUPPORT - Quick link to reach us for technical support or suggest an idea.
+* PHP 8.0.6 tested
+* WooCommerce 5.4.1 tested
+* Wordpress 5.7.2 tested
+
+= 5.4.1 27/05/2021 =
 * PHP 8.0.6 tested
 * WooCommerce 5.3.0 tested
 * Wordpress 5.7.2 tested
-
 
 = 5.4.0 29/04/2021 =
 * Dev - Add Tooltip & Suggestion for fields

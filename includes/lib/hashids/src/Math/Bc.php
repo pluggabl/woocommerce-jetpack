@@ -11,6 +11,8 @@
 
 namespace Hashids\Math;
 
+require_once('MathInterface.php');
+
 /**
  * This is the Bc math class.
  *

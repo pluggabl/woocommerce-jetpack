@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.3.9
+ * @version 5.4.2
  * @since   1.0.0
  * @author  Pluggabl LLC.
  */
@@ -45,6 +45,8 @@ if (!class_exists('WC_Settings_Jetpack')):
 
             // Create a PRO version ratting notice
             add_action('woocommerce_after_settings_' . $this->id, array($this, 'create_pro_version_footer_review_notice'));
+
+            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
 
             require_once 'class-wcj-settings-custom-fields.php';
         }
@@ -193,11 +195,46 @@ if (!class_exists('WC_Settings_Jetpack')):
         /**
          * create_pro_version_footer_review_notice.
          *
-         * @version 5.3.9
+         * @version 5.4.2
          * @since   5.3.1
          */
-        public function create_pro_version_footer_review_notice()
-    {
+        public function create_pro_version_footer_review_notice() {
+            $sec_link = wcj_plugin_url();
+        ?>
+            <div class="circleBox">
+                <div class="circle-badge" style="float:right">
+                    <img src="<?php echo $sec_link ?>/assets/images/pop_icon.png">
+                </div>
+                <div class="subCircles">
+                    <div class="sub-circle">
+                        <div class="form_label">
+                            <a href="https://booster.io/submit-idea/" target="_blank">
+                            <label>Suggest a feature</label>
+                            <div class="ic_list">
+                                <img src="<?php echo $sec_link ?>/assets/images/suggestion-w.png">
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sub-circle">
+                        <a href="https://wordpress.org/support/plugin/woocommerce-jetpack/#new-topic-0" target="_blank">
+                        <div class="form_label">
+                            <label>Booster Free Support (72 business hours response)</label>
+                            <div class="ic_list"><img src="<?php echo $sec_link ?>/assets/images/support-3d-w.png"></div>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="sub-circle">
+                        <a href="https://booster.io/my-account/booster-contact/" target="_blank">
+                        <div class="form_label">
+                            <label>Booster Plus Premium Support (4 hours - 24 hours response)</label>
+                            <div class="ic_list"><img src="<?php echo $sec_link ?>/assets/images/support-24-h-w.png"></div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <?php
             if ('booster-plus-for-woocommerce.php' !== basename(WCJ_PLUGIN_FILE)) {
                 return;
             }
@@ -216,6 +253,17 @@ if (!class_exists('WC_Settings_Jetpack')):
 <?php
     echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
         }
+
+    /**
+	 * enqueue_admin_script.
+	 *
+	 * @version 5.4.2
+	 * @since   5.4.2
+	 */
+	function enqueue_admin_script() {
+        wp_enqueue_script(  'wcj-admin-js',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-admin.js', array( 'jquery' ), WCJ()->version, true );
+        wp_localize_script( 'wcj-admin-js', 'admin_object' , false );
+	}
 
         /**
          * Output cats
