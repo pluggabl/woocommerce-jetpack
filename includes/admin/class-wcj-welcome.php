@@ -2,7 +2,7 @@
 /**
  * Booster getting started
  *
- * @version 5.4.1
+ * @version 5.4.3-dev
  * @author  Pluggabl LLC.
  */
 
@@ -28,24 +28,7 @@ class WCJ_Welcome {
 			add_action( 'admin_menu', array( $this, 'wcj_register_welcome_page' ) );
 			add_action( 'network_admin_menu', array( $this, 'wcj_register_welcome_page' ) );
 			add_action( 'admin_head', array( $this, 'wcj_hide_menu' ) );
-
-			if(isset($_POST['submit_email_to_klaviyo']) && $_POST['user_email'] != "" ){
-				$API_KEY         = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4"; 
-		        $list_id         = "RQJNvK";
-		        $email           = $_POST['user_email']; 
-		        $check_subscribe = $this->check_email_exist_in_klaviyo_subscribe_list( $list_id, $email );
-		        // Subscribe to List
-		        if( $check_subscribe == 0 ) {
-		            $response = $this->add_email_to_klaviyo_subscribe_list( $list_id, $email );
-                    $redirect = admin_url( 'index.php?page=jetpack-getting-started&wcj-redirect=1&msg=1' );
-		            set_transient( '_wcj_redirect_to_getting_started_msg', 1, 30 );
-                    add_action( 'admin_init', array( $this, 'wcj_redirect_to_getting_started_msg' ), 10);
-		        }
-		        else {
-		        	set_transient( '_wcj_redirect_to_getting_started_msg', 2, 30 );
-                    add_action( 'admin_init', array( $this, 'wcj_redirect_to_getting_started_msg' ), 10);
-		        }
-			}
+            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
 
 		}
 	}
@@ -53,7 +36,7 @@ class WCJ_Welcome {
     /**
 	 * wcj_register_welcome_page
 	 *
-	 * @version 5.4.1
+	 * @version 5.4.3-dev
 	 */
 	public function wcj_register_welcome_page() {
 		add_dashboard_page(
@@ -63,19 +46,6 @@ class WCJ_Welcome {
 			'jetpack-getting-started',
 			array( $this, 'wcj_welcome_screen_content' )
 		);
-	}
-
-    /**
-	 * wcj_redirect_to_getting_started_msg
-	 *
-	 * @version 5.4.1
-	 */
-	public function wcj_redirect_to_getting_started_msg() {
-		$msg = get_transient( '_wcj_redirect_to_getting_started_msg' );
-		delete_transient( '_wcj_redirect_to_getting_started_msg' );
-		$redirect = admin_url( 'index.php?page=jetpack-getting-started&wcj-redirect=1&msg='.$msg.'/#subscribe-email' );
-		wp_safe_redirect( $redirect );
-		exit;
 	}
 
 	/**
@@ -113,49 +83,15 @@ class WCJ_Welcome {
 		require_once( WCJ_PLUGIN_PATH . '/includes/admin/wcj-welcome-screen-content.php' );
 	}
 
-    /**
-	 * check_email_exist_in_klaviyo_subscribe_list
-	 * 
-	 * @version 5.4.1
+	/**
+	 * enqueue_admin_script.
+	 *
+	 * @version 5.4.3-dev
+	 * @since   5.4.3-dev
 	 */
-	public function check_email_exist_in_klaviyo_subscribe_list($list_id,$email){
-		$API_KEY        = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4";  
-	    $data_to_post   = "?api_key=".$API_KEY."&emails=".$email;
-	    $URL            = "https://a.klaviyo.com/api/v2/list/".$list_id."/subscribe".$data_to_post;
-	    $curlSession    = curl_init();    
-	    curl_setopt($curlSession, CURLOPT_URL, $URL);
-	    curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
-	    curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
-	    $CheckListSubscriptionsResponse = json_decode(curl_exec($curlSession), true);
-	    $CheckListSubscriptions = count($CheckListSubscriptionsResponse);
-	    curl_close($curlSession);
-	    return $CheckListSubscriptions;
-	}
-
-    /**
-	 * add_email_to_klaviyo_subscribe_list
-	 * 
-	 * @version 5.4.1
-	 */
-	public function add_email_to_klaviyo_subscribe_list($list_id,$email){
-		$API_KEY            = "pk_6e2f40d8614c17a121a4d2c567d2bd72d4"; 
-		$URL = "https://a.klaviyo.com/api/v2/list/".$list_id."/subscribe";
-		$subscribe_to_plan  = array( 
-		    "api_key"       => $API_KEY,
-		    "profiles"      => array(
-		        "email"     => $email
-		    )
-		);
-		$subscribe_to_plan  = json_encode($subscribe_to_plan);	
-		$curlSession        = curl_init();
-		curl_setopt($curlSession, CURLOPT_URL, $URL);
-		curl_setopt($curlSession, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-		curl_setopt($curlSession, CURLOPT_POST, 1);
-		curl_setopt($curlSession, CURLOPT_POSTFIELDS,$subscribe_to_plan);
-		curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
-		$subscribeToListResponse = json_decode(curl_exec($curlSession), true);
-		curl_close($curlSession);
-		return $subscribeToListResponse;
+	function enqueue_admin_script() {
+        wp_enqueue_script(  'wcj-admin-js',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-admin.js', array( 'jquery' ), WCJ()->version, true );
+        wp_localize_script( 'wcj-admin-js', 'admin_object' ,array('admin_object'), false );
 	}
 }
 

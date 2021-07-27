@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 5.4.0
+ * @version 5.4.3-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    "pretty prices"
@@ -223,6 +223,15 @@ $settings = array(
 		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
 		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Product Add-Ons</a> plugin.', 'woocommerce-jetpack' ), 'https://woocommerce.com/products/product-add-ons/' ) . '<br />' . __( 'Only works with <code>Multicurrency on per Product Basis</code> option disabled.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_multicurrency_compatibility_product_addons',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
+		'title'             => __( 'WooCommerce Attribute Swatches by Iconic Plugin', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => __( 'Fixes cart item price issue if the <code>WooCommerce Attribute Swatches by Iconic</code> Plugin is activated', 'woocommerce-jetpack'),
+		'id'                => 'wcj_multicurrency_compatibility_wc_attribute_swatches_premium_variable_cart_item_price',
 		'default'           => 'no',
 		'type'              => 'checkbox',
 	),

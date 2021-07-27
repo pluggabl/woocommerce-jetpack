@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 4.3.0
+ * @version 5.4.3-dev
  * @author  Pluggabl LLC.
  */
 
@@ -433,7 +433,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_selector.
 	 *
-	 * @version 3.2.4
+	 * @version 5.4.3-dev
 	 * @since   3.1.0
 	 * @todo    add `default` attribute
 	 * @todo    (maybe) add more selector types (e.g.: currency)
@@ -442,16 +442,29 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	function wcj_selector( $atts ) {
 		$html           = '';
 		$options        = '';
+		$countries      = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
+
 		$selected_value = ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ?
 			$_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] :
 			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 		);
+
+		switch ( $countries ) {
+			case 'wc':
+				$countries = WC()->countries->get_allowed_countries();
+				break;
+			default: // 'all'
+				$countries = wcj_get_countries();
+				asort( $options );
+				break;
+		}
+
 		switch ( $atts['selector_type'] ) {
 			case 'product_custom_visibility':
 				$options = wcj_get_select_options( wcj_get_option( 'wcj_product_custom_visibility_options_list', '' ) );
 				break;
 			default: // 'country'
-				$options = wcj_get_countries();
+				$options = $countries;
 				asort( $options );
 				break;
 		}
