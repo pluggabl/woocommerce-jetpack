@@ -1,7 +1,7 @@
 /**
  * wcj-product-addons.
  *
- * @version 4.6.1
+ * @version 5.4.3
  * @since   2.5.3
  * @todo    `text` type - update price not only on change, but on each pressed key
  * @todo    fix the issue with custom price labels module
@@ -54,9 +54,9 @@ function change_price() {
 					}
 					amount.replaceWith(response);
 				} else if (is_variable) {
-					var amount = jQuery("span[class='price'] " + ignore_strikethrough_str + " .amount");
+					var amount = jQuery(".woocommerce-variation-price span[class='price'] " + ignore_strikethrough_str + " .amount");
 					if (!amount.length) {
-						amount = jQuery("span[class='price'] .amount");
+						amount = jQuery(".woocommerce-variation-price span[class='price'] .amount");
 					}
 					amount.replaceWith(response);
 				}

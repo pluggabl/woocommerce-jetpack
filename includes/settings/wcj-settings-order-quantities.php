@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 4.2.0
+ * @version 5.4.3
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) generate settings in loop ( min / max )
@@ -113,6 +113,14 @@ return array(
 		'custom_attributes' => ( '' === apply_filters( 'booster_message', '', 'readonly' ) ? array( 'min' => 0, 'step' => $qty_step_settings ) : apply_filters( 'booster_message', '', 'readonly' ) ),
 	),
 	array(
+		'title'    => __( 'Add all quantities if quantity lower than the minimum quantity', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you want allow product add to cart with remain quantities if product quantities less than minimum quantities', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_quantities_lower_than_min_cart_total_quantity',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'    => __( 'Per Item Quantity on Per Product Basis', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
@@ -169,6 +177,15 @@ return array(
 		'type'     => 'number',
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => ( '' === apply_filters( 'booster_message', '', 'readonly' ) ? array( 'min' => 0, 'step' => $qty_step_settings ) : apply_filters( 'booster_message', '', 'readonly' ) ),
+	),
+	array(
+		'title'    => __( 'Check Product Quantity Forcefully', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this option if you want to not allow user to product add to cart if user already reached the Max Quantity limit', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
+		'id'       => 'wcj_order_quantities_check_product_quantity_forcefully',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Per Item Quantity on Per Product Basis', 'woocommerce-jetpack' ),

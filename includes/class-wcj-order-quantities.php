@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 4.4.0
+ * @version 5.4.3
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.4.0
+	 * @version 5.4.3
 	 * @since   2.9.0
 	 * @todo    [dev] maybe rename the module to "Order Product Quantities" or "Product Quantities"?
 	 * @todo    [dev] loop (`woocommerce_loop_add_to_cart_link`)
@@ -58,6 +58,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 			// Quantity step
 			if ( 'yes' === wcj_get_option( 'wcj_order_quantities_step_section_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_quantity_input_step', array( $this, 'set_quantity_input_step' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_quantity_input_min', array( $this, 'set_quantity_input_step' ), PHP_INT_MAX, 2 );
 			}
 			// Meta box
 			$this->is_min_per_product_enabled = ( 'yes' === wcj_get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) &&
@@ -88,6 +89,11 @@ class WCJ_Order_Quantities extends WCJ_Module {
 
 			// Prevent outdated min/max Quantity Options
 			add_action( 'woocommerce_update_product', array( $this, 'prevent_outdated_min_max' ), 10 );
+
+			// Check Product Quantity Forcefully
+			if ( 'yes' === wcj_get_option( 'wcj_order_quantities_check_product_quantity_forcefully', 'no' ) ) {
+				add_filter('woocommerce_add_to_cart_validation', array( $this, 'set_quantity_input_max_cart_item' ) ,PHP_INT_MAX,4);
+			}
 		}
 	}
 
@@ -340,13 +346,16 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * set_quantity_input_min.
 	 *
-	 * @version 3.2.2
+	 * @version 5.4.3
 	 * @since   3.2.2
 	 */
 	function set_quantity_input_min( $qty, $_product ) {
 		if ( ! $_product->is_type( 'variable' ) ) {
 			$min  = $this->get_product_quantity( 'min', $_product, $qty );
 			$_max = $_product->get_max_purchase_quantity();
+			if( 'yes'=== wcj_get_option( 'wcj_product_quantities_lower_than_min_cart_total_quantity' , 'no' ) ) {
+				return $qty;
+			}
 			return ( -1 == $_max || $min < $_max ? $min : $_max );
 		} else {
 			return $qty;
@@ -410,7 +419,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * print_message.
 	 *
-	 * @version 4.2.0
+	 * @version 5.4.3
 	 * @since   2.9.0
 	 */
 	function print_message( $message_type, $_is_cart, $required_quantity, $total_quantity, $_product_id = 0 ) {
@@ -447,6 +456,9 @@ class WCJ_Order_Quantities extends WCJ_Module {
 					__( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ) );
 				break;
 			case 'min_per_item_quantity':
+				if( "yes" === wcj_get_option( 'wcj_product_quantities_lower_than_min_cart_total_quantity' ) ) {
+					return;
+				}
 				$_product = wc_get_product( $_product_id );
 				$replaced_values = array(
 					'%min_per_item_quantity%' => $required_quantity,
@@ -640,6 +652,37 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		}
 	}
 
+	/**
+	 * set_quantity_input_max_cart_item.
+	 *
+	 * @version 5.4.3
+	 * @since   5.4.3
+	 */
+	function set_quantity_input_max_cart_item( $passed_validation, $product_id, $quantity ) {
+		global $product;
+		$max  					= $this->get_product_quantity( 'max', $product,  $quantity );
+		$cart_item_quantities 	= WC()->cart->get_cart_item_quantities();
+
+		if ( empty( $cart_item_quantities ) || ! isset( $cart_item_quantities[ $product_id ] ) ) {
+			return $passed_validation;
+		}
+
+		$cart_quantity = $cart_item_quantities[ $product_id ];
+		if ( ( $cart_quantity + $quantity ) >$max ) {
+			$passed_validation 	= false;
+			$product 			= wc_get_product( $product_id);
+			$replaced_values 	= array(
+				'%max_per_item_quantity%' => $max ,
+				'%item_quantity%'         => $cart_quantity,
+				'%product_title%'         => $product->get_title(),
+			);
+
+			$message_template = wcj_get_option( 'wcj_order_quantities_max_per_item_message', '' );
+			$_notice = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $message_template );
+			wc_add_notice($_notice, 'error' );
+		}
+		return $passed_validation;
+	}
 }
 
 endif;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.4.2
+ * @version 5.4.3
  * @since   1.0.0
  * @author  Pluggabl LLC.
  */
@@ -257,12 +257,12 @@ if (!class_exists('WC_Settings_Jetpack')):
     /**
 	 * enqueue_admin_script.
 	 *
-	 * @version 5.4.2
+	 * @version 5.4.3
 	 * @since   5.4.2
 	 */
 	function enqueue_admin_script() {
         wp_enqueue_script(  'wcj-admin-js',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-admin.js', array( 'jquery' ), WCJ()->version, true );
-        wp_localize_script( 'wcj-admin-js', 'admin_object' , false );
+        wp_localize_script( 'wcj-admin-js', 'admin_object' ,array('admin_object'), false );
 	}
 
         /**

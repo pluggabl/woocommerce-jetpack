@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.3.4
+ * @version 5.4.3
  * @since   2.4.3
  * @author  Pluggabl LLC.
  */
@@ -92,7 +92,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility.
 	 *
-	 * @version 5.3.3
+	 * @version 5.4.3
 	 * @since   4.3.0
 	 */
 	function handle_compatibility(){
@@ -104,6 +104,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 		// WooCommerce Coupons
 		add_filter( 'woocommerce_coupon_is_valid', array( $this, 'check_woocommerce_coupon_min_max_amount' ), 10, 3 );
 		add_filter( 'woocommerce_get_shop_coupon_data', array( $this, 'fix_wc_coupon_discount_amount' ), 10, 3 );
+
+		// WooCommerce Attribute Swatches by Iconic Plugin
+		if ( 'yes' === wcj_get_option( 'wcj_multicurrency_compatibility_wc_attribute_swatches_premium_variable_cart_item_price' , 'no' ) ) {
+			add_filter( 'woocommerce_cart_item_price', array( $this, 'fix_wc_attribute_swatches_premium_variable_cart_item_price' ), 20, 3 );
+		}
 
 		// WooCommerce Price Filter Widget
 		if ( 'yes' === wcj_get_option( 'wcj_multicurrency_compatibility_wc_price_filter' , 'no' ) ) {
@@ -422,6 +427,26 @@ class WCJ_Multicurrency extends WCJ_Module {
 		$current_coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
 		$coupon->set_amount( $this->change_price( $current_coupon_amount, null ) );
 		return $coupon;
+	}
+
+	/**
+	 * fix_wc_attribute_swatches_premium_variable_cart_item_price.
+	 *
+	 * @version 5.4.3
+	 * @since   5.4.3
+	 *
+	 * @param $price_html
+	 * @param $cart_item
+	 * @param $cart_item_key
+	 *
+	 * @return mixed
+	 */
+	function fix_wc_attribute_swatches_premium_variable_cart_item_price( $price_html, $cart_item, $cart_item_key ) {
+		if ( empty( $cart_item['iconic_was_fee'] ) ) {
+			return $price_html;
+		}
+		$price = $this->change_price( $cart_item['iconic_was_fee'], null );
+		return wc_price( $price );
 	}
 
 	/**

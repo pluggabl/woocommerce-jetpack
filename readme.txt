@@ -2,9 +2,9 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 5.7.2
+Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.2
+Stable tag: 5.4.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -257,6 +257,19 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.4.3 28/07/2021 =
+* Fix - SHIPPING & ORDERS- Order Quantities - Fixed Steps issue on product detail page.
+* Fix - PRODUCTS - Product Addons - Fixed issue when "Enable AJAX on Single Product Page" option, Prices of Related products are also change while changing varition of variable product.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed meta key issue for input type select.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Fixed Compatibility issue with WooCommerce Attribute Swatches by Iconic Plugin
+* Fix - Fixed error WP_Scripts::localize was called incorrectly. The $l10n parameter must be an array
+* Feature - SHIPPING & ORDERS - Order Quantities - Show notice while add to cart, if the Maximum order quantity limit reached.
+* Feature - SHIPPING & ORDERS - Order Quantities - Allow any quantity if the product is lower than the minimum quantity.
+* Feature - PRODUCTS - Product Visibility by Country - Added options to choose All countries or WooCommerce Selling Locations for For [wcj_selector selector_type="country"]
+* WooCommerce 5.5.2 tested
+* Wordpress 5.8 tested
+
 = 5.4.2 24/06/2021 =
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed duplicate meta key issue.
 * Fix - SHIPPING & ORDERS - Order Numbers - Fixed hashid dependency issue.

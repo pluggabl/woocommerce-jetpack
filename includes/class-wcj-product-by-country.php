@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 5.2.0
+ * @version 5.4.3
  * @since   2.5.0
  * @author  Pluggabl LLC.
  */
@@ -138,7 +138,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * maybe_add_extra_settings.
 	 *
-	 * @version 3.6.0
+	 * @version 5.4.3
 	 * @since   3.6.0
 	 * @todo    (maybe) move "Country List" inside the "Admin Options" section
 	 */
@@ -163,6 +163,23 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 				'options'  => array(
 					'by_ip'  => __( 'Automatically by IP', 'woocommerce-jetpack' ),
 					'manual' => __( 'Manually', 'woocommerce-jetpack' ),
+				),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+				'css'      => 'min-width:250px;',
+			),
+			array(
+				'title'    => __( 'Country List', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This option sets which countries will be added to the list in [wcj_selector selector_type="country"] shortcode. Possible values: "All countries" or "WooCommerce selling locations".', 'woocommerce-jetpack' ),
+				'desc'     => sprintf(
+					'<p>' . __( 'If "WooCommerce selling locations" option is selected, country list will be set by <a href="%s">WooCommerce > Settings > General > Selling location(s)</a>.', 'woocommerce-jetpack' ),
+						admin_url( 'admin.php?page=wc-settings' ) ) .
+					'<br>' . apply_filters( 'booster_message', '', 'desc' ) . '</p>',
+				'id'       => 'wcj_product_by_country_country_list_shortcode',
+				'default'  => 'all',
+				'type'     => 'select',
+				'options'  => array(
+					'all' => __( 'All countries', 'woocommerce-jetpack' ),
+					'wc'  => __( 'WooCommerce selling locations', 'woocommerce-jetpack' ),
 				),
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 				'css'      => 'min-width:250px;',

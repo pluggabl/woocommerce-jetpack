@@ -1,3 +1,11 @@
+<?php
+/**
+ * Booster for WooCommerce - Welcome Screen Content
+ *
+ * @version 5.4.3
+ * @author  Pluggabl LLC.
+ */
+?>
 <div class="wcj-welcome-page">
 	<div class="wcj-welcome-container">
 		<div class="wcj-welcome-content-main">
@@ -124,18 +132,24 @@
 				</div>
 				<div id="subscribe-email" class="wcj-welcome-content-inner wcj-welcome-subscribe-email">
 				    <h3> <?php esc_html_e( "Don't miss updates from us!", "woocommerce-jetpack" ); ?> </h3>
-				    <form method="post" action="<?php echo $_SERVER['PHP_SELF']."?page=jetpack-getting-started&wcj-redirect=1"; ?>">
+				    <form method="post" name="subscribe-email-form">
 						<input class="form-control user_email" type="email" required="true" name="user_email" placeholder="Enter your email">
-						<input class="subscribe-email-btn" type="submit" name="submit_email_to_klaviyo" value="Submit">
+						<input class="subscribe-email-btn" type="button" name="submit_email_to_klaviyo" value="Submit">
 					</form>
                     <?php
-                        if(isset( $_GET['msg'] ) && $_GET['msg'] == 1 ){
-                        	?><p style="color: #f46c5e;"><?php esc_html_e( "Thank you for subscribing your email", "woocommerce-jetpack" ); ?></p><?php
-                        }
-                        elseif(isset( $_GET['msg'] ) && $_GET['msg'] == 2 ){
-                            ?><p style="color: #f46c5e;"><?php esc_html_e( "You have already subscribed your email", "woocommerce-jetpack" ); ?></p><?php
-                        }
-                    ?>
+						if( isset( $_REQUEST['msg'] ) ){
+							$subscribe_message 		= "";
+							$subscribe_message_id 	= $_REQUEST['msg'];
+							if( $subscribe_message_id == 1 ){
+								$subscribe_message = "Thank you for subscribing your email";
+							}else if( $subscribe_message_id == 2 ){
+								$subscribe_message = "You have already subscribed your email";
+							}else if( $subscribe_message_id == 3 ){
+								$subscribe_message = "Something went wrong with your subscription. Please after some time !";
+							}
+							echo '<p style="color: #f46c5e;">' . sprintf( __( '%s', 'woocommerce-jetpack' ), $subscribe_message ) . '</p>';
+						}
+					?>
 				</div>
 				<div class="wcj-welcome-content-inner wcj-welcome-subscribe-email">
 				    <h3> <?php esc_html_e( "Contact Us", "woocommerce-jetpack" ); ?> </h3>
