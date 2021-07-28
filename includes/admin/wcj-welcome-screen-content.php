@@ -1,3 +1,11 @@
+<?php
+/**
+ * Booster for WooCommerce - Welcome Screen Content
+ *
+ * @version 5.4.3
+ * @author  Pluggabl LLC.
+ */
+?>
 <div class="wcj-welcome-page">
 	<div class="wcj-welcome-container">
 		<div class="wcj-welcome-content-main">

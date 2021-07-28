@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.4.3-dev
+ * @version 5.4.3
  * @author  Pluggabl LLC.
  */
 
@@ -433,7 +433,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_selector.
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 * @since   3.1.0
 	 * @todo    add `default` attribute
 	 * @todo    (maybe) add more selector types (e.g.: currency)

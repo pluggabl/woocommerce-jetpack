@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.4.3-dev
+ * @version 5.4.3
  * @since   1.0.0
  * @author  Pluggabl LLC.
  */
@@ -257,7 +257,7 @@ if (!class_exists('WC_Settings_Jetpack')):
     /**
 	 * enqueue_admin_script.
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 * @since   5.4.2
 	 */
 	function enqueue_admin_script() {

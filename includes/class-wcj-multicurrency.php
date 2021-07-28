@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.4.3-dev
+ * @version 5.4.3
  * @since   2.4.3
  * @author  Pluggabl LLC.
  */
@@ -92,7 +92,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility.
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 * @since   4.3.0
 	 */
 	function handle_compatibility(){
@@ -432,8 +432,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * fix_wc_attribute_swatches_premium_variable_cart_item_price.
 	 *
-	 * @version 5.4.3-dev
-	 * @since   5.4.3-dev
+	 * @version 5.4.3
+	 * @since   5.4.3
 	 *
 	 * @param $price_html
 	 * @param $cart_item

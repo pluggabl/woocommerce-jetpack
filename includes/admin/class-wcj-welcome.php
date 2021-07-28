@@ -2,7 +2,7 @@
 /**
  * Booster getting started
  *
- * @version 5.4.3-dev
+ * @version 5.4.3
  * @author  Pluggabl LLC.
  */
 
@@ -36,7 +36,7 @@ class WCJ_Welcome {
     /**
 	 * wcj_register_welcome_page
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 */
 	public function wcj_register_welcome_page() {
 		add_dashboard_page(
@@ -86,8 +86,8 @@ class WCJ_Welcome {
 	/**
 	 * enqueue_admin_script.
 	 *
-	 * @version 5.4.3-dev
-	 * @since   5.4.3-dev
+	 * @version 5.4.3
+	 * @since   5.4.3
 	 */
 	function enqueue_admin_script() {
         wp_enqueue_script(  'wcj-admin-js',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-admin.js', array( 'jquery' ), WCJ()->version, true );

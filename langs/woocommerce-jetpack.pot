@@ -45,7 +45,7 @@ msgstr ""
 #: includes/classes/class-wcj-module.php:582
 #: includes/classes/class-wcj-module.php:782
 #: includes/settings/wcj-settings-price-by-country.php:250
-msgid "Booster"
+msgid "Booster" 
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:67

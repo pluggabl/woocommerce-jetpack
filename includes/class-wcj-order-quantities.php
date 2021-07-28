@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 5.4.3-dev
+ * @version 5.4.3
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 * @since   2.9.0
 	 * @todo    [dev] maybe rename the module to "Order Product Quantities" or "Product Quantities"?
 	 * @todo    [dev] loop (`woocommerce_loop_add_to_cart_link`)
@@ -346,7 +346,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * set_quantity_input_min.
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 * @since   3.2.2
 	 */
 	function set_quantity_input_min( $qty, $_product ) {
@@ -419,7 +419,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * print_message.
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 * @since   2.9.0
 	 */
 	function print_message( $message_type, $_is_cart, $required_quantity, $total_quantity, $_product_id = 0 ) {
@@ -655,8 +655,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * set_quantity_input_max_cart_item.
 	 *
-	 * @version 5.4.3-dev
-	 * @since   5.4.3-dev
+	 * @version 5.4.3
+	 * @since   5.4.3
 	 */
 	function set_quantity_input_max_cart_item( $passed_validation, $product_id, $quantity ) {
 		global $product;

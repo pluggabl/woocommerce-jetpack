@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.3-dev
+Stable tag: 5.4.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -258,7 +258,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 5.4.3-dev 28/07/2021 =
+= 5.4.3 28/07/2021 =
 * Fix - SHIPPING & ORDERS- Order Quantities - Fixed Steps issue on product detail page.
 * Fix - PRODUCTS - Product Addons - Fixed issue when "Enable AJAX on Single Product Page" option, Prices of Related products are also change while changing varition of variable product.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed meta key issue for input type select.

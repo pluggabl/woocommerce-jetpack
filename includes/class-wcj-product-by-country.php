@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 5.4.3-dev
+ * @version 5.4.3
  * @since   2.5.0
  * @author  Pluggabl LLC.
  */
@@ -138,7 +138,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * maybe_add_extra_settings.
 	 *
-	 * @version 5.4.3-dev
+	 * @version 5.4.3
 	 * @since   3.6.0
 	 * @todo    (maybe) move "Country List" inside the "Admin Options" section
 	 */
