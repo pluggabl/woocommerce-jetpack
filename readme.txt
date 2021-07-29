@@ -228,6 +228,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 **PDF Invoicing & Packing Slips**
 
 * *PDF Invoicing* - Invoices, Proforma Invoices (Plus), Credit Notes (Plus), Paid Stamp (Plus) and Packing Slips (Plus).
+* *Paid Stamp (Plus)*
+* *Display product image on pdf (Plus)*
+* *Display product addons on pdf (Plus)*
+* *Display product input fields on pdf (Plus)*
+* *Display checkout custom fields on pdf (Plus)*
+* *Display WooCommerce order’s meta on pdf (Plus)*
+* *Display WooCommerce subscription order details on pdf (Plus)*
 
 **Emails & Misc.**
 
