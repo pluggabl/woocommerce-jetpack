@@ -265,8 +265,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 5.4.4 09/08/2021 =
-* Fix - Emails & Misc.- Email Verification - Fixed privacy issue for Authentication link.
+= 5.4.4 11/08/2021 =
+* Fix - Emails & Misc.- Email Verification - Fixed security issue for Authentication link.
 
 = 5.4.3 28/07/2021 =
 * Fix - SHIPPING & ORDERS- Order Quantities - Fixed Steps issue on product detail page.
