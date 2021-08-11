@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.3
+Stable tag: 5.4.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -264,6 +264,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.4.4 09/08/2021 =
+* Fix - Emails & Misc.- Email Verification - Fixed privacy issue for Authentication link.
 
 = 5.4.3 28/07/2021 =
 * Fix - SHIPPING & ORDERS- Order Quantities - Fixed Steps issue on product detail page.

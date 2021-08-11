@@ -45,7 +45,7 @@ msgstr ""
 #: includes/classes/class-wcj-module.php:582
 #: includes/classes/class-wcj-module.php:782
 #: includes/settings/wcj-settings-price-by-country.php:250
-msgid "Booster" 
+msgid "Booster"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:67
@@ -324,7 +324,7 @@ msgid "Product Info"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:764
-#: includes/admin/wcj-welcome-screen-content.php:72
+#: includes/admin/wcj-welcome-screen-content.php:80
 #: includes/class-wcj-product-input-fields.php:24
 #: includes/input-fields/class-wcj-product-input-fields-core.php:185
 msgid "Product Input Fields"
@@ -490,7 +490,7 @@ msgid ""
 msgstr ""
 
 #: includes/admin/wcj-modules-cats.php:116
-#: includes/admin/wcj-welcome-screen-content.php:99
+#: includes/admin/wcj-welcome-screen-content.php:107
 #: includes/settings/wcj-settings-payment-gateways-by-country.php:55
 #: includes/settings/wcj-settings-payment-gateways-by-currency.php:14
 #: includes/settings/wcj-settings-payment-gateways-by-shipping.php:37
@@ -533,175 +533,175 @@ msgstr ""
 msgid "Emails, Reports, Export, Admin Tools, General Options and more."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:9
+#: includes/admin/wcj-welcome-screen-content.php:17
 msgid "Welcome to booster."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:10
+#: includes/admin/wcj-welcome-screen-content.php:18
 msgid ""
 "Thank you for choosing Booster - Supercharge your WooCommerce site with these "
 "awesome powerful features. More than 100 modules. All in one WooCommerce "
 "plugin."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:11
+#: includes/admin/wcj-welcome-screen-content.php:19
 msgid "Launch Booster Settings"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:17
+#: includes/admin/wcj-welcome-screen-content.php:25
 msgid "Get Booster Plus Now."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:23
+#: includes/admin/wcj-welcome-screen-content.php:31
 msgid "30-Day Risk Free"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:23
+#: includes/admin/wcj-welcome-screen-content.php:31
 msgid "Money Back Guarantee"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:29
+#: includes/admin/wcj-welcome-screen-content.php:37
 msgid "400+ 5-Star"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:29
+#: includes/admin/wcj-welcome-screen-content.php:37
 msgid "Reviews"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:35
+#: includes/admin/wcj-welcome-screen-content.php:43
 msgid "Trusted by"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:35
+#: includes/admin/wcj-welcome-screen-content.php:43
 msgid "100,000+"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:35
+#: includes/admin/wcj-welcome-screen-content.php:43
 msgid "Websites"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:42
+#: includes/admin/wcj-welcome-screen-content.php:50
 msgid "Tons of Customizations and Zero Coding."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:44
+#: includes/admin/wcj-welcome-screen-content.php:52
 msgid ""
 "Access more than one hundred easy-to-use modules to quickly add customized "
 "functionality to your WooCommerce business"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:45
+#: includes/admin/wcj-welcome-screen-content.php:53
 msgid "- Without writing a line of code."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:54
+#: includes/admin/wcj-welcome-screen-content.php:62
 msgid "PDF Invoicing and Packing Slips"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:55
+#: includes/admin/wcj-welcome-screen-content.php:63
 msgid ""
 "Streamline your WooCommerce orders and paperwork, and deliver a seamless "
 "customer experience with the PDF Invoicing and Packing Slips module."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:63
+#: includes/admin/wcj-welcome-screen-content.php:71
 #: includes/class-wcj-product-addons.php:30
 msgid "Product Addons"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:64
+#: includes/admin/wcj-welcome-screen-content.php:72
 msgid ""
 "Create addons for your WooCommerce products like support service or special "
 "offers with the Product Addons Module."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:73
+#: includes/admin/wcj-welcome-screen-content.php:81
 msgid ""
 "Allow your customers to provide more details about their order with the "
 "Product Input Fields module. Super handy when selling customized products."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:81
+#: includes/admin/wcj-welcome-screen-content.php:89
 msgid "Button and Price Labels"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:82
+#: includes/admin/wcj-welcome-screen-content.php:90
 msgid ""
 "Add custom buttons and price labels to your products with this popular "
 "module. Set automatic price for products with an empty price field."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:90
+#: includes/admin/wcj-welcome-screen-content.php:98
 msgid "Prices and Currencies"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:91
+#: includes/admin/wcj-welcome-screen-content.php:99
 msgid ""
 "Make it easy for customers around the globe to make purchases on your site by "
 "displaying their currency with the Prices and Currencies by Country module."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:100
+#: includes/admin/wcj-welcome-screen-content.php:108
 msgid ""
 "Set up multiple payment gateways based on currency, shipping method, country, "
 "or state."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:108
+#: includes/admin/wcj-welcome-screen-content.php:116
 msgid "Cart and Checkout"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:109
+#: includes/admin/wcj-welcome-screen-content.php:117
 msgid ""
 "Customize the shopping cart and checkout experience. Add coupons, additional "
 "fees, custom fields, and buttons with the Cart and Checkout modules."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:117
+#: includes/admin/wcj-welcome-screen-content.php:125
 msgid "Emails & Additional Tools"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:118
+#: includes/admin/wcj-welcome-screen-content.php:126
 msgid ""
 "Add custom emails, additional recipients, and verification for increased "
 "security. Explore miscellaneous reporting and customization tools for "
 "increased functionality."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:122
+#: includes/admin/wcj-welcome-screen-content.php:130
 msgid "See All Features"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:126
+#: includes/admin/wcj-welcome-screen-content.php:134
 msgid "Don't miss updates from us!"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:142
+#: includes/admin/wcj-welcome-screen-content.php:150
 #, php-format
 msgid "%s"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:147
+#: includes/admin/wcj-welcome-screen-content.php:155
 msgid "Contact Us"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:149
+#: includes/admin/wcj-welcome-screen-content.php:157
 msgid ""
 "Booster Plus customers get access to Premium Support and we respond within 24 "
 "business hours."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:150
+#: includes/admin/wcj-welcome-screen-content.php:158
 msgid "Booster Plus Premium Support"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:153
+#: includes/admin/wcj-welcome-screen-content.php:161
 msgid ""
 "Free users post on WordPress Plugin Support forum here. We check these "
 "threads twice every week Mon and Frid to respond."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:154
+#: includes/admin/wcj-welcome-screen-content.php:162
 msgid "Booster Free Plugin Support"
 msgstr ""
 

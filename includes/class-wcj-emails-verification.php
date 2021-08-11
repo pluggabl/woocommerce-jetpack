@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 5.2.0
+ * @version 5.4.4
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -177,14 +177,14 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * reset_and_mail_activation_link.
 	 *
-	 * @version 3.1.0
+	 * @version 5.4.4
 	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 	 */
 	function reset_and_mail_activation_link( $user_id ) {
 		$user_info     = get_userdata( $user_id );
-		$code          = md5( time() );
-		$url           = add_query_arg( 'wcj_verify_email', base64_encode( json_encode( array( 'id' => $user_id, 'code' => $code ) ) ), wc_get_page_permalink( 'myaccount' ) );
+		$code          = mb_strtoupper(strval(bin2hex(openssl_random_pseudo_bytes(16))));
+		$url           = wp_nonce_url(add_query_arg( 'wcj_verify_email', base64_encode( json_encode( array( 'id' => $user_id, 'code' => $code  ) ) ), wc_get_page_permalink( 'myaccount' ) ));
 		$email_content = do_shortcode( apply_filters( 'booster_option',
 			__( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ),
 			get_option( 'wcj_emails_verification_email_content',
