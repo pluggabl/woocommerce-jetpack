@@ -326,7 +326,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_refunds_table.
 	 *
-	 * @version 4.5.0
+	 * @version  5.4.5-dev
 	 * @since   3.1.0
 	 * @see     woocommerce/includes/admin/meta-boxes/views/html-order-refund.php for refund_title
 	 * @todo    add `refund_items_or_reason_or_title` column
@@ -369,7 +369,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 						break;
 					case 'refund_items':
 						$_items = array();
-						foreach ( $_refund->get_items() as $_item ) {
+						foreach ( $_refund->get_items(array( 'line_item', 'fee', 'shipping' )) as $_item ) {
 							$_items[] = $_item->get_name() . ' x ' . $_item->get_quantity() * -1;
 						}
 						$cell = ( ! empty( $_items ) ? implode( '<br>', $_items ) : '' );
