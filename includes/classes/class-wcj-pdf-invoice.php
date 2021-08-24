@@ -148,6 +148,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 			
 			$pdf->SetAutoPageBreak(false, 0);
 			$pdf->Image( $background_image,0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), '', '', '', false, 300, '', false, false, 0);
+			$pdf->setPageMark();
 		}
 
 		return $pdf;
