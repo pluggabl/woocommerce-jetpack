@@ -282,7 +282,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 5.4.0
+	 * @version 5.4.5-dev
 	 * @since   2.3.0
 	 * @todo    convert from before version 2.3.0
 	 */
@@ -337,13 +337,24 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					$value = $_value;
 				}
 				// Adding field to final output
-				if ( '' != $label || '' != $value ) {
-					$replaced_values = array(
-						'%label%' => $label,
-						'%value%' => $value,
-					);
-					$final_output .= str_replace( array_keys( $replaced_values ), $replaced_values, $templates['field'] );
+				if (  '' != $value  ) {
+					if($value != 'No'){
+						$replaced_values = array(
+							'%label%' => $label,
+							'%value%' => $value,
+						);
+						$final_output .= str_replace( array_keys( $replaced_values ), $replaced_values, $templates['field'] );
+					 }
+					
 				}
+				else if ('' == $value) {
+						$templates = array(
+							'before' => '',
+							'field'  => '',
+							'after'  => '',
+						);
+						$final_output .= str_replace( array_keys( $replaced_values ), $replaced_values, $templates['field'] );
+					 }
 			}
 		}
 		// Outputting
