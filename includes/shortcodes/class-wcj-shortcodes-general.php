@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.4.3
+ * @version 5.4.5
  * @author  Pluggabl LLC.
  */
 
@@ -25,6 +25,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_country_select_drop_down_list',
 			'wcj_cross_sell_display',
 			'wcj_currency_exchange_rate',
+			'wcj_currency_exchange_rate_wholesale_module',
 			'wcj_currency_exchange_rates_table',
 			'wcj_currency_select_drop_down_list',
 			'wcj_currency_select_link_list',
@@ -498,6 +499,22 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	function wcj_currency_exchange_rate( $atts ) {
 		return ( '' != $atts['from'] && '' != $atts['to'] ) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $atts['from'] . $atts['to'] ) ) : '';
 	}
+
+	/**
+	 * wcj_currency_exchange_rate_wholesale_module.
+	 *
+	 * @version 5.4.5
+	 * @since   5.4.5
+	 * @todo    (maybe) add similar function
+	 */
+	 
+	function wcj_currency_exchange_rate_wholesale_module( ) {
+		$store_base_currency= strtolower(get_option('woocommerce_currency'));
+		 $store_current_currency = strtolower(get_woocommerce_currency());
+		  return ( '' !=  $store_base_currency && '' != $store_current_currency) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title(  $store_base_currency .  $store_current_currency ) ) : '';
+	
+	  }
+
 
 	/**
 	 * wcj_currency_exchange_rates_table.

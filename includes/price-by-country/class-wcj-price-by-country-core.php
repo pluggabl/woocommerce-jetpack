@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.3.0
+ * @version 5.4.5
  * @author  Pluggabl LLC.
  */
 
@@ -111,7 +111,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 5.3.0
+	 * @version 5.4.5
 	 */
 	function add_hooks() {
 
@@ -141,9 +141,9 @@ class WCJ_Price_by_Country_Core {
 				if ( 1 == (float) $country_exchange_rate ) {
 					return;
 				}
-				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'order_by_price_asc_post_clauses' );
-				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'order_by_price_desc_post_clauses' );
-				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'price_filter_post_clauses' );
+				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'order_by_price_asc_post_clauses',0 );
+				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'order_by_price_desc_post_clauses',0 );
+				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'price_filter_post_clauses',0 );
 			} );
 			add_filter( 'woocommerce_price_filter_widget_step', function ( $step ) {
 				$step = 1;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.3.7
+ * @version 5.4.5
  * @since   2.3.9
  * @author  Pluggabl LLC.
  */
@@ -388,11 +388,11 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 5.3.7
+	 * @version 5.4.5
 	 */
 	function enqueue_scripts() {
 		if (
-			'no' === wcj_get_option( 'wcj_eu_vat_number_validate', 'yes' ) ||
+			'no' === wcj_get_option( 'wcj_eu_vat_number_validate', 'yes' ) &&  'no' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'yes' ) ||
 			! $this->restrictive_loading_valid()
 		) {
 			return;
@@ -523,9 +523,17 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 4.6.1
+	 * @version 5.4.5
 	 */
 	function checkout_validate_vat( $_posted ) {
+		if ('yes' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'no' ) && '' == $_posted['billing_eu_vat_number']  ){
+			if( in_array( $_posted['billing_country'] , wcj_get_european_union_countries() ) ) {
+				wc_add_notice(
+					 __( '<strong>Billing EU VAT Number</strong>is a required field.', 'woocommerce-jetpack' ),
+					'error'
+				);
+			}
+		   }
 		if ( 'yes' === wcj_get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
 			if (
 				( 'yes' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'no' ) && '' == $_posted['billing_eu_vat_number'] ) ||

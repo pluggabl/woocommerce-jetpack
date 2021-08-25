@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 5.4.0
+ * @version 5.4.5
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -57,6 +57,16 @@ $settings = array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
+
+	array(
+		'title'    => __( 'Convert Price by Country Module Use Only', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Apply price directly method use in wholesale discount on cart page when you are using Price by Country Module ', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wholesale_price_apply_only_if_price_country_currency_price_directly',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+
 	array(
 		'title'    => __( 'Round Single Product Price', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'If enabled will round single product price with precision set in WooCommerce > Settings > General > Number of decimals.', 'woocommerce-jetpack' ),

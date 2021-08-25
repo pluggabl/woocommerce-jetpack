@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 5.0.0
+ * @version 5.4.5
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    per variation
@@ -145,7 +145,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_discount_by_quantity.
 	 *
-	 * @version 4.7.1
+	 * @version 5.4.5
 	 */
 	private function get_discount_by_quantity( $quantity, $product_id ) {
 
@@ -170,7 +170,18 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				$level_qty = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
 				if ( $quantity >= $level_qty && $level_qty >= $max_qty_level ) {
 					$max_qty_level = $level_qty;
-					$discount = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
+					if('yes' === wcj_get_option('wcj_wholesale_price_apply_only_if_price_country_currency_price_directly')){
+						$discount = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
+						$discount_type = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_discount_type', true );
+						if ( 'price_directly' === $discount_type ) { 
+							$convertion_rate =do_shortcode('[wcj_currency_exchange_rate_wholesale_module]');
+							$discount = $discount * $convertion_rate;
+						}
+					}
+
+					else{ 
+						$discount = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
+					}
 				}
 			}
 		} else {
