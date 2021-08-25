@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.3.7
+ * @version 5.4.5
  * @author  Pluggabl LLC.
  */
 
@@ -326,7 +326,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_refunds_table.
 	 *
-	 * @version  5.4.5-dev
+	 * @version  5.4.5
 	 * @since   3.1.0
 	 * @see     woocommerce/includes/admin/meta-boxes/views/html-order-refund.php for refund_title
 	 * @todo    add `refund_items_or_reason_or_title` column

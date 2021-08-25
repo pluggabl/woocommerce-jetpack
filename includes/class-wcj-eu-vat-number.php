@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.3.7
+ * @version 5.4.5
  * @since   2.3.9
  * @author  Pluggabl LLC.
  */
@@ -388,7 +388,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 5.4.5-dev
+	 * @version 5.4.5
 	 */
 	function enqueue_scripts() {
 		if (
@@ -523,7 +523,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 5.4.5-dev
+	 * @version 5.4.5
 	 */
 	function checkout_validate_vat( $_posted ) {
 		if ('yes' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'no' ) && '' == $_posted['billing_eu_vat_number']  ){

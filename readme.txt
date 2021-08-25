@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.5-dev
+Stable tag: 5.4.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -265,17 +265,17 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 5.4.5-dev 25/08/2021 =
-* Fix - PDF INVOICING & PACKING SLIPS-Table Border not showing when use background image.
-* Fix - PDF INVOICING & PACKING SLIPS-Page break not working when extraheader css Adding.
-* Fix - PDF INVOICING & PACKING SLIPS-refunf extra fee and shipping showing Blank on item table.
-* Fix - CART & CHECKOUT - Checkout Custom Fields - Category rules not working on checkout page using custom flieds modules on email.
-* Fix - CART & CHECKOUT - EU VAT Number - EU vat number required notice when flied is empty.
-* Fix - SHIPPING & ORDERS - Order Numbers - order number Sequential not working on new order coming.
-* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Closure error when Widgets use on shop page.
-* Fix - PRICES & CURRENCIES - Wholesale Price - per product price directly not working when multicurrecy switcher is enable.
+= 5.4.5 25/08/2021 =
+* Fix - PDF INVOICING & PACKING SLIPS - Fixed table border is not being shown when we use a background image.
+* Fix - PDF INVOICING & PACKING SLIPS - Fixed page break not working when extra header css is being added.
+* Fix - PDF INVOICING & PACKING SLIPS - Fixed refund extra fee and shipping value not being shown on item table.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed Category rules of checkout were not being reflected on email.
+* Fix - CART & CHECKOUT - EU VAT Number - Fixed EU vat number required notice when the field is empty.
+* Fix - SHIPPING & ORDERS - Order Numbers - Fixed order number sequential bug for a new order.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed closure error when widgets are being used on shop page.
+* Fix - PRICES & CURRENCIES - Wholesale Price - Fixed per product price issue with the multicurrency switcher.
 * WooCommerce 5.6.0 tested
-* Wordpress 5.8 tested
+* WordPress 5.8 tested
 
 = 5.4.4 11/08/2021 =
 * Fix - Emails & Misc.- Email Verification - Fixed security issue for Authentication link.

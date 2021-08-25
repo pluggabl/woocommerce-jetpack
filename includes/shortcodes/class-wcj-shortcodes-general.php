@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.4.3
+ * @version 5.4.5
  * @author  Pluggabl LLC.
  */
 
@@ -503,8 +503,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_exchange_rate_wholesale_module.
 	 *
-	 * @version 5.4.5-dev
-	 * @since   5.4.5-dev
+	 * @version 5.4.5
+	 * @since   5.4.5
 	 * @todo    (maybe) add similar function
 	 */
 	 

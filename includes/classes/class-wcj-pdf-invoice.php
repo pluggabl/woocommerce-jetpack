@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 5.3.1
+ * @version 5.4.5
  * @author  Pluggabl LLC.
  */
 
@@ -24,7 +24,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 5.4.5-dev
+	 * @version 5.4.5
 	 * @todo    [dev] check `addTTFfont()`
 	 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster for WooCommerce' )`
 	 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`

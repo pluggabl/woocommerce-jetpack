@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.3.0
+ * @version 5.4.5
  * @author  Pluggabl LLC.
  */
 
@@ -111,7 +111,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 5.4.5-dev
+	 * @version 5.4.5
 	 */
 	function add_hooks() {
 

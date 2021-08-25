@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 5.4.5-dev
+ * @version 5.4.5
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */

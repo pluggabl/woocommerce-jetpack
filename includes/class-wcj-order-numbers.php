@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.3.8
+ * @version 5.4.5
  * @author  Pluggabl LLC.
  */
 
@@ -400,7 +400,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 5.4.5-dev
+	 * @version 5.4.5
 	 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
