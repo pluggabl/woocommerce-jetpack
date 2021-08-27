@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.5
+Stable tag: 5.4.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -264,6 +264,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.4.6 27/08/2021 =
+
+* Fix - SHIPPING & ORDERS - Order Numbers - Fixed order number sequential bug for a new order for different PHP versions.
 
 = 5.4.5 25/08/2021 =
 * Fix - PDF INVOICING & PACKING SLIPS - Fixed table border is not being shown when we use a background image.
