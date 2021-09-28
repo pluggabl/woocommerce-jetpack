@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.4.5
+ * @version 5.4.7-dev
  * @author  Pluggabl LLC.
  */
 
@@ -282,8 +282,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 5.4.5
-	 * @since   2.3.0
+	 * @version 5.4.7-dev
+	 * @since   2.3.1-dev
 	 * @todo    convert from before version 2.3.0
 	 */
 	function add_custom_fields_to_order_display( $order, string $section =null, $templates ) {
@@ -353,7 +353,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							'field'  => '',
 							'after'  => '',
 						);
-						$final_output .= str_replace( array_keys( $replaced_values ), $replaced_values, $templates['field'] );
+						$final_output .= str_replace( array_keys( $templates ), $templates, $templates['field'] );
 					 }
 			}
 		}
