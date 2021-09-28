@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 5.3.0
- * @since   2.5.0
+ * @version 5.4.7-dev
+ * @since   2.5.1
  * @author  Pluggabl LLC.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
-	 * @since   2.5.0
+	 * @version 5.4.7-dev
+	 * @since   2.5.1
 	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
 	function __construct() {
@@ -46,10 +46,94 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 
+			if('yes'===wcj_get_option('wcj_product_price_by_formula_woo_booking_plugin' ,'no')){ 
+				add_filter('woocommerce_bookings_calculated_booking_cost_success_output',array($this,'booking_price_change'),PHP_INT_MAX,10,3);
+			}
+			
+			if('yes'===wcj_get_option('wcj_product_price_by_formula_woo_booking_promotional','no')) { 
+				add_filter('woocommerce_get_price_html',array($this,'promotional_price_showing'),PHP_INT_MAX,10,2);
+			}
 			$this->rounding           = wcj_get_option( 'wcj_product_price_by_formula_rounding', 'no_rounding' );
 			$this->rounding_precision = wcj_get_option( 'wcj_product_price_by_formula_rounding_precision', 0 );
 		}
 	}
+
+	/**
+	 * booking_price_change.
+	 *
+	 * @version 5.4.7-dev
+	 * @since   5.4.7-dev
+	 */
+	function booking_price_change($output, $display_price, $_product) { 
+
+		if ( $this->is_price_by_formula_product( $_product ) && '' != $display_price ) {
+			$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
+			$saved_price = $this->get_saved_price( $_product_id );
+			if ( false !== $saved_price ) {
+				return $saved_price;
+			}
+			$is_per_product = ( 'per_product' === get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_calculation', true ) );
+			$the_formula = ( $is_per_product )
+				? get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_eval', true )
+				: wcj_get_option( 'wcj_product_price_by_formula_eval', '' );
+			$the_formula = do_shortcode( $the_formula );
+			if ( '' != $the_formula ) {
+				$total_params = ( $is_per_product )
+					? get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_total_params', true )
+					: wcj_get_option( 'wcj_product_price_by_formula_total_params', 1 );
+				if ( $total_params > 0 ) {
+					$the_current_filter = current_filter();
+					if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
+						$display_price = wcj_get_product_display_price( $_product );
+						$this->save_price( $_product_id, $display_price );
+						return $display_price;
+					}
+					$math = new WCJ_Math();
+					$math->registerVariable( 'x', $display_price );
+					for ( $i = 1; $i <= $total_params; $i++ ) {
+						$the_param = ( $is_per_product )
+							? get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_param_' . $i, true )
+							: wcj_get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
+						$the_param = $this->add_product_id_param( $the_param, $_product );
+						$the_param = do_shortcode( $the_param );
+						if ( '' != $the_param ) {
+							$math->registerVariable( 'p' . $i, $the_param );
+						}
+					}
+					$the_formula = str_replace( 'x', '$x', $the_formula );
+					$the_formula = str_replace( 'p', '$p', $the_formula );
+					try {
+						$display_price = $math->evaluate( $the_formula );
+					} catch ( Exception $e ) {
+						if ( $output_errors ) {
+							echo '<p style="color:red;">' . __( 'Error in formula', 'woocommerce-jetpack' ) . ': ' . $e->getMessage() . '</p>';
+						}
+					}
+					if ( 'no_rounding' != $this->rounding ) {
+						$display_price = wcj_round( $display_price, $this->rounding_precision, $this->rounding );
+					}
+					$this->save_price( $_product_id, $display_price );
+				}
+			}
+		}
+
+		$output = apply_filters( 'woocommerce_bookings_booking_cost_string', __( 'Booking cost', 'woocommerce-jetpack' ), $_product ) . ': <strong>' . wc_price( $display_price ) . $price_suffix . '</strong>';
+		return 	$output;
+	}
+
+	/**
+	 * promotional_price_showing.
+	 *
+	 * @version 5.4.7-dev
+	 * @since   5.4.7-dev
+	 */
+	function promotional_price_showing($price, $_product){
+		$price_html=$_product->get_price();
+		$price_html = sprintf( __( 'From: %s', 'woocommerce-jetpack' ), wc_price( $price_html ) );
+		return $price_html;
+	 }
+
+
 
 	/**
 	 * add_reset_settings_button.
