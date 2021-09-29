@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 5.4.7-dev
+ * @version 5.4.7
  * @since   2.5.1
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.4.7-dev
+	 * @version 5.4.7
 	 * @since   2.5.1
 	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
@@ -61,11 +61,10 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * booking_price_change.
 	 *
-	 * @version 5.4.7-dev
-	 * @since   5.4.7-dev
+	 * @version 5.4.7
+	 * @since   5.4.7
 	 */
-	function booking_price_change($output, $display_price, $_product) { 
-
+	function booking_price_change($output, $display_price, $_product) {
 		if ( $this->is_price_by_formula_product( $_product ) && '' != $display_price ) {
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
 			$saved_price = $this->get_saved_price( $_product_id );
@@ -124,16 +123,14 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * promotional_price_showing.
 	 *
-	 * @version 5.4.7-dev
-	 * @since   5.4.7-dev
+	 * @version 5.4.7
+	 * @since   5.4.7
 	 */
 	function promotional_price_showing($price, $_product){
 		$price_html=$_product->get_price();
 		$price_html = sprintf( __( 'From: %s', 'woocommerce-jetpack' ), wc_price( $price_html ) );
 		return $price_html;
 	 }
-
-
 
 	/**
 	 * add_reset_settings_button.

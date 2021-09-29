@@ -1,8 +1,8 @@
 /**
 * wcj-checkout-core-fields.
 *
-* @version 5.4.7-dev
-* @since   5.4.7-dev
+* @version 5.4.7
+* @since   5.4.7
 */
 
 jQuery(document).ready(function () {
@@ -22,9 +22,9 @@ jQuery(document).ready(function () {
                 jQuery("p#" + field + '_field').each(function () {
                     jQuery(this).removeClass("form-row-wide");
                     if (wcj_checkout_core_field.class == null){
-
+                    }else{
+                        jQuery(this).addClass(wcj_checkout_core_field.class[0]);
                     }
-                    jQuery(this).addClass(wcj_checkout_core_field.class[0]);
                 });
             });
         });

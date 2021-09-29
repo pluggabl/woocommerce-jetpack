@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.7-dev
+Stable tag: 5.4.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -265,11 +265,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 5.4.7-dev 29/09/2021 =
+= 5.4.7 29/09/2021 =
 
-* Feature - PRICES & CURRENCIES - Product Price by Formula - Added Compatibility with WoocommerceBooking plugin .
+* Feature - PRICES & CURRENCIES - Product Price by Formula - Added Compatibility with WoocommerceBooking plugin.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed PHP warning array_key() expects parameter 1.
-* Fix - CART & CHECKOUT - Checkout Core Fields Module - Fixed Error Uncaught TypeError: Cannot read property '0' of undefined.
+* Fix - CART & CHECKOUT - Checkout Core Fields - Fixed Error Uncaught TypeError: Cannot read property '0' of undefined.
 * WooCommerce 5.7.1 tested
 * WordPress 5.8.1 tested
 
