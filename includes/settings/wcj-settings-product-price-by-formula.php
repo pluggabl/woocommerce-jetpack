@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 5.4.0
- * @since   2.8.0
+ * @version 5.4.7
+ * @since   2.8.1
  * @author  Pluggabl LLC.
  */
 
@@ -78,6 +78,23 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_product_price_by_formula_rounding_precision',
 		'default'  => 0,
 		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
+		'title'    => __( 'Compatible With Woococommerce Booking Plugin', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable on Woocommerce Booking Module', 'woocommerce-jetpack' ),
+		'desc_tip' => __( "If you are facing pricing issue after enable Woocommerce Booking plugin please enable  the section", 'woocommerce-jetpack' ) . '<br />',
+		'type'     => 'checkbox',
+		'id'       => 'wcj_product_price_by_formula_woo_booking_plugin',
+		'default'  => 'no',
+	),
+
+	array(
+		'title'    => __( 'Promotional pricing issue', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( "If you are facing promotional  pricing issue in booking product then enable the section", 'woocommerce-jetpack' ) . '<br />',
+		'type'     => 'checkbox',
+		'id'       => 'wcj_product_price_by_formula_woo_booking_promotional',
+		'default'  => 'no',
 	),
 	array(
 		'title'    => __( 'Disable Admin Scope', 'woocommerce-jetpack' ),
