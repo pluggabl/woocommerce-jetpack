@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.7
+Stable tag: 5.8.4-dev
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,7 +136,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 **Products**
 
-* *WooCommerce Product Extra Fees* - Lets you set extra fees for all your shop’s products. Fees can be fixed or calculated as percent from the price. (Plus only)
+* *WooCommerce Product Extra Fees* - Lets you set extra fees for all your shop’s products. Fees can be fixed or calculated as percent from the price. (Available in paid Booster bundles)
 * *Add to Cart* - Set any local URL to redirect to on Add to Cart (Per product not allowed in free version). Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products (Plus). Disable quantity input. Open external products on the add to cart in the new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages (Plus).
 * *Add to Cart Button Visibility* - Enable/disable Add to Cart button globally or on per product basis.
 * *Admin Products List* - Customize admin products list (1 custom column allowed in free).
@@ -184,9 +184,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Plus). Different button positions on the cart page (Plus).
 * *Mini Cart Custom Info* - Add custom info to the mini cart widget (1 block allowed in free version).
 * *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Plus).
-* *Frequently Bought Together* - Add Frequently Bought Together section with suggest items usually bought together with the product watched by your customer. (Plus only)
-* *One Page Checkout* - One Page Checkout make easier for customers to buy from custom checkout pages by displaying both product selection and checkout forms on a single page. (Plus only)
-
+* *Frequently Bought Together* - Add Frequently Bought Together section with suggest items usually bought together with the product watched by your customer. (Available in paid Booster bundles)
+* *One Page Checkout* - One Page Checkout make easier for customers to buy from custom checkout pages by displaying both product selection and checkout forms on a single page. (Available in paid Booster bundles)
+* *Wishlist* - Add to Favourites your customer can mark Products as Favourite Products for any upcomming event.(Available in paid Booster bundles)
 
 **Payment Gateways**
 
@@ -264,6 +264,17 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.4.8-dev 27/10/2021 =
+
+* Feature - PRODUCTS - Product Visibility by Country - Added Shortcode to display product visibility by country[wcj_product_visibility_by_country].
+* Fix - PAYMENT GATEWAYS - Gateways Fees and Discounts - Fixed klarna payment fees not showing on checkout page.
+* Fix -PRODUCTS - Related Products - Fixed Include exclude hide option not working on products.
+* Fix -PDF INVOICING & PACKING SLIPS - Fixed Bulk pdf invoice download not working  billing_country and not_billing_country shortcode.
+* Fix -PRICES & CURRENCIES- Currency per Product - Currency per product module shipping price not converted with exchange rate.
+* WooCommerce 5.7.1 tested
+* WordPress 5.8.1 tested
+
 
 = 5.4.7 29/09/2021 =
 
