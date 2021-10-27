@@ -265,16 +265,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 5.4.8-dev 27/10/2021 =
+= 5.4.8 27/10/2021 =
 
-* Feature - PRODUCTS - Product Visibility by Country - Added Shortcode to display product visibility by country[wcj_product_visibility_by_country].
-* Fix - PAYMENT GATEWAYS - Gateways Fees and Discounts - Fixed klarna payment fees not showing on checkout page.
-* Fix -PRODUCTS - Related Products - Fixed Include exclude hide option not working on products.
-* Fix -PDF INVOICING & PACKING SLIPS - Fixed Bulk pdf invoice download not working  billing_country and not_billing_country shortcode.
-* Fix -PRICES & CURRENCIES- Currency per Product - Currency per product module shipping price not converted with exchange rate.
-* WooCommerce 5.7.1 tested
-* WordPress 5.8.1 tested
-
+* Feature - PRODUCTS - Product Visibility by Country - Added shortcode to display product visibility by country. Use [wcj_product_visibility_by_country] to apply.
+* Fix - PAYMENT GATEWAYS - Gateways Fees and Discounts - Fixed klarna payment fees issue for checkout page.
+* Fix - PRODUCTS - Related Products - Fixed include/exclude hide option issue for products.
+* Fix - PDF INVOICING & PACKING SLIPS - Fixed bulk pdf invoice download issue with include and exclude billing country
+* Fix - PRICES & CURRENCIES- Currency per Product - Fixed shipping price convert issue with exchange rate.
 
 = 5.4.7 29/09/2021 =
 

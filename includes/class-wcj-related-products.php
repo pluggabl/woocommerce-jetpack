@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.4.8-dev
+ * @version 5.4.8
  * @author  Pluggabl LLC.
  */
 
@@ -239,7 +239,7 @@ if (!class_exists('WCJ_Related_Products')) :
 		/**
 		 * related_products_query_wc3.
 		 *
-		 * @version 5.4.8-dev
+		 * @version 5.4.8
 		 * @since   2.8.0
 		 * @see     WC_Product_Data_Store_CPT::get_related_products_query()
 		 * @todo    "Relate by Product Attribute" - directly to `$query['where']` instead of getting ids via `WP_Query`

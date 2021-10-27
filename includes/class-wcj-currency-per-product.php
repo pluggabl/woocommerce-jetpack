@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 5.4.8-dev
+ * @version 5.4.8
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -18,7 +18,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.8-dev
+		 * @version 5.4.8
 		 * @since   2.5.2
 		 * @todo    (maybe) add `$this->price_hooks_priority`
 		 */

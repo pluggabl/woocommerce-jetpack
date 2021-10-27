@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.4.8-dev
+ * @version 5.4.8
  * @author  Pluggabl LLC.
  */
 
@@ -17,7 +17,7 @@ if (!class_exists('WCJ_Products_Shortcodes')) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.8-dev
+		 * @version 5.4.8
 		 * @todo    (maybe) add `[wcj_product_stock_price]`
 		 */
 		function __construct()
@@ -1398,8 +1398,8 @@ if (!class_exists('WCJ_Products_Shortcodes')) :
 		/**
 		 * wcj_product_visibility_by_country.
 		 *
-		 * @version 5.4.8-dev
-		 * @since   5.4.8-dev
+		 * @version 5.4.8
+		 * @since   5.4.8
 		 */
 		function wcj_product_visibility_by_contry($atts)
 		{

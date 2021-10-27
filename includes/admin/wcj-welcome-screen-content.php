@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Welcome Screen Content
  *
- * @version 5.4.8-dev
+ * @version 5.4.8
  * @author  Pluggabl LLC.
  */
 ?>

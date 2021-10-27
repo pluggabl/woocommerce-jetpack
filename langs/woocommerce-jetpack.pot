@@ -33,8 +33,8 @@ msgstr ""
 msgid "Product category (archive) view"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:29
-#: includes/admin/class-wc-settings-jetpack.php:457
+#: includes/admin/class-wc-settings-jetpack.php:30
+#: includes/admin/class-wc-settings-jetpack.php:460
 #: includes/class-wcj-admin-bar.php:276
 #: includes/class-wcj-checkout-files-upload.php:219
 #: includes/class-wcj-eu-vat-number.php:166
@@ -48,62 +48,63 @@ msgstr ""
 msgid "Booster"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:67
+#: includes/admin/class-wc-settings-jetpack.php:68
 msgid "Upgrade today to unlock these popular premium features:"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:69
+#: includes/admin/class-wc-settings-jetpack.php:70
 msgid "Add ability to create Proforma Invoices, Credit Notes and Packing slips"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:70
+#: includes/admin/class-wc-settings-jetpack.php:71
 msgid ""
 "<strong>Cart and checkout</strong> – add multiple – custom fields, custom "
 "info blocks, check out file uploads"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:71
+#: includes/admin/class-wc-settings-jetpack.php:72
 msgid ""
 "<strong>Prices and currencies</strong> – add more unlimited number of "
 "currencies to WooCommerce"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:72
+#: includes/admin/class-wc-settings-jetpack.php:73
 msgid ""
 "<strong>Add to cart</strong> – customize add to cart messages, Button labels "
 "- multiple category groups allowed"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:73
+#: includes/admin/class-wc-settings-jetpack.php:74
 msgid ""
 "<strong>Empty Cart</strong> – customize empty cart button text, different "
 "button positions on cart page"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:74
+#: includes/admin/class-wc-settings-jetpack.php:75
 msgid "<strong>Mini cart</strong> – More custom information options"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:75
+#: includes/admin/class-wc-settings-jetpack.php:76
 msgid "<strong>Export options</strong> – more fields enabled"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:76
+#: includes/admin/class-wc-settings-jetpack.php:77
 msgid "More configuration options for payments and shipping"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:86
-msgid "Upgrade to Booster Plus"
+#: includes/admin/class-wc-settings-jetpack.php:87
+#: includes/functions/wcj-functions-admin.php:341
+msgid "Upgrade Booster to unlock this feature"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:150
+#: includes/admin/class-wc-settings-jetpack.php:151
 #, php-format
 msgid ""
 "You're using Booster free version. To unlock more features please consider <a "
-"target=\"_blank\" href=\"%s\">upgrading to Plus</a>."
+"target=\"_blank\" href=\"%s\">Upgrade Booster to unlock this feature</a>."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:184
+#: includes/admin/class-wc-settings-jetpack.php:185
 #, php-format
 msgid ""
 "Please rate <strong>Booster for WooCommerce</strong> %s on <a href=\"%s\" "
@@ -111,7 +112,7 @@ msgid ""
 "from Booster team!"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:245
+#: includes/admin/class-wc-settings-jetpack.php:247
 #, php-format
 msgid ""
 "Please rate <strong>Booster for WooCommerce</strong> %s on  <a href=\"%s\" "
@@ -119,44 +120,44 @@ msgid ""
 "from Booster team!"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:314
+#: includes/admin/class-wc-settings-jetpack.php:317
 #: includes/class-wcj-admin-bar.php:140
 msgid "Alphabetically"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:315
+#: includes/admin/class-wc-settings-jetpack.php:318
 #: includes/class-wcj-admin-bar.php:144
 msgid "By Category"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:316
+#: includes/admin/class-wc-settings-jetpack.php:319
 #: includes/class-wcj-admin-bar.php:148
 msgid "Active"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:317
+#: includes/admin/class-wc-settings-jetpack.php:320
 #: includes/class-wcj-admin-bar.php:152
 msgid "Manage Settings"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:379
+#: includes/admin/class-wc-settings-jetpack.php:382
 #: includes/admin/wcj-modules-cats.php:14 includes/class-wcj-admin-bar.php:214
 #: includes/class-wcj-my-account.php:34
 msgid "Dashboard"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:426
+#: includes/admin/class-wc-settings-jetpack.php:429
 #, php-format
 msgid ""
 "Please note that current <em>%s</em> module is deprecated and will be removed "
 "in future updates. Please use <em>%s</em> module instead."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:431
+#: includes/admin/class-wc-settings-jetpack.php:434
 msgid "Module will be removed from the module's list as soon as you disable it."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:442
+#: includes/admin/class-wc-settings-jetpack.php:445
 #, php-format
 msgid ""
 "Please note that <em>%s</em> module is currently under development. Until "
@@ -164,85 +165,85 @@ msgid ""
 "be moved to paid plugin version."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:453
+#: includes/admin/class-wc-settings-jetpack.php:456
 #: includes/class-wcj-admin-bar.php:384
 #: includes/settings/wcj-settings-emails-verification.php:146
 #: includes/settings/wcj-settings-price-by-country.php:249
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:455
-#: includes/admin/class-wc-settings-jetpack.php:662
+#: includes/admin/class-wc-settings-jetpack.php:458
+#: includes/admin/class-wc-settings-jetpack.php:659
 #: includes/class-wcj-admin-bar.php:168 includes/class-wcj-admin-bar.php:508
 #: includes/class-wcj-admin-bar.php:608 includes/core/class-wcj-admin.php:116
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:507
+#: includes/admin/class-wc-settings-jetpack.php:510
 msgid ""
 "This section lets you export, import or reset all Booster's modules settings."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:531
+#: includes/admin/class-wc-settings-jetpack.php:534
 #: includes/class-wcj-export-import.php:26
 msgid "Export"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:532
+#: includes/admin/class-wc-settings-jetpack.php:535
 msgid "Export all Booster's options to a file."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:535
+#: includes/admin/class-wc-settings-jetpack.php:538
 #: includes/class-wcj-purchase-data.php:104
 msgid "Import"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:537
+#: includes/admin/class-wc-settings-jetpack.php:540
 msgid "Import all Booster's options from a file."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:541
+#: includes/admin/class-wc-settings-jetpack.php:544
 msgid ""
 "This will reset settings to defaults for all Booster modules. Are you sure?"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:542
+#: includes/admin/class-wc-settings-jetpack.php:545
 msgid "Reset"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:543
+#: includes/admin/class-wc-settings-jetpack.php:546
 msgid "Reset all Booster's options."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:547
+#: includes/admin/class-wc-settings-jetpack.php:550
 msgid "This will delete all Booster meta. Are you sure?"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:548
+#: includes/admin/class-wc-settings-jetpack.php:551
 msgid "Reset meta"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:549
+#: includes/admin/class-wc-settings-jetpack.php:552
 msgid "Reset all Booster's meta."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:587
+#: includes/admin/class-wc-settings-jetpack.php:590
 msgid "Version"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:612
-#: includes/admin/class-wc-settings-jetpack.php:623
+#: includes/admin/class-wc-settings-jetpack.php:621
 msgid "Select All"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:615
-#: includes/admin/class-wc-settings-jetpack.php:625
+#: includes/admin/class-wc-settings-jetpack.php:614
+#: includes/admin/class-wc-settings-jetpack.php:622
 #: includes/admin/class-wcj-tools.php:76
 msgid "Module"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:617
-#: includes/admin/class-wc-settings-jetpack.php:628
+#: includes/admin/class-wc-settings-jetpack.php:616
+#: includes/admin/class-wc-settings-jetpack.php:625
 #: includes/admin/class-wcj-tools.php:77
 #: includes/export/class-wcj-fields-helper.php:293
 #: includes/gateways/class-wc-gateway-wcj-custom.php:61
@@ -254,103 +255,103 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:664
+#: includes/admin/class-wc-settings-jetpack.php:661
 #: includes/class-wcj-admin-bar.php:172
 #: includes/classes/class-wcj-module.php:929
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:675
+#: includes/admin/class-wc-settings-jetpack.php:672
 msgid "No active modules found."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:679
+#: includes/admin/class-wc-settings-jetpack.php:676
 msgid "Total Modules:"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:744
+#: includes/admin/class-wc-settings-jetpack.php:742
 msgid "Autoload Booster's Options"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:746
+#: includes/admin/class-wc-settings-jetpack.php:744
 msgid ""
 "Choose if you want Booster's options to be autoloaded when calling "
 "add_option. After saving this option, you need to Reset all Booster's "
 "settings. Leave default value (i.e. Enabled) if not sure."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:751
+#: includes/admin/class-wc-settings-jetpack.php:749
 msgid "Load Modules on Init Hook"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:753
+#: includes/admin/class-wc-settings-jetpack.php:751
 msgid "Choose if you want to load Booster Modules on Init hook."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:753
+#: includes/admin/class-wc-settings-jetpack.php:751
 msgid ""
 "It will load the locale appropriately if users change it from the profile "
 "page."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:758
+#: includes/admin/class-wc-settings-jetpack.php:756
 msgid "Use List Instead of Comma Separated Text for Products in Settings"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:760
-#: includes/admin/class-wc-settings-jetpack.php:774
-#: includes/admin/class-wc-settings-jetpack.php:783
+#: includes/admin/class-wc-settings-jetpack.php:758
+#: includes/admin/class-wc-settings-jetpack.php:772
+#: includes/admin/class-wc-settings-jetpack.php:781
 #, php-format
 msgid "Supported modules: %s."
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:761
+#: includes/admin/class-wc-settings-jetpack.php:759
 #: includes/class-wcj-payment-gateways-per-category.php:26
 msgid "Gateways per Product or Category"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:762
+#: includes/admin/class-wc-settings-jetpack.php:760
 #: includes/class-wcj-global-discount.php:29
 #: includes/settings/wcj-settings-product-addons.php:254
 msgid "Global Discount"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:763
-#: includes/admin/class-wc-settings-jetpack.php:775
-#: includes/admin/class-wc-settings-jetpack.php:784
+#: includes/admin/class-wc-settings-jetpack.php:761
+#: includes/admin/class-wc-settings-jetpack.php:773
+#: includes/admin/class-wc-settings-jetpack.php:782
 #: includes/class-wcj-product-custom-info.php:24
 #: includes/functions/wcj-functions-general.php:449
 msgid "Product Info"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:764
-#: includes/admin/wcj-welcome-screen-content.php:80
+#: includes/admin/class-wc-settings-jetpack.php:762
+#: includes/admin/wcj-welcome-screen-content.php:81
 #: includes/class-wcj-product-input-fields.php:24
 #: includes/input-fields/class-wcj-product-input-fields-core.php:185
 msgid "Product Input Fields"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:765
+#: includes/admin/class-wc-settings-jetpack.php:763
 msgid "Products XML"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:766
-#: includes/class-wcj-related-products.php:38
+#: includes/admin/class-wc-settings-jetpack.php:764
+#: includes/class-wcj-related-products.php:43
 #: includes/settings/meta-box/wcj-settings-meta-box-related-products.php:30
 #: includes/settings/wcj-settings-free-price.php:20
 msgid "Related Products"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:772
+#: includes/admin/class-wc-settings-jetpack.php:770
 msgid ""
 "Use List Instead of Comma Separated Text for Products Categories in Settings"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:781
+#: includes/admin/class-wc-settings-jetpack.php:779
 msgid "Use List Instead of Comma Separated Text for Products Tags in Settings"
 msgstr ""
 
-#: includes/admin/class-wc-settings-jetpack.php:809
+#: includes/admin/class-wc-settings-jetpack.php:807
 #: includes/core/class-wcj-admin.php:100
 msgid "Booster for WooCommerce"
 msgstr ""
@@ -490,7 +491,7 @@ msgid ""
 msgstr ""
 
 #: includes/admin/wcj-modules-cats.php:116
-#: includes/admin/wcj-welcome-screen-content.php:107
+#: includes/admin/wcj-welcome-screen-content.php:108
 #: includes/settings/wcj-settings-payment-gateways-by-country.php:55
 #: includes/settings/wcj-settings-payment-gateways-by-currency.php:14
 #: includes/settings/wcj-settings-payment-gateways-by-shipping.php:37
@@ -533,175 +534,175 @@ msgstr ""
 msgid "Emails, Reports, Export, Admin Tools, General Options and more."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:17
+#: includes/admin/wcj-welcome-screen-content.php:18
 msgid "Welcome to booster."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:18
+#: includes/admin/wcj-welcome-screen-content.php:19
 msgid ""
 "Thank you for choosing Booster - Supercharge your WooCommerce site with these "
 "awesome powerful features. More than 100 modules. All in one WooCommerce "
 "plugin."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:19
+#: includes/admin/wcj-welcome-screen-content.php:20
 msgid "Launch Booster Settings"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:25
-msgid "Get Booster Plus Now."
+#: includes/admin/wcj-welcome-screen-content.php:26
+msgid "Upgrade Booster to unlock this feature."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:31
+#: includes/admin/wcj-welcome-screen-content.php:32
 msgid "30-Day Risk Free"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:31
+#: includes/admin/wcj-welcome-screen-content.php:32
 msgid "Money Back Guarantee"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:37
+#: includes/admin/wcj-welcome-screen-content.php:38
 msgid "400+ 5-Star"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:37
+#: includes/admin/wcj-welcome-screen-content.php:38
 msgid "Reviews"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:43
+#: includes/admin/wcj-welcome-screen-content.php:44
 msgid "Trusted by"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:43
+#: includes/admin/wcj-welcome-screen-content.php:44
 msgid "100,000+"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:43
+#: includes/admin/wcj-welcome-screen-content.php:44
 msgid "Websites"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:50
+#: includes/admin/wcj-welcome-screen-content.php:51
 msgid "Tons of Customizations and Zero Coding."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:52
+#: includes/admin/wcj-welcome-screen-content.php:53
 msgid ""
 "Access more than one hundred easy-to-use modules to quickly add customized "
 "functionality to your WooCommerce business"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:53
+#: includes/admin/wcj-welcome-screen-content.php:54
 msgid "- Without writing a line of code."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:62
+#: includes/admin/wcj-welcome-screen-content.php:63
 msgid "PDF Invoicing and Packing Slips"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:63
+#: includes/admin/wcj-welcome-screen-content.php:64
 msgid ""
 "Streamline your WooCommerce orders and paperwork, and deliver a seamless "
 "customer experience with the PDF Invoicing and Packing Slips module."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:71
+#: includes/admin/wcj-welcome-screen-content.php:72
 #: includes/class-wcj-product-addons.php:30
 msgid "Product Addons"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:72
+#: includes/admin/wcj-welcome-screen-content.php:73
 msgid ""
 "Create addons for your WooCommerce products like support service or special "
 "offers with the Product Addons Module."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:81
+#: includes/admin/wcj-welcome-screen-content.php:82
 msgid ""
 "Allow your customers to provide more details about their order with the "
 "Product Input Fields module. Super handy when selling customized products."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:89
+#: includes/admin/wcj-welcome-screen-content.php:90
 msgid "Button and Price Labels"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:90
+#: includes/admin/wcj-welcome-screen-content.php:91
 msgid ""
 "Add custom buttons and price labels to your products with this popular "
 "module. Set automatic price for products with an empty price field."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:98
+#: includes/admin/wcj-welcome-screen-content.php:99
 msgid "Prices and Currencies"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:99
+#: includes/admin/wcj-welcome-screen-content.php:100
 msgid ""
 "Make it easy for customers around the globe to make purchases on your site by "
 "displaying their currency with the Prices and Currencies by Country module."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:108
+#: includes/admin/wcj-welcome-screen-content.php:109
 msgid ""
 "Set up multiple payment gateways based on currency, shipping method, country, "
 "or state."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:116
+#: includes/admin/wcj-welcome-screen-content.php:117
 msgid "Cart and Checkout"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:117
+#: includes/admin/wcj-welcome-screen-content.php:118
 msgid ""
 "Customize the shopping cart and checkout experience. Add coupons, additional "
 "fees, custom fields, and buttons with the Cart and Checkout modules."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:125
+#: includes/admin/wcj-welcome-screen-content.php:126
 msgid "Emails & Additional Tools"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:126
+#: includes/admin/wcj-welcome-screen-content.php:127
 msgid ""
 "Add custom emails, additional recipients, and verification for increased "
 "security. Explore miscellaneous reporting and customization tools for "
 "increased functionality."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:130
+#: includes/admin/wcj-welcome-screen-content.php:131
 msgid "See All Features"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:134
+#: includes/admin/wcj-welcome-screen-content.php:135
 msgid "Don't miss updates from us!"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:150
+#: includes/admin/wcj-welcome-screen-content.php:151
 #, php-format
 msgid "%s"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:155
+#: includes/admin/wcj-welcome-screen-content.php:156
 msgid "Contact Us"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:157
+#: includes/admin/wcj-welcome-screen-content.php:158
 msgid ""
 "Booster Plus customers get access to Premium Support and we respond within 24 "
 "business hours."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:158
+#: includes/admin/wcj-welcome-screen-content.php:159
 msgid "Booster Plus Premium Support"
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:161
+#: includes/admin/wcj-welcome-screen-content.php:162
 msgid ""
 "Free users post on WordPress Plugin Support forum here. We check these "
 "threads twice every week Mon and Frid to respond."
 msgstr ""
 
-#: includes/admin/wcj-welcome-screen-content.php:162
+#: includes/admin/wcj-welcome-screen-content.php:163
 msgid "Booster Free Plugin Support"
 msgstr ""
 
@@ -878,7 +879,7 @@ msgstr ""
 #: includes/class-wcj-admin-bar.php:440
 #: includes/settings/wcj-settings-offer-price.php:49
 #: includes/settings/wcj-settings-stock.php:101
-#: includes/shortcodes/class-wcj-shortcodes-products.php:614
+#: includes/shortcodes/class-wcj-shortcodes-products.php:645
 msgid "Out of stock"
 msgstr ""
 
@@ -1604,36 +1605,36 @@ msgstr ""
 msgid "Set different currency for external products."
 msgstr ""
 
-#: includes/class-wcj-currency-per-product.php:26
+#: includes/class-wcj-currency-per-product.php:29
 #: includes/settings/wcj-settings-currency-per-product.php:64
 msgid "Currency per Product"
 msgstr ""
 
-#: includes/class-wcj-currency-per-product.php:27
+#: includes/class-wcj-currency-per-product.php:30
 msgid ""
 "Display prices for products in different currencies (1 currency allowed in "
 "free version)."
 msgstr ""
 
-#: includes/class-wcj-currency-per-product.php:28
+#: includes/class-wcj-currency-per-product.php:31
 msgid "Display prices for products in different currencies."
 msgstr ""
 
-#: includes/class-wcj-currency-per-product.php:173
+#: includes/class-wcj-currency-per-product.php:179
 #: includes/settings/wcj-settings-currency-per-product.php:43
 msgid ""
 "Only one product can be added to the cart. Clear the cart or finish the "
 "order, before adding another product to the cart."
 msgstr ""
 
-#: includes/class-wcj-currency-per-product.php:188
+#: includes/class-wcj-currency-per-product.php:196
 #: includes/settings/wcj-settings-currency-per-product.php:50
 msgid ""
 "Only products with same currency can be added to the cart. Clear the cart or "
 "finish the order, before adding products with another currency to the cart."
 msgstr ""
 
-#: includes/class-wcj-currency-per-product.php:227
+#: includes/class-wcj-currency-per-product.php:237
 #, php-format
 msgctxt "Price range: from-to"
 msgid "%1$s&ndash;%2$s"
@@ -3115,17 +3116,17 @@ msgstr ""
 msgid "Currency converter for payment gateways."
 msgstr ""
 
-#: includes/class-wcj-payment-gateways-fees.php:25
+#: includes/class-wcj-payment-gateways-fees.php:28
 msgid "Gateways Fees and Discounts"
 msgstr ""
 
-#: includes/class-wcj-payment-gateways-fees.php:26
+#: includes/class-wcj-payment-gateways-fees.php:29
 msgid ""
 "Enable extra fees or discounts for payment gateways. Force Default Payment "
 "Gateway (Plus). Apply fees depending on specific products (Plus)."
 msgstr ""
 
-#: includes/class-wcj-payment-gateways-fees.php:27
+#: includes/class-wcj-payment-gateways-fees.php:30
 msgid "Enable extra fees or discounts for payment gateways."
 msgstr ""
 
@@ -3519,9 +3520,10 @@ msgstr ""
 #: includes/settings/wcj-settings-payment-gateways-by-shipping.php:23
 #: includes/settings/wcj-settings-payment-gateways-by-user-role.php:23
 #: includes/settings/wcj-settings-payment-gateways-currency.php:95
-#: includes/settings/wcj-settings-payment-gateways-fees.php:21
-#: includes/settings/wcj-settings-payment-gateways-fees.php:86
-#: includes/settings/wcj-settings-payment-gateways-fees.php:102
+#: includes/settings/wcj-settings-payment-gateways-fees.php:22
+#: includes/settings/wcj-settings-payment-gateways-fees.php:31
+#: includes/settings/wcj-settings-payment-gateways-fees.php:96
+#: includes/settings/wcj-settings-payment-gateways-fees.php:112
 #: includes/settings/wcj-settings-payment-gateways-per-category.php:25
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:56
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:106
@@ -4025,7 +4027,7 @@ msgid "Products category"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-price-converter.php:262
-#: includes/shortcodes/class-wcj-shortcodes-products.php:359
+#: includes/shortcodes/class-wcj-shortcodes-products.php:376
 msgid "Any"
 msgstr ""
 
@@ -4990,21 +4992,21 @@ msgstr ""
 msgid "Report"
 msgstr ""
 
-#: includes/class-wcj-related-products.php:39
+#: includes/class-wcj-related-products.php:44
 msgid ""
 "Change displayed related products number, columns, order; relate by tag, "
 "category, product attribute or manually on per product basis (Plus). Hide "
 "related products completely."
 msgstr ""
 
-#: includes/class-wcj-related-products.php:40
+#: includes/class-wcj-related-products.php:45
 msgid ""
 "Change displayed related products number, columns, order; relate by tag, "
 "category, product attribute or manually on per product basis. Hide related "
 "products completely."
 msgstr ""
 
-#: includes/class-wcj-related-products.php:43
+#: includes/class-wcj-related-products.php:48
 #, php-format
 msgid ""
 "You may need to <a href=\"%s\">clear all products transients</a> to "
@@ -5825,7 +5827,7 @@ msgstr ""
 msgid "Unexpected error"
 msgstr ""
 
-#: includes/classes/class-wcj-shortcodes.php:135
+#: includes/classes/class-wcj-shortcodes.php:143
 #: includes/shortcodes/class-wcj-shortcodes-general.php:547
 #, php-format
 msgid "\"%s\" module is not enabled!"
@@ -6518,22 +6520,22 @@ msgstr ""
 msgid "Availability Class"
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:137
+#: includes/functions/wcj-functions-admin.php:143
 #, php-format
 msgid ""
 "<strong>Booster for WooCommerce</strong> plugin was successfully updated to "
 "version <strong>%s</strong>."
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:184
+#: includes/functions/wcj-functions-admin.php:191
 msgid "Search&hellip;"
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:224
+#: includes/functions/wcj-functions-admin.php:232
 msgid "Enter comma separated list of IDs."
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:298
+#: includes/functions/wcj-functions-admin.php:310
 #: includes/settings/wcj-settings-emails-verification.php:75
 #: includes/settings/wcj-settings-emails-verification.php:83
 #: includes/settings/wcj-settings-emails-verification.php:130
@@ -6541,60 +6543,57 @@ msgstr ""
 msgid "Replaced value: %s"
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:298
+#: includes/functions/wcj-functions-admin.php:310
 #, php-format
 msgid "Replaced values: %s"
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:327
-msgid "Install Booster Plus to unlock all features"
-msgstr ""
-
-#: includes/functions/wcj-functions-admin.php:328
+#: includes/functions/wcj-functions-admin.php:343
 #, php-format
 msgid ""
 "Some settings fields are locked and you will need %s to modify all locked "
 "fields."
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:331
+#: includes/functions/wcj-functions-admin.php:347
 msgid "Buy now"
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:332
+#: includes/functions/wcj-functions-admin.php:348
 msgid "Visit Booster Site"
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:337
+#: includes/functions/wcj-functions-admin.php:353
 #, php-format
-msgid "Get <a href=\"%s\" target=\"_blank\">Booster Plus</a> to change value."
+msgid "Upgrade <a href=\"%s\" target=\"_blank\">Booster</a> to change value."
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:340
-#, php-format
-msgid ""
-"Get <a href=\"%s\" target=\"_blank\">Booster Plus</a> to enable \"%s\" option."
-msgstr ""
-
-#: includes/functions/wcj-functions-admin.php:343
-#, php-format
-msgid "Get Booster Plus to enable \"%s\" option."
-msgstr ""
-
-#: includes/functions/wcj-functions-admin.php:346
+#: includes/functions/wcj-functions-admin.php:356
 #, php-format
 msgid ""
-"Get <a href=\"%s\" target=\"_blank\">Booster Plus</a> to change values below."
+"Upgrade <a href=\"%s\" target=\"_blank\">Booster to unlock this feature</a> "
+"to enable \"%s\" option."
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:349
+#: includes/functions/wcj-functions-admin.php:359
+#, php-format
+msgid "Upgrade Booster to to enable \"%s\" option."
+msgstr ""
+
+#: includes/functions/wcj-functions-admin.php:362
 #, php-format
 msgid ""
-"Get <a href=\"%s\" target=\"_blank\">Booster Plus</a> to change values above."
+"Upgrade  <a href=\"%s\" target=\"_blank\">Booster</a> to change values below."
 msgstr ""
 
-#: includes/functions/wcj-functions-admin.php:352
-msgid "Get Booster Plus to change value."
+#: includes/functions/wcj-functions-admin.php:365
+#, php-format
+msgid ""
+"Upgrade  <a href=\"%s\" target=\"_blank\">Booster </a> to change values above."
+msgstr ""
+
+#: includes/functions/wcj-functions-admin.php:368
+msgid "Upgrade Booster to change value."
 msgstr ""
 
 #: includes/functions/wcj-functions-country.php:167
@@ -9114,7 +9113,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-offer-price.php:25
 #: includes/settings/wcj-settings-currency-exchange-rates.php:62
 #: includes/settings/wcj-settings-offer-price.php:168
-#: includes/settings/wcj-settings-payment-gateways-fees.php:93
+#: includes/settings/wcj-settings-payment-gateways-fees.php:103
 #: includes/settings/wcj-settings-product-by-user.php:70
 msgid "Number of decimals"
 msgstr ""
@@ -9498,7 +9497,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:18
 #: includes/settings/wcj-settings-checkout-fees.php:72
 #: includes/settings/wcj-settings-global-discount.php:69
-#: includes/settings/wcj-settings-payment-gateways-fees.php:57
+#: includes/settings/wcj-settings-payment-gateways-fees.php:67
 #: includes/settings/wcj-settings-purchase-data.php:89
 #: includes/settings/wcj-settings-wholesale-price.php:99
 msgid "Percent"
@@ -9507,7 +9506,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:19
 #: includes/settings/wcj-settings-checkout-fees.php:71
 #: includes/settings/wcj-settings-global-discount.php:70
-#: includes/settings/wcj-settings-payment-gateways-fees.php:56
+#: includes/settings/wcj-settings-payment-gateways-fees.php:66
 #: includes/settings/wcj-settings-price-by-user-role.php:31
 #: includes/settings/wcj-settings-purchase-data.php:88
 #: includes/settings/wcj-settings-wholesale-price.php:100
@@ -9807,7 +9806,7 @@ msgstr ""
 #: includes/settings/wcj-settings-add-to-cart.php:156
 #: includes/settings/wcj-settings-add-to-cart.php:213
 #: includes/settings/wcj-settings-add-to-cart.php:222
-#: includes/settings/wcj-settings-payment-gateways-fees.php:43
+#: includes/settings/wcj-settings-payment-gateways-fees.php:53
 #: includes/settings/wcj-settings-product-custom-info.php:191
 msgid "Leave blank to disable."
 msgstr ""
@@ -10361,7 +10360,7 @@ msgstr ""
 #: includes/settings/wcj-settings-payment-gateways-by-country.php:15
 #: includes/settings/wcj-settings-payment-gateways-by-shipping.php:17
 #: includes/settings/wcj-settings-payment-gateways-by-user-role.php:14
-#: includes/settings/wcj-settings-payment-gateways-fees.php:15
+#: includes/settings/wcj-settings-payment-gateways-fees.php:16
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:15
 #: includes/settings/wcj-settings-payment-gateways-per-category.php:19
 #: includes/settings/wcj-settings-price-formats.php:15
@@ -10780,7 +10779,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-checkout-custom-fields.php:390
 #: includes/settings/wcj-settings-global-discount.php:163
-#: includes/settings/wcj-settings-payment-gateways-fees.php:144
+#: includes/settings/wcj-settings-payment-gateways-fees.php:154
 #: includes/settings/wcj-settings-product-addons.php:149
 #: includes/settings/wcj-settings-related-products.php:244
 msgid "Exclude Products"
@@ -11145,7 +11144,7 @@ msgid "Total Fees"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-fees.php:53
-#: includes/settings/wcj-settings-payment-gateways-fees.php:101
+#: includes/settings/wcj-settings-payment-gateways-fees.php:111
 msgid "Taxable"
 msgstr ""
 
@@ -13469,7 +13468,7 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-multicurrency.php:73
-#: includes/settings/wcj-settings-payment-gateways-fees.php:85
+#: includes/settings/wcj-settings-payment-gateways-fees.php:95
 #: includes/settings/wcj-settings-product-price-by-formula.php:64
 msgid "Rounding"
 msgstr ""
@@ -13854,8 +13853,8 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-my-account.php:202
-#: includes/settings/wcj-settings-payment-gateways-fees.php:134
-#: includes/settings/wcj-settings-payment-gateways-fees.php:146
+#: includes/settings/wcj-settings-payment-gateways-fees.php:144
+#: includes/settings/wcj-settings-payment-gateways-fees.php:156
 #: includes/settings/wcj-settings-stock.php:42
 #: includes/settings/wcj-settings-stock.php:55
 msgid "Ignored if empty."
@@ -14061,7 +14060,7 @@ msgstr ""
 #: includes/settings/wcj-settings-order-min-amount.php:29
 #: includes/settings/wcj-settings-order-min-amount.php:36
 #: includes/settings/wcj-settings-order-min-amount.php:43
-#: includes/settings/wcj-settings-payment-gateways-fees.php:117
+#: includes/settings/wcj-settings-payment-gateways-fees.php:127
 msgid "Exclude"
 msgstr ""
 
@@ -15048,116 +15047,132 @@ msgid ""
 "modules."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:20
+#: includes/settings/wcj-settings-payment-gateways-fees.php:21
 msgid "Force Default Payment Gateway"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:23
+#: includes/settings/wcj-settings-payment-gateways-fees.php:24
 msgid ""
 "Pre-sets the default available payment gateway on cart and checkout pages."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:23
+#: includes/settings/wcj-settings-payment-gateways-fees.php:24
 #, php-format
 msgid ""
 "The chosen payment will be the first one from the <a href=\"%s\">Payments</a> "
 "page"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:42
+#: includes/settings/wcj-settings-payment-gateways-fees.php:30
+msgid "Enable klarna Payment Gateway Charge/Discount"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-fees.php:32
+msgid ""
+"If you enable this mode so add Klarna payment gateway charge/discount into "
+"your cart total"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-fees.php:32
+msgid ""
+"If you have not klarna plugin install first <a href=\"https://wordpress.org/"
+"plugins/klarna-payments-for-woocommerce/\">Payments</a> page"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-fees.php:52
 msgid "Fee (or Discount) Title"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:43
+#: includes/settings/wcj-settings-payment-gateways-fees.php:53
 msgid "Fee (or discount) title to show to customer."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:50
+#: includes/settings/wcj-settings-payment-gateways-fees.php:60
 msgid "Fee (or Discount) Type"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:51
+#: includes/settings/wcj-settings-payment-gateways-fees.php:61
 msgid "Percent or fixed value."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:61
+#: includes/settings/wcj-settings-payment-gateways-fees.php:71
 msgid "Fee (or Discount) Value"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:62
+#: includes/settings/wcj-settings-payment-gateways-fees.php:72
 msgid "The value. For discount enter a negative number."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:69
+#: includes/settings/wcj-settings-payment-gateways-fees.php:79
 msgid "Minimum Cart Amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:70
+#: includes/settings/wcj-settings-payment-gateways-fees.php:80
 msgid "Minimum cart amount for adding the fee (or discount)."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:70
-#: includes/settings/wcj-settings-payment-gateways-fees.php:78
+#: includes/settings/wcj-settings-payment-gateways-fees.php:80
+#: includes/settings/wcj-settings-payment-gateways-fees.php:88
 msgid "Set 0 to disable."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:77
+#: includes/settings/wcj-settings-payment-gateways-fees.php:87
 msgid "Maximum Cart Amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:78
+#: includes/settings/wcj-settings-payment-gateways-fees.php:88
 msgid "Maximum cart amount for adding the fee (or discount)."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:87
+#: includes/settings/wcj-settings-payment-gateways-fees.php:97
 msgid "Round the fee (or discount) value before adding to the cart."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:94
+#: includes/settings/wcj-settings-payment-gateways-fees.php:104
 msgid "If rounding is enabled, set precision (i.e. number of decimals) here."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:108
+#: includes/settings/wcj-settings-payment-gateways-fees.php:118
 msgid "Tax class"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:109
+#: includes/settings/wcj-settings-payment-gateways-fees.php:119
 msgid "If taxing is enabled, set tax class here."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:113
+#: includes/settings/wcj-settings-payment-gateways-fees.php:123
 msgid "Standard Rate"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:116
+#: includes/settings/wcj-settings-payment-gateways-fees.php:126
 msgid "Exclude Shipping when Calculating Total Cart Amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:118
-#: includes/settings/wcj-settings-payment-gateways-fees.php:126
+#: includes/settings/wcj-settings-payment-gateways-fees.php:128
+#: includes/settings/wcj-settings-payment-gateways-fees.php:136
 msgid ""
 "This affects \"Percent\" type fees and \"Minimum/Maximum Cart Amount\" "
 "options."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:124
+#: includes/settings/wcj-settings-payment-gateways-fees.php:134
 msgid "Include Taxes"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:125
+#: includes/settings/wcj-settings-payment-gateways-fees.php:135
 msgid "Include taxes when calculating Total Cart Amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:132
+#: includes/settings/wcj-settings-payment-gateways-fees.php:142
 msgid "Require Products"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:133
+#: includes/settings/wcj-settings-payment-gateways-fees.php:143
 msgid ""
 "Require at least one of selected products to be in cart for fee to be applied."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-fees.php:145
+#: includes/settings/wcj-settings-payment-gateways-fees.php:155
 msgid "Do not apply fee, if at least one of selected products is in cart."
 msgstr ""
 
@@ -20522,20 +20537,20 @@ msgstr ""
 msgid "Edit Product"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:333
+#: includes/shortcodes/class-wcj-shortcodes-products.php:349
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:340
+#: includes/shortcodes/class-wcj-shortcodes-products.php:356
 msgid "No sales yet."
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:611
+#: includes/shortcodes/class-wcj-shortcodes-products.php:642
 msgid "In stock"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:1071
+#: includes/shortcodes/class-wcj-shortcodes-products.php:1116
 msgid "from %level_min_qty% pcs."
 msgstr ""
 

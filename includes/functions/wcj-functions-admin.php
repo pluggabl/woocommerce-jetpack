@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 5.4.8-dev
+ * @version 5.4.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -329,7 +329,7 @@ if (!function_exists('wcj_get_plus_message')) {
 	/**
 	 * wcj_get_plus_message.
 	 *
-	 * @version 5.4.8-dev
+	 * @version 5.4.8
 	 */
 	function wcj_get_plus_message($value, $message_type, $args = array())
 	{
