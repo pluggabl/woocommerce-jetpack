@@ -40,8 +40,8 @@ Multiple WordPress WooCommerce plugins are a thing of the past! Boost the functi
 <li><a href="https://booster.io/category/features/emails-misc/"><strong>Emails, reporting, and Administrative tools:</strong></a> Add custom emails, additional recipients, and basic WPML support. Generate various reports (sales, customers, etc.), track users, and include verification for increased security.Key Features of Booster for WooCommerce.</li>
 </ul>
 
-**Need more? Check out Booster Plus**
-Booster Plus is a paid upgrade of Booster that unlocks more functionality. Boost your business with all the best WooCommerce features and get access to additional administrative tools and reports.
+**Need more? Check out paid Booster bundles**
+paid Booster bundles are paid upgrade of Booster that unlocks more functionalities. Boost your business with all the best WooCommerce features and get access to additional administrative tools and reports.
 
 * *PDF Invoicing and Packing:* Create proforma invoices, credit notes, and packing slips
 * *Cart and Checkout:* Add multiple custom fields, custom info blocks, check out file uploads.
@@ -52,10 +52,10 @@ Booster Plus is a paid upgrade of Booster that unlocks more functionality. Boost
 * *Export options:* Enable additional fields.
 * *Configuration options:* Include additional payments and shipping options.
 
-Booster Plus has all of these additional features and more. Discover what Booster has to offer now: 
-<a href="https://booster.io/booster-woocommerce-free-vs-plus/"><strong>Compare Booster Free and Plus versions</strong></a>
+Paid Booster bundles have all of these additional features and more. Discover what Booster has to offer now:
+<a href="https://booster.io/booster-woocommerce-free-vs-plus/"><strong>Compare Booster Free and paid Booster bundles</strong></a>
 
-Booster Plus comes with a 30-day no-questions-asked money-back guarantee. If you’re not completely satisfied, we will give you 100% of your money back!
+Paid Booster bundles comes with a 30-day no-questions-asked money-back guarantee. If you’re not completely satisfied, we will give you 100% of your money back!
 <a href="https://booster.io/buy-booster/"><strong>Upgrade Now</strong></a>
 
 == Screenshots ==
@@ -87,31 +87,31 @@ You’re done!
 
 Absolutely not! You can configure everything Booster has to offer without any coding knowledge.
 
-= What’s the difference between Booster and Booster Plus? =
+= What’s the difference between Booster and Paid Booster bundles? =
 
 The free version of Booster for WooCommerce offers 68 amazing features.  But, if you’re looking for greater functionality and even more customization options – Booster Plus is the ultimate WooCommerce product bundle for you. Booster Plus is packed with 196 features and counting. 
 
 Check out our [feature comparison](https://booster.io/booster-woocommerce-free-vs-plus/) and decide which version is best for you.
 
-= Why should I choose Booster Plus over other plugins? =
+= Why should I choose paid Booster bundles over other plugins? =
 
-Implementing just a few modules from the Booster Plus suite is more cost-effective than using multiple individual plugins, often priced at $79-$99 each. Stacking your WooCommerce site with a lot of different plugins can slow it down too. All those individual plugins may not necessarily be compatible with one another.
-Booster Plus solves all of these problems with over 100 compatible modules in a single package for easy WooCommerce integration. You get multiple custom features for the cost of one WordPress product plugin and the benefit of zero bloat.
+Implementing just a few modules from the Booster paid Booster bundles suite is more cost-effective than using multiple individual plugins, often priced at $79-$99 each. Stacking your WooCommerce site with a lot of different plugins can slow it down too. All those individual plugins may not necessarily be compatible with one another.
+paid Booster bundles solves all of these problems with over 100 compatible modules in a single package for easy WooCommerce integration. You get multiple custom features for the cost of one WordPress product plugin and the benefit of zero bloat.
 
 = Do you offer refunds? =
 
-If you are not completely satisfied with Booster Plus, you can request a refund within the first 30 days, and we will give you 100% of your money back – no questions asked.
+If you are not completely satisfied with paid Booster bundles, you can request a refund within the first 30 days, and we will give you 100% of your money back – no questions asked.
 
 = How to unlock those some features settings that are locked? =
 
-To unlock all Booster for WooCommerce features, please install additional [Booster for WooCommerce Plus](https://booster.io/buy-booster/) plugin.
+To unlock all Booster for WooCommerce features, please install additional paid Booster bundles(https://booster.io/buy-booster/) plugin.
 
 == Detailed List of Features ==
 
 **Prices & Currencies**
 
 * *Bulk Price Converter* - Multiply all products prices by set value.
-* *Currencies* - Add all world currencies and cryptocurrencies to your store; change currency symbol (Plus); add custom currencies (1 allowed in free version).
+* *Currencies* - Add all world currencies and cryptocurrencies to your store; change currency symbol (Available in paid Booster bundles); add custom currencies (1 allowed in free version).
 * *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce (1 allowed in free version).
 * *Currency for External Products* - Set different currency for external products.
 * *Currency per Product* - Display prices for products in different currencies (1 currency allowed in free version).
@@ -120,7 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * *Multicurrency Product Base Price* - Enter prices for products in different currencies (1 currency allowed in free version).
 * *Offer Your Price* - Let your customers suggest their price for products (Available for all the products in free version).
 * *Price Formats* - Set different price formats for different currencies (1 price format allowed in free version). Set general price format options.
-* *Price based on User Role* - Display products prices by user roles. Price based on User Role by Products Categories or Tags (Plus).
+* *Price based on User Role* - Display products prices by user roles. Price based on User Role by Products Categories or Tags (Available in paid Booster bundles).
 * *Prices and Currencies by Country* - Change product price and currency automatically by customer's country (1 country group allowed in free version).
 * *Product Open Pricing (Name Your Price)* - Let your store customers enter price for the product manually.
 * *Product Price by Formula* - Set formula for automatic product price calculation (Available per product in free version).
@@ -129,61 +129,61 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 **Button & Price Labels**
 
 * *Add to Cart Button Labels* - Change text for Add to Cart button by product type, by product category or for individual products (1 category group allowed in free version).
-* *Call for Price* - Create any custom price label for all products with empty price (Plus).
+* *Call for Price* - Create any custom price label for all products with empty price (Available in paid Booster bundles).
 * *Custom Price Labels* - Create any custom price label for any product (Just a few positions allowed in free version).
-* *Free Price Labels* - Set free price labels (Variable products allowed in Plus).
+* *Free Price Labels* - Set free price labels (Variable products allowed in paid Booster bundles).
 * *More Button Labels* - Set "Place order" button label.
 
 **Products**
 
 * *WooCommerce Product Extra Fees* - Lets you set extra fees for all your shop’s products. Fees can be fixed or calculated as percent from the price. (Available in paid Booster bundles)
-* *Add to Cart* - Set any local URL to redirect to on Add to Cart (Per product not allowed in free version). Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products (Plus). Disable quantity input. Open external products on the add to cart in the new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages (Plus).
+* *Add to Cart* - Set any local URL to redirect to on Add to Cart (Per product not allowed in free version). Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products (Available in paid Booster bundles). Disable quantity input. Open external products on the add to cart in the new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages (Available in paid Booster bundles).
 * *Add to Cart Button Visibility* - Enable/disable Add to Cart button globally or on per product basis.
 * *Admin Products List* - Customize admin products list (1 custom column allowed in free).
 * *Bookings* - Add bookings products to WooCommerce.
 * *Cost of Goods* - Save product purchase costs data for admin reports (1 custom field allowed in free version).
-* *Cross-sells* - Customize cross-sells products display. Global Cross-sells (Plus); Exclude "Not in Stock" Products (Plus); Replace Cart Products with Cross-sells (Plus).
+* *Cross-sells* - Customize cross-sells products display. Global Cross-sells (Available in paid Booster bundles); Exclude "Not in Stock" Products (Available in paid Booster bundles); Replace Cart Products with Cross-sells (Available in paid Booster bundles).
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Addons* - Add (paid/free/discount) addons to products (1 addon allowed in free version).
-* *Product Availability by Date* - Set product availability by date (Custom frontend messages available in Plus).
-* *Product Availability by Time* - Set product availability by time (Custom frontend messages available in Plus).
-* *Product Bulk Meta Editor* - Set products meta with bulk editor (Variations available in Plus).
-* *Product Custom Visibility* - Display products by custom param (Bulk actions available in Plus).
+* *Product Availability by Date* - Set product availability by date (Custom frontend messages available in paid Booster bundles).
+* *Product Availability by Time* - Set product availability by time (Custom frontend messages available in paid Booster bundles).
+* *Product Bulk Meta Editor* - Set products meta with bulk editor (Variations available in paid Booster bundles).
+* *Product Custom Visibility* - Display products by custom param (Bulk actions available in paid Booster bundles).
 * *Product Images* - Customize products images and thumbnails.
 * *Product Info* - Add additional info to category and single product pages (1 block allowed in free version).
 * *Product Input Fields* - Add input fields to the products (1 input field allowed in free version).
-* *Product Listings* - Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Plus), exclude categories, show/hide empty categories.
-* *Product MSRP* - Save and display product MSRP in WooCommerce (Custom template available in Plus).
+* *Product Listings* - Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed Available in paid Booster bundles), exclude categories, show/hide empty categories.
+* *Product MSRP* - Save and display product MSRP in WooCommerce (Custom template available in paid Booster bundles).
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).
-* *Product Visibility by Country* - Display products by customer's country. User Country Selection Method (Plus); Admin country list options (Plus); Visibility method options (Plus).
-* *Product Visibility by User Role* - Display products by customer's user role. Visibility method options (Plus)
+* *Product Visibility by Country* - Display products by customer's country. User Country Selection Method (Available in paid Booster bundles); Admin country list options (Available in paid Booster bundles); Visibility method options (Available in paid Booster bundles).
+* *Product Visibility by User Role* - Display products by customer's user role. Visibility method options (Available in paid Booster bundles)
 * *Products XML Feeds* - Products XML feeds (1 file allowed in free version.).
-* *Products per Page* - Add "products per page" selector to WooCommerce (Select options available in Plus).
-* *Related Products* - Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Plus). Hide related products completely.
-* *SKU* - Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Plus); Sequential Number Generation (Plus); Variable Products Variations (Plus).
-* *Sale Flash* - Customize products sale flash. Per product (Plus); Per category (Plus); Per tag (Plus).
-* *Sorting* - Add more sorting options; rename or remove default sorting options (Plus); rearrange sorting options on frontend. Sort SKUs as numbers (Plus)
-* *Stock* - Products stock display management. Custom Stock HTML (Plus). Remove Stock Display (Plus).
+* *Products per Page* - Add "products per page" selector to WooCommerce (Select options available in paid Booster bundles).
+* *Related Products* - Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Available in paid Booster bundles). Hide related products completely.
+* *SKU* - Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Available in paid Booster bundles); Sequential Number Generation (Available in paid Booster bundles); Variable Products Variations (Available in paid Booster bundles).
+* *Sale Flash* - Customize products sale flash. Per product (Available in paid Booster bundles); Per category (Available in paid Booster bundles); Per tag (Available in paid Booster bundles).
+* *Sorting* - Add more sorting options; rename or remove default sorting options (Available in paid Booster bundles); rearrange sorting options on frontend. Sort SKUs as numbers (Available in paid Booster bundles)
+* *Stock* - Products stock display management. Custom Stock HTML (Available in paid Booster bundles). Remove Stock Display (Available in paid Booster bundles).
 * *Tax Display* - Customize WooCommerce tax display.
-* *Upsells* - Customize upsells products display. Global upsells (Plus).
-* *User Products* - Let users add new products from the frontend. Image additional field (Plus). Custom Taxonomies (1 allowed in free version).
+* *Upsells* - Customize upsells products display. Global upsells (Available in paid Booster bundles).
+* *User Products* - Let users add new products from the frontend. Image additional field (Available in paid Booster bundles). Custom Taxonomies (1 allowed in free version).
 
 **Cart & Checkout**
 
 * *Cart Custom Info* - Add custom info to the cart page (1 cart block allowed in free version).
 * *Cart Customization* - Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.
-* *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Plus)
+* *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Available in paid Booster bundles)
 * *Checkout Custom Fields* - Add custom fields to the checkout page (1 field allowed in free version).
 * *Checkout Custom Info* - Add custom info to the checkout page (1 block allowed in free version).
-* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP (Plus); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Plus).
+* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP (Available in paid Booster bundles); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields Available in paid Booster bundles).
 * *Checkout Fees* - Add fees to WooCommerce cart & checkout (1 fee allowed in free version).
 * *Checkout Files Upload* - Let customers upload files on (or after) the checkout (1 file allowed in free version).
-* *Coupon Code Generator* - Coupon code generator (Multiple generation algorithms available in Plus).
-* *Coupon by User Role* - Coupons by user roles. Invalidate per Coupon (Plus). Custom coupon invalid messages (Plus)
-* *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Plus). Check for IP Location Country  (Plus)
-* *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Plus). Different button positions on the cart page (Plus).
+* *Coupon Code Generator* - Coupon code generator (Multiple generation algorithms Available in paid Booster bundles).
+* *Coupon by User Role* - Coupons by user roles. Invalidate per Coupon (Available in paid Booster bundles). Custom coupon invalid messages (Available in paid Booster bundles)
+* *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Available in paid Booster bundles). Check for IP Location Country  (Available in paid Booster bundles)
+* *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Available in paid Booster bundles). Different button positions on the cart page (Available in paid Booster bundles).
 * *Mini Cart Custom Info* - Add custom info to the mini cart widget (1 block allowed in free version).
-* *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Plus).
+* *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Available in paid Booster bundles).
 * *Frequently Bought Together* - Add Frequently Bought Together section with suggest items usually bought together with the product watched by your customer. (Available in paid Booster bundles)
 * *One Page Checkout* - One Page Checkout make easier for customers to buy from custom checkout pages by displaying both product selection and checkout forms on a single page. (Available in paid Booster bundles)
 * *Wishlist* - Add to Favourites your customer can mark Products as Favourite Products for any upcomming event.(Available in paid Booster bundles)
@@ -191,8 +191,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 **Payment Gateways**
 
 * *Custom Gateways* - Add multiple custom payment gateways to WooCommerce (1 custom gateway allowed in free version).
-* *Gateways Currency Converter* - Currency converter for payment gateways. Update exchange rates automatically (Plus).
-* *Gateways Fees and Discounts* - Enable extra fees or discounts for payment gateways. Force Default Payment Gateway (Plus). Apply fees depending on specific products (Plus).
+* *Gateways Currency Converter* - Currency converter for payment gateways. Update exchange rates automatically (Available in paid Booster bundles).
+* *Gateways Fees and Discounts* - Enable extra fees or discounts for payment gateways. Force Default Payment Gateway (Available in paid Booster bundles). Apply fees depending on specific products (Available in paid Booster bundles).
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) payment gateway.
 * *Gateways Min/Max Amounts* - Add min/max amounts for payment gateways to show up (Only Direct bank transfer allowed in free version).
 * *Gateways by Country, State or Postcode* - Set countries, states or postcodes to include/exclude for payment gateways to show up.
@@ -208,55 +208,55 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * *Custom Shipping* - Add multiple custom shipping methods to WooCommerce.
 * *Left to Free Shipping* - Display "left to free shipping" info.
 * *Maximum Products per User* - Limit number of items your (logged) customers can buy (Free version allows to limit globally).
-* *Order Custom Statuses* - Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus).
+* *Order Custom Statuses* - Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Available in paid Booster bundles). Add Custom Statuses to Admin Order List Action Buttons (Available in paid Booster bundles).
 * *Order Minimum Amount* - Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).
-* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Plus). 
+* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Available in paid Booster bundles).
 * *Order Quantities* - Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.
-* *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Plus).
-* *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Plus). Update totals label (Plus).
-* *Shipping Descriptions* - Add descriptions to shipping methods on frontend. Description visibility (Plus). Description position (Plus).
-* *Shipping Icons* - Add icons to shipping methods on frontend. Icon Visibility (Plus)
-* *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Plus).
-* *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Plus).
-* *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Plus).
-* *Shipping Methods by Min/Max Order Quantity* - Set minimum and/or maximum order quantity for shipping methods to show up (Local pickup available in Plus).
-* *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Plus).
-* *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Plus).
+* *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Available in paid Booster bundles).
+* *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Available in paid Booster bundles). Update totals label (Available in paid Booster bundles).
+* *Shipping Descriptions* - Add descriptions to shipping methods on frontend. Description visibility (Available in paid Booster bundles). Description position (Available in paid Booster bundles).
+* *Shipping Icons* - Add icons to shipping methods on frontend. Icon Visibility (Available in paid Booster bundles)
+* *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in paid Booster bundles).
+* *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in paid Booster bundles).
+* *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in paid Booster bundles).
+* *Shipping Methods by Min/Max Order Quantity* - Set minimum and/or maximum order quantity for shipping methods to show up (Local pickup available in paid Booster bundles).
+* *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in paid Booster bundles).
+* *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in paid Booster bundles).
 * *Shipping Options* - Hide shipping when free is available. Grant free shipping on per product basis (In free version, all products in cart must grant free shipping). Show only the most expensive shipping (In free version, only free shipping is allowed to be ignored).
 * *Shipping Time* - Add delivery time estimation to shipping methods.
 
 **PDF Invoicing & Packing Slips**
 
-* *PDF Invoicing* - Invoices, Proforma Invoices (Plus), Credit Notes (Plus), Paid Stamp (Plus) and Packing Slips (Plus).
-* *Paid Stamp (Plus)*
-* *Display product image on pdf (Plus)*
-* *Display product addons on pdf (Plus)*
-* *Display product input fields on pdf (Plus)*
-* *Display checkout custom fields on pdf (Plus)*
-* *Display WooCommerce order’s meta on pdf (Plus)*
-* *Display WooCommerce subscription order details on pdf (Plus)*
+* *PDF Invoicing* - Invoices, Proforma Invoices (Available in paid Booster bundles), Credit Notes (Available in paid Booster bundles), Paid Stamp (Available in paid Booster bundles) and Packing Slips (Available in paid Booster bundles).
+* *Paid Stamp (Available in paid Booster bundles)*
+* *Display product image on pdf (Available in paid Booster bundles)*
+* *Display product addons on pdf (Available in paid Booster bundles)*
+* *Display product input fields on pdf (Available in paid Booster bundles)*
+* *Display checkout custom fields on pdf (Available in paid Booster bundles)*
+* *Display WooCommerce order’s meta on pdf (Available in paid Booster bundles)*
+* *Display WooCommerce subscription order details on pdf (Available in paid Booster bundles)*
 
 **Emails & Misc.**
 
 * *Admin Bar* - WooCommerce admin bar.
-* *Admin Tools* - Booster for WooCommerce general back-end tools. Enable interface by user roles (Plus). Custom shop manager editable roles (Plus).
+* *Admin Tools* - Booster for WooCommerce general back-end tools. Enable interface by user roles (Available in paid Booster bundles). Custom shop manager editable roles (Available in paid Booster bundles).
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
-* *Breadcrumbs* - Customize WooCommerce breadcrumbs. Hide breadcrumbs (Plus).
+* *Breadcrumbs* - Customize WooCommerce breadcrumbs. Hide breadcrumbs (Available in paid Booster bundles).
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
 * *Custom Emails* - Add custom emails to WooCommerce (1 custom email allowed in free version).
 * *Custom JS* - Separate custom JS for front and back end.
 * *Custom PHP* - Custom PHP tool.
 * *Debug Tools* - Booster for WooCommerce debug and log tools.
 * *Email Options* - WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.
-* *Email Verification* - Add WooCommerce email verification. Customize verification email subject, content and template (Plus).
+* *Email Verification* - Add WooCommerce email verification. Customize verification email subject, content and template (Available in paid Booster bundles).
 * *Export* - WooCommerce export tools. Additional export fields (1 field allowed in free version).
 * *General* - Booster for WooCommerce general front-end tools.
 * *Modules By User Roles* - Enable/disable Booster for WooCommerce modules by user roles.
-* *My Account* - WooCommerce "My Account" page customization. Customize Menu Order (Plus). Add Custom Menu Items (Plus). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).
+* *My Account* - WooCommerce "My Account" page customization. Customize Menu Order (Available in paid Booster bundles). Add Custom Menu Items (Available in paid Booster bundles). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).
 * *Old Slugs* - Remove old products slugs.
 * *Reports* - Stock, sales, customers etc. reports.
 * *Template Editor* - WooCommerce template editor.
-* *User Tracking* - Track your users in WooCommerce. Track Orders (Plus).
+* *User Tracking* - Track your users in WooCommerce. Track Orders (Available in paid Booster bundles).
 
 == Feedback ==
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
