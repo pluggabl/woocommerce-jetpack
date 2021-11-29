@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 5.2.0
+ * @version 5.4.9-dev
  * @since   3.5.3
  * @author  Pluggabl LLC.
  */
@@ -135,14 +135,14 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * cross_sells_exclude_not_in_stock.
 	 *
-	 * @version 3.9.0
+	 * @version 5.4.9-dev
 	 * @since   3.9.0
 	 */
 	function cross_sells_exclude_not_in_stock( $ids, $_product ) {
-		foreach ( $ids as $key => $product_id ) {
-			$product = wc_get_product( $product_id );
-			if ( ! $product->is_in_stock() ) {
-				unset( $ids[ $key ] );
+		foreach ($ids as $key => $product_id) {
+			$product = wc_get_product($product_id);
+			if (!$product->managing_stock() && !$product->is_in_stock()) {
+				unset($ids[$key]);
 			}
 		}
 		return $ids;
