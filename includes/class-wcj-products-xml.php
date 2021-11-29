@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 5.2.0
+ * @version 5.4.9-dev
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    create all files at once (manually and synchronize update)
@@ -105,7 +105,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * admin_notices.
 	 *
-	 * @version 3.3.0
+	 * @version 5.4.9-dev
 	 * @since   2.5.7
 	 */
 	function admin_notices() {
@@ -115,7 +115,7 @@ class WCJ_Products_XML extends WCJ_Module {
 				$message = __( 'An error has occurred while creating products XML file.', 'woocommerce-jetpack' );
 			} else {
 				$class   = 'notice notice-success is-dismissible';
-				$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), $_GET['wcj_create_products_xml_result'] );
+				$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), sanitize_text_field($_GET['wcj_create_products_xml_result'] ));
 			}
 			echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
 		}
