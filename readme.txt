@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.4.8
+Stable tag: 5.4.9-dev
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -167,7 +167,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * *Tax Display* - Customize WooCommerce tax display.
 * *Upsells* - Customize upsells products display. Global upsells (Available in paid Booster bundles).
 * *User Products* - Let users add new products from the frontend. Image additional field (Available in paid Booster bundles). Custom Taxonomies (1 allowed in free version).
-
+* *Product Variation Swatches* - Let users choose product variant from frontend.(Available in paid Booster bundles)
 **Cart & Checkout**
 
 * *Cart Custom Info* - Add custom info to the cart page (1 cart block allowed in free version).
@@ -264,6 +264,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+ 5.4.9-dev 30/11/2021 =
+
+
+* Fix - PRICES & CURRENCIES- Currency per Product - Fixed shipping price convert issue with exchange rate chnage wcj_get_option to get_option.
+* Fix - SHIPPING & ORDERS - Fixed nulled circle exception showing when spping module not found.
+* Fix - PRODUCTS -Cross-sells- Fixed product not in stock error on cart page.
+* Fix - PDF INVOICING & PACKING SLIPS- Fixed XSS reflected injection on unsanitize feilds.
+* Fix - PRODUCTS -Products XML Feeds- Fixed XSS reflected injection on unsanitize feilds.
+* Fix - EMAILS & MISC-General- Fixed product not in stock error on cart page.
+
 
 = 5.4.8 27/10/2021 =
 
