@@ -1,7 +1,7 @@
 /**
  * wcj-admin.
  *
- * @version 5.4.3
+ * @version 5.4.9-dev
  * @since   5.4.2
  */
 
@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
     /* Quick Links Footer - Popup */
     let circleBadge = document.querySelector('.circle-badge'),
     subCircles = document.querySelectorAll('.subCircles > div');
-    if(circleBadge !== null){
+    if (null !== circleBadge) { // ADDED THIS
         circleBadge.addEventListener('click', showCircles);
         function showCircles() {
             subCircles.forEach(circle => {
