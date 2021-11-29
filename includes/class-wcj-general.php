@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 4.5.0
+ * @version 4.5.9-dev
  * @author  Pluggabl LLC.
  */
 
@@ -175,7 +175,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * create_custom_roles_tool.
 	 *
-	 * @version 4.0.0
+	 * @version 4.5.9-dev
 	 * @since   2.5.3
 	 */
 	function create_custom_roles_tool() {
@@ -209,7 +209,7 @@ class WCJ_General extends WCJ_Module {
 				unset( $custom_roles[ $_GET['wcj_delete_role'] ] );
 				update_option( 'wcj_custom_roles', $custom_roles );
 			}
-			echo '<p style="color:green;font-weight:bold;">' . sprintf( __( 'Role %s successfully deleted!', 'woocommerce-jetpack'), $_GET['wcj_delete_role'] ) . '</p>';
+			echo '<p style="color:green;font-weight:bold;">' . sprintf( __( 'Role %s successfully deleted!', 'woocommerce-jetpack'), sanitize_text_field($_GET['wcj_delete_role'] )) . '</p>';
 		}
 
 		echo $this->get_tool_header_html( 'custom_roles' );
