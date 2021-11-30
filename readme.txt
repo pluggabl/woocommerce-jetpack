@@ -265,8 +265,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
- 5.4.9 30/11/2021 =
-
+= 5.4.9 30/11/2021 =
 
 * Fix - PRICES & CURRENCIES- Currency per Product - Fixed shipping price convert issue with exchange rate change wcj_get_option to get_option.
 * Fix - SHIPPING & ORDERS - Fixed nulled circle exception showing when shipping module not found.
@@ -274,7 +273,6 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * Fix - PDF INVOICING & PACKING SLIPS- Fixed XSS reflected injection on fields without sanitization.
 * Fix - PRODUCTS -Products XML Feeds- Fixed XSS reflected injection on fields without sanitization.
 * Fix - EMAILS & MISC-General- Fixed XSS reflected injection on fields without sanitization.
-
 
 = 5.4.8 27/10/2021 =
 
