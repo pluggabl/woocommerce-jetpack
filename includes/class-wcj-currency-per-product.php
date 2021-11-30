@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 5.4.8
+ * @version 5.4.9
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -18,7 +18,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.8
+		 * @version 5.4.9
 		 * @since   2.5.2
 		 * @todo    (maybe) add `$this->price_hooks_priority`
 		 */
@@ -34,9 +34,9 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 
 			if ($this->is_enabled()) {
 
-				$this->do_save_converted_prices = ('yes' === wcj_get_option('wcj_currency_per_product_save_prices', 'no'));
+				$this->do_save_converted_prices = ('yes' === get_option('wcj_currency_per_product_save_prices', 'no'));
 
-				$this->is_currency_per_product_by_product_enabled = ('yes' === wcj_get_option('wcj_currency_per_product_per_product', 'yes'));
+				$this->is_currency_per_product_by_product_enabled = ('yes' === get_option('wcj_currency_per_product_per_product', 'yes'));
 				if ($this->is_currency_per_product_by_product_enabled) {
 					add_action('add_meta_boxes',    array($this, 'add_meta_box'));
 					add_action('save_post_product', array($this, 'save_meta_box'), PHP_INT_MAX, 2);
@@ -66,7 +66,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * change_shipping_price.
 		 *
-		 * @version 3.2.0
+		 * @version 5.4.9
 		 * @since   2.7.0
 		 */
 		function change_shipping_price($package_rates, $package)
@@ -75,13 +75,13 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 				if (WC()->cart->is_empty()) {
 					return $package_rates;
 				}
-				$cart_checkout_behaviour = wcj_get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
+				$cart_checkout_behaviour = get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
 				switch ($cart_checkout_behaviour) {
 					case 'leave_one_product':
 					case 'leave_same_currency':
 					case 'convert_first_product':
 					case 'convert_last_product':
-						$shop_currency = wcj_get_option('woocommerce_currency');
+						$shop_currency = get_option('woocommerce_currency');
 						if (false != ($_currency = $this->get_cart_checkout_currency()) && $_currency != $shop_currency) {
 							$currency_exchange_rate = $this->get_currency_exchange_rate($_currency);
 							if (0 != $currency_exchange_rate && 1 != $currency_exchange_rate) {
@@ -103,17 +103,17 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * get_product_currency.
 		 *
-		 * @version 3.7.0
+		 * @version 5.4.9
 		 * @since   2.9.0
-		 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( wcj_get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`
+		 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`
 		 */
 		function get_product_currency($product_id)
 		{
 			// By users or user roles
-			$do_check_by_users        = ('yes' === wcj_get_option('wcj_currency_per_product_by_users_enabled', 'no'));
-			$do_check_by_user_roles   = ('yes' === wcj_get_option('wcj_currency_per_product_by_user_roles_enabled', 'no'));
-			$do_check_by_product_cats = ('yes' === wcj_get_option('wcj_currency_per_product_by_product_cats_enabled', 'no'));
-			$do_check_by_product_tags = ('yes' === wcj_get_option('wcj_currency_per_product_by_product_tags_enabled', 'no'));
+			$do_check_by_users        = ('yes' === get_option('wcj_currency_per_product_by_users_enabled', 'no'));
+			$do_check_by_user_roles   = ('yes' === get_option('wcj_currency_per_product_by_user_roles_enabled', 'no'));
+			$do_check_by_product_cats = ('yes' === get_option('wcj_currency_per_product_by_product_cats_enabled', 'no'));
+			$do_check_by_product_tags = ('yes' === get_option('wcj_currency_per_product_by_product_tags_enabled', 'no'));
 			if ($do_check_by_users || $do_check_by_user_roles || $do_check_by_product_cats || $do_check_by_product_tags) {
 				if ($do_check_by_users || $do_check_by_user_roles) {
 					$product_author_id = get_post_field('post_author', $product_id);
@@ -124,35 +124,35 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 				if ($do_check_by_product_tags) {
 					$_product_tags = wcj_get_the_terms($product_id, 'product_tag');
 				}
-				$total_number = apply_filters('booster_option', 1, wcj_get_option('wcj_currency_per_product_total_number', 1));
+				$total_number = apply_filters('booster_option', 1, get_option('wcj_currency_per_product_total_number', 1));
 				for ($i = 1; $i <= $total_number; $i++) {
 					if ($do_check_by_users) {
-						$users = wcj_get_option('wcj_currency_per_product_users_' . $i, '');
+						$users = get_option('wcj_currency_per_product_users_' . $i, '');
 						if (!empty($users) && in_array($product_author_id, $users)) {
-							return wcj_get_option('wcj_currency_per_product_currency_' . $i);
+							return get_option('wcj_currency_per_product_currency_' . $i);
 						}
 					}
 					if ($do_check_by_user_roles) {
-						$user_roles = wcj_get_option('wcj_currency_per_product_user_roles_' . $i, '');
+						$user_roles = get_option('wcj_currency_per_product_user_roles_' . $i, '');
 						if (!empty($user_roles) && wcj_is_user_role($user_roles, $product_author_id)) {
-							return wcj_get_option('wcj_currency_per_product_currency_' . $i);
+							return get_option('wcj_currency_per_product_currency_' . $i);
 						}
 					}
 					if ($do_check_by_product_cats) {
-						$product_cats = wcj_get_option('wcj_currency_per_product_product_cats_' . $i, '');
+						$product_cats = get_option('wcj_currency_per_product_product_cats_' . $i, '');
 						if (!empty($_product_cats) && !empty($product_cats)) {
 							$_intersect = array_intersect($_product_cats, $product_cats);
 							if (!empty($_intersect)) {
-								return wcj_get_option('wcj_currency_per_product_currency_' . $i);
+								return get_option('wcj_currency_per_product_currency_' . $i);
 							}
 						}
 					}
 					if ($do_check_by_product_tags) {
-						$product_tags = wcj_get_option('wcj_currency_per_product_product_tags_' . $i, '');
+						$product_tags = get_option('wcj_currency_per_product_product_tags_' . $i, '');
 						if (!empty($_product_tags) && !empty($product_tags)) {
 							$_intersect = array_intersect($_product_tags, $product_tags);
 							if (!empty($_intersect)) {
-								return wcj_get_option('wcj_currency_per_product_currency_' . $i);
+								return get_option('wcj_currency_per_product_currency_' . $i);
 							}
 						}
 					}
@@ -165,16 +165,16 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * validate_on_add_to_cart.
 		 *
-		 * @version 2.9.0
+		 * @version 5.4.9
 		 * @since   2.7.0
 		 */
 		function validate_on_add_to_cart($passed, $product_id)
 		{
-			$cart_checkout_behaviour = wcj_get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
+			$cart_checkout_behaviour = get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
 			if ('leave_one_product' === $cart_checkout_behaviour) {
 				foreach (WC()->cart->get_cart() as $cart_item) {
 					if ($cart_item['product_id'] != $product_id) {
-						wc_add_notice(wcj_get_option(
+						wc_add_notice(get_option(
 							'wcj_currency_per_product_cart_checkout_leave_one_product',
 							__('Only one product can be added to the cart. Clear the cart or finish the order, before adding another product to the cart.', 'woocommerce-jetpack')
 						), 'error');
@@ -182,7 +182,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 					}
 				}
 			} elseif ('leave_same_currency' === $cart_checkout_behaviour) {
-				$shop_currency = wcj_get_option('woocommerce_currency');
+				$shop_currency = get_option('woocommerce_currency');
 				$product_currency = $this->get_product_currency($product_id);
 				if ('' == $product_currency) {
 					$product_currency = $shop_currency;
@@ -191,7 +191,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 					$cart_product_currency = (isset($cart_item['wcj_currency_per_product']) && '' != $cart_item['wcj_currency_per_product']) ?
 						$cart_item['wcj_currency_per_product'] : $shop_currency;
 					if ($cart_product_currency != $product_currency) {
-						wc_add_notice(wcj_get_option(
+						wc_add_notice(get_option(
 							'wcj_currency_per_product_cart_checkout_leave_same_currency',
 							__('Only products with same currency can be added to the cart. Clear the cart or finish the order, before adding products with another currency to the cart.', 'woocommerce-jetpack')
 						), 'error');
@@ -246,15 +246,15 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * get_currency_exchange_rate.
 		 *
-		 * @version 3.6.0
+		 * @version 5.4.9
 		 * @since   2.5.2
 		 */
 		function get_currency_exchange_rate($currency_code)
 		{
-			$total_number = apply_filters('booster_option', 1, wcj_get_option('wcj_currency_per_product_total_number', 1));
+			$total_number = apply_filters('booster_option', 1, get_option('wcj_currency_per_product_total_number', 1));
 			for ($i = 1; $i <= $total_number; $i++) {
-				if ($currency_code === wcj_get_option('wcj_currency_per_product_currency_' . $i)) {
-					return (0 != ($rate = wcj_get_option('wcj_currency_per_product_exchange_rate_' . $i, 1)) ? (1 / $rate) : 1);
+				if ($currency_code === get_option('wcj_currency_per_product_currency_' . $i)) {
+					return (0 != ($rate = get_option('wcj_currency_per_product_exchange_rate_' . $i, 1)) ? (1 / $rate) : 1);
 				}
 			}
 			return 1;
@@ -295,20 +295,20 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * change_price.
 		 *
-		 * @version 3.3.0
+		 * @version 5.4.9
 		 * @since   2.5.2
 		 */
 		function change_price($price, $_product)
 		{
 			if (isset($_product->wcj_currency_per_product)) {
-				$cart_checkout_behaviour = wcj_get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
+				$cart_checkout_behaviour = get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
 				switch ($cart_checkout_behaviour) {
 					case 'leave_one_product':
 					case 'leave_same_currency':
 						return $price;
 					case 'convert_first_product':
 					case 'convert_last_product':
-						$shop_currency = wcj_get_option('woocommerce_currency');
+						$shop_currency = get_option('woocommerce_currency');
 						if (false != ($_currency = $this->get_cart_checkout_currency()) && $_currency != $shop_currency) {
 							if ($_product->wcj_currency_per_product === $_currency) {
 								return $price;
@@ -331,7 +331,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 							return $this->maybe_save_converted_price($price * $exchange_rate, $_product, $shop_currency);
 						}
 					default: // case 'convert_shop_default':
-						$shop_currency = wcj_get_option('woocommerce_currency');
+						$shop_currency = get_option('woocommerce_currency');
 						if (false !== ($saved_price = $this->maybe_return_saved_converted_price($_product, $shop_currency))) {
 							return $saved_price;
 						}
@@ -431,12 +431,12 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * get_cart_checkout_currency.
 		 *
-		 * @version 3.7.0
+		 * @version 5.4.9
 		 * @since   2.7.0
 		 */
 		function get_cart_checkout_currency()
 		{
-			$cart_checkout_behaviour = wcj_get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
+			$cart_checkout_behaviour = get_option('wcj_currency_per_product_cart_checkout', 'convert_shop_default');
 			if (false !== ($value = apply_filters('wcj_currency_per_product_cart_checkout_currency', false, $cart_checkout_behaviour))) {
 				return $value;
 			}

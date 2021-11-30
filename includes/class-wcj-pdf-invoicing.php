@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.2.0
+ * @version 5.4.9
  * @author  Pluggabl LLC.
  */
 
@@ -108,7 +108,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * bulk_actions_pdfs_notices.
 	 *
-	 * @version 3.5.2
+	 * @version 5.4.9 
 	 * @since   2.5.7
 	 */
 	function bulk_actions_pdfs_notices() {
@@ -143,7 +143,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 						break;
 					default:
 						echo '<div class="notice notice-error"><p>' .
-							sprintf( __( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . $_GET['wcj_notice'] . '</code>' ) .
+							sprintf( __( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . sanitize_text_field($_GET['wcj_notice']) . '</code>' ) .
 						'</p></div>';
 						break;
 				}
