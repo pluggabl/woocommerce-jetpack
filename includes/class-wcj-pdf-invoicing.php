@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.4.9-dev
+ * @version 5.4.9
  * @author  Pluggabl LLC.
  */
 
@@ -108,7 +108,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * bulk_actions_pdfs_notices.
 	 *
-	 * @version 5.4.9-dev 
+	 * @version 5.4.9 
 	 * @since   2.5.7
 	 */
 	function bulk_actions_pdfs_notices() {

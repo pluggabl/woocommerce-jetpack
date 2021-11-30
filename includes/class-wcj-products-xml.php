@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 5.4.9-dev
+ * @version 5.4.9
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    create all files at once (manually and synchronize update)
@@ -105,7 +105,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * admin_notices.
 	 *
-	 * @version 5.4.9-dev
+	 * @version 5.4.9
 	 * @since   2.5.7
 	 */
 	function admin_notices() {

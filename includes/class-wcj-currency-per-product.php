@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 5.4.9-dev
+ * @version 5.4.9
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -18,7 +18,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.9-dev
+		 * @version 5.4.9
 		 * @since   2.5.2
 		 * @todo    (maybe) add `$this->price_hooks_priority`
 		 */
@@ -66,7 +66,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * change_shipping_price.
 		 *
-		 * @version 5.4.9-dev
+		 * @version 5.4.9
 		 * @since   2.7.0
 		 */
 		function change_shipping_price($package_rates, $package)
@@ -103,7 +103,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * get_product_currency.
 		 *
-		 * @version 5.4.9-dev
+		 * @version 5.4.9
 		 * @since   2.9.0
 		 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`
 		 */
@@ -165,7 +165,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * validate_on_add_to_cart.
 		 *
-		 * @version 5.4.9-dev
+		 * @version 5.4.9
 		 * @since   2.7.0
 		 */
 		function validate_on_add_to_cart($passed, $product_id)
@@ -246,7 +246,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * get_currency_exchange_rate.
 		 *
-		 * @version 5.4.9-dev
+		 * @version 5.4.9
 		 * @since   2.5.2
 		 */
 		function get_currency_exchange_rate($currency_code)
@@ -295,7 +295,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * change_price.
 		 *
-		 * @version 5.4.9-dev
+		 * @version 5.4.9
 		 * @since   2.5.2
 		 */
 		function change_price($price, $_product)
@@ -431,7 +431,7 @@ if (!class_exists('WCJ_Currency_Per_Product')) :
 		/**
 		 * get_cart_checkout_currency.
 		 *
-		 * @version 5.4.9-dev
+		 * @version 5.4.9
 		 * @since   2.7.0
 		 */
 		function get_cart_checkout_currency()

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 4.5.9-dev
+ * @version 5.4.9
  * @author  Pluggabl LLC.
  */
 
@@ -175,7 +175,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * create_custom_roles_tool.
 	 *
-	 * @version 4.5.9-dev
+	 * @version 5.4.9
 	 * @since   2.5.3
 	 */
 	function create_custom_roles_tool() {
