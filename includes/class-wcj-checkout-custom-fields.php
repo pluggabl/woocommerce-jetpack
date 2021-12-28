@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.4.7
+ * @version 5.5.0-dev
  * @author  Pluggabl LLC.
  */
 
@@ -561,7 +561,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 5.3.6
+	 * @version 5.5.0-dev
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 	 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 	 */
@@ -639,7 +639,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 				if ( 'select' === $the_type || 'radio' === $the_type ) {
 					$select_options_raw = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i );
-					$select_options = wcj_get_select_options( $select_options_raw );
+					$select_options = wcj_get_select_options( $select_options_raw,false );
 					if ( 'select' === $the_type ) {
 						$placeholder = wcj_get_option( 'wcj_checkout_custom_field_placeholder_' . $i );
 						if ( '' != $placeholder ) {
