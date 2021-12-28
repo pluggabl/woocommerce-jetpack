@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping
  *
- * @version 5.3.4
+ * @version 5.5.0-dev
  * @since   2.4.8
  * @author  Pluggabl LLC.
  */
@@ -27,7 +27,7 @@ class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 5.3.4
+	 * @version 5.5.0-dev
 	 * @access  public
 	 * @return  void
 	 */
@@ -57,7 +57,7 @@ class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 		}
 
 		// Save settings in admin
-		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ),12 );
 	}
 
 	/**
