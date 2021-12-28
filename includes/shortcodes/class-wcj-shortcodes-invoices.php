@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Invoices
  *
- * @version 2.7.0
+ * @version 5.5.0-dev
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 5.5.0-dev
 	 */
 	function __construct() {
 
@@ -26,7 +26,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 			'wcj_packing_slip_number',
 			'wcj_credit_note_number',
 			'wcj_custom_doc_number',
-
+			'wcj_encode_img',
 			'wcj_invoice_date',
 			'wcj_proforma_invoice_date',
 			'wcj_packing_slip_date',
@@ -60,6 +60,21 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 
 		return $atts;
 	}
+
+	/**
+	 * wcj_encode_img.
+	 */
+	function wcj_encode_img($atts){
+		
+		if(isset($atts['srcs'])) {
+			$img_base64_encoded=$atts['srcs'];
+			$img = '<img  src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $img_base64_encoded) . '">';
+			
+			return $img;
+
+		}
+
+}
 
 	/**
 	 * wcj_invoice_date.
