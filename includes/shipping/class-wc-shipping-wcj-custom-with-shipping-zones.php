@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 5.5.0-dev
+ * @version 5.5.0
  * @since   2.5.6
  * @author  Pluggabl LLC.
  */
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Init settings
 		 *
-		 * @version 5.5.0-dev
+		 * @version 5.5.0
 		 * @since   2.5.6
 		 * @access  public
 		 * @return  void

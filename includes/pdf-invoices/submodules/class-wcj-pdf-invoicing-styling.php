@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Styling
  *
- * @version 5.5.0-dev
+ * @version 5.5.0
  * @author  Pluggabl LLC.
  */
 
@@ -53,7 +53,7 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 	/**
 	 * On an early action hook, check if the hook is scheduled - if not, schedule it.
 	 *
-	 * @version 5.5.0-dev
+	 * @version 5.5.0
 	 * @version 2.9.0
 	 * @todo    save `$event_timestamp` info (i.e. hook next scheduled time)
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping
  *
- * @version 5.5.0-dev
+ * @version 5.5.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
  */
@@ -27,7 +27,7 @@ class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 5.5.0-dev
+	 * @version 5.5.0
 	 * @access  public
 	 * @return  void
 	 */

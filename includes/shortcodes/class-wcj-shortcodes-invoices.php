@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Invoices
  *
- * @version 5.5.0-dev
+ * @version 5.5.0
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.5.0-dev
+	 * @version 5.5.0
 	 */
 	function __construct() {
 

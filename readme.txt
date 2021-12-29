@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.5.0-dev
+Stable tag: 5.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -265,15 +265,14 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
-= 5.5.0-dev 29/12/2021 =
+= 5.5.0 29/12/2021 =
 
-* Feature - PDF INVOICING & PACKING SLIPS- Added Base64 encode image shortcode [wcj_encode_img srcs=''].
-* Fix - SHIPPING & ORDERS - Shipping Options- Fixed Priority issue for not showing Expensive shipping gateway.
-* Fix - CART & CHECKOUT - EU VAT Number - Fixed Skipable validation country not skip validation.
-* Fix - PRODUCTS -Fixed wcj_product_tags shortcode retung invalid argument when tags are not present in product.
-* Fix - CART & CHECKOUT -Checkout Custom Fields- Fixed Select value not showing space between two text in order.
-* Fix - PDF INVOICING & PACKING SLIPS- Fixed Cron run every hour to daily.
-
+* Feature - PDF INVOICING & PACKING SLIPS- Added Base64 encode image shortcode [wcj_encode_img srcs=''] to support QR Codes.
+* Fix - SHIPPING & ORDERS - Shipping Options- Fixed Priority issue for most expensive and product tag based shipping methods.
+* Fix - CART & CHECKOUT - EU VAT Number - Fixed the exception country setting issue.
+* Fix - PRODUCTS -Fixed wcj_product_tags shortcode was showing invalid argument error for products without tags.
+* Fix - CART & CHECKOUT -Checkout Custom Fields- Fixed the select option to show the original label instead of database values.
+* Fix - PDF INVOICING & PACKING SLIPS- Reduced the frequency of call from an hour to daily basis.
 
 = 5.4.9 30/11/2021 =
 

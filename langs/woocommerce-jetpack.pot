@@ -2114,11 +2114,11 @@ msgstr ""
 msgid "Validation failed. Please try again."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:532
+#: includes/class-wcj-eu-vat-number.php:537
 msgid "<strong>Billing EU VAT Number</strong>is a required field."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:547
+#: includes/class-wcj-eu-vat-number.php:552
 #: includes/settings/wcj-settings-eu-vat-number.php:83
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
@@ -20550,7 +20550,7 @@ msgstr ""
 msgid "In stock"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-shortcodes-products.php:1116
+#: includes/shortcodes/class-wcj-shortcodes-products.php:1118
 msgid "from %level_min_qty% pcs."
 msgstr ""
 

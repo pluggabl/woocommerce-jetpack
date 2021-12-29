@@ -1,7 +1,7 @@
 /**
  * wcj-admin.
  *
- * @version 5.5.0-dev
+ * @version 5.5.0
  * @since   5.4.2
  */
 

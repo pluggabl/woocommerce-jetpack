@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.5.0-dev
+ * @version 5.5.0
  * @since   2.3.9
  * @author  Pluggabl LLC.
  */
@@ -523,7 +523,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 5.5.0-dev
+	 * @version 5.5.0
 	 */
 	function checkout_validate_vat( $_posted ) {
 		$skip_country = wcj_get_option( 'wcj_eu_vat_number_advanced_skip_countries', 'no' );

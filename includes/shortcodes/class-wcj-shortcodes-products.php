@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.5.0-dev
+ * @version 5.5.0
  * @author  Pluggabl LLC.
  */
 
@@ -812,7 +812,7 @@ if (!class_exists('WCJ_Products_Shortcodes')) :
 		/**
 		 * wcj_product_tags.
 		 *
-		 * @version 5.5.0-dev
+		 * @version 5.5.0
 		 * @return  string
 		 */
 		function wcj_product_tags($atts)
