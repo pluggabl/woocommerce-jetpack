@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Styling
  *
- * @version 3.1.0
+ * @version 5.5.0
  * @author  Pluggabl LLC.
  */
 
@@ -53,12 +53,12 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 	/**
 	 * On an early action hook, check if the hook is scheduled - if not, schedule it.
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.0
 	 * @version 2.9.0
 	 * @todo    save `$event_timestamp` info (i.e. hook next scheduled time)
 	 */
 	function schedule_download_fonts_event() {
-		$interval        = 'hourly';
+		$interval        = 'daily';
 		$event_hook      = 'wcj_download_tcpdf_fonts_hook';
 		$event_timestamp = wp_next_scheduled( $event_hook, array( $interval ) );
 		if ( ! $event_timestamp ) {

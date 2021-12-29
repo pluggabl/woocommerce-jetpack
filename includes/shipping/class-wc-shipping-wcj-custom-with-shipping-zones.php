@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 5.3.5
+ * @version 5.5.0
  * @since   2.5.6
  * @author  Pluggabl LLC.
  */
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Init settings
 		 *
-		 * @version 5.3.4
+		 * @version 5.5.0
 		 * @since   2.5.6
 		 * @access  public
 		 * @return  void
@@ -62,10 +62,10 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 			$this->weight_table_total_rows    = $this->get_option( 'weight_table_total_rows' );
 
 			// Save settings in admin
-			add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+			add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ),12 );
 
 			// Sanitize Settings
-			add_filter( 'woocommerce_shipping_' . $this->id . '_instance_settings_values', array( $this, 'sanitize_settings' ), 10, 2 );
+			add_filter( 'woocommerce_shipping_' . $this->id . '_instance_settings_values', array( $this, 'sanitize_settings' ), 12, 2 );
 
 			// Add weight table rows
 			if ( apply_filters( 'wcj_custom_shipping_do_add_table_rows', true, $this ) ) {

@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.4.8
+ * @version 5.5.0
  * @author  Pluggabl LLC.
  */
 
@@ -812,7 +812,7 @@ if (!class_exists('WCJ_Products_Shortcodes')) :
 		/**
 		 * wcj_product_tags.
 		 *
-		 * @version 2.7.0
+		 * @version 5.5.0
 		 * @return  string
 		 */
 		function wcj_product_tags($atts)
@@ -824,11 +824,13 @@ if (!class_exists('WCJ_Products_Shortcodes')) :
 
 			$product_tags = get_the_terms($atts['product_id'], 'product_tag');
 			$product_tags_names = array();
+			if (!empty($product_tags)) {
 			foreach ($product_tags as $product_tag) {
 				$product_tags_names[] = $product_tag->name;
 			}
 			return implode($atts['sep'], $product_tags_names);
 		}
+	}
 
 		/**
 		 * wcj_product_you_save.

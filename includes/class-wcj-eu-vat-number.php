@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.4.5
+ * @version 5.5.0
  * @since   2.3.9
  * @author  Pluggabl LLC.
  */
@@ -523,9 +523,14 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 5.4.5
+	 * @version 5.5.0
 	 */
 	function checkout_validate_vat( $_posted ) {
+		$skip_country = wcj_get_option( 'wcj_eu_vat_number_advanced_skip_countries', 'no' );
+		$skip_country = explode(',', $skip_country);
+
+		if(!in_array($_posted['billing_country'],$skip_country))
+		{
 		if ('yes' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'no' ) && '' == $_posted['billing_eu_vat_number']  ){
 			if( in_array( $_posted['billing_country'] , wcj_get_european_union_countries() ) ) {
 				wc_add_notice(
@@ -543,10 +548,11 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				)
 			) {
 				if( in_array( $_posted['billing_country'] , wcj_get_european_union_countries() ) ) {
-					wc_add_notice(
-						get_option( 'wcj_eu_vat_number_not_valid_message' , __( '<strong>EU VAT Number</strong> is not valid.', 'woocommerce-jetpack' ) ),
-						'error'
-					);
+						wc_add_notice(
+							get_option( 'wcj_eu_vat_number_not_valid_message' , __( '<strong>EU VAT Number</strong> is not valid.', 'woocommerce-jetpack' ) ),
+							'error'
+						);
+					}
 				}
 			}
 		}
