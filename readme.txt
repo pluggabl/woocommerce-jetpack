@@ -2,7 +2,7 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 5.8
+Tested up to: 5.8.2
 Requires PHP: 5.6
 Stable tag: 5.5.0
 License: GNU General Public License v3.0
@@ -273,6 +273,8 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * Fix - PRODUCTS -Fixed wcj_product_tags shortcode was showing invalid argument error for products without tags.
 * Fix - CART & CHECKOUT -Checkout Custom Fields- Fixed the select option to show the original label instead of database values.
 * Fix - PDF INVOICING & PACKING SLIPS- Reduced the frequency of call from an hour to daily basis.
+* WooCommerce 6.0.0 tested
+* WordPress 5.8.2 tested
 
 = 5.4.9 30/11/2021 =
 
