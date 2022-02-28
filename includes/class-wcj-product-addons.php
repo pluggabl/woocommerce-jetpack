@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 5.5.3-dev
+ * @version 5.5.4
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -421,7 +421,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version  5.5.3-dev
+	 * @version  5.5.4
 	 * @since   2.5.3
 	 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.5.3-dev
+ * @version 5.5.4
  * @since   2.5.7
  * @author  Pluggabl LLC.
  */
