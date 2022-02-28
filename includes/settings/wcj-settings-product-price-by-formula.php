@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 5.4.7
+ * @version 5.5.4
  * @since   2.8.1
  * @author  Pluggabl LLC.
  */
@@ -91,7 +91,7 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Promotional pricing issue', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( "If you are facing promotional  pricing issue in booking product then enable the section", 'woocommerce-jetpack' ) . '<br />',
+		'desc_tip' => __( "If you are facing a promotional  pricing issue in booking products then enable the section", 'woocommerce-jetpack' ) . '<br />',
 		'type'     => 'checkbox',
 		'id'       => 'wcj_product_price_by_formula_woo_booking_promotional',
 		'default'  => 'no',

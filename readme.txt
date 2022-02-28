@@ -2,9 +2,9 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 5.9
+Tested up to: 5.9.1
 Requires PHP: 5.6
-Stable tag: 5.5.1
+Stable tag: 5.5.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -264,6 +264,14 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.5.4 28/02/2022 =
+* Fix - PRODUCTS-Product Addons-Fixed Quantity issue with PHP 8.0
+* Fix - PRICES & CURRENCIES-Global Discount-Fixed issue with showing discounted price on product page for PHP 8.0.
+* Fix - PAYMENT GATEWAYS-Gateways Fees and Discounts-Changed transalation text for WPML.
+* Fix - PRODUCTS-Product Price by Formula-Change transalation text for WPML.
+* WooCommerce 6.2.1 tested
+* WordPress 5.9.1 tested
 
 = 5.5.1 31/01/2022 =
 * WooCommerce 6.1.1 tested
