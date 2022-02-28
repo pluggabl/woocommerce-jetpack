@@ -3,13 +3,13 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules. All in one WooCommerce plugin.
-Version: 5.5.1
+Version: 5.5.3-dev
 Author: Pluggabl LLC
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
 Domain Path: /langs
 Copyright: © 2020 Pluggabl LLC.
-WC tested up to: 6.1.1
+WC tested up to: 6.2.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -58,7 +58,7 @@ if (!class_exists('WC_Jetpack')) :
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '5.5.1';
+		public $version = '5.5.3-dev';
 
 		/**
 		 * @var WC_Jetpack The single instance of the class
