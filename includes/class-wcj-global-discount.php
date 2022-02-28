@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.3.8
+ * @version 5.5.3-dev
  * @since   2.5.7
  * @author  Pluggabl LLC.
  */
@@ -373,7 +373,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 				if ( ! $this->check_if_applicable_by_product_scope( $_product, $price, $price_type, wcj_get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) ) ) {
 					continue; // no changes by current discount group
 				}
-				if ( 'sale_price' === $price_type && 0 == $price ) {
+				if ( 'sale_price' === $price_type && 0 == (int)$price ) {
 					$price = $_product->get_regular_price();
 				}
 				return $this->calculate_price( $price, $coefficient, $i ); // discount applied
