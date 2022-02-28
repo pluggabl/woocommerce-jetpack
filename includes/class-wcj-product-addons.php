@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 5.4.0
+ * @version 5.5.3-dev
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -421,13 +421,14 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version 4.6.1
+	 * @version  5.5.3-dev
 	 * @since   2.5.3
 	 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
 	 */
 	function get_product_addons( $product_id ) {
 		$addons = array();
 		// All Products
+		$var=get_post_meta($product_id,'wcj_product_addons_per_product_qty_');
 		if ( 'yes' === wcj_get_option( 'wcj_product_addons_all_products_enabled', 'no' ) ) {
 			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -435,7 +436,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 					if ( ! $this->is_global_addon_visible( $i, $product_id ) ) {
 						continue;
 					}
-					if ( '0' === ( $qty = wcj_get_option( 'wcj_product_addons_all_products_qty_' . $i, '' ) ) || $qty < 0 ) {
+					if ( '0' === ( $qty = wcj_get_option( 'wcj_product_addons_all_products_qty_' . $i, '' ) ) || $qty > $var ) {
 						continue;
 					}
 					$addons[] = array(
@@ -465,7 +466,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				$total_number = get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_total_number', true );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_enabled_' . $i, true ) ) {
-						if ( '0' === ( $qty = get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_qty_' . $i, true ) ) || $qty < 0  ) {
+						if ( '0' === ( $qty = get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_qty_' . $i, true ) ) || $qty > $var  ) {
 							continue;
 						}
 						$addons[] = array(
