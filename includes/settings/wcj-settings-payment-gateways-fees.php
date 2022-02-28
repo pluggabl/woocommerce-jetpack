@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 5.4.8
+ * @version 5.5.3-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -29,7 +29,7 @@ $settings           = array(
 	array(
 		'title' => __('Enable klarna Payment Gateway Charge/Discount', 'woocommerce-jetpack'),
 		'desc' => __('Enable', 'woocommerce-jetpack'),
-		'desc_tip' => sprintf(__('If you enable this mode so add Klarna payment gateway charge/discount into your cart total') . '<br />' . __('If you have not klarna plugin install first <a href="https://wordpress.org/plugins/klarna-payments-for-woocommerce/">Payments</a> page', 'woocommerce-jetpack')),
+		'desc_tip' => sprintf(__('If you enable this mode so add Klarna payment gateway charge/discount into your cart total') . '<br />' . __('If you do not have the Klarna plugin installed first<a href="https://wordpress.org/plugins/klarna-payments-for-woocommerce/">Payments</a>', 'woocommerce-jetpack')),
 		'type' => 'checkbox',
 		'default' => 'no',
 		'id' => "wcj_enable_payment_gateway_charge_discount",
