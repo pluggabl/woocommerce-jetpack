@@ -317,3 +317,7 @@ img.wcj-rocket-icon:hover {
   font-size: 12px;
   color: #000;
 }
+
+#order_data .order_data_column p {
+  word-break: break-word;
+}
