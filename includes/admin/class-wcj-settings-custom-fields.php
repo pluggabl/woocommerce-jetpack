@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 5.2.0
+ * @version 5.5.6-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -294,11 +294,11 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * output_custom_number.
 	 *
-	 * @version 2.5.5
+	 * @version 5.5.6-dev
 	 */
 	function output_custom_number( $value ) {
 		$type         = 'number';
-		$option_value = wcj_get_option( $value['id'], $value['default'] );
+		$option_value = get_option( $value['id'], $value['default'] );
 		$tooltip_html = ( isset( $value['desc_tip'] ) && '' != $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 		$description  = ' <span class="description">' . $value['desc'] . '</span>';
