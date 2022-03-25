@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 4.8.0
+ * @version 5.5.6-dev
  * @author  Pluggabl LLC.
  */
 
@@ -19,10 +19,25 @@ class WCJ_Tools {
 		if ( is_admin() ) {
 			if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
 				add_action( 'admin_menu', array( $this, 'add_wcj_tools' ), 100 );
+				add_action( 'admin_enqueue_scripts', array($this,'wcj_new_desing_dashboard_enqueue') );
 			}
 		}
 	}
 
+	/**
+    * wcj_new_desing_dashboard_enqueue.
+    *
+    * @version 5.5.6-dev
+    * @since   5.5.6-dev
+  	*/
+	  function wcj_new_desing_dashboard_enqueue(){   
+	    $page = isset( $_GET['page'] ) ? $_GET['page'] : "" ;
+   		if( $page ==='wcj-tools'){
+			wp_enqueue_style('wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css');
+            wp_enqueue_script('wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array('jquery'), '5.0.0', true);
+            //wp_enqueue_script('wcj-admin-dasboard-js', wcj_plugin_url() . '/includes/js/wcj-new_desing.js');
+        }
+	}
 	/**
 	 * add_wcj_tools.
 	 *
@@ -44,7 +59,7 @@ class WCJ_Tools {
 	/**
 	 * create_tools_page.
 	 *
-	 * @version 2.3.10
+	 * @version 5.5.6-dev
 	 */
 	function create_tools_page() {
 
@@ -55,7 +70,7 @@ class WCJ_Tools {
 				'title' => __( 'Tools Dashboard', 'woocommerce-jetpack' ),
 			),
 		) );
-		$html = '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper">';
+		$html = '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper wcj_tool_tab_part">';
 		$active_tab = ( isset( $_GET['tab'] ) ) ? $_GET['tab'] : 'dashboard';
 		foreach ( $tabs as $tab ) {
 			$is_active = ( $active_tab === $tab['id'] ) ? 'nav-tab-active' : '';
@@ -68,9 +83,10 @@ class WCJ_Tools {
 		if ( 'dashboard' === $active_tab ) {
 			$title = __( 'Booster for WooCommerce Tools - Dashboard', 'woocommerce-jetpack' );
 			$desc  = __( 'This dashboard lets you check statuses and short descriptions of all available Booster for WooCommerce tools. Tools can be enabled through WooCommerce > Settings > Booster. Enabled tools will appear in the tabs menu above.', 'woocommerce-jetpack' );
+			echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			echo '<h3>' . $title . '</h3>';
 			echo '<p>' .  $desc . '</p>';
-			echo '<table class="widefat" style="width:90%;">';
+			echo '<table class="widefat striped" style="width:90%;">';
 			echo '<tr>';
 			echo '<th style="width:20%;">' . __( 'Tool', 'woocommerce-jetpack' ) . '</th>';
 			echo '<th style="width:20%;">' . __( 'Module', 'woocommerce-jetpack' ) . '</th>';
@@ -79,6 +95,7 @@ class WCJ_Tools {
 			echo '</tr>';
 			do_action( 'wcj_tools_' . 'dashboard' );
 			echo '</table>';
+			echo '</div>';
 		} else {
 			do_action( 'wcj_tools_' . $active_tab );
 		}

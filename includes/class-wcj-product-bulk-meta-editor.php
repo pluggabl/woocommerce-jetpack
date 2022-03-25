@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 5.2.0
+ * @version 5.5.6-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -193,11 +193,12 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * get_tool_html.
 	 *
-	 * @version 2.8.0
+	 * @version 5.5.6-dev
 	 * @since   2.8.0
 	 */
 	function get_tool_html( $meta_name, $result_message, $_products, $selected_products, $set_meta ) {
 		$html = '';
+		$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$html .= '<div class="wrap">';
 		$html .= $this->get_tool_header_html( 'product_bulk_meta_editor' );
 		$html .= $result_message;
@@ -208,6 +209,7 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 			$html .= $this->get_html_meta_table( $meta_name, $_products, $selected_products, $set_meta );
 		}
 		$html .= '</form>';
+		$html .= '</div>';
 		$html .= '</div>';
 		return $html;
 	}

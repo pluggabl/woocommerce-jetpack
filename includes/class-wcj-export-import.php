@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.4.0
+ * @version 5.5.6-dev
  * @since   2.5.4
  * @author  Pluggabl LLC.
  */
@@ -287,10 +287,11 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * create_export_tool.
 	 *
-	 * @version 3.0.0
+	 * @version 5.5.6-dev
 	 * @since   2.4.8
 	 */
 	function create_export_tool( $tool_id ) {
+		echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		echo $this->get_tool_header_html( 'export_' . $tool_id );
 		echo '<p>' . $this->export_date_fields( $tool_id ) . '</p>';
 		if ( ! isset( $_GET['range'] ) ) {
@@ -311,6 +312,7 @@ class WCJ_Export_Import extends WCJ_Module {
 		echo '</form>';
 		$data = $this->export( $tool_id );
 		echo ( is_array( $data ) ) ? wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) ) : $data;
+		echo '</div>';
 	}
 
 	/**

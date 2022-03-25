@@ -6,298 +6,314 @@
  */
 
 img.wcj-rocket-icon:hover {
-	box-shadow: 0 1px 0 #C43F15;
+  box-shadow: 0 1px 0 #c43f15;
 }
 
 /* start admin getting strted welcome page */
-.wcj-welcome-page{
-    padding-top: 110px;
+.wcj-welcome-page {
+  padding-top: 110px;
 }
-.wcj-welcome-container{
-    width: 750px;
-    margin: 0 auto;
-    max-width: 100%;
+.wcj-welcome-container {
+  width: 750px;
+  margin: 0 auto;
+  max-width: 100%;
 }
-.wcj-welcome-content-main{
-    padding-top: 50px;
-    background: #fff;
-    border: 1px solid #d6e2ed;
-    margin: 25px 0;
-    position: relative;
-    text-align: center; 
+.wcj-welcome-content-main {
+  padding-top: 50px;
+  background: #fff;
+  border: 1px solid #d6e2ed;
+  margin: 25px 0;
+  position: relative;
+  text-align: center;
 }
-.wcj-welcome-content-inner{
-    padding:25px;
+.wcj-welcome-content-inner {
+  padding: 25px;
 }
-.wcj-welcome-content-inner h3{
-    color: #393f4c;
-    font-size: 24px;
-    margin: 0 0 20px;
-    line-height: 1.4;
+.wcj-welcome-content-inner h3 {
+  color: #393f4c;
+  font-size: 24px;
+  margin: 0 0 20px;
+  line-height: 1.4;
 }
-.wcj-welcome-content-inner p{
-    font-size: 16px;
+.wcj-welcome-content-inner p {
+  font-size: 16px;
 }
-.wcj-welcome-content-logo-main{
-    position: absolute;
-    top: -60px;
-    width: 120px;
-    height: 120px;
-    left: 50%;
-    margin-left: -60px;
-    background: #fff;
-    border-radius: 50%;
-    border: 1px solid #d6e2ed;
+.wcj-welcome-content-logo-main {
+  position: absolute;
+  top: -60px;
+  width: 120px;
+  height: 120px;
+  left: 50%;
+  margin-left: -60px;
+  background: #fff;
+  border-radius: 50%;
+  border: 1px solid #d6e2ed;
 }
-.wcj-welcome-content-logo-main .wcj-welcome-content-logo{
-    width: 100%;
-    padding-top: 66%;
-    position: relative;
+.wcj-welcome-content-logo-main .wcj-welcome-content-logo {
+  width: 100%;
+  padding-top: 66%;
+  position: relative;
 }
-.wcj-welcome-content-logo::after{
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 82px;
-    padding-top: 68%;
-    background-image: url(../../assets/images/plugin_logo.png);
-    margin: 15px 19px 19px;
+.wcj-welcome-content-logo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 82px;
+  padding-top: 68%;
+  background-image: url(../../assets/images/plugin_logo.png);
+  margin: 15px 19px 19px;
 }
-.wcj-welcome-padding-top-0{
-    padding-top: 0px;
+.wcj-welcome-padding-top-0 {
+  padding-top: 0px;
 }
 .wcj-buy-puls-btn-main {
-    width: 100%;
+  width: 100%;
 }
-.wcj-buy-puls-btn{
-    background: #f46c5e;
-    border-width: 1px 1px 2px;
-    border-radius: 50px;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 18px;
-    font-weight: 400;
-    padding: 15px 30px;
-    text-decoration: none;
+.wcj-buy-puls-btn {
+  background: #f46c5e;
+  border-width: 1px 1px 2px;
+  border-radius: 50px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 15px 30px;
+  text-decoration: none;
 }
-.wcj-buy-puls-btn:hover{
-    color: #fff;
-    text-decoration:underline;
+.wcj-buy-puls-btn:hover {
+  color: #fff;
+  text-decoration: underline;
 }
-.wcj-buy-puls-content-row{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0px;
+.wcj-buy-puls-content-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0px;
 }
-.wcj-buy-puls-content-col-4{
-    text-align: left;
-    width: 33%;
-    float: left;
-    display: flex;    
+.wcj-buy-puls-content-col-4 {
+  text-align: left;
+  width: 33%;
+  float: left;
+  display: flex;
 }
-.wcj-buy-puls-content-col-4 .wcj-badge{
-    border: 1px solid #d4ddf2;
-    border-radius: 50px;
-    text-align: left;
-    padding: 8px;
-    width: 100%;
-    box-shadow: 0 0 6px #d4ddf2;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-left: 10px;
+.wcj-buy-puls-content-col-4 .wcj-badge {
+  border: 1px solid #d4ddf2;
+  border-radius: 50px;
+  text-align: left;
+  padding: 8px;
+  width: 100%;
+  box-shadow: 0 0 6px #d4ddf2;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
-.wcj-badge img{
-    float: left;
-    width: 55px;
-    height: auto;
-    display: block;
-    margin: 0 10px;
+.wcj-badge img {
+  float: left;
+  width: 55px;
+  height: auto;
+  display: block;
+  margin: 0 10px;
 }
-.wcj-badge span{
-    font-size: 16px;
-    white-space: normal;
-    line-height: normal;
-    top: auto;
+.wcj-badge span {
+  font-size: 16px;
+  white-space: normal;
+  line-height: normal;
+  top: auto;
 }
-.wcj-buy-puls-content-col-6{
-    text-align: left;
-    width: 50%;
-    float: left;
-    display: flex;
+.wcj-buy-puls-content-col-6 {
+  text-align: left;
+  width: 50%;
+  float: left;
+  display: flex;
 }
-.wcj-feature-img img{
-    float: left;
-    width: 55px;
-    height: auto;
-    display: block;
-    margin:15px;
-
+.wcj-feature-img img {
+  float: left;
+  width: 55px;
+  height: auto;
+  display: block;
+  margin: 15px;
 }
-.wcj-feature-text h4{
-    font-size: 16px;
+.wcj-feature-text h4 {
+  font-size: 16px;
 }
-.wcj-feature-text p{
-    font-size: 14px;
-    margin-top: -15px;
-
+.wcj-feature-text p {
+  font-size: 14px;
+  margin-top: -15px;
 }
-.wcj-welcome-subscribe-email{
-    margin-top: 30px;
+.wcj-welcome-subscribe-email {
+  margin-top: 30px;
 }
-.wcj-welcome-subscribe-email .user_email{
-    width: 50%;
-    height: 35px;
+.wcj-welcome-subscribe-email .user_email {
+  width: 50%;
+  height: 35px;
 }
-.subscribe-email-btn{
-    background: #f46c5e;
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 5px 20px;
-    border: 0;
+.subscribe-email-btn {
+  background: #f46c5e;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px 20px;
+  border: 0;
 }
-.wcj-support{
-    margin-bottom: 30px;
-    margin-top: 10px;
+.wcj-support {
+  margin-bottom: 30px;
+  margin-top: 10px;
 }
-.wcj-support a{
-    color: #f46c5e;
-    font-size: 16px;
+.wcj-support a {
+  color: #f46c5e;
+  font-size: 16px;
 }
 /* end admin getting strted welcome page */
 
 /* footer review notice start */
 
 .circleBox {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    text-align: center;
-    position: fixed;
-    float: right;
-    margin-top: -89px;
-    bottom: 20px;
-	right: 40px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  text-align: center;
+  position: fixed;
+  float: right;
+  margin-top: -89px;
+  bottom: 20px;
+  right: 40px;
 }
 
 .circle-badge img {
-	height: 61px;
-	border-radius: 50%;
+  height: 61px;
+  border-radius: 50%;
 }
 
 .circleBox .circle-badge {
-	font-size: 45px;
-	color: #f46c5e;
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
-	cursor: pointer;
-	transition: 0.5s;
-	z-index: 1000;
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  font-size: 45px;
+  color: #f46c5e;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 1000;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* After TOGGLE CLASS [ Active ] On The circle-badge */
 .circleBox .circle-badge.active {
-	transform: rotateZ(180deg);
+  transform: rotateZ(180deg);
 }
 
 /* Sub Circles */
 .subCircles {
-	display: inline-flex;
-	background-color: red;
+  display: inline-flex;
+  background-color: red;
 }
 
 .subCircles .sub-circle {
-	color: #5DACD8;
-	line-height: 80px;
-	font-size: 25px;
-	position: absolute;
-	top: 6px;
-	left: 6px;
-	z-index: 999;
-	transition: 0.5s;
-	transform: scale(0);
-	cursor: pointer;
+  color: #5dacd8;
+  line-height: 80px;
+  font-size: 25px;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 999;
+  transition: 0.5s;
+  transform: scale(0);
+  cursor: pointer;
 }
 
 .subCircles .sub-circle .ic_list {
-	width: 50px;
-	height: 50px;
-	background-color: #f46c5e;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #f46c5e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .subCircles .sub-circle .form_label {
-	position: relative;
+  position: relative;
 }
 
 .subCircles .sub-circle .form_label label {
-	position: absolute;
-	display: block;
-	top: 50%;
-	right: calc(100% + 25px);
-	transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-webkit-transform: translateY(-50%);
-	color: #fff;
-	background: #f46c5e 0 0 no-repeat padding-box;
-	font-size: 12px;
-	white-space: nowrap;
-	padding: 5px 10px;
-	height: auto !important;
-	line-height: initial;
-	transition: all 0.2s ease-out;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+  position: absolute;
+  display: block;
+  top: 50%;
+  right: calc(100% + 25px);
+  transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  color: #fff;
+  background: #f46c5e 0 0 no-repeat padding-box;
+  font-size: 12px;
+  white-space: nowrap;
+  padding: 5px 10px;
+  height: auto !important;
+  line-height: initial;
+  transition: all 0.2s ease-out;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
 }
 
 .subCircles .sub-circle .ic_list img {
-	width: 32px;
+  width: 32px;
 }
 
 .subCircles .sub-circle .subCircles .sub-circle:hover {
-	opacity: 0.9;
+  opacity: 0.9;
 }
 
 .subCircles .sub-circle:active {
-	opacity: 1;
-	transform: scale(0.9);
+  opacity: 1;
+  transform: scale(0.9);
 }
 
 /* After Toggle Class Show */
 .sub-circle.show {
-	transform: scale(1);
+  transform: scale(1);
 }
 
 .sub-circle.show:first-child {
-	top: -40px;
-	left: 25px;
+  top: -40px;
+  left: 25px;
 }
 
 .sub-circle.show:nth-child(2) {
-	top: -100px;
-	left: 25px;
+  top: -100px;
+  left: 25px;
 }
 
 .sub-circle.show:nth-child(3) {
-	left: 25px;
-	top: -160px;
+  left: 25px;
+  top: -160px;
 }
 
 /* footer review notice end */
+
+.wclj_tl_foot {
+  background-color: #fff;
+}
+.wclj_tl_foot .wcj-review-footer p:empty {
+  display: none;
+}
+.wclj_tl_foot .wcj-review-footer {
+  margin-bottom: 0px;
+}
+#wpfooter {
+  position: relative;
+}
+.wclj_tl_foot .wcj-review-footer label,
+.wclj_tl_foot .wcj-review-footer p {
+  font-size: 12px;
+  color: #000;
+}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Old Slugs
  *
- * @version 2.8.0
+ * @version 5.5.6-dev
  * @author  Pluggabl LLC.
  */
 
@@ -94,11 +94,12 @@ class WCJ_Old_Slugs extends WCJ_Module {
 	/**
 	 * output_old_slugs_tool.
 	 *
-	 * @version 2.8.0
+	 * @version 5.5.6-dev
 	 * @since   2.8.0
 	 */
 	function output_old_slugs_tool( $remove_result_html, $multi_table_data, $num_old_slugs, $posts_ids ) {
 		$html = '';
+		$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$html .= '<div class="wrap">';
 		$html .= $this->get_tool_header_html( 'old_slugs' );
 		$html .= $remove_result_html;
@@ -129,6 +130,7 @@ class WCJ_Old_Slugs extends WCJ_Module {
 		if ( $num_old_slugs == 0 ) {
 			$html .= '<div class="updated"><p><strong>' . __( 'No old slugs found.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 		}
+		$html .= '</div>';
 		$html .= '</div>';
 		echo $html;
 	}

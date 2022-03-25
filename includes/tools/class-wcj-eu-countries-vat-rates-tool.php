@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - EU Countries VAT Rates
  *
- * @version 2.5.0
+ * @version 5.5.6-dev
  * @since   2.3.10
  * @author  Pluggabl LLC.
  */
@@ -55,12 +55,13 @@ class WCJ_EU_Countries_VAT_Rates_Tool {
 	/**
 	 * create_eu_countries_vat_rates_tool.
 	 *
-	 * @version 2.3.10
+	 * @version 5.5.6-dev
 	 * @since   2.3.10
 	 */
 	function create_eu_countries_vat_rates_tool( $header_html ) {
 
 		$the_tool_html = '';
+		$the_tool_html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$the_tool_html .= $header_html;
 
 //		$the_tool_html .= '<h4>' . __( 'Settings', 'woocommerce-jetpack' ) . '</h4>';
@@ -92,7 +93,7 @@ class WCJ_EU_Countries_VAT_Rates_Tool {
 		foreach ( $eu_vat_rates as $country => $rate ) {
 			$data[] = array( $i++, $country . ' - ' . wcj_get_country_name_by_code( $country ), $rate . '%' );
 		}
-		$the_tool_html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:50%;min-width:300px;', ) );
+		$the_tool_html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat striped', 'table_style' => 'width:50%;min-width:300px;', ) );
 
 		$the_tool_html .= '<h4>' . __( 'Current standard tax rates', 'woocommerce-jetpack' ) . '</h4>';
 		$standard_tax_rates = wcj_get_rates_for_tax_class( '' );
@@ -108,7 +109,7 @@ class WCJ_EU_Countries_VAT_Rates_Tool {
 			$data[] = array( $i++, $tax_rate_object->tax_rate_country . ' - ' . wcj_get_country_name_by_code( $tax_rate_object->tax_rate_country ), $tax_rate_object->tax_rate . '%', $tax_rate_object->tax_rate_name, );
 		}
 		$the_tool_html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:75%;min-width:300px;', ) );
-
+		$the_tool_html .= '</div>';
 		echo $the_tool_html;
 	}
 }

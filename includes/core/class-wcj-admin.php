@@ -73,22 +73,33 @@ class WCJ_Admin {
 	/**
 	 * admin_footer_text
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.6-dev
 	 */
 	function admin_footer_text( $footer_text ) {
 		if ( isset( $_GET['page'] ) ) {
 			if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
-				$rocket_icons = wcj_get_5_rocket_image();
-				$rating_link = '<a href="https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?rate=5#new-post" target="_blank">' . $rocket_icons . '</a>';
-				return sprintf(
-					__( 'If you like <strong>Booster for WooCommerce</strong> please leave us a %s rating. Thank you, we couldn\'t have done it without you!', 'woocommerce-jetpack' ),
-					$rating_link
-				);
+				 ?>
+				<div class="wclj_tl_foot">
+				<div class="wcj-footer">
+					<div class="wcj-review-footer">
+					<p><?php _e('Please rate ', 'woocommerce-jetpack');?><strong><?php _e('Booster for Woocommerce', 'woocommerce-jetpack');?></strong>
+						<span class="wcj-woo-star">
+							<img src="<?php echo wcj_plugin_url().'/assets/images/star.png'; ?>">
+							<img src="<?php echo wcj_plugin_url().'/assets/images/star.png'; ?>">
+							<img src="<?php echo wcj_plugin_url().'/assets/images/star.png'; ?>">
+							<img src="<?php echo wcj_plugin_url().'/assets/images/star.png'; ?>">
+							<img src="<?php echo wcj_plugin_url().'/assets/images/star.png'; ?>">
+						</span>
+						<strong><a href="https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?rate=5#new-post" target="_blank"><?php _e('WordPress.org', 'woocommerce-jetpack');?></a></strong><?php _e(' to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack');?>
+						</p>
+					</div>
+				</div>
+				</div>
+			<?php
 			}
 		}
 		return $footer_text;
 	}
-
 	/**
 	 * Add menu item
 	 *

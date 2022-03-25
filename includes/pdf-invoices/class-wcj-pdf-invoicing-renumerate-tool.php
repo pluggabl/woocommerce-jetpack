@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Renumerate Tool
  *
- * @version 3.2.2
+ * @version 5.5.6-dev
  * @author  Pluggabl LLC.
  */
 
@@ -40,7 +40,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 	/**
 	 * Add Renumerate Invoices tool to WooCommerce menu (the content).
 	 *
-	 * @version 3.2.2
+	 * @version 5.5.6-dev
 	 */
 	function create_renumerate_invoices_tool() {
 
@@ -63,7 +63,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 			}
 		}
 
-		?><div>
+		?><div class="wcj-setting-jetpack-body">
 			<h2><?php echo __( 'Booster - Renumerate Invoices', 'woocommerce-jetpack' ); ?></h2>
 			<p><?php echo __( 'The tool renumerates invoices from choosen date. Invoice number format is set in WooCommerce > Settings > Booster > PDF Invoicing & Packing Slips > Numbering.', 'woocommerce-jetpack' ); ?></p>
 			<?php echo $result_message; ?>
