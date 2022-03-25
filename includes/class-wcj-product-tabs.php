@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 5.2.0
+ * @version 5.5.6-dev
  * @author  Pluggabl LLC.
  */
 
@@ -514,7 +514,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_new_custom_product_tab_local.
 	 *
-	 * @version 3.6.0
+	 * @version 5.5.6-dev
 	 */
 	function create_new_custom_product_tab_local( $key, $tab ) {
 		echo $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) );
