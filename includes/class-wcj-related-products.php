@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.4.8
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -239,7 +239,7 @@ if (!class_exists('WCJ_Related_Products')) :
 		/**
 		 * related_products_query_wc3.
 		 *
-		 * @version 5.4.8
+		 * @version 5.5.6
 		 * @since   2.8.0
 		 * @see     WC_Product_Data_Store_CPT::get_related_products_query()
 		 * @todo    "Relate by Product Attribute" - directly to `$query['where']` instead of getting ids via `WP_Query`
@@ -250,7 +250,16 @@ if (!class_exists('WCJ_Related_Products')) :
 			//////////////////////////////////////////////////////////////////////
 			// Pluggabl
 			if ('yes' === wcj_get_option('wcj_product_info_related_products_hide', 'no')) {
-				//$include_ids = false;
+			$include_ids = false;
+		} else {
+			$include_ids = $this->get_related_products_ids_wc3( $product_id );
+				if ( false !== $include_ids && empty( $include_ids ) ) {
+					return $_query;
+				}
+			}
+			if ( false !== $include_ids ) {
+				$include_ids = implode( ',', array_map( 'absint', $include_ids ) );
+			}
 				$cats_array  = array();
 				$tags_array  = array();
 				$_product = wc_get_product($product_id);
@@ -269,7 +278,7 @@ if (!class_exists('WCJ_Related_Products')) :
 
 				// Arrays to string.
 				$exclude_ids = implode(',', array_map('absint', $exclude_ids));
-				$cats_array  = array(); // implode( ',', array_map( 'absint', $cats_array ) );
+				$cats_array  = implode( ',', array_map( 'absint', $cats_array ) );
 				$tags_array  = implode(',', array_map('absint', $tags_array));
 
 				$limit           = absint($limit);
@@ -310,25 +319,15 @@ if (!class_exists('WCJ_Related_Products')) :
 					}
 
 					if ($tags_array) {
-						$_query['where'] .= " ( tt.taxonomy = 'product_tag' AND t.term_id IN ( {$tags_array} ) ) ";
-					}
-
-					$_query['where'] .= ')';
-				}
-
-				$_query['limits'] = " LIMIT {$limit} ";
-
-				return $_query;
-			} else {
-				$include_ids = $this->get_related_products_ids_wc3($product_id);
-				if (false !== $include_ids && empty($include_ids)) {
-					return $_query;
-				}
+				$_query['where'] .= " ( tt.taxonomy = 'product_tag' AND t.term_id IN ( {$tags_array} ) ) ";
 			}
-			// if ( false !== $include_ids ) {
-			// 	$include_ids = implode( ',', array_map( 'absint', $include_ids ) );
-			// }
 
+			$_query['where'] .= ')';
+		}
+
+		$_query['limits'] = " LIMIT {$limit} ";
+
+		return $_query;
 		}
 
 		/**

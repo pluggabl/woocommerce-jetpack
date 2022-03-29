@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.2.0
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -241,7 +241,9 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	 */
 	function create_products_atts_tool() {
 		$html = '';
+		$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$html .= $this->get_products_atts();
+		$html .= '</div>';
 		echo $html;
 	}
 

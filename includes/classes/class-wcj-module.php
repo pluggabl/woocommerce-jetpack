@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.3.6
+ * @version 5.5.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -772,15 +772,15 @@ class WCJ_Module {
 	/**
 	 * get_tool_header_html.
 	 *
-	 * @version 2.3.10
+	 * @version 5.5.6
 	 * @since   2.3.10
 	 */
 	function get_tool_header_html( $tool_id ) {
 		$html = '';
 		if ( isset( $this->tools_array[ $tool_id ] ) ) {
-			$html .= '<p>' .  $this->get_back_to_settings_link_html() . '</p>';
-			$html .= '<h3>' . __( 'Booster', 'woocommerce-jetpack' ) . ' - ' . $this->tools_array[ $tool_id ]['title'] . '</h3>';
-			$html .= '<p style="font-style:italic;">' . $this->tools_array[ $tool_id ]['desc']  . '</p>';
+			$html .= '<p class="wcj-backlink">' .  $this->get_back_to_settings_link_html() . '</p>';
+			$html .= '<h3 class="wcj-tools-title">' . __( 'Booster', 'woocommerce-jetpack' ) . ' - ' . $this->tools_array[ $tool_id ]['title'] . '</h3>';
+			$html .= '<p class="wcj-tools-desc" style="font-style:italic;">' . $this->tools_array[ $tool_id ]['desc']  . '</p>';
 		}
 		return $html;
 	}
@@ -913,14 +913,9 @@ class WCJ_Module {
 			$module_desc = '<div style="padding: 15px; background-color: #ffffff; color: #000000;">' . $this->get_extra_desc() . '</div>';
 		}
 		if ( ! isset( $this->link ) && isset( $this->link_slug ) && '' != $this->link_slug ) {
-			if($this->link_slug == "woocommerce-pdf-invoicing-and-packing-slips")
-			{
-				$this->link = 'https://booster.io/' . $this->link_slug . '/';
-			}
-			else
-			{
-				$this->link = 'https://booster.io/features/' . $this->link_slug . '/';
-			}
+			
+				$this->link = 'https://booster.io/docs/' . $this->link_slug . '/';
+			
 		}
 		$the_link = '';
 		if ( isset( $this->link ) && '' != $this->link ) {

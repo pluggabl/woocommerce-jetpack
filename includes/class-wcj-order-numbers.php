@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.4.6
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -315,7 +315,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add Renumerate Orders tool to WooCommerce menu (the content).
 	 *
-	 * @version 3.3.0
+	 * @version 5.5.6
 	 * @todo    restyle
 	 * @todo    add more result info (e.g. number of regenerated orders etc.)
 	 */
@@ -331,6 +331,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			}
 		}
 		$html = '';
+		$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$html .= '<div class="wrap">';
 		$html .= $this->get_tool_header_html( 'renumerate_orders' );
 		$html .= '<p>';
@@ -344,6 +345,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		$html .= '<form method="post" action="">';
 		$html .= '<input class="button-primary" type="submit" name="renumerate_orders" value="' . __( 'Renumerate orders', 'woocommerce-jetpack' ) . '">';
 		$html .= '</form>';
+		$html .= '</div>';
 		$html .= '</div>';
 		echo $html;
 	}

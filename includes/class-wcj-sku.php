@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 5.2.0
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -654,7 +654,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * create_sku_tool
 	 *
-	 * @version 3.5.0
+	 * @version 5.5.6
 	 */
 	function create_sku_tool() {
 		$result_message = '';
@@ -678,6 +678,7 @@ class WCJ_SKU extends WCJ_Module {
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'SKUs generated and set successfully!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		}
 		$html = '';
+		$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$html .= '<div class="wrap">';
 		$html .= $this->get_tool_header_html( 'sku' );
 		if ( ! $is_preview ) {
@@ -702,6 +703,7 @@ class WCJ_SKU extends WCJ_Module {
 		if ( $is_preview ) {
 			$html .= $preview_html;
 		}
+		$html .= '</div>';
 		$html .= '</div>';
 		echo $html;
 	}

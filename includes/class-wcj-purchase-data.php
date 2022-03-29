@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.4.0
+ * @version 5.5.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -77,7 +77,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * create_import_from_wc_cog_tool.
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.6
 	 * @since   2.9.0
 	 */
 	function create_import_from_wc_cog_tool() {
@@ -106,10 +106,12 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		$button_form .= '</form>';
 		// Output
 		$html = '';
+		$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$html .= '<div class="wrap">';
 		$html .= '<p>' . $this->get_tool_header_html( 'import_from_wc_cog' ) . '</p>';
 		$html .= '<p>' . $button_form . '</p>';
 		$html .= '<p>' . wcj_get_table_html( $table_data, array( 'table_heading_type' => 'horizontal', 'table_class' => 'widefat striped' ) ) . '</p>';
+		$html .= '</div>';
 		$html .= '</div>';
 		echo $html;
 	}

@@ -1,7 +1,7 @@
 /**
  * wcj-product-addons.
  *
- * @version 5.4.3
+ * @version 5.5.6
  * @since   2.5.3
  * @todo    `text` type - update price not only on change, but on each pressed key
  * @todo    fix the issue with custom price labels module
@@ -93,7 +93,7 @@ jQuery(document).ready(function() {
 			hide_variation_addon_fields();
 			for (i = 0; i < _ajax_object.enable_by_variation.length; i++) {
 				if (Array.isArray(_ajax_object.enable_by_variation[i]) && _ajax_object.enable_by_variation[i].indexOf(parseInt(variation_id)) != -1) {
-					var addons = jQuery('input[name="' + addon_pattern + (i + 1) + '"],label[for*="' + addon_pattern + (i + 1) + '"],*[class*="' + addon_pattern + (i + 1) + '"]');
+					var addons = jQuery('input[name="' + addon_pattern + (i + 1) + '"],label[for="' + addon_pattern + (i + 1) + '"],*[class*="' + addon_pattern + (i + 1) + '"]');
 					addons.each(function() {
 						if(jQuery(this).is('[data-required]')){
 							jQuery(this).attr('required','required');

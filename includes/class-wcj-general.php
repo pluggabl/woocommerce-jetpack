@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.4.9
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -211,7 +211,7 @@ class WCJ_General extends WCJ_Module {
 			}
 			echo '<p style="color:green;font-weight:bold;">' . sprintf( __( 'Role %s successfully deleted!', 'woocommerce-jetpack'), sanitize_text_field($_GET['wcj_delete_role'] )) . '</p>';
 		}
-
+		echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		echo $this->get_tool_header_html( 'custom_roles' );
 
 		$table_data = array();
@@ -235,9 +235,10 @@ class WCJ_General extends WCJ_Module {
 		$table_data[] = array( __( 'Capabilities', 'woocommerce-jetpack'), wcj_get_select_html( 'wcj_custom_role_caps', wcj_get_user_roles_options(), 'width:100%' ) );
 		echo '<h3>' . __( 'Add New Role', 'woocommerce-jetpack') . '</h3>';
 		echo '<form method="post" action="' . remove_query_arg( 'wcj_delete_role' ) . '">' .
-			wcj_get_table_html( $table_data, array( 'table_class' => 'widefat', 'table_heading_type' => 'vertical', 'table_style' => 'width:20%;min-width:300px;', ) )
+			wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical', 'table_style' => 'width:20%;min-width:300px;', ) )
 			. '<p>' . '<input type="submit" name="wcj_add_new_role" class="button-primary" value="' . __( 'Add', 'woocommerce-jetpack' ) . '">' . '</p>'
 			. '</form>';
+			echo '</div>';
 	}
 
 	/**

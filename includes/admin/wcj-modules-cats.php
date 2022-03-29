@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 5.4.0
+ * @version 5.5.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -14,8 +14,8 @@ return apply_filters( 'wcj_modules', array(
 		'label'          => __( 'Dashboard', 'woocommerce-jetpack' ),
 		'desc'           => __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="https://booster.io" target="_blank">https://booster.io</a> for detailed info on each feature.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
-			'alphabetically',
 			'by_category',
+			'all_module',
 			'active',
 			'manager',
 		),
@@ -109,6 +109,7 @@ return apply_filters( 'wcj_modules', array(
 			'checkout_customization',
 			'checkout_fees',
 			'eu_vat_number',
+			
 		),
 	),
 

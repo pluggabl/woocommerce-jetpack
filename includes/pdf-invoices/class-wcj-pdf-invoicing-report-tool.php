@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 4.3.0
+ * @version 5.5.6
  * @since   2.2.1
  * @author  Pluggabl LLC.
  */
@@ -92,7 +92,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Add Invoices Report tool to WooCommerce menu (the content).
 	 *
-	 * @version 3.6.0
+	 * @version 5.5.6
 	 */
 	function create_invoices_report_tool() {
 		$result_message = '';
@@ -108,6 +108,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			}
 		}
 		$html = '';
+		$html .= '<div class="wcj-setting-jetpack-body">';
 		$html .= '<div class="wrap">';
 		$html .= WCJ()->modules['pdf_invoicing']->get_tool_header_html( 'invoices_report' );
 		$html .= '<p><form method="post" action="">';
@@ -157,6 +158,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		$html .= '</form></p>';
 		$html .= $result_message;
+		$html .= '</div>';
 		$html .= '</div>';
 		echo $html;
 	}

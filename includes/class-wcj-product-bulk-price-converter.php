@@ -230,7 +230,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		}
 
 		// Output HTML
-		echo '<div>';
+		echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			echo $this->get_tool_header_html( 'bulk_price_converter' );
 			echo $result_message;
 			echo '<form method="post" action="">';

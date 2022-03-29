@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 5.4.0
+ * @version 5.5.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -174,6 +174,7 @@ foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			'id'       => 'wcj_price_by_user_role_empty_price_' . $role_key,
 			'default'  => 'no',
 			'type'     => 'wcj_number_plus_checkbox_end',
+			'class'	   => 'wcj_multiplier_cls'
 		),
 	) );
 }
