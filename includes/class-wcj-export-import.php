@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @since   2.5.4
  * @author  Pluggabl LLC.
  */
@@ -287,7 +287,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * create_export_tool.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   2.4.8
 	 */
 	function create_export_tool( $tool_id ) {

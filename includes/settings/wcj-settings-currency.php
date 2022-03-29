@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currencies
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */

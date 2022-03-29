@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -27,8 +27,8 @@ class WCJ_Tools {
 	/**
     * wcj_new_desing_dashboard_enqueue.
     *
-    * @version 5.5.6-dev
-    * @since   5.5.6-dev
+    * @version 5.5.6
+    * @since   5.5.6
   	*/
 	  function wcj_new_desing_dashboard_enqueue(){   
 	    $page = isset( $_GET['page'] ) ? $_GET['page'] : "" ;
@@ -59,7 +59,7 @@ class WCJ_Tools {
 	/**
 	 * create_tools_page.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 */
 	function create_tools_page() {
 

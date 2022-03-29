@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -772,7 +772,7 @@ class WCJ_Module {
 	/**
 	 * get_tool_header_html.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   2.3.10
 	 */
 	function get_tool_header_html( $tool_id ) {

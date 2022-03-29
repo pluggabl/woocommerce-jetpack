@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 

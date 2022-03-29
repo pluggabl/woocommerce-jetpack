@@ -192,8 +192,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_vat_func.
 	 *
-	 * @version 5.5.6-dev
-	 * @since   5.5.6-dev
+	 * @version 5.5.6
+	 * @since   5.5.6
 	 */
 
 	function wcj_order_vat_func($attr) {

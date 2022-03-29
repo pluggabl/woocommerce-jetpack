@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - EU Countries VAT Rates
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @since   2.3.10
  * @author  Pluggabl LLC.
  */
@@ -55,7 +55,7 @@ class WCJ_EU_Countries_VAT_Rates_Tool {
 	/**
 	 * create_eu_countries_vat_rates_tool.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   2.3.10
 	 */
 	function create_eu_countries_vat_rates_tool( $header_html ) {

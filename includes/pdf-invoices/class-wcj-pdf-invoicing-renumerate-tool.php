@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Renumerate Tool
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -40,7 +40,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 	/**
 	 * Add Renumerate Invoices tool to WooCommerce menu (the content).
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 */
 	function create_renumerate_invoices_tool() {
 

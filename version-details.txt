@@ -1,4 +1,4 @@
-= 5.5.6-dev 30/03/2022 =
+= 5.5.6 30/03/2022 =
 * Fix - PRODUCTS - Product Addons - Fixed add-on issue with add-on by variation feature.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed IP detection issue with Booster method.
 * WooCommerce 6.3.1 tested

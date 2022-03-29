@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Old Slugs
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -94,7 +94,7 @@ class WCJ_Old_Slugs extends WCJ_Module {
 	/**
 	 * output_old_slugs_tool.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   2.8.0
 	 */
 	function output_old_slugs_tool( $remove_result_html, $multi_table_data, $num_old_slugs, $posts_ids ) {

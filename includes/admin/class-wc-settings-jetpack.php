@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @since   1.0.0
  * @author  Pluggabl LLC.
  */
@@ -58,8 +58,8 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
             * wcj_new_desing_dashboard.
             *
-            * @version 5.5.6-dev
-            * @since   5.5.6-dev
+            * @version 5.5.6
+            * @since   5.5.6
           */
    
           public function wcj_new_desing_dashboard(){   
@@ -77,7 +77,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * create_free_version_notice_about_plus.
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          * @since   5.3.0
          */
         public function create_free_version_notice_about_plus()
@@ -99,7 +99,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * create_free_version_footer_review_notice.
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          * @since   5.3.0
          */
         public function create_free_version_footer_review_notice()
@@ -122,7 +122,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * create_pro_version_footer_review_notice.
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          * @since   5.3.1
          */
         public function create_pro_version_footer_review_notice()
@@ -194,7 +194,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * Output cats
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          */
         public function output_cats_submenu(){
             global $current_section; 
@@ -218,7 +218,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * Output sections (modules) sub menu
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          * @todo    (maybe) for case insensitive sorting: `array_multisort( array_map( 'strtolower', $menu ), $menu );` instead of `asort( $menu );` (see http://php.net/manual/en/function.asort.php)
          */
         public function output_sections_submenu()
@@ -325,7 +325,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * is_dashboard_section.
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          * @since   3.0.0
          */
         public function is_dashboard_section($current_section)
@@ -336,7 +336,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * Output the settings.
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          * @todo    (maybe) admin_notices
          */
         public function output()
@@ -421,7 +421,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
         /**
          * output_dashboard.
          *
-         * @version 5.5.6-dev
+         * @version 5.5.6
          */
         public function output_dashboard($current_section)
         {
@@ -790,7 +790,7 @@ if (!class_exists('WC_Settings_Jetpack')) :
     /**
      * dasboard_menu
      *
-     * @version 5.5.6-dev
+     * @version 5.5.6
      * @return  array
      */
 

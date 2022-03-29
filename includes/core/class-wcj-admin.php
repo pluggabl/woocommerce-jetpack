@@ -73,7 +73,7 @@ class WCJ_Admin {
 	/**
 	 * admin_footer_text
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 */
 	function admin_footer_text( $footer_text ) {
 		if ( isset( $_GET['page'] ) ) {

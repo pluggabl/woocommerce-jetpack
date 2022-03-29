@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -77,7 +77,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * create_import_from_wc_cog_tool.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   2.9.0
 	 */
 	function create_import_from_wc_cog_tool() {

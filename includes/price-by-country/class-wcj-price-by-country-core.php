@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @todo    [dev] check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
@@ -63,7 +63,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Gets currency by country.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   4.1.0
 	 *
 	 * @param $country
@@ -94,7 +94,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * maybe_init_customer_country_by_ip.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   2.9.0
 	 */
 	function maybe_init_customer_country_by_ip() {
@@ -174,7 +174,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * set_default_checkout_country.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   5.3.0
 	 *
 	 * @param $default_country
@@ -195,7 +195,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * handle_wc_points_rewards_settings.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   5.2.0
 	 *
 	 * @param $value
@@ -222,7 +222,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * convert_free_shipping_min_amount.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   5.1.0
 	 *
 	 * @param $option
@@ -358,7 +358,7 @@ class WCJ_Price_by_Country_Core {
 	 *
 	 * @see price-slider.js->init_price_filter()
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   5.1.0
 	 */
 	function add_compatibility_with_price_filter_widget() {
@@ -465,7 +465,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * woocommerce_price_filter_sql.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   5.1.0
 	 *
 	 * @see WC_Widget_Price_Filter::get_filtered_price()
@@ -525,7 +525,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * format_price_after_including_excluding_tax.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   4.4.0
 	 *
 	 * @param $return_price
@@ -575,7 +575,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_grouped.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   2.5.0
 	 */
 	function change_price_grouped( $price, $qty, $_product ) {
@@ -625,7 +625,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
@@ -639,7 +639,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 	 */
 	function get_customer_country_group_id() {
@@ -699,7 +699,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Gets country group id.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @since   4.1.0
 	 * @param   $country
 	 *

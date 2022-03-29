@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @author  Pluggabl LLC.
  */
 
@@ -315,7 +315,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add Renumerate Orders tool to WooCommerce menu (the content).
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 * @todo    restyle
 	 * @todo    add more result info (e.g. number of regenerated orders etc.)
 	 */

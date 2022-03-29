@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 5.5.6-dev
+ * @version 5.5.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -294,7 +294,7 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * output_custom_number.
 	 *
-	 * @version 5.5.6-dev
+	 * @version 5.5.6
 	 */
 	function output_custom_number( $value ) {
 		$type         = 'number';
