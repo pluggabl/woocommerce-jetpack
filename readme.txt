@@ -273,6 +273,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * Fix - PRODUCTS - Related Products - Changed the query for manually related products.
 * Fix - PRODUCTS- Product Tabs - Added WPML compatibility in product tabs Module.
 * Fix - PDF INVOICING & PACKING SLIPS - Removed cron schedule for fonts when module not activated.
+* Feature - PDF INVOICING & PACKING SLIPS - Added Custom message on VAT 0 [wcj_order_vat_func vat_exempt_text='add Custom Text Here'].
 * WooCommerce 6.3.1 tested
 * WordPress 5.9.2 tested
 

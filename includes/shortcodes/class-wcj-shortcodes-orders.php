@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.4.5
+ * @version 5.4.6-dev
  * @author  Pluggabl LLC.
  */
 
@@ -95,6 +95,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_tax_refunded',
 			'wcj_order_total_weight',
 			'wcj_order_total_width',
+			'wcj_order_vat_func'
 		);
 
 		parent::__construct();
@@ -157,6 +158,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		return $modified_atts;
 	}
 
+	
 	/**
 	 * init_atts.
 	 *
@@ -184,6 +186,29 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		return $atts;
+	}
+
+
+	/**
+	 * wcj_order_vat_func.
+	 *
+	 * @version 5.5.6-dev
+	 * @since   5.5.6-dev
+	 */
+
+	function wcj_order_vat_func($attr) {
+		if(isset($attr['vat_exempt_text'])) {
+		$vat_exempt_text = $attr['vat_exempt_text'];
+		$order_id = wcj_get_order_id( $this->the_order );
+		$order = wc_get_order( $order_id );
+			foreach ( $order->get_items() as $item_id => $item ) {
+			 $tax = $item->get_subtotal_tax();
+
+				if( $tax == 0){
+					return  $vat_exempt_text ;
+				}
+			}
+		}
 	}
 
 	/**
