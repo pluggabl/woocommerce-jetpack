@@ -833,24 +833,6 @@ if (!class_exists('WC_Settings_Jetpack')) :
                     <div class="wcj-tit">
                       <h1><?php _e('My Account', 'woocommerce-jetpack');?></h1>
                     </div>
-                    <div class="wcj-no-sub">
-                      <p>
-                        <?php 
-                          _e('License : ', 'woocommerce-jetpack');
-                          $site_key_status = wcj_get_option( 'wcj_site_key_status', false );
-                          if ( isset( $site_key_status['server_response']->status ) && false !== $site_key_status['server_response']->status ) {
-                            ?>
-                              <span><strong><?php _e('License is valid.', 'woocommerce-jetpack');?></strong></span>
-                            <?php
-                          }
-                          else{
-                            ?>
-                            <span><strong><?php _e('No Subscription', 'woocommerce-jetpack');?></strong></span><img src="<?php echo wcj_plugin_url().'/assets/images/Question.png'; ?>">
-                            <?php
-                          }
-                        ?> 
-                      </p>
-                    </div>
                   </div>
                   <div class="wcj-btn-main">
                     <a href="https://booster.io/buy-booster/" class="wcj-button" target="_blank"><?php _e('Get Booster Plus', 'woocommerce-jetpack');?></a>
@@ -866,22 +848,6 @@ if (!class_exists('WC_Settings_Jetpack')) :
                         <li><a target="_blank" href="https://booster.io/docs/dashboard"><?php _e('Dashboard', 'woocommerce-jetpack');?></a></li>
                         <li><a target="_blank" href="https://booster.io/docs/how-to-navigate-through-booster-categories-and-modules-smoothly"><?php _e('Navigating Categories', 'woocommerce-jetpack');?></a></li>
                         <li><a target="_blank" href="https://booster.io/docs/how-to-get-started-with-booster"><?php _e('How to get started with booster', 'woocommerce-jetpack');?></a></li>
-                      </ul>
-                    </div>
-                    <div class="wcj-info-section wcj-box">
-                      <div class="wcj-tit">
-                        <h3><?php _e('License key setup instructions', 'woocommerce-jetpack');?></h3>
-                      </div>
-                      <ul class="wcj-dashboard-info-ul">
-                        <li> <?php _e('Generate license key on', 'woocommerce-jetpack');?> <a target="_blank" href="https://booster.io/my-account/"><?php _e('Booster.io/my-account', 'woocommerce-jetpack');?></a> </li>
-                        <ul class="wcj-dashboard-info-ul">
-                          <li><?php _e('Under the Downloads and Keys section, generate the key for your WooCommerce store(Site URL should match the setting from your site)', 'woocommerce-jetpack');?></li>  
-                        </ul>
-                        <li><?php _e('On your website get the Site URL', 'woocommerce-jetpack');?></li>  
-                        <ul class="wcj-dashboard-info-ul">
-                          <li><?php _e('Go to  WooCommerce --> Settings --> Booster --> Dashboard --> Site key setting Copy the Site URL', 'woocommerce-jetpack');?></li>  
-                        </ul>
-                        <li><?php _e('Configure Booster key on your website', 'woocommerce-jetpack');?></li>  
                       </ul>
                     </div>
                     <div class="wcj-faq-section wcj-box">
