@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 5.4.8
+ * @version 5.5.7-dev
  * @since   2.2.2
  * @author  Pluggabl LLC.
  */
@@ -217,7 +217,7 @@ if (!class_exists('WCJ_Payment_Gateways_Fees')) :
 		/**
 		 * gateways_fees.
 		 *
-		 * @version 5.4.8
+		 * @version 5.5.7-dev
 		 */
 		function gateways_fees()
 		{
@@ -253,7 +253,7 @@ if (!class_exists('WCJ_Payment_Gateways_Fees')) :
 							$final_fee_to_add = $fee_value;
 							break;
 						case 'percent':
-							$final_fee_to_add = ($fee_value / 100) * $total_in_cart;
+							$final_fee_to_add = $total_in_cart * 100/(100-$fee_value) - $total_in_cart;
 							if ('yes' === $this->wcj_get_option('round', $current_gateway)) {
 								$final_fee_to_add = round($final_fee_to_add, $this->wcj_get_option('round_precision', $current_gateway));
 							}
