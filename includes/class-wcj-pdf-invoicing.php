@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.4.9
+ * @version 5.5.7-dev
  * @author  Pluggabl LLC.
  */
 
@@ -154,7 +154,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Processes the PDF bulk actions.
 	 *
-	 * @version 4.5.0
+	 * @version 5.5.7-dev
 	 * @since   2.5.7
 	 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 	 *
@@ -183,6 +183,28 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		switch( $the_action ) {
 			case 'generate':
 				$generated = 0;
+
+				if ('yes' === get_option('wcj_invoicing_desc_order_sequence')) {
+ 
+                        $invoice_num = array_reverse($post_ids);
+                        foreach ($invoice_num as $post_id) {
+                            if ($this->create_document($post_id, $the_type)) {
+                                $generated++;
+                            }
+                        }
+                        // Build the redirect url
+                        $redirect_to = add_query_arg(
+                            array(
+                                'generated' => $generated,
+                                'generated_type' => $the_type,
+                                'generated_' . $the_type => 1,
+                                'ids' => join(',', $invoice_num),
+                                'post_status' => $_GET['post_status'],
+                            ),
+                            $redirect_to
+                        );
+                }
+
 				foreach( $post_ids as $post_id ) {
 					if ( $this->create_document( $post_id, $the_type ) ) {
 						$generated++;
