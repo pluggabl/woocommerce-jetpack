@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.5.6
+ * @version 5.5.7-dev
  * @author  Pluggabl LLC.
  */
 
@@ -779,7 +779,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price.
 	 *
-	 * @version 4.9.0
+	 * @version 5.5.7-dev
 	 */
 	function change_price( $price, $product ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
@@ -804,6 +804,27 @@ class WCJ_Price_by_Country_Core {
 			}
 			$new_price = wcj_price_by_country( $price, $product, $group_id );
 			WCJ()->modules['price_by_country']->calculated_products_prices[ wcj_get_product_id( $product ) ][ $_current_filter ] = $new_price;
+
+			if(wcj_is_plugin_activated('b2b', 'b2bking.php')){
+
+				$user_id = get_current_user_id();
+				$currentusergroupidnr = get_user_meta($user_id, 'b2bking_customergroup', true );
+				$b2b_price = get_post_meta($product->get_id(), 'b2bking_sale_product_price_group_'.$currentusergroupidnr, true );
+				$b2b_regular_price = get_post_meta($product->get_id(), 'b2bking_regular_product_price_group_'.$currentusergroupidnr, true );
+
+				if('yes'=== get_option('wcj_price_by_country_b2b_sale_price_group','no')){
+
+					if( empty($b2b_price) && !empty($b2b_regular_price) && !$product->is_type( 'variable' ) ){
+
+						$b2b_regular_price = get_post_meta($product->get_id(), 'b2bking_regular_product_price_group_'.$currentusergroupidnr, true );
+						$country_exchange_rate = wcj_get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
+						$modified_price = $b2b_regular_price * $country_exchange_rate;
+
+						return $modified_price;
+					}
+				}
+			}
+			
 			return $new_price;
 		}
 		// No changes
