@@ -168,8 +168,10 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * *Upsells* - Customize upsells products display. Global upsells (Available in paid Booster bundles).
 * *User Products* - Let users add new products from the frontend. Image additional field (Available in paid Booster bundles). Custom Taxonomies (1 allowed in free version).
 * *Product Variation Swatches* - Let users choose product variant from frontend.(Available in paid Booster bundles)
+
 **Cart & Checkout**
 
+* *Cart Anabdoned Reminder* - Send reminder for abandoned cart offering discount to increase conversion.(Available in paid Booster bundles)
 * *Cart Custom Info* - Add custom info to the cart page (1 cart block allowed in free version).
 * *Cart Customization* - Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.
 * *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Available in paid Booster bundles)
@@ -266,6 +268,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 == Changelog ==
 
 = 5.5.7 27/04/2022 =
+
 * NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added new shortcode to show 0 VAT message. [wcj_order_vat_func vat_exempt_text=' ']
 * FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Bulk and auto-generate number sequence issue has been fixed.
 * FIXED - PRICES & CURRENCIES- Prices and Currencies by Country - Added Compatibility of B2B King wholesale prices.
@@ -276,6 +279,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 
 = 5.5.6 30/03/2022 =
+
 * Fix - PRODUCTS - Product Addons - Fixed add-on issue with add-on by variation feature.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed IP detection issue with Booster method.
 * Fix - PRICES & CURRENCIES - Currency - Fixed the input field addition on saving the changes.
@@ -288,6 +292,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * WordPress 5.9.2 tested
 
 = 5.5.4 28/02/2022 =
+
 * Fix - PRODUCTS-Product Addons-Fixed Quantity issue with PHP 8.0
 * Fix - PRICES & CURRENCIES-Global Discount-Fixed issue with showing discounted price on product page for PHP 8.0.
 * Fix - PAYMENT GATEWAYS-Gateways Fees and Discounts-Changed transalation text for WPML.
@@ -296,6 +301,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * WordPress 5.9.1 tested
 
 = 5.5.1 31/01/2022 =
+
 * WooCommerce 6.1.1 tested
 * WordPress 5.9 tested
 
