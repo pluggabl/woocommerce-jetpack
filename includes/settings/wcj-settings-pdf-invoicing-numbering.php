@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Numbering
  *
- * @version 5.4.0
+ * @version 5.5.7
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -57,6 +57,12 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_template',
 			'default'  => '%prefix%%counter%%suffix%',
 			'type'     => 'text',
+		),
+		array(
+			'title' => __( 'Bulk Invoice Number DESC Order', 'woocommerce-jetpack' ),
+			'desc' => 'If you want generate invoice number sequence in DESC order sequence please enable this otherwise leave it uncheck',
+			'id' => 'wcj_invoicing_desc_order_sequence',
+			'type' => 'checkbox',
 		),
 		array(
 			'type'     => 'sectionend',

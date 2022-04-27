@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 5.5.6
+ * @version 5.5.7
  * @author  Pluggabl LLC.
  */
 
@@ -523,11 +523,12 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_new_custom_product_tab_global.
 	 *
-	 * @version 3.4.5
+	 * @version 5.5.7
 	 */
 	function create_new_custom_product_tab_global( $key, $tab ) {
-		echo $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) );
-	}
+        echo $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) );
+    }
+
 
 	/**
 	 * save_custom_tabs_meta_box.

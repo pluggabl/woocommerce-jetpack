@@ -1,5 +1,5 @@
-= 5.5.6 30/03/2022 =
-* Fix - PRODUCTS - Product Addons - Fixed add-on issue with add-on by variation feature.
-* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed IP detection issue with Booster method.
-* WooCommerce 6.3.1 tested
-* WordPress 5.9.2 tested
+= 5.5.7 27/04/2022 =
+* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added new shortcode to show 0 VAT message. [wcj_order_vat_func vat_exempt_text=' ']
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Bulk and auto-generate number sequence issue has been fixed.
+* WooCommerce 6.4.1 tested
+* WordPress 5.9.3 tested
