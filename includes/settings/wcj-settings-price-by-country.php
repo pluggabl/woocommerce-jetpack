@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 5.5.7-dev
+ * @version 5.5.7
  * @since   2.8.1
  * @author  Pluggabl LLC.
  */

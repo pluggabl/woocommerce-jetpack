@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.5.7-dev
+ * @version 5.5.7
  * @author  Pluggabl LLC.
  */
 
@@ -160,7 +160,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_vat_func.
 	 *
-	 * @version 5.5.7-dev
+	 * @version 5.5.7
 	 * @since   5.5.6
 	 */
 

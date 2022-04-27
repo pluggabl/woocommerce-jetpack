@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Numbering
  *
- * @version 5.5.7-dev
+ * @version 5.5.7
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */

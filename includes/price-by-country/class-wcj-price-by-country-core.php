@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.5.7-dev
+ * @version 5.5.7
  * @author  Pluggabl LLC.
  */
 
@@ -779,7 +779,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price.
 	 *
-	 * @version 5.5.7-dev
+	 * @version 5.5.7
 	 */
 	function change_price( $price, $product ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
