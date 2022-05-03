@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.2.0
+ * @version 5.5.8-dev
  * @since   2.7.0
  * @author  Pluggabl LLC.
  */
@@ -49,7 +49,7 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 	/**
 	 * wcj_add_change_price_hooks.
 	 *
-	 * @version 2.7.0
+	 * @version 5.5.8-dev
 	 * @since   2.7.0
 	 * @todo    use `$module_object->price_hooks_priority` instead of passing `$priority` argument
 	 */
@@ -59,6 +59,9 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 		add_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,                     array( $module_object, 'change_price' ),              $priority, 2 );
 		add_filter( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,                  array( $module_object, 'change_price' ),              $priority, 2 );
 		// Variations
+		if ( 'yes' === wcj_get_option( 'wcj_price_by_country_Webtofee_subscription_price_group' , 'no') ) {
+		add_filter( 'hf_subscription_product_price',                  array( $module_object, 'change_price' ),              $priority, 2 );
+		}
 		add_filter( 'woocommerce_variation_prices_price',                  array( $module_object, 'change_price' ),              $priority, 2 );
 		add_filter( 'woocommerce_variation_prices_regular_price',          array( $module_object, 'change_price' ),              $priority, 2 );
 		add_filter( 'woocommerce_variation_prices_sale_price',             array( $module_object, 'change_price' ),              $priority, 2 );
