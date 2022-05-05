@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 5.2.0
+ * @version 5.5.8-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -378,48 +378,80 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/*
 	 * Add item to cart on visit.
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.8-dev
 	 * @todo    (maybe) optionally add product every time page is visited (instead of only once)
 	 */
 	function add_to_cart_on_visit() {
-		if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id = get_the_ID() ) ) {
-			// If "per product" is selected - check product's settings (i.e. meta)
-			if ( 'per_product' === wcj_get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
-				if ( 'yes' !== get_post_meta( $product_id, '_' . 'wcj_add_to_cart_on_visit_enabled', true ) ) {
-					return;
-				}
-			}
-			if ( isset( WC()->cart ) ) {
-				// Check if product already in cart
-				if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
-					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-						$_product = $values['data'];
-						if ( wcj_get_product_id_or_variation_parent_id( $_product ) == $product_id ) {
-							// Product found - do not add it
-							return;
-						}
-					}
-					// Product not found - add it
-					$was_added_to_cart = WC()->cart->add_to_cart( $product_id );
-				} else {
-					// No products in cart - add it
-					$was_added_to_cart = WC()->cart->add_to_cart( $product_id );
-				}
-				// Maybe perform add to cart redirect
-				if ( false !== $was_added_to_cart && (
-					'yes' === wcj_get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ||
-					'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) )
-				) ) {
-					if ( $redirect_url = $this->maybe_redirect_to_url( false, $product_id ) ) {
-						if ( wp_safe_redirect( $redirect_url ) ) {
-							exit;
-						}
-					}
-				}
-			}
+		
+			global $product;
+
+			if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id = get_the_ID() ) ) {
+			
+				$_productId = wc_get_product( get_the_ID() );
+                
+			if( $_productId->is_type('variable') ){
+					 $default_attributes = $_productId->get_default_attributes();
+					
+				foreach($_productId->get_available_variations() as $variation_values ){
+					
+						
+					foreach($variation_values['attributes'] as $key => $attribute_value ){
+
+							
+							$attribute_name = str_replace( 'attribute_', '', $key );
+							$default_value = $_productId->get_variation_default_attribute($attribute_name);	
+						if( $default_value == $attribute_value ){
+				
+						$product_id = $variation_values['variation_id'];
+
+						} else {
+	               
+	                 	$product_id = $product_id;
+								
+	                	}
+	             	}
+				}			
+	    	}
+
+	    if ( 'per_product' === wcj_get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
+	    	if ( 'yes' !== get_post_meta( $product_id, '_' . 'wcj_add_to_cart_on_visit_enabled', true ) ) {
+	    		return;
+	    	}
+	    }
+		    if ( isset( WC()->cart ) ) {
+						// Check if product already in cart
+		    	if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
+		    		foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+		    		$_product = $values['data'];
+		    		
+	                   //OLD CONDITION - if ( wcj_get_product_id_or_variation_parent_id( $_product ) == $product_id ) 
+		    			if ( wcj_get_productId_or_variationId( $_product ) == $product_id ) {
+								//	echo " Product found - do not add it";
+		    				return;
+		    			}
+		    		}
+						//	echo " Product not found - add it ";
+					
+		    		$was_added_to_cart = WC()->cart->add_to_cart( $product_id );
+
+		    	} else {
+						//	echo "No products in cart - add it ";
+		    		$was_added_to_cart = WC()->cart->add_to_cart( $product_id );
+		    	}
+						// Maybe perform add to cart redirect
+		    	if ( false !== $was_added_to_cart && (
+		    		'yes' === wcj_get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ||
+		    		'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) )
+		    	) ) {
+		    		if ( $redirect_url = $this->maybe_redirect_to_url( false, $product_id ) ) {
+		    			if ( wp_safe_redirect( $redirect_url ) ) {
+		    				exit;
+		    			}
+		    		}
+		    	}
+		    }
 		}
 	}
-
 }
 
 endif;

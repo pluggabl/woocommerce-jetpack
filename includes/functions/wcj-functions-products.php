@@ -72,6 +72,27 @@ if ( ! function_exists( 'wcj_is_enabled_for_product' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_productId_or_variationId' ) ) {
+	/**
+	 * wcj_get_productId_or_variationId.
+	 *
+	 * @version 5.5.8-dev
+	 * @since  1.0.0
+	 */
+	function wcj_get_productId_or_variationId( $_product ) {
+		if ( ! $_product || ! is_object( $_product ) ) {
+			return 0;
+		}
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			return $_product->id;
+
+		} else {
+			
+			return $_product->get_id();	
+		}
+	}
+}
+
 if ( ! function_exists( 'wcj_get_product_id' ) ) {
 	/**
 	 * wcj_get_product_id.
