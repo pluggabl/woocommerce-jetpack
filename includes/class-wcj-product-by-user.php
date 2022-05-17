@@ -37,6 +37,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 		add_action( 'init',                   array( $this, 'add_my_products_endpoint' ) );
 		add_action( 'woocommerce_thankyou', array( $this, 'getProductOwnerEmail'), 10, 1 );
 		add_filter( 'woocommerce_email_headers', array( $this,'sendemail_to_productowner_order_place_successfully'), 10, 3 );
+		add_filter( 'woocommerce_email_recipient_no_stock', array( $this,'change_stock_email_recipient'), 10, 2 );
 
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === wcj_get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
@@ -57,6 +58,9 @@ class WCJ_Product_By_User extends WCJ_Module {
 		if ( ! $order_id )
 	        return;
 	    $order = wc_get_order( $order_id );
+	    if ( ! $order ) {
+	        return -1;
+	    }
 
 	    foreach ( $order->get_items() as $item_id => $item ) {
 	    	$productId = $item['product_id'];
@@ -82,6 +86,34 @@ class WCJ_Product_By_User extends WCJ_Module {
 			}
 		}
 		return $headers;
+	}
+
+	/**
+	 * Send Email To Product User at success page when Product is Out Of Stock
+	 *
+	 * @version 5.5.8-dev
+	 * @since 1.0.0
+	 */
+	function change_stock_email_recipient( $recipient, $product ) {
+	    $sendEmailtoUserProduct = get_option( 'wcj_user_product_email_send' );
+	    if($sendEmailtoUserProduct == 'yes') {
+	    	$recipient = $this->get_out_of_stock_email_to_userproduct_recipient( $recipient, $product );
+		}
+		return $recipient;
+	}
+
+	/**
+	 * Get Product User Email at success page for Out Of Stock Product
+	 *
+	 * @version 5.5.8-dev
+	 * @since 1.0.0
+	 */
+	function get_out_of_stock_email_to_userproduct_recipient( $recipient, $product ) {
+	    $productId = $product->id;
+	    $authorId = get_post_field( 'post_author', $productId );
+	    $user = get_user_by( 'ID', $authorId );
+	    $recipient = $user->user_email;
+		return $recipient;
 	}
 
 	/**
