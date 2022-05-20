@@ -120,6 +120,34 @@ if (!function_exists('WCJ')) {
 		return WC_Jetpack::instance();
 	}
 }
+/**
+	 * 
+	 *
+	 * @version 5.5.8-dev
+	 * @since 1.0.0
+	 * @return  Booster_Pro
+	 */		
+/**
+ * This function allows you to track usage of your plugin
+ * Place in your main plugin file
+ * Refer to https://wisdomplugin.com/support for help
+ */
+if( ! class_exists( 'Plugin_Usage_Tracker') ) {
+	require_once dirname( __FILE__ ) . '/tracking/class-plugin-usage-tracker.php';
+}
+if( ! function_exists( 'woocommerce_jetpack_start_plugin_tracking' ) ) {
+	function woocommerce_jetpack_start_plugin_tracking() {
+		$wisdom = new Plugin_Usage_Tracker(
+			__FILE__,
+			'https://boosterio.bigscoots-staging.com',
+			array(),
+			true,
+			true,
+			1
+		);
+	}
+	woocommerce_jetpack_start_plugin_tracking();
+}				
 
 WCJ();
 
