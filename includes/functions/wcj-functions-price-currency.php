@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.5.8-dev
+ * @version 5.5.8
  * @since   2.7.0
  * @author  Pluggabl LLC.
  */
@@ -49,7 +49,7 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 	/**
 	 * wcj_add_change_price_hooks.
 	 *
-	 * @version 5.5.8-dev
+	 * @version 5.5.8
 	 * @since   2.7.0
 	 * @todo    use `$module_object->price_hooks_priority` instead of passing `$priority` argument
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 5.5.8-dev
+ * @version 5.5.8
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -378,7 +378,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/*
 	 * Add item to cart on visit.
 	 *
-	 * @version 5.5.8-dev
+	 * @version 5.5.8
 	 * @todo    (maybe) optionally add product every time page is visited (instead of only once)
 	 */
 	function add_to_cart_on_visit() {

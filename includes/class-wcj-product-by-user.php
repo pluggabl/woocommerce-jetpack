@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 5.5.8-dev
+ * @version 5.5.8
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.5.8-dev
+	 * @version 5.5.8
 	 * @since   2.5.2
 	 * @todo    run `add_my_products_endpoint` only if module is enabled
 	 */
@@ -51,7 +51,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Get Product User Email at success page
 	 *
-	 * @version 5.5.8-dev
+	 * @version 5.5.8
 	 * @since 1.0.0
 	 */
 	function getProductOwnerEmail( $order_id ) {
@@ -74,7 +74,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Send Email To Product User at success page when email send setting enable
 	 *
-	 * @version 5.5.8-dev
+	 * @version 5.5.8
 	 * @since 1.0.0
 	 */
 	function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $order) {
@@ -91,7 +91,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Send Email To Product User at success page when Product is Out Of Stock
 	 *
-	 * @version 5.5.8-dev
+	 * @version 5.5.8
 	 * @since 1.0.0
 	 */
 	function change_stock_email_recipient( $recipient, $product ) {
@@ -105,7 +105,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Get Product User Email at success page for Out Of Stock Product
 	 *
-	 * @version 5.5.8-dev
+	 * @version 5.5.8
 	 * @since 1.0.0
 	 */
 	function get_out_of_stock_email_to_userproduct_recipient( $recipient, $product ) {

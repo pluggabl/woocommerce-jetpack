@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Product by User
  *
- * @version 5.5.8-dev
+ * @version 5.5.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
