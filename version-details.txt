@@ -1,5 +1,6 @@
-= 5.5.7 27/04/2022 =
-* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added new shortcode to show 0 VAT message. [wcj_order_vat_func vat_exempt_text=' ']
-* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Bulk and auto-generate number sequence issue has been fixed.
-* WooCommerce 6.4.1 tested
-* WordPress 5.9.3 tested
+= 5.5.8 25/05/2022 =
+
+* NEW FEATURE - PRODUCTS - User Products - Send an email to the product owner when a product has been sold.
+* NEW FEATURE - PAYMENT GATEWAYS - Gateways Fees and Discounts - Added a new feature to apply Payment Gateways Fees by User role.
+* WooCommerce 6.5.1 tested
+* WordPress 6.0 tested

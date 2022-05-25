@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Product by User
  *
- * @version 2.8.0
+ * @version 5.5.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -172,6 +172,16 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_pro
 		)
 	);
 }
+$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Send Email to Product User', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Check to send email to product user when customer place order successfully', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_user_product_email_send',
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		),
+	)
+);
 $settings = array_merge( $settings, array(
 		array(
 			'type'     => 'sectionend',

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Booster for WooCommerce - Settings - Gateways Fees and Discounts
+ * Booster Elite for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 5.5.4
- * @since   2.8.0
+ * @version 5.5.8
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  */
 
@@ -26,15 +26,15 @@ $settings           = array(
 		'default'           => 'no',
 		'id'                => "wcj_gateways_fees_force_default_payment_gateway",
 	),
+
 	array(
 		'title' => __('Enable klarna Payment Gateway Charge/Discount', 'woocommerce-jetpack'),
 		'desc' => __('Enable', 'woocommerce-jetpack'),
-		'desc_tip' => sprintf(__('If you enable this mode so add Klarna payment gateway charge/discount into your cart total') . '<br />' . __('If you do not have the Klarna plugin installed first<a href="https://wordpress.org/plugins/klarna-payments-for-woocommerce/">Payments</a>', 'woocommerce-jetpack')),
+		'desc_tip' => sprintf(__('If you enable this mode so add Klarna payment gateway charge/discount into your cart total') . '<br />' . __('If you donot have the Klarna plugin installed first<a href="https://wordpress.org/plugins/klarna-payments-for-woocommerce/">Payments</a>', 'woocommerce-jetpack')),
 		'type' => 'checkbox',
 		'default' => 'no',
 		'id' => "wcj_enable_payment_gateway_charge_discount",
 	),
-
 	array(
 		'type'     => 'sectionend',
 		'id'       => "wcj_gateways_fees",
@@ -54,7 +54,7 @@ foreach ($available_gateways as $key => $gateway) {
 			'id'       => "wcj_gateways_fees_text[{$key}]",
 			'default'  => '',
 			'type'     => 'text',
-			'css'      => 'width:100%;',
+			
 		),
 		array(
 			'title'    => __('Fee (or Discount) Type', 'woocommerce-jetpack'),
@@ -75,6 +75,14 @@ foreach ($available_gateways as $key => $gateway) {
 			'type'     => 'number',
 			'custom_attributes' => array('step' => '0.01'),
 		),
+		array(
+            'title' => __('Different Fee/Discount for User Roles', 'woocommerce-jetpack'),
+            'desc' => __('Enable', 'woocommerce-jetpack'),
+            'desc_tip' => __('If you enable this, it will apply different Fees/Discount based on user role.', 'woocommerce-jetpack'),
+            'type' => 'checkbox',
+            'default' => 'no',
+            'id' => "wcj_enable_payment_gateway_charge_discount_userwise[{$key}]",
+        ),
 		array(
 			'title'    => __('Minimum Cart Amount', 'woocommerce-jetpack'),
 			'desc_tip' => __('Minimum cart amount for adding the fee (or discount).', 'woocommerce-jetpack') . ' ' . __('Set 0 to disable.', 'woocommerce-jetpack'),
@@ -162,10 +170,31 @@ foreach ($available_gateways as $key => $gateway) {
 			'desc'     => apply_filters('booster_message', '', 'desc'),
 			'custom_attributes' => apply_filters('booster_message', '', 'disabled'),
 		),
-		array(
+
+	));
+	foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __($role_data['name'], 'woocommerce-jetpack'),
+				'desc_tip' => __('The value. For discount enter a negative number.', 'woocommerce-jetpack'),
+				'id'       => "wcj_gateways_fees_{$role_key}[{$key}]",
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array('step' => '0.01'),
+			),
+			));
+		}
+		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+		$settings = array_merge( $settings, array(
+			array(
 			'type'     => 'sectionend',
 			'id'       => "wcj_gateways_fees_options[{$key}]",
-		),
-	));
+			),
+		));
+
+		}
+			
+		
+	
 }
 return $settings;

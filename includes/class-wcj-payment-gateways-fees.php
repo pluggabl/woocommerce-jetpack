@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 5.5.7
+ * @version 5.5.8
  * @since   2.2.2
  * @author  Pluggabl LLC.
  */
@@ -217,7 +217,7 @@ if (!class_exists('WCJ_Payment_Gateways_Fees')) :
 		/**
 		 * gateways_fees.
 		 *
-		 * @version 5.5.7
+		 * @version 5.5.8
 		 */
 		function gateways_fees()
 		{
@@ -241,7 +241,21 @@ if (!class_exists('WCJ_Payment_Gateways_Fees')) :
 					$woocommerce->cart->cart_contents_total);
 				$total_in_cart += 'no' === $this->wcj_get_option('include_taxes', $current_gateway) ? 0 : $woocommerce->cart->get_subtotal_tax() + $woocommerce->cart->get_shipping_tax();
 				if ('' != $fee_text && $total_in_cart >= $min_cart_amount  && (0 == $max_cart_amount || $total_in_cart <= $max_cart_amount) && $this->check_cart_products($current_gateway)) {
-					$fee_value = $this->wcj_get_option('value', $current_gateway);
+					$enableUserWiseChargeDiscount = wcj_get_option('wcj_enable_payment_gateway_charge_discount_userwise')[$current_gateway];
+                    if($enableUserWiseChargeDiscount == 'yes'){
+                        if ( is_user_logged_in() ) {
+                            global $current_user;
+                            $user_role = $current_user->roles[0];              
+                        }else{
+                            $user_role = 'guest';
+                        }
+                        $additionalDiscountbyUser = wcj_get_option('wcj_gateways_fees_'.$user_role)[$current_gateway];
+                        if($additionalDiscountbyUser){
+                            $fee_value = $additionalDiscountbyUser;
+                        }
+                    }else{
+                        $fee_value = $this->wcj_get_option('value', $current_gateway);
+                    }
 					$fee_type  = $this->wcj_get_option('type', $current_gateway);
 					$final_fee_to_add = 0;
 					switch ($fee_type) {

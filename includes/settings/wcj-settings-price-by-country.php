@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 5.5.7
+ * @version 5.5.8
  * @since   2.8.1
  * @author  Pluggabl LLC.
  */
@@ -169,14 +169,19 @@ $settings = array(
 		'id'       => 'wcj_price_by_country_compatibility',
 	),
 	array(
+		'title' => __('Active Webtofee subscription Section', 'woocommerce-jetpack'),
+		'desc' => __( 'Compatibility with Webtofee subscription PLugin', 'woocommerce-jetpack' ),
+		'id' => 'wcj_price_by_country_Webtofee_subscription_price_group',
+		'default' => 'no',
+		'type' => 'checkbox',
+	),
+	array(
 		'title' => __('Active B2B Plugin Price Section', 'woocommerce-jetpack'),
 		'desc' => __( 'Active B2B Plugin Price Section', 'woocommerce-jetpack' ),
 		'id' => 'wcj_price_by_country_b2b_sale_price_group',
 		'default' => 'no',
 		'type' => 'checkbox',
 	),
-
-
     array(
         'title' => __('Disable Quick Edit Product For Admin Scope', 'woocommerce-jetpack'),
         'desc' => __('Disable For Admin Quick Edit Scope.', 'woocommerce-jetpack'),

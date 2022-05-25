@@ -2,9 +2,9 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 5.9.3
+Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 5.5.7
+Stable tag: 5.5.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -107,6 +107,11 @@ If you are not completely satisfied with paid Booster bundles, you can request a
 To unlock all Booster for WooCommerce features, please install additional paid Booster bundles(https://booster.io/buy-booster/) plugin.
 
 == Detailed List of Features ==
+
+**Subscription Customization**
+
+* *Subscriptions* - Give customers more control of their subscriptions, Cancellation questionnaire, Change next payment date, Add Products to Existing Subscription, Turn existing one-time products to subscriptions base etc.(Available in paid Booster bundles)
+
 
 **Prices & Currencies**
 
@@ -266,6 +271,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.5.8 25/05/2022 =
+
+* NEW FEATURE - PRODUCTS - User Products - Send an email to the product owner when a product has been sold.
+* NEW FEATURE - PAYMENT GATEWAYS - Gateways Fees and Discounts - Added a new feature to apply Payment Gateways Fees by User role.
+* FIXED - PRICES & CURRENCIES - Prices and Currencies by Country - Added Compatibility with Webtofee subscription Plugin.
+* FIXED - PRICES & CURRENCIES - Wholesale Price - Exclude/Include product issues that have been fixed in the Wholesale Price Module.
+* FIXED - PRODUCTS - Add to Cart - Fixed an issue with default variations add to the cart module.
+* WooCommerce 6.5.1 tested
+* WordPress 6.0 tested
+
 
 = 5.5.7 27/04/2022 =
 

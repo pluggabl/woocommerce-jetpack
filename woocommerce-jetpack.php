@@ -3,13 +3,13 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules. All in one WooCommerce plugin.
-Version: 5.5.7
+Version: 5.5.8
 Author: Pluggabl LLC
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
 Domain Path: /langs
 Copyright: © 2020 Pluggabl LLC.
-WC tested up to: 6.4.1
+WC tested up to: 6.5.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -58,7 +58,7 @@ if (!class_exists('WC_Jetpack')) :
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '5.5.7';
+		public $version = '5.5.8';
 
 		/**
 		 * @var WC_Jetpack The single instance of the class
@@ -120,6 +120,34 @@ if (!function_exists('WCJ')) {
 		return WC_Jetpack::instance();
 	}
 }
+/**
+	 * 
+	 *
+	 * @version 5.5.8
+	 * @since 1.0.0
+	 * @return  Booster_Pro
+	 */		
+/**
+ * This function allows you to track usage of your plugin
+ * Place in your main plugin file
+ * Refer to https://wisdomplugin.com/support for help
+ */
+if( ! class_exists( 'Plugin_Usage_Tracker') ) {
+	require_once dirname( __FILE__ ) . '/tracking/class-plugin-usage-tracker.php';
+}
+if( ! function_exists( 'woocommerce_jetpack_start_plugin_tracking' ) ) {
+	function woocommerce_jetpack_start_plugin_tracking() {
+		$wisdom = new Plugin_Usage_Tracker(
+			__FILE__,
+			'https://boosterio.bigscoots-staging.com',
+			array(),
+			true,
+			true,
+			1
+		);
+	}
+	woocommerce_jetpack_start_plugin_tracking();
+}				
 
 WCJ();
 
