@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @since   3.2.2
  * @author  Pluggabl LLC.
  */
@@ -131,7 +131,7 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * get_custom_statuses_table.
 	 *
-	 * @version 3.6.0
+	 * @version 5.5.9
 	 * @since   3.2.2
 	 */
 	function get_custom_statuses_table() {
@@ -157,11 +157,11 @@ class WCJ_Order_Statuses_Tool {
 				$icon_data       = $this->module->get_status_icon_data( substr( $status, 3 ) );
 				$color_html      = '<input disabled type="color" value="' . $icon_data['color'] . '">';
 				$text_color_html = '<input disabled type="color" value="' . $icon_data['text_color'] . '">';
-				$delete_button   = '<a class="button-primary" href="' . add_query_arg( 'delete', $status, remove_query_arg( 'edit' ) ) .
+				$delete_button   = '<a class="button-primary" href="' .  esc_url(add_query_arg( 'delete', $status, remove_query_arg( 'edit' ) )) .
 					'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
 				$edit_button     = '<a class="button-primary"' . ( '' != apply_filters( 'booster_message', '', 'desc' ) ?
 					' disabled title="' . __( 'Get Booster Plus to enable.', 'woocommerce-jetpack' ) . '"' :
-					' href="' . add_query_arg( 'edit', $status, remove_query_arg( 'delete' ) ) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
+					' href="' .  esc_url(add_query_arg( 'edit', $status, remove_query_arg( 'delete' ) )) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
 				$row = array_merge( $row, array(
 					$icon_data['content'],
 					$color_html,
@@ -261,11 +261,11 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * get_delete_all_custom_statuses_button.
 	 *
-	 * @version 3.2.2
+	 * @version 5.5.9
 	 * @since   3.2.2
 	 */
 	function get_delete_all_custom_statuses_button() {
-		return '<p>' . '<a class="button-primary" href="' . add_query_arg( 'delete_all', '1', remove_query_arg( array( 'edit', 'delete' ) ) ) .
+		return '<p>' . '<a class="button-primary" href="' .  esc_url(add_query_arg( 'delete_all', '1', remove_query_arg( array( 'edit', 'delete' ) ) )) .
 			'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete All Custom Statuses', 'woocommerce-jetpack' ) . '</a>' .
 		'</p>';
 	}

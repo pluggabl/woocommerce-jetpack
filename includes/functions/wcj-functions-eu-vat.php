@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - EU VAT
  *
- * @version 5.1.0
+ * @version 5.5.9
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -13,17 +13,17 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	/**
 	 * wcj_validate_vat_no_soap.
 	 *
-	 * @version 5.1.0
+	 * @version 5.5.9
 	 * @since   2.5.7
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
 	function wcj_validate_vat_no_soap( $country_code, $vat_number, $method ) {
 		$country_code = strtoupper( $country_code );
-		$api_url = add_query_arg( array(
+		$api_url =  esc_url(add_query_arg( array(
 			'ms'     => $country_code,
 			'vat'    => $vat_number,
 			'locale' => 'en',
-		), 'http://ec.europa.eu/taxation_customs/vies/viesquer.do' );
+		), 'http://ec.europa.eu/taxation_customs/vies/viesquer.do' ));
 		switch ( $method ) {
 			case 'file_get_contents':
 				if ( ini_get( 'allow_url_fopen' ) ) {

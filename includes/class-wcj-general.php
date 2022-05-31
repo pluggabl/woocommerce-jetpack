@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -107,7 +107,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * add_user_role_changer.
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.9
 	 * @since   2.9.0
 	 */
 	function add_user_role_changer( $wp_admin_bar ) {
@@ -129,7 +129,7 @@ class WCJ_General extends WCJ_Module {
 				'parent' => 'booster-user-role-changer',
 				'id'     => 'booster-user-role-changer-role-' . $user_role_key,
 				'title'  => $user_role_name,
-				'href'   => add_query_arg( 'wcj_booster_user_role', $user_role_key ),
+				'href'   =>  esc_url(add_query_arg( 'wcj_booster_user_role', $user_role_key )),
 			);
 			$wp_admin_bar->add_node( $args );
 		}
@@ -175,7 +175,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * create_custom_roles_tool.
 	 *
-	 * @version 5.4.9
+	 * @version 5.5.9
 	 * @since   2.5.3
 	 */
 	function create_custom_roles_tool() {
@@ -222,7 +222,7 @@ class WCJ_General extends WCJ_Module {
 		foreach ( $existing_roles as $role_key => $role_data ) {
 			$delete_html = ( in_array( $role_key, $default_wp_wc_roles ) )
 				? ''
-				: '<a href="' . add_query_arg( 'wcj_delete_role', $role_key ). '"' . wcj_get_js_confirmation() . '>' . __( 'Delete', 'woocommerce-jetpack') . '</a>';
+				: '<a href="' .  esc_url(add_query_arg( 'wcj_delete_role', $role_key )). '"' . wcj_get_js_confirmation() . '>' . __( 'Delete', 'woocommerce-jetpack') . '</a>';
 			$caps = ( ! empty( $custom_roles[ $role_key ]['caps_role'] ) ? $custom_roles[ $role_key ]['caps_role'] : $role_key );
 			$table_data[] = array( $role_key, $role_data['name'], $caps, $delete_html );
 		}

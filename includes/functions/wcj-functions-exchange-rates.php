@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @since   2.7.0
  * @author  Pluggabl LLC.
  */
@@ -192,7 +192,7 @@ if ( ! function_exists( 'wcj_currencyconverterapi_get_exchange_rate' ) ) {
 	/*
 	 * wcj_currencyconverterapi_get_exchange_rate.
 	 *
-	 * @version 4.4.0
+	 * @version 5.5.9
 	 * @since   3.9.0
 	 */
 	function wcj_currencyconverterapi_get_exchange_rate( $currency_from, $currency_to ) {
@@ -200,9 +200,9 @@ if ( ! function_exists( 'wcj_currencyconverterapi_get_exchange_rate' ) ) {
 		$url     = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=y';
 		$api_key = wcj_get_option( 'wcj_currency_exchange_api_key_fccapi' );
 		if ( ! empty( $api_key ) ) {
-			$url = add_query_arg( array(
+			$url =  esc_url(add_query_arg( array(
 				'apiKey' => $api_key
-			), $url );
+			), $url ));
 		}
 		$response = wcj_get_currency_exchange_rates_url_response( $url );
 		if ( $response ) {
@@ -502,7 +502,7 @@ if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' 
 	/*
 	 * wcj_currencyconverterapi_io_get_exchange_rate_average.
 	 *
-	 * @version 4.4.0
+	 * @version 5.5.9
 	 * @since   3.9.0
 	 * @return  false or rate
 	 */
@@ -515,9 +515,9 @@ if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' 
 			$url     = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=ultra&date=' . $range['start_date'] . '&endDate=' . $range['end_date'];
 			$api_key = wcj_get_option( 'wcj_currency_exchange_api_key_fccapi' );
 			if ( ! empty( $api_key ) ) {
-				$url = add_query_arg( array(
+				$url =  esc_url(add_query_arg( array(
 					'apiKey' => $api_key
-				), $url );
+				), $url ));
 			}
 			$response  = wcj_get_currency_exchange_rates_url_response( $url );
 			if ( $response && ! empty( $response->{$pair} ) ) {

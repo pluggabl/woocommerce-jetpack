@@ -2,7 +2,7 @@
 /**
  * This is the class that sends all the data back to the home site
  * It also handles opting in and deactivation
- * @version 1.2.5
+ * @version 5.5.9
  */
 
 // Exit if accessed directly
@@ -858,11 +858,11 @@ if( ! class_exists( 'Plugin_Usage_Tracker') ) {
 					// Option 2 enables a second notice that fires after the user opts in to tracking
 					$yes_args['marketing'] = 'yes';
 				}
-				$url_yes = add_query_arg( $yes_args );
-				$url_no = add_query_arg( array(
+				$url_yes =  esc_url(add_query_arg( $yes_args ));
+				$url_no =  esc_url(add_query_arg( array(
 					'plugin' 		=> $this->plugin_name,
 					'plugin_action'	=> 'no'
-				) );
+				) ));
 
 				// Decide on notice text
 				if( $this->marketing != 1 ) {
@@ -913,14 +913,14 @@ if( ! class_exists( 'Plugin_Usage_Tracker') ) {
 				$plugin = $this->plugin_data();
 				$plugin_name = $plugin['Name'];
 
-				$url_yes = add_query_arg( array(
+				$url_yes =  esc_url(add_query_arg( array(
 					'plugin' 			=> $this->plugin_name,
 					'marketing_optin'	=> 'yes'
-				) );
-				$url_no = add_query_arg( array(
+				) ));
+				$url_no =  esc_url(add_query_arg( array(
 					'plugin' 			=> $this->plugin_name,
 					'marketing_optin'	=> 'no'
-				) );
+				) ));
 
 				$marketing_text = sprintf(
 					__( 'Thank you for opting in to tracking. Would you like to receive occasional news about this %s, including details of new features and special offers?', 'singularity' ),

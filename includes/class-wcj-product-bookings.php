@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 4.6.0
+ * @version 5.5.9
  * @since   2.5.0
  * @author  Pluggabl LLC.
  */
@@ -448,12 +448,12 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_notice_query_var.
 	 *
-	 * @version 2.5.0
+	 * @version 5.5.9
 	 * @since   2.5.0
 	 */
 	function add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_product_bookings_admin_notice' => true ), $location );
+		return  esc_url(add_query_arg( array( 'wcj_product_bookings_admin_notice' => true ), $location ));
 	}
 
 	/**

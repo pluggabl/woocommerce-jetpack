@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.4.5
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -762,7 +762,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_select_link_list.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.9
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_link_list( $atts, $content ) {
@@ -796,7 +796,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 					'%currency_symbol%' => get_woocommerce_currency_symbol( $currency_code ),
 				);
 				$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
-				$the_link = '<a href="' . add_query_arg( 'wcj-currency', $currency_code ) . '">' . $currency_switcher_output . '</a>';
+				$the_link = '<a href="' .  esc_url(add_query_arg( 'wcj-currency', $currency_code )) . '">' . $currency_switcher_output . '</a>';
 				if ( $currency_code != $selected_currency ) {
 					$links[] = $the_link;
 				} else {

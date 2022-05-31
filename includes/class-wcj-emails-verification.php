@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 5.4.4
+ * @version 5.5.9
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -138,18 +138,18 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * prevent_user_login_automatically_after_register.
 	 *
-	 * @version 2.8.0
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 */
 	function prevent_user_login_automatically_after_register( $redirect_to ) {
 		wp_logout();
-		return add_query_arg( 'wcj_activate_account_message', '', $redirect_to );
+		return  esc_url(add_query_arg( 'wcj_activate_account_message', '', $redirect_to ));
 	}
 
 	/**
 	 * check_if_user_email_is_verified.
 	 *
-	 * @version 3.6.0
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 */
 	function check_if_user_email_is_verified( $userdata ) {
@@ -168,7 +168,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 			$error_message = do_shortcode( wcj_get_option( 'wcj_emails_verification_error_message',
 				__( 'Your account has to be activated before you can login. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' )
 			) );
-			$error_message = str_replace( '%resend_verification_url%', add_query_arg( 'wcj_user_id', $userdata->ID, wc_get_page_permalink( 'myaccount' ) ), $error_message );
+			$error_message = str_replace( '%resend_verification_url%',  esc_url(add_query_arg( 'wcj_user_id', $userdata->ID, wc_get_page_permalink( 'myaccount' ) )), $error_message );
 			$userdata = new WP_Error( 'booster_email_verified_error', $error_message );
 		}
 		return $userdata;
@@ -177,7 +177,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * reset_and_mail_activation_link.
 	 *
-	 * @version 5.4.4
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 	 */
@@ -206,7 +206,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * process_email_verification.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 */
 	function process_email_verification() {
@@ -235,7 +235,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 						__( '<strong>Error:</strong> Activation failed, please contact our administrator. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' )
 					)
 				);
-				$_notice = str_replace( '%resend_verification_url%', add_query_arg( 'wcj_user_id', $data['id'], wc_get_page_permalink( 'myaccount' ) ), $_notice );
+				$_notice = str_replace( '%resend_verification_url%',  esc_url(add_query_arg( 'wcj_user_id', $data['id'], wc_get_page_permalink( 'myaccount' ) )), $_notice );
 				wc_add_notice( $_notice, 'error' );
 			} else {
 				$_notice = wcj_get_option( 'wcj_emails_verification_failed_message_no_user_id',

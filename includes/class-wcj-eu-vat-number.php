@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.5.0
+ * @version 5.5.9
  * @since   2.3.9
  * @author  Pluggabl LLC.
  */
@@ -174,7 +174,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 3.3.0
+	 * @version 5.5.9
 	 * @since   2.6.0
 	 */
 	function create_meta_box() {
@@ -232,7 +232,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			),
 		);
 		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
-		echo '<p>' . '<a href="' . add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id ) . '">' .
+		echo '<p>' . '<a href="' .  esc_url(add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id )) . '">' .
 			__( 'Validate VAT and remove taxes', 'woocommerce-jetpack' ) . '</a>' . '</p>';
 	}
 

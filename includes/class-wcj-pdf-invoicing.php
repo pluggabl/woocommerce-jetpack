@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.5.7
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -154,7 +154,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Processes the PDF bulk actions.
 	 *
-	 * @version 5.5.7
+	 * @version 5.5.9
 	 * @since   2.5.7
 	 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 	 *
@@ -193,7 +193,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
                             }
                         }
                         // Build the redirect url
-                        $redirect_to = add_query_arg(
+                        $redirect_to =  esc_url(add_query_arg(
                             array(
                                 'generated' => $generated,
                                 'generated_type' => $the_type,
@@ -202,7 +202,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
                                 'post_status' => $_GET['post_status'],
                             ),
                             $redirect_to
-                        );
+                        ));
                 }
 
 				foreach( $post_ids as $post_id ) {
@@ -211,7 +211,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 					}
 				}
 				// Build the redirect url
-				$redirect_to = add_query_arg(
+				$redirect_to =  esc_url(add_query_arg(
 					array(
 						'generated'              => $generated,
 						'generated_type'         => $the_type,
@@ -220,18 +220,18 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 						'post_status'            => $_GET['post_status'],
 					),
 					$redirect_to
-				);
+				));
 				break;
 			case 'download':
 				if ( '' != ( $result = $this->get_invoices_zip( $the_type, $post_ids ) ) ) {
 					// Build the redirect url
-					$redirect_to = add_query_arg(
+					$redirect_to =  esc_url(add_query_arg(
 						array(
 							'post_status'        => $_GET['post_status'],
 							'wcj_notice'         => $result,
 						),
 						$redirect_to
-					);
+					));
 				}
 				break;
 			case 'merge':
@@ -244,13 +244,13 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				if ( ! empty( $merge_ids ) ) {
 					if ( '' != ( $result = $this->merge_pdfs( $the_type, $merge_ids ) ) ) {
 						// Build the redirect url
-						$redirect_to = add_query_arg(
+						$redirect_to =  esc_url(add_query_arg(
 							array(
 								'post_status'        => $_GET['post_status'],
 								'wcj_notice'         => $result,
 							),
 							$redirect_to
-						);
+						));
 					}
 				}
 				break;

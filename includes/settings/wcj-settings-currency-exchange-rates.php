@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 5.4.0
+ * @version 5.5.9
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)
@@ -41,7 +41,7 @@ $settings = array(
 			'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 		),
 		'desc'     => ( $this->is_enabled() ?
-			$desc . ' ' . '<a href="' . add_query_arg( 'wcj_currency_exchange_rates_update_now', '1' ) . '">' . __( 'Update all rates now', 'woocommerce-jetpack' ) . '</a>' : '' ),
+			$desc . ' ' . '<a href="' .  esc_url(add_query_arg( 'wcj_currency_exchange_rates_update_now', '1' )) . '">' . __( 'Update all rates now', 'woocommerce-jetpack' ) . '</a>' : '' ),
 	),
 	array(
 		'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),

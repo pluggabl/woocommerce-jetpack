@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Sales
  *
- * @version 3.2.4
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -67,7 +67,7 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 3.2.4
+	 * @version 5.5.9
 	 * @since   2.3.0
 	 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
 	 * @todo    display more info for "Parent product deleted" and "Product deleted"
@@ -325,11 +325,11 @@ class WCJ_Reports_Sales {
 
 		$menu = '';
 		$menu .= '<ul class="subsubsub">';
-		$menu .= '<li><a href="' . add_query_arg( 'year', date( 'Y' ) )         . '" class="' .
+		$menu .= '<li><a href="' .  esc_url(add_query_arg( 'year', date( 'Y' ) )  )       . '" class="' .
 			( ( $this->year == date( 'Y' ) ) ? 'current' : '' ) . '">' . date( 'Y' ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 1 ) ) . '" class="' .
+		$menu .= '<li><a href="' .  esc_url(add_query_arg( 'year', ( date( 'Y' ) - 1 ) )) . '" class="' .
 			( ( $this->year == ( date( 'Y' ) - 1 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 1 ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) . '" class="' .
+		$menu .= '<li><a href="' .  esc_url(add_query_arg( 'year', ( date( 'Y' ) - 2 ) )) . '" class="' .
 			( ( $this->year == ( date( 'Y' ) - 2 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 2 ) . '</a></li>';
 		$menu .= '</ul>';
 		$menu .= '<br class="clear">';

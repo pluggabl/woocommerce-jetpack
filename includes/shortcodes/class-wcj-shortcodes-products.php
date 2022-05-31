@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.5.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -245,13 +245,13 @@ if (!class_exists('WCJ_Products_Shortcodes')) :
 		/**
 		 * wcj_product_author_link.
 		 *
-		 * @version 2.6.0
+		 * @version 5.5.9
 		 * @since   2.6.0
 		 */
 		function wcj_product_author_link($atts)
 		{
 			global $post;
-			return add_query_arg('post_type', 'product', get_author_posts_url($post->post_author));
+			return  esc_url(add_query_arg('post_type', 'product', get_author_posts_url($post->post_author)));
 		}
 
 		/**

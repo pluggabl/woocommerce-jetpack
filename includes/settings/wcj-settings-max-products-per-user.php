@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Max Products per User
  *
- * @version 4.2.0
+ * @version 5.5.9
  * @since   3.5.0
  * @author  Pluggabl LLC.
  */
@@ -97,7 +97,7 @@ return array(
 		'default'  => '',
 		'type'     => 'custom_link',
 		'link'     => '<a class="button" href="' .
-			add_query_arg( 'wcj_max_products_per_user_calculate_data', '1', remove_query_arg( 'wcj_max_products_per_user_calculate_data_finished' ) ) . '">' .
+		esc_url(add_query_arg( 'wcj_max_products_per_user_calculate_data', '1', remove_query_arg( 'wcj_max_products_per_user_calculate_data_finished' ) ) ). '">' .
 				__( 'Calculate Data', 'woocommerce-jetpack' ) .
 			'</a>',
 	),

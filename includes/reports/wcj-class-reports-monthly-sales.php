@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 3.6.0
+ * @version 5.5.9
  * @since   2.4.7
  * @author  Pluggabl LLC.
  */
@@ -71,7 +71,7 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_monthly_sales_report.
 	 *
-	 * @version 3.6.0
+	 * @version 5.5.9
 	 * @since   2.4.7
 	 * @todo    (maybe) visible rows selection by admin (as option)
 	 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
@@ -316,11 +316,11 @@ class WCJ_Reports_Monthly_Sales {
 		$menu = '';
 		$menu .= '<p>';
 		$menu .= '<ul class="subsubsub">';
-		$menu .= '<li><a href="' . add_query_arg( 'year', date( 'Y' ) )         . '" class="' .
+		$menu .= '<li><a href="' .  esc_url(add_query_arg( 'year', date( 'Y' ) )  )       . '" class="' .
 			( ( $this->year == date( 'Y' ) ) ? 'current' : '' ) . '">' . date( 'Y' ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 1 ) ) . '" class="' .
+		$menu .= '<li><a href="' .  esc_url(add_query_arg( 'year', ( date( 'Y' ) - 1 ) )) . '" class="' .
 			( ( $this->year == ( date( 'Y' ) - 1 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 1 ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) . '" class="' .
+		$menu .= '<li><a href="' . esc_url(add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) ). '" class="' .
 			( ( $this->year == ( date( 'Y' ) - 2 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 2 ) . '</a> | </li>';
 		$menu .= '</ul>';
 		$menu .= '</p>';

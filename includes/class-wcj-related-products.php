@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -34,7 +34,7 @@ if (!class_exists('WCJ_Related_Products')) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.5.9
 		 */
 		function __construct()
 		{
@@ -46,7 +46,7 @@ if (!class_exists('WCJ_Related_Products')) :
 			$this->link_slug  = 'woocommerce-related-products';
 			$this->extra_desc = sprintf(
 				__('You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack'),
-				add_query_arg('wcj_clear_all_products_transients', 'yes')
+				esc_url(add_query_arg('wcj_clear_all_products_transients', 'yes'))
 			);
 			parent::__construct();
 

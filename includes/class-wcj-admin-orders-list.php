@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -191,7 +191,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * add_shop_order_multiple_statuses_not_completed_link.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.9
 	 * @since   2.5.7
 	 */
 	function add_shop_order_multiple_statuses_not_completed_link( $views ) {
@@ -205,7 +205,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		$all_not_completed_statuses_param    = urlencode( implode( ',', $all_not_completed_statuses ) );
 		$class                               = ( isset( $wp_query->query['post_status'] ) && is_array( $wp_query->query['post_status'] ) && $all_not_completed_statuses === $wp_query->query['post_status'] ) ? 'current' : '';
 		$query_string                        = remove_query_arg( array( 'post_status', 'wcj_admin_filter_statuses' ) );
-		$query_string                        = add_query_arg( 'post_status', $all_not_completed_statuses_param, $query_string );
+		$query_string                        =  esc_url(add_query_arg( 'post_status', $all_not_completed_statuses_param, $query_string ));
 		$views['wcj_statuses_not_completed'] = '<a href="' . esc_url( $query_string ) . '" class="' . esc_attr( $class ) . '">' . __( 'Not Completed', 'woocommerce-jetpack' ) . '</a>';
 		return $views;
 	}

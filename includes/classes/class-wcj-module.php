@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -289,12 +289,12 @@ class WCJ_Module {
 	/**
 	 * validate_value_add_notice_query_var.
 	 *
-	 * @version 2.9.1
+	 * @version 5.5.9
 	 * @since   2.9.1
 	 */
 	function validate_value_add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location );
+		return  esc_url(add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location ));
 	}
 
 	/**
@@ -416,12 +416,12 @@ class WCJ_Module {
 	/**
 	 * add_notice_query_var.
 	 *
-	 * @version 2.5.3
+	 * @version 5.5.9
 	 * @since   2.5.3
 	 */
 	function add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_' . $this->id . '_admin_notice' => true ), $location );
+		return  esc_url(add_query_arg( array( 'wcj_' . $this->id . '_admin_notice' => true ), $location ));
 	}
 
 	/**
@@ -871,7 +871,7 @@ class WCJ_Module {
 	/**
 	 * add_reset_settings_button.
 	 *
-	 * @version 2.5.9
+	 * @version 5.5.9
 	 * @since   2.4.0
 	 */
 	function add_reset_settings_button( $settings ) {
@@ -889,7 +889,7 @@ class WCJ_Module {
 				'id'       => 'wcj_' . $this->id . '_reset_settings',
 				'type'     => 'custom_link',
 				'link'     => '<a onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')" class="button-primary" style="' .
-					$reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+					$reset_button_style . '" href="' .  esc_url(add_query_arg( 'wcj_reset_settings', $this->id )) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 			),
 			array(
 				'type' => 'sectionend',

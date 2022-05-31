@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 4.4.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -366,7 +366,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 4.4.0
+	 * @version 5.5.9
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {
@@ -383,9 +383,9 @@ class WCJ_Product_Input_Fields_Core {
 				$value = maybe_unserialize( $value );
 				if ( isset( $value['name'] ) ) {
 					if ( isset( $value['wcj_uniqid'] ) ) {
-						$value = '<a href="' . add_query_arg( 'wcj_download_file', $_product_id . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' . $value['name'] . '</a>';
+						$value = '<a href="' . esc_url(add_query_arg( 'wcj_download_file', $_product_id . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) ) . '">' . $value['name'] . '</a>';
 					} else {
-						$value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' .$value['name'] . '</a>';
+						$value = '<a href="' .  esc_url(add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) )) . '">' .$value['name'] . '</a>';
 					}
 				}
 			} else {
