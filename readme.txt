@@ -272,7 +272,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
-= 5.5.8 31/05/2022 =
+= 5.5.9 31/05/2022 =
 
 * FIXED - Added Security vulnerability fixes.
 * WooCommerce 6.5.1 tested
