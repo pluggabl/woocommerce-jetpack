@@ -259,14 +259,14 @@ class WCJ_Export_Import extends WCJ_Module {
 		$current_start_date = ( isset( $_GET['start_date'] ) ? $_GET['start_date'] : '' );
 		$current_end_date   = ( isset( $_GET['end_date'] )   ? $_GET['end_date']   : '' );
 		$predefined_ranges = array();
-		$predefined_ranges[] = '<a href="' . add_query_arg( 'range', 'all_time', remove_query_arg( array( 'start_date', 'end_date' ) ) ) . '">' .
+		$predefined_ranges[] = '<a href="' .  esc_url(add_query_arg( 'range', 'all_time', remove_query_arg( array( 'start_date', 'end_date' ) ) )) . '">' .
 			__( 'All time', 'woocommerce-jetpack' ) . '</a>';
 		foreach ( array_merge( wcj_get_reports_standard_ranges(), wcj_get_reports_custom_ranges() ) as $range_id => $range_data ) {
-			$link = add_query_arg( array(
+			$link =  esc_url(add_query_arg( array(
 				'start_date' => $range_data['start_date'],
 				'end_date'   => $range_data['end_date'],
 				'range'      => $range_id,
-			) );
+			) ));
 			$predefined_ranges[] = '<a href="' . $link . '">' . $range_data['title'] . '</a>';
 		}
 		$predefined_ranges = implode( ' | ', $predefined_ranges );

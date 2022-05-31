@@ -146,12 +146,12 @@ class WCJ_Reports_Customers {
 				$result = $result['customer_counter'];
 				$html .= '<tr>';
 				$html .= '<td>' . ++$i . '</td>';
-				$country_code_link = '<a href="' . add_query_arg( array ( 'country' => $country_code ) ) . '">' . $country_code . '</a>';
+				$country_code_link = '<a href="' .  esc_url(add_query_arg( array ( 'country' => $country_code ) )) . '">' . $country_code . '</a>';
 				$html .= ( 2 == strlen( $country_code ) ) ? '<td>' . $country_code_link . '</td>' : '<td>' . $country_code . '</td>' ;
 				$html .= '<td>' . $result . '</td>';
 				$html .= ( 0 != $total_customers ) ? '<td>' . number_format( ( $result / $total_customers ) * 100, 2 ) . '%' . '</td>' : '<td></td>';
 				$country_flag_img = wcj_get_country_flag_by_code( $country_code );
-				$country_flag_img_link = '<a href="' . add_query_arg( array ( 'country' => $country_code ) ) . '">' .
+				$country_flag_img_link = '<a href="' .  esc_url(add_query_arg( array ( 'country' => $country_code ) )) . '">' .
 					$country_flag_img . ' ' . wcj_get_country_name_by_code( $country_code ) . '</a>';
 				$html .= ( 2 == strlen( $country_code ) ) ? '<td>' . $country_flag_img_link . '</td>' : '<td></td>';
 				$html .= '</tr>';

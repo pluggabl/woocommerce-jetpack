@@ -138,8 +138,8 @@ class WCJ_Orders extends WCJ_Module {
 	 * @todo    this will output the link, even if there no prev/next orders available
 	 */
 	function create_orders_navigation_meta_box() {
-		echo '<a href="' . add_query_arg( 'wcj_orders_navigation', 'prev' ) . '">' . '&lt;&lt; ' . __( 'Previous order', 'woocommerce-jetpack' ) . '</a>' .
-			 '<a href="' . add_query_arg( 'wcj_orders_navigation', 'next' ) . '" style="float:right;">' . __( 'Next order', 'woocommerce-jetpack' ) . ' &gt;&gt;' . '</a>';
+		echo '<a href="' .  esc_url(add_query_arg( 'wcj_orders_navigation', 'prev' )) . '">' . '&lt;&lt; ' . __( 'Previous order', 'woocommerce-jetpack' ) . '</a>' .
+			 '<a href="' .  esc_url(add_query_arg( 'wcj_orders_navigation', 'next' )) . '" style="float:right;">' . __( 'Next order', 'woocommerce-jetpack' ) . ' &gt;&gt;' . '</a>';
 	}
 
 	/**
@@ -212,7 +212,7 @@ class WCJ_Orders extends WCJ_Module {
 			$data_store->delete_by_order_id( $post_id );
 			wc_downloadable_product_permissions( $post_id, true );
 		}
-		$redirect_to = add_query_arg( 'wcj_bulk_regenerated_download_permissions', count( $post_ids ), $redirect_to );
+		$redirect_to =  esc_url(add_query_arg( 'wcj_bulk_regenerated_download_permissions', count( $post_ids ), $redirect_to ));
 		return $redirect_to;
 	}
 

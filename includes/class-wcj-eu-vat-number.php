@@ -232,7 +232,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			),
 		);
 		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
-		echo '<p>' . '<a href="' . add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id ) . '">' .
+		echo '<p>' . '<a href="' .  esc_url(add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id )) . '">' .
 			__( 'Validate VAT and remove taxes', 'woocommerce-jetpack' ) . '</a>' . '</p>';
 	}
 

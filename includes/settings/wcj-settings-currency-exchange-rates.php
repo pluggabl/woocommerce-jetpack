@@ -41,7 +41,7 @@ $settings = array(
 			'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 		),
 		'desc'     => ( $this->is_enabled() ?
-			$desc . ' ' . '<a href="' . add_query_arg( 'wcj_currency_exchange_rates_update_now', '1' ) . '">' . __( 'Update all rates now', 'woocommerce-jetpack' ) . '</a>' : '' ),
+			$desc . ' ' . '<a href="' .  esc_url(add_query_arg( 'wcj_currency_exchange_rates_update_now', '1' )) . '">' . __( 'Update all rates now', 'woocommerce-jetpack' ) . '</a>' : '' ),
 	),
 	array(
 		'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),

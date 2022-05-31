@@ -216,7 +216,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 */
 	function add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_product_price_by_user_role_admin_notice' => true ), $location );
+		return  esc_url(add_query_arg( array( 'wcj_product_price_by_user_role_admin_notice' => true ), $location ));
 	}
 
 	/**

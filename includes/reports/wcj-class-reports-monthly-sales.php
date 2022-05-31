@@ -316,11 +316,11 @@ class WCJ_Reports_Monthly_Sales {
 		$menu = '';
 		$menu .= '<p>';
 		$menu .= '<ul class="subsubsub">';
-		$menu .= '<li><a href="' . add_query_arg( 'year', date( 'Y' ) )         . '" class="' .
+		$menu .= '<li><a href="' .  esc_url(add_query_arg( 'year', date( 'Y' ) )  )       . '" class="' .
 			( ( $this->year == date( 'Y' ) ) ? 'current' : '' ) . '">' . date( 'Y' ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 1 ) ) . '" class="' .
+		$menu .= '<li><a href="' .  esc_url(add_query_arg( 'year', ( date( 'Y' ) - 1 ) )) . '" class="' .
 			( ( $this->year == ( date( 'Y' ) - 1 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 1 ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) . '" class="' .
+		$menu .= '<li><a href="' . esc_url(add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) ). '" class="' .
 			( ( $this->year == ( date( 'Y' ) - 2 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 2 ) . '</a> | </li>';
 		$menu .= '</ul>';
 		$menu .= '</p>';

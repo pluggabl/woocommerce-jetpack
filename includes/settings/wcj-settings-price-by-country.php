@@ -195,7 +195,7 @@ $settings = array(
 		'title'             => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
 		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc_tip'          => '<a href="' . add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups' ) ) ) . '">' .
+		'desc_tip'          => '<a href="' .  esc_url(add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups' ) ) ) ). '">' .
 		                       __( 'Recalculate price filter widget and sorting by price product prices.', 'woocommerce-jetpack' ) . '</a>',
 		'id'                => 'wcj_price_by_country_price_filter_widget_support_enabled',
 		'default'           => 'no',

@@ -204,7 +204,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	 */
 	function add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_product_open_price_admin_notice' => true ), $location );
+		return  esc_url(add_query_arg( array( 'wcj_product_open_price_admin_notice' => true ), $location ));
 	}
 
 	/**

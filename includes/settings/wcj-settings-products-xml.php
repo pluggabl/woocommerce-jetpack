@@ -53,7 +53,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_pro
 	if ( $this->is_enabled() ) {
 		$products_xml_cron_desc = '<a class="button" title="' .
 			__( 'If you\'ve made any changes in module\'s settings - don\'t forget to save changes before clicking this button.', 'woocommerce-jetpack' ) . '"' .
-			' href="' . add_query_arg( 'wcj_create_products_xml', $i, remove_query_arg( 'wcj_create_products_xml_result' ) ) . '">' .
+			' href="' .  esc_url(add_query_arg( 'wcj_create_products_xml', $i, remove_query_arg( 'wcj_create_products_xml_result' ) )) . '">' .
 			__( 'Create Now', 'woocommerce-jetpack' ) . '</a>' .
 		wcj_crons_get_next_event_time_message( 'wcj_create_products_xml_cron_time_' . $i );
 	}

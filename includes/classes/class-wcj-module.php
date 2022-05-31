@@ -294,7 +294,7 @@ class WCJ_Module {
 	 */
 	function validate_value_add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location );
+		return  esc_url(add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location ));
 	}
 
 	/**
@@ -421,7 +421,7 @@ class WCJ_Module {
 	 */
 	function add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_' . $this->id . '_admin_notice' => true ), $location );
+		return  esc_url(add_query_arg( array( 'wcj_' . $this->id . '_admin_notice' => true ), $location ));
 	}
 
 	/**
@@ -889,7 +889,7 @@ class WCJ_Module {
 				'id'       => 'wcj_' . $this->id . '_reset_settings',
 				'type'     => 'custom_link',
 				'link'     => '<a onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')" class="button-primary" style="' .
-					$reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+					$reset_button_style . '" href="' .  esc_url(add_query_arg( 'wcj_reset_settings', $this->id )) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 			),
 			array(
 				'type' => 'sectionend',

@@ -114,7 +114,7 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 		}
 		$html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical', ) );
 		if ( 'yes' === wcj_get_option( 'wcj_custom_payment_gateways_input_fields_delete_button', 'no' ) ) {
-			$html .= '<p><a style="color:#a00;" href="' . add_query_arg( 'wcj_delete_payment_gateway_input_fields', $order_id ) . '"' . wcj_get_js_confirmation() . '>' .
+			$html .= '<p><a style="color:#a00;" href="' .  esc_url(add_query_arg( 'wcj_delete_payment_gateway_input_fields', $order_id )) . '"' . wcj_get_js_confirmation() . '>' .
 				__( 'Delete', 'woocommerce-jetpack' ) . '</a></p>';
 		}
 		echo $html;

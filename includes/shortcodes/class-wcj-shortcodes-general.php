@@ -796,7 +796,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 					'%currency_symbol%' => get_woocommerce_currency_symbol( $currency_code ),
 				);
 				$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
-				$the_link = '<a href="' . add_query_arg( 'wcj-currency', $currency_code ) . '">' . $currency_switcher_output . '</a>';
+				$the_link = '<a href="' .  esc_url(add_query_arg( 'wcj-currency', $currency_code )) . '">' . $currency_switcher_output . '</a>';
 				if ( $currency_code != $selected_currency ) {
 					$links[] = $the_link;
 				} else {

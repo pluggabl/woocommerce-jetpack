@@ -74,7 +74,7 @@ class WCJ_Currency_Reports {
 					'parent' => $parent,
 					'id'     => $parent . '_' . $code,
 					'title'  => $code,
-					'href'   => add_query_arg( 'currency', $code ),
+					'href'   =>  esc_url(add_query_arg( 'currency', $code )),
 					'meta'   => array( 'title' => __( 'Show reports only in', 'woocommerce-jetpack' ) . ' ' . $code, ),
 				);
 				$wp_admin_bar->add_node( $args );

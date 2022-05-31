@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			if ( ! isset( $this->custom_pages ) ) {
 				$this->get_custom_pages();
 			}
-			return ( isset( $this->custom_pages[ $endpoint ] ) && empty( $this->custom_pages[ $endpoint ]['endpoint'] ) && ( $myaccount_page_id = wcj_get_option( 'woocommerce_myaccount_page_id' ) ) ? add_query_arg( 'section', $endpoint, get_permalink( $myaccount_page_id ) ) : $url );
+			return ( isset( $this->custom_pages[ $endpoint ] ) && empty( $this->custom_pages[ $endpoint ]['endpoint'] ) && ( $myaccount_page_id = wcj_get_option( 'woocommerce_myaccount_page_id' ) ) ?  esc_url(add_query_arg( 'section', $endpoint, get_permalink( $myaccount_page_id ) )) :  esc_url($url ));
 		}
 
 		/**
