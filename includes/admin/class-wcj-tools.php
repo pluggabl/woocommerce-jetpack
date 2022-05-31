@@ -74,7 +74,7 @@ class WCJ_Tools {
 		$active_tab = ( isset( $_GET['tab'] ) ) ? $_GET['tab'] : 'dashboard';
 		foreach ( $tabs as $tab ) {
 			$is_active = ( $active_tab === $tab['id'] ) ? 'nav-tab-active' : '';
-			$html .= '<a href="' . add_query_arg( array( 'page' => 'wcj-tools', 'tab' => $tab['id'] ), get_admin_url() . 'admin.php' ) . '" class="nav-tab ' . $is_active . '">' . $tab['title'] . '</a>';
+			$html .= '<a href="' .  esc_url(add_query_arg( array( 'page' => 'wcj-tools', 'tab' => $tab['id'] ), get_admin_url() . 'admin.php' )) . '" class="nav-tab ' . $is_active . '">' . $tab['title'] . '</a>';
 		}
 		$html .= '</h2>';
 		echo $html;

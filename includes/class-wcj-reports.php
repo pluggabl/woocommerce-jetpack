@@ -89,12 +89,12 @@ class WCJ_Reports extends WCJ_Module {
 					'parent' => $parent,
 					'id'     => $parent . '_' . $month_num,
 					'title'  => $month_name,
-					'href'   => add_query_arg( array(
+					'href'   =>  esc_url(add_query_arg( array(
 						'range'            => 'custom',
 						'start_date'       => $start_date,
 						'end_date'         => $end_date,
 						'wc_reports_nonce' => $custom_range_nonce,
-					) ),
+					) )),
 					'meta'   => array( 'title' => $month_name ),
 				);
 				$wp_admin_bar->add_node( $node );
@@ -128,12 +128,12 @@ class WCJ_Reports extends WCJ_Module {
 					'parent' => $parent,
 					'id'     => $parent . '_' . $custom_range_id,
 					'title'  => $custom_range['title'],
-					'href'   => add_query_arg( array(
+					'href'   =>  esc_url(add_query_arg( array(
 						'range'            => 'custom',
 						'start_date'       => $custom_range['start_date'],
 						'end_date'         => $custom_range['end_date'],
 						'wc_reports_nonce' => $custom_range_nonce,
-					) ),
+					) )),
 					'meta'   => array( 'title' => $custom_range['title'] ),
 				);
 				$wp_admin_bar->add_node( $node );

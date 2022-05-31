@@ -331,7 +331,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 			}
 		}
 		echo '<p>' .
-			'<a class="button-primary" href="' . add_query_arg( 'wcj_delete_track_users_stats', '1' ) . '" ' .
+			'<a class="button-primary" href="' .  esc_url(add_query_arg( 'wcj_delete_track_users_stats', '1' )) . '" ' .
 				'onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"' .
 			'>' . __( 'Delete all tracking data', 'woocommerce-jetpack' ) . '</a>' .
 		'</p>';
@@ -339,7 +339,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 		$cron_next_schedule = ( '' != ( $_time = wcj_get_option( 'wcj_track_users_cron_time_schedule', '' ) ) ? date( 'Y-m-d H:i:s', $_time ) : '-' );
 		echo '<p>' .
 			sprintf( __( 'Stats generated at %s. Next update is scheduled at %s.', 'woocommerce-jetpack' ), $cron_last_run, $cron_next_schedule ) . ' ' .
-			'<a href="' . add_query_arg( 'wcj_track_users_update_county_stats', '1' ) . '">' . __( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
+			'<a href="' .  esc_url(add_query_arg( 'wcj_track_users_update_county_stats', '1' )) . '">' . __( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
 		'</p>';
 	}
 

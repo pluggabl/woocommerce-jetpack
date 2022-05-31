@@ -360,7 +360,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			if ( 0 != $atts['product_id'] ) {
 				$the_field = ( '' == get_post_thumbnail_id( $atts['product_id'] ) ) ?
 					$new_image_field :
-					'<a href="' . add_query_arg( 'wcj_edit_product_image_delete', $atts['product_id'] ) . '" onclick="return confirm(\'' .
+					'<a href="' .  esc_url(add_query_arg( 'wcj_edit_product_image_delete', $atts['product_id'] ) ). '" onclick="return confirm(\'' .
 						__( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a><br>' .
 						get_the_post_thumbnail( $atts['product_id'], array( 50, 50 ) , array( 'class' => 'alignleft' ) );
 			} else {

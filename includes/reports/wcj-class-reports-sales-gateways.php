@@ -116,7 +116,7 @@ class WCJ_Reports_Product_Sales_Gateways {
 		$menu .= '<ul class="subsubsub">';
 		foreach ( array_merge( wcj_get_reports_standard_ranges(), wcj_get_reports_custom_ranges() ) as $custom_range ) {
 			$menu .= '<li><a ' .
-				'href="' . add_query_arg( array( 'start_date' => $custom_range['start_date'], 'end_date' => $custom_range['end_date'] ) ) . '" ' .
+				'href="' .  esc_url(add_query_arg( array( 'start_date' => $custom_range['start_date'], 'end_date' => $custom_range['end_date'] ) )) . '" ' .
 				'class="' . ( ( $this->start_date == $custom_range['start_date'] && $this->end_date == $custom_range['end_date'] ) ? 'current' : '' ) . '"' .
 			'>' . $custom_range['title'] . '</a> | </li>';
 		}

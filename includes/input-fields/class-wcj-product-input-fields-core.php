@@ -383,9 +383,9 @@ class WCJ_Product_Input_Fields_Core {
 				$value = maybe_unserialize( $value );
 				if ( isset( $value['name'] ) ) {
 					if ( isset( $value['wcj_uniqid'] ) ) {
-						$value = '<a href="' . add_query_arg( 'wcj_download_file', $_product_id . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' . $value['name'] . '</a>';
+						$value = '<a href="' . esc_url(add_query_arg( 'wcj_download_file', $_product_id . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) ) . '">' . $value['name'] . '</a>';
 					} else {
-						$value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' .$value['name'] . '</a>';
+						$value = '<a href="' .  esc_url(add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) )) . '">' .$value['name'] . '</a>';
 					}
 				}
 			} else {

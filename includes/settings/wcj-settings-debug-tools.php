@@ -44,7 +44,7 @@ return array(
 		'id'       => 'wcj_debug_tools_system_info',
 		'default'  => '',
 		'type'     => 'custom_link',
-		'link'     => '<a href="' . add_query_arg( 'wcj_debug', true ) . '">' . __( 'Show extended info', 'woocommerce-jetpack' ) . '</a>' .
+		'link'     => '<a href="' . esc_url( add_query_arg( 'wcj_debug', true ) ). '">' . __( 'Show extended info', 'woocommerce-jetpack' ) . '</a>' .
 			'<pre style="background-color: white; padding: 5px;">' . wcj_get_table_html( $this->get_system_info_table_array(),
 				array( 'columns_styles' => array( 'padding:0;', 'padding:0;' ), 'table_heading_type' => 'vertical' ) ) . '</pre>',
 	),

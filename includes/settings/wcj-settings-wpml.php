@@ -98,7 +98,7 @@ $settings = array(
 		'id'       => 'wcj_' . $this->id . '_module_tools',
 		'type'     => 'custom_link',
 		'link'     => ( $this->is_enabled() ) ?
-			'<code>' . '<a href="' . add_query_arg( 'create_wpml_xml_file', '1' ) . '">' .
+			'<code>' . '<a href="' .  esc_url(add_query_arg( 'create_wpml_xml_file', '1' )) . '">' .
 				__( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</a>' . '</code>' .
 				'<pre>' . $this->notice . '</pre>' :
 			'<code>' . __( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</code>',

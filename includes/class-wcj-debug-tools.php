@@ -53,7 +53,7 @@ class WCJ_Debug_Tools extends WCJ_Module {
 		$the_tools = '';
 		$the_tools .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 		$the_tools .= $this->get_tool_header_html( 'debug_tools' );
-		$the_tools .= '<p><a href="' . add_query_arg( 'wcj_delete_log', '1' ) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a></p>';
+		$the_tools .= '<p><a href="' . esc_url(add_query_arg( 'wcj_delete_log', '1' )) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ). '</a></p>';
 		// Log
 		$the_log = '';
 		$the_log .= '<p style="font-style:italic;color:gray;">' . sprintf( __( 'Now: %s', 'woocommerce-jetpack' ), date( 'Y-m-d H:i:s' ) ) . '</p>';

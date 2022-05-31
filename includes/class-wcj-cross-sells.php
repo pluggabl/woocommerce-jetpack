@@ -82,7 +82,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 				}
 			}
 			if ( ! empty( $product_ids_to_remove ) ) {
-				$url = add_query_arg( array( 'wcj-remove-from-cart' => implode( ',', array_unique( $product_ids_to_remove ) ) ), $url );
+				$url =  esc_url(add_query_arg( array( 'wcj-remove-from-cart' => implode( ',', array_unique( $product_ids_to_remove ) ) ), $url ));
 			}
 		}
 		return $url;
