@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -133,7 +133,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * create_orders_navigation_meta_box.
 	 *
-	 * @version 3.4.0
+	 * @version 5.5.9
 	 * @since   3.4.0
 	 * @todo    this will output the link, even if there no prev/next orders available
 	 */
@@ -198,7 +198,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * handle_bulk_actions_regenerate_download_permissions.
 	 *
-	 * @version 3.2.0
+	 * @version 5.5.9
 	 * @since   3.2.0
 	 * @see     https://make.wordpress.org/core/2016/10/04/custom-bulk-actions/
 	 * @todo    (maybe) "bulk actions" for for WP < 4.7

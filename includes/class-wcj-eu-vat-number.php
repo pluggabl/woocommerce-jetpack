@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.5.0
+ * @version 5.5.9
  * @since   2.3.9
  * @author  Pluggabl LLC.
  */
@@ -174,7 +174,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 3.3.0
+	 * @version 5.5.9
 	 * @since   2.6.0
 	 */
 	function create_meta_box() {

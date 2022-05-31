@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 3.6.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -59,7 +59,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * add_custom_order_reports_ranges_by_month_to_admin_bar.
 	 *
-	 * @version 3.2.4
+	 * @version 5.5.9
 	 * @since   2.2.4
 	 */
 	function add_custom_order_reports_ranges_by_month_to_admin_bar( $wp_admin_bar ) {
@@ -105,7 +105,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * add_custom_order_reports_ranges_to_admin_bar.
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.9
 	 */
 	function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
 		$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );

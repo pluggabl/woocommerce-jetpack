@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -59,7 +59,7 @@ class WCJ_Tools {
 	/**
 	 * create_tools_page.
 	 *
-	 * @version 5.5.6
+	 * @version 5.5.9
 	 */
 	function create_tools_page() {
 

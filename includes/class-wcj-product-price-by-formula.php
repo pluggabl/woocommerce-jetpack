@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 5.4.7
+ * @version 5.5.9
  * @since   2.5.1
  * @author  Pluggabl LLC.
  */
@@ -397,7 +397,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * add_notice_query_var.
 	 *
-	 * @version 2.5.0
+	 * @version 5.5.9
 	 * @since   2.5.0
 	 */
 	function add_notice_query_var( $location ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 2.8.0
+ * @version 5.5.9
  * @since   2.5.0
  * @author  Pluggabl LLC.
  */
@@ -246,7 +246,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_add_new.
 	 *
-	 * @version 2.8.0
+	 * @version 5.5.9
 	 * @since   2.5.0
 	 * @todo    `multipart` only if image
 	 */

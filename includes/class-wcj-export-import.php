@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @since   2.5.4
  * @author  Pluggabl LLC.
  */
@@ -250,7 +250,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_date_fields.
 	 *
-	 * @version 4.4.0
+	 * @version 5.5.9
 	 * @since   3.0.0
 	 * @todo    [dev] maybe make `$dateformat` optional
 	 * @todo    [dev] mark current (i.e. active) link (if exists)
@@ -268,6 +268,7 @@ class WCJ_Export_Import extends WCJ_Module {
 				'range'      => $range_id,
 			) ));
 			$predefined_ranges[] = '<a href="' . $link . '">' . $range_data['title'] . '</a>';
+			
 		}
 		$predefined_ranges = implode( ' | ', $predefined_ranges );
 		$dateformat        = ' dateformat="yy-mm-dd"';

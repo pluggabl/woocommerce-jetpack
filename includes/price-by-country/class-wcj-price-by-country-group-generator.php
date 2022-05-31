@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price By Country - Group Generator
  *
- * @version 3.9.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -64,7 +64,7 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * create_all_countries_groups.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.9
 	 * @todo    add nonce verification
 	 */
 	function create_all_countries_groups() {

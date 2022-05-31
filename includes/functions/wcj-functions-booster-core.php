@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Booster Core
  *
- * @version 4.3.0
+ * @version 5.5.9
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -51,7 +51,7 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 	/**
 	 * Checks if the current request is a WP REST API request.
 	 *
-	 * @version 4.3.0
+	 * @version 5.5.9
 	 * @since   4.3.0
 	 *
 	 * @author  matzeeable

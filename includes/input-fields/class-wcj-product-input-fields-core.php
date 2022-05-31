@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 4.4.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -366,7 +366,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 4.4.0
+	 * @version 5.5.9
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {

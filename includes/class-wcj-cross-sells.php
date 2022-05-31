@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 5.4.9
+ * @version 5.5.9
  * @since   3.5.3
  * @author  Pluggabl LLC.
  */
@@ -66,7 +66,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * replace_with_cross_sells_to_url.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.9
 	 * @since   3.9.0
 	 * @todo    [dev] re-check variable products
 	 */

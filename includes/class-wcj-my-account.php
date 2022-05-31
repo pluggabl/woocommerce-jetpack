@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -214,7 +214,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * set_custom_page_url.
 		 *
-		 * @version 4.8.0
+		 * @version 5.5.9
 		 * @since   4.3.0
 		 * @todo    [dev] (maybe) customizable `section` (e.g. `wcj-section`)
 		 */

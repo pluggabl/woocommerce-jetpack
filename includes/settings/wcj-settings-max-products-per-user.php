@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Max Products per User
  *
- * @version 4.2.0
+ * @version 5.5.9
  * @since   3.5.0
  * @author  Pluggabl LLC.
  */

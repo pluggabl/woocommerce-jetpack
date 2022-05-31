@@ -1,6 +1,5 @@
-= 5.5.8 25/05/2022 =
+= 5.5.8 31/05/2022 =
 
-* NEW FEATURE - PRODUCTS - User Products - Send an email to the product owner when a product has been sold.
-* NEW FEATURE - PAYMENT GATEWAYS - Gateways Fees and Discounts - Added a new feature to apply Payment Gateways Fees by User role.
+* FIXED - Added Security vulnerability fixes.
 * WooCommerce 6.5.1 tested
 * WordPress 6.0 tested

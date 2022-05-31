@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Debug Tools
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @version 4.1.0
  * @author  Pluggabl LLC.
  */
@@ -39,7 +39,7 @@ class WCJ_Debug_Tools extends WCJ_Module {
 	/**
 	 * create_debug_tools_tool.
 	 *
-	 * @version 5.5.6
+	 * @version 5.5.9
 	 */
 	function create_debug_tools_tool() {
 		// Delete log

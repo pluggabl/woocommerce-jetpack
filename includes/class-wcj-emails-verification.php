@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 5.4.4
+ * @version 5.5.9
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -138,7 +138,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * prevent_user_login_automatically_after_register.
 	 *
-	 * @version 2.8.0
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 */
 	function prevent_user_login_automatically_after_register( $redirect_to ) {
@@ -149,7 +149,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * check_if_user_email_is_verified.
 	 *
-	 * @version 3.6.0
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 */
 	function check_if_user_email_is_verified( $userdata ) {
@@ -177,7 +177,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * reset_and_mail_activation_link.
 	 *
-	 * @version 5.4.4
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 	 */
@@ -206,7 +206,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * process_email_verification.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.9
 	 * @since   2.8.0
 	 */
 	function process_email_verification() {

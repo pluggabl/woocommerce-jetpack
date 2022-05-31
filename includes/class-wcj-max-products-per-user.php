@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @since   3.5.0
  * @author  Pluggabl LLC.
  */
@@ -138,7 +138,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * calculate_data.
 	 *
-	 * @version 4.1.0
+	 * @version 5.5.9
 	 * @since   3.5.0
 	 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 	 */

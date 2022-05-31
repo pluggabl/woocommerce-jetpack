@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - EU VAT
  *
- * @version 5.1.0
+ * @version 5.5.9
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -13,7 +13,7 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	/**
 	 * wcj_validate_vat_no_soap.
 	 *
-	 * @version 5.1.0
+	 * @version 5.5.9
 	 * @since   2.5.7
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */

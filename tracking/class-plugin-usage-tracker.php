@@ -2,7 +2,7 @@
 /**
  * This is the class that sends all the data back to the home site
  * It also handles opting in and deactivation
- * @version 1.2.5
+ * @version 5.5.9
  */
 
 // Exit if accessed directly

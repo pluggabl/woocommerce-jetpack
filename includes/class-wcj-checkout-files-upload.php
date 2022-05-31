@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @since   2.4.5
  * @author  Pluggabl LLC.
  */
@@ -104,7 +104,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_to_order_display.
 	 *
-	 * @version 3.8.0
+	 * @version 5.5.9
 	 * @since   2.4.7
 	 * @todo    (maybe) somehow add `%image%` to emails also
 	 */
@@ -227,7 +227,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 3.4.0
+	 * @version 5.5.9
 	 * @since   2.4.5
 	 */
 	function create_file_admin_order_meta_box() {
@@ -708,7 +708,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 4.2.0
+	 * @version 5.5.9
 	 * @since   2.5.0
 	 */
 	function get_the_form( $i, $file_name, $order_id = 0 ) {
