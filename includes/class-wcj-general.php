@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -107,7 +107,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * add_user_role_changer.
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.9
 	 * @since   2.9.0
 	 */
 	function add_user_role_changer( $wp_admin_bar ) {
@@ -175,7 +175,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * create_custom_roles_tool.
 	 *
-	 * @version 5.4.9
+	 * @version 5.5.9
 	 * @since   2.5.3
 	 */
 	function create_custom_roles_tool() {

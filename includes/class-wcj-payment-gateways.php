@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -101,7 +101,7 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * create_custom_payment_gateways_fields_admin_order_meta_box.
 	 *
-	 * @version 3.3.0
+	 * @version 5.5.9
 	 * @since   2.5.2
 	 */
 	function create_custom_payment_gateways_fields_admin_order_meta_box() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - WPML
  *
- * @version 5.1.0
+ * @version 5.5.9
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */

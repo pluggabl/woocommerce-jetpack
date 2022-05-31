@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Products XML
  *
- * @version 3.6.0
+ * @version 5.5.9
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    recheck "URL" in `'wcj_products_xml_file_path_' . $i`

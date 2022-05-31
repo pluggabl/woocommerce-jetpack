@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @since   3.2.4
  * @author  Pluggabl LLC.
  */
@@ -191,7 +191,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * add_shop_order_multiple_statuses_not_completed_link.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.9
 	 * @since   2.5.7
 	 */
 	function add_shop_order_multiple_statuses_not_completed_link( $views ) {

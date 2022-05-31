@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Sales
  *
- * @version 3.2.4
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -67,7 +67,7 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 3.2.4
+	 * @version 5.5.9
 	 * @since   2.3.0
 	 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
 	 * @todo    display more info for "Parent product deleted" and "Product deleted"

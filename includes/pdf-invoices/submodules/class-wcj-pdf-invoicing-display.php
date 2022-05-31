@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 3.9.0
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -114,7 +114,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_admin_actions.
 	 *
-	 * @version 2.7.0
+	 * @version 5.5.9
 	 * @since   2.4.7
 	 */
 	function add_pdf_invoices_admin_actions( $actions, $the_order ) {
@@ -175,7 +175,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Output custom columns for products
 	 *
-	 * @version 2.4.7
+	 * @version 5.5.9
 	 * @param   string $column
 	 */
 	function render_order_columns( $column ) {
@@ -204,7 +204,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_links_to_thankyou_page.
 	 *
-	 * @version 3.6.0
+	 * @version 5.5.9
 	 * @since   3.6.0
 	 * @todo    option to change priority for the hook (probably for all docs at once)
 	 */
@@ -232,7 +232,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_action_links.
 	 *
-	 * @version 2.7.0
+	 * @version 5.5.9
 	 */
 	function add_pdf_invoices_action_links( $actions, $the_order ) {
 		$invoice_types = wcj_get_enabled_invoice_types();

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 5.5.8
+ * @version 5.5.9
  * @since   2.5.2
  * @author  Pluggabl LLC.
  */
@@ -208,7 +208,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * add_my_products_content_my_account_page.
 	 *
-	 * @version 2.8.0
+	 * @version 5.5.9
 	 * @since   2.5.2
 	 */
 	function add_my_products_content_my_account_page() {

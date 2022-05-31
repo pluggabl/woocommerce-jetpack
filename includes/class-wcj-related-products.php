@@ -3,7 +3,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.5.6
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -34,7 +34,7 @@ if (!class_exists('WCJ_Related_Products')) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.5.9
 		 */
 		function __construct()
 		{

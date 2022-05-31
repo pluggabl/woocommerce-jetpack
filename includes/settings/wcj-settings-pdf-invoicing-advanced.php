@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 5.4.0
+ * @version 5.5.9
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) create "Tools (Options)" submodule

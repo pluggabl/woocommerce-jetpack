@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 3.2.4
+ * @version 5.5.9
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -155,7 +155,7 @@ class WCJ_Reports_Product_Sales_Daily {
 	/*
 	 * output_report_header.
 	 *
-	 * @version 2.9.0
+	 * @version 5.5.9
 	 * @since   2.9.0
 	 */
 	function output_report_header() {

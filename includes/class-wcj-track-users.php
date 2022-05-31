@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 5.2.0
+ * @version 5.5.9
  * @since   3.1.3
  * @author  Pluggabl LLC.
  */
@@ -301,7 +301,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	/**
 	 * track_users_by_country_dashboard_widget.
 	 *
-	 * @version 2.9.1
+	 * @version 5.5.9
 	 * @since   2.9.1
 	 * @todo    (maybe) display all info (IP, referer etc.) on country click
 	 * @todo    (maybe) display stats by day and/or month

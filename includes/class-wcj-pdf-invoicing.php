@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.5.7
+ * @version 5.5.9
  * @author  Pluggabl LLC.
  */
 
@@ -154,7 +154,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Processes the PDF bulk actions.
 	 *
-	 * @version 5.5.7
+	 * @version 5.5.9
 	 * @since   2.5.7
 	 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 	 *
