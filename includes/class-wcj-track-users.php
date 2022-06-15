@@ -350,7 +350,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	 * @since   2.9.1
 	 */
 	function enqueue_track_users_script() {
-		wp_enqueue_script(  'wcj-track-users',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-track-users.js', array( 'jquery' ), WCJ()->version, true );
+		wp_enqueue_script(  'wcj-track-users',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-track-users.js', array( 'jquery' ), w_c_j()->version, true );
 		wp_localize_script( 'wcj-track-users', 'track_users_ajax_object', array(
 			'ajax_url'     => admin_url( 'admin-ajax.php' ),
 			'http_referer' => ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : 'N/A' ),

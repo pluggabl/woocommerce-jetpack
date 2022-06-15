@@ -1,11 +1,11 @@
 <?php
 /**
- * This file is part of FPDI
+ * This file is part of FPDI.
  *
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi;
 
@@ -21,129 +21,128 @@ use setasign\Fpdi\PdfParser\Type\PdfNull;
  *
  * @package setasign\Fpdi
  */
-class Fpdi extends FpdfTpl
-{
-    use FpdiTrait;
+class Fpdi extends FpdfTpl {
 
-    /**
-     * FPDI version
-     *
-     * @string
-     */
-    const VERSION = '2.1.1';
+	use FpdiTrait;
 
-    /**
-     * Draws an imported page or a template onto the page or another template.
-     *
-     * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
-     * ratio.
-     *
-     * @param mixed $tpl The template id
-     * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
-     *                           with the keys "x", "y", "width", "height", "adjustPageSize".
-     * @param float|int $y The ordinate of upper-left corner.
-     * @param float|int|null $width The width.
-     * @param float|int|null $height The height.
-     * @param bool $adjustPageSize
-     * @return array The size
-     * @see Fpdi::getTemplateSize()
-     */
-    public function useTemplate($tpl, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false)
-    {
-        if (isset($this->importedPages[$tpl])) {
-            $size = $this->useImportedPage($tpl, $x, $y, $width, $height, $adjustPageSize);
-            if ($this->currentTemplateId !== null) {
-                $this->templates[$this->currentTemplateId]['resources']['templates']['importedPages'][$tpl] = $tpl;
-            }
-            return $size;
-        }
+	/**
+	 * FPDI version
+	 *
+	 * @string
+	 */
+	const VERSION = '2.1.1';
 
-        return parent::useTemplate($tpl, $x, $y, $width, $height, $adjustPageSize);
-    }
+	/**
+	 * Draws an imported page or a template onto the page or another template.
+	 *
+	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
+	 * ratio.
+	 *
+	 * @param mixed           $tpl The template id.
+	 * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
+	 *                           with the keys "x", "y", "width", "height", "adjustPageSize".
+	 * @param float|int       $y The ordinate of upper-left corner.
+	 * @param float|int|null  $width The width.
+	 * @param float|int|null  $height The height.
+	 * @param bool            $adjustPageSize
+	 * @return array The size
+	 * @see Fpdi::getTemplateSize()
+	 */
+	public function useTemplate( $tpl, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false ) {
+		if ( isset( $this->importedPages[ $tpl ] ) ) {
+			$size = $this->useImportedPage( $tpl, $x, $y, $width, $height, $adjustPageSize );
+			if ( null !== $this->currentTemplateId ) {
+				$this->templates[ $this->currentTemplateId ]['resources']['templates']['importedPages'][ $tpl ] = $tpl;
+			}
+			return $size;
+		}
 
-    /**
-     * Get the size of an imported page or template.
-     *
-     * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
-     * ratio.
-     *
-     * @param mixed $tpl The template id
-     * @param float|int|null $width The width.
-     * @param float|int|null $height The height.
-     * @return array|bool An array with following keys: width, height, 0 (=width), 1 (=height), orientation (L or P)
-     */
-    public function getTemplateSize($tpl, $width = null, $height = null)
-    {
-        $size = parent::getTemplateSize($tpl, $width, $height);
-        if ($size === false) {
-            return $this->getImportedPageSize($tpl, $width, $height);
-        }
+		return parent::useTemplate( $tpl, $x, $y, $width, $height, $adjustPageSize );
+	}
 
-        return $size;
-    }
+	/**
+	 * Get the size of an imported page or template.
+	 *
+	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
+	 * ratio.
+	 *
+	 * @param mixed          $tpl The template id.
+	 * @param float|int|null $width The width.
+	 * @param float|int|null $height The height.
+	 * @return array|bool An array with following keys: width, height, 0 (=width), 1 (=height), orientation (L or P)
+	 */
+	public function getTemplateSize( $tpl, $width = null, $height = null ) {
+		$size = parent::getTemplateSize( $tpl, $width, $height );
+		if ( false === $size ) {
+			return $this->getImportedPageSize( $tpl, $width, $height );
+		}
 
-    /**
-     * @inheritdoc
-     * @throws CrossReferenceException
-     * @throws PdfParserException
-     */
-    protected function _putimages()
-    {
-        $this->currentReaderId = null;
-        parent::_putimages();
+		return $size;
+	}
 
-        foreach ($this->importedPages as $key => $pageData) {
-            $this->_newobj();
-            $this->importedPages[$key]['objectNumber'] = $this->n;
-            $this->currentReaderId = $pageData['readerId'];
-            $this->writePdfType($pageData['stream']);
-            $this->_put('endobj');
-        }
+	/**
+	 * Inheritdoc.
+	 *
+	 * @inheritdoc
+	 * @throws CrossReferenceException
+	 * @throws PdfParserException
+	 */
+	protected function _putimages() {
+		$this->currentReaderId = null;
+		parent::_putimages();
 
-        foreach (\array_keys($this->readers) as $readerId) {
-            $parser = $this->getPdfReader($readerId)->getParser();
-            $this->currentReaderId = $readerId;
+		foreach ( $this->importedPages as $key => $pageData ) {
+			$this->_newobj();
+			$this->importedPages[ $key ]['objectNumber'] = $this->n;
+			$this->currentReaderId                       = $pageData['readerId'];
+			$this->writePdfType( $pageData['stream'] );
+			$this->_put( 'endobj' );
+		}
 
-            while (($objectNumber = \array_pop($this->objectsToCopy[$readerId])) !== null) {
-                try {
-                    $object = $parser->getIndirectObject($objectNumber);
+		foreach ( \array_keys( $this->readers ) as $readerId ) {
+			$parser                = $this->getPdfReader( $readerId )->getParser();
+			$this->currentReaderId = $readerId;
 
-                } catch (CrossReferenceException $e) {
-                    if ($e->getCode() === CrossReferenceException::OBJECT_NOT_FOUND) {
-                        $object = PdfIndirectObject::create($objectNumber, 0, new PdfNull());
-                    } else {
-                        throw $e;
-                    }
-                }
+			while ( ( $objectNumber = \array_pop( $this->objectsToCopy[ $readerId ] ) ) !== null ) {
+				try {
+					$object = $parser->getIndirectObject( $objectNumber );
 
-                $this->writePdfType($object);
-            }
-        }
+				} catch ( CrossReferenceException $e ) {
+					if ( $e->getCode() === CrossReferenceException::OBJECT_NOT_FOUND ) {
+						$object = PdfIndirectObject::create( $objectNumber, 0, new PdfNull() );
+					} else {
+						throw $e;
+					}
+				}
 
-        $this->currentReaderId = null;
-    }
+				$this->writePdfType( $object );
+			}
+		}
 
-    /**
-     * @inheritdoc
-     */
-    protected function _putxobjectdict()
-    {
-        foreach ($this->importedPages as $key => $pageData) {
-            $this->_put('/' . $pageData['id'] . ' ' . $pageData['objectNumber'] . ' 0 R');
-        }
+		$this->currentReaderId = null;
+	}
 
-        parent::_putxobjectdict();
-    }
+	/**
+	 * Inheritdoc
+	 *
+	 * @inheritdoc
+	 */
+	protected function _putxobjectdict() {
+		foreach ( $this->importedPages as $key => $pageData ) {
+			$this->_put( '/' . $pageData['id'] . ' ' . $pageData['objectNumber'] . ' 0 R' );
+		}
 
-    /**
-     * @inheritdoc
-     */
-    protected function _put($s, $newLine = true)
-    {
-        if ($newLine) {
-            $this->buffer .= $s . "\n";
-        } else {
-            $this->buffer .= $s;
-        }
-    }
+		parent::_putxobjectdict();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function _put( $s, $newLine = true ) {
+		if ( $newLine ) {
+			$this->buffer .= $s . "\n";
+		} else {
+			$this->buffer .= $s;
+		}
+	}
 }

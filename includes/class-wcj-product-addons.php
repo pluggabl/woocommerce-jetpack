@@ -306,16 +306,16 @@ class WCJ_Product_Addons extends WCJ_Module {
 		if ( 'by_module' === $apply_price_filters ) {
 			$modules_to_apply = wcj_get_option( 'wcj_product_addons_apply_price_filters_by_module', array() );
 			// Multicurrency Product Base Price module
-			if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency_base_price', $modules_to_apply ) ) && WCJ()->modules['multicurrency_base_price']->is_enabled() ) {
-				$price = WCJ()->modules['multicurrency_base_price']->change_price( $price, $product );
+			if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency_base_price', $modules_to_apply ) ) && w_c_j()->modules['multicurrency_base_price']->is_enabled() ) {
+				$price = w_c_j()->modules['multicurrency_base_price']->change_price( $price, $product );
 			}
 			// Multicurrency (Currency Switcher) module
-			if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency',            $modules_to_apply ) ) && WCJ()->modules['multicurrency']->is_enabled() ) {
-				$price = WCJ()->modules['multicurrency']->change_price( $price, $product, array( 'do_save' => false ) );
+			if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency',            $modules_to_apply ) ) && w_c_j()->modules['multicurrency']->is_enabled() ) {
+				$price = w_c_j()->modules['multicurrency']->change_price( $price, $product, array( 'do_save' => false ) );
 			}
 			// Global Discount module
-			if ( ( empty( $modules_to_apply ) || in_array( 'global_discount',          $modules_to_apply ) ) && WCJ()->modules['global_discount']->is_enabled() ) {
-				$price = WCJ()->modules['global_discount']->add_global_discount( $price, $product, 'price' );
+			if ( ( empty( $modules_to_apply ) || in_array( 'global_discount',          $modules_to_apply ) ) && w_c_j()->modules['global_discount']->is_enabled() ) {
+				$price = w_c_j()->modules['global_discount']->add_global_discount( $price, $product, 'price' );
 			}
 		} elseif ( 'yes' === $apply_price_filters ) {
 			$price = apply_filters( WCJ_PRODUCT_GET_PRICE_FILTER, $price, $product );
@@ -390,7 +390,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 			$enable_by_variation = wp_list_pluck( $addons, 'enable_by_variation' );
 			if ( ! empty( $addons ) ) {
 				$is_variable_with_single_price = ( $the_product->is_type( 'variable' ) && ( $the_product->get_variation_price( 'min' ) == $the_product->get_variation_price( 'max' ) ) );
-				wp_enqueue_script( 'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), WCJ()->version, true );
+				wp_enqueue_script( 'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), w_c_j()->version, true );
 				wp_localize_script( 'wcj-product-addons', 'ajax_object', array(
 					'enable_by_variation'           => $enable_by_variation,
 					'ajax_url'                      => admin_url( 'admin-ajax.php' ),

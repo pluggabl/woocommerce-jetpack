@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\CrossReference;
 
@@ -20,154 +20,149 @@ use setasign\Fpdi\PdfParser\StreamReader;
  *
  * @package setasign\Fpdi\PdfParser\CrossReference
  */
-class LineReader extends AbstractReader implements ReaderInterface
-{
-    /**
-     * The object offsets.
-     *
-     * @var array
-     */
-    protected $offsets;
+class LineReader extends AbstractReader implements ReaderInterface {
 
-    /**
-     * LineReader constructor.
-     *
-     * @param PdfParser $parser
-     * @throws CrossReferenceException
-     */
-    public function __construct(PdfParser $parser)
-    {
-        $this->read($this->extract($parser->getStreamReader()));
-        parent::__construct($parser);
-    }
+	/**
+	 * The object offsets.
+	 *
+	 * @var array
+	 */
+	protected $offsets;
 
-    /**
-     * @inheritdoc
-     */
-    public function getOffsetFor($objectNumber)
-    {
-        if (isset($this->offsets[$objectNumber])) {
-            return $this->offsets[$objectNumber][0];
-        }
+	/**
+	 * LineReader constructor.
+	 *
+	 * @param PdfParser $parser
+	 * @throws CrossReferenceException
+	 */
+	public function __construct( PdfParser $parser ) {
+		$this->read( $this->extract( $parser->getStreamReader() ) );
+		parent::__construct( $parser );
+	}
 
-        return false;
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function getOffsetFor( $objectNumber ) {
+		if ( isset( $this->offsets[ $objectNumber ] ) ) {
+			return $this->offsets[ $objectNumber ][0];
+		}
 
-    /**
-     * Get all found offsets.
-     *
-     * @return array
-     */
-    public function getOffsets()
-    {
-        return $this->offsets;
-    }
+		return false;
+	}
 
-    /**
-     * Extracts the cross reference data from the stream reader.
-     *
-     * @param StreamReader $reader
-     * @return string
-     * @throws CrossReferenceException
-     */
-    protected function extract(StreamReader $reader)
-    {
-        $cycles = -1;
-        $bytesPerCycle = 100;
+	/**
+	 * Get all found offsets.
+	 *
+	 * @return array
+	 */
+	public function getOffsets() {
+		return $this->offsets;
+	}
 
-        $reader->reset(null, $bytesPerCycle);
+	/**
+	 * Extracts the cross reference data from the stream reader.
+	 *
+	 * @param StreamReader $reader
+	 * @return string
+	 * @throws CrossReferenceException
+	 */
+	protected function extract( StreamReader $reader ) {
+		$cycles        = -1;
+		$bytesPerCycle = 100;
 
-        while (
-            ($trailerPos = \strpos($reader->getBuffer(false), 'trailer', \max($bytesPerCycle * $cycles++, 0))) === false
-        ) {
-            if ($reader->increaseLength($bytesPerCycle) === false) {
-                break;
-            }
-        }
+		$reader->reset( null, $bytesPerCycle );
 
-        if ($trailerPos === false) {
-            throw new CrossReferenceException(
-                'Unexpected end of cross reference. "trailer"-keyword not found.',
-                CrossReferenceException::NO_TRAILER_FOUND
-            );
-        }
+		while (
+			( $trailerPos = \strpos( $reader->getBuffer( false ), 'trailer', \max( $bytesPerCycle * $cycles++, 0 ) ) ) === false
+		) {
+			if ( $reader->increaseLength( $bytesPerCycle ) === false ) {
+				break;
+			}
+		}
 
-        $xrefContent = \substr($reader->getBuffer(false), 0, $trailerPos);
-        $reader->reset($reader->getPosition() + $trailerPos);
+		if ( $trailerPos === false ) {
+			throw new CrossReferenceException(
+				'Unexpected end of cross reference. "trailer"-keyword not found.',
+				CrossReferenceException::NO_TRAILER_FOUND
+			);
+		}
 
-        return $xrefContent;
-    }
+		$xrefContent = \substr( $reader->getBuffer( false ), 0, $trailerPos );
+		$reader->reset( $reader->getPosition() + $trailerPos );
 
-    /**
-     * Read the cross-reference entries.
-     *
-     * @param string $xrefContent
-     * @throws CrossReferenceException
-     */
-    protected function read($xrefContent)
-    {
-        // get eol markers in the first 100 bytes
-        \preg_match_all("/(\r\n|\n|\r)/", \substr($xrefContent, 0, 100), $m);
+		return $xrefContent;
+	}
 
-        if (\count($m[0]) === 0) {
-            throw new CrossReferenceException(
-                'No data found in cross-reference.',
-                CrossReferenceException::INVALID_DATA
-            );
-        }
+	/**
+	 * Read the cross-reference entries.
+	 *
+	 * @param string $xrefContent
+	 * @throws CrossReferenceException
+	 */
+	protected function read( $xrefContent ) {
+		// get eol markers in the first 100 bytes
+		\preg_match_all( "/(\r\n|\n|\r)/", \substr( $xrefContent, 0, 100 ), $m );
 
-        // count(array_count_values()) is faster then count(array_unique())
-        // @see https://github.com/symfony/symfony/pull/23731
-        // can be reverted for php7.2
-        $differentLineEndings = \count(\array_count_values($m[0]));
-        if ($differentLineEndings > 1) {
-            $lines = \preg_split("/(\r\n|\n|\r)/", $xrefContent, -1, PREG_SPLIT_NO_EMPTY);
-        } else {
-            $lines = \explode($m[0][0], $xrefContent);
-        }
+		if ( \count( $m[0] ) === 0 ) {
+			throw new CrossReferenceException(
+				'No data found in cross-reference.',
+				CrossReferenceException::INVALID_DATA
+			);
+		}
 
-        unset($differentLineEndings, $m);
-        $linesCount = \count($lines);
-        $start = null;
-        $entryCount = 0;
+		// count(array_count_values()) is faster then count(array_unique())
+		// @see https://github.com/symfony/symfony/pull/23731
+		// can be reverted for php7.2
+		$differentLineEndings = \count( \array_count_values( $m[0] ) );
+		if ( $differentLineEndings > 1 ) {
+			$lines = \preg_split( "/(\r\n|\n|\r)/", $xrefContent, -1, PREG_SPLIT_NO_EMPTY );
+		} else {
+			$lines = \explode( $m[0][0], $xrefContent );
+		}
 
-        $offsets = [];
+		unset( $differentLineEndings, $m );
+		$linesCount = \count( $lines );
+		$start      = null;
+		$entryCount = 0;
 
-        /** @noinspection ForeachInvariantsInspection */
-        for ($i = 0; $i < $linesCount; $i++) {
-            $line = \trim($lines[$i]);
-            if ($line) {
-                $pieces = \explode(' ', $line);
+		$offsets = array();
 
-                $c = \count($pieces);
-                switch ($c) {
-                    case 2:
-                        $start = (int) $pieces[0];
-                        $entryCount += (int) $pieces[1];
-                        break;
+		/** @noinspection ForeachInvariantsInspection */
+		for ( $i = 0; $i < $linesCount; $i++ ) {
+			$line = \trim( $lines[ $i ] );
+			if ( $line ) {
+				$pieces = \explode( ' ', $line );
 
-                    /** @noinspection PhpMissingBreakStatementInspection */
-                    case 3:
-                        switch ($pieces[2]) {
-                            case 'n':
-                                $offsets[$start] = [(int) $pieces[0], (int) $pieces[1]];
-                                $start++;
-                                break 2;
-                            case 'f':
-                                $start++;
-                                break 2;
-                        }
-                        // fall through if pieces doesn't match
+				$c = \count( $pieces );
+				switch ( $c ) {
+					case 2:
+						$start       = (int) $pieces[0];
+						$entryCount += (int) $pieces[1];
+						break;
 
-                    default:
-                        throw new CrossReferenceException(
-                            \sprintf('Unexpected data in xref table (%s)', \implode(' ', $pieces)),
-                            CrossReferenceException::INVALID_DATA
-                        );
-                }
-            }
-        }
+					/** @noinspection PhpMissingBreakStatementInspection */
+					case 3:
+						switch ( $pieces[2] ) {
+							case 'n':
+								$offsets[ $start ] = array( (int) $pieces[0], (int) $pieces[1] );
+								$start++;
+								break 2;
+							case 'f':
+								$start++;
+								break 2;
+						}
+						// fall through if pieces doesn't match
 
-        $this->offsets = $offsets;
-    }
+					default:
+						throw new CrossReferenceException(
+							\sprintf( 'Unexpected data in xref table (%s)', \implode( ' ', $pieces ) ),
+							CrossReferenceException::INVALID_DATA
+						);
+				}
+			}
+		}
+
+		$this->offsets = $offsets;
+	}
 }

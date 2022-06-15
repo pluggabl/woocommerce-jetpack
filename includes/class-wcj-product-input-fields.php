@@ -164,7 +164,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * @version 2.9.0
 	 */
 	function register_scripts() {
-		wp_register_script( 'wcj-product-input-fields', wcj_plugin_url() . '/includes/js/wcj-product-input-fields.js', array( 'jquery' ), WCJ()->version, true );
+		wp_register_script( 'wcj-product-input-fields', wcj_plugin_url() . '/includes/js/wcj-product-input-fields.js', array( 'jquery' ), w_c_j()->version, true );
 	}
 
 	/**

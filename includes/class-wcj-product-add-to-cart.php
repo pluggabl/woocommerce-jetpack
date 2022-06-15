@@ -323,7 +323,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 * @since   2.4.8
 	 */
 	function enqueue_variable_add_to_cart_scripts() {
-		wp_enqueue_script( 'wcj-variations', wcj_plugin_url() . '/includes/js/wcj-variations-frontend.js', array( 'jquery' ), WCJ()->version, true );
+		wp_enqueue_script( 'wcj-variations', wcj_plugin_url() . '/includes/js/wcj-variations-frontend.js', array( 'jquery' ), w_c_j()->version, true );
 	}
 
 	/**
@@ -425,7 +425,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 		    		$_product = $values['data'];
 		    		
 	                   //OLD CONDITION - if ( wcj_get_product_id_or_variation_parent_id( $_product ) == $product_id ) 
-		    			if ( wcj_get_productId_or_variationId( $_product ) == $product_id ) {
+		    			if ( wcj_get_product_id_or_variation_id( $_product ) == $product_id ) {
 								//	echo " Product found - do not add it";
 		    				return;
 		    			}

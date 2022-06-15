@@ -5,12 +5,17 @@
  * @version 5.2.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
-
+	/**
+	 * WCJ_Multicurrency_Base_Price.
+	 */
 	class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 		/**
@@ -19,7 +24,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 5.2.0
 		 * @since   2.4.8
 		 */
-		function __construct() {
+		public function __construct() {
 
 			$this->id         = 'multicurrency_base_price';
 			$this->short_desc = __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' );
@@ -30,7 +35,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 
 			if ( $this->is_enabled() ) {
 
-				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 
@@ -41,40 +46,48 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 					wcj_add_change_price_hooks( $this, $this->price_hooks_priority, false );
 				}
 
-				// Compatibility with WooCommerce Price Filter Widget
+				// Compatibility with WooCommerce Price Filter Widget.
 				$this->handle_price_filter_widget_compatibility();
 
-				// Compatibility with WooCommerce Ordering
+				// Compatibility with WooCommerce Ordering.
 				$this->handle_wc_price_sorting();
 			}
 		}
 
 		/**
-		 * handle_wc_ordering.
+		 * Handle_wc_ordering.
 		 *
 		 * @version 5.0.0
 		 * @since   5.0.0
 		 */
-		function handle_wc_price_sorting() {
-			add_filter( 'woocommerce_get_catalog_ordering_args', function ( $args, $orderby, $order ) {
-				if (
+		public function handle_wc_price_sorting() {
+			add_filter(
+				'woocommerce_get_catalog_ordering_args',
+				function ( $args, $orderby, $order ) {
+					if (
 					'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ||
 					is_admin()
-				) {
-					return $args;
-				}
-				add_filter( 'posts_clauses', function ( $args ) use ( $order ) {
-					if ( false === strpos( $args['orderby'], 'wc_product_meta_lookup' ) ) {
+					) {
 						return $args;
 					}
-					$order_sql = 'DESC' === $order ? 'DESC' : 'ASC';
-					global $wpdb;
-					$args['join']    .= " LEFT JOIN {$wpdb->postmeta} AS pm ON ({$wpdb->posts}.ID = pm.post_id and pm.meta_key='_wcj_multicurrency_base_price')";
-					$args['orderby'] = " pm.meta_value + 0 {$order_sql}, wc_product_meta_lookup.product_id {$order_sql} ";
+					add_filter(
+						'posts_clauses',
+						function ( $args ) use ( $order ) {
+							if ( false === strpos( $args['orderby'], 'wc_product_meta_lookup' ) ) {
+								return $args;
+							}
+							$order_sql = 'DESC' === $order ? 'DESC' : 'ASC';
+							global $wpdb;
+							$args['join']   .= " LEFT JOIN {$wpdb->postmeta} AS pm ON ({$wpdb->posts}.ID = pm.post_id and pm.meta_key='_wcj_multicurrency_base_price')";
+							$args['orderby'] = " pm.meta_value + 0 {$order_sql}, wc_product_meta_lookup.product_id {$order_sql} ";
+							return $args;
+						}
+					);
 					return $args;
-				} );
-				return $args;
-			}, 10, 3 );
+				},
+				10,
+				3
+			);
 		}
 
 		/**
@@ -83,7 +96,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 4.8.0
 		 * @since   4.3.1
 		 */
-		function handle_price_filter_widget_compatibility() {
+		public function handle_price_filter_widget_compatibility() {
 			add_action( 'updated_post_meta', array( $this, 'update_base_price_meta_on_price_update' ), 10, 3 );
 			add_action( 'updated_post_meta', array( $this, 'update_base_price_meta_on_base_price_currency_update' ), 10, 3 );
 			add_action( 'added_post_meta', array( $this, 'update_base_price_meta_on_base_price_currency_update' ), 10, 3 );
@@ -95,7 +108,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		}
 
 		/**
-		 * modify_default_price_filter_hook.
+		 * Modify_default_price_filter_hook.
 		 *
 		 * @version 4.8.0
 		 * @since 4.8.0
@@ -104,16 +117,17 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @return mixed
 		 */
-		function modify_default_price_filter_hook( $query ) {
+		public function modify_default_price_filter_hook( $query ) {
+			$nonce = wp_create_nonce();
 			if (
 				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				! isset( $_GET['min_price'] ) ||
-				! isset( $_GET['max_price'] )
+				! isset( $_GET['max_price'] ) && wp_verify_nonce( $nonce )
 			) {
 				return $query;
 			}
 
-			// Remove Price Filter Meta Query
+			// Remove Price Filter Meta Query.
 			$meta_query = $query->get( 'meta_query' );
 			$meta_query = empty( $meta_query ) ? array() : $meta_query;
 			foreach ( $meta_query as $key => $value ) {
@@ -125,20 +139,20 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			}
 			$query->set( 'meta_query', $meta_query );
 
-			// Remove Price Filter Hooks
+			// Remove Price Filter Hooks.
 			wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'price_filter_post_clauses' );
 
-			// Remove Price Filter hooks from "Product Filter for WooCommerce" plugin
+			// Remove Price Filter hooks from "Product Filter for WooCommerce" plugin.
 			if ( class_exists( 'XforWC_Product_Filters_Frontend' ) ) {
 				remove_filter( 'posts_clauses', 'XforWC_Product_Filters_Frontend::price_filter_post_clauses', 10, 2 );
 			}
 
-			// Add Price Filter Hook
+			// Add Price Filter Hook.
 			add_filter( 'posts_clauses', array( $this, 'price_filter_post_clauses' ), 10, 2 );
 		}
 
 		/**
-		 * price_filter_post_clauses.
+		 * Price_filter_post_clauses.
 		 *
 		 * @version 4.8.0
 		 * @since 4.8.0
@@ -150,9 +164,10 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @return mixed
 		 */
-		function price_filter_post_clauses( $args, $wp_query ) {
+		public function price_filter_post_clauses( $args, $wp_query ) {
 			global $wpdb;
-			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ) {
+			$nonce = wp_create_nonce();
+			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) && wp_verify_nonce( $nonce ) ) ) {
 				return $args;
 			}
 			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
@@ -198,7 +213,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @return string
 		 */
-		function change_woocommerce_price_filter_sql($sql){
+		public function change_woocommerce_price_filter_sql( $sql ) {
 			if (
 				is_admin() ||
 				( ! is_shop() && ! is_product_taxonomy() ) ||
@@ -223,20 +238,20 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 					unset( $meta_query[ $key ] );
 				}
 			}
-			$meta_query = new WP_Meta_Query( $meta_query );
-			$tax_query  = new WP_Tax_Query( $tax_query );
+			$meta_query     = new WP_Meta_Query( $meta_query );
+			$tax_query      = new WP_Tax_Query( $tax_query );
 			$meta_query_sql = $meta_query->get_sql( 'post', $wpdb->posts, 'ID' );
 			$tax_query_sql  = $tax_query->get_sql( $wpdb->posts, 'ID' );
-			$sql = "SELECT MIN(FLOOR(IF(pm2.meta_value=1, pm3.meta_value, pm.meta_value))) AS min_price, MAX(CEILING(IF(pm2.meta_value=1, pm3.meta_value, pm.meta_value))) AS max_price FROM {$wpdb->posts}";
-			$sql .= " JOIN {$wpdb->postmeta} as pm ON {$wpdb->posts}.ID = pm.post_id " . $tax_query_sql['join'] . $meta_query_sql['join'];
-			$sql .= " LEFT JOIN {$wpdb->postmeta} as pm2 ON {$wpdb->posts}.ID = pm2.post_id AND pm2.meta_key = '_wcj_multicurrency_base_price_comp_pf' ";
-			$sql .= " LEFT JOIN {$wpdb->postmeta} as pm3 ON {$wpdb->posts}.ID = pm3.post_id AND pm3.meta_key = '_wcj_multicurrency_base_price' ";
-			$sql .= " 	WHERE {$wpdb->posts}.post_type IN ('" . implode( "','", array_map( 'esc_sql', apply_filters( 'woocommerce_price_filter_post_type', array( 'product' ) ) ) ) . "')				
+			$sql            = "SELECT MIN(FLOOR(IF(pm2.meta_value=1, pm3.meta_value, pm.meta_value))) AS min_price, MAX(CEILING(IF(pm2.meta_value=1, pm3.meta_value, pm.meta_value))) AS max_price FROM {$wpdb->posts}";
+			$sql           .= " JOIN {$wpdb->postmeta} as pm ON {$wpdb->posts}.ID = pm.post_id " . $tax_query_sql['join'] . $meta_query_sql['join'];
+			$sql           .= " LEFT JOIN {$wpdb->postmeta} as pm2 ON {$wpdb->posts}.ID = pm2.post_id AND pm2.meta_key = '_wcj_multicurrency_base_price_comp_pf' ";
+			$sql           .= " LEFT JOIN {$wpdb->postmeta} as pm3 ON {$wpdb->posts}.ID = pm3.post_id AND pm3.meta_key = '_wcj_multicurrency_base_price' ";
+			$sql           .= " 	WHERE {$wpdb->posts}.post_type IN ('" . implode( "','", array_map( 'esc_sql', apply_filters( 'woocommerce_price_filter_post_type', array( 'product' ) ) ) ) . "')				
 					AND {$wpdb->posts}.post_status = 'publish'
 					AND pm.meta_key IN ('" . implode( "','", array_map( 'esc_sql', apply_filters( 'woocommerce_price_filter_meta_keys', array( '_price' ) ) ) ) . "')
 					AND pm.meta_value > '' ";
-			$sql .= $tax_query_sql['where'] . $meta_query_sql['where'];
-			$search = WC_Query::get_main_search_query_sql();
+			$sql           .= $tax_query_sql['where'] . $meta_query_sql['where'];
+			$search         = WC_Query::get_main_search_query_sql();
 			if ( $search ) {
 				$sql .= ' AND ' . $search;
 			}
@@ -253,12 +268,13 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @param $object_id
 		 * @param $meta_key
 		 */
-		function update_base_price_meta_on_base_price_currency_update( $meta_id, $object_id, $meta_key ) {
+		public function update_base_price_meta_on_base_price_currency_update( $meta_id, $object_id, $meta_key ) {
+			$product = wc_get_product( $object_id );
 			if (
 				( 'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_wcj_multicurrency_base_price_currency' !== $meta_key ||
-				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
+				! is_a( $product, 'WC_Product' )
 			) {
 				return;
 			}
@@ -275,12 +291,13 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @param $object_id
 		 * @param $meta_key
 		 */
-		function update_base_price_meta_on_price_update( $meta_id, $object_id, $meta_key ){
+		public function update_base_price_meta_on_price_update( $meta_id, $object_id, $meta_key ) {
+			$product = wc_get_product( $object_id );
 			if (
 				( 'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_price' !== $meta_key ||
-				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
+				! is_a( $product, 'WC_Product' )
 			) {
 				return;
 			}
@@ -297,7 +314,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @param $old_value
 		 * @param $option_value
 		 */
-		function update_products_base_price_on_exchange_rate_change( $option_name, $old_value, $option_value ){
+		public function update_products_base_price_on_exchange_rate_change( $option_name, $old_value, $option_value ) {
 			if (
 				( 'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === wcj_get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				false === strpos( $option_name, 'wcj_multicurrency_base_price_exchange_rate_' )
@@ -326,16 +343,17 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @param $meta_key
 		 * @param $meta_value
 		 */
-		function handle_price_filter_compatibility_flag_on_base_price_currency_update( $meta_id, $object_id, $meta_key, $meta_value ) {
+		public function handle_price_filter_compatibility_flag_on_base_price_currency_update( $meta_id, $object_id, $meta_key, $meta_value ) {
+			$product = wc_get_product( $object_id );
 			if (
 				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_wcj_multicurrency_base_price_currency' !== $meta_key ||
-				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
+				! is_a( $product, 'WC_Product' )
 			) {
 				return;
 			}
-			if ( $meta_value === wcj_get_option( 'woocommerce_currency' ) ) {
+			if ( wcj_get_option( 'woocommerce_currency' ) === $meta_value ) {
 				delete_post_meta( $product->get_id(), '_wcj_multicurrency_base_price_comp_pf' );
 			} else {
 				update_post_meta( $product->get_id(), '_wcj_multicurrency_base_price_comp_pf', true );
@@ -353,16 +371,17 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @param $meta_key
 		 * @param $meta_value
 		 */
-		function handle_price_filter_compatibility_flag_on_base_price_update( $meta_id, $object_id, $meta_key, $meta_value ) {
+		public function handle_price_filter_compatibility_flag_on_base_price_update( $meta_id, $object_id, $meta_key, $meta_value ) {
+			$product = wc_get_product( $object_id );
 			if (
 				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_wcj_multicurrency_base_price' !== $meta_key ||
-				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
+				! is_a( $product, 'WC_Product' )
 			) {
 				return;
 			}
-			if ( $meta_value === get_post_meta( $product->get_id(), '_price', true ) ) {
+			if ( get_post_meta( $product->get_id(), '_price', true ) === $meta_value ) {
 				delete_post_meta( $product->get_id(), '_wcj_multicurrency_base_price_comp_pf' );
 			} else {
 				update_post_meta( $product->get_id(), '_wcj_multicurrency_base_price_comp_pf', true );
@@ -380,7 +399,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @return WP_Query
 		 */
-		function get_products_by_base_price_currency( $compare = '=', $currency = '' ) {
+		public function get_products_by_base_price_currency( $compare = '=', $currency = '' ) {
 			if ( empty( $currency ) ) {
 				$currency = wcj_get_option( 'woocommerce_currency' );
 			}
@@ -395,9 +414,9 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 					array(
 						'key'     => '_wcj_multicurrency_base_price_currency',
 						'value'   => $currency,
-						'compare' => $compare
-					)
-				)
+						'compare' => $compare,
+					),
+				),
 			);
 			$query = new WP_Query( $args );
 			return $query;
@@ -410,11 +429,11 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @since   4.3.1
 		 *
 		 * @param $product
-		 * @param null $price
+		 * @param null    $price
 		 *
 		 * @return bool
 		 */
-		function update_wcj_multicurrency_base_price_meta( $product, $price = null ) {
+		public function update_wcj_multicurrency_base_price_meta( $product, $price = null ) {
 			if ( filter_var( $product, FILTER_VALIDATE_INT ) ) {
 				$product = wc_get_product( $product );
 			}
@@ -429,18 +448,18 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		}
 
 		/**
-		 * change_price_grouped.
+		 * Change_price_grouped.
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.0
 		 */
-		function change_price_grouped( $price, $qty, $_product ) {
+		public function change_price_grouped( $price, $qty, $_product ) {
 			if ( $_product->is_type( 'grouped' ) ) {
 				foreach ( $_product->get_children() as $child_id ) {
-					$the_price = get_post_meta( $child_id, '_price', true );
+					$the_price   = get_post_meta( $child_id, '_price', true );
 					$the_product = wc_get_product( $child_id );
-					$the_price = wcj_get_product_display_price( $the_product, $the_price, 1 );
-					if ( $the_price == $price ) {
+					$the_price   = wcj_get_product_display_price( $the_product, $the_price, 1 );
+					if ( $the_price === $price ) {
 						return $this->change_price( $price, $the_product );
 					}
 				}
@@ -449,23 +468,23 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		}
 
 		/**
-		 * change_price.
+		 * Change_price.
 		 *
 		 * @version 2.7.0
 		 * @since   2.4.8
 		 */
-		function change_price( $price, $_product ) {
+		public function change_price( $price, $_product ) {
 			return wcj_price_by_product_base_currency( $price, wcj_get_product_id_or_variation_parent_id( $_product ) );
 		}
 
 		/**
-		 * get_variation_prices_hash.
+		 * Get_variation_prices_hash.
 		 *
 		 * @version 3.5.0
 		 * @since   2.4.8
 		 */
-		function get_variation_prices_hash( $price_hash, $_product, $display ) {
-			$multicurrency_base_price_currency = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_' . 'wcj_multicurrency_base_price_currency', true );
+		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
+			$multicurrency_base_price_currency          = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_wcj_multicurrency_base_price_currency', true );
 			$price_hash['wcj_multicurrency_base_price'] = array(
 				'currency'           => $multicurrency_base_price_currency,
 				'exchange_rate'      => wcj_get_currency_exchange_rate_product_base_currency( $multicurrency_base_price_currency ),
@@ -477,23 +496,25 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		}
 
 		/**
-		 * change_currency_symbol_on_product_edit.
+		 * Change_currency_symbol_on_product_edit.
 		 *
 		 * @version 3.9.0
 		 * @since   2.4.8
 		 */
-		function change_currency_symbol_on_product_edit( $currency_symbol, $currency ) {
+		public function change_currency_symbol_on_product_edit( $currency_symbol, $currency ) {
+			$nonce = wp_create_nonce();
 			if ( is_admin() ) {
 				global $pagenow;
 				if (
-					( 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] ) ||                                          // admin product edit page
-					( ! $this->do_convert_in_back_end && 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) // admin products list
+					( 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] ) || // admin product edit page.
+					( ! $this->do_convert_in_back_end && 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) // admin products list.
+					&& wp_verify_nonce( $nonce )
 				) {
-					$multicurrency_base_price_currency = get_post_meta( get_the_ID(), '_' . 'wcj_multicurrency_base_price_currency', true );
-					if ( '' != $multicurrency_base_price_currency ) {
+					$multicurrency_base_price_currency = get_post_meta( get_the_ID(), '_wcj_multicurrency_base_price_currency', true );
+					if ( '' !== $multicurrency_base_price_currency ) {
 						remove_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 						$return = get_woocommerce_currency_symbol( $multicurrency_base_price_currency );
-						add_filter(    'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
+						add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 						return $return;
 					}
 				}

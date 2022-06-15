@@ -5,13 +5,16 @@
  * @version 3.4.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/functions
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! function_exists( 'wcj_is_plugin_active_simple' ) ) {
 	/**
-	 * wcj_is_plugin_active_simple.
+	 * Wcj_is_plugin_active_simple.
 	 *
 	 * @version 3.4.0
 	 * @since   2.8.0
@@ -19,7 +22,7 @@ if ( ! function_exists( 'wcj_is_plugin_active_simple' ) ) {
 	 */
 	function wcj_is_plugin_active_simple( $plugin ) {
 		return (
-			in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
+			in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ), true ) ||
 			( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
 		);
 	}
@@ -27,7 +30,7 @@ if ( ! function_exists( 'wcj_is_plugin_active_simple' ) ) {
 
 if ( ! function_exists( 'wcj_get_active_plugins' ) ) {
 	/**
-	 * wcj_get_active_plugins.
+	 * Wcj_get_active_plugins.
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
@@ -44,7 +47,7 @@ if ( ! function_exists( 'wcj_get_active_plugins' ) ) {
 
 if ( ! function_exists( 'wcj_is_plugin_active_by_file' ) ) {
 	/**
-	 * wcj_is_plugin_active_by_file.
+	 * Wcj_is_plugin_active_by_file.
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
@@ -63,7 +66,7 @@ if ( ! function_exists( 'wcj_is_plugin_active_by_file' ) ) {
 
 if ( ! function_exists( 'wcj_is_plugin_activated' ) ) {
 	/**
-	 * wcj_is_plugin_activated.
+	 * Wcj_is_plugin_activated.
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
@@ -80,20 +83,20 @@ if ( ! function_exists( 'wcj_is_plugin_activated' ) ) {
 
 if ( ! function_exists( 'wcj_get_option' ) ) {
 	/**
-	 * wcj_get_option.
+	 * Wcj_get_option.
 	 *
 	 * @version 5.3.3
 	 * @since   5.3.3
 	 *
 	 * @param $option_name
-	 * @param null $default
+	 * @param null        $default Get defult null value.
 	 *
 	 * @return  bool
 	 */
 	function wcj_get_option( $option_name, $default = null ) {
-		if ( ! isset( WCJ()->options[ $option_name ] ) ) {
-			WCJ()->options[ $option_name ] = get_option( $option_name, $default );
+		if ( ! isset( w_c_j()->options[ $option_name ] ) ) {
+			w_c_j()->options[ $option_name ] = get_option( $option_name, $default );
 		}
-		return apply_filters( $option_name, WCJ()->options[ $option_name ] );
+		return apply_filters( $option_name, w_c_j()->options[ $option_name ] );
 	}
 }

@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\Type;
 
@@ -14,7 +14,7 @@ namespace setasign\Fpdi\PdfParser\Type;
  *
  * @package setasign\Fpdi\PdfParser\Type
  */
-class PdfNull extends PdfType
-{
-    // empty body
+class PdfNull extends PdfType {
+
+	// empty body
 }

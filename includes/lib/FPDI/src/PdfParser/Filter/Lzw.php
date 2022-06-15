@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\Filter;
 
@@ -14,176 +14,172 @@ namespace setasign\Fpdi\PdfParser\Filter;
  *
  * @package setasign\Fpdi\PdfParser\Filter
  */
-class Lzw implements FilterInterface
-{
-    /**
-     * @var null|string
-     */
-    protected $data;
+class Lzw implements FilterInterface {
 
-    /**
-     * @var array
-     */
-    protected $sTable = [];
+	/**
+	 * @var null|string
+	 */
+	protected $data;
 
-    /**
-     * @var int
-     */
-    protected $dataLength = 0;
+	/**
+	 * @var array
+	 */
+	protected $sTable = array();
 
-    /**
-     * @var int
-     */
-    protected $tIdx;
+	/**
+	 * @var int
+	 */
+	protected $dataLength = 0;
 
-    /**
-     * @var int
-     */
-    protected $bitsToGet = 9;
+	/**
+	 * @var int
+	 */
+	protected $tIdx;
 
-    /**
-     * @var int
-     */
-    protected $bytePointer;
+	/**
+	 * @var int
+	 */
+	protected $bitsToGet = 9;
 
-    /**
-     * @var int
-     */
-    protected $nextData = 0;
+	/**
+	 * @var int
+	 */
+	protected $bytePointer;
 
-    /**
-     * @var int
-     */
-    protected $nextBits = 0;
+	/**
+	 * @var int
+	 */
+	protected $nextData = 0;
 
-    /**
-     * @var array
-     */
-    protected $andTable = [511, 1023, 2047, 4095];
+	/**
+	 * @var int
+	 */
+	protected $nextBits = 0;
 
-    /**
-     * Method to decode LZW compressed data.
-     *
-     * @param string $data The compressed data
-     * @return string The uncompressed data
-     * @throws LzwException
-     */
-    public function decode($data)
-    {
-        if ($data[0] === "\x00" && $data[1] === "\x01") {
-            throw new LzwException(
-                'LZW flavour not supported.',
-                LzwException::LZW_FLAVOUR_NOT_SUPPORTED
-            );
-        }
+	/**
+	 * @var array
+	 */
+	protected $andTable = array( 511, 1023, 2047, 4095 );
 
-        $this->initsTable();
+	/**
+	 * Method to decode LZW compressed data.
+	 *
+	 * @param string $data The compressed data
+	 * @return string The uncompressed data
+	 * @throws LzwException
+	 */
+	public function decode( $data ) {
+		if ( $data[0] === "\x00" && $data[1] === "\x01" ) {
+			throw new LzwException(
+				'LZW flavour not supported.',
+				LzwException::LZW_FLAVOUR_NOT_SUPPORTED
+			);
+		}
 
-        $this->data = $data;
-        $this->dataLength = \strlen($data);
+		$this->initsTable();
 
-        // Initialize pointers
-        $this->bytePointer = 0;
+		$this->data       = $data;
+		$this->dataLength = \strlen( $data );
 
-        $this->nextData = 0;
-        $this->nextBits = 0;
+		// Initialize pointers
+		$this->bytePointer = 0;
 
-        $oldCode = 0;
+		$this->nextData = 0;
+		$this->nextBits = 0;
 
-        $uncompData = '';
+		$oldCode = 0;
 
-        while (($code = $this->getNextCode()) !== 257) {
-            if ($code === 256) {
-                $this->initsTable();
-                $code = $this->getNextCode();
+		$uncompData = '';
 
-                if ($code === 257) {
-                    break;
-                }
+		while ( ( $code = $this->getNextCode() ) !== 257 ) {
+			if ( $code === 256 ) {
+				$this->initsTable();
+				$code = $this->getNextCode();
 
-                $uncompData .= $this->sTable[$code];
-                $oldCode = $code;
+				if ( $code === 257 ) {
+					break;
+				}
 
-            } else {
-                if ($code < $this->tIdx) {
-                    $string = $this->sTable[$code];
-                    $uncompData .= $string;
+				$uncompData .= $this->sTable[ $code ];
+				$oldCode     = $code;
 
-                    $this->addStringToTable($this->sTable[$oldCode], $string[0]);
-                    $oldCode = $code;
-                } else {
-                    $string = $this->sTable[$oldCode];
-                    $string .= $string[0];
-                    $uncompData .= $string;
+			} else {
+				if ( $code < $this->tIdx ) {
+					$string      = $this->sTable[ $code ];
+					$uncompData .= $string;
 
-                    $this->addStringToTable($string);
-                    $oldCode = $code;
-                }
-            }
-        }
+					$this->addStringToTable( $this->sTable[ $oldCode ], $string[0] );
+					$oldCode = $code;
+				} else {
+					$string      = $this->sTable[ $oldCode ];
+					$string     .= $string[0];
+					$uncompData .= $string;
 
-        return $uncompData;
-    }
+					$this->addStringToTable( $string );
+					$oldCode = $code;
+				}
+			}
+		}
 
-    /**
-     * Initialize the string table.
-     */
-    protected function initsTable()
-    {
-        $this->sTable = [];
+		return $uncompData;
+	}
 
-        for ($i = 0; $i < 256; $i++) {
-            $this->sTable[$i] = \chr($i);
-        }
+	/**
+	 * Initialize the string table.
+	 */
+	protected function initsTable() {
+		$this->sTable = array();
 
-        $this->tIdx = 258;
-        $this->bitsToGet = 9;
-    }
+		for ( $i = 0; $i < 256; $i++ ) {
+			$this->sTable[ $i ] = \chr( $i );
+		}
 
-    /**
-     * Add a new string to the string table.
-     *
-     * @param string $oldString
-     * @param string $newString
-     */
-    protected function addStringToTable($oldString, $newString = '')
-    {
-        $string = $oldString . $newString;
+		$this->tIdx      = 258;
+		$this->bitsToGet = 9;
+	}
 
-        // Add this new String to the table
-        $this->sTable[$this->tIdx++] = $string;
+	/**
+	 * Add a new string to the string table.
+	 *
+	 * @param string $oldString
+	 * @param string $newString
+	 */
+	protected function addStringToTable( $oldString, $newString = '' ) {
+		$string = $oldString . $newString;
 
-        if ($this->tIdx === 511) {
-            $this->bitsToGet = 10;
-        } elseif ($this->tIdx === 1023) {
-            $this->bitsToGet = 11;
-        } elseif ($this->tIdx === 2047) {
-            $this->bitsToGet = 12;
-        }
-    }
+		// Add this new String to the table
+		$this->sTable[ $this->tIdx++ ] = $string;
 
-    /**
-     * Returns the next 9, 10, 11 or 12 bits.
-     *
-     * @return integer
-     */
-    protected function getNextCode()
-    {
-        if ($this->bytePointer === $this->dataLength) {
-            return 257;
-        }
+		if ( $this->tIdx === 511 ) {
+			$this->bitsToGet = 10;
+		} elseif ( $this->tIdx === 1023 ) {
+			$this->bitsToGet = 11;
+		} elseif ( $this->tIdx === 2047 ) {
+			$this->bitsToGet = 12;
+		}
+	}
 
-        $this->nextData = ($this->nextData << 8) | (\ord($this->data[$this->bytePointer++]) & 0xff);
-        $this->nextBits += 8;
+	/**
+	 * Returns the next 9, 10, 11 or 12 bits.
+	 *
+	 * @return integer
+	 */
+	protected function getNextCode() {
+		if ( $this->bytePointer === $this->dataLength ) {
+			return 257;
+		}
 
-        if ($this->nextBits < $this->bitsToGet) {
-            $this->nextData = ($this->nextData << 8) | (\ord($this->data[$this->bytePointer++]) & 0xff);
-            $this->nextBits += 8;
-        }
+		$this->nextData  = ( $this->nextData << 8 ) | ( \ord( $this->data[ $this->bytePointer++ ] ) & 0xff );
+		$this->nextBits += 8;
 
-        $code = ($this->nextData >> ($this->nextBits - $this->bitsToGet)) & $this->andTable[$this->bitsToGet - 9];
-        $this->nextBits -= $this->bitsToGet;
+		if ( $this->nextBits < $this->bitsToGet ) {
+			$this->nextData  = ( $this->nextData << 8 ) | ( \ord( $this->data[ $this->bytePointer++ ] ) & 0xff );
+			$this->nextBits += 8;
+		}
 
-        return $code;
-    }
+		$code            = ( $this->nextData >> ( $this->nextBits - $this->bitsToGet ) ) & $this->andTable[ $this->bitsToGet - 9 ];
+		$this->nextBits -= $this->bitsToGet;
+
+		return $code;
+	}
 }

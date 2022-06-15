@@ -5,13 +5,16 @@
  * @version 4.9.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/functions
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! function_exists( 'wcj_get_date_ranges' ) ) {
-	/*
-	 * wcj_get_date_ranges.
+	/**
+	 * Wcj_get_date_ranges.
 	 *
 	 * @version 3.9.0
 	 * @since   3.9.0
@@ -20,21 +23,27 @@ if ( ! function_exists( 'wcj_get_date_ranges' ) ) {
 	function wcj_get_date_ranges( $start_date, $end_date, $period ) {
 			$return      = array();
 			$_start_date = $start_date;
-			$_end_date   = date( 'Y-m-d', strtotime( '+' . ( $period - 1 ) . ' days', strtotime( $_start_date ) ) );
-			if ( strtotime( $_end_date ) > strtotime( $end_date ) ) {
-				$_end_date = $end_date;
-			}
-			$return[] = array( 'start_date' => $_start_date, 'end_date' => $_end_date );
+			$_end_date   = gmdate( 'Y-m-d', strtotime( '+' . ( $period - 1 ) . ' days', strtotime( $_start_date ) ) );
+		if ( strtotime( $_end_date ) > strtotime( $end_date ) ) {
+			$_end_date = $end_date;
+		}
+			$return[] = array(
+				'start_date' => $_start_date,
+				'end_date'   => $_end_date,
+			);
 			while ( strtotime( $_end_date ) < strtotime( $end_date ) ) {
-				$_start_date =  date( 'Y-m-d', strtotime( '+1 day', strtotime( $_end_date ) ) );
+				$_start_date = gmdate( 'Y-m-d', strtotime( '+1 day', strtotime( $_end_date ) ) );
 				if ( strtotime( $_start_date ) > strtotime( $end_date ) ) {
 					$_start_date = $end_date;
 				}
-				$_end_date = date( 'Y-m-d', strtotime( '+' . $period . ' days', strtotime( $_end_date ) ) );
+				$_end_date = gmdate( 'Y-m-d', strtotime( '+' . $period . ' days', strtotime( $_end_date ) ) );
 				if ( strtotime( $_end_date ) > strtotime( $end_date ) ) {
 					$_end_date = $end_date;
 				}
-				$return[] = array( 'start_date' => $_start_date, 'end_date' => $_end_date );
+				$return[] = array(
+					'start_date' => $_start_date,
+					'end_date'   => $_end_date,
+				);
 			}
 			return $return;
 	}
@@ -42,7 +51,7 @@ if ( ! function_exists( 'wcj_get_date_ranges' ) ) {
 
 if ( ! function_exists( 'wcj_check_single_date' ) ) {
 	/**
-	 * wcj_check_single_date.
+	 * Wcj_check_single_date.
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
@@ -65,7 +74,7 @@ if ( ! function_exists( 'wcj_check_single_date' ) ) {
 
 if ( ! function_exists( 'wcj_check_date' ) ) {
 	/**
-	 * wcj_check_date.
+	 * Wcj_check_date.
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
@@ -73,7 +82,7 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 	function wcj_check_date( $_date, $args = array() ) {
 		if ( empty( $args ) ) {
 			$time_now        = current_time( 'timestamp' );
-			$args['day_now'] = intval( date( 'j', $time_now ) );
+			$args['day_now'] = intval( gmdate( 'j', $time_now ) );
 		}
 		$_date = explode( ',', $_date );
 		foreach ( $_date as $_single_date ) {
@@ -87,7 +96,7 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 
 if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
-	 * wcj_check_time_from.
+	 * Wcj_check_time_from.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
@@ -97,7 +106,7 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 		if ( isset( $time_from[0] ) && $args['hours_now'] < $time_from[0] ) {
 			return false;
 		}
-		if ( isset( $time_from[1] ) && $time_from[0] == $args['hours_now'] && $args['minutes_now'] < $time_from[1] ) {
+		if ( isset( $time_from[1] ) && $time_from[0] === $args['hours_now'] && $args['minutes_now'] < $time_from[1] ) {
 			return false;
 		}
 		return true;
@@ -106,7 +115,7 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 
 if ( ! function_exists( 'wcj_check_time_to' ) ) {
 	/**
-	 * wcj_check_time_to.
+	 * Wcj_check_time_to.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
@@ -116,7 +125,7 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 		if ( isset( $time_to[0] ) && $args['hours_now'] > $time_to[0] ) {
 			return false;
 		}
-		if ( isset( $time_to[1] ) && $time_to[0] == $args['hours_now'] && $args['minutes_now'] > $time_to[1] ) {
+		if ( isset( $time_to[1] ) && $time_to[0] === $args['hours_now'] && $args['minutes_now'] > $time_to[1] ) {
 			return false;
 		}
 		return true;
@@ -125,7 +134,7 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 
 if ( ! function_exists( 'wcj_check_single_time' ) ) {
 	/**
-	 * wcj_check_single_time.
+	 * Wcj_check_single_time.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
@@ -148,16 +157,16 @@ if ( ! function_exists( 'wcj_check_single_time' ) ) {
 
 if ( ! function_exists( 'wcj_check_time' ) ) {
 	/**
-	 * wcj_check_time.
+	 * Wcj_check_time.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
 	 */
 	function wcj_check_time( $_time, $args = array() ) {
 		if ( empty( $args ) ) {
-			$time_now = current_time( 'timestamp' );
-			$args['hours_now']   = intval( date( 'H', $time_now ) );
-			$args['minutes_now'] = intval( date( 'i', $time_now ) );
+			$time_now            = current_time( 'timestamp' );
+			$args['hours_now']   = intval( gmdate( 'H', $time_now ) );
+			$args['minutes_now'] = intval( gmdate( 'i', $time_now ) );
 		}
 		$_time = explode( ',', $_time );
 		foreach ( $_time as $_single_time ) {
@@ -170,7 +179,7 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 }
 
 if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
-	/*
+	/**
 	 * Matches each symbol of PHP date format standard
 	 * with jQuery equivalent codeword
 	 * http://stackoverflow.com/questions/16702398/convert-a-php-date-format-to-a-jqueryui-datepicker-date-format
@@ -180,8 +189,8 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 	 * @since   2.4.0
 	 */
 	function wcj_date_format_php_to_js( $php_format ) {
-		$SYMBOLS_MATCHING = array(
-			// Day
+		$symbols_matching = array(
+			// Day.
 			'd' => 'dd',
 			'D' => 'D',
 			'j' => 'd',
@@ -190,20 +199,20 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 			'S' => '',
 			'w' => '',
 			'z' => 'o',
-			// Week
+			// Week.
 			'W' => '',
-			// Month
+			// Month.
 			'F' => 'MM',
 			'm' => 'mm',
 			'M' => 'M',
 			'n' => 'm',
 			't' => '',
-			// Year
+			// Year.
 			'L' => '',
 			'o' => '',
 			'Y' => 'yy',
 			'y' => 'y',
-			// Time
+			// Time.
 			'a' => '',
 			'A' => '',
 			'B' => '',
@@ -213,22 +222,23 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 			'H' => '',
 			'i' => '',
 			's' => '',
-			'u' => ''
+			'u' => '',
 		);
-		$jqueryui_format = "";
-		$escaping = false;
-		for ( $i = 0; $i < strlen( $php_format ); $i++ ) {
+		$jqueryui_format  = '';
+		$escaping         = false;
+		$php_fo           = strlen( $php_format );
+		for ( $i = 0; $i < $php_fo; $i++ ) {
 			$char = $php_format[ $i ];
-			if ( $char === '\\' ) { // PHP date format escaping character
+			if ( '\\' === $char ) { // PHP date format escaping character.
 				$i++;
 				$jqueryui_format .= ( $escaping ) ? $php_format[ $i ] : '\'' . $php_format[ $i ];
-				$escaping = true;
+				$escaping         = true;
 			} else {
 				if ( $escaping ) {
 					$jqueryui_format .= "'";
-					$escaping = false;
+					$escaping         = false;
 				}
-				$jqueryui_format .= ( isset( $SYMBOLS_MATCHING[ $char ] ) ) ? $SYMBOLS_MATCHING[ $char ] : $char;
+				$jqueryui_format .= ( isset( $symbols_matching[ $char ] ) ) ? $symbols_matching[ $char ] : $char;
 			}
 		}
 		return $jqueryui_format;
@@ -237,7 +247,7 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 
 if ( ! function_exists( 'wcj_timezone' ) ) {
 	/**
-	 * wcj_timezone.
+	 * Wcj_timezone.
 	 *
 	 * @version 4.7.0
 	 * @since   4.7.0
@@ -273,13 +283,13 @@ if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
 	 * @since   4.9.0
 	 *
 	 * @param string $utc_date
-	 * @param null $format
+	 * @param null   $format
 	 *
 	 * @return string
 	 */
 	function wcj_pretty_utc_date( string $utc_date, $format = null ) {
 		if ( ! preg_match( '/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$/', $utc_date ) ) {
-			throw new InvalidArgumentException( "Expected argument to be in YYYY-MM-DD hh:mm:ss format" );
+			throw new InvalidArgumentException( 'Expected argument to be in YYYY-MM-DD hh:mm:ss format' );
 		}
 		$date_in_local_timezone         = get_date_from_gmt( $utc_date );
 		$seconds_since_local_1_jan_1970 =

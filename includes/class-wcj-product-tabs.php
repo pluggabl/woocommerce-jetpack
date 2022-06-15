@@ -52,7 +52,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'wcj-custom-tabs-yoast-seo',
 				wcj_plugin_url() . '/includes/js/wcj-custom-tabs-yoast-seo.js',
 				array( 'jquery', 'yoast-seo-admin-script' ),
-				WCJ()->version,
+				w_c_j()->version,
 				false
 			);
 		}

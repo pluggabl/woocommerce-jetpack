@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfReader;
 
@@ -14,82 +14,81 @@ namespace setasign\Fpdi\PdfReader;
  *
  * @package setasign\Fpdi\PdfReader
  */
-abstract class PageBoundaries
-{
-    /**
-     * MediaBox
-     *
-     * The media box defines the boundaries of the physical medium on which the page is to be printed.
-     *
-     * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
-     * @var string
-     */
-    const MEDIA_BOX = 'MediaBox';
+abstract class PageBoundaries {
 
-    /**
-     * CropBox
-     *
-     * The crop box defines the region to which the contents of the page shall be clipped (cropped) when displayed or
-     * printed.
-     *
-     * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
-     * @var string
-     */
-    const CROP_BOX = 'CropBox';
+	/**
+	 * MediaBox
+	 *
+	 * The media box defines the boundaries of the physical medium on which the page is to be printed.
+	 *
+	 * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
+	 * @var string
+	 */
+	const MEDIA_BOX = 'MediaBox';
 
-    /**
-     * BleedBox
-     *
-     * The bleed box defines the region to which the contents of the page shall be clipped when output in a
-     * production environment.
-     *
-     * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
-     * @var string
-     */
-    const BLEED_BOX = 'BleedBox';
+	/**
+	 * CropBox
+	 *
+	 * The crop box defines the region to which the contents of the page shall be clipped (cropped) when displayed or
+	 * printed.
+	 *
+	 * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
+	 * @var string
+	 */
+	const CROP_BOX = 'CropBox';
 
-    /**
-     * TrimBox
-     *
-     * The trim box defines the intended dimensions of the finished page after trimming.
-     *
-     * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
-     * @var string
-     */
-    const TRIM_BOX = 'TrimBox';
+	/**
+	 * BleedBox
+	 *
+	 * The bleed box defines the region to which the contents of the page shall be clipped when output in a
+	 * production environment.
+	 *
+	 * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
+	 * @var string
+	 */
+	const BLEED_BOX = 'BleedBox';
 
-    /**
-     * ArtBox
-     *
-     * The art box defines the extent of the page’s meaningful content (including potential white space) as intended
-     * by the page’s creator.
-     *
-     * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
-     * @var string
-     */
-    const ART_BOX = 'ArtBox';
+	/**
+	 * TrimBox
+	 *
+	 * The trim box defines the intended dimensions of the finished page after trimming.
+	 *
+	 * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
+	 * @var string
+	 */
+	const TRIM_BOX = 'TrimBox';
 
-    /**
-     * All page boundaries
-     *
-     * @var array
-     */
-    public static $all = array(
-        self::MEDIA_BOX,
-        self::CROP_BOX,
-        self::BLEED_BOX,
-        self::TRIM_BOX,
-        self::ART_BOX
-    );
+	/**
+	 * ArtBox
+	 *
+	 * The art box defines the extent of the page’s meaningful content (including potential white space) as intended
+	 * by the page’s creator.
+	 *
+	 * @see PDF 32000-1:2008 - 14.11.2 Page Boundaries
+	 * @var string
+	 */
+	const ART_BOX = 'ArtBox';
 
-    /**
-     * Checks if a name is a valid page boundary name.
-     *
-     * @param string $name The boundary name
-     * @return boolean A boolean value whether the name is valid or not.
-     */
-    public static function isValidName($name)
-    {
-        return \in_array($name, self::$all, true);
-    }
+	/**
+	 * All page boundaries
+	 *
+	 * @var array
+	 */
+	public static $all = array(
+		self::MEDIA_BOX,
+		self::CROP_BOX,
+		self::BLEED_BOX,
+		self::TRIM_BOX,
+		self::ART_BOX,
+	);
+
+	/**
+	 * Checks if a name is a valid page boundary name.
+	 *
+	 * @param string $name The boundary name
+	 * @return boolean A boolean value whether the name is valid or not.
+	 */
+	public static function isValidName( $name ) {
+		return \in_array( $name, self::$all, true );
+	}
 }

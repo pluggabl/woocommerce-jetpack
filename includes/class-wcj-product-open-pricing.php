@@ -103,8 +103,8 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	function maybe_convert_price_currency( $price, $product = null ) {
 		if ( 'switched_currency' === wcj_get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 			// Multicurrency (Currency Switcher) module
-			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
-				$price = WCJ()->modules['multicurrency']->change_price( $price, $product );
+			if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
+				$price = w_c_j()->modules['multicurrency']->change_price( $price, $product );
 			}
 		}
 		return $price;
@@ -311,8 +311,8 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			}
 			$price = $_product->wcj_open_price;
 			// Multicurrency (Currency Switcher) module
-			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
-				$price = WCJ()->modules['multicurrency']->change_price( $price, null );
+			if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
+				$price = w_c_j()->modules['multicurrency']->change_price( $price, null );
 			}
 			return $price;
 		} else {
@@ -398,9 +398,9 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			}
 			if ( 'switched_currency' === wcj_get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 				// Multicurrency (Currency Switcher) module
-				if ( WCJ()->modules['multicurrency']->is_enabled() ) {
-					if ( $this->shop_currency != ( $current_currency = WCJ()->modules['multicurrency']->get_current_currency_code() ) ) {
-						if ( 0 != ( $rate = WCJ()->modules['multicurrency']->get_currency_exchange_rate( $current_currency ) ) ) {
+				if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
+					if ( $this->shop_currency != ( $current_currency = w_c_j()->modules['multicurrency']->get_current_currency_code() ) ) {
+						if ( 0 != ( $rate = w_c_j()->modules['multicurrency']->get_currency_exchange_rate( $current_currency ) ) ) {
 							$cart_item_data['wcj_open_price'] = $cart_item_data['wcj_open_price'] / $rate;
 						}
 					}

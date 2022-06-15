@@ -101,7 +101,7 @@ class WCJ_WPML extends WCJ_Module {
 	function switch_currency_using_multicurrency( $currency ) {
 		if (
 			'no' === wcj_get_option( 'wcj_wpml_switch_booster_currency', 'no' ) ||
-			! WCJ()->modules['multicurrency']->is_enabled()
+			! w_c_j()->modules['multicurrency']->is_enabled()
 		) {
 			return;
 		}

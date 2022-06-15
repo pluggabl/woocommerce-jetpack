@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfReader;
 
@@ -28,245 +28,240 @@ use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
  *
  * @package setasign\Fpdi\PdfReader
  */
-class Page
-{
-    /**
-     * @var PdfIndirectObject
-     */
-    protected $pageObject;
+class Page {
 
-    /**
-     * @var PdfDictionary
-     */
-    protected $pageDictionary;
+	/**
+	 * @var PdfIndirectObject
+	 */
+	protected $pageObject;
 
-    /**
-     * @var PdfParser
-     */
-    protected $parser;
+	/**
+	 * @var PdfDictionary
+	 */
+	protected $pageDictionary;
 
-    /**
-     * Inherited attributes
-     *
-     * @var null|array
-     */
-    protected $inheritedAttributes;
+	/**
+	 * @var PdfParser
+	 */
+	protected $parser;
 
-    /**
-     * Page constructor.
-     *
-     * @param PdfIndirectObject $page
-     * @param PdfParser $parser
-     */
-    public function __construct(PdfIndirectObject $page, PdfParser $parser)
-    {
-        $this->pageObject = $page;
-        $this->parser = $parser;
-    }
+	/**
+	 * Inherited attributes
+	 *
+	 * @var null|array
+	 */
+	protected $inheritedAttributes;
 
-    /**
-     * Get the indirect object of this page.
-     *
-     * @return PdfIndirectObject
-     */
-    public function getPageObject()
-    {
-        return $this->pageObject;
-    }
+	/**
+	 * Page constructor.
+	 *
+	 * @param PdfIndirectObject $page
+	 * @param PdfParser         $parser
+	 */
+	public function __construct( PdfIndirectObject $page, PdfParser $parser ) {
+		$this->pageObject = $page;
+		$this->parser     = $parser;
+	}
 
-    /**
-     * Get the dictionary of this page.
-     *
-     * @return PdfDictionary
-     * @throws PdfParserException
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     */
-    public function getPageDictionary()
-    {
-        if (null === $this->pageDictionary) {
-            $this->pageDictionary = PdfDictionary::ensure(PdfType::resolve($this->getPageObject(), $this->parser));
-        }
+	/**
+	 * Get the indirect object of this page.
+	 *
+	 * @return PdfIndirectObject
+	 */
+	public function getPageObject() {
+		return $this->pageObject;
+	}
 
-        return $this->pageDictionary;
-    }
+	/**
+	 * Get the dictionary of this page.
+	 *
+	 * @return PdfDictionary
+	 * @throws PdfParserException
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 */
+	public function getPageDictionary() {
+		if ( null === $this->pageDictionary ) {
+			$this->pageDictionary = PdfDictionary::ensure( PdfType::resolve( $this->getPageObject(), $this->parser ) );
+		}
 
-    /**
-     * Get a page attribute.
-     *
-     * @param string $name
-     * @param bool $inherited
-     * @return PdfType|null
-     * @throws PdfParserException
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     */
-    public function getAttribute($name, $inherited = true)
-    {
-        $dict = $this->getPageDictionary();
+		return $this->pageDictionary;
+	}
 
-        if (isset($dict->value[$name])) {
-            return $dict->value[$name];
-        }
+	/**
+	 * Get a page attribute.
+	 *
+	 * @param string $name
+	 * @param bool   $inherited
+	 * @return PdfType|null
+	 * @throws PdfParserException
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 */
+	public function getAttribute( $name, $inherited = true ) {
+		$dict = $this->getPageDictionary();
 
-        $inheritedKeys = ['Resources', 'MediaBox', 'CropBox', 'Rotate'];
-        if ($inherited && \in_array($name, $inheritedKeys, true)) {
-            if ($this->inheritedAttributes === null) {
-                $this->inheritedAttributes = [];
-                $inheritedKeys = \array_filter($inheritedKeys, function ($key) use ($dict) {
-                    return !isset($dict->value[$key]);
-                });
+		if ( isset( $dict->value[ $name ] ) ) {
+			return $dict->value[ $name ];
+		}
 
-                if (\count($inheritedKeys) > 0) {
-                    $parentDict = PdfType::resolve(PdfDictionary::get($dict, 'Parent'), $this->parser);
-                    while ($parentDict instanceof PdfDictionary) {
-                        foreach ($inheritedKeys as $index => $key) {
-                            if (isset($parentDict->value[$key])) {
-                                $this->inheritedAttributes[$key] = $parentDict->value[$key];
-                                unset($inheritedKeys[$index]);
-                            }
-                        }
+		$inheritedKeys = array( 'Resources', 'MediaBox', 'CropBox', 'Rotate' );
+		if ( $inherited && \in_array( $name, $inheritedKeys, true ) ) {
+			if ( $this->inheritedAttributes === null ) {
+				$this->inheritedAttributes = array();
+				$inheritedKeys             = \array_filter(
+					$inheritedKeys,
+					function ( $key ) use ( $dict ) {
+						return ! isset( $dict->value[ $key ] );
+					}
+				);
 
-                        /** @noinspection NotOptimalIfConditionsInspection */
-                        if (isset($parentDict->value['Parent']) && \count($inheritedKeys) > 0) {
-                            $parentDict = PdfType::resolve(PdfDictionary::get($parentDict, 'Parent'), $this->parser);
-                        } else {
-                            break;
-                        }
-                    }
-                }
-            }
+				if ( \count( $inheritedKeys ) > 0 ) {
+					$parentDict = PdfType::resolve( PdfDictionary::get( $dict, 'Parent' ), $this->parser );
+					while ( $parentDict instanceof PdfDictionary ) {
+						foreach ( $inheritedKeys as $index => $key ) {
+							if ( isset( $parentDict->value[ $key ] ) ) {
+								$this->inheritedAttributes[ $key ] = $parentDict->value[ $key ];
+								unset( $inheritedKeys[ $index ] );
+							}
+						}
 
-            if (isset($this->inheritedAttributes[$name])) {
-                return $this->inheritedAttributes[$name];
-            }
-        }
+						/** @noinspection NotOptimalIfConditionsInspection */
+						if ( isset( $parentDict->value['Parent'] ) && \count( $inheritedKeys ) > 0 ) {
+							$parentDict = PdfType::resolve( PdfDictionary::get( $parentDict, 'Parent' ), $this->parser );
+						} else {
+							break;
+						}
+					}
+				}
+			}
 
-        return null;
-    }
+			if ( isset( $this->inheritedAttributes[ $name ] ) ) {
+				return $this->inheritedAttributes[ $name ];
+			}
+		}
 
-    /**
-     * Get the rotation value.
-     *
-     * @return int
-     * @throws PdfParserException
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     */
-    public function getRotation()
-    {
-        $rotation = $this->getAttribute('Rotate');
-        if (null === $rotation) {
-            return 0;
-        }
+		return null;
+	}
 
-        $rotation = PdfNumeric::ensure(PdfType::resolve($rotation, $this->parser))->value % 360;
+	/**
+	 * Get the rotation value.
+	 *
+	 * @return int
+	 * @throws PdfParserException
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 */
+	public function getRotation() {
+		$rotation = $this->getAttribute( 'Rotate' );
+		if ( null === $rotation ) {
+			return 0;
+		}
 
-        if ($rotation < 0) {
-            $rotation += 360;
-        }
+		$rotation = PdfNumeric::ensure( PdfType::resolve( $rotation, $this->parser ) )->value % 360;
 
-        return $rotation;
-    }
+		if ( $rotation < 0 ) {
+			$rotation += 360;
+		}
 
-    /**
-     * Get a boundary of this page.
-     *
-     * @param string $box
-     * @param bool $fallback
-     * @return bool|Rectangle
-     * @throws PdfParserException
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     * @see PageBoundaries
-     */
-    public function getBoundary($box = PageBoundaries::CROP_BOX, $fallback = true)
-    {
-        $value = $this->getAttribute($box);
+		return $rotation;
+	}
 
-        if ($value !== null) {
-            return Rectangle::byPdfArray($value, $this->parser);
-        }
+	/**
+	 * Get a boundary of this page.
+	 *
+	 * @param string $box
+	 * @param bool   $fallback
+	 * @return bool|Rectangle
+	 * @throws PdfParserException
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 * @see PageBoundaries
+	 */
+	public function getBoundary( $box = PageBoundaries::CROP_BOX, $fallback = true ) {
+		$value = $this->getAttribute( $box );
 
-        if ($fallback === false) {
-            return false;
-        }
+		if ( $value !== null ) {
+			return Rectangle::byPdfArray( $value, $this->parser );
+		}
 
-        switch ($box) {
-            case PageBoundaries::BLEED_BOX:
-            case PageBoundaries::TRIM_BOX:
-            case PageBoundaries::ART_BOX:
-                return $this->getBoundary(PageBoundaries::CROP_BOX, true);
-            case PageBoundaries::CROP_BOX:
-                return $this->getBoundary(PageBoundaries::MEDIA_BOX, true);
-        }
+		if ( $fallback === false ) {
+			return false;
+		}
 
-        return false;
-    }
+		switch ( $box ) {
+			case PageBoundaries::BLEED_BOX:
+			case PageBoundaries::TRIM_BOX:
+			case PageBoundaries::ART_BOX:
+				return $this->getBoundary( PageBoundaries::CROP_BOX, true );
+			case PageBoundaries::CROP_BOX:
+				return $this->getBoundary( PageBoundaries::MEDIA_BOX, true );
+		}
 
-    /**
-     * Get the width and height of this page.
-     *
-     * @param string $box
-     * @param bool $fallback
-     * @return array|bool
-     * @throws PdfParserException
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     */
-    public function getWidthAndHeight($box = PageBoundaries::CROP_BOX, $fallback = true)
-    {
-        $boundary = $this->getBoundary($box, $fallback);
-        if ($boundary === false) {
-            return false;
-        }
+		return false;
+	}
 
-        $rotation = $this->getRotation();
-        $interchange = ($rotation / 90) % 2;
+	/**
+	 * Get the width and height of this page.
+	 *
+	 * @param string $box
+	 * @param bool   $fallback
+	 * @return array|bool
+	 * @throws PdfParserException
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 */
+	public function getWidthAndHeight( $box = PageBoundaries::CROP_BOX, $fallback = true ) {
+		$boundary = $this->getBoundary( $box, $fallback );
+		if ( $boundary === false ) {
+			return false;
+		}
 
-        return [
-            $interchange ? $boundary->getHeight() : $boundary->getWidth(),
-            $interchange ? $boundary->getWidth() : $boundary->getHeight()
-        ];
-    }
+		$rotation    = $this->getRotation();
+		$interchange = ( $rotation / 90 ) % 2;
 
-    /**
-     * Get the raw content stream.
-     *
-     * @return string
-     * @throws PdfReaderException
-     * @throws PdfTypeException
-     * @throws FilterException
-     * @throws PdfParserException
-     */
-    public function getContentStream()
-    {
-        $dict = $this->getPageDictionary();
-        $contents = PdfType::resolve(PdfDictionary::get($dict, 'Contents'), $this->parser);
-        if ($contents instanceof PdfNull) {
-            return '';
-        }
+		return array(
+			$interchange ? $boundary->getHeight() : $boundary->getWidth(),
+			$interchange ? $boundary->getWidth() : $boundary->getHeight(),
+		);
+	}
 
-        if ($contents instanceof PdfArray) {
-            $result = [];
-            foreach ($contents->value as $content) {
-                $content = PdfType::resolve($content, $this->parser);
-                if (!($content instanceof PdfStream)) {
-                    continue;
-                }
-                $result[] = $content->getUnfilteredStream();
-            }
+	/**
+	 * Get the raw content stream.
+	 *
+	 * @return string
+	 * @throws PdfReaderException
+	 * @throws PdfTypeException
+	 * @throws FilterException
+	 * @throws PdfParserException
+	 */
+	public function getContentStream() {
+		$dict     = $this->getPageDictionary();
+		$contents = PdfType::resolve( PdfDictionary::get( $dict, 'Contents' ), $this->parser );
+		if ( $contents instanceof PdfNull ) {
+			return '';
+		}
 
-            return \implode("\n", $result);
-        }
+		if ( $contents instanceof PdfArray ) {
+			$result = array();
+			foreach ( $contents->value as $content ) {
+				$content = PdfType::resolve( $content, $this->parser );
+				if ( ! ( $content instanceof PdfStream ) ) {
+					continue;
+				}
+				$result[] = $content->getUnfilteredStream();
+			}
 
-        if ($contents instanceof PdfStream) {
-            return $contents->getUnfilteredStream();
-        }
+			return \implode( "\n", $result );
+		}
 
-        throw new PdfReaderException(
-            'Array or stream expected.',
-            PdfReaderException::UNEXPECTED_DATA_TYPE
-        );
-    }
+		if ( $contents instanceof PdfStream ) {
+			return $contents->getUnfilteredStream();
+		}
+
+		throw new PdfReaderException(
+			'Array or stream expected.',
+			PdfReaderException::UNEXPECTED_DATA_TYPE
+		);
+	}
 }

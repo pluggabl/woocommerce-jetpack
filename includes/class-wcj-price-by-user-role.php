@@ -163,7 +163,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 * @since   3.6.0
 	 */
 	function enqueue_admin_script() {
-		wp_enqueue_script( 'wcj-price-by-user-role-admin', wcj_plugin_url() . '/includes/js/wcj-price-by-user-role-admin.js', array( 'jquery' ), WCJ()->version, true );
+		wp_enqueue_script( 'wcj-price-by-user-role-admin', wcj_plugin_url() . '/includes/js/wcj-price-by-user-role-admin.js', array( 'jquery' ), w_c_j()->version, true );
 	}
 
 	/**

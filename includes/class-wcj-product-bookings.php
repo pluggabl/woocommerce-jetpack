@@ -133,7 +133,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			return;
 		}
 
-		wp_enqueue_script( 'wcj-bookings', wcj_plugin_url() . '/includes/js/wcj-bookings.js', array(), WCJ()->version, true );
+		wp_enqueue_script( 'wcj-bookings', wcj_plugin_url() . '/includes/js/wcj-bookings.js', array(), w_c_j()->version, true );
 		wp_localize_script( 'wcj-bookings', 'ajax_object', array(
 			'ajax_url'            => admin_url( 'admin-ajax.php' ),
 			'product_id'          => get_the_ID(),

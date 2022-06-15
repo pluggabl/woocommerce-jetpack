@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\CrossReference;
 
@@ -20,177 +20,174 @@ use setasign\Fpdi\PdfParser\StreamReader;
  *
  * @package setasign\Fpdi\PdfParser\CrossReference
  */
-class FixedReader extends AbstractReader implements ReaderInterface
-{
-    /**
-     * @var StreamReader
-     */
-    protected $reader;
+class FixedReader extends AbstractReader implements ReaderInterface {
 
-    /**
-     * Data of subsections.
-     *
-     * @var array
-     */
-    protected $subSections;
+	/**
+	 * @var StreamReader
+	 */
+	protected $reader;
 
-    /**
-     * FixedReader constructor.
-     *
-     * @param PdfParser $parser
-     * @throws CrossReferenceException
-     */
-    public function __construct(PdfParser $parser)
-    {
-        $this->reader = $parser->getStreamReader();
-        $this->read();
-        parent::__construct($parser);
-    }
+	/**
+	 * Data of subsections.
+	 *
+	 * @var array
+	 */
+	protected $subSections;
 
-    /**
-     * Get all subsection data.
-     *
-     * @return array
-     */
-    public function getSubSections()
-    {
-        return $this->subSections;
-    }
+	/**
+	 * FixedReader constructor.
+	 *
+	 * @param PdfParser $parser
+	 * @throws CrossReferenceException
+	 */
+	public function __construct( PdfParser $parser ) {
+		$this->reader = $parser->getStreamReader();
+		$this->read();
+		parent::__construct( $parser );
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function getOffsetFor($objectNumber)
-    {
-        foreach ($this->subSections as $offset => list($startObject, $objectCount)) {
-            if ($objectNumber >= $startObject && $objectNumber < ($startObject + $objectCount)) {
-                $position = $offset + 20 * ($objectNumber - $startObject);
-                $this->reader->ensure($position, 20);
-                $line = $this->reader->readBytes(20);
-                if ($line[17] === 'f') {
-                    return false;
-                }
+	/**
+	 * Get all subsection data.
+	 *
+	 * @return array
+	 */
+	public function getSubSections() {
+		return $this->subSections;
+	}
 
-                return (int) \substr($line, 0, 10);
-            }
-        }
+	/**
+	 * @inheritdoc
+	 */
+	public function getOffsetFor( $objectNumber ) {
+		foreach ( $this->subSections as $offset => list($startObject, $objectCount) ) {
+			if ( $objectNumber >= $startObject && $objectNumber < ( $startObject + $objectCount ) ) {
+				$position = $offset + 20 * ( $objectNumber - $startObject );
+				$this->reader->ensure( $position, 20 );
+				$line = $this->reader->readBytes( 20 );
+				if ( $line[17] === 'f' ) {
+					return false;
+				}
 
-        return false;
-    }
+				return (int) \substr( $line, 0, 10 );
+			}
+		}
 
-    /**
-     * Read the cross-reference.
-     *
-     * This reader will only read the subsections in this method. The offsets were resolved individually by this
-     * information.
-     *
-     * @throws CrossReferenceException
-     */
-    protected function read()
-    {
-        $subSections = [];
+		return false;
+	}
 
-        $startObject = $entryCount = $lastLineStart = null;
-        $validityChecked = false;
-        while (($line = $this->reader->readLine(20)) !== false) {
-            if (\strpos($line, 'trailer') !== false) {
-                $this->reader->reset($lastLineStart);
-                break;
-            }
+	/**
+	 * Read the cross-reference.
+	 *
+	 * This reader will only read the subsections in this method. The offsets were resolved individually by this
+	 * information.
+	 *
+	 * @throws CrossReferenceException
+	 */
+	protected function read() {
+		$subSections = array();
 
-            // jump over if line content doesn't match the expected string
-            if (\sscanf($line, '%d %d', $startObject, $entryCount) !== 2) {
-                continue;
-            }
+		$startObject     = $entryCount = $lastLineStart = null;
+		$validityChecked = false;
+		while ( ( $line = $this->reader->readLine( 20 ) ) !== false ) {
+			if ( \strpos( $line, 'trailer' ) !== false ) {
+				$this->reader->reset( $lastLineStart );
+				break;
+			}
 
-            $oldPosition = $this->reader->getPosition();
-            $position = $oldPosition + $this->reader->getOffset();
+			// jump over if line content doesn't match the expected string
+			if ( \sscanf( $line, '%d %d', $startObject, $entryCount ) !== 2 ) {
+				continue;
+			}
 
-            if (!$validityChecked && $entryCount > 0) {
-                $nextLine = $this->reader->readBytes(21);
-                /* Check the next line for maximum of 20 bytes and not longer
-                 * By catching 21 bytes and trimming the length should be still 21.
-                 */
-                if (\strlen(\trim($nextLine)) !== 21) {
-                    throw new CrossReferenceException(
-                        'Cross-reference entries are larger than 20 bytes.',
-                        CrossReferenceException::ENTRIES_TOO_LARGE
-                    );
-                }
+			$oldPosition = $this->reader->getPosition();
+			$position    = $oldPosition + $this->reader->getOffset();
 
-                /* Check for less than 20 bytes: cut the line to 20 bytes and trim; have to result in exactly 18 bytes.
-                 * If it would have less bytes the substring would get the first bytes of the next line which would
-                 * evaluate to a 20 bytes long string after trimming.
-                 */
-                if (\strlen(\trim(\substr($nextLine, 0, 20))) !== 18) {
-                    throw new CrossReferenceException(
-                        'Cross-reference entries are less than 20 bytes.',
-                        CrossReferenceException::ENTRIES_TOO_SHORT
-                    );
-                }
+			if ( ! $validityChecked && $entryCount > 0 ) {
+				$nextLine = $this->reader->readBytes( 21 );
+				/*
+				 Check the next line for maximum of 20 bytes and not longer
+				 * By catching 21 bytes and trimming the length should be still 21.
+				 */
+				if ( \strlen( \trim( $nextLine ) ) !== 21 ) {
+					throw new CrossReferenceException(
+						'Cross-reference entries are larger than 20 bytes.',
+						CrossReferenceException::ENTRIES_TOO_LARGE
+					);
+				}
 
-                $validityChecked = true;
-            }
+				/*
+				 Check for less than 20 bytes: cut the line to 20 bytes and trim; have to result in exactly 18 bytes.
+				 * If it would have less bytes the substring would get the first bytes of the next line which would
+				 * evaluate to a 20 bytes long string after trimming.
+				 */
+				if ( \strlen( \trim( \substr( $nextLine, 0, 20 ) ) ) !== 18 ) {
+					throw new CrossReferenceException(
+						'Cross-reference entries are less than 20 bytes.',
+						CrossReferenceException::ENTRIES_TOO_SHORT
+					);
+				}
 
-            $subSections[$position] = [$startObject, $entryCount];
+				$validityChecked = true;
+			}
 
-            $lastLineStart = $position + $entryCount * 20;
-            $this->reader->reset($lastLineStart);
-        }
+			$subSections[ $position ] = array( $startObject, $entryCount );
 
-        // reset after the last correct parsed line
-        $this->reader->reset($lastLineStart);
+			$lastLineStart = $position + $entryCount * 20;
+			$this->reader->reset( $lastLineStart );
+		}
 
-        if (\count($subSections) === 0) {
-            throw new CrossReferenceException(
-                'No entries found in cross-reference.',
-                CrossReferenceException::NO_ENTRIES
-            );
-        }
+		// reset after the last correct parsed line
+		$this->reader->reset( $lastLineStart );
 
-        $this->subSections = $subSections;
-    }
+		if ( \count( $subSections ) === 0 ) {
+			throw new CrossReferenceException(
+				'No entries found in cross-reference.',
+				CrossReferenceException::NO_ENTRIES
+			);
+		}
 
-    /**
-     * Fixes an invalid object number shift.
-     *
-     * This method can be used to repair documents with an invalid subsection header:
-     *
-     * <code>
-     * xref
-     * 1 7
-     * 0000000000 65535 f
-     * 0000000009 00000 n
-     * 0000412075 00000 n
-     * 0000412172 00000 n
-     * 0000412359 00000 n
-     * 0000412417 00000 n
-     * 0000412468 00000 n
-     * </code>
-     *
-     * It shall only be called on the first table.
-     *
-     * @return bool
-     */
-    public function fixFaultySubSectionShift()
-    {
-        $subSections = $this->getSubSections();
-        if (\count($subSections) > 1) {
-            return false;
-        }
+		$this->subSections = $subSections;
+	}
 
-        $subSection = \current($subSections);
-        if ($subSection[0] != 1) {
-            return false;
-        }
+	/**
+	 * Fixes an invalid object number shift.
+	 *
+	 * This method can be used to repair documents with an invalid subsection header:
+	 *
+	 * <code>
+	 * xref
+	 * 1 7
+	 * 0000000000 65535 f
+	 * 0000000009 00000 n
+	 * 0000412075 00000 n
+	 * 0000412172 00000 n
+	 * 0000412359 00000 n
+	 * 0000412417 00000 n
+	 * 0000412468 00000 n
+	 * </code>
+	 *
+	 * It shall only be called on the first table.
+	 *
+	 * @return bool
+	 */
+	public function fixFaultySubSectionShift() {
+		$subSections = $this->getSubSections();
+		if ( \count( $subSections ) > 1 ) {
+			return false;
+		}
 
-        if ($this->getOffsetFor(1) === false) {
-            foreach ($subSections as $offset => list($startObject, $objectCount)) {
-                $this->subSections[$offset] = [$startObject - 1, $objectCount];
-            }
-            return true;
-        }
+		$subSection = \current( $subSections );
+		if ( $subSection[0] != 1 ) {
+			return false;
+		}
 
-        return false;
-    }
+		if ( $this->getOffsetFor( 1 ) === false ) {
+			foreach ( $subSections as $offset => list($startObject, $objectCount) ) {
+				$this->subSections[ $offset ] = array( $startObject - 1, $objectCount );
+			}
+			return true;
+		}
+
+		return false;
+	}
 }

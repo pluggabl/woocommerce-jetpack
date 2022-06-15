@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\Type;
 
@@ -16,67 +16,64 @@ use setasign\Fpdi\PdfParser\StreamReader;
  *
  * @package setasign\Fpdi\PdfParser\Type
  */
-class PdfHexString extends PdfType
-{
-    /**
-     * Parses a hexadecimal string object from the stream reader.
-     *
-     * @param StreamReader $streamReader
-     * @return bool|self
-     */
-    public static function parse(StreamReader $streamReader)
-    {
-        $bufferOffset = $streamReader->getOffset();
+class PdfHexString extends PdfType {
 
-        /**
-         * @var string $buffer
-         * @var int $pos
-         */
-        while (true) {
-            $buffer = $streamReader->getBuffer(false);
-            $pos = \strpos($buffer, '>', $bufferOffset);
-            if ($pos === false) {
-                if (!$streamReader->increaseLength()) {
-                    return false;
-                }
-                continue;
-            }
+	/**
+	 * Parses a hexadecimal string object from the stream reader.
+	 *
+	 * @param StreamReader $streamReader
+	 * @return bool|self
+	 */
+	public static function parse( StreamReader $streamReader ) {
+		$bufferOffset = $streamReader->getOffset();
 
-            break;
-        }
+		/**
+		 * @var string $buffer
+		 * @var int $pos
+		 */
+		while ( true ) {
+			$buffer = $streamReader->getBuffer( false );
+			$pos    = \strpos( $buffer, '>', $bufferOffset );
+			if ( $pos === false ) {
+				if ( ! $streamReader->increaseLength() ) {
+					return false;
+				}
+				continue;
+			}
 
-        $result = \substr($buffer, $bufferOffset, $pos - $bufferOffset);
-        $streamReader->setOffset($pos + 1);
+			break;
+		}
 
-        $v = new self;
-        $v->value = $result;
+		$result = \substr( $buffer, $bufferOffset, $pos - $bufferOffset );
+		$streamReader->setOffset( $pos + 1 );
 
-        return $v;
-    }
+		$v        = new self();
+		$v->value = $result;
 
-    /**
-     * Helper method to create an instance.
-     *
-     * @param string $string The hex encoded string.
-     * @return self
-     */
-    public static function create($string)
-    {
-        $v = new self;
-        $v->value = $string;
+		return $v;
+	}
 
-        return $v;
-    }
+	/**
+	 * Helper method to create an instance.
+	 *
+	 * @param string $string The hex encoded string.
+	 * @return self
+	 */
+	public static function create( $string ) {
+		$v        = new self();
+		$v->value = $string;
 
-    /**
-     * Ensures that the passed value is a PdfHexString instance.
-     *
-     * @param mixed $hexString
-     * @return self
-     * @throws PdfTypeException
-     */
-    public static function ensure($hexString)
-    {
-        return PdfType::ensureType(self::class, $hexString, 'Hex string value expected.');
-    }
+		return $v;
+	}
+
+	/**
+	 * Ensures that the passed value is a PdfHexString instance.
+	 *
+	 * @param mixed $hexString
+	 * @return self
+	 * @throws PdfTypeException
+	 */
+	public static function ensure( $hexString ) {
+		return PdfType::ensureType( self::class, $hexString, 'Hex string value expected.' );
+	}
 }

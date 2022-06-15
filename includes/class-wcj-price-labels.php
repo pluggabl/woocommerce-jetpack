@@ -392,11 +392,11 @@ class WCJ_Price_Labels extends WCJ_Module {
 		}
 
 		// Apply shortcodes
-		WCJ()->shortcodes['products']->passed_product = $product;
-		WCJ()->shortcodes['products_crowdfunding']->passed_product = $product;
+		w_c_j()->shortcodes['products']->passed_product = $product;
+		w_c_j()->shortcodes['products_crowdfunding']->passed_product = $product;
 		$result = do_shortcode( $price );
-		unset( WCJ()->shortcodes['products']->passed_product );
-		unset( WCJ()->shortcodes['products_crowdfunding']->passed_product );
+		unset( w_c_j()->shortcodes['products']->passed_product );
+		unset( w_c_j()->shortcodes['products_crowdfunding']->passed_product );
 
 		return $result;
 	}

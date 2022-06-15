@@ -94,7 +94,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 		}
 		$module = 'multicurrency';
 		if ( wcj_is_module_enabled( $module ) ) {
-			$price = WCJ()->modules[ $module ]->change_price( $price, null );
+			$price = w_c_j()->modules[ $module ]->change_price( $price, null );
 		}
 		return $price;
 	}

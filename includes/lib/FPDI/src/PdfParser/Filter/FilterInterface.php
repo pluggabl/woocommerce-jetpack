@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\Filter;
 
@@ -14,13 +14,13 @@ namespace setasign\Fpdi\PdfParser\Filter;
  *
  * @package setasign\Fpdi\PdfParser\Filter
  */
-interface FilterInterface
-{
-    /**
-     * Decode a string.
-     *
-     * @param string $data The input string
-     * @return string
-     */
-    public function decode($data);
+interface FilterInterface {
+
+	/**
+	 * Decode a string.
+	 *
+	 * @param string $data The input string
+	 * @return string
+	 */
+	public function decode( $data);
 }
