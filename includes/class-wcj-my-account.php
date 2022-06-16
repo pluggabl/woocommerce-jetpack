@@ -550,7 +550,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					$_order = wc_get_order( isset( $_GET['order_id'] ) );
 					if ( $_order->get_customer_id() === get_current_user_id() ) {
 						$_order->update_status( isset( $_GET['status'] ) );
-						wp_safe_redirect( remove_query_arg( array( 'wcj_action', 'status', 'order_id', '_wpnonce' ) ) );
+						wp_safe_redirect( esc_url( remove_query_arg( array( 'wcj_action', 'status', 'order_id', '_wpnonce' ) ) ) );
 						exit;
 					}
 				}

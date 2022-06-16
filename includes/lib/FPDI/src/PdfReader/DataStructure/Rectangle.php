@@ -25,21 +25,29 @@ use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 class Rectangle {
 
 	/**
+	 * Llx
+	 *
 	 * @var int|float
 	 */
 	protected $llx;
 
 	/**
+	 * Lly
+	 *
 	 * @var int|float
 	 */
 	protected $lly;
 
 	/**
+	 * Urx
+	 *
 	 * @var int|float
 	 */
 	protected $urx;
 
 	/**
+	 * Ury
+	 *
 	 * @var int|float
 	 */
 	protected $ury;
@@ -47,8 +55,8 @@ class Rectangle {
 	/**
 	 * Create a rectangle instance by a PdfArray.
 	 *
-	 * @param PdfArray|mixed $array
-	 * @param PdfParser      $parser
+	 * @param PdfArray|mixed $array Get PDf array.
+	 * @param PdfParser      $parser get PDF Parser.
 	 * @return Rectangle
 	 * @throws PdfTypeException
 	 * @throws CrossReferenceException
@@ -67,10 +75,10 @@ class Rectangle {
 	/**
 	 * Rectangle constructor.
 	 *
-	 * @param float|int $ax
-	 * @param float|int $ay
-	 * @param float|int $bx
-	 * @param float|int $by
+	 * @param float|int $ax Get int value.
+	 * @param float|int $ay Get int value.
+	 * @param float|int $bx Get int value.
+	 * @param float|int $by Get int value.
 	 */
 	public function __construct( $ax, $ay, $bx, $by ) {
 		$this->llx = \min( $ax, $bx );

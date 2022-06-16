@@ -21,15 +21,16 @@ class PdfString extends PdfType {
 	/**
 	 * Parses a string object from the stream reader.
 	 *
-	 * @param StreamReader $streamReader
+	 * @param StreamReader $streamReader Get streamReader.
 	 * @return self
 	 */
 	public static function parse( StreamReader $streamReader ) {
-		$pos          = $startPos = $streamReader->getOffset();
+		$startPos     = $streamReader->getOffset();
+		$pos          = $startPos;
 		$openBrackets = 1;
 		do {
 			$buffer = $streamReader->getBuffer( false );
-			for ( $length = \strlen( $buffer ); $openBrackets !== 0 && $pos < $length; $pos++ ) {
+			for ( $length = \strlen( $buffer ); 0 !== $openBrackets && $pos < $length; $pos++ ) {
 				switch ( $buffer[ $pos ] ) {
 					case '(':
 						$openBrackets++;
@@ -41,7 +42,7 @@ class PdfString extends PdfType {
 						$pos++;
 				}
 			}
-		} while ( $openBrackets !== 0 && $streamReader->increaseLength() );
+		} while ( 0 !== $openBrackets && $streamReader->increaseLength() );
 
 		$result = \substr( $buffer, $startPos, $openBrackets + $pos - $startPos - 1 );
 		$streamReader->setOffset( $pos );
@@ -68,7 +69,7 @@ class PdfString extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfString instance.
 	 *
-	 * @param mixed $string
+	 * @param mixed $string Get string value.
 	 * @return self
 	 * @throws PdfTypeException
 	 */
@@ -79,18 +80,18 @@ class PdfString extends PdfType {
 	/**
 	 * Unescapes escaped sequences in a PDF string according to the PDF specification.
 	 *
-	 * @param string $s
+	 * @param string $s Get string value.
 	 * @return string
 	 */
 	public static function unescape( $s ) {
 		$out = '';
-		/** @noinspection ForeachInvariantsInspection */
+		/** Noinspection ForeachInvariantsInspection */
 		for ( $count = 0, $n = \strlen( $s ); $count < $n; $count++ ) {
-			if ( $s[ $count ] !== '\\' ) {
+			if ( '\\' !== $s[ $count ] ) {
 				$out .= $s[ $count ];
 			} else {
-				// A backslash at the end of the string - ignore it
-				if ( $count === ( $n - 1 ) ) {
+				// A backslash at the end of the string - ignore it.
+				if ( ( $n - 1 ) === $count ) {
 					break;
 				}
 
@@ -122,7 +123,7 @@ class PdfString extends PdfType {
 						break;
 
 					case "\r":
-						if ( $count !== $n - 1 && $s[ $count + 1 ] === "\n" ) {
+						if ( $n - 1 !== $count && "\n" === $s[ $count + 1 ] ) {
 							$count++;
 						}
 						break;
@@ -132,13 +133,13 @@ class PdfString extends PdfType {
 
 					default:
 						$actualChar = \ord( $s[ $count ] );
-						// ascii 48 = number 0
-						// ascii 57 = number 9
+						// ascii 48 = number 0.
+						// ascii 57 = number 9.
 						if ( $actualChar >= 48 &&
 							$actualChar <= 57 ) {
 							$oct = '' . $s[ $count ];
 
-							/** @noinspection NotOptimalIfConditionsInspection */
+							/** Noinspection NotOptimalIfConditionsInspection */
 							if ( $count + 1 < $n &&
 								\ord( $s[ $count + 1 ] ) >= 48 &&
 								\ord( $s[ $count + 1 ] ) <= 57
@@ -146,7 +147,7 @@ class PdfString extends PdfType {
 								$count++;
 								$oct .= $s[ $count ];
 
-								/** @noinspection NotOptimalIfConditionsInspection */
+								/** Noinspection NotOptimalIfConditionsInspection */
 								if ( $count + 1 < $n &&
 									\ord( $s[ $count + 1 ] ) >= 48 &&
 									\ord( $s[ $count + 1 ] ) <= 57
@@ -157,7 +158,7 @@ class PdfString extends PdfType {
 
 							$out .= \chr( \octdec( $oct ) );
 						} else {
-							// If the character is not one of those defined, the backslash is ignored
+							// If the character is not one of those defined, the backslash is ignored.
 							$out .= $s[ $count ];
 						}
 				}

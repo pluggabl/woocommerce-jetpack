@@ -22,11 +22,15 @@ use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 abstract class AbstractReader {
 
 	/**
+	 * PdfParser
+	 *
 	 * @var PdfParser
 	 */
 	protected $parser;
 
 	/**
+	 * PdfDictionary
+	 *
 	 * @var PdfDictionary
 	 */
 	protected $trailer;
@@ -34,9 +38,9 @@ abstract class AbstractReader {
 	/**
 	 * AbstractReader constructor.
 	 *
-	 * @param PdfParser $parser
-	 * @throws CrossReferenceException
-	 * @throws PdfTypeException
+	 * @param PdfParser $parser Get PdfParser.
+	 * @throws CrossReferenceException CrossReferenceException.
+	 * @throws PdfTypeException PdfTypeException.
 	 */
 	public function __construct( PdfParser $parser ) {
 		$this->parser = $parser;
@@ -55,13 +59,12 @@ abstract class AbstractReader {
 	/**
 	 * Read the trailer dictionary.
 	 *
-	 * @throws CrossReferenceException
-	 * @throws PdfTypeException
+	 * @throws CrossReferenceException CrossReferenceException.
 	 */
 	protected function readTrailer() {
 		try {
 			$trailerKeyword = $this->parser->readValue( null, PdfToken::class );
-			if ( $trailerKeyword->value !== 'trailer' ) {
+			if ( 'trailer' !== $trailerKeyword->value ) {
 				throw new CrossReferenceException(
 					\sprintf(
 						'Unexpected end of cross reference. "trailer"-keyword expected, got: %s.',

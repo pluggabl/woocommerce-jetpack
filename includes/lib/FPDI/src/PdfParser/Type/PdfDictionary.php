@@ -23,9 +23,9 @@ class PdfDictionary extends PdfType {
 	/**
 	 * Parses a dictionary of the passed tokenizer, stream-reader and parser.
 	 *
-	 * @param Tokenizer    $tokenizer
-	 * @param StreamReader $streamReader
-	 * @param PdfParser    $parser
+	 * @param Tokenizer    $tokenizer Get tokenizer.
+	 * @param StreamReader $streamReader Get streamReader.
+	 * @param PdfParser    $parser Get PdfParser.
 	 * @return bool|self
 	 * @throws PdfTypeException
 	 */
@@ -34,25 +34,26 @@ class PdfDictionary extends PdfType {
 
 		while ( true ) {
 			$token = $tokenizer->getNextToken();
-			if ( $token === '>' && $streamReader->getByte() === '>' ) {
+			if ( '>' === $token && '>' === $streamReader->getByte() ) {
 				$streamReader->addOffset( 1 );
 				break;
 			}
 
 			$key = $parser->readValue( $token );
-			if ( $key === false ) {
+			if ( false === $key ) {
 				return false;
 			}
 
-			// ensure the first value to be a Name object
+			// ensure the first value to be a Name object.
 			if ( ! ( $key instanceof PdfName ) ) {
 				$lastToken = null;
-				// ignore all other entries and search for the closing brackets
-				while ( ( $token = $tokenizer->getNextToken() ) !== '>' && $token !== false && $lastToken !== '>' ) {
+				// ignore all other entries and search for the closing brackets.
+				$token = $tokenizer->getNextToken();
+				while ( ( $token ) !== '>' && false !== $token && '>' !== $lastToken ) {
 					$lastToken = $token;
 				}
 
-				if ( $token === false ) {
+				if ( false === $token ) {
 					return false;
 				}
 
@@ -60,7 +61,7 @@ class PdfDictionary extends PdfType {
 			}
 
 			$value = $parser->readValue();
-			if ( $value === false ) {
+			if ( false === $value ) {
 				return false;
 			}
 
@@ -68,8 +69,8 @@ class PdfDictionary extends PdfType {
 				continue;
 			}
 
-			// catch missing value
-			if ( $value instanceof PdfToken && $value->value === '>' && $streamReader->getByte() === '>' ) {
+			// catch missing value.
+			if ( $value instanceof PdfToken && '>' === $value->value && '>' === $streamReader->getByte() ) {
 				$streamReader->addOffset( 1 );
 				break;
 			}
@@ -99,9 +100,9 @@ class PdfDictionary extends PdfType {
 	/**
 	 * Get a value by its key from a dictionary or a default value.
 	 *
-	 * @param mixed              $dictionary
-	 * @param string             $key
-	 * @param PdfType|mixed|null $default
+	 * @param mixed              $dictionary Get dictionary.
+	 * @param string             $key Get Key.
+	 * @param PdfType|mixed|null $default Get default value.
 	 * @return PdfNull|PdfType
 	 * @throws PdfTypeException
 	 */
@@ -112,7 +113,7 @@ class PdfDictionary extends PdfType {
 			return $dictionary->value[ $key ];
 		}
 
-		return $default === null
+		return null === $default
 			? new PdfNull()
 			: $default;
 	}
@@ -120,7 +121,7 @@ class PdfDictionary extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfDictionary instance.
 	 *
-	 * @param mixed $dictionary
+	 * @param mixed $dictionary Get dictionary.
 	 * @return self
 	 * @throws PdfTypeException
 	 */

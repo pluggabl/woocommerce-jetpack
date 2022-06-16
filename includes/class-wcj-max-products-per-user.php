@@ -184,7 +184,7 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 					add_query_arg(
 						'wcj_max_products_per_user_calculate_data_finished',
 						$total_orders,
-						remove_query_arg( 'wcj_max_products_per_user_calculate_data' )
+						esc_url( remove_query_arg( 'wcj_max_products_per_user_calculate_data' ) )
 					)
 				);
 				exit;

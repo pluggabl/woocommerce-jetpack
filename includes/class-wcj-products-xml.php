@@ -134,7 +134,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			if ( false !== $result ) {
 				update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
 			}
-			wp_safe_redirect( add_query_arg( 'wcj_create_products_xml_result', ( false === $result ? 0 : $file_num ), remove_query_arg( 'wcj_create_products_xml' ) ) );
+			wp_safe_redirect( add_query_arg( 'wcj_create_products_xml_result', ( false === $result ? 0 : $file_num ), esc_url( remove_query_arg( 'wcj_create_products_xml' ) ) ));
 			exit;
 		}
 	}

@@ -53,7 +53,7 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 			$nonce = wp_create_nonce();
 			if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) && wp_verify_nonce( $nonce ) ) {
 				update_option( 'wcj_log', '' );
-				if ( wp_safe_redirect( remove_query_arg( 'wcj_delete_log' ) ) ) {
+				if ( wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_log' ) ) ) ) {
 					exit;
 				}
 			}

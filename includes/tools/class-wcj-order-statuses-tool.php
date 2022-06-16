@@ -159,7 +159,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			foreach ( $custom_statuses as $slug => $label ) {
 				delete_option( 'wcj_orders_custom_status_icon_data_' . $slug );
 			}
-			wp_safe_redirect( remove_query_arg( 'delete_all' ) );
+			wp_safe_redirect( esc_url(remove_query_arg( 'delete_all' )) );
 			exit;
 		}
 
@@ -192,11 +192,11 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 					$icon_data       = $this->module->get_status_icon_data( substr( $status, 3 ) );
 					$color_html      = '<input disabled type="color" value="' . $icon_data['color'] . '">';
 					$text_color_html = '<input disabled type="color" value="' . $icon_data['text_color'] . '">';
-					$delete_button   = '<a class="button-primary" href="' . esc_url( add_query_arg( 'delete', $status, remove_query_arg( 'edit' ) ) ) .
+					$delete_button   = '<a class="button-primary" href="' . esc_url( add_query_arg( 'delete', $status, esc_url(remove_query_arg( 'edit' )) ) ) .
 					'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
 					$edit_button     = '<a class="button-primary"' . ( '' !== apply_filters( 'booster_message', '', 'desc' ) ?
 					' disabled title="' . __( 'Get Booster Plus to enable.', 'woocommerce-jetpack' ) . '"' :
-					' href="' . esc_url( add_query_arg( 'edit', $status, remove_query_arg( 'delete' ) ) ) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
+					' href="' . esc_url( add_query_arg( 'edit', $status, esc_url(remove_query_arg( 'delete' ) ) )) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
 					$row             = array_merge(
 						$row,
 						array(
@@ -255,7 +255,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$action_button         = '<input class="button-primary" type="submit" name="' . ( $is_editing ? 'edit_custom_status' : 'add_custom_status' ) . '"' .
 				' value="' . ( $is_editing ? __( 'Edit custom status', 'woocommerce-jetpack' ) : __( 'Add new custom status', 'woocommerce-jetpack' ) ) . '">';
 			$clear_button          = ( $is_editing ?
-				' <a class="button-primary" href="' . remove_query_arg( array( 'delete', 'edit' ) ) . '">' . __( 'Clear', 'woocommerce-jetpack' ) . '</a>' : '' );
+				' <a class="button-primary" href="' . esc_url(remove_query_arg( array( 'delete', 'edit' )) ) . '">' . __( 'Clear', 'woocommerce-jetpack' ) . '</a>' : '' );
 			$table_data            = array(
 				array(
 					__( 'Slug (without <code>wc-</code> prefix)', 'woocommerce-jetpack' ),
@@ -279,7 +279,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 				$columns_styles[] = 'width:16%;';
 			}
 			return '<h4>' . ( $is_editing ? __( 'Edit', 'woocommerce-jetpack' ) : __( 'Add', 'woocommerce-jetpack' ) ) . '</h4>' .
-			'<form method="post" action="' . remove_query_arg( 'delete' ) . '">' .
+			'<form method="post" action="' . esc_url(remove_query_arg( 'delete' )) . '">' .
 				wcj_get_table_html(
 					$table_data,
 					array(
@@ -317,7 +317,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		 * @since   3.2.2
 		 */
 		public function get_delete_all_custom_statuses_button() {
-			return '<p> <a class="button-primary" href="' . esc_url( add_query_arg( 'delete_all', '1', remove_query_arg( array( 'edit', 'delete' ) ) ) ) .
+			return '<p> <a class="button-primary" href="' . esc_url( add_query_arg( 'delete_all', '1', esc_url(remove_query_arg( array( 'edit', 'delete' )) ) ) ) .
 			'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete All Custom Statuses', 'woocommerce-jetpack' ) . '</a>' .
 			'</p>';
 		}

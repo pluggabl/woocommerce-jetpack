@@ -100,7 +100,7 @@ return array(
 		'default' => '',
 		'type'    => 'custom_link',
 		'link'    => '<a class="button" href="' .
-		esc_url( add_query_arg( 'wcj_max_products_per_user_calculate_data', '1', remove_query_arg( 'wcj_max_products_per_user_calculate_data_finished' ) ) ) . '">' .
+		esc_url( add_query_arg( 'wcj_max_products_per_user_calculate_data', '1', esc_url(remove_query_arg( 'wcj_max_products_per_user_calculate_data_finished' ) )) ) . '">' .
 				__( 'Calculate Data', 'woocommerce-jetpack' ) .
 			'</a>',
 	),

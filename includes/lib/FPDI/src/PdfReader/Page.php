@@ -31,16 +31,22 @@ use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
 class Page {
 
 	/**
+	 * PdfIndirectObject
+	 *
 	 * @var PdfIndirectObject
 	 */
 	protected $pageObject;
 
 	/**
+	 * PdfDictionary
+	 *
 	 * @var PdfDictionary
 	 */
 	protected $pageDictionary;
 
 	/**
+	 * PdfParser
+	 *
 	 * @var PdfParser
 	 */
 	protected $parser;
@@ -55,8 +61,8 @@ class Page {
 	/**
 	 * Page constructor.
 	 *
-	 * @param PdfIndirectObject $page
-	 * @param PdfParser         $parser
+	 * @param PdfIndirectObject $page Get pdf page object.
+	 * @param PdfParser         $parser get pdf Parser.
 	 */
 	public function __construct( PdfIndirectObject $page, PdfParser $parser ) {
 		$this->pageObject = $page;
@@ -91,8 +97,8 @@ class Page {
 	/**
 	 * Get a page attribute.
 	 *
-	 * @param string $name
-	 * @param bool   $inherited
+	 * @param string $name Get name.
+	 * @param bool   $inherited Get inherited value.
 	 * @return PdfType|null
 	 * @throws PdfParserException
 	 * @throws PdfTypeException
@@ -107,7 +113,7 @@ class Page {
 
 		$inheritedKeys = array( 'Resources', 'MediaBox', 'CropBox', 'Rotate' );
 		if ( $inherited && \in_array( $name, $inheritedKeys, true ) ) {
-			if ( $this->inheritedAttributes === null ) {
+			if ( null === $this->inheritedAttributes ) {
 				$this->inheritedAttributes = array();
 				$inheritedKeys             = \array_filter(
 					$inheritedKeys,
@@ -126,7 +132,9 @@ class Page {
 							}
 						}
 
-						/** @noinspection NotOptimalIfConditionsInspection */
+						/**
+						 * Noinspection NotOptimalIfConditionsInspection
+						 */
 						if ( isset( $parentDict->value['Parent'] ) && \count( $inheritedKeys ) > 0 ) {
 							$parentDict = PdfType::resolve( PdfDictionary::get( $parentDict, 'Parent' ), $this->parser );
 						} else {
@@ -170,8 +178,8 @@ class Page {
 	/**
 	 * Get a boundary of this page.
 	 *
-	 * @param string $box
-	 * @param bool   $fallback
+	 * @param string $box Get String value.
+	 * @param bool   $fallback Get fallback Value.
 	 * @return bool|Rectangle
 	 * @throws PdfParserException
 	 * @throws PdfTypeException
@@ -181,11 +189,11 @@ class Page {
 	public function getBoundary( $box = PageBoundaries::CROP_BOX, $fallback = true ) {
 		$value = $this->getAttribute( $box );
 
-		if ( $value !== null ) {
+		if ( null !== $value ) {
 			return Rectangle::byPdfArray( $value, $this->parser );
 		}
 
-		if ( $fallback === false ) {
+		if ( false === $fallback ) {
 			return false;
 		}
 
@@ -204,8 +212,8 @@ class Page {
 	/**
 	 * Get the width and height of this page.
 	 *
-	 * @param string $box
-	 * @param bool   $fallback
+	 * @param string $box Get String value.
+	 * @param bool   $fallback Get fallback Value.
 	 * @return array|bool
 	 * @throws PdfParserException
 	 * @throws PdfTypeException
@@ -213,7 +221,7 @@ class Page {
 	 */
 	public function getWidthAndHeight( $box = PageBoundaries::CROP_BOX, $fallback = true ) {
 		$boundary = $this->getBoundary( $box, $fallback );
-		if ( $boundary === false ) {
+		if ( false === $boundary ) {
 			return false;
 		}
 

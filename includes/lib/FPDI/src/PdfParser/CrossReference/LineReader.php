@@ -32,8 +32,8 @@ class LineReader extends AbstractReader implements ReaderInterface {
 	/**
 	 * LineReader constructor.
 	 *
-	 * @param PdfParser $parser
-	 * @throws CrossReferenceException
+	 * @param PdfParser $parser Get PdfParser.
+	 * @throws CrossReferenceException CrossReferenceException.
 	 */
 	public function __construct( PdfParser $parser ) {
 		$this->read( $this->extract( $parser->getStreamReader() ) );
@@ -41,7 +41,7 @@ class LineReader extends AbstractReader implements ReaderInterface {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Inheritdoc
 	 */
 	public function getOffsetFor( $objectNumber ) {
 		if ( isset( $this->offsets[ $objectNumber ] ) ) {
@@ -63,9 +63,9 @@ class LineReader extends AbstractReader implements ReaderInterface {
 	/**
 	 * Extracts the cross reference data from the stream reader.
 	 *
-	 * @param StreamReader $reader
+	 * @param StreamReader $reader Get StreamReader.
 	 * @return string
-	 * @throws CrossReferenceException
+	 * @throws CrossReferenceException CrossReferenceException.
 	 */
 	protected function extract( StreamReader $reader ) {
 		$cycles        = -1;
@@ -81,7 +81,7 @@ class LineReader extends AbstractReader implements ReaderInterface {
 			}
 		}
 
-		if ( $trailerPos === false ) {
+		if ( false === $trailerPos ) {
 			throw new CrossReferenceException(
 				'Unexpected end of cross reference. "trailer"-keyword not found.',
 				CrossReferenceException::NO_TRAILER_FOUND
@@ -97,11 +97,11 @@ class LineReader extends AbstractReader implements ReaderInterface {
 	/**
 	 * Read the cross-reference entries.
 	 *
-	 * @param string $xrefContent
-	 * @throws CrossReferenceException
+	 * @param string $xrefContent Get xrefContent.
+	 * @throws CrossReferenceException CrossReferenceException.
 	 */
 	protected function read( $xrefContent ) {
-		// get eol markers in the first 100 bytes
+		// get eol markers in the first 100 bytes.
 		\preg_match_all( "/(\r\n|\n|\r)/", \substr( $xrefContent, 0, 100 ), $m );
 
 		if ( \count( $m[0] ) === 0 ) {
@@ -111,9 +111,9 @@ class LineReader extends AbstractReader implements ReaderInterface {
 			);
 		}
 
-		// count(array_count_values()) is faster then count(array_unique())
-		// @see https://github.com/symfony/symfony/pull/23731
-		// can be reverted for php7.2
+		// count(array_count_values()) is faster then count(array_unique()).
+		// @see https://github.com/symfony/symfony/pull/23731.
+		// can be reverted for php7.2.
 		$differentLineEndings = \count( \array_count_values( $m[0] ) );
 		if ( $differentLineEndings > 1 ) {
 			$lines = \preg_split( "/(\r\n|\n|\r)/", $xrefContent, -1, PREG_SPLIT_NO_EMPTY );
@@ -128,7 +128,7 @@ class LineReader extends AbstractReader implements ReaderInterface {
 
 		$offsets = array();
 
-		/** @noinspection ForeachInvariantsInspection */
+		/** Noinspection ForeachInvariantsInspection */
 		for ( $i = 0; $i < $linesCount; $i++ ) {
 			$line = \trim( $lines[ $i ] );
 			if ( $line ) {
@@ -141,7 +141,7 @@ class LineReader extends AbstractReader implements ReaderInterface {
 						$entryCount += (int) $pieces[1];
 						break;
 
-					/** @noinspection PhpMissingBreakStatementInspection */
+					/** Noinspection PhpMissingBreakStatementInspection */
 					case 3:
 						switch ( $pieces[2] ) {
 							case 'n':
@@ -152,7 +152,7 @@ class LineReader extends AbstractReader implements ReaderInterface {
 								$start++;
 								break 2;
 						}
-						// fall through if pieces doesn't match
+						// fall through if pieces doesn't match.
 
 					default:
 						throw new CrossReferenceException(

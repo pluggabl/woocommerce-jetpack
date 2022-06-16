@@ -17,6 +17,8 @@ namespace setasign\Fpdi\PdfParser;
 class Tokenizer {
 
 	/**
+	 * StreamReader
+	 * 
 	 * @var StreamReader
 	 */
 	protected $streamReader;
@@ -31,7 +33,7 @@ class Tokenizer {
 	/**
 	 * Tokenizer constructor.
 	 *
-	 * @param StreamReader $streamReader
+	 * @param StreamReader $streamReader Get streamReader.
 	 */
 	public function __construct( StreamReader $streamReader ) {
 		$this->streamReader = $streamReader;
@@ -56,7 +58,7 @@ class Tokenizer {
 	/**
 	 * Push a token onto the stack.
 	 *
-	 * @param string $token
+	 * @param string $token Get token.
 	 */
 	public function pushStack( $token ) {
 		$this->stack[] = $token;
@@ -69,20 +71,20 @@ class Tokenizer {
 	 */
 	public function getNextToken() {
 		$token = \array_pop( $this->stack );
-		if ( $token !== null ) {
+		if ( null !== $token ) {
 			return $token;
 		}
-
-		if ( ( $byte = $this->streamReader->readByte() ) === false ) {
+		$byte = $this->streamReader->readByte();
+		if ( ( $byte ) === false ) {
 			return false;
 		}
 
-		if ( $byte === "\x20" ||
-			$byte === "\x0A" ||
-			$byte === "\x0D" ||
-			$byte === "\x0C" ||
-			$byte === "\x09" ||
-			$byte === "\x00"
+		if ( "\x20" === $byte ||
+			"\x0A" === $byte ||
+			"\x0D" === $byte ||
+			"\x0C" === $byte ||
+			"\x09" === $byte ||
+			"\x00" === $byte
 		) {
 			if ( $this->leapWhiteSpaces() === false ) {
 				return false;
@@ -107,7 +109,7 @@ class Tokenizer {
 		}
 
 		/*
-		 This way is faster than checking single bytes.
+		 * This way is faster than checking single bytes.
 		 */
 		$bufferOffset = $this->streamReader->getOffset();
 		do {
@@ -118,11 +120,11 @@ class Tokenizer {
 				$bufferOffset
 			);
 		} while (
-			// Break the loop if a delimiter or white space char is matched
-			// in the current buffer or increase the buffers length
-			$lastBuffer !== false &&
+			// Break the loop if a delimiter or white space char is matched.
+			// in the current buffer or increase the buffers length.
+			false !== $lastBuffer &&
 			(
-				$bufferOffset + $pos === \strlen( $lastBuffer ) &&
+				\strlen( $lastBuffer ) === $bufferOffset + $pos &&
 				$this->streamReader->increaseLength()
 			)
 		);

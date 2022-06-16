@@ -10,7 +10,7 @@
 namespace setasign\Fpdi\PdfParser\Filter;
 
 /**
- * Class for handling zlib/deflate encoded data
+ * Class for handling zlib/deflate encoded data.
  *
  * @package setasign\Fpdi\PdfParser\Filter
  */
@@ -31,7 +31,7 @@ class Flate implements FilterInterface {
 	/**
 	 * Decodes a flate compressed string.
 	 *
-	 * @param string $data The input string
+	 * @param string $data The input string.
 	 * @return string
 	 * @throws FlateException
 	 */
@@ -39,15 +39,15 @@ class Flate implements FilterInterface {
 		if ( $this->extensionLoaded() ) {
 			$oData = $data;
 			$data  = @( ( \strlen( $data ) > 0 ) ? \gzuncompress( $data ) : '' );
-			if ( $data === false ) {
-				// Try this fallback
+			if ( false === $data ) {
+				// Try this fallback.
 				$tries = 1;
-				while ( $tries < 10 && ( $data === false || \strlen( $data ) < ( \strlen( $oData ) - $tries - 1 ) ) ) {
+				while ( $tries < 10 && ( false === $data || \strlen( $data ) < ( \strlen( $oData ) - $tries - 1 ) ) ) {
 					$data = @( \gzinflate( \substr( $oData, $tries ) ) );
 					$tries++;
 				}
 
-				if ( $data === false ) {
+				if ( false === $data ) {
 					throw new FlateException(
 						'Error while decompressing stream.',
 						FlateException::DECOMPRESS_ERROR

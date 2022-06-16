@@ -12,7 +12,7 @@ namespace setasign\Fpdi\PdfParser\Filter;
 use setasign\Fpdi\PdfParser\PdfParserException;
 
 /**
- * Exception for filters
+ * Exception for filters.
  *
  * @package setasign\Fpdi\PdfParser\Filter
  */

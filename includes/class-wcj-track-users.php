@@ -116,7 +116,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	function track_users_update_county_stats() {
 		if ( isset( $_GET['wcj_track_users_update_county_stats'] ) ) {
 			$this->track_users_generate_stats_cron( 'manual' );
-			wp_safe_redirect( remove_query_arg( 'wcj_track_users_update_county_stats' ) );
+			wp_safe_redirect( esc_url( remove_query_arg( 'wcj_track_users_update_county_stats' )) );
 			exit;
 		}
 	}
@@ -235,7 +235,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 			$wpdb->query( $sql );
 			delete_option( 'wcj_track_users_stats_by_country' );
 			delete_option( 'wcj_track_users_cron_time_last_run' );
-			wp_safe_redirect( remove_query_arg( 'wcj_delete_track_users_stats' ) );
+			wp_safe_redirect( esc_url(remove_query_arg( 'wcj_delete_track_users_stats' ) ));
 			exit;
 		}
 	}

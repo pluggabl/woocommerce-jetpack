@@ -47,7 +47,7 @@ class FpdfTpl extends \tFPDF {
 	 * @throws \BadMethodCallException
 	 */
 	public function setPageFormat( $size, $orientation ) {
-		if ( $this->currentTemplateId !== null ) {
+		if ( null !== $this->currentTemplateId ) {
 			throw new \BadMethodCallException( 'The page format cannot be changed when writing to a template.' );
 		}
 
@@ -62,12 +62,12 @@ class FpdfTpl extends \tFPDF {
 
 		$size = $this->_getpagesize( $size );
 
-		if ( $orientation != $this->CurOrientation
-			|| $size[0] != $this->CurPageSize[0]
-			|| $size[1] != $this->CurPageSize[1]
+		if ( $orientation !== $this->CurOrientation
+			|| $size[0] !== $this->CurPageSize[0]
+			|| $size[1] !== $this->CurPageSize[1]
 		) {
-			// New size or orientation
-			if ( $orientation === 'P' ) {
+			// New size or orientation.
+			if ( 'P' === $orientation ) {
 				$this->w = $size[0];
 				$this->h = $size[1];
 			} else {
@@ -85,7 +85,7 @@ class FpdfTpl extends \tFPDF {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Inheritdoc
 	 */
 	protected function _put( $s, $newLine = true ) {
 		if ( $newLine ) {

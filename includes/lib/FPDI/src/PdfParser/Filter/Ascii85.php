@@ -10,7 +10,7 @@
 namespace setasign\Fpdi\PdfParser\Filter;
 
 /**
- * Class for handling ASCII base-85 encoded data
+ * Class for handling ASCII base-85 encoded data.
  *
  * @package setasign\Fpdi\PdfParser\Filter
  */
@@ -19,9 +19,9 @@ class Ascii85 implements FilterInterface {
 	/**
 	 * Decode ASCII85 encoded string.
 	 *
-	 * @param string $data The input string
+	 * @param string $data The input string.
 	 * @return string
-	 * @throws Ascii85Exception
+	 * @throws Ascii85Exception Ascii85Exception.
 	 */
 	public function decode( $data ) {
 		$out   = '';
@@ -30,23 +30,23 @@ class Ascii85 implements FilterInterface {
 
 		$l = \strlen( $data );
 
-		/** @noinspection ForeachInvariantsInspection */
+		/** Nnoinspection ForeachInvariantsInspection */
 		for ( $k = 0; $k < $l; ++$k ) {
 			$ch = \ord( $data[ $k ] ) & 0xff;
 
-			// Start <~
-			if ( $k === 0 && $ch === 60 && isset( $data[ $k + 1 ] ) && ( \ord( $data[ $k + 1 ] ) & 0xFF ) === 126 ) {
+			// Start.
+			if ( 0 === $k && 60 === $ch && isset( $data[ $k + 1 ] ) && ( \ord( $data[ $k + 1 ] ) & 0xFF ) === 126 ) {
 				$k++;
 				continue;
 			}
-			// End ~>
-			if ( $ch === 126 && isset( $data[ $k + 1 ] ) && ( \ord( $data[ $k + 1 ] ) & 0xFF ) === 62 ) {
+			// End.
+			if ( 126 === $ch && isset( $data[ $k + 1 ] ) && ( \ord( $data[ $k + 1 ] ) & 0xFF ) === 62 ) {
 				break;
 			}
 			if ( \preg_match( '/^\s$/', \chr( $ch ) ) ) {
 				continue;
 			}
-			if ( $ch === 122 /* z */ && $state === 0 ) {
+			if ( 122 === $ch /* z */ && 0 === $state ) {
 				$out .= \chr( 0 ) . \chr( 0 ) . \chr( 0 ) . \chr( 0 );
 				continue;
 			}
@@ -60,11 +60,11 @@ class Ascii85 implements FilterInterface {
 			$chn[ $state ] = $ch - 33;/* ! */
 			$state++;
 
-			if ( $state === 5 ) {
+			if ( 5 === $state ) {
 				$state = 0;
 				$r     = 0;
 				for ( $j = 0; $j < 5; ++$j ) {
-					/** @noinspection UnnecessaryCastingInspection */
+					/** Noinspection UnnecessaryCastingInspection */
 					$r = (int) ( $r * 85 + $chn[ $j ] );
 				}
 
@@ -75,23 +75,23 @@ class Ascii85 implements FilterInterface {
 			}
 		}
 
-		if ( $state === 1 ) {
+		if ( 1 === $state ) {
 			throw new Ascii85Exception(
 				'Illegal length while ASCII85 decode.',
 				Ascii85Exception::ILLEGAL_LENGTH
 			);
 		}
 
-		if ( $state === 2 ) {
+		if ( 2 === $state ) {
 			$r    = $chn[0] * 85 * 85 * 85 * 85 + ( $chn[1] + 1 ) * 85 * 85 * 85;
 			$out .= \chr( $r >> 24 );
 
-		} elseif ( $state === 3 ) {
+		} elseif ( 3 === $state ) {
 			$r    = $chn[0] * 85 * 85 * 85 * 85 + $chn[1] * 85 * 85 * 85 + ( $chn[2] + 1 ) * 85 * 85;
 			$out .= \chr( $r >> 24 );
 			$out .= \chr( $r >> 16 );
 
-		} elseif ( $state === 4 ) {
+		} elseif ( 4 === $state ) {
 			$r    = $chn[0] * 85 * 85 * 85 * 85 + $chn[1] * 85 * 85 * 85 + $chn[2] * 85 * 85 + ( $chn[3] + 1 ) * 85;
 			$out .= \chr( $r >> 24 );
 			$out .= \chr( $r >> 16 );

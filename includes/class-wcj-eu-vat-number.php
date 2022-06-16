@@ -143,7 +143,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 						}
 					}
 				}
-				wp_safe_redirect( remove_query_arg( 'validate_vat_and_maybe_remove_taxes' ) );
+				wp_safe_redirect( esc_url( remove_query_arg( 'validate_vat_and_maybe_remove_taxes' ) ) );
 				exit;
 			}
 		}

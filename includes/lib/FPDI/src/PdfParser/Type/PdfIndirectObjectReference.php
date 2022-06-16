@@ -19,8 +19,8 @@ class PdfIndirectObjectReference extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param int $objectNumber
-	 * @param int $generationNumber
+	 * @param int $objectNumber Get objectNumber.
+	 * @param int $generationNumber Get generationNumber.
 	 * @return self
 	 */
 	public static function create( $objectNumber, $generationNumber ) {
@@ -34,7 +34,7 @@ class PdfIndirectObjectReference extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfIndirectObject instance.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Get value.
 	 * @return self
 	 * @throws PdfTypeException
 	 */

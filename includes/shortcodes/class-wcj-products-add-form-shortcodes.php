@@ -330,7 +330,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			$header_html .= '<h3>';
 			$header_html .= ( 0 == $atts['product_id'] ) ? __( 'Add New Product', 'woocommerce-jetpack' ) : __( 'Edit Product', 'woocommerce-jetpack' );
 			$header_html .= '</h3>';
-			$header_html .= '<form method="post" action="' . remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) .
+			$header_html .= '<form method="post" action="' . esc_url(remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) )) .
 			'" enctype="multipart/form-data">';
 
 			$required_mark_html_template = '&nbsp;<abbr class="required" title="' . __( 'required', 'woocommerce-jetpack' ) . '">*</abbr>';

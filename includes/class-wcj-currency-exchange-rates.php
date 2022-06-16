@@ -71,7 +71,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 			$nonce = wp_create_nonce();
 			if ( isset( $_GET['wcj_currency_exchange_rates_update_now'] ) && wp_verify_nonce( $nonce ) ) {
 				do_action( 'auto_update_exchange_rates_hook' );
-				wp_safe_redirect( remove_query_arg( 'wcj_currency_exchange_rates_update_now' ) );
+				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_currency_exchange_rates_update_now' ) ) );
 			}
 		}
 

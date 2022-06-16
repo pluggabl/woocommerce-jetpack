@@ -400,7 +400,7 @@ if (!class_exists('WCJ_Related_Products')) :
 					}
 					$offset += $block_size;
 				}
-				wp_safe_redirect(remove_query_arg('wcj_clear_all_products_transients'));
+				wp_safe_redirect(esc_url( remove_query_arg('wcj_clear_all_products_transients')));
 				exit;
 			}
 		}

@@ -23,11 +23,11 @@ class PdfIndirectObject extends PdfType {
 	/**
 	 * Parses an indirect object from a tokenizer, parser and stream-reader.
 	 *
-	 * @param int          $objectNumberToken
-	 * @param int          $objectGenerationNumberToken
-	 * @param PdfParser    $parser
-	 * @param Tokenizer    $tokenizer
-	 * @param StreamReader $reader
+	 * @param int          $objectNumberToken Get objectNumberToken.
+	 * @param int          $objectGenerationNumberToken Get objectGenerationNumberToken.
+	 * @param PdfParser    $parser Get PdfParser Value.
+	 * @param Tokenizer    $tokenizer Get tokenizer.
+	 * @param StreamReader $reader Get reader.
 	 * @return bool|self
 	 * @throws PdfTypeException
 	 */
@@ -39,14 +39,14 @@ class PdfIndirectObject extends PdfType {
 		StreamReader $reader
 	) {
 		$value = $parser->readValue();
-		if ( $value === false ) {
+		if ( false === $value ) {
 			return false;
 		}
 
 		$nextToken = $tokenizer->getNextToken();
-		if ( $nextToken === 'stream' ) {
+		if ( 'stream' === $nextToken ) {
 			$value = PdfStream::parse( $value, $reader );
-		} elseif ( $nextToken !== false ) {
+		} elseif ( false !== $nextToken ) {
 			$tokenizer->pushStack( $nextToken );
 		}
 
@@ -61,9 +61,9 @@ class PdfIndirectObject extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param int     $objectNumber
-	 * @param int     $generationNumber
-	 * @param PdfType $value
+	 * @param int     $objectNumber Get objectNumber.
+	 * @param int     $generationNumber Get generationNumber.
+	 * @param PdfType $value Get Pdftype value.
 	 * @return self
 	 */
 	public static function create( $objectNumber, $generationNumber, PdfType $value ) {
@@ -78,7 +78,7 @@ class PdfIndirectObject extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfIndirectObject instance.
 	 *
-	 * @param mixed $indirectObject
+	 * @param mixed $indirectObject Get indirectObject.
 	 * @return self
 	 * @throws PdfTypeException
 	 */

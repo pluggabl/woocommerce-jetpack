@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 						}
 					}
 				}
-				wp_safe_redirect( remove_query_arg( 'wcj-remove-from-cart' ) );
+				wp_safe_redirect( esc_url( remove_query_arg( 'wcj-remove-from-cart' ) ) );
 				exit;
 			}
 		}

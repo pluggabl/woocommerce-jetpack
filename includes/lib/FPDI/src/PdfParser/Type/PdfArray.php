@@ -23,8 +23,8 @@ class PdfArray extends PdfType {
 	/**
 	 * Parses an array of the passed tokenizer and parser.
 	 *
-	 * @param Tokenizer $tokenizer
-	 * @param PdfParser $parser
+	 * @param Tokenizer $tokenizer Get tokenizer.
+	 * @param PdfParser $parser Get PdfParser.
 	 * @return bool|self
 	 * @throws PdfTypeException
 	 */
@@ -32,8 +32,10 @@ class PdfArray extends PdfType {
 		$result = array();
 
 		// Recurse into this function until we reach the end of the array.
-		while ( ( $token = $tokenizer->getNextToken() ) !== ']' ) {
-			if ( $token === false || ( $value = $parser->readValue( $token ) ) === false ) {
+		$token = $tokenizer->getNextToken();
+		while ( ']' !== ( $token ) ) {
+			$value = $parser->readValue( $token );
+			if ( false === $token || false === ( $value ) ) {
 				return false;
 			}
 
@@ -49,7 +51,7 @@ class PdfArray extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param PdfType[] $values
+	 * @param PdfType[] $values Get pdf type value.
 	 * @return self
 	 */
 	public static function create( array $values = array() ) {
@@ -62,15 +64,15 @@ class PdfArray extends PdfType {
 	/**
 	 * Ensures that the passed array is a PdfArray instance with a (optional) specific size.
 	 *
-	 * @param mixed    $array
-	 * @param null|int $size
+	 * @param mixed    $array Get array value.
+	 * @param null|int $size Get size value.
 	 * @return self
 	 * @throws PdfTypeException
 	 */
 	public static function ensure( $array, $size = null ) {
 		$result = PdfType::ensureType( self::class, $array, 'Array value expected.' );
 
-		if ( $size !== null && \count( $array->value ) !== $size ) {
+		if ( null !== $size && \count( $array->value ) !== $size ) {
 			throw new PdfTypeException(
 				\sprintf( 'Array with %s entries expected.', $size ),
 				PdfTypeException::INVALID_DATA_SIZE

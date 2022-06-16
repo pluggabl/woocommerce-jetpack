@@ -23,6 +23,8 @@ use setasign\Fpdi\PdfParser\StreamReader;
 class FixedReader extends AbstractReader implements ReaderInterface {
 
 	/**
+	 * StreamReader
+	 *
 	 * @var StreamReader
 	 */
 	protected $reader;
@@ -37,8 +39,8 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 	/**
 	 * FixedReader constructor.
 	 *
-	 * @param PdfParser $parser
-	 * @throws CrossReferenceException
+	 * @param PdfParser $parser Get PdfParser.
+	 * @throws CrossReferenceException CrossReferenceException.
 	 */
 	public function __construct( PdfParser $parser ) {
 		$this->reader = $parser->getStreamReader();
@@ -56,7 +58,7 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Inheritdoc
 	 */
 	public function getOffsetFor( $objectNumber ) {
 		foreach ( $this->subSections as $offset => list($startObject, $objectCount) ) {
@@ -64,7 +66,7 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 				$position = $offset + 20 * ( $objectNumber - $startObject );
 				$this->reader->ensure( $position, 20 );
 				$line = $this->reader->readBytes( 20 );
-				if ( $line[17] === 'f' ) {
+				if ( 'f' === $line[17] ) {
 					return false;
 				}
 
@@ -81,12 +83,13 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 	 * This reader will only read the subsections in this method. The offsets were resolved individually by this
 	 * information.
 	 *
-	 * @throws CrossReferenceException
+	 * @throws CrossReferenceException CrossReferenceException.
 	 */
 	protected function read() {
-		$subSections = array();
-
-		$startObject     = $entryCount = $lastLineStart = null;
+		$subSections     = array();
+		$lastLineStart   = null;
+		$entryCount      = $lastLineStart;
+		$startObject     = $entryCount;
 		$validityChecked = false;
 		while ( ( $line = $this->reader->readLine( 20 ) ) !== false ) {
 			if ( \strpos( $line, 'trailer' ) !== false ) {
@@ -94,7 +97,7 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 				break;
 			}
 
-			// jump over if line content doesn't match the expected string
+			// jump over if line content doesn't match the expected string.
 			if ( \sscanf( $line, '%d %d', $startObject, $entryCount ) !== 2 ) {
 				continue;
 			}
@@ -105,7 +108,7 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 			if ( ! $validityChecked && $entryCount > 0 ) {
 				$nextLine = $this->reader->readBytes( 21 );
 				/*
-				 Check the next line for maximum of 20 bytes and not longer
+				 * Check the next line for maximum of 20 bytes and not longer
 				 * By catching 21 bytes and trimming the length should be still 21.
 				 */
 				if ( \strlen( \trim( $nextLine ) ) !== 21 ) {
@@ -136,7 +139,7 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 			$this->reader->reset( $lastLineStart );
 		}
 
-		// reset after the last correct parsed line
+		// reset after the last correct parsed line.
 		$this->reader->reset( $lastLineStart );
 
 		if ( \count( $subSections ) === 0 ) {
@@ -177,7 +180,7 @@ class FixedReader extends AbstractReader implements ReaderInterface {
 		}
 
 		$subSection = \current( $subSections );
-		if ( $subSection[0] != 1 ) {
+		if ( 1 !== $subSection[0] ) {
 			return false;
 		}
 

@@ -524,7 +524,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						update_option( $settings['id'], $default_value );
 					}
 				}
-				wp_safe_redirect( remove_query_arg( 'wcj_reset_settings' ) );
+				wp_safe_redirect(esc_url( remove_query_arg( 'wcj_reset_settings' ) ));
 				exit();
 			}
 		}

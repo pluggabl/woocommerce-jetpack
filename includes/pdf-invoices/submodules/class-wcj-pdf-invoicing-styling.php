@@ -102,7 +102,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 				delete_option( 'wcj_invoicing_fonts_version' );
 				delete_option( 'wcj_invoicing_fonts_version_timestamp' );
 				wcj_check_and_maybe_download_tcpdf_fonts();
-				wp_safe_redirect( remove_query_arg( 'wcj_download_fonts' ) );
+				wp_safe_redirect( esc_url(remove_query_arg( 'wcj_download_fonts' )) );
 				exit;
 			}
 		}

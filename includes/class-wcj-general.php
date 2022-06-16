@@ -251,7 +251,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 			$table_data[] = array( __( 'Name', 'woocommerce-jetpack' ), '<input style="width:100%" required type="text" name="wcj_custom_role_name">' );
 			$table_data[] = array( __( 'Capabilities', 'woocommerce-jetpack' ), wcj_get_select_html( 'wcj_custom_role_caps', wcj_get_user_roles_options(), 'width:100%' ) );
 			echo '<h3>' . wp_kses_post( 'Add New Role', 'woocommerce-jetpack' ) . '</h3>';
-			echo '<form method="post" action="' . wp_kses_post( remove_query_arg( 'wcj_delete_role' ) ) . '">' .
+			echo '<form method="post" action="' . wp_kses_post( esc_url( remove_query_arg( 'wcj_delete_role' ) ) ) . '">' .
 			wp_kses_post(
 				wcj_get_table_html(
 					$table_data,

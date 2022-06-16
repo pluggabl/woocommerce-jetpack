@@ -25,16 +25,16 @@ class PdfType {
 	 *
 	 * This method is used to evaluate indirect and direct object references until a final value is reached.
 	 *
-	 * @param PdfType   $value
-	 * @param PdfParser $parser
-	 * @param bool      $stopAtIndirectObject
+	 * @param PdfType   $value Get PdfType value.
+	 * @param PdfParser $parser Get PdfParser.
+	 * @param bool      $stopAtIndirectObject Get stopAtIndirectObject.
 	 * @return PdfType
-	 * @throws CrossReferenceException
-	 * @throws PdfParserException
+	 * @throws CrossReferenceException CrossReferenceException.
+	 * @throws PdfParserException PdfParserException.
 	 */
 	public static function resolve( PdfType $value, PdfParser $parser, $stopAtIndirectObject = false ) {
 		if ( $value instanceof PdfIndirectObject ) {
-			if ( $stopAtIndirectObject === true ) {
+			if ( true === $stopAtIndirectObject ) {
 				return $value;
 			}
 
@@ -51,11 +51,11 @@ class PdfType {
 	/**
 	 * Ensure that a value is an instance of a specific PDF type.
 	 *
-	 * @param string  $type
-	 * @param PdfType $value
-	 * @param string  $errorMessage
+	 * @param string  $type Get string type.
+	 * @param PdfType $value Get PdfType value.
+	 * @param string  $errorMessage get errorMessage.
 	 * @return mixed
-	 * @throws PdfTypeException
+	 * @throws PdfTypeException PdfTypeException.
 	 */
 	protected static function ensureType( $type, $value, $errorMessage ) {
 		if ( ! ( $value instanceof $type ) ) {

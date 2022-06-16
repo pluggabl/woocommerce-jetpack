@@ -21,7 +21,7 @@ foreach ( $autogenerate_buttons_data as $autogenerate_button_id => $autogenerate
 	$autogenerate_buttons[] = ( 1 === apply_filters( 'booster_option', 1, '' ) ?
 	'<a class="button" disabled title="' . __( 'Available in Booster Plus only.', 'woocommerce-jetpack' ) . '">' . $autogenerate_button_desc . '</a>' :
 	'<a class="button" href="' .
-		esc_url( add_query_arg( 'wcj_generate_country_groups', $autogenerate_button_id, remove_query_arg( 'recalculate_price_filter_products_prices' ) ) ) . '"' .
+		esc_url( add_query_arg( 'wcj_generate_country_groups', $autogenerate_button_id, esc_url(remove_query_arg( 'recalculate_price_filter_products_prices' )) ) ) . '"' .
 		wcj_get_js_confirmation( __( 'All existing country groups will be deleted and new groups will be created. Are you sure?', 'woocommerce-jetpack' ) ) . '>' .
 			$autogenerate_button_desc .
 	'</a>' );
@@ -190,7 +190,7 @@ $settings = array(
 		'title'             => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
 		'desc'              => empty( $message ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc_tip'          => '<a href="' . esc_url( add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups' ) ) ) ) . '">' .
+		'desc_tip'          => '<a href="' . esc_url( add_query_arg( 'recalculate_price_filter_products_prices', '1', esc_url(remove_query_arg( array( 'wcj_generate_country_groups' ) ) )) ) . '">' .
 							__( 'Recalculate price filter widget and sorting by price product prices.', 'woocommerce-jetpack' ) . '</a>',
 		'id'                => 'wcj_price_by_country_price_filter_widget_support_enabled',
 		'default'           => 'no',

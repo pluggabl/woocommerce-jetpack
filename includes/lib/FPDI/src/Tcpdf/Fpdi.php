@@ -1,4 +1,9 @@
 <?php
+/**
+ * Tcpdf version
+ *
+ * @package  setasign\Fpdi\Tcpdf
+ */
 
 namespace setasign\Fpdi\Tcpdf;
 
@@ -65,13 +70,13 @@ class Fpdi extends \TCPDF {
 	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
 	 * ratio.
 	 *
-	 * @param mixed           $tpl The template id
+	 * @param mixed           $tpl The template id.
 	 * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
 	 *                           with the keys "x", "y", "width", "height", "adjustPageSize".
 	 * @param float|int       $y The ordinate of upper-left corner.
 	 * @param float|int|null  $width The width.
 	 * @param float|int|null  $height The height.
-	 * @param bool            $adjustPageSize
+	 * @param bool            $adjustPageSize Get adjust page size value.
 	 * @return array The size
 	 * @see FpdiTrait::getTemplateSize()
 	 */
@@ -85,13 +90,13 @@ class Fpdi extends \TCPDF {
 	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
 	 * ratio.
 	 *
-	 * @param mixed           $pageId The page id
+	 * @param mixed           $pageId The page id.
 	 * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
 	 *                           with the keys "x", "y", "width", "height", "adjustPageSize".
 	 * @param float|int       $y The ordinate of upper-left corner.
 	 * @param float|int|null  $width The width.
 	 * @param float|int|null  $height The height.
-	 * @param bool            $adjustPageSize
+	 * @param bool            $adjustPageSize Get adjust page size value.
 	 * @return array The size.
 	 * @see Fpdi::getTemplateSize()
 	 */
@@ -111,7 +116,7 @@ class Fpdi extends \TCPDF {
 	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
 	 * ratio.
 	 *
-	 * @param mixed          $tpl The template id
+	 * @param mixed          $tpl The template id.
 	 * @param float|int|null $width The width.
 	 * @param float|int|null $height The height.
 	 * @return array|bool An array with following keys: width, height, 0 (=width), 1 (=height), orientation (L or P)
@@ -121,7 +126,7 @@ class Fpdi extends \TCPDF {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Inheritdoc
 	 */
 	protected function _getxobjectdict() {
 		$out = parent::_getxobjectdict();
@@ -134,9 +139,9 @@ class Fpdi extends \TCPDF {
 	}
 
 	/**
-	 * @inheritdoc
-	 * @throws CrossReferenceException
-	 * @throws PdfParserException
+	 * Inheritdoc
+	 *
+	 * @throws CrossReferenceException CrossReferenceException.
 	 */
 	protected function _putxobjects() {
 		foreach ( $this->importedPages as $key => $pageData ) {
@@ -150,8 +155,8 @@ class Fpdi extends \TCPDF {
 		foreach ( \array_keys( $this->readers ) as $readerId ) {
 			$parser                = $this->getPdfReader( $readerId )->getParser();
 			$this->currentReaderId = $readerId;
-
-			while ( ( $objectNumber = \array_pop( $this->objectsToCopy[ $readerId ] ) ) !== null ) {
+			$objectNumber          = \array_pop( $this->objectsToCopy[ $readerId ] );
+			while ( ( $objectNumber ) !== null ) {
 				try {
 					$object = $parser->getIndirectObject( $objectNumber );
 
@@ -167,7 +172,7 @@ class Fpdi extends \TCPDF {
 			}
 		}
 
-		// let's prepare resources for imported pages in templates
+		// let's prepare resources for imported pages in templates.
 		foreach ( $this->xobjects as $xObjectId => $data ) {
 			if ( ! isset( $data['importedPages'] ) ) {
 				continue;
@@ -186,8 +191,8 @@ class Fpdi extends \TCPDF {
 	/**
 	 * Append content to the buffer of TCPDF.
 	 *
-	 * @param string $s
-	 * @param bool   $newLine
+	 * @param string $s Get string value.
+	 * @param bool   $newLine Get bool value.
 	 */
 	protected function _put( $s, $newLine = true ) {
 		if ( $newLine ) {
@@ -211,7 +216,7 @@ class Fpdi extends \TCPDF {
 	/**
 	 * Writes a PdfType object to the resulting buffer.
 	 *
-	 * @param PdfType $value
+	 * @param PdfType $value Get pdftype value.
 	 * @throws PdfTypeException
 	 */
 	protected function writePdfType( PdfType $value ) {
@@ -240,6 +245,8 @@ class Fpdi extends \TCPDF {
 
 		} elseif ( $value instanceof PdfIndirectObject ) {
 			/**
+			 * PdfIndirectObject
+			 *
 			 * @var $value PdfIndirectObject
 			 */
 			$this->currentObjectNumber = $this->objectMap[ $this->currentReaderId ][ $value->objectNumber ];

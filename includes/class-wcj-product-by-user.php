@@ -274,8 +274,8 @@ class WCJ_Product_By_User extends WCJ_Module {
 					/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
 					'<code>'. $_product_data['status'] . '</code>',
 					$_product_data['title'],
-					'<a class="button" href="' .  esc_url(add_query_arg( 'wcj_edit_product',   $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) )) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . ' ' .
-					'<a class="button" href="' .  esc_url(add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) )) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
+					'<a class="button" href="' .  esc_url(add_query_arg( 'wcj_edit_product',   $_product_id, esc_url( remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . ' ' .
+					'<a class="button" href="' .  esc_url(add_query_arg( 'wcj_delete_product', $_product_id, esc_url( remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) )) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
 				);
 			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) );

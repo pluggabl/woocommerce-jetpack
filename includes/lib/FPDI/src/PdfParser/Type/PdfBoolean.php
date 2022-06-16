@@ -19,7 +19,7 @@ class PdfBoolean extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param bool $value
+	 * @param bool $value Get Bool value.
 	 * @return self
 	 */
 	public static function create( $value ) {
@@ -31,7 +31,7 @@ class PdfBoolean extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfBoolean instance.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Get Array value.
 	 * @return self
 	 * @throws PdfTypeException
 	 */

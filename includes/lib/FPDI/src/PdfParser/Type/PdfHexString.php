@@ -21,20 +21,22 @@ class PdfHexString extends PdfType {
 	/**
 	 * Parses a hexadecimal string object from the stream reader.
 	 *
-	 * @param StreamReader $streamReader
+	 * @param StreamReader $streamReader Get streamReader.
 	 * @return bool|self
 	 */
 	public static function parse( StreamReader $streamReader ) {
 		$bufferOffset = $streamReader->getOffset();
 
 		/**
-		 * @var string $buffer
+		 * Parse
+		 *
+		 * @var string $buffer Get buffer.
 		 * @var int $pos
 		 */
 		while ( true ) {
 			$buffer = $streamReader->getBuffer( false );
 			$pos    = \strpos( $buffer, '>', $bufferOffset );
-			if ( $pos === false ) {
+			if ( false === $pos ) {
 				if ( ! $streamReader->increaseLength() ) {
 					return false;
 				}
@@ -69,7 +71,7 @@ class PdfHexString extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfHexString instance.
 	 *
-	 * @param mixed $hexString
+	 * @param mixed $hexString Get hexString.
 	 * @return self
 	 * @throws PdfTypeException
 	 */

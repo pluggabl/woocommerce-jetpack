@@ -28,8 +28,8 @@ class PdfStream extends PdfType {
 	/**
 	 * Parses a stream from a stream reader.
 	 *
-	 * @param PdfDictionary $dictionary
-	 * @param StreamReader  $reader
+	 * @param PdfDictionary $dictionary Get dictionary.
+	 * @param StreamReader  $reader Get StreamReader.
 	 * @return self
 	 * @throws PdfTypeException
 	 */
@@ -40,9 +40,10 @@ class PdfStream extends PdfType {
 
 		$offset = $reader->getOffset();
 
-		// Find the first "newline"
-		while ( ( $firstByte = $reader->getByte( $offset ) ) !== false ) {
-			if ( $firstByte !== "\n" && $firstByte !== "\r" ) {
+		// Find the first newline.
+		$firstByte = $reader->getByte( $offset );
+		while ( false !== ( $firstByte ) ) {
+			if ( "\n" !== $firstByte && "\r" !== $firstByte ) {
 				$offset++;
 			} else {
 				break;
@@ -57,16 +58,16 @@ class PdfStream extends PdfType {
 		}
 
 		$sndByte = $reader->getByte( $offset + 1 );
-		if ( $firstByte === "\n" || $firstByte === "\r" ) {
+		if ( "\n" === $firstByte || "\r" === $firstByte ) {
 			$offset++;
 		}
 
-		if ( $sndByte === "\n" && $firstByte !== "\n" ) {
+		if ( "\n" === $sndByte && "\n" !== $firstByte ) {
 			$offset++;
 		}
 
 		$reader->setOffset( $offset );
-		// let's only save the byte-offset and read the stream only when needed
+		// let's only save the byte-offset and read the stream only when needed.
 		$v->stream = $reader->getPosition() + $reader->getOffset();
 
 		return $v;
@@ -75,8 +76,8 @@ class PdfStream extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param PdfDictionary $dictionary
-	 * @param string        $stream
+	 * @param PdfDictionary $dictionary Get dictionary.
+	 * @param string        $stream Get stream.
 	 * @return self
 	 */
 	public static function create( PdfDictionary $dictionary, $stream ) {
@@ -90,7 +91,7 @@ class PdfStream extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfStream instance.
 	 *
-	 * @param mixed $stream
+	 * @param mixed $stream Get stream.
 	 * @return self
 	 * @throws PdfTypeException
 	 */
@@ -123,11 +124,11 @@ class PdfStream extends PdfType {
 		if ( \is_int( $this->stream ) ) {
 			$length = PdfDictionary::get( $this->value, 'Length' );
 			$this->reader->reset( $this->stream, $length->value );
-			if ( ! ( $length instanceof PdfNumeric ) || $length->value === 0 ) {
+			if ( ! ( $length instanceof PdfNumeric ) || 0 === $length->value ) {
 				while ( true ) {
 					$buffer = $this->reader->getBuffer( false );
 					$length = \strpos( $buffer, 'endstream' );
-					if ( $length === false ) {
+					if ( false === $length ) {
 						if ( ! $this->reader->increaseLength( 100000 ) ) {
 							return false;
 						}
@@ -139,19 +140,19 @@ class PdfStream extends PdfType {
 				$buffer   = \substr( $buffer, 0, $length );
 				$lastByte = \substr( $buffer, -1 );
 
-				// Check for EOL
-				if ( $lastByte === "\n" ) {
+				// Check for EOL.
+				if ( "\n" === $lastByte ) {
 					$buffer = \substr( $buffer, 0, -1 );
 				}
 
 				$lastByte = \substr( $buffer, -1 );
-				if ( $lastByte === "\r" ) {
+				if ( "\r" === $lastByte ) {
 					$buffer = \substr( $buffer, 0, -1 );
 				}
 			} else {
 				$buffer = $this->reader->getBuffer( false );
 			}
-			if ( $cache === false ) {
+			if ( false === $cache ) {
 				return $buffer;
 			}
 
@@ -214,7 +215,7 @@ class PdfStream extends PdfType {
 
 					if ( $decodeParam instanceof PdfDictionary ) {
 						$predictor = PdfDictionary::get( $decodeParam, 'Predictor', PdfNumeric::create( 1 ) );
-						if ( $predictor->value !== 1 ) {
+						if ( 1 !== $predictor->value ) {
 							if ( ! \class_exists( Predictor::class ) ) {
 								throw new PdfParserException(
 									'This PDF document makes use of features which are only implemented in the ' .

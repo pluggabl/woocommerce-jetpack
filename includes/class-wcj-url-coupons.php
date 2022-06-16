@@ -47,7 +47,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 			case 'custom':
 				return wcj_get_option( 'wcj_url_coupons_redirect_custom_url', '' );
 			default: // 'no'
-				return remove_query_arg( $arg_key );
+				return esc_url(remove_query_arg( $arg_key ));
 		}
 	}
 

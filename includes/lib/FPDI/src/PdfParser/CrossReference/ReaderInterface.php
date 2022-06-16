@@ -21,7 +21,7 @@ interface ReaderInterface {
 	/**
 	 * Get an offset by an object number.
 	 *
-	 * @param int $objectNumber
+	 * @param int $objectNumber Get objectNumber.
 	 * @return int|bool False if the offset was not found.
 	 */
 	public function getOffsetFor( $objectNumber);

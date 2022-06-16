@@ -19,7 +19,7 @@ class AsciiHex implements FilterInterface {
 	/**
 	 * Converts an ASCII hexadecimal encoded string into its binary representation.
 	 *
-	 * @param string $data The input string
+	 * @param string $data The input string.
 	 * @return string
 	 */
 	public function decode( $data ) {
@@ -34,8 +34,8 @@ class AsciiHex implements FilterInterface {
 	/**
 	 * Converts a string into ASCII hexadecimal representation.
 	 *
-	 * @param string  $data The input string
-	 * @param boolean $leaveEOD
+	 * @param string  $data The input string.
+	 * @param boolean $leaveEOD Get leaveEOD.
 	 * @return string
 	 */
 	public function encode( $data, $leaveEOD = false ) {

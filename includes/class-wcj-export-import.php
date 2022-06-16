@@ -282,7 +282,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			$current_start_date  = ( isset( $_GET['start_date'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['start_date'] ) : '' );
 			$current_end_date    = ( isset( $_GET['end_date'] ) ? isset( $_GET['end_date'] ) : '' );
 			$predefined_ranges   = array();
-			$predefined_ranges[] = '<a href="' . esc_url( add_query_arg( 'range', 'all_time', remove_query_arg( array( 'start_date', 'end_date' ) ) ) ) . '">' .
+			$predefined_ranges[] = '<a href="' . esc_url( add_query_arg( 'range', 'all_time', esc_url( remove_query_arg( array( 'start_date', 'end_date' ) ) ) ) ) . '">' .
 			__( 'All time', 'woocommerce-jetpack' ) . '</a>';
 			foreach ( array_merge( wcj_get_reports_standard_ranges(), wcj_get_reports_custom_ranges() ) as $range_id => $range_data ) {
 				$link                = esc_url(

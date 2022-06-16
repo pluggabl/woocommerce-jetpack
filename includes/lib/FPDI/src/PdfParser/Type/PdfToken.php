@@ -19,7 +19,7 @@ class PdfToken extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param string $token
+	 * @param string $token Get token.
 	 * @return self
 	 */
 	public static function create( $token ) {
@@ -32,9 +32,9 @@ class PdfToken extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfToken instance.
 	 *
-	 * @param mixed $token
+	 * @param mixed $token Get token.
 	 * @return self
-	 * @throws PdfTypeException
+	 * @throws PdfTypeException PdfTypeException.
 	 */
 	public static function ensure( $token ) {
 		return PdfType::ensureType( self::class, $token, 'Token value expected.' );

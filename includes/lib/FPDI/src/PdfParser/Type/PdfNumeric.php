@@ -19,7 +19,7 @@ class PdfNumeric extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param int|float $value
+	 * @param int|float $value Get int value.
 	 * @return PdfNumeric
 	 */
 	public static function create( $value ) {
@@ -32,7 +32,7 @@ class PdfNumeric extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfNumeric instance.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value  Get value.
 	 * @return self
 	 * @throws PdfTypeException
 	 */

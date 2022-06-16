@@ -22,8 +22,8 @@ class PdfName extends PdfType {
 	/**
 	 * Parses a name object from the passed tokenizer and stream-reader.
 	 *
-	 * @param Tokenizer    $tokenizer
-	 * @param StreamReader $streamReader
+	 * @param Tokenizer    $tokenizer Get tokenizer.
+	 * @param StreamReader $streamReader Get streamReader.
 	 * @return self
 	 */
 	public static function parse( Tokenizer $tokenizer, StreamReader $streamReader ) {
@@ -40,7 +40,7 @@ class PdfName extends PdfType {
 	/**
 	 * Unescapes a name string.
 	 *
-	 * @param string $value
+	 * @param string $value Get string Value.
 	 * @return string
 	 */
 	public static function unescape( $value ) {
@@ -60,7 +60,7 @@ class PdfName extends PdfType {
 	/**
 	 * Helper method to create an instance.
 	 *
-	 * @param string $string
+	 * @param string $string Get string Value.
 	 * @return self
 	 */
 	public static function create( $string ) {
@@ -73,7 +73,7 @@ class PdfName extends PdfType {
 	/**
 	 * Ensures that the passed value is a PdfName instance.
 	 *
-	 * @param mixed $name
+	 * @param mixed $name Get names.
 	 * @return self
 	 * @throws PdfTypeException
 	 */

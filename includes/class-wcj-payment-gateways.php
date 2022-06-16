@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 			if ( isset( $_GET['wcj_delete_payment_gateway_input_fields'] ) && wp_verify_nonce( $nonce ) ) {
 				$order_id = isset( $_GET['wcj_delete_payment_gateway_input_fields'] );
 				delete_post_meta( $order_id, '_wcj_custom_payment_gateway_input_fields' );
-				wp_safe_redirect( remove_query_arg( 'wcj_delete_payment_gateway_input_fields' ) );
+				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_payment_gateway_input_fields' ) ) );
 				exit;
 			}
 		}

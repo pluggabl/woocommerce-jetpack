@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of FPDI
+ * This file is part of FPDI.
  *
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
@@ -39,7 +39,7 @@ class Fpdi extends FpdfTpl {
 	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
 	 * ratio.
 	 *
-	 * @param mixed           $tpl The template id
+	 * @param mixed           $tpl The template id.
 	 * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
 	 *                           with the keys "x", "y", "width", "height", "adjustPageSize".
 	 * @param float|int       $y The ordinate of upper-left corner.
@@ -52,7 +52,7 @@ class Fpdi extends FpdfTpl {
 	public function useTemplate( $tpl, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false ) {
 		if ( isset( $this->importedPages[ $tpl ] ) ) {
 			$size = $this->useImportedPage( $tpl, $x, $y, $width, $height, $adjustPageSize );
-			if ( $this->currentTemplateId !== null ) {
+			if ( null !== $this->currentTemplateId ) {
 				$this->templates[ $this->currentTemplateId ]['resources']['templates']['importedPages'][ $tpl ] = $tpl;
 			}
 			return $size;
@@ -67,14 +67,14 @@ class Fpdi extends FpdfTpl {
 	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
 	 * ratio.
 	 *
-	 * @param mixed          $tpl The template id
+	 * @param mixed          $tpl The template id.
 	 * @param float|int|null $width The width.
 	 * @param float|int|null $height The height.
 	 * @return array|bool An array with following keys: width, height, 0 (=width), 1 (=height), orientation (L or P)
 	 */
 	public function getTemplateSize( $tpl, $width = null, $height = null ) {
 		$size = parent::getTemplateSize( $tpl, $width, $height );
-		if ( $size === false ) {
+		if ( false === $size ) {
 			return $this->getImportedPageSize( $tpl, $width, $height );
 		}
 
@@ -82,9 +82,9 @@ class Fpdi extends FpdfTpl {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Inheritdoc
+	 *
 	 * @throws CrossReferenceException
-	 * @throws PdfParserException
 	 */
 	public function _putimages() {
 		$this->currentReaderId = null;
@@ -101,8 +101,8 @@ class Fpdi extends FpdfTpl {
 		foreach ( \array_keys( $this->readers ) as $readerId ) {
 			$parser                = $this->getPdfReader( $readerId )->getParser();
 			$this->currentReaderId = $readerId;
-
-			while ( ( $objectNumber = \array_pop( $this->objectsToCopy[ $readerId ] ) ) !== null ) {
+			$objectNumber          = \array_pop( $this->objectsToCopy[ $readerId ] );
+			while ( ( $objectNumber ) !== null ) {
 				try {
 					$object = $parser->getIndirectObject( $objectNumber );
 
@@ -133,11 +133,11 @@ class Fpdi extends FpdfTpl {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Inheritdoc
 	 */
 	public function _newobj( $n = null ) {
-		// Begin a new object
-		if ( $n === null ) {
+		// Begin a new object.
+		if ( null === $n ) {
 			$n = ++$this->n;
 		}
 		$this->offsets[ $n ] = $this->_getoffset();
@@ -145,7 +145,7 @@ class Fpdi extends FpdfTpl {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Inheritdoc
 	 */
 	protected function _getoffset() {
 		return strlen( $this->buffer );

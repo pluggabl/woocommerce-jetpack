@@ -609,7 +609,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					delete_post_meta( $order_id, '_wcj_checkout_files_upload_real_name_' . $i );
 				}
 				delete_post_meta( $order_id, '_wcj_checkout_files_total_files' );
-				wp_safe_redirect( remove_query_arg( 'wcj_download_checkout_file_admin_delete_all' ) );
+				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_download_checkout_file_admin_delete_all' ) ) );
 				exit;
 			}
 			// User file download.

@@ -17,46 +17,64 @@ namespace setasign\Fpdi\PdfParser\Filter;
 class Lzw implements FilterInterface {
 
 	/**
+	 * Data
+	 *
 	 * @var null|string
 	 */
 	protected $data;
 
 	/**
+	 * Array
+	 *
 	 * @var array
 	 */
 	protected $sTable = array();
 
 	/**
+	 * Int
+	 *
 	 * @var int
 	 */
 	protected $dataLength = 0;
 
 	/**
+	 * Int
+	 *
 	 * @var int
 	 */
 	protected $tIdx;
 
 	/**
+	 * Int
+	 *
 	 * @var int
 	 */
 	protected $bitsToGet = 9;
 
 	/**
+	 * Int
+	 *
 	 * @var int
 	 */
 	protected $bytePointer;
 
 	/**
+	 * Int
+	 *
 	 * @var int
 	 */
 	protected $nextData = 0;
 
 	/**
+	 * Int
+	 *
 	 * @var int
 	 */
 	protected $nextBits = 0;
 
 	/**
+	 * Int
+	 *
 	 * @var array
 	 */
 	protected $andTable = array( 511, 1023, 2047, 4095 );
@@ -64,12 +82,12 @@ class Lzw implements FilterInterface {
 	/**
 	 * Method to decode LZW compressed data.
 	 *
-	 * @param string $data The compressed data
+	 * @param string $data The compressed data.
 	 * @return string The uncompressed data
-	 * @throws LzwException
+	 * @throws LzwException LzwException.
 	 */
 	public function decode( $data ) {
-		if ( $data[0] === "\x00" && $data[1] === "\x01" ) {
+		if ( "\x00" === $data[0] && "\x01" === $data[1] ) {
 			throw new LzwException(
 				'LZW flavour not supported.',
 				LzwException::LZW_FLAVOUR_NOT_SUPPORTED
@@ -81,7 +99,7 @@ class Lzw implements FilterInterface {
 		$this->data       = $data;
 		$this->dataLength = \strlen( $data );
 
-		// Initialize pointers
+		// Initialize pointers.
 		$this->bytePointer = 0;
 
 		$this->nextData = 0;
@@ -90,13 +108,13 @@ class Lzw implements FilterInterface {
 		$oldCode = 0;
 
 		$uncompData = '';
-
-		while ( ( $code = $this->getNextCode() ) !== 257 ) {
-			if ( $code === 256 ) {
+		$code       = $this->getNextCode();
+		while ( ( $code ) !== 257 ) {
+			if ( 256 === $code ) {
 				$this->initsTable();
 				$code = $this->getNextCode();
 
-				if ( $code === 257 ) {
+				if ( 257 === $code ) {
 					break;
 				}
 
@@ -141,20 +159,20 @@ class Lzw implements FilterInterface {
 	/**
 	 * Add a new string to the string table.
 	 *
-	 * @param string $oldString
-	 * @param string $newString
+	 * @param string $oldString Get oldString.
+	 * @param string $newString Get newString.
 	 */
 	protected function addStringToTable( $oldString, $newString = '' ) {
 		$string = $oldString . $newString;
 
-		// Add this new String to the table
+		// Add this new String to the table.
 		$this->sTable[ $this->tIdx++ ] = $string;
 
-		if ( $this->tIdx === 511 ) {
+		if ( 511 === $this->tIdx ) {
 			$this->bitsToGet = 10;
-		} elseif ( $this->tIdx === 1023 ) {
+		} elseif ( 1023 === $this->tIdx ) {
 			$this->bitsToGet = 11;
-		} elseif ( $this->tIdx === 2047 ) {
+		} elseif ( 2047 === $this->tIdx ) {
 			$this->bitsToGet = 12;
 		}
 	}
