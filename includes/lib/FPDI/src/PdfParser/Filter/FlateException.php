@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\Filter;
 
@@ -14,15 +14,19 @@ namespace setasign\Fpdi\PdfParser\Filter;
  *
  * @package setasign\Fpdi\PdfParser\Filter
  */
-class FlateException extends FilterException
-{
-    /**
-     * @var integer
-     */
-    const NO_ZLIB = 0x0401;
+class FlateException extends FilterException {
 
-    /**
-     * @var integer
-     */
-    const DECOMPRESS_ERROR = 0x0402;
+	/**
+	 * Integer
+	 *
+	 * @var integer
+	 */
+	const NO_ZLIB = 0x0401;
+
+	/**
+	 * Integer
+	 *
+	 * @var integer
+	 */
+	const DECOMPRESS_ERROR = 0x0402;
 }

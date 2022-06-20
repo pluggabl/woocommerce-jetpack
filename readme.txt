@@ -1518,7 +1518,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * Dev - Settings - Readme generator `woojetpack_readme` removed.
 * Dev - Classes - `WCJ_Module` - `create_meta_box()` - Tooltip restyled. Optional `css` attribute added to `title` type.
 * Dev - Core - Options - Code refactoring.
-* Dev - Core - Shortcodes - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
+* Dev - Core - Shortcodes - Code refactoring - Shortcodes objects saved in `w_c_j()->shortcodes` array.
 * Dev - Core - `wcj-constants.php` file moved to `core` directory.
 * Dev - Version option name changed. Some filters renamed. "WC tested up to" added to plugin's header.
 

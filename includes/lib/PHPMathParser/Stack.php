@@ -1,21 +1,36 @@
 <?php
+/**
+ *
+ * Namespace PHPMathParser;
+ *
+ * @package Booster_For_WooCommerce/lib
+ */
 
-//namespace PHPMathParser;
-
+/**
+ * WCJ_Stack
+ */
 class WCJ_Stack {
-
-    protected $data = array();
-
-    public function push($element) {
-        $this->data[] = $element;
-    }
-
-    public function poke() {
-        return end($this->data);
-    }
-
-    public function pop() {
-        return array_pop($this->data);
-    }
+	/**
+	 * $data
+	 */
+	protected $data = array();
+	/**
+	 * Push
+	 */
+	public function push( $element ) {
+		$this->data[] = $element;
+	}
+	/**
+	 * Poke
+	 */
+	public function poke() {
+		return end( $this->data );
+	}
+	/**
+	 * Pop
+	 */
+	public function pop() {
+		return array_pop( $this->data );
+	}
 
 }

@@ -5,13 +5,16 @@
  * @version 5.3.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/functions
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
 	/**
-	 * wcj_get_adjacent_order_id.
+	 * Wcj_get_adjacent_order_id.
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
@@ -29,7 +32,7 @@ if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
 		$loop = new WP_Query( $args );
 		if ( $loop->have_posts() ) {
 			foreach ( $loop->posts as $post_id ) {
-				if ( $current_id == $post_id ) {
+				if ( $current_id === $post_id ) {
 					return $direction( $loop->posts );
 				}
 				next( $loop->posts );
@@ -41,7 +44,7 @@ if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_status' ) ) {
 	/**
-	 * wcj_get_order_status.
+	 * Wcj_get_order_status.
 	 *
 	 * @version 3.2.2
 	 * @since   3.2.2
@@ -53,7 +56,7 @@ if ( ! function_exists( 'wcj_get_order_status' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_billing_email' ) ) {
 	/**
-	 * wcj_get_order_billing_email.
+	 * Wcj_get_order_billing_email.
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
@@ -65,7 +68,7 @@ if ( ! function_exists( 'wcj_get_order_billing_email' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_date' ) ) {
 	/**
-	 * wcj_get_order_date.
+	 * Wcj_get_order_date.
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
@@ -77,7 +80,7 @@ if ( ! function_exists( 'wcj_get_order_date' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	/**
-	 * wcj_get_order_id.
+	 * Wcj_get_order_id.
 	 *
 	 * @version 3.1.1
 	 * @since   2.7.0
@@ -92,7 +95,7 @@ if ( ! function_exists( 'wcj_get_order_id' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_currency' ) ) {
 	/**
-	 * wcj_get_order_currency.
+	 * Wcj_get_order_currency.
 	 *
 	 * @version 2.7.0
 	 * @since   2.7.0
@@ -104,40 +107,47 @@ if ( ! function_exists( 'wcj_get_order_currency' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	/**
-	 * wcj_get_order_item_meta_info.
+	 * Wcj_get_order_item_meta_info.
 	 *
-	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
+	 * From woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php.
 	 *
 	 * @version 5.3.0
 	 * @since   2.5.9
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null, $exclude_meta = array() ) {
 		$meta_info = '';
-		$metadata = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->has_meta( $item_id ) : $item->get_meta_data() );
+		$metadata  = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->has_meta( $item_id ) : $item->get_meta_data() );
 		if ( $metadata ) {
 			$meta_info = array();
 			foreach ( $metadata as $meta ) {
 
-				$_meta_key   = ( WCJ_IS_WC_VERSION_BELOW_3 ? $meta['meta_key']   : $meta->key );
+				$_meta_key   = ( WCJ_IS_WC_VERSION_BELOW_3 ? $meta['meta_key'] : $meta->key );
 				$_meta_value = ( WCJ_IS_WC_VERSION_BELOW_3 ? $meta['meta_value'] : $meta->value );
 
-				// Skip hidden core fields
-				if ( in_array( $_meta_key, apply_filters( 'woocommerce_hidden_order_itemmeta', array(
-					'_qty',
-					'_tax_class',
-					'_product_id',
-					'_variation_id',
-					'_line_subtotal',
-					'_line_subtotal_tax',
-					'_line_total',
-					'_line_tax',
-					'method_id',
-					'cost'
-				) ) ) ) {
+				// Skip hidden core fields.
+				if ( in_array(
+					$_meta_key,
+					apply_filters(
+						'woocommerce_hidden_order_itemmeta',
+						array(
+							'_qty',
+							'_tax_class',
+							'_product_id',
+							'_variation_id',
+							'_line_subtotal',
+							'_line_subtotal_tax',
+							'_line_total',
+							'_line_tax',
+							'method_id',
+							'cost',
+						)
+					),
+					true
+				) ) {
 					continue;
 				}
 
-				if ( ! empty( $exclude_meta ) && in_array( $_meta_key, $exclude_meta ) ) {
+				if ( ! empty( $exclude_meta ) && in_array( $_meta_key, $exclude_meta, true ) ) {
 					continue;
 				}
 
@@ -149,12 +159,12 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 					continue;
 				}
 
-				// Skip serialised meta
+				// Skip serialised meta.
 				if ( is_serialized( $_meta_value ) || is_array( $_meta_value ) ) {
 					continue;
 				}
 
-				// Get attribute data
+				// Get attribute data.
 				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $_meta_key ) ) ) {
 					$term        = get_term_by( 'slug', $_meta_value, wc_sanitize_taxonomy_name( $_meta_key ) );
 					$_meta_key   = wc_attribute_label( wc_sanitize_taxonomy_name( $_meta_key ) );
@@ -166,7 +176,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 					} elseif ( is_object( $item ) ) {
 						$the_product = $item->get_product();
 					}
-					$_meta_key   = ( is_object( $the_product ) ) ? wc_attribute_label( $_meta_key, $the_product ) : $_meta_key;
+					$_meta_key = ( is_object( $the_product ) ) ? wc_attribute_label( $_meta_key, $the_product ) : $_meta_key;
 				}
 				$meta_info[] = wp_kses_post( rawurldecode( $_meta_key ) ) . ': ' . wp_kses_post( rawurldecode( $_meta_value ) );
 			}
@@ -178,7 +188,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_statuses' ) ) {
 	/**
-	 * wcj_get_order_statuses.
+	 * Wcj_get_order_statuses.
 	 *
 	 * @version 3.2.2
 	 * @since   2.9.0
@@ -189,7 +199,7 @@ if ( ! function_exists( 'wcj_get_order_statuses' ) ) {
 			return $statuses;
 		}
 		$result = array();
-		foreach( $statuses as $status => $status_name ) {
+		foreach ( $statuses as $status => $status_name ) {
 			$result[ substr( $status, 3 ) ] = $status_name;
 		}
 		return $result;
@@ -198,7 +208,7 @@ if ( ! function_exists( 'wcj_get_order_statuses' ) ) {
 
 if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
 	/**
-	 * wcj_order_get_payment_method.
+	 * Wcj_order_get_payment_method.
 	 *
 	 * @version 2.8.2
 	 * @since   2.8.0
@@ -217,7 +227,7 @@ if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_fees_total' ) ) {
 	/**
-	 * wcj_get_order_fees_total.
+	 * Wcj_get_order_fees_total.
 	 *
 	 * @version 4.5.0
 	 * @since   4.5.0
@@ -237,7 +247,7 @@ if ( ! function_exists( 'wcj_get_order_fees_total' ) ) {
 
 if ( ! function_exists( 'wcj_get_order_fees_total_tax' ) ) {
 	/**
-	 * wcj_get_order_fees_total_tax.
+	 * Wcj_get_order_fees_total_tax.
 	 *
 	 * @version 4.5.0
 	 * @since   4.5.0

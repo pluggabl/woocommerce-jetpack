@@ -6,6 +6,7 @@
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @todo    use all functions where applicable
+ * @package Booster_For_WooCommerce/functions
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'wcj_crons_get_all_intervals' ) ) {
 	/**
-	 * wcj_crons_get_all_intervals.
+	 * Wcj_crons_get_all_intervals.
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
@@ -24,13 +25,21 @@ if ( ! function_exists( 'wcj_crons_get_all_intervals' ) ) {
 			$action = __( 'Update', 'woocommerce-jetpack' );
 		}
 		$return = array(
+			/* translators: %s: search term */
 			'minutely'   => sprintf( __( '%s every minute', 'woocommerce-jetpack' ), $action ),
+			/* translators: %s: search term */
 			'minute_5'   => sprintf( __( '%s every 5 minutes', 'woocommerce-jetpack' ), $action ),
+			/* translators: %s: search term */
 			'minute_15'  => sprintf( __( '%s every 15 minutes', 'woocommerce-jetpack' ), $action ),
+			/* translators: %s: search term */
 			'minute_30'  => sprintf( __( '%s every 30 minutes', 'woocommerce-jetpack' ), $action ),
+			/* translators: %s: search term */
 			'hourly'     => sprintf( __( '%s hourly', 'woocommerce-jetpack' ), $action ),
+			/* translators: %s: search term */
 			'twicedaily' => sprintf( __( '%s twice daily', 'woocommerce-jetpack' ), $action ),
+			/* translators: %s: search term */
 			'daily'      => sprintf( __( '%s daily', 'woocommerce-jetpack' ), $action ),
+			/* translators: %s: search term */
 			'weekly'     => sprintf( __( '%s weekly', 'woocommerce-jetpack' ), $action ),
 		);
 		if ( ! empty( $skip_intervals ) ) {
@@ -44,7 +53,7 @@ if ( ! function_exists( 'wcj_crons_get_all_intervals' ) ) {
 
 if ( ! function_exists( 'wcj_crons_schedule_the_events' ) ) {
 	/**
-	 * wcj_crons_schedule_the_events.
+	 * Wcj_crons_schedule_the_events.
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
@@ -67,18 +76,20 @@ if ( ! function_exists( 'wcj_crons_schedule_the_events' ) ) {
 
 if ( ! function_exists( 'wcj_crons_get_next_event_time_message' ) ) {
 	/**
-	 * wcj_crons_get_next_event_time_message.
+	 * Wcj_crons_get_next_event_time_message.
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
 	 * @todo    (maybe) move to "date-time" functions
 	 */
 	function wcj_crons_get_next_event_time_message( $time_option_name ) {
-		if ( '' != wcj_get_option( $time_option_name, '' ) ) {
+		if ( '' !== wcj_get_option( $time_option_name, '' ) ) {
 			$scheduled_time_diff = wcj_get_option( $time_option_name, '' ) - time();
 			if ( $scheduled_time_diff > 60 ) {
+				/* translators: %s: search term */
 				return '<br><em>' . sprintf( __( '%s till next run.', 'woocommerce-jetpack' ), human_time_diff( 0, $scheduled_time_diff ) ) . '</em>';
 			} elseif ( $scheduled_time_diff > 0 ) {
+				/* translators: %s: search term */
 				return '<br><em>' . sprintf( __( '%s seconds till next run.', 'woocommerce-jetpack' ), $scheduled_time_diff ) . '</em>';
 			}
 		}
@@ -88,31 +99,31 @@ if ( ! function_exists( 'wcj_crons_get_next_event_time_message' ) ) {
 
 if ( ! function_exists( 'wcj_crons_add_custom_intervals' ) ) {
 	/**
-	 * wcj_crons_add_custom_intervals.
+	 * Wcj_crons_add_custom_intervals.
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
 	 */
 	function wcj_crons_add_custom_intervals( $schedules ) {
-		$schedules['weekly'] = array(
+		$schedules['weekly']    = array(
 			'interval' => 604800,
-			'display'  => __( 'Once weekly', 'woocommerce-jetpack' )
+			'display'  => __( 'Once weekly', 'woocommerce-jetpack' ),
 		);
 		$schedules['minute_30'] = array(
 			'interval' => 1800,
-			'display'  => __( 'Once every 30 minutes', 'woocommerce-jetpack' )
+			'display'  => __( 'Once every 30 minutes', 'woocommerce-jetpack' ),
 		);
 		$schedules['minute_15'] = array(
 			'interval' => 900,
-			'display'  => __( 'Once every 15 minutes', 'woocommerce-jetpack' )
+			'display'  => __( 'Once every 15 minutes', 'woocommerce-jetpack' ),
 		);
-		$schedules['minute_5'] = array(
+		$schedules['minute_5']  = array(
 			'interval' => 300,
-			'display'  => __( 'Once every 5 minutes', 'woocommerce-jetpack' )
+			'display'  => __( 'Once every 5 minutes', 'woocommerce-jetpack' ),
 		);
-		$schedules['minutely'] = array(
+		$schedules['minutely']  = array(
 			'interval' => 60,
-			'display'  => __( 'Once a minute', 'woocommerce-jetpack' )
+			'display'  => __( 'Once a minute', 'woocommerce-jetpack' ),
 		);
 		return $schedules;
 	}

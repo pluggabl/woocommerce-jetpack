@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\Type;
 
@@ -14,31 +14,29 @@ namespace setasign\Fpdi\PdfParser\Type;
  *
  * @package setasign\Fpdi\PdfParser\Type
  */
-class PdfToken extends PdfType
-{
-    /**
-     * Helper method to create an instance.
-     *
-     * @param string $token
-     * @return self
-     */
-    public static function create($token)
-    {
-        $v = new self;
-        $v->value = $token;
+class PdfToken extends PdfType {
 
-        return $v;
-    }
+	/**
+	 * Helper method to create an instance.
+	 *
+	 * @param string $token Get token.
+	 * @return self
+	 */
+	public static function create( $token ) {
+		$v        = new self();
+		$v->value = $token;
 
-    /**
-     * Ensures that the passed value is a PdfToken instance.
-     *
-     * @param mixed $token
-     * @return self
-     * @throws PdfTypeException
-     */
-    public static function ensure($token)
-    {
-        return PdfType::ensureType(self::class, $token, 'Token value expected.');
-    }
+		return $v;
+	}
+
+	/**
+	 * Ensures that the passed value is a PdfToken instance.
+	 *
+	 * @param mixed $token Get token.
+	 * @return self
+	 * @throws PdfTypeException PdfTypeException.
+	 */
+	public static function ensure( $token ) {
+		return PdfType::ensureType( self::class, $token, 'Token value expected.' );
+	}
 }

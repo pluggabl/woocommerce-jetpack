@@ -5,15 +5,17 @@
  * @version 2.5.9
  * @since   2.5.9
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/functions
  */
 
 if ( ! function_exists( 'convert_number_to_words_lt' ) ) {
 	/**
-	 * convert_number_to_words_lt.
+	 * Convert_number_to_words_lt.
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
 	 * @return  string
+	 * @param int $number Get Number.
 	 */
 	function convert_number_to_words_lt( $number ) {
 		$hyphen      = ' ';
@@ -72,12 +74,12 @@ if ( ! function_exists( 'convert_number_to_words_lt' ) ) {
 			10000000000000000000 => 'kvintilijonų',
 		);
 
-		if (!is_numeric($number)) {
+		if ( ! is_numeric( $number ) ) {
 			return false;
 		}
 
-		if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
-			// overflow
+		if ( ( $number >= 0 && (int) $number < 0 ) || (int) $number < 0 - PHP_INT_MAX ) {
+			// overflow.
 			trigger_error(
 				'convert_number_to_words_lt only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
 				E_USER_WARNING
@@ -85,72 +87,72 @@ if ( ! function_exists( 'convert_number_to_words_lt' ) ) {
 			return false;
 		}
 
-		if ($number < 0) {
-			return $negative . convert_number_to_words_lt(abs($number));
+		if ( $number < 0 ) {
+			return $negative . convert_number_to_words_lt( abs( $number ) );
+		}
+		$fraction = null;
+		$string   = $fraction;
+
+		if ( strpos( $number, '.' ) !== false ) {
+			list($number, $fraction) = explode( '.', $number );
 		}
 
-		$string = $fraction = null;
-
-		if (strpos($number, '.') !== false) {
-			list($number, $fraction) = explode('.', $number);
-		}
-
-		switch (true) {
+		switch ( true ) {
 			case $number < 21:
-				$string = $dictionary[$number];
+				$string = $dictionary[ $number ];
 				break;
 			case $number < 100:
-				$tens   = ((int) ($number / 10)) * 10;
+				$tens   = ( (int) ( $number / 10 ) ) * 10;
 				$units  = $number % 10;
-				$string = $dictionary[$tens];
-				if ($units) {
-					$string .= $hyphen . $dictionary[$units];
+				$string = $dictionary[ $tens ];
+				if ( $units ) {
+					$string .= $hyphen . $dictionary[ $units ];
 				}
 				break;
 			case $number < 200:
 				$hundreds  = $number / 100;
 				$remainder = $number % 100;
-				$string = $dictionary[$hundreds] . ' ' . $dictionary[100];
-				if ($remainder) {
-					$string .= $conjunction . convert_number_to_words_lt($remainder);
+				$string    = $dictionary[ $hundreds ] . ' ' . $dictionary[100];
+				if ( $remainder ) {
+					$string .= $conjunction . convert_number_to_words_lt( $remainder );
 				}
 				break;
 			case $number < 1000:
 				$hundreds  = $number / 100;
 				$remainder = $number % 100;
-				$string = $dictionary[$hundreds] . ' ' . $dictionary[200];
-				if ($remainder) {
-					$string .= $conjunction . convert_number_to_words_lt($remainder);
+				$string    = $dictionary[ $hundreds ] . ' ' . $dictionary[200];
+				if ( $remainder ) {
+					$string .= $conjunction . convert_number_to_words_lt( $remainder );
 				}
 				break;
 
 			default:
-				$baseUnit = pow(1000, floor(log($number, 1000)));
-				$numBaseUnits = (int) ($number / $baseUnit);
-				$number1=(string)$number;
-				if ($numBaseUnits==1){
-					$baseUnits=$baseUnit;
-				}elseif($numBaseUnits <10) {
-					$baseUnits=$baseUnit*2;
+				$base_unit      = pow( 1000, floor( log( $number, 1000 ) ) );
+				$num_base_units = (int) ( $number / $base_unit );
+				$number1        = (string) $number;
+				if ( 1 === $num_base_units ) {
+					$base_units = $base_unit;
+				} elseif ( $num_base_units < 10 ) {
+					$base_units = $base_unit * 2;
 				} else {
-					$baseUnits=$baseUnit*10;}
+					$base_units = $base_unit * 10;}
 
-				$remainder = $number % $baseUnit;
-				$string = convert_number_to_words_lt($numBaseUnits) . ' ' . $dictionary[$baseUnits];
-				if ($remainder) {
+				$remainder = $number % $base_unit;
+				$string    = convert_number_to_words_lt( $num_base_units ) . ' ' . $dictionary[ $base_units ];
+				if ( $remainder ) {
 					$string .= $remainder < 100 ? $conjunction : $separator;
-					$string .= convert_number_to_words_lt($remainder);
+					$string .= convert_number_to_words_lt( $remainder );
 				}
 				break;
 		}
 
-		if (null !== $fraction && is_numeric($fraction)) {
+		if ( null !== $fraction && is_numeric( $fraction ) ) {
 			$string .= $decimal;
-			$words = array();
-			foreach (str_split((string) $fraction) as $number) {
-				$words[] = $dictionary[$number];
+			$words   = array();
+			foreach ( str_split( (string) $fraction ) as $number ) {
+				$words[] = $dictionary[ $number ];
 			}
-			$string .= implode(' ', $words);
+			$string .= implode( ' ', $words );
 		}
 
 		return $string;

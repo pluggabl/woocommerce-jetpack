@@ -6,17 +6,20 @@
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) remove COD, Custom Booster Payment Gateways (and maybe other payment gateways) that already have `enable_for_methods` option
+ * @package Booster_For_WooCommerce/settings
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 $use_shipping_instance = ( 'yes' === wcj_get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
-$shipping_methods = ( $use_shipping_instance ? wcj_get_shipping_methods_instances() : wcj_get_shipping_methods() );
-$settings = array(
+$shipping_methods      = ( $use_shipping_instance ? wcj_get_shipping_methods_instances() : wcj_get_shipping_methods() );
+$settings              = array(
 	array(
-		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_payment_gateways_by_shipping_general_options',
+		'title' => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_payment_gateways_by_shipping_general_options',
 	),
 	array(
 		'title'    => __( 'Use Shipping Instances', 'woocommerce-jetpack' ),
@@ -28,49 +31,58 @@ $settings = array(
 		'default'  => 'no',
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_payment_gateways_by_shipping_general_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_payment_gateways_by_shipping_general_options',
 	),
 );
-$settings = array_merge( $settings, array(
+$settings              = array_merge(
+	$settings,
 	array(
-		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'desc'  => __( 'If payment gateway is only available for certain methods, set it up here. Leave blank to enable for all methods.', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_payment_gateways_by_shipping_options',
-	),
-) );
-$gateways = WC()->payment_gateways->payment_gateways();
+		array(
+			'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+			'type'  => 'title',
+			'desc'  => __( 'If payment gateway is only available for certain methods, set it up here. Leave blank to enable for all methods.', 'woocommerce-jetpack' ),
+			'id'    => 'wcj_payment_gateways_by_shipping_options',
+		),
+	)
+);
+$gateways              = WC()->payment_gateways->payment_gateways();
 foreach ( $gateways as $key => $gateway ) {
-	if ( ! in_array( $key, array( 'bacs', 'cod' ) ) ) {
+	if ( ! in_array( $key, array( 'bacs', 'cod' ), true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
-		if ( '' == $custom_attributes ) {
+		if ( '' === $custom_attributes ) {
 			$custom_attributes = array();
 		}
 		$desc_tip = apply_filters( 'booster_message', '', 'desc_no_link' );
 	} else {
 		$custom_attributes = array();
-		$desc_tip = '';
+		$desc_tip          = '';
 	}
-	$settings = array_merge( $settings, array(
+	$settings = array_merge(
+		$settings,
 		array(
-			'title'             => $gateway->title,
-			'desc_tip'          => $desc_tip,
-			'desc'              => __( 'Enable for shipping methods', 'woocommerce' ),
-			'id'                => ( $use_shipping_instance ? 'wcj_gateways_by_shipping_enable_instance_' . $key : 'wcj_gateways_by_shipping_enable_' . $key ),
-			'default'           => '',
-			'type'              => 'multiselect',
-			'class'             => 'chosen_select',
-			'css'               => 'width: 450px;',
-			'options'           => $shipping_methods,
-			'custom_attributes' => array_merge( array( 'data-placeholder' => __( 'Select shipping methods', 'woocommerce' ) ), $custom_attributes ),
-		),
-	) );
+			array(
+				'title'             => $gateway->title,
+				'desc_tip'          => $desc_tip,
+				'desc'              => __( 'Enable for shipping methods', 'woocommerce' ),
+				'id'                => ( $use_shipping_instance ? 'wcj_gateways_by_shipping_enable_instance_' . $key : 'wcj_gateways_by_shipping_enable_' . $key ),
+				'default'           => '',
+				'type'              => 'multiselect',
+				'class'             => 'chosen_select',
+				'css'               => 'width: 450px;',
+				'options'           => $shipping_methods,
+				'custom_attributes' => array_merge( array( 'data-placeholder' => __( 'Select shipping methods', 'woocommerce' ) ), $custom_attributes ),
+			),
+		)
+	);
 }
-$settings = array_merge( $settings, array(
+$settings = array_merge(
+	$settings,
 	array(
-		'type'  => 'sectionend',
-		'id'    => 'wcj_payment_gateways_by_shipping_options',
-	),
-) );
+		array(
+			'type' => 'sectionend',
+			'id'   => 'wcj_payment_gateways_by_shipping_options',
+		),
+	)
+);
 return $settings;

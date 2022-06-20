@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfReader;
 
@@ -24,198 +24,196 @@ use setasign\Fpdi\PdfParser\Type\PdfTypeException;
  *
  * @package setasign\Fpdi\PdfReader
  */
-class PdfReader
-{
-    /**
-     * @var PdfParser
-     */
-    protected $parser;
+class PdfReader {
 
-    /**
-     * @var int
-     */
-    protected $pageCount;
+	/**
+	 * PdfParser
+	 *
+	 * @var PdfParser
+	 */
+	protected $parser;
 
-    /**
-     * Indirect objects of resolved pages.
-     *
-     * @var PdfIndirectObjectReference[]
-     */
-    protected $pages = [];
+	/**
+	 * @var int
+	 */
+	protected $pageCount;
 
-    /**
-     * PdfReader constructor.
-     *
-     * @param PdfParser $parser
-     */
-    public function __construct(PdfParser $parser)
-    {
-        $this->parser = $parser;
-    }
+	/**
+	 * Indirect objects of resolved pages.
+	 *
+	 * @var PdfIndirectObjectReference[]
+	 */
+	protected $pages = array();
 
-    /**
-     * PdfReader destructor.
-     */
-    public function __destruct()
-    {
-        if ($this->parser !== null) {
-            /** @noinspection PhpInternalEntityUsedInspection */
-            $this->parser->cleanUp();
-        }
-    }
+	/**
+	 * PdfReader constructor.
+	 *
+	 * @param PdfParser $parser
+	 */
+	public function __construct( PdfParser $parser ) {
+		$this->parser = $parser;
+	}
 
-    /**
-     * Get the pdf parser instance.
-     *
-     * @return PdfParser
-     */
-    public function getParser()
-    {
-        return $this->parser;
-    }
+	/**
+	 * PdfReader destructor.
+	 */
+	public function __destruct() {
+		if ( null !== $this->parser ) {
+			/**
+			 * Noinspection PhpInternalEntityUsedInspection
+			 */
+			$this->parser->cleanUp();
+		}
+	}
 
-    /**
-     * Get the PDF version.
-     *
-     * @return string
-     * @throws PdfParserException
-     */
-    public function getPdfVersion()
-    {
-        return \implode('.', $this->parser->getPdfVersion());
-    }
+	/**
+	 * Get the pdf parser instance.
+	 *
+	 * @return PdfParser
+	 */
+	public function getParser() {
+		return $this->parser;
+	}
 
-    /**
-     * Get the page count.
-     *
-     * @return int
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     * @throws PdfParserException
-     */
-    public function getPageCount()
-    {
-        if ($this->pageCount === null) {
-            $catalog = $this->parser->getCatalog();
+	/**
+	 * Get the PDF version.
+	 *
+	 * @return string
+	 * @throws PdfParserException
+	 */
+	public function getPdfVersion() {
+		return \implode( '.', $this->parser->getPdfVersion() );
+	}
 
-            $pages = PdfType::resolve(PdfDictionary::get($catalog, 'Pages'), $this->parser);
-            $count = PdfType::resolve(PdfDictionary::get($pages, 'Count'), $this->parser);
+	/**
+	 * Get the page count.
+	 *
+	 * @return int
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 * @throws PdfParserException
+	 */
+	public function getPageCount() {
+		if ( null === $this->pageCount ) {
+			$catalog = $this->parser->getCatalog();
 
-            $this->pageCount = PdfNumeric::ensure($count)->value;
-        }
+			$pages = PdfType::resolve( PdfDictionary::get( $catalog, 'Pages' ), $this->parser );
+			$count = PdfType::resolve( PdfDictionary::get( $pages, 'Count' ), $this->parser );
 
-        return $this->pageCount;
-    }
+			$this->pageCount = PdfNumeric::ensure( $count )->value;
+		}
 
-    /**
-     * Get a page instance.
-     *
-     * @param int $pageNumber
-     * @return Page
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     * @throws PdfParserException
-     * @throws \InvalidArgumentException
-     */
-    public function getPage($pageNumber)
-    {
-        if (!\is_numeric($pageNumber)) {
-            throw new \InvalidArgumentException(
-                'Page number needs to be a number.'
-            );
-        }
+		return $this->pageCount;
+	}
 
-        if ($pageNumber < 1 || $pageNumber > $this->getPageCount()) {
-            throw new \InvalidArgumentException(
-                \sprintf(
-                    'Page number "%s" out of available page range (1 - %s)',
-                    $pageNumber,
-                    $this->getPageCount()
-                )
-            );
-        }
+	/**
+	 * Get a page instance.
+	 *
+	 * @param int $pageNumber Get page Number.
+	 * @return Page
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 * @throws PdfParserException
+	 * @throws \InvalidArgumentException
+	 */
+	public function getPage( $pageNumber ) {
+		if ( ! \is_numeric( $pageNumber ) ) {
+			throw new \InvalidArgumentException(
+				'Page number needs to be a number.'
+			);
+		}
 
-        $this->readPages();
+		if ( $pageNumber < 1 || $pageNumber > $this->getPageCount() ) {
+			throw new \InvalidArgumentException(
+				\sprintf(
+					'Page number "%s" out of available page range (1 - %s)',
+					$pageNumber,
+					$this->getPageCount()
+				)
+			);
+		}
 
-        $page = $this->pages[$pageNumber - 1];
+		$this->readPages();
 
-        if ($page instanceof PdfIndirectObjectReference) {
-            $readPages = function ($kids) use (&$readPages) {
-                $kids = PdfArray::ensure($kids);
+		$page = $this->pages[ $pageNumber - 1 ];
 
-                /** @noinspection LoopWhichDoesNotLoopInspection */
-                foreach ($kids->value as $reference) {
-                    $reference = PdfIndirectObjectReference::ensure($reference);
-                    $object = $this->parser->getIndirectObject($reference->value);
-                    $type = PdfDictionary::get($object->value, 'Type');
+		if ( $page instanceof PdfIndirectObjectReference ) {
+			$readPages = function ( $kids ) use ( &$readPages ) {
+				$kids = PdfArray::ensure( $kids );
 
-                    if ($type->value === 'Pages') {
-                        return $readPages(PdfDictionary::get($object->value, 'Kids'));
-                    }
+				/** Noinspection LoopWhichDoesNotLoopInspection */
+				foreach ( $kids->value as $reference ) {
+					$reference = PdfIndirectObjectReference::ensure( $reference );
+					$object    = $this->parser->getIndirectObject( $reference->value );
+					$type      = PdfDictionary::get( $object->value, 'Type' );
 
-                    return $object;
-                }
+					if ( 'Pages' === $type->value ) {
+						return $readPages( PdfDictionary::get( $object->value, 'Kids' ) );
+					}
 
-                throw new PdfReaderException(
-                    'Kids array cannot be empty.',
-                    PdfReaderException::KIDS_EMPTY
-                );
-            };
+					return $object;
+				}
 
-            $page = $this->parser->getIndirectObject($page->value);
-            $dict = PdfType::resolve($page, $this->parser);
-            $type = PdfDictionary::get($dict, 'Type');
-            if ($type->value === 'Pages') {
-                $kids = PdfType::resolve(PdfDictionary::get($dict, 'Kids'), $this->parser);
-                $page = $this->pages[$pageNumber - 1] = $readPages($kids);
-            } else {
-                $this->pages[$pageNumber - 1] = $page;
-            }
-        }
+				throw new PdfReaderException(
+					'Kids array cannot be empty.',
+					PdfReaderException::KIDS_EMPTY
+				);
+			};
 
-        return new Page($page, $this->parser);
-    }
+			$page = $this->parser->getIndirectObject( $page->value );
+			$dict = PdfType::resolve( $page, $this->parser );
+			$type = PdfDictionary::get( $dict, 'Type' );
+			if ( 'Pages' === $type->value ) {
+				$kids                           = PdfType::resolve( PdfDictionary::get( $dict, 'Kids' ), $this->parser );
+				$this->pages[ $pageNumber - 1 ] = $readPages( $kids );
+				$page                           = $this->pages[ $pageNumber - 1 ];
+			} else {
+				$this->pages[ $pageNumber - 1 ] = $page;
+			}
+		}
 
-    /**
-     * Walk the page tree and resolve all indirect objects of all pages.
-     *
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     * @throws PdfParserException
-     */
-    protected function readPages()
-    {
-        if (\count($this->pages) > 0) {
-            return;
-        }
+		return new Page( $page, $this->parser );
+	}
 
-        $readPages = function ($kids, $count) use (&$readPages) {
-            $kids = PdfArray::ensure($kids);
-            $isLeaf = $count->value === \count($kids->value);
+	/**
+	 * Walk the page tree and resolve all indirect objects of all pages.
+	 *
+	 * @throws PdfTypeException
+	 * @throws CrossReferenceException
+	 * @throws PdfParserException
+	 */
+	protected function readPages() {
+		if ( \count( $this->pages ) > 0 ) {
+			return;
+		}
 
-            foreach ($kids->value as $reference) {
-                $reference = PdfIndirectObjectReference::ensure($reference);
+		$readPages = function ( $kids, $count ) use ( &$readPages ) {
+			$kids   = PdfArray::ensure( $kids );
+			$isLeaf = \count( $kids->value ) === $count->value;
 
-                if ($isLeaf) {
-                    $this->pages[] = $reference;
-                    continue;
-                }
+			foreach ( $kids->value as $reference ) {
+				$reference = PdfIndirectObjectReference::ensure( $reference );
 
-                $object = $this->parser->getIndirectObject($reference->value);
-                $type = PdfDictionary::get($object->value, 'Type');
+				if ( $isLeaf ) {
+					$this->pages[] = $reference;
+					continue;
+				}
 
-                if ($type->value === 'Pages') {
-                    $readPages(PdfDictionary::get($object->value, 'Kids'), PdfDictionary::get($object->value, 'Count'));
-                } else {
-                    $this->pages[] = $object;
-                }
-            }
-        };
+				$object = $this->parser->getIndirectObject( $reference->value );
+				$type   = PdfDictionary::get( $object->value, 'Type' );
 
-        $catalog = $this->parser->getCatalog();
-        $pages = PdfType::resolve(PdfDictionary::get($catalog, 'Pages'), $this->parser);
-        $count = PdfType::resolve(PdfDictionary::get($pages, 'Count'), $this->parser);
-        $kids = PdfType::resolve(PdfDictionary::get($pages, 'Kids'), $this->parser);
-        $readPages($kids, $count);
-    }
+				if ( 'Pages' === $type->value ) {
+					$readPages( PdfDictionary::get( $object->value, 'Kids' ), PdfDictionary::get( $object->value, 'Count' ) );
+				} else {
+					$this->pages[] = $object;
+				}
+			}
+		};
+
+		$catalog = $this->parser->getCatalog();
+		$pages   = PdfType::resolve( PdfDictionary::get( $catalog, 'Pages' ), $this->parser );
+		$count   = PdfType::resolve( PdfDictionary::get( $pages, 'Count' ), $this->parser );
+		$kids    = PdfType::resolve( PdfDictionary::get( $pages, 'Kids' ), $this->parser );
+		$readPages( $kids, $count );
+	}
 }

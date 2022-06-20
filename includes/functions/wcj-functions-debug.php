@@ -4,13 +4,16 @@
  *
  * @version 4.1.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/functions
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! function_exists( 'wcj_log' ) ) {
 	/**
-	 * wcj_log.
+	 * Wcj_log.
 	 *
 	 * @version 4.1.0
 	 */
@@ -26,11 +29,12 @@ if ( ! function_exists( 'wcj_log' ) ) {
 			$message = print_r( $message, true );
 		}
 		if ( 'yes' === wcj_get_option( 'wcj_logging_enabled', 'no' ) ) {
-			update_option( 'wcj_log', '<span style="color:red;">' . date( 'Y-m-d H:i:s' ) . ' ' . esc_url( $_SERVER['REQUEST_URI'] ) . '</span> <span style="color:orange;">[</span>' . $message . '<span style="color:orange;">]</span>' . '<br>' . wcj_get_option( 'wcj_log', '' ) );
+			update_option( 'wcj_log', '<span style="color:red;">' . gmdate( 'Y-m-d H:i:s' ) . ' ' . esc_url( $_SERVER['REQUEST_URI'] ) . '</span> <span style="color:orange;">[</span>' . $message . '<span style="color:orange;">]</span> <br>' . wcj_get_option( 'wcj_log', '' ) );
 		}
-		// WC log
+		// WC log.
 		if ( 'yes' === wcj_get_option( 'wcj_wc_logging_enabled', 'no' ) && function_exists( 'wc_get_logger' ) ) {
-			if ( $log = wc_get_logger() ) {
+			$log = wc_get_logger();
+			if ( $log ) {
 				$log->log( 'info', $message, array( 'source' => 'booster_for_woocommerce' ) );
 			}
 		}

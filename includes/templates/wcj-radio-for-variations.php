@@ -5,6 +5,7 @@
  * @version 4.6.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
+ * @package WooCommerce/Templates
  */
 
 global $product;
@@ -20,7 +21,7 @@ $attribute_keys = array_keys( $attributes );
 		<tr>
 			<th colspan="2">
 				<?php $attribute_labels = array_map( 'wc_attribute_label', array_keys( $attributes ) ); ?>
-				<?php echo implode( ' X ', $attribute_labels ); ?>
+				<?php echo implode( ' X ', wp_kses_post( $attribute_labels ) ); ?>
 				<?php echo wp_kses_post( apply_filters( 'woocommerce_reset_variations_link', '<a style="float:right" class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>' ) ); ?>
 			</th>
 		</tr>
@@ -33,7 +34,7 @@ $attribute_keys = array_keys( $attributes );
 	</table>
 	<?php
 	foreach ( $product->get_attributes() as $attribute_name => $options ) {
-		echo '<input type="hidden" name="attribute_' . $attribute_name . '" value="">';
+		echo '<input type="hidden" name="attribute_' . wp_kses_post( $attribute_name ) . '" value="">';
 	}
 	?>
 <?php endif; ?>

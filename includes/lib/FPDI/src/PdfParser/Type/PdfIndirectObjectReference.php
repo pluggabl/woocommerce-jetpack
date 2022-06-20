@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
-  */
+ */
 
 namespace setasign\Fpdi\PdfParser\Type;
 
@@ -14,40 +14,38 @@ namespace setasign\Fpdi\PdfParser\Type;
  *
  * @package setasign\Fpdi\PdfParser\Type
  */
-class PdfIndirectObjectReference extends PdfType
-{
-    /**
-     * Helper method to create an instance.
-     *
-     * @param int $objectNumber
-     * @param int $generationNumber
-     * @return self
-     */
-    public static function create($objectNumber, $generationNumber)
-    {
-        $v = new self;
-        $v->value = (int) $objectNumber;
-        $v->generationNumber = (int) $generationNumber;
+class PdfIndirectObjectReference extends PdfType {
 
-        return $v;
-    }
+	/**
+	 * Helper method to create an instance.
+	 *
+	 * @param int $objectNumber Get objectNumber.
+	 * @param int $generationNumber Get generationNumber.
+	 * @return self
+	 */
+	public static function create( $objectNumber, $generationNumber ) {
+		$v                   = new self();
+		$v->value            = (int) $objectNumber;
+		$v->generationNumber = (int) $generationNumber;
 
-    /**
-     * Ensures that the passed value is a PdfIndirectObject instance.
-     *
-     * @param mixed $value
-     * @return self
-     * @throws PdfTypeException
-     */
-    public static function ensure($value)
-    {
-        return PdfType::ensureType(self::class, $value, 'Indirect reference value expected.');
-    }
+		return $v;
+	}
 
-    /**
-     * The generation number.
-     *
-     * @var int
-     */
-    public $generationNumber;
+	/**
+	 * Ensures that the passed value is a PdfIndirectObject instance.
+	 *
+	 * @param mixed $value Get value.
+	 * @return self
+	 * @throws PdfTypeException
+	 */
+	public static function ensure( $value ) {
+		return PdfType::ensureType( self::class, $value, 'Indirect reference value expected.' );
+	}
+
+	/**
+	 * The generation number.
+	 *
+	 * @var int
+	 */
+	public $generationNumber;
 }

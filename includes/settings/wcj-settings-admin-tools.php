@@ -5,20 +5,27 @@
  * @version 4.9.0
  * @since   2.7.2
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/settings
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+$message = apply_filters( 'booster_message', '', 'desc' );
 return array(
 	array(
-		'title'    => __( 'Admin Tools Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_admin_tools_general_options',
+		'title' => __( 'Admin Tools Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_admin_tools_general_options',
 	),
 	array(
 		'title'    => __( 'Show Booster Menus Only to Admin', 'woocommerce-jetpack' ),
-		'desc_tip' => sprintf( __( 'Will require %s capability to see Booster menus (instead of %s capability).', 'woocommerce-jetpack' ),
-			'<code>manage_options</code>', '<code>manage_woocommerce</code>' ),
+		'desc_tip' => sprintf(
+			/* translators: %%1$s: translators Added */
+			__( 'Will require %1$s capability to see Booster menus (instead of %2$s capability).', 'woocommerce-jetpack' ),
+			'<code>manage_options</code>',
+			'<code>manage_woocommerce</code>'
+		),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_admin_tools_show_menus_to_admin_only',
 		'default'  => 'no',
@@ -27,8 +34,11 @@ return array(
 	array(
 		'title'    => __( 'Suppress Admin Connect Notice', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => sprintf( __( 'Will remove "%s" admin notice.', 'woocommerce-jetpack' ),
-			__( 'Connect your store to WooCommerce.com to receive extensions updates and support.', 'woocommerce-jetpack' ) ),
+		'desc_tip' => sprintf(
+			/* translators: %%1$s: translators Added */
+			__( 'Will remove "%s" admin notice.', 'woocommerce-jetpack' ),
+			__( 'Connect your store to WooCommerce.com to receive extensions updates and support.', 'woocommerce-jetpack' )
+		),
 		'id'       => 'wcj_admin_tools_suppress_connect_notice',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -44,7 +54,7 @@ return array(
 	array(
 		'title'             => __( 'Enable Interface By User Roles', 'woocommerce-jetpack' ),
 		'desc_tip'          => __( 'The interface can\'t be disabled for The Administrator role.', 'woocommerce-jetpack' ) . '<br /><br />' . __( 'Leave it empty to enable the interface for all the roles.', 'woocommerce-jetpack' ),
-		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Disables the whole Booster admin interface for not selected roles.', 'woocommerce-jetpack' ) : $message,
+		'desc'              => empty( $message ) ? __( 'Disables the whole Booster admin interface for not selected roles.', 'woocommerce-jetpack' ) : $message,
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'id'                => 'wcj_admin_tools_enable_interface_by_role',
 		'default'           => '',
@@ -53,13 +63,13 @@ return array(
 		'options'           => wcj_get_user_roles_options(),
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_admin_tools_general_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_admin_tools_general_options',
 	),
 	array(
-		'title'    => __( 'Orders Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_admin_tools_orders_options',
+		'title' => __( 'Orders Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_admin_tools_orders_options',
 	),
 	array(
 		'title'    => __( 'Show Order Meta', 'woocommerce-jetpack' ),
@@ -70,13 +80,13 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_admin_tools_orders_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_admin_tools_orders_options',
 	),
 	array(
-		'title'    => __( 'Products Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_admin_tools_products_options',
+		'title' => __( 'Products Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_admin_tools_products_options',
 	),
 	array(
 		'title'    => __( 'Show Product Meta', 'woocommerce-jetpack' ),
@@ -103,22 +113,22 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'JSON Product Search Limit', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will set the maximum number of products to return on JSON search (e.g. when setting Upsells and Cross-sells on product edit page).', 'woocommerce-jetpack' ) . ' ' .
+		'title'             => __( 'JSON Product Search Limit', 'woocommerce-jetpack' ),
+		'desc_tip'          => __( 'This will set the maximum number of products to return on JSON search (e.g. when setting Upsells and Cross-sells on product edit page).', 'woocommerce-jetpack' ) . ' ' .
 			__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_json_search_limit',
-		'default'  => 0,
-		'type'     => 'number',
+		'id'                => 'wcj_product_json_search_limit',
+		'default'           => 0,
+		'type'              => 'number',
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_admin_tools_products_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_admin_tools_products_options',
 	),
 	array(
-		'title'    => __( 'Users Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_admin_tools_users_options',
+		'title' => __( 'Users Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_admin_tools_users_options',
 	),
 	array(
 		'title'             => __( 'Shop Manager Editable Roles', 'woocommerce-jetpack' ),
@@ -132,7 +142,7 @@ return array(
 		'options'           => wcj_get_user_roles_options(),
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_admin_tools_users_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_admin_tools_users_options',
 	),
 );

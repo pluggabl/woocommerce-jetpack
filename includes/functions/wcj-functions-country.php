@@ -4,18 +4,19 @@
  *
  * @version 3.9.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/functions
  */
 
 if ( ! function_exists( 'wcj_maybe_add_european_union_countries' ) ) {
 	/**
-	 * wcj_maybe_add_european_union_countries.
+	 * Wcj_maybe_add_european_union_countries.
 	 *
 	 * @version 3.6.0
 	 * @since   3.6.0
 	 * @todo    use where needed
 	 */
 	function wcj_maybe_add_european_union_countries( $countries ) {
-		if ( ! empty( $countries ) && in_array( 'EU', $countries ) ) {
+		if ( ! empty( $countries ) && in_array( 'EU', $countries, true ) ) {
 			$countries = array_merge( $countries, wcj_get_european_union_countries() );
 		}
 		return $countries;
@@ -24,15 +25,15 @@ if ( ! function_exists( 'wcj_maybe_add_european_union_countries' ) ) {
 
 if ( ! function_exists( 'wcj_get_country_by_ip' ) ) {
 	/**
-	 * wcj_get_country_by_ip.
+	 * Wcj_get_country_by_ip.
 	 *
 	 * @version 3.9.0
 	 * @since   3.1.0
 	 */
 	function wcj_get_country_by_ip() {
-		// Get the country by IP
+		// Get the country by IP.
 		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip() : array( 'country' => '' ) );
-		// Base fallback
+		// Base fallback.
 		if ( empty( $location['country'] ) ) {
 			$location = apply_filters( 'woocommerce_customer_default_location', wcj_get_option( 'woocommerce_default_country' ) );
 			if ( function_exists( 'wc_format_country_state_string' ) ) {
@@ -45,9 +46,9 @@ if ( ! function_exists( 'wcj_get_country_by_ip' ) ) {
 
 if ( ! function_exists( 'wcj_get_country_flag_by_code' ) ) {
 	/**
-	 * wcj_get_country_flag_by_code.
+	 * Wcj_get_country_flag_by_code.
 	 *
-	 @version  2.9.1
+	 * @version  2.9.1
 	 */
 	function wcj_get_country_flag_by_code( $country_code ) {
 		$img      = '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png';
@@ -59,23 +60,23 @@ if ( ! function_exists( 'wcj_get_country_flag_by_code' ) ) {
 
 if ( ! function_exists( 'wcj_get_customer_country' ) ) {
 	/**
-	 * wcj_get_customer_country.
+	 * Wcj_get_customer_country.
 	 *
 	 * @version 2.9.0
 	 * @return  string
 	 * @todo    re-check: there is also `wcj_customer_get_country()`
 	 */
 	function wcj_get_customer_country( $user_id ) {
-		$user_meta = get_user_meta( $user_id );
-		$billing_country  = isset( $user_meta['billing_country'][0] )  ? $user_meta['billing_country'][0]  : '';
+		$user_meta        = get_user_meta( $user_id );
+		$billing_country  = isset( $user_meta['billing_country'][0] ) ? $user_meta['billing_country'][0] : '';
 		$shipping_country = isset( $user_meta['shipping_country'][0] ) ? $user_meta['shipping_country'][0] : '';
-		return ( '' == $billing_country ) ? $shipping_country : $billing_country;
+		return ( '' === $billing_country ) ? $shipping_country : $billing_country;
 	}
 }
 
 if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 	/**
-	 * wcj_get_european_union_countries_with_vat.
+	 * Wcj_get_european_union_countries_with_vat.
 	 *
 	 * @version 3.2.0
 	 * @return  array
@@ -95,7 +96,7 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 			'FI' => 24,
 			'FR' => 20,
 			'GB' => 20,
-			'GR' => 24, // 23
+			'GR' => 24, // 23.
 			'HU' => 27,
 			'HR' => 25,
 			'IE' => 23,
@@ -107,7 +108,7 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 			'NL' => 21,
 			'PL' => 23,
 			'PT' => 23,
-			'RO' => 19, // 20 // 24
+			'RO' => 19, // 20.// 24.
 			'SE' => 25,
 			'SI' => 22,
 			'SK' => 20,
@@ -117,7 +118,7 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 
 if ( ! function_exists( 'wcj_get_european_union_countries' ) ) {
 	/**
-	 * wcj_get_european_union_countries.
+	 * Wcj_get_european_union_countries.
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
@@ -150,7 +151,7 @@ if ( ! function_exists( 'wcj_get_states' ) ) {
 	 */
 	function wcj_get_states() {
 		$base_country = WC()->countries->get_base_country();
-		$states = WC()->countries->get_states( $base_country );
+		$states       = WC()->countries->get_states( $base_country );
 		return ( isset( $states ) && ! empty( $states ) ) ? $states : array();
 	}
 }
@@ -415,7 +416,7 @@ if ( ! function_exists( 'wcj_get_countries' ) ) {
 
 if ( ! function_exists( 'wcj_get_currency_countries' ) ) {
 	/**
-	 * wcj_get_currency_countries.
+	 * Wcj_get_currency_countries.
 	 *
 	 * 158 currencies.
 	 * Three-letter currency code (ISO 4217) => Two-letter countries codes (ISO 3166-1 alpha-2).
@@ -593,7 +594,7 @@ if ( ! function_exists( 'wcj_get_currency_countries' ) ) {
 			'ZWD' => array( 'ZW' ),
 			'GQE' => array( 'CF' ),
 			'MOP' => array( 'MO' ),
-			// Former currencies
+			// Former currencies.
 			'LTL' => array( 'LT' ),
 			'LVL' => array( 'LV' ),
 			'EEK' => array( 'EE' ),
