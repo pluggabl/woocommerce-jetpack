@@ -90,6 +90,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @version 3.8.0
 		 * @since   3.8.0
 		 * @todo    (dev) maybe move this to `WCJ_Module`
+		 * @param string | array $option defines the option.
+		 * @param string         $key defines the key.
+		 * @param bool           $default defines the default.
 		 */
 		public function wcj_get_option( $option, $key, $default = false ) {
 			return ( isset( $this->options[ $option ][ $key ] ) ? $this->options[ $option ][ $key ] : ( isset( $this->defaults[ $option ] ) ? $this->defaults[ $option ] : $default ) );
@@ -186,6 +189,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @todo    add WPML support
 		 * @todo    add product variations
 		 * @todo    add product cats and tags
+		 * @param string $gateway defines the gateway.
 		 */
 		public function check_cart_products( $gateway ) {
 			$include_products = $this->wcj_get_option( 'include_products', $gateway );

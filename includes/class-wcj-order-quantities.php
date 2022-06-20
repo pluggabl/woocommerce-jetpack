@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 4.4.0
 		 * @since   4.4.0
-		 * @param $product_id
+		 * @param int $product_id defines the product_id.
 		 */
 		public function prevent_outdated_min_max( $product_id ) {
 			$product = wc_get_product( $product_id );
@@ -126,6 +126,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 4.3.1
 		 * @since   4.3.1
+		 * @param string $pattern defines the pattern.
 		 */
 		public function float_quantity_input_pattern( $pattern ) {
 			return '[0-9.]*';
@@ -147,6 +148,8 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 4.2.0
 		 * @since   4.2.0
+		 * @param string $html defines the html.
+		 * @param array  $product defines the product.
 		 */
 		public function replace_quantity_attribute_on_loop_cart_link( $html, $product ) {
 			$quantity = $this->get_product_quantity( 'min', $product, 1 );
@@ -209,8 +212,8 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 * @version 4.1.0
 		 * @since   4.1.0
 		 *
-		 * @param $args
-		 * @param $product
+		 * @param array $args defines the args.
+		 * @param array $product defines the product.
 		 *
 		 * @return mixed
 		 */
@@ -224,6 +227,8 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 4.2.0
 		 * @since   3.7.0
+		 * @param array $args defines the args.
+		 * @param array $product defines the product.
 		 */
 		public function set_quantity_input_args( $args, $product ) {
 			if ( 'yes' === wcj_get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
@@ -248,6 +253,8 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 3.7.0
 		 * @since   3.7.0
+		 * @param int   $qty defines the qty.
+		 * @param array $product defines the product.
 		 */
 		public function set_quantity_input_step( $qty, $product ) {
 			$step = wcj_get_option( 'wcj_order_quantities_step', 1 );
@@ -265,6 +272,10 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 3.6.0
 		 * @since   3.6.0
+		 * @param string | array $passed defines the passed.
+		 * @param int            $product_id defines the product_id.
+		 * @param int            $quantity defines the quantity.
+		 * @param int            $variation_id defines the variation_id.
 		 */
 		public function single_item_cart( $passed, $product_id, $quantity = 0, $variation_id = 0 ) {
 			if ( ! WC()->cart->is_empty() ) {
@@ -318,6 +329,9 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 3.2.2
 		 * @since   3.2.2
+		 * @param string | int $min_or_max defines the min_or_max.
+		 * @param array        $_product defines the _product.
+		 * @param int          $default_qty defines the default_qty.
 		 */
 		public function get_product_quantity( $min_or_max, $_product, $default_qty ) {
 			$max_or_max_per_item_quantity = apply_filters( 'booster_option', 0, wcj_get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) );
@@ -342,6 +356,9 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 3.2.2
 		 * @since   3.2.2
+		 * @param array $args defines the args.
+		 * @param array $_product defines the _product.
+		 * @param array $_variation defines the _variation.
 		 */
 		public function set_quantity_input_min_max_variation( $args, $_product, $_variation ) {
 			$args['min_qty'] = $this->get_product_quantity( 'min', $_variation, $args['min_qty'] );
@@ -364,6 +381,8 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 5.4.3
 		 * @since   3.2.2
+		 * @param int   $qty defines the qty.
+		 * @param array $_product defines the _product.
 		 */
 		public function set_quantity_input_min( $qty, $_product ) {
 			if ( ! $_product->is_type( 'variable' ) ) {
@@ -383,6 +402,8 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 3.2.2
 		 * @since   3.2.2
+		 * @param int   $qty defines the qty.
+		 * @param array $_product defines the _product.
 		 */
 		public function set_quantity_input_max( $qty, $_product ) {
 			if ( ! $_product->is_type( 'variable' ) ) {
@@ -437,6 +458,11 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 5.4.3
 		 * @since   2.9.0
+		 * @param string | array $message_type defines the message_type.
+		 * @param string         $_is_cart defines the _is_cart.
+		 * @param int            $required_quantity defines the required_quantity.
+		 * @param int            $total_quantity defines the total_quantity.
+		 * @param int            $_product_id defines the _product_id.
 		 */
 		public function print_message( $message_type, $_is_cart, $required_quantity, $total_quantity, $_product_id = 0 ) {
 			if ( $_is_cart ) {
@@ -520,6 +546,9 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 4.2.0
 		 * @since   4.2.0
+		 * @param int          $product_id defines the product_id.
+		 * @param int | string $product_qty_step defines the product_qty_step.
+		 * @param int          $quantity defines the quantity.
 		 */
 		public function check_step( $product_id, $product_qty_step, $quantity ) {
 			$min_value = $this->get_product_quantity( 'min', wc_get_product( $product_id ), 0 );
@@ -543,6 +572,9 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 4.4.0
 		 * @since   4.2.0
+		 * @param int           $cart_item_quantities defines the cart_item_quantities.
+		 * @param string | bool $_is_cart defines the _is_cart.
+		 * @param string | bool $_return defines the _return.
 		 */
 		public function check_quantities_step( $cart_item_quantities, $_is_cart, $_return ) {
 			if ( 'yes' !== wcj_get_option( 'wcj_order_quantities_step_additional_validation_enabled', 'no' ) ) {
@@ -574,7 +606,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 			$step = wcj_get_option( 'wcj_order_quantities_step', 1 );
 			if (
 			empty( $step ) &&
-			0 !== ( $step = wcj_get_option( 'wcj_order_quantities_step', 1 ) )
+			0 !== ( $step )
 			) {
 				foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 					if ( $this->is_step_per_product_enabled && 0 !== get_post_meta( $_product_id, '_wcj_order_quantities_step', true ) ) {
@@ -599,6 +631,11 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 4.2.0
 		 * @since   2.9.0
+		 * @param string        $min_or_max defines the min_or_max.
+		 * @param int           $cart_item_quantities defines the cart_item_quantities.
+		 * @param int           $cart_total_quantity defines the cart_total_quantity.
+		 * @param string        $_is_cart defines the _is_cart.
+		 * @param string | bool $_return defines the _return.
 		 */
 		public function check_quantities( $min_or_max, $cart_item_quantities, $cart_total_quantity, $_is_cart, $_return ) {
 			$min_or_max_cart_total_quantity = wcj_get_option( 'wcj_order_quantities_' . $min_or_max . '_cart_total_quantity', 0 );
@@ -689,6 +726,9 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 *
 		 * @version 5.4.3
 		 * @since   5.4.3
+		 * @param string | bool $passed_validation defines the passed_validation.
+		 * @param int           $product_id defines the product_id.
+		 * @param int           $quantity defines the quantity.
 		 */
 		public function set_quantity_input_max_cart_item( $passed_validation, $product_id, $quantity ) {
 			global $product;

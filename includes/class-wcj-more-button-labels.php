@@ -57,6 +57,7 @@ if ( ! class_exists( 'WCJ_More_Button_Labels' ) ) :
 		 * Set_order_button_text.
 		 *
 		 * @version 2.8.0
+		 * @param string $current_text defines the current_text.
 		 */
 		public function set_order_button_text( $current_text ) {
 			$new_text = wcj_get_option( 'wcj_checkout_place_order_button_text', '' );

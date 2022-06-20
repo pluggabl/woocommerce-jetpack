@@ -12,13 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
+if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		/**
-		 * WCJ_Price_by_Country_Local.
+		 * WCJ_Price_By_Country_Local.
 		 *
 		 * @version 2.3.9
 		 */
-	class WCJ_Price_by_Country_Local {
+	class WCJ_Price_By_Country_Local {
 
 		/**
 		 * Constructor.
@@ -43,6 +43,10 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 
 		/**
 		 * Add_variable_pricing.
+		 *
+		 * @param int | string $loop Define loop.
+		 * @param string       $variation_data Get variation data.
+		 * @param Array        $variation Get variation.
 		 */
 		public function add_variable_pricing( $loop, $variation_data, $variation ) {
 			$this->create_custom_meta_box( 'variable', $variation->ID );
@@ -50,6 +54,9 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 
 		/**
 		 * Create_custom_meta_box.
+		 *
+		 * @param string $simple_or_variable get product variation type.
+		 * @param int    $product_id get product id.
 		 */
 		public function create_custom_meta_box( $simple_or_variable, $product_id = 0 ) {
 
@@ -126,13 +133,18 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 
 		/**
 		 * Save options.
+		 *
+		 * @param int          $post_id Get post id.
+		 * @param int | string $total_options_groups Get total options groups.
+		 * @param int          $variation_id_addon Get addon variation id.
 		 */
 		public function save_options( $post_id, $total_options_groups, $variation_id_addon = '' ) {
 			$options = $this->get_prices_options();
+			$nonce   = wp_create_nonce();
 			for ( $i = 1; $i <= $total_options_groups; $i++ ) {
 				foreach ( $options as $option ) {
-					if ( isset( $_POST[ $option['id'] . $i . $variation_id_addon ] ) ) {
-						update_post_meta( $post_id, '_' . $option['id'] . $i, $_POST[ $option['id'] . $i . $variation_id_addon ] );
+					if ( isset( $_POST[ $option['id'] . $i . $variation_id_addon ] ) && wp_verify_nonce( $nonce ) ) {
+						update_post_meta( $post_id, '_' . $option['id'] . $i, isset( $_POST[ $option['id'] . $i . $variation_id_addon ] ) );
 					} elseif ( 'checkbox' === $option['type'] ) {
 						update_post_meta( $post_id, '_' . $option['id'] . $i, 'off' );
 					}
@@ -145,6 +157,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 		 *
 		 * @version 2.3.9
 		 * @since   2.3.9
+		 * @param int $product_id  get product id.
 		 */
 		public function save_custom_meta_box_on_product_edit_ajax( $product_id ) {
 			return $this->save_custom_meta_box_on_product_edit( $product_id, /* 'ajax' */ null );
@@ -152,13 +165,16 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 
 		/**
 		 * Save Custom Meta Box on Product Edit.
+		 *
+		 * @param int         $post_id  get post id.
+		 * @param obj | array $post get post.
 		 */
 		public function save_custom_meta_box_on_product_edit( $post_id, $post ) {
-
+			$nonce       = wp_create_nonce();
 			$meta_box_id = 'price_by_country';
 
 			// Check that we are saving with custom meta box displayed.
-			if ( ! isset( $_POST[ 'woojetpack_' . $meta_box_id . '_save_post' ] ) ) {
+			if ( ! isset( $_POST[ 'woojetpack_' . $meta_box_id . '_save_post' ] ) && wp_verify_nonce( $nonce ) ) {
 				return;
 			}
 
@@ -184,6 +200,11 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 
 		/**
 		 * Get_option_field_html.
+		 *
+		 * @param int   $current_post_id get current post id.
+		 * @param int   $option_id get option id.
+		 * @param Array $option Get options.
+		 * @param int   $variation_id_addon Get variation addon id.
 		 */
 		public function get_option_field_html( $current_post_id, $option_id, $option, $variation_id_addon = '' ) {
 			$html         = '';
@@ -197,6 +218,10 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 		 * Get_all_options_html.
 		 *
 		 * @version 4.0.0
+		 * @param string $simple_or_variable get variation type.
+		 * @param int    $current_post_id get current post id.
+		 * @param int    $total_number get total num.
+		 * @param int    $variation_id_addon Get variation addon id.
 		 */
 		public function get_all_options_html( $simple_or_variable, $current_post_id, $total_number, $variation_id_addon = '' ) {
 			$html    = '';
@@ -255,4 +280,4 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 
 endif;
 
-return new WCJ_Price_by_Country_Local();
+return new WCJ_Price_By_Country_Local();

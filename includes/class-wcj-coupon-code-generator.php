@@ -64,7 +64,9 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		 *
 		 * @version 3.2.3
 		 * @since   3.2.3
-		 * @todo    (maybe) $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		 * @todo    (maybe) $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.
+		 * @param int    $length defines the length.
+		 * @param string $characters defines the characters.
 		 */
 		public function random_string( $length = 32, $characters = 'abcdefghijklmnopqrstuvwxyz' ) {
 			$characters_length = strlen( $characters );
@@ -81,6 +83,9 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		 * @version 3.2.3
 		 * @since   3.1.3
 		 * @todo    (maybe) more algorithms
+		 * @param string $str used for str.
+		 * @param string $algorithm used fore algorithm.
+		 * @param int    $length used for length.
 		 */
 		public function generate_coupon_code( $str = '', $algorithm = '', $length = '' ) {
 			if ( '' === $str ) {

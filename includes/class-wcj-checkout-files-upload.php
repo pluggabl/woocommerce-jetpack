@@ -103,6 +103,9 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.5
+		 * @param array         $attachments defines the attachments.
+		 * @param bool | string $status defines the status.
+		 * @param string | int  $order defines the order.
 		 */
 		public function add_files_to_email_attachments( $attachments, $status, $order ) {
 			if (
@@ -123,6 +126,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 * @version 5.5.9
 		 * @since   2.4.7
 		 * @todo    (maybe) somehow add `%image%` to emails also
+		 * @param string | int $order defines the order.
 		 */
 		public function add_files_to_order_display( $order ) {
 			$order_id    = wcj_get_order_id( $order );
@@ -148,7 +152,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					$img = '';
 					if ( $do_add_img ) {
 						$order_file_name = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . get_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i, true );
-						if ( @is_array( getimagesize( $order_file_name ) ) ) {
+						if ( is_array( getimagesize( $order_file_name ) ) ) {
 							$link = esc_url(
 								add_query_arg(
 									array(
@@ -180,6 +184,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
+		 * @param string $message defines the message.
+		 * @param string $notice_type defines the notice_type.
 		 */
 		public function add_notice( $message, $notice_type = 'success' ) {
 			if ( 'wc_add_notice' === $this->checkout_files_upload_notice_type ) {
@@ -194,6 +200,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   2.4.5
+		 * @param string $posted defines the posted.
 		 */
 		public function validate_on_checkout( $posted ) {
 			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
@@ -310,6 +317,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.2.3
 		 * @since   3.2.3
+		 * @param string $ext defines the ext.
 		 */
 		public function is_extension_blocked( $ext ) {
 			if ( 'no' === wcj_get_option( 'wcj_checkout_files_upload_block_files_enabled', 'yes' ) ) {
@@ -332,6 +340,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.4.0
 		 * @since   2.4.5
+		 * @param int    $order_id defines the order_id.
+		 * @param string $posted defines the posted.
 		 */
 		public function add_files_to_order( $order_id, $posted ) {
 			$upload_dir = wcj_get_wcj_uploads_dir( 'checkout_files_upload' );
@@ -347,7 +357,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					$download_file_name = $order_id . '_' . $i . '.' . $ext;
 					$file_path          = $upload_dir . '/' . $download_file_name;
 					$tmp_file_name      = $session_data['tmp_name'];
-					$file_data          = file_get_contents( $tmp_file_name );
+					$file_data          = wp_remote_get( $tmp_file_name );
 					if ( ! $this->is_extension_blocked( $ext ) ) { // should already be validated earlier, but just in case...
 						file_put_contents( $file_path, $file_data );
 					}
@@ -365,6 +375,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   3.6.0
+		 * @param string         $cart_item_key defines the cart_item_key.
+		 * @param string | array $cart defines the cart.
 		 */
 		public function remove_files_on_empty_cart( $cart_item_key, $cart ) {
 			$wcj_checkout_files_upload_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
@@ -393,6 +405,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 * @version 3.8.0
 		 * @since   3.8.0
 		 * @todo    use where needed
+		 * @param int          $order_id defines the order_id.
+		 * @param string | int $file_num defines the file_num.
 		 */
 		public function get_order_full_file_name( $order_id, $file_num ) {
 			return wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . get_post_meta( $order_id, '_wcj_checkout_files_upload_' . $file_num, true );
@@ -656,6 +670,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.6.0
 		 * @since   2.4.7
+		 * @param int $i defines the value of i.
+		 * @param int $order_id defines the order_id.
 		 */
 		public function is_visible( $i, $order_id = 0 ) {
 
@@ -825,6 +841,9 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.7.0
 		 * @since   3.7.0
+		 * @param string $link defines the link.
+		 * @param int    $i defines the value of i.
+		 * @param int    $order_id defines the order_id.
 		 */
 		public function maybe_get_image( $link, $i, $order_id = 0 ) {
 			$nonce = wp_create_nonce();
@@ -837,7 +856,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					$session_data  = wcj_session_get( 'wcj_checkout_files_upload_' . $i );
 					$tmp_file_name = $session_data['tmp_name'];
 				}
-				if ( @is_array( getimagesize( $tmp_file_name ) ) ) {
+				if ( is_array( getimagesize( $tmp_file_name ) ) ) {
 					return '<img style="' . wcj_get_option( 'wcj_checkout_files_upload_form_template_field_image_style', 'width:64px;' ) . '" src="' . $link . '"> ';
 				}
 			}
@@ -849,6 +868,9 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.5.0
+		 * @param int    $i defines the value of i.
+		 * @param string $file_name defines the file_name.
+		 * @param int    $order_id defines the order_id.
 		 */
 		public function get_the_form( $i, $file_name, $order_id = 0 ) {
 			$the_label = wcj_get_option( 'wcj_checkout_files_upload_label_' . $i, '' );
@@ -919,6 +941,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 2.5.6
 		 * @since   2.5.0
+		 * @param int $order_id defines the order_id.
 		 */
 		public function add_files_upload_form_to_thankyou_and_myaccount_page( $order_id ) {
 			$html           = '';
@@ -953,6 +976,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 *
 		 * @version 3.4.0
 		 * @since   2.5.2
+		 * @param bool $is_direct_call check the is_direct_call.
 		 */
 		public function add_files_upload_form_to_checkout_frontend_all( $is_direct_call = false ) {
 			$html         = '';

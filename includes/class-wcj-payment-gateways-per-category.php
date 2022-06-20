@@ -46,8 +46,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		 * @version 4.6.0
 		 * @since   4.6.0
 		 *
-		 * @param $gateway_id
-		 * @param array      $products
+		 * @param string | int $gateway_id defines the gateway_id.
+		 * @param array        $products defines the products.
 		 *
 		 * @return bool
 		 */
@@ -133,6 +133,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		 *
 		 * @version 4.6.0
 		 * @todo    [dev] (maybe) `if ( ! is_checkout() ) { return $available_gateways; }`
+		 * @param array $available_gateways defines the available_gateways.
 		 */
 		public function filter_available_payment_gateways_per_category( $available_gateways ) {
 			$cart_products  = array();

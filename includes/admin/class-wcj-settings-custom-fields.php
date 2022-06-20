@@ -42,6 +42,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 * Output_exchange_rate_settings_button.
 		 *
 		 * @version 5.2.0
+		 * @param  Array $value Get values.
 		 */
 		public function output_exchange_rate_settings_button( $value ) {
 
@@ -112,6 +113,9 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 3.1.3
 		 * @since   3.1.3
+		 * @param  Array $value Get values.
+		 * @param  Array $option Get options.
+		 * @param  Array $raw_value Get raw value.
 		 */
 		public function maybe_unclean_field( $value, $option, $raw_value ) {
 			return ( isset( $option['wcj_raw'] ) && $option['wcj_raw'] ? $raw_value : $value );
@@ -122,6 +126,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.9.0
 		 * @since   2.9.0
+		 * @param  Array $value Get values.
 		 */
 		public function output_wcj_save_settings_button( $value ) {
 			// Output.
@@ -140,6 +145,9 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param  Array $value Get values.
+		 * @param  Array $option Get options.
+		 * @param  Array $raw_value Get raw value.
 		 */
 		public function format_wcj_number_plus_checkbox_end( $value, $option, $raw_value ) {
 			return ( 'wcj_number_plus_checkbox_end' === $option['type'] ) ? ( '1' === $raw_value || 'yes' === $raw_value ? 'yes' : 'no' ) : $value;
@@ -150,6 +158,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param  Array $value Get values.
 		 */
 		public function output_wcj_number_plus_checkbox_start( $value ) {
 			// Custom attribute handling.
@@ -191,6 +200,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param  Array $value Get values.
 		 */
 		public function output_wcj_number_plus_checkbox_end( $value ) {
 			// Custom attribute handling.
@@ -228,6 +238,9 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param  Array $value Get values.
+		 * @param  Array $option Get options.
+		 * @param  Array $raw_value Get raw value.
 		 */
 		public function unclean_custom_textarea( $value, $option, $raw_value ) {
 			return ( 'custom_textarea' === $option['type'] ) ? $raw_value : $value;
@@ -238,6 +251,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.6.0
 		 * @since   2.2.6
+		 * @param  Array $value Get values.
 		 */
 		public function output_custom_textarea( $value ) {
 			$option_value      = wcj_get_option( $value['id'], $value['default'] );
@@ -262,7 +276,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 					style="<?php echo esc_attr( $value['css'] ); ?>"
 					class="<?php echo esc_attr( $value['class'] ); ?>"
 					placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-					<?php echo implode( ' ', wp_kses_post( $custom_attributes ) ); ?>
+					<?php echo wp_kses_post( implode( ' ', $custom_attributes ) ); ?>
 					><?php echo esc_textarea( $option_value ); ?></textarea>
 			</td>
 		</tr>
@@ -274,6 +288,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.2.3
+		 * @param  Array $value Get values.
 		 */
 		public function output_module_tools( $value ) {
 			?>
@@ -298,6 +313,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.2.8
+		 * @param  Array $value Get values.
 		 */
 		public function output_custom_link( $value ) {
 			$tooltip_html = ( isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
@@ -318,6 +334,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 * Output_custom_number.
 		 *
 		 * @version 5.5.6
+		 * @param  Array $value Get values.
 		 */
 		public function output_custom_number( $value ) {
 			$type         = 'number';
@@ -353,7 +370,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 					value="<?php echo esc_attr( $option_value ); ?>"
 					class="<?php echo esc_attr( $value['class'] ); ?>"
 					placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-					<?php echo implode( ' ', wp_kses_post( $custom_attributes ) ); ?>
+					<?php echo wp_kses_post( implode( ' ', $custom_attributes ) ); ?>
 					/><?php echo wp_kses_post( $save_button ); ?><?php echo wp_kses_post( $description ); ?>
 			</td>
 		</tr>

@@ -96,6 +96,8 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 *
 		 * @version 4.0.0
 		 * @since   4.0.0
+		 * @param string | bool  $is_editable defines the is_editable.
+		 * @param string | array $order defines the order.
 		 */
 		public function editable_status( $is_editable, $order ) {
 			return in_array( $order->get_status(), wcj_get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ), true );
@@ -211,6 +213,9 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 * @since   3.2.0
 		 * @see     https://make.wordpress.org/core/2016/10/04/custom-bulk-actions/
 		 * @todo    (maybe) "bulk actions" for for WP < 4.7
+		 * @param string $redirect_to defines the redirect_to.
+		 * @param string $doaction defines the doaction.
+		 * @param array  $post_ids defines the post_ids.
 		 */
 		public function handle_bulk_actions_regenerate_download_permissions( $redirect_to, $doaction, $post_ids ) {
 			if ( 'wcj_regenerate_download_permissions' !== $doaction ) {
@@ -230,6 +235,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 *
 		 * @version 3.2.0
 		 * @since   3.2.0
+		 * @param array $bulk_actions defines the bulk_actions.
 		 */
 		public function register_bulk_actions_regenerate_download_permissions( $bulk_actions ) {
 			$bulk_actions['wcj_regenerate_download_permissions'] = __( 'Regenerate download permissions', 'woocommerce-jetpack' );
@@ -311,6 +317,8 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 * @version 2.7.0
 		 * @since   2.5.6
 		 * @todo    (maybe) move meta box to `side`
+		 * @param string $order_currency defines the order_currency.
+		 * @param array  $_order defines the _order.
 		 */
 		public function change_order_currency( $order_currency, $_order ) {
 			$wcj_order_currency = get_post_meta( wcj_get_order_id( $_order ), '_wcj_order_currency', true );
@@ -322,6 +330,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 *
 		 * @version 3.7.0
 		 * @todo    (maybe) at first check if status is not `completed` already (however `WC_Order::set_status()` checks that anyway)
+		 * @param int $order_id defines the order_id.
 		 */
 		public function auto_complete_order( $order_id ) {
 			if ( ! $order_id ) {

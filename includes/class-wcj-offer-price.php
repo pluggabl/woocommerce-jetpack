@@ -109,7 +109,8 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 					$styling_options[ $option ] = $default;
 				}
 			}
-			echo "<style type=\"text/css\">
+			echo wp_kses_post(
+				"<style type=\"text/css\">
 			.wcj-offer-price-modal-content {
 				width: {$styling_options['form_content_width']};
 			}
@@ -127,7 +128,8 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 			.wcj-offer-price-modal-footer h1, .wcj-offer-price-modal-footer h2, .wcj-offer-price-modal-footer h3, .wcj-offer-price-modal-footer h4, .wcj-offer-price-modal-footer h5, .wcj-offer-price-modal-footer h6 {
 				color: {$styling_options['form_footer_text_color']};
 			}
-		</style>";
+		</style>"
+			);
 		}
 
 		/**
@@ -136,6 +138,8 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 * @version 2.9.0
 		 * @since   2.9.0
 		 * @todo    (maybe) add successful deletion notice
+		 * @param int            $post_id defines the post_id.
+		 * @param string | array $post defines the post.
 		 */
 		public function delete_offer_price_product_history( $post_id, $post ) {
 			$nonce = wp_create_nonce();
@@ -284,6 +288,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 *
 		 * @version 4.2.0
 		 * @since   2.9.0
+		 * @param int $product_id defines the product_id.
 		 */
 		public function is_offer_price_enabled_for_product( $product_id ) {
 			switch ( apply_filters( 'booster_option', 'all_products', wcj_get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
@@ -307,6 +312,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 * @version 4.2.0
 		 * @since   2.9.0
 		 * @todo    (maybe) rethink `str_replace( '\'', '"', ... )`
+		 * @param int $product_id defines the product_id.
 		 */
 		public function get_wcj_data_array( $product_id ) {
 			$is_per_product_enabled = ( in_array( apply_filters( 'booster_option', 'all_products', wcj_get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ), array( 'per_product', 'per_product_and_per_category' ), true ) );
@@ -450,6 +456,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 * @version 4.4.0
 		 * @since   4.4.0
 		 * @todo    [dev] add more conditions to exclude (i.e. not only "out of stock")
+		 * @param int $product_id defines the product_id.
 		 */
 		public function is_offer_price_excluded_for_product( $product_id ) {
 			if ( 'yes' === wcj_get_option( 'wcj_offer_price_exclude_out_of_stock', 'no' ) ) {
@@ -518,9 +525,10 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				} else {
 					$admin_email       = wcj_get_option( 'admin_email' );
 					$product_author_id = get_post_field( 'post_author', $product_id );
+					$product_user_info = get_userdata( $product_author_id );
 					if (
 					( $product_author_id ) &&
-					( $product_user_info = get_userdata( $product_author_id ) ) &&
+					( $product_user_info ) &&
 					isset( $product_user_info->user_email )
 					) {
 						$product_author_email = $product_user_info->user_email;

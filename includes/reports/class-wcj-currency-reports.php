@@ -30,12 +30,13 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * Add_reports_currency_to_admin_bar.
 		 *
 		 * @version 5.5.9
+		 * @param int | string $wp_admin_bar Difine admin_bar.
 		 */
 		public function add_reports_currency_to_admin_bar( $wp_admin_bar ) {
+			$nonce = wp_create_nonce();
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] && wp_verify_nonce( $nonce ) ) {
 
-			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
-
-				$the_current_code = isset( $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency();
+				$the_current_code = isset( $_GET['currency'] ) ? isset( $_GET['currency'] ) : get_woocommerce_currency();
 				$parent           = 'reports_currency_select';
 				$args             = array(
 					'parent' => false,
@@ -93,15 +94,18 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * Change_currency_symbol_reports.
 		 *
 		 * @version 3.9.0
+		 * @param string $currency_symbol Get currency symbol.
+		 * @param string $currency Get currency.
 		 */
 		public function change_currency_symbol_reports( $currency_symbol, $currency ) {
-			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			$nonce = wp_create_nonce();
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] && wp_verify_nonce( $nonce ) ) {
 				if ( isset( $_GET['currency'] ) ) {
 					if ( 'merge' === $_GET['currency'] ) {
 						return '';
 					} else {
 						remove_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_reports' ), PHP_INT_MAX, 2 );
-						$return = get_woocommerce_currency_symbol( $_GET['currency'] );
+						$return = get_woocommerce_currency_symbol( isset( $_GET['currency'] ) );
 						add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_reports' ), PHP_INT_MAX, 2 );
 						return $return;
 					}
@@ -114,16 +118,18 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * Filter_reports.
 		 *
 		 * @version 2.5.7
+		 * @param Array $args Get args.
 		 */
 		public function filter_reports( $args ) {
-			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			$nonce = wp_create_nonce();
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] && wp_verify_nonce( $nonce ) ) {
 				if ( isset( $_GET['currency'] ) && 'merge' === $_GET['currency'] ) {
 					return $args;
 				}
 				$args['where_meta'] = array(
 					array(
 						'meta_key'   => '_order_currency',
-						'meta_value' => isset( $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency(),
+						'meta_value' => isset( $_GET['currency'] ) ? isset( $_GET['currency'] ) : get_woocommerce_currency(),
 						'operator'   => '=',
 					),
 				);

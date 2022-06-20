@@ -105,6 +105,10 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 		 *
 		 * @version 5.5.6
 		 * @since   2.8.0
+		 * @param string | array $remove_result_html defines the remove_result_html.
+		 * @param array          $multi_table_data defines the multi_table_data.
+		 * @param int            $num_old_slugs defines the num_old_slugs.
+		 * @param array          $posts_ids defines the posts_ids.
 		 */
 		public function output_old_slugs_tool( $remove_result_html, $multi_table_data, $num_old_slugs, $posts_ids ) {
 			$html  = '';

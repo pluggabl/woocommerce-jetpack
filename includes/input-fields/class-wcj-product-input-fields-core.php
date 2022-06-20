@@ -20,7 +20,11 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 */
 	class WCJ_Product_Input_Fields_Core {
 
-		/** @var string scope. */
+		/**
+		 * Ccope
+		 *
+		 * @var string scope.
+		 */
 		public $scope = '';
 
 		/**
@@ -31,6 +35,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @todo    add `do_shortcode()` to all applicable options (e.g. "Message on required")
 		 * @todo    add positions: `woocommerce_before_add_to_cart_quantity`, `woocommerce_after_add_to_cart_quantity` (same to all similar modules, search for `woocommerce_before_add_to_cart_button`)
 		 * @todo    add variable alternative positions: `woocommerce_before_variations_form`, `woocommerce_before_single_variation`, `woocommerce_single_variation`, `woocommerce_after_single_variation`, `woocommerce_after_variations_form` (same to all similar modules, search for `woocommerce_before_add_to_cart_button`)
+		 * @param  string $scope define scope.
 		 */
 		public function __construct( $scope ) {
 			$this->scope = $scope;
@@ -92,8 +97,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @version 4.2.0
 		 * @since   4.2.0
 		 *
-		 * @param $raq
-		 * @param $product_raq
+		 * @param Array $raq Get raq.
+		 * @param Array $product_raq Get product raq item.
 		 *
 		 * @return array
 		 */
@@ -117,8 +122,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @version 4.2.0
 		 * @since   4.2.0
 		 *
-		 * @param $formatted_meta
-		 * @param $order_item
+		 * @param Array $formatted_meta Get formatted meta.
+		 * @param Array $order_item Get order item.
 		 *
 		 * @return array
 		 */
@@ -151,10 +156,14 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * Save product input fields on Product Edit.
 		 *
 		 * @version 3.5.0
+		 * @param int         $post_id Get post ID.
+		 * @param obj | Array $post Get post.
 		 */
 		public function save_local_product_input_fields_on_product_edit( $post_id, $post ) {
 			// Check that we are saving with input fields displayed.
-			if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) ) {
+			$nonce = wp_create_nonce();
+
+			if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) && wp_verify_nonce( $nonce ) ) {
 				return;
 			}
 			// Save values.
@@ -164,12 +173,12 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			$options                          = $this->get_options();
 			$values                           = array();
 			$values['local_total_number']     = isset( $_POST['wcj_product_input_fields_local_total_number'] ) ?
-			$_POST['wcj_product_input_fields_local_total_number'] : $default_total_input_fields;
+			isset( $_POST['wcj_product_input_fields_local_total_number'] ) : $default_total_input_fields;
 			for ( $i = 1; $i <= $total_input_fields_before_saving; $i++ ) {
 				foreach ( $options as $option ) {
 					$option_name = str_replace( 'wcj_product_input_fields_', '', $option['id'] . $i );
 					if ( isset( $_POST[ $option['id'] . $i ] ) ) {
-						$values[ $option_name ] = $_POST[ $option['id'] . $i ];
+						$values[ $option_name ] = isset( $_POST[ $option['id'] . $i ] );
 					} elseif ( 'checkbox' === $option['type'] ) {
 						$values[ $option_name ] = 'off';
 					}

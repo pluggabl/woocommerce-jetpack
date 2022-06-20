@@ -106,6 +106,9 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 
 		/**
 		 * Save_custom_price_labels.
+		 *
+		 * @param int            $post_id defines the post_id.
+		 * @param string | array $post defines the post.
 		 */
 		public function save_custom_price_labels( $post_id, $post ) {
 			$nonce = wp_create_nonce();
@@ -212,6 +215,9 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		 * Customize_price.
 		 *
 		 * @todo    recheck if `str_replace( 'From: ', '', $price );` is necessary? Also this works only for English WP installs.
+		 * @param int            $price defines the price.
+		 * @param string         $custom_tab_section defines the custom_tab_section.
+		 * @param string | array $custom_label defines the custom_label.
 		 */
 		public function customize_price( $price, $custom_tab_section, $custom_label ) {
 			switch ( $custom_tab_section ) {
@@ -236,6 +242,8 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
+		 * @param int            $price defines the price.
+		 * @param string | array $product defines the product.
 		 */
 		public function custom_price( $price, $product ) {
 

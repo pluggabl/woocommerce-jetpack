@@ -41,7 +41,8 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 		 * @since   3.2.2
 		 */
 		public function wcj_ajax_get_exchange_rates_average() {
-			echo wcj_currencyconverterapi_io_get_exchange_rate_average( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'], $_POST['wcj_start_date'], $_POST['wcj_end_date'] );
+			$nonce = wp_create_nonce();
+			echo wcj_currencyconverterapi_io_get_exchange_rate_average( isset( $_POST['wcj_currency_from'] ), isset( $_POST['wcj_currency_to'] ), isset( $_POST['wcj_start_date'] ), isset( $_POST['wcj_end_date'] ) ) && wp_verify_nonce( $nonce );
 			die();
 		}
 
@@ -51,8 +52,11 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 		 * @version 2.9.0
 		 */
 		public function register_script() {
+			$nonce = wp_create_nonce();
 			if (
 			isset( $_GET['section'] ) &&
+			wp_verify_nonce( $nonce )
+			&&
 			in_array(
 				$_GET['section'],
 				array(
@@ -83,8 +87,10 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 		 * @version 3.2.2
 		 */
 		public function enqueue_exchange_rates_script() {
+			$nonce = wp_create_nonce();
 			if (
 			isset( $_GET['section'] ) &&
+			wp_verify_nonce( $nonce ) &&
 			in_array(
 				$_GET['section'],
 				array(

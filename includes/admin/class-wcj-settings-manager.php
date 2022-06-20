@@ -64,9 +64,11 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		 */
 		public function manage_options_import() {
 			global $wcj_notice;
-			if ( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' === $_FILES['booster_import_settings_file']['tmp_name'] ) {
+			$nonce = wp_create_nonce();
+			if ( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' === $_FILES['booster_import_settings_file']['tmp_name'] && wp_verify_nonce( $nonce ) ) {
 				$wcj_notice     .= __( 'Please upload a file to import!', 'woocommerce-jetpack' );
 				$import_settings = array();
+
 				unset( $_POST['booster_import_settings'] );
 			} else {
 				$import_counter  = 0;

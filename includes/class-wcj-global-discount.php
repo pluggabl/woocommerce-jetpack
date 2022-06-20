@@ -17,7 +17,11 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 	 * WCJ_Global_Discount.
 	 */
 	class WCJ_Global_Discount extends WCJ_Module {
-
+		/**
+		 * Wcj_global_options.
+		 *
+		 * @var $wcj_global_options.
+		 */
 		private $wcj_global_options = array();
 
 		/**
@@ -55,9 +59,9 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 * @version 4.8.0
 		 * @since   4.8.0
 		 *
-		 * @param $args
-		 * @param $atts
-		 * @param $type
+		 * @param array          $args defines the args.
+		 * @param string | array $atts defines the atts.
+		 * @param string         $type defines the type.
 		 *
 		 * @return mixed
 		 */
@@ -240,6 +244,8 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 * @version 5.3.8
 		 * @since   3.1.0
 		 * @todo    `WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER, 'woocommerce_variation_prices_regular_price', 'woocommerce_product_variation_get_regular_price'`
+		 * @param  int            $price defines the price.
+		 * @param  array | string $_product defines the _product.
 		 */
 		public function change_price( $price, $_product ) {
 			$_current_filter = current_filter();
@@ -261,6 +267,9 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   2.5.7
+		 * @param int            $price defines the price.
+		 * @param int            $qty defines the qty.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function change_price_grouped( $price, $qty, $_product ) {
 			if ( $_product->is_type( 'grouped' ) ) {
@@ -281,6 +290,9 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 *
 		 * @version 3.8.0
 		 * @since   2.5.7
+		 * @param int            $price defines the price.
+		 * @param int            $coefficient defines the coefficient.
+		 * @param string | array $group defines the group.
 		 */
 		public function calculate_price( $price, $coefficient, $group ) {
 			if ( '' === $price ) {
@@ -304,6 +316,8 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 * @version 3.1.0
 		 * @since   2.5.7
 		 * @return  bool
+		 * @param string | array $_product defines the _product.
+		 * @param string | array $group defines the group.
 		 */
 		public function check_if_applicable( $_product, $group ) {
 			return ( 'yes' === wcj_get_option( 'wcj_global_discount_sale_enabled_' . $group, 'yes' ) && $this->is_enabled_for_product( $_product, $group ) );
@@ -314,6 +328,8 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param string | array $_product defines the _product.
+		 * @param string | array $group defines the group.
 		 */
 		public function is_enabled_for_product( $_product, $group ) {
 			$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
@@ -335,6 +351,10 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   3.1.0
+		 * @param string | array $_product defines the _product.
+		 * @param int            $price defines the price.
+		 * @param string         $price_type defines the price_type.
+		 * @param string         $scope defines the scope.
 		 */
 		public function check_if_applicable_by_product_scope( $_product, $price, $price_type, $scope ) {
 			$return = true;
@@ -367,6 +387,9 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   2.5.7
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
+		 * @param string         $price_type defines the price_type.
 		 */
 		public function add_global_discount( $price, $_product, $price_type ) {
 
@@ -427,6 +450,9 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 *
 		 * @version 4.9.0
 		 * @since   2.5.7
+		 * @param array          $price_hash defines the price_hash.
+		 * @param string | array $_product defines the _product.
+		 * @param string         $display defines the display.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
 			$options = $this->get_global_discount_options();

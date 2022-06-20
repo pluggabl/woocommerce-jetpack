@@ -148,11 +148,12 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			if ( isset( $this->custom_pages ) ) {
 				return $this->custom_pages;
 			}
-			$this->custom_pages = array();
-			$title              = wcj_get_option( 'wcj_my_account_custom_pages_title', array() );
-			$content            = wcj_get_option( 'wcj_my_account_custom_pages_content', array() );
-			$endpoint           = wcj_get_option( 'wcj_my_account_custom_pages_endpoint', array() );
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_my_account_custom_pages_total_number', 1 ) ); $i ++ ) {
+			$this->custom_pages                       = array();
+			$title                                    = wcj_get_option( 'wcj_my_account_custom_pages_title', array() );
+			$content                                  = wcj_get_option( 'wcj_my_account_custom_pages_content', array() );
+			$endpoint                                 = wcj_get_option( 'wcj_my_account_custom_pages_endpoint', array() );
+			$wcj_my_account_custom_pages_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_my_account_custom_pages_total_number', 1 ) );
+			for ( $i = 1; $i <= $wcj_my_account_custom_pages_total_number; $i ++ ) {
 				if ( ! empty( $title[ $i ] ) && ! empty( $content[ $i ] ) ) {
 					$endpoint[ $i ]                                       = isset( $endpoint[ $i ] ) ? $endpoint[ $i ] : '';
 					$this->custom_pages[ sanitize_title( $title[ $i ] ) ] = array(
@@ -170,6 +171,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 *
 		 * @version 4.5.0
 		 * @since   4.3.0
+		 * @param string $title defines the title.
 		 */
 		public function set_custom_page_title( $title ) {
 			$nonce = wp_create_nonce();
@@ -197,7 +199,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @version 4.8.0
 		 * @since   4.8.0
 		 *
-		 * @param string $title
+		 * @param string $title defines the title.
 		 * @return string
 		 */
 		public function set_custom_page_title_with_endpoint( $title ) {
@@ -230,6 +232,10 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @version 5.5.9
 		 * @since   4.3.0
 		 * @todo    [dev] (maybe) customizable `section` (e.g. `wcj-section`)
+		 * @param string $url defines the url.
+		 * @param string $endpoint defines the endpoint.
+		 * @param string $value defines the value.
+		 * @param string $permalink defines the permalink.
 		 */
 		public function set_custom_page_url( $url, $endpoint, $value, $permalink ) {
 			$myaccount_page_id = wcj_get_option( 'woocommerce_myaccount_page_id' );
@@ -244,6 +250,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 *
 		 * @version 4.8.0
 		 * @since   4.3.0
+		 * @param array $items defines the items.
 		 */
 		public function add_custom_page_menu_item( $items ) {
 			foreach ( $this->get_custom_pages() as $custom_menu_page_id => $custom_menu_page_data ) {
@@ -258,6 +265,10 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 *
 		 * @version 3.8.0
 		 * @since   3.8.0
+		 * @param string $url defines the url.
+		 * @param string $endpoint defines the endpoint.
+		 * @param string $value defines the value.
+		 * @param string $permalink defines the permalink.
 		 */
 		public function customize_menu_custom_endpoints( $url, $endpoint, $value, $permalink ) {
 			$custom_items = array_map( 'trim', explode( PHP_EOL, wcj_get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
@@ -276,6 +287,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @version 4.8.0
 		 * @since   3.8.0
 		 * @see     woocommerce/templates/myaccount/dashboard.php
+		 * @param string | array $value defines the value.
 		 */
 		public function customize_dashboard( $value ) {
 			$nonce = wp_create_nonce();
@@ -367,6 +379,8 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @todo    (maybe) 'view-order': `$title = ( $order = wc_get_order( $wp->query_vars['view-order'] ) ) ? sprintf( __( 'Order #%s', 'woocommerce' ), $order->get_order_number() ) : '';`
 		 * @todo    (maybe) 'order-pay'      => __( 'Pay for order', 'woocommerce' )
 		 * @todo    (maybe) 'order-received' => __( 'Order received', 'woocommerce' )
+		 * @param string $title defines the title.
+		 * @param string $endpoint defines the endpoint.
 		 */
 		public function customize_endpoint_title( $title, $endpoint ) {
 			$menu_titles = wcj_get_option( 'wcj_my_account_menu_title', array() );
@@ -382,6 +396,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @version 5.1.1
 		 * @since   3.8.0
 		 * @todo    (maybe) option to disable menu
+		 * @param array $items defines the items.
 		 */
 		public function customize_menu( $items ) {
 			$menu_titles = wcj_get_option( 'wcj_my_account_menu_title', array() );
@@ -446,6 +461,9 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @version 3.6.0
 		 * @since   3.6.0
 		 * @todo    (maybe) optional admin confirmation for some user roles (probably will need to create additional `...-pending` user roles)
+		 * @param id             $customer_id defines the customer_id.
+		 * @param string | array $new_customer_data defines the new_customer_data.
+		 * @param string         $password_generated defines the password_generated.
 		 */
 		public function process_registration_extra_fields( $customer_id, $new_customer_data, $password_generated ) {
 			$nonce = wp_create_nonce();
@@ -489,6 +507,8 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @version 2.9.0
 		 * @since   2.9.0
 		 * @see     http://snippet.fm/snippets/add-order-complete-action-to-woocommerce-my-orders-customer-table/
+		 * @param array  $actions defines the actions.
+		 * @param string $order defines the order.
 		 */
 		public function maybe_add_my_account_order_actions( $actions, $order ) {
 			$statuses_to_add = wcj_get_option( 'wcj_my_account_add_order_status_actions', '' );

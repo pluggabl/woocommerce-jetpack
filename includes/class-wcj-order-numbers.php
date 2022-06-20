@@ -90,8 +90,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @version 5.1.0
 		 * @since   5.1.0
 		 *
-		 * @param $msg
-		 * @param $order
+		 * @param string         $msg defines the msg.
+		 * @param string | array $order defines the order.
 		 *
 		 * @return mixed
 		 */
@@ -121,7 +121,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @version 5.1.0
 		 * @since   5.1.0
 		 *
-		 * @param $order
+		 * @param string | array $order defines the order.
 		 *
 		 * @return array
 		 */
@@ -152,6 +152,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @version 3.5.0
 		 * @since   3.5.0
 		 * @todo    re-think if setting number for yet not-numbered order should be allowed (i.e. do not check for `( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) )`)
+		 * @param string         $post_type defines the post_type.
+		 * @param string | array $post defines the post.
 		 */
 		public function maybe_add_meta_box( $post_type, $post ) {
 			if ( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) ) {
@@ -164,6 +166,9 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 *
 		 * @version 3.2.3
 		 * @since   3.2.3
+		 * @param array  $meta defines the meta.
+		 * @param string $to_order defines the to_order.
+		 * @param string $from_order defines the from_order.
 		 */
 		public function woocommerce_subscriptions_remove_meta_copy( $meta, $to_order, $from_order ) {
 			foreach ( $meta as $meta_id => $meta_item ) {
@@ -190,6 +195,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @version 4.2.0
 		 * @since   2.6.0
 		 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
+		 * @param array | string $query defines the query.
 		 */
 		public function search_by_custom_number( $query ) {
 			$search = trim( $query->query['s'] );
@@ -253,8 +259,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				$query->set( 'post__in', array() );
 				$current_meta_query = empty( $query->get( 'meta_query' ) ) ? array() : $query->get( 'meta_query' );
 				$query->set( 'meta_query', array_merge( $current_meta_query, $meta_query_args ) );
-			}// If not found search by post_id.
-			else {
+				// If not found search by post_id.
+			} else {
 				$query->set( 'post_status', $post_status );
 				$query->set( 's', '' );
 				$current_post_in = empty( $query->get( 'post__in' ) ) ? array() : $query->get( 'post__in' );
@@ -267,6 +273,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   2.5.2
+		 * @param int $order_number defines the order_number.
 		 */
 		public function add_order_number_to_tracking( $order_number ) {
 			$offset     = 0;
@@ -301,6 +308,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * Display order number.
 		 *
 		 * @version 3.5.0
+		 * @param int            $order_number defines the order_number.
+		 * @param string | array $order defines the order.
 		 */
 		public function display_order_number( $order_number, $order ) {
 			$order_id          = wcj_get_order_id( $order );
@@ -374,6 +383,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 
 		/**
 		 * Add_new_order_number.
+		 *
+		 * @param int $order_id defines the order_id.
 		 */
 		public function add_new_order_number( $order_id ) {
 			$this->add_order_number_meta( $order_id, false );
@@ -385,6 +396,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @version 3.3.0
 		 * @since   3.3.0
 		 * @todo    use transactions on `wcj_order_number_use_mysql_transaction_enabled`
+		 * @param int $current_order_number defines the current_order_number.
+		 * @param int $order_id defines the order_id.
 		 */
 		public function maybe_reset_sequential_counter( $current_order_number, $order_id ) {
 			$reset_period = wcj_get_option( 'wcj_order_number_counter_reset_enabled', 'no' );
@@ -427,6 +440,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 *
 		 * @version 5.4.6
 		 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
+		 * @param int  $order_id defines the order_id.
+		 * @param bool $do_overwrite defines the do_overwrite.
 		 */
 		public function add_order_number_meta( $order_id, $do_overwrite ) {
 			if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {

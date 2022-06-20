@@ -61,6 +61,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		 *
 		 * @version 3.0.1
 		 * @since   3.0.1
+		 * @param array          $data defines the data.
+		 * @param string | array $errors defines the errors.
 		 */
 		public function check_required_wcj_input_fields( $data, $errors ) {
 			$nonce          = wp_create_nonce();
@@ -140,6 +142,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		 *
 		 * @version 4.7.0
 		 * @since   2.5.2
+		 * @param int    $order_id defines the order_id.
+		 * @param string $posted defines the posted.
 		 */
 		public function update_custom_payment_gateways_fields_order_meta( $order_id, $posted ) {
 			$payment_method = get_post_meta( $order_id, '_payment_method', true );

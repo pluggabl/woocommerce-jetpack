@@ -80,6 +80,9 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		 * @todo    [feature] add replaced value `%current_add_to_cart_qty%`
 		 * @todo    [feature] (maybe) add replaced value `%remaining_qty_incl_qty_already_in_cart%`
 		 * @todo    [feature] (maybe) option to choose `wc_add_notice( $message, 'error' );` or `wc_add_notice( $message, 'notice' );`
+		 * @param string $passed defines the passed.
+		 * @param int    $product_id defines the product_id.
+		 * @param int    $quantity defines the quantity.
 		 */
 		public function validate_on_add_to_cart( $passed, $product_id, $quantity ) {
 			// Get max quantity (for current product).
@@ -247,6 +250,7 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		 *
 		 * @version 3.5.0
 		 * @since   3.5.0
+		 * @param int $order_id defines the order_id.
 		 */
 		public function save_quantities( $order_id ) {
 			$order = wc_get_order( $order_id );
@@ -284,6 +288,7 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		 * @todo    (maybe) local - add "enabled/disabled" option
 		 * @todo    (maybe) global - apply only to selected products (i.e. include/exclude products, cats, tags)
 		 * @todo    (maybe) per user and/or per user role (both global and local)
+		 * @param int $product_id defines the product_id.
 		 */
 		public function get_max_qty( $product_id ) {
 			$qty = get_post_meta( $product_id, '_wcj_max_products_per_user_qty', true );
@@ -328,6 +333,7 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		 * @version 3.5.0
 		 * @since   3.5.0
 		 * @todo    [dev] recheck `$cart_item_quantity` (maybe should be calculated same as `$currently_in_cart` in `$this->validate_on_add_to_cart()`)
+		 * @param bool $add_notices defines the add_notices.
 		 */
 		public function check_quantities( $add_notices = true ) {
 			$result = true;

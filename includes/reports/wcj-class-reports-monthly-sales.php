@@ -26,6 +26,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.4.7
+		 * @param null $args Get null value.
 		 */
 		public function __construct( $args = null ) {
 			return true;
@@ -38,10 +39,11 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		 * @since   2.4.7
 		 */
 		public function get_report() {
-			$html = '';
-			if ( isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
+			$html  = '';
+			$nonce = wp_create_nonce();
+			if ( isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) && wp_verify_nonce( $nonce ) ) {
 				// Save rates.
-				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), $_POST['wcj_save_currency_rates_array'] ) );
+				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), isset( $_POST['wcj_save_currency_rates_array'] ) ) );
 				$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates saved.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			} elseif ( isset( $_POST['wcj_reset_currency_rates'] ) ) {
 				// Delete rates.
@@ -49,7 +51,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 				$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates deleted.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			}
 			// Show report.
-			$this->year = isset( $_GET['year'] ) ? $_GET['year'] : gmdate( 'Y' );
+			$this->year = isset( $_GET['year'] ) ? isset( $_GET['year'] ) : gmdate( 'Y' );
 			$html      .= $this->get_monthly_sales_report();
 			return $html;
 		}
@@ -59,6 +61,10 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		 *
 		 * @version 2.9.1
 		 * @since   2.4.7
+		 * @param int    $currency_from Define currency_from.
+		 * @param int    $currency_to Define  currency_to.
+		 * @param number $start_date Get start date.
+		 * @param number $end_date Get end date.
 		 */
 		public function get_saved_exchange_rate( $currency_from, $currency_to, $start_date, $end_date ) {
 			// Same currency.
@@ -106,7 +112,8 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 
 			$order_currencies_array        = array();
 			$order_currencies_array_totals = array();
-			$report_currency               = ( isset( $_GET['currency'] ) && 'merge' !== $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency();
+			$nonce                         = wp_create_nonce();
+			$report_currency               = ( isset( $_GET['currency'] ) && 'merge' !== isset( $_GET['currency'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['currency'] ) : get_woocommerce_currency();
 			$block_size                    = 256;
 			$table_data                    = array();
 			$do_forecast                   = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_forecast', 'no' ) );

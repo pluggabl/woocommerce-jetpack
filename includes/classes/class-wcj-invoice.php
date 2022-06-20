@@ -19,12 +19,24 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		 * @version 5.3.6
 		 */
 	class WCJ_Invoice {
-
+		/**
+		 * Order_id.
+		 *
+		 * @var $order_id.
+		 */
 		public $order_id;
+		/**
+		 * Invoice_type.
+		 *
+		 * @var $invoice_type
+		 */
 		public $invoice_type;
 
 		/**
 		 * Constructor.
+		 *
+		 * @param int    $order_id Get order id.
+		 * @param string $invoice_type  get invoice type.
 		 */
 		public function __construct( $order_id, $invoice_type ) {
 			$this->order_id     = $order_id;
@@ -59,6 +71,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		 * @version 5.3.6
 		 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 		 * @todo    used get_option instead wcj_get_option to get current numbering_counter.
+		 * @param number $date get date.
 		 */
 		public function create( $date = '' ) {
 			$order_id     = $this->order_id;

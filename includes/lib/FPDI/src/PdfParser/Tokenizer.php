@@ -18,7 +18,7 @@ class Tokenizer {
 
 	/**
 	 * StreamReader
-	 * 
+	 *
 	 * @var StreamReader
 	 */
 	protected $streamReader;

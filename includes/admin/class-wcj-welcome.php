@@ -21,8 +21,8 @@ if ( ! class_exists( 'WCJ_Welcome' ) ) :
 		 */
 		public function __construct() {
 			if ( is_admin() ) {
-				$nonce = wp_create_nonce();
-				if ( isset( $_GET['page'] ) && 'jetpack-getting-started' === $_GET['page'] && wp_verify_nonce( $nonce ) ) {
+
+				if ( isset( $_GET['page'] ) && 'jetpack-getting-started' === $_GET['page'] ) {
 					add_action(
 						'in_admin_header',
 						function () {

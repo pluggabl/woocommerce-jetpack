@@ -78,7 +78,9 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		 * @version 4.0.0
 		 * @since   4.0.0
 		 * @todo    [dev] `unlink` and `rmdir` on settings reset
-		 * @todo    [dev] on empty content - delete dir also (`rmdir`)
+		 * @todo    [dev] on empty content - delete dir also (`rmdir`).
+		 * @param string | array $sections defines the sections.
+		 * @param string | array $current_section defines the current_section.
 		 */
 		public function create_php_file( $sections, $current_section ) {
 			if ( $this->id === $current_section ) {

@@ -65,6 +65,9 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 		 *
 		 * @version 5.3.7
 		 * @since   2.3.0
+		 * @param Array  $currency_pairs Define Currency pairs.
+		 * @param string $currency_to Define Currency to.
+		 * @param string $option_name Get option name.
 		 */
 		public function get_currency_pair( $currency_pairs, $currency_to, $option_name ) {
 			foreach ( $currency_pairs as $k => $currency_pair ) {
@@ -86,6 +89,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 		 *
 		 * @version 3.4.5
 		 * @todo    get currency pairs from "Currency Exchange Rates" module (see `get_all_currencies_exchange_rates_currencies()`)
+		 * @param int | string $interval Define rate interval.
 		 */
 		public function update_the_exchange_rates( $interval ) {
 
@@ -165,8 +169,9 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 			}
 
 			// Currency Pairs - Final.
-			$rate_offset_fixed = wcj_get_option( 'wcj_currency_exchange_rates_offset_fixed', 0 );
-			if ( $rate_rounding_enabled = ( 'yes' === wcj_get_option( 'wcj_currency_exchange_rates_rounding_enabled', 'no' ) ) ) {
+			$rate_offset_fixed     = wcj_get_option( 'wcj_currency_exchange_rates_offset_fixed', 0 );
+			$rate_rounding_enabled = ( 'yes' === wcj_get_option( 'wcj_currency_exchange_rates_rounding_enabled', 'no' ) );
+			if ( $rate_rounding_enabled ) {
 				$rate_rounding_precision = wcj_get_option( 'wcj_currency_exchange_rates_rounding_precision', 0 );
 			}
 			foreach ( $currency_pairs as $currency_pair ) {
@@ -213,6 +218,8 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 
 		/**
 		 * Cron_add_custom_intervals.
+		 *
+		 * @param Array $schedules get crone schedules.
 		 */
 		public function cron_add_custom_intervals( $schedules ) {
 			$schedules['weekly']   = array(

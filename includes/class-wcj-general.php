@@ -119,6 +119,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.9.0
+		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_user_role_changer( $wp_admin_bar ) {
 			$current_user_id           = get_current_user_id();
@@ -169,6 +170,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param int $the_time defines the the_time.
 		 */
 		public function change_session_expiring( $the_time ) {
 			return wcj_get_option( 'wcj_session_expiring', 47 * 60 * 60 );
@@ -179,6 +181,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param int $the_time defines the the_time.
 		 */
 		public function change_session_expiration( $the_time ) {
 			return wcj_get_option( 'wcj_session_expiration', 48 * 60 * 60 );
@@ -272,6 +275,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		 *
 		 * @version 2.5.2
 		 * @since   2.5.2
+		 * @param array $load_gateways defines the load_gateways.
 		 */
 		public function maybe_change_paypal_email( $load_gateways ) {
 			if ( isset( WC()->cart ) ) {
@@ -281,7 +285,10 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 						foreach ( $load_gateways as $key => $gateway ) {
 							if ( is_string( $gateway ) && 'WC_Gateway_Paypal' === $gateway ) {
 								$load_gateway                 = new $gateway();
-								$load_gateway->receiver_email = $load_gateway->email = $load_gateway->settings['receiver_email'] = $load_gateway->settings['email'] = $email;
+								$load_gateway->settings['email'] = $email;
+							    $load_gateway->settings['receiver_email'] =$load_gateway->settings['email'];
+							    $$load_gateway->email  = $load_gateway->settings['receiver_email'];
+							    $load_gateway->receiver_email = $load_gateway->email;
 								$load_gateways[ $key ]        = $load_gateway;
 							}
 						}

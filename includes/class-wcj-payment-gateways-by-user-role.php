@@ -37,10 +37,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_User_Role' ) ) :
 		}
 
 		/**
-		 * available_payment_gateways.
+		 * Available_payment_gateways.
 		 *
 		 * @version 4.7.1
 		 * @since   2.5.3
+		 * @param array $_available_gateways defines the _available_gateways.
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			$multi_role_check = wcj_get_option( 'wcj_payment_gateways_by_user_role_multi_role_check', 'no' );

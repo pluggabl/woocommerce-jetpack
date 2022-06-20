@@ -46,6 +46,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 		 * @since   2.7.0
 		 * @see     `is_available()` function in WooCommerce `WC_Gateway_COD` class
 		 * @todo    (maybe) virtual orders (`enable_for_virtual`)
+		 * @param string        $gateway_key defines the gateway_key.
+		 * @param string | bool $enable_for_methods defines the enable_for_methods.
 		 */
 		public function check_if_enabled_for_methods( $gateway_key, $enable_for_methods ) {
 
@@ -143,10 +145,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 		}
 
 		/**
-		 * available_payment_gateways.
+		 * Available_payment_gateways.
 		 *
 		 * @version 3.5.0
 		 * @since   2.7.0
+		 * @param array $_available_gateways defines the _available_gateways.
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			foreach ( $_available_gateways as $key => $gateway ) {

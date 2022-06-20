@@ -38,10 +38,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Currency' ) ) :
 		}
 
 		/**
-		 * available_payment_gateways.
+		 * Available_payment_gateways.
 		 *
 		 * @version 3.0.0
 		 * @since   3.0.0
+		 * @param array $_available_gateways defines the _available_gateways.
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			$current_currency = get_woocommerce_currency();

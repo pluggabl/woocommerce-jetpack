@@ -76,6 +76,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @since   2.4.8
 		 * @todo    [dev] when filtering now using `strpos`, but other options would be `stripos` (case-insensitive) or strict equality
 		 * @todo    [dev] (maybe) do filtering directly in WP_Query
+		 * @param int $tool_id defines the tool_id.
 		 */
 		public function export( $tool_id ) {
 			$data = array();
@@ -169,7 +170,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @version 5.1.0
 		 * @since   5.1.0
 		 *
-		 * @param $row
+		 * @param array $row defines the row.
 		 *
 		 * @return array
 		 */
@@ -228,6 +229,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @version 2.5.9
 		 * @since   2.5.5
 		 * @todo    [dev] filter each field separately
+		 * @param int $tool_id defines the tool_id.
 		 */
 		public function export_filter_fields( $tool_id ) {
 			$fields = array();
@@ -276,6 +278,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @since   3.0.0
 		 * @todo    [dev] maybe make `$dateformat` optional
 		 * @todo    [dev] mark current (i.e. active) link (if exists)
+		 * @param int $tool_id defines the tool_id.
 		 */
 		public function export_date_fields( $tool_id ) {
 			$nonce               = wp_create_nonce();
@@ -317,6 +320,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 *
 		 * @version 5.5.6
 		 * @since   2.4.8
+		 * @param int $tool_id defines the tool_id.
 		 */
 		public function create_export_tool( $tool_id ) {
 			$nonce = wp_create_nonce();

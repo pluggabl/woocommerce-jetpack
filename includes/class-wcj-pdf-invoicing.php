@@ -90,7 +90,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @version 4.3.0
 		 * @since   2.5.7
 		 *
-		 * @param $actions
+		 * @param string | array $actions defines the actions.
 		 *
 		 * @return array
 		 */
@@ -169,9 +169,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @since   2.5.7
 		 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 		 *
-		 * @param $redirect_to
-		 * @param $action
-		 * @param $post_ids
+		 * @param string | array $redirect_to defines the redirect_to.
+		 * @param string | array $action defines the action.
+		 * @param array          $post_ids defines the post_ids.
 		 *
 		 * @return string
 		 */
@@ -289,6 +289,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @see     https://www.setasign.com/products/fpdi/demos/concatenate-fake/
 		 * @todo    rethink filename (i.e. 'docs.pdf')
 		 * @todo    (maybe) always save/download instead of display on output
+		 * @param  int   $invoice_type_id defines the invoice_type_id.
+		 * @param array $post_ids defines the post_ids.
 		 */
 		public function merge_pdfs( $invoice_type_id, $post_ids ) {
 			if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
@@ -327,6 +329,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @since   2.5.7
 		 * @todo    (maybe) add timestamp to filename
 		 * @todo    add `ZipArchive` fallback
+		 * @param  int   $invoice_type_id defines the invoice_type_id.
+		 * @param array $post_ids defines the post_ids.
 		 */
 		public function get_invoices_zip( $invoice_type_id, $post_ids ) {
 			if ( ! class_exists( 'ZipArchive' ) ) {
@@ -384,6 +388,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 *
 		 * @version 3.2.0
 		 * @since   2.7.0
+		 * @param  int $order_id defines the order_id.
 		 */
 		public function create_document_hook( $order_id ) {
 			$current_filter = current_filter();
@@ -412,6 +417,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * Create_document.
 		 *
 		 * @version 2.5.7
+		 * @param  int    $order_id defines the order_id.
+		 * @param  string $invoice_type defines the invoice_type.
 		 */
 		public function create_document( $order_id, $invoice_type ) {
 			if ( false === wcj_is_invoice_created( $order_id, $invoice_type ) ) {
@@ -426,6 +433,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 *
 		 * @version 2.3.0
 		 * @since   2.3.0
+		 * @param  int    $order_id defines the order_id.
+		 * @param  string $invoice_type defines the invoice_type.
 		 */
 		public function delete_document( $order_id, $invoice_type ) {
 			if ( true === wcj_is_invoice_created( $order_id, $invoice_type ) ) {
@@ -459,6 +468,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @version 3.4.0
 		 * @since   2.9.0
 		 * @todo    check if `current_user_can( 'administrator' )` is the same as checking role directly
+		 * @param  bool $allow_order_owner defines the allow_order_owner.
 		 */
 		public function check_user_roles( $allow_order_owner = true ) {
 			if ( $allow_order_owner && get_current_user_id() === intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {

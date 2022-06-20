@@ -25,7 +25,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @access  public
-		 * @return  void
+		 * @return  statement
 		 */
 		public function __construct() {
 			return true;
@@ -37,6 +37,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		 * @version 5.5.0
 		 * @access  public
 		 * @return  void
+		 * @param int $id_count get id count.
 		 */
 		public function init( $id_count ) {
 
@@ -72,7 +73,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
-		 * @param   array $package
+		 * @param   array $package Get pakage array.
 		 * @return  bool
 		 */
 		public function is_available( $package ) {
@@ -209,6 +210,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.5.2
+		 * @param int $weight Get weight.
 		 */
 		public function calculate_shipping_by_table( $weight ) {
 			if ( 0 === $this->weight_table_total_rows ) {
@@ -245,7 +247,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @access  public
-		 * @param   mixed $package
+		 * @param   mixed $package Get pakages.
 		 * @return  void
 		 */
 		public function calculate_shipping( $package = array() ) {

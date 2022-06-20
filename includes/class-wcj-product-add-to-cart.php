@@ -175,6 +175,8 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		 * @see     `wc_add_to_cart_message()` in `wc-cart-functions.php`
 		 * @todo    (maybe) product specific messages: foreach ( $products as $product_id => $qty ) ...
 		 * @todo    (maybe) if ( WCJ_IS_WC_VERSION_BELOW_3 ) apply_filters( 'wc_add_to_cart_message' ) with 2 params: $message, $product_id
+		 * @param string $message defines the message.
+		 * @param array  $products defines the products.
 		 */
 		public function change_add_to_cart_message_html( $message, $products ) {
 
@@ -213,6 +215,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		 *
 		 * @version 2.6.0
 		 * @since   2.6.0
+		 * @param string $link defines the link.
 		 */
 		public function add_to_cart_variable_replace_loop_w_single( $link ) {
 			global $product;
@@ -258,7 +261,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 			if ( $product->is_type( 'external' ) ) {
 				$button_html = ob_get_contents();
 				ob_end_clean();
-				echo ( WCJ_IS_WC_VERSION_BELOW_3_4_0 ?
+				echo ( wp_kses_post( WCJ_IS_WC_VERSION_BELOW_3_4_0 ) ?
 				wp_kses_post( str_replace( '<a href=', '<a target="_blank" href=', $button_html ) ) : wp_kses_post( str_replace( '<form ', '<form target="_blank" ', $button_html ) ) );
 			}
 		}
@@ -268,6 +271,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		 *
 		 * @version 3.2.4
 		 * @since   2.5.3
+		 * @param string $link_html defines the link_html.
 		 */
 		public function replace_external_with_custom_add_to_cart_in_loop( $link_html ) {
 			global $product;
@@ -286,6 +290,9 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		 *
 		 * @version 2.5.6
 		 * @since   2.5.6
+		 * @param string $supports defines the supports.
+		 * @param string $feature defines the feature.
+		 * @param array  $_product defines the _product.
 		 */
 		public function manage_add_to_cart_ajax( $supports, $feature, $_product ) {
 			$value = get_post_meta( get_the_ID(), '_wcj_add_to_cart_button_ajax_disable', true );
@@ -300,6 +307,8 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		 *
 		 * @version 2.5.6
 		 * @since   2.5.6
+		 * @param string $url defines the url.
+		 * @param array  $_product defines the _product.
 		 */
 		public function custom_add_to_cart_loop_url( $url, $_product ) {
 			$custom_url = get_post_meta( get_the_ID(), '_wcj_add_to_cart_button_loop_custom_url', true );
@@ -366,6 +375,8 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		 * Maybe_redirect_to_url.
 		 *
 		 * @version 3.4.0
+		 * @param string     $url defines the url.
+		 * @param bool | int $product_id defines the product_id.
 		 */
 		public function maybe_redirect_to_url( $url, $product_id = false ) {
 			$nonce = wp_create_nonce();
@@ -403,17 +414,17 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 			$product_id = get_the_ID();
 			if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id ) ) {
 
-				$_productId = wc_get_product( get_the_ID() );
+				$_productid = wc_get_product( get_the_ID() );
 
-				if ( $_productId->is_type( 'variable' ) ) {
-					$default_attributes = $_productId->get_default_attributes();
+				if ( $_productid->is_type( 'variable' ) ) {
+					$default_attributes = $_productid->get_default_attributes();
 
-					foreach ( $_productId->get_available_variations() as $variation_values ) {
+					foreach ( $_productid->get_available_variations() as $variation_values ) {
 
 						foreach ( $variation_values['attributes'] as $key => $attribute_value ) {
 
 							$attribute_name = str_replace( 'attribute_', '', $key );
-							$default_value  = $_productId->get_variation_default_attribute( $attribute_name );
+							$default_value  = $_productid->get_variation_default_attribute( $attribute_name );
 							if ( $default_value === $attribute_value ) {
 
 								$product_id = $variation_values['variation_id'];

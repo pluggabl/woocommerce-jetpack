@@ -62,9 +62,11 @@ if ( ! class_exists( 'WCJ_Price_Formats' ) ) :
 		 * @version 3.5.0
 		 * @since   3.5.0
 		 * @todo    code refactoring
+		 * @param int $price_decimals_num defines the price_decimals_num.
 		 */
 		public function price_decimals( $price_decimals_num ) {
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+			$wcj_price_formats_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_formats_total_number', 1 ) );
+			for ( $i = 1; $i <= $wcj_price_formats_total_number; $i++ ) {
 				if ( get_woocommerce_currency() === wcj_get_option( 'wcj_price_formats_currency_' . $i ) ) {
 					$wpml_language = wcj_get_option( 'wcj_price_formats_wpml_language_' . $i, '' );
 					if ( defined( 'ICL_LANGUAGE_CODE' ) && '' !== ( $wpml_language ) ) {
@@ -85,10 +87,12 @@ if ( ! class_exists( 'WCJ_Price_Formats' ) ) :
 		 *
 		 * @version 4.1.0
 		 * @since   2.5.2
+		 * @param array $args defines the args.
 		 */
 		public function price_format( $args ) {
-			$current_currency = ( '' !== $args['currency'] ? $args['currency'] : get_woocommerce_currency() );
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+			$current_currency               = ( '' !== $args['currency'] ? $args['currency'] : get_woocommerce_currency() );
+			$wcj_price_formats_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_formats_total_number', 1 ) );
+			for ( $i = 1; $i <= $wcj_price_formats_total_number; $i++ ) {
 				if ( wcj_get_option( 'wcj_price_formats_currency_' . $i ) === $current_currency ) {
 					$wpml_language = wcj_get_option( 'wcj_price_formats_wpml_language_' . $i, '' );
 					if ( defined( 'ICL_LANGUAGE_CODE' ) && '' !== ( $wpml_language ) ) {
@@ -117,6 +121,9 @@ if ( ! class_exists( 'WCJ_Price_Formats' ) ) :
 		 *
 		 * @version 3.2.4
 		 * @since   3.2.4
+		 * @param string       $currency_code_pos defines the currency_code_pos.
+		 * @param string | int $currency defines the currency.
+		 * @param int          $price_format defines the price_format.
 		 */
 		public function get_woocommerce_price_format_currency_code( $currency_code_pos, $currency, $price_format ) {
 			switch ( $currency_code_pos ) {
@@ -138,6 +145,7 @@ if ( ! class_exists( 'WCJ_Price_Formats' ) ) :
 		 *
 		 * @version 2.5.2
 		 * @since   2.5.2
+		 * @param string $currency_pos defines the currency_pos.
 		 */
 		public function get_woocommerce_price_format( $currency_pos ) {
 			$format = '%1$s%2$s';

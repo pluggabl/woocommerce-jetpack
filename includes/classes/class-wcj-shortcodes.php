@@ -13,17 +13,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
-		 * @version 5.4.8
-		 *
 		 * WCJ_Shortcodes.
+		 *
+		 * @version 5.4.8
 		 */
 	class WCJ_Shortcodes {
 
 
 		/**
-		 * @version 5.4.8
-		 *
 		 * Constructor.
+		 *
+		 * @version 5.4.8
 		 */
 		public function __construct() {
 			foreach ( $this->the_shortcodes as $the_shortcode ) {

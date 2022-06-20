@@ -117,8 +117,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 4.8.0
 		 * @since   4.7.0
 		 *
-		 * @param $data
-		 * @param $raw_data
+		 * @param array          $data defines the data.
+		 * @param string | array $raw_data defines the raw_data.
 		 *
 		 * @return mixed
 		 */
@@ -147,10 +147,10 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 4.8.0
 		 * @since   4.7.0
 		 *
-		 * @param $value
-		 * @param $meta
-		 * @param $product
-		 * @param $row
+		 * @param string | array $value defines the value.
+		 * @param string | array $meta defines the meta.
+		 * @param string | array $product defines the product.
+		 * @param string | array $row defines the row.
 		 *
 		 * @return string
 		 */
@@ -171,8 +171,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 4.5.0
 		 * @since   4.5.0
 		 *
-		 * @param $meta_data
-		 * @param $item
+		 * @param  array $meta_data defines the meta_data.
+		 * @param array $item defines the item.
 		 *
 		 * @return mixed
 		 */
@@ -207,6 +207,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 3.3.0
 		 * @since   3.3.0
 		 * @todo    (maybe) $order->add_order_note
+		 * @param int $order_id defines the order_id.
 		 */
 		public function maybe_reduce_addons_qty( $order_id ) {
 			$order = wc_get_order( $order_id );
@@ -256,6 +257,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 2.5.6
 		 * @since   2.5.6
 		 * @todo    get real number of addons (instead of max_addons = 100)
+		 * @param array $hidden_metas defines the hidden_metas.
 		 */
 		public function hide_addons_in_admin_order( $hidden_metas ) {
 			$max_addons = 100;
@@ -273,6 +275,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 4.9.0
 		 * @since   2.5.5
+		 * @param array | string $passed defines the passed.
+		 * @param int            $product_id defines the product_id.
+		 * @param int            $quantity defines the quantity.
 		 */
 		public function validate_on_add_to_cart( $passed, $product_id, $quantity ) {
 			$args = func_get_args();
@@ -315,6 +320,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 5.3.3
 		 * @since   2.8.0
+		 * @param int          $price defines the price.
+		 * @param null | array $product defines the product.
 		 */
 		public function maybe_convert_currency( $price, $product = null ) {
 			$apply_price_filters = wcj_get_option( 'wcj_product_addons_apply_price_filters', 'by_module' );
@@ -344,6 +351,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 3.7.0
 		 * @since   3.7.0
 		 * @todo    move this to global functions (`wcj_clean_and_explode()`)
+		 * @param array  $delimiter defines the delimiter.
+		 * @param string $string defines the string.
 		 */
 		public function clean_and_explode( $delimiter, $string ) {
 			return array_map( 'trim', explode( $delimiter, trim( $string ) ) );
@@ -354,6 +363,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 4.6.0
 		 * @since   2.5.3
+		 * @param array | string $param defines the param.
 		 */
 		public function price_change_ajax( $param ) {
 			$nonce = wp_create_nonce();
@@ -429,6 +439,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @since   3.0.0
 		 * @todo    add "include only products"
 		 * @todo    add "include/exclude categories/tags"
+		 * @param int $i defines the i.
+		 * @param int $product_id defines the product_id.
 		 */
 		public function is_global_addon_visible( $i, $product_id ) {
 			$exclude_products = wcj_get_option( 'wcj_product_addons_all_products_exclude_products_' . $i, '' );
@@ -444,6 +456,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version  5.5.4
 		 * @since   2.5.3
 		 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
+		 * @param int $product_id defines the product_id.
 		 */
 		public function get_product_addons( $product_id ) {
 			$addons = array();
@@ -520,8 +533,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 4.6.0
 		 * @since   4.6.0
 		 *
-		 * @param $price_value
-		 * @param $product_id
+		 * @param int $price_value defines the price_value.
+		 * @param int $product_id defines the product_id.
 		 *
 		 * @return string
 		 */
@@ -546,6 +559,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 3.4.0
 		 * @since   3.4.0
 		 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module - `woocommerce_checkout_create_order_line_item` hook)
+		 * @param int   $item_id defines the item_id.
+		 * @param array $item defines the item.
+		 * @param int   $order_id defines the order_id.
 		 */
 		public function add_info_to_order_item_meta_wc3( $item_id, $item, $order_id ) {
 			if ( is_a( $item, 'WC_Order_Item_Product' ) ) {
@@ -558,6 +574,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 3.7.0
 		 * @since   2.5.3
+		 * @param int    $item_id defines the item_id.
+		 * @param array  $values defines the values.
+		 * @param string $cart_item_key defines the cart_item_key.
 		 */
 		public function add_info_to_order_item_meta( $item_id, $values, $cart_item_key ) {
 			$addons  = $this->get_product_addons( $values['product_id'] );
@@ -575,6 +594,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 4.8.0
 		 * @since   2.5.3
+		 * @param string $name defines the name.
+		 * @param array  $item defines the item.
+		 * @param bool   $is_cart defines the is_cart.
 		 */
 		public function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
 			if ( $is_cart ) {
@@ -610,6 +632,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 2.5.3
 		 * @since   2.5.3
+		 * @param bool   $name defines the name.
+		 * @param array  $cart_item defines the cart_item.
+		 * @param string $cart_item_key defines the cart_item_key.
 		 */
 		public function add_info_to_cart_item_name( $name, $cart_item, $cart_item_key ) {
 			return $this->add_info_to_order_item_name( $name, $cart_item, true );
@@ -620,6 +645,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 4.4.0
 		 * @since   2.5.3
+		 * @param int   $price defines the price.
+		 * @param array $_product defines the _product.
 		 */
 		public function change_price( $price, $_product ) {
 			$addons = $this->get_product_addons( wcj_get_product_id_or_variation_parent_id( $_product ) );
@@ -636,6 +663,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 4.5.0
 		 * @since   2.5.3
+		 * @param array  $cart_item_data defines the cart_item_data.
+		 * @param string $cart_item_key defines the cart_item_key.
 		 */
 		public function add_addons_price_to_cart_item( $cart_item_data, $cart_item_key ) {
 			$addons = $this->get_product_addons( ( WCJ_IS_WC_VERSION_BELOW_3 ? $cart_item_data['data']->product_id : wcj_get_product_id_or_variation_parent_id( $cart_item_data['data'] ) ) );
@@ -659,6 +688,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 4.5.0
 		 * @since   2.5.3
+		 * @param array          $item defines the item.
+		 * @param string         $values defines the values.
+		 * @param string | array $addon defines the addon.
 		 */
 		public function get_cart_item_addons_price_from_session( $item, $values, $addon ) {
 			if ( array_key_exists( 'wcj_pa_total_extra_price', $item ) ) {
@@ -672,6 +704,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 *
 		 * @version 4.9.0
 		 * @since   2.5.3
+		 * @param array $cart_item_data defines the cart_item_data.
+		 * @param int   $product_id defines the product_id.
+		 * @param int   $variation_id defines the variation_id.
 		 */
 		public function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 			$addons = $this->get_product_addons( $product_id );
@@ -865,7 +900,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 4.6.0
 		 * @since   4.6.0
 		 *
-		 * @param $html
+		 * @param string $html defines the html.
 		 *
 		 * @return string
 		 */
@@ -879,8 +914,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @version 4.6.0
 		 * @since   4.6.0
 		 *
-		 * @param $_product
-		 * @param $price
+		 * @param int   $price defines the price.
+		 * @param array $_product defines the _product.
 		 *
 		 * @return string
 		 */

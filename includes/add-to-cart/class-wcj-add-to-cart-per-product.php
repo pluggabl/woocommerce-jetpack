@@ -76,13 +76,14 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		 */
 		public function save_custom_add_to_cart_meta_box( $post_id, $post ) {
 			// Check that we are saving with custom add to cart metabox displayed.
-			if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) ) {
+			$nonce = wp_create_nonce();
+			if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) && wp_verify_nonce( $nonce ) ) {
 				return;
 			}
 			$option_name = 'wcj_custom_add_to_cart_local_single';
-			update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
+			update_post_meta( $post_id, '_' . $option_name, isset( $_POST[ $option_name ] ) );
 			$option_name = 'wcj_custom_add_to_cart_local_archive';
-			update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
+			update_post_meta( $post_id, '_' . $option_name, isset( $_POST[ $option_name ] ) );
 		}
 
 		/**
@@ -138,7 +139,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 			}
 			$html .= '</table>';
 			$html .= '<input type="hidden" name="woojetpack_custom_add_to_cart_save_post" value="woojetpack_custom_add_to_cart_save_post">';
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 	}
 

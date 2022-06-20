@@ -50,6 +50,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Icons' ) ) :
 		 * Set_icon.
 		 *
 		 * @version 2.3.1
+		 * @param string $icon defines the icon.
+		 * @param string $key defines the key.
 		 */
 		public function set_icon( $icon, $key ) {
 			$default_gateways = apply_filters( 'booster_option', array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' ), array() );

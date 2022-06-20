@@ -55,13 +55,15 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		 *
 		 * @version 3.7.0
 		 * @since   2.7.0
+		 * @param string $item_name defines the item_name.
+		 * @param  array  $item defines the item.
 		 */
 		public function add_product_info_to_email_order_item_name( $item_name, $item ) {
 			if ( $item['product_id'] ) {
 				global $post;
 				$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
-				$post       = get_post( $product_id );
-				setup_postdata( $post );
+				$posts      = get_post( $product_id );
+				setup_postdata( $posts );
 				$item_name .= do_shortcode( wcj_get_option( 'wcj_product_info_in_email_order_item_name', '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]' ) );
 				wp_reset_postdata();
 			}
@@ -73,6 +75,7 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		 *
 		 * @version 3.5.0
 		 * @since   3.5.0
+		 * @param string | array  $_object defines the _object.
 		 */
 		public function maybe_check_order_status( $_object ) {
 			$enable_order_statuses = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_emails_forwarding_enable_order_status', '' ) );
@@ -88,6 +91,9 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		 * Add another email recipient to all WooCommerce emails.
 		 *
 		 * @version 3.5.0
+		 * @param string         $email_headers defines the email_headers.
+		 * @param int            $id defines the id.
+		 * @param string | array $_object defines the _object.
 		 */
 		public function add_bcc_email( $email_headers, $id, $_object ) {
 			return ( $this->maybe_check_order_status( $_object ) ? $email_headers . 'Bcc: ' . wcj_get_option( 'wcj_emails_bcc_email', '' ) . "\r\n" : $email_headers );
@@ -97,6 +103,9 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		 * Add another email recipient to all WooCommerce emails.
 		 *
 		 * @version 3.5.0
+		 * @param string         $email_headers defines the email_headers.
+		 * @param int            $id defines the id.
+		 * @param string | array $_object defines the _object.
 		 */
 		public function add_cc_email( $email_headers, $id, $_object ) {
 			return ( $this->maybe_check_order_status( $_object ) ? $email_headers . 'Cc: ' . wcj_get_option( 'wcj_emails_cc_email', '' ) . "\r\n" : $email_headers );
@@ -107,6 +116,7 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		 *
 		 * @version 3.5.0
 		 * @since   2.3.9
+		 * @param string | bool $extended_title defines the extended_title.
 		 */
 		public function get_emails_forwarding_settings( $extended_title = false ) {
 			return array(
@@ -155,6 +165,7 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		 *
 		 * @version 2.3.9
 		 * @todo    (maybe) remove this completely (and then move `get_emails_forwarding_settings()` to settings file)
+		 * @param   array $settings defines the settings.
 		 */
 		public function add_email_forwarding_fields_to_wc_standard_settings( $settings ) {
 			$updated_settings = array();

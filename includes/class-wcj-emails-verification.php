@@ -72,9 +72,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 *
 		 * @version 5.2.0
 		 * @since   5.2.0
-		 *
-		 * @param $user
-		 *
+		 * @param string $user defines the user.
 		 * @return WP_Error
 		 */
 		public function prevent_authenticate( $user ) {
@@ -101,7 +99,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 * @version 5.2.0
 		 * @since   5.2.0
 		 *
-		 * @param $allowed
+		 * @param bool $allowed check auth.
 		 *
 		 * @return bool
 		 */
@@ -119,6 +117,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 * @version 3.1.0
 		 * @since   3.1.0
 		 * @todo    (maybe) add option to enable/disable the column
+		 * @param array $columns defines email coulmn.
 		 */
 		public function add_verified_email_column( $columns ) {
 			$columns['wcj_is_verified_email'] = __( 'Verified', 'woocommerce-jetpack' );
@@ -130,6 +129,9 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param string $output defines the output.
+		 * @param string $column_name defines the column_name.
+		 * @param int $user_id defines the user_id.
 		 */
 		public function render_verified_email_column( $output, $column_name, $user_id ) {
 			if ( 'wcj_is_verified_email' === $column_name ) {
@@ -147,6 +149,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.8.0
+		 * @param string $redirect_to defines the redirect_to.
 		 */
 		public function prevent_user_login_automatically_after_register( $redirect_to ) {
 			wp_logout();
@@ -158,6 +161,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.8.0
+		 * @param array $userdata defines the userdata.
 		 */
 		public function check_if_user_email_is_verified( $userdata ) {
 			if (
@@ -190,6 +194,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 * @version 5.5.9
 		 * @since   2.8.0
 		 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
+		 * @param int $user_id defines the user_id.
 		 */
 		public function reset_and_mail_activation_link( $user_id ) {
 			$user_info     = get_userdata( $user_id );

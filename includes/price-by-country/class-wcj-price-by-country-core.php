@@ -11,13 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
+if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
-		 * WCJ_Price_by_Country_Core.
+		 * WCJ_Price_By_Country_Core.
 		 *
 		 * @version 5.5.6
 		 */
-	class WCJ_Price_by_Country_Core {
+	class WCJ_Price_By_Country_Core {
 
 		/**
 		 * Constructor.
@@ -56,9 +56,10 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$country          = $_REQUEST['wcj-country'];
-			$country_selector = $_REQUEST['wcj_country_selector'];
-			$req_country      = isset( $country ) && ! empty( $country ) ? $country : ( isset( $country_selector ) && ! empty( $country_selector ) ? $country : null );
+			$nonce            = wp_create_nonce();
+			$country          = isset( $_REQUEST['wcj-country'] );
+			$country_selector = isset( $_REQUEST['wcj_country_selector'] );
+			$req_country      = isset( $country ) && wp_verify_nonce( $nonce ) && ! empty( $country ) ? $country : ( isset( $country_selector ) && ! empty( $country_selector ) ? $country : null );
 			if ( ! empty( $req_country ) ) {
 				wcj_session_set( 'wcj-country', $req_country );
 				do_action( 'wcj_price_by_country_set_country', $req_country, $this->get_currency_by_country( $req_country ) );
@@ -71,7 +72,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.5.6
 		 * @since   4.1.0
 		 *
-		 * @param $country
+		 * @param string $country Get country.
 		 *
 		 * @return bool|mixed|void
 		 */
@@ -87,7 +88,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 4.1.0
 		 * @since   4.1.0
 		 *
-		 * @param $country
+		 * @param string $country Get country.
 		 */
 		public function save_currency_on_session_by_country( $country ) {
 			$currency = $this->get_currency_by_country( $country );
@@ -189,7 +190,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.5.6
 		 * @since   5.3.0
 		 *
-		 * @param $default_country
+		 * @param string $default_country Get country.
 		 *
 		 * @return array|null|string
 		 */
@@ -212,7 +213,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.5.6
 		 * @since   5.2.0
 		 *
-		 * @param $value
+		 * @param  string $value Get value.
 		 *
 		 * @return string
 		 */
@@ -239,9 +240,9 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.5.6
 		 * @since   5.1.0
 		 *
-		 * @param $option
-		 * @param $key
-		 * @param $method
+		 * @param string $option Get options.
+		 * @param string $key get key value.
+		 * @param string $method Get method.
 		 *
 		 * @return mixed
 		 */
@@ -264,8 +265,8 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.1.0
 		 * @since   5.1.0
 		 *
-		 * @param $sql
-		 * @param $country_group_id
+		 * @param mixed $sql Get sql query.
+		 * @param int   $country_group_id get country group id.
 		 *
 		 * @return string
 		 */
@@ -284,7 +285,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.1.0
 		 * @since   5.1.0
 		 *
-		 * @param $country_group_id
+		 * @param int $country_group_id get country group id.
 		 *
 		 * @return string
 		 */
@@ -299,8 +300,8 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.1.0
 		 * @since   5.1.0
 		 *
-		 * @param $args
-		 * @param $wp_query
+		 * @param int | string $args Get args.
+		 * @param mixed        $wp_query get wp query.
 		 *
 		 * @return mixed
 		 */
@@ -329,15 +330,15 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * price_filter_post_clauses.
+		 * Price_filter_post_clauses.
 		 *
 		 * @version 5.1.0
 		 * @since   5.1.0
 		 *
 		 * @see WC_Query::price_filter_post_clauses()
 		 *
-		 * @param $args
-		 * @param $wp_query
+		 * @param int | string $args Get args.
+		 * @param mixed        $wp_query get wp query.
 		 *
 		 * @return mixed
 		 */
@@ -345,9 +346,10 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 			global $wpdb;
 			$group_id              = $this->get_customer_country_group_id();
 			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
+			$nonce                 = wp_create_nonce();
 			if (
 			! $wp_query->is_main_query() ||
-			( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ||
+			( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) && wp_verify_nonce( $nonce ) ) ||
 			empty( $group_id ) ||
 			1 === (float) ( $country_exchange_rate )
 			) {
@@ -488,9 +490,9 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
 		 *
-		 * @param $sql
-		 * @param $meta_query_sql
-		 * @param $tax_query_sql
+		 * @param mixed  $sql Get sql query.
+		 * @param string $meta_query_sql get meta query sql.
+		 * @param string $tax_query_sql tax query sql.
 		 *
 		 * @return string
 		 */
@@ -548,9 +550,9 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * @version 5.5.6
 		 * @since   4.4.0
 		 *
-		 * @param $return_price
-		 * @param $qty
-		 * @param $product
+		 * @param  int    $return_price return price.
+		 * @param int    $qty get Qty.
+		 * @param string $product Get product.
 		 *
 		 * @return float|int
 		 */
@@ -580,6 +582,8 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 *
 		 * @version 2.5.3
 		 * @since   2.5.3
+		 * @param  array          $meta_query Get meta query.
+		 * @param  array | string $_wc_query get wc query.
 		 */
 		public function price_filter_meta_query( $meta_query, $_wc_query ) {
 			$group_id = $this->get_customer_country_group_id();
@@ -598,6 +602,9 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 *
 		 * @version 5.5.6
 		 * @since   2.5.0
+		 * @param  int    $price Get price value.
+		 *  @param int    $qty get Qty.
+		 * @param string $_product Get product.
 		 */
 		public function change_price_grouped( $price, $qty, $_product ) {
 			if ( $_product->is_type( 'grouped' ) ) {
@@ -647,6 +654,8 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * Change_price_shipping.
 		 *
 		 * @version 5.5.6
+		 * @param int |string  $package_rates get pakages rates.
+		 * @param int | string $package get pakages.
 		 */
 		public function change_price_shipping( $package_rates, $package ) {
 			$group_id = $this->get_customer_country_group_id();
@@ -680,9 +689,10 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 			}
 
 			// Get the country.
+			$nonce           = wp_create_nonce();
 			$override_option = get_option( 'wcj_price_by_country_override_on_checkout_with_billing_country', 'no' );
-			if ( isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
-				$country = $_GET['country'];
+			if ( isset( $_GET['country'] ) && '' !== isset( $_GET['country'] ) && wcj_is_user_role( 'administrator' ) && wp_verify_nonce( $nonce ) ) {
+				$country = isset( $_GET['country'] );
 			} elseif ( 'no' !== ( $override_option )
 			&& (
 				( 'all' === get_option( 'wcj_price_by_country_override_scope', 'all' ) ) ||
@@ -725,7 +735,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 *
 		 * @version 5.5.6
 		 * @since   4.1.0
-		 * @param   $country
+		 * @param string $country Get country.
 		 *
 		 * @return int
 		 */
@@ -755,6 +765,8 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 
 		/**
 		 * Change_currency_code.
+		 *
+		 * @param int | string $currency Get currency.
 		 */
 		public function change_currency_code( $currency ) {
 			$group_id = $this->get_customer_country_group_id();
@@ -772,6 +784,9 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 *
 		 * @version 4.0.0
 		 * @since   2.4.3
+		 * @param array  $price_hash Get price data.
+		 * @param string $_product Get product.
+		 * @param string $display define display product.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
 			$group_id = $this->get_customer_country_group_id();
@@ -793,6 +808,8 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 * Change_price.
 		 *
 		 * @version 5.5.7
+		 * @param int   $price $price get price.
+		 * @param array $product Get product data.
 		 */
 		public function change_price( $price, $product ) {
 			$group_id = $this->get_customer_country_group_id();
@@ -849,4 +866,4 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 
 endif;
 
-return new WCJ_Price_by_Country_Core();
+return new WCJ_Price_By_Country_Core();

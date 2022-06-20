@@ -16,11 +16,17 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		 * WCJ_Reports_Customers.
 		 */
 	class WCJ_Reports_Customers {
-
+		/**
+		 * Country_sets.
+		 *
+		 * @var $country_sets
+		 */
 		public $country_sets;
 
 		/**
 		 * Constructor.
+		 *
+		 * @param null $args Get null value.
 		 */
 		public function __construct( $args = null ) {
 			$this->country_sets = ( isset( $args['group_countries'] ) && 'yes' === $args['group_countries'] ) ?
@@ -31,8 +37,8 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		 * Get_report function.
 		 */
 		public function get_report() {
-
-			$report_type = isset( $_GET['country'] ) ? $_GET['country'] : 'all_countries';
+			$nonce       = wp_create_nonce();
+			$report_type = isset( $_GET['country'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['country'] ) : 'all_countries';
 
 			$html = '';
 
@@ -54,6 +60,9 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 
 		/**
 		 * Get_data function.
+		 *
+		 * @param Array  $customers Get customers data.
+		 * @param string $report_type Get all_countries.
 		 */
 		public function get_data( $customers, $report_type = 'all_countries' ) {
 
@@ -110,6 +119,9 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 
 		/**
 		 * Custom_sort_for_data.
+		 *
+		 * @param array | int $a get customer counter.
+		 *  @param array | int $b get customer counter.
 		 */
 		public function custom_sort_for_data( $a, $b ) {
 			if ( $a['customer_counter'] === $b['customer_counter'] ) {
@@ -122,6 +134,9 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		 * Get_data function.
 		 *
 		 * @version 5.5.9
+		 * @param Array  $data Get data.
+		 * @param int    $total_customers Get total number of customers.
+		 * @param string $report_type Get all_countries.
 		 */
 		public function get_html( $data, $total_customers, $report_type = 'all_countries' ) {
 			$html = '';

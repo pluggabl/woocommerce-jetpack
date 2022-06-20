@@ -78,6 +78,8 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 * @version 5.5.9
 		 * @since   3.9.0
 		 * @todo    [dev] re-check variable products
+		 * @param string         $url defines the url.
+		 * @param string | array $product defines the product.
 		 */
 		public function replace_with_cross_sells_to_url( $url, $product ) {
 			$_cart = WC()->cart;
@@ -149,6 +151,8 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 *
 		 * @version 5.4.9
 		 * @since   3.9.0
+		 * @param int            $ids defines the ids.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function cross_sells_exclude_not_in_stock( $ids, $_product ) {
 			foreach ( $ids as $key => $product_id ) {
@@ -168,6 +172,8 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 * @todo    [dev] (maybe) ids instead of list
 		 * @todo    [dev] (maybe) on cart update (i.e. product removed) cross-sells are not updated (so it may be needed to reload page manually to see new cross-sells)
 		 * @todo    [feature] (maybe) on per category/tag basis
+		 * @param int            $ids defines the ids.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function cross_sells_ids( $ids, $_product ) {
 			$global_cross_sells = wcj_get_option( 'wcj_cross_sells_global_ids', '' );
@@ -187,6 +193,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 *
 		 * @version 3.5.3
 		 * @since   3.5.3
+		 * @param string | array $order defines the order.
 		 */
 		public function cross_sells_order( $order ) {
 			$_order = wcj_get_option( 'wcj_cross_sells_order', 'no_changes' );
@@ -198,6 +205,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 *
 		 * @version 3.5.3
 		 * @since   3.5.3
+		 * @param string | array $orderby defines the orderby.
 		 */
 		public function cross_sells_orderby( $orderby ) {
 			$_orderby = wcj_get_option( 'wcj_cross_sells_orderby', 'no_changes' );
@@ -209,6 +217,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 *
 		 * @version 3.5.3
 		 * @since   3.5.3
+		 * @param string | int $columns defines the columns.
 		 */
 		public function cross_sells_columns( $columns ) {
 			$_columns = wcj_get_option( 'wcj_cross_sells_columns', 0 );
@@ -220,6 +229,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 *
 		 * @version 3.6.0
 		 * @since   3.5.3
+		 * @param int $limit defines the limit.
 		 */
 		public function cross_sells_total( $limit ) {
 			$_limit = wcj_get_option( 'wcj_cross_sells_total', 0 );

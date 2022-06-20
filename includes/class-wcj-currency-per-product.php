@@ -70,6 +70,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 5.4.9
 		 * @since   2.7.0
+		 * @param int    $package_rates defines the package_rates.
+		 * @param string $package defines the package.
 		 */
 		public function change_shipping_price( $package_rates, $package ) {
 			if ( isset( WC()->cart ) ) {
@@ -107,7 +109,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 5.4.9
 		 * @since   2.9.0
-		 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`
+		 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`.
+		 * @param int $product_id defines the product_id.
 		 */
 		public function get_product_currency( $product_id ) {
 			// By users or user roles.
@@ -168,6 +171,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 5.4.9
 		 * @since   2.7.0
+		 * @param string $passed defines the passed.
+		 * @param int    $product_id defines the product_id.
 		 */
 		public function validate_on_add_to_cart( $passed, $product_id ) {
 			$cart_checkout_behaviour = get_option( 'wcj_currency_per_product_cart_checkout', 'convert_shop_default' );
@@ -213,6 +218,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 2.9.0
 		 * @since   2.5.2
+		 * @param string         $price_html defines the price_html.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function grouped_price_html( $price_html, $_product ) {
 			$child_prices = array();
@@ -254,6 +261,7 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 5.4.9
 		 * @since   2.5.2
+		 * @param string | int $currency_code defines the currency_code.
 		 */
 		public function get_currency_exchange_rate( $currency_code ) {
 			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
@@ -271,6 +279,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 3.3.0
 		 * @since   3.3.0
+		 * @param string | array $_product defines the _product.
+		 * @param int | string   $_currency defines the _currency.
 		 */
 		public function maybe_return_saved_converted_price( $_product, $_currency ) {
 			if ( $this->do_save_converted_prices ) {
@@ -287,6 +297,9 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 3.3.0
 		 * @since   3.3.0
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
+		 * @param int | string   $_currency defines the _currency.
 		 */
 		public function maybe_save_converted_price( $price, $_product, $_currency ) {
 			if ( $this->do_save_converted_prices ) {
@@ -301,6 +314,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 5.4.9
 		 * @since   2.5.2
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function change_price( $price, $_product ) {
 			if ( isset( $_product->wcj_currency_per_product ) ) {
@@ -354,6 +369,9 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 3.3.0
 		 * @since   2.5.2
+		 * @param array          $item defines the item.
+		 * @param array          $values defines the values.
+		 * @param string | array $key defines the key.
 		 */
 		public function get_cart_item_from_session( $item, $values, $key ) {
 			if ( array_key_exists( 'wcj_currency_per_product', $values ) ) {
@@ -370,6 +388,9 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 2.9.0
 		 * @since   2.5.2
+		 * @param array $cart_item_data defines the cart_item_data.
+		 * @param int   $product_id defines the product_id.
+		 * @param int   $variation_id defines the variation_id.
 		 */
 		public function add_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 			$currency_per_product_currency = $this->get_product_currency( $product_id );
@@ -385,6 +406,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 * @version 3.3.0
 		 * @since   2.5.2
 		 * @todo    `wcj_currency_per_product_item_key` seems to be not working here
+		 * @param array        $cart_item_data defines the cart_item_data.
+		 * @param int | string $cart_item_key defines the cart_item_key.
 		 */
 		public function add_cart_item( $cart_item_data, $cart_item_key ) {
 			if ( isset( $cart_item_data['wcj_currency_per_product'] ) ) {
@@ -480,6 +503,7 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.2
+		 * @param int | string $currency defines the currency.
 		 */
 		public function change_currency_code( $currency ) {
 			$_currency = $this->get_current_product_id_and_currency();

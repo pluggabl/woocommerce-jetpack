@@ -51,6 +51,8 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.7.0
+		 * @param string | array $_product defines the _product.
+		 * @param string         $type defines the type.
 		 */
 		public function are_all_prices_free( $_product, $type ) {
 			if ( 'variable' === $type ) {
@@ -87,6 +89,8 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.7.0
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function maybe_modify_price( $price, $_product ) {
 			if ( '' !== $price ) {
@@ -110,6 +114,7 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		 *
 		 * @version 2.5.9
 		 * @since   2.5.9
+		 * @param int $product_id defines the product_id.
 		 */
 		public function get_view_id( $product_id ) {
 			$view = 'single'; // default.
@@ -132,6 +137,8 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.9
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function modify_free_price_simple_external_custom( $price, $_product ) {
 			$default = '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>';
@@ -145,6 +152,8 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.9
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function modify_free_price_grouped( $price, $_product ) {
 			return do_shortcode( wcj_get_option( 'wcj_free_price_grouped_' . $this->get_view_id( wcj_get_product_id_or_variation_parent_id( $_product ) ), __( 'Free!', 'woocommerce' ) ) );
@@ -155,6 +164,8 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.9
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function modify_free_price_variable( $price, $_product ) {
 			return do_shortcode( apply_filters( 'booster_option', __( 'Free!', 'woocommerce' ), wcj_get_option( 'wcj_free_price_variable_' . $this->get_view_id( wcj_get_product_id_or_variation_parent_id( $_product ) ), __( 'Free!', 'woocommerce' ) ) ) );
@@ -165,6 +176,8 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		 *
 		 * @version 2.5.9
 		 * @since   2.5.9
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function modify_free_price_variation( $price, $_product ) {
 			return do_shortcode( apply_filters( 'booster_option', __( 'Free!', 'woocommerce' ), wcj_get_option( 'wcj_free_price_variable_variation', __( 'Free!', 'woocommerce' ) ) ) );

@@ -67,9 +67,9 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @version 5.3.0
 		 * @since   5.3.0
 		 *
-		 * @param $change
-		 * @param $price
-		 * @param $_product
+		 * @param string | bool  $change defines the change.
+		 * @param int            $price defines the price.
+		 * @param string | array $_product defines the _product.
 		 *
 		 * @return bool
 		 */
@@ -112,7 +112,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @version 4.6.0
 		 * @since   4.6.0
 		 *
-		 * @param $hide
+		 * @param bool $hide defines the hide.
 		 *
 		 * @return bool
 		 */
@@ -131,6 +131,12 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 *
 		 * @version 3.6.0
 		 * @since   3.6.0
+		 * @param string $action defines the action.
+		 * @param string $regular_or_sale defines the regular_or_sale.
+		 * @param string $source_product defines the source_product.
+		 * @param string $source_role defines the source_role.
+		 * @param string $dest_roles defines the dest_roles.
+		 * @param string $dest_products defines the dest_products.
 		 */
 		public function get_admin_settings_copy_link( $action, $regular_or_sale, $source_product, $source_role, $dest_roles, $dest_products ) {
 			switch ( $action ) {
@@ -178,6 +184,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 *
 		 * @version 3.2.0
 		 * @since   3.2.0
+		 * @param string | bool  $on_sale defines the on_sale.
+		 * @param string | array $product defines the product.
 		 */
 		public function maybe_make_on_sale( $on_sale, $product ) {
 			return ( $product->get_price() < $product->get_regular_price() ? true : $on_sale );
@@ -188,6 +196,9 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param string $option_value defines the option_value.
+		 * @param string $option_name defines the option_name.
+		 * @param int    $module_id defines the module_id.
 		 */
 		public function save_meta_box_value( $option_value, $option_name, $module_id ) {
 			if ( true === apply_filters( 'booster_option', false, true ) ) {
@@ -220,6 +231,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.5.0
+		 * @param string $location defines the location.
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
@@ -252,6 +264,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 *
 		 * @version 3.2.0
 		 * @since   2.5.0
+		 * @param int | array    $package_rates defines the package_rates.
+		 * @param string | array $package defines the package.
 		 */
 		public function change_price_shipping( $package_rates, $package ) {
 			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_shipping_enabled', 'no' ) ) {
@@ -267,6 +281,9 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.0
+		 * @param int   $price defines the price.
+		 * @param int   $qty defines the qty.
+		 * @param array $_product defines the _product.
 		 */
 		public function change_price_grouped( $price, $qty, $_product ) {
 			if ( $_product->is_type( 'grouped' ) ) {
@@ -294,6 +311,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @todo    (maybe) add "enable compound multipliers" option
 		 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
 		 * @todo    (maybe) code refactoring (cats/tags)
+		 * @param int   $price defines the price.
+		 * @param array $_product defines the _product.
 		 */
 		public function change_price( $price, $_product ) {
 
@@ -312,6 +331,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			}
 
 			// Per product.
+			$regular_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_regular_price_' . $current_user_role, true );
 			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
 				if ( 'yes' === get_post_meta( wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) ), '_wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
 					$_product_id = wcj_maybe_get_product_id_wpml( wcj_get_product_id( $_product ) );
@@ -335,7 +355,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 							}
 							return ( '' === $price ) ? $price : $price * $multiplier_per_product;
 						}
-					} elseif ( '' !== ( $regular_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
+					} elseif ( '' !== ( $regular_price_per_product ) ) {
 						if ( in_array(
 							$_current_filter,
 							array(
@@ -475,6 +495,9 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @since   2.5.0
 		 * @todo    only hash categories that is relevant to the product
 		 * @todo    (maybe) code refactoring (cats/tags)
+		 * @param array          $price_hash defines the price_hash.
+		 * @param array          $_product defines the _product.
+		 * @param string | array $display defines the display.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
 			$user_role                   = wcj_get_current_user_first_role();

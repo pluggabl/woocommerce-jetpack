@@ -77,6 +77,8 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.2.6
+		 * @param bool $purchasable defines the purchasable.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function check_dates( $purchasable, $_product ) {
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );

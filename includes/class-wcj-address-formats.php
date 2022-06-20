@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Booster for WooCommerce - Module - Address Formats
  *
@@ -9,37 +8,35 @@
  * @package Booster_For_WooCommerce/includes
  */
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if (!class_exists('WCJ_Address_Formats')) :
+if ( ! class_exists( 'WCJ_Address_Formats' ) ) :
 
 	/**
 	 * WCJ_Address_Formats.
 	 *
 	 * @version 2.8.0
 	 */
-	class WCJ_Address_Formats extends WCJ_Module
-	{
+	class WCJ_Address_Formats extends WCJ_Module {
+
 
 		/**
 		 * Constructor.
 		 *
 		 * @version 2.8.0
 		 */
-		public function __construct()
-		{
-
+		public function __construct() {
 			$this->id         = 'address_formats';
-			$this->short_desc = __('Address Formats', 'woocommerce-jetpack');
-			$this->desc       = __('Set address format in orders on per country basis. Force base country display.', 'woocommerce-jetpack');
+			$this->short_desc = __( 'Address Formats', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Set address format in orders on per country basis. Force base country display.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-address-formats';
 			parent::__construct();
 
-			if ($this->is_enabled()) {
-				add_filter('woocommerce_localisation_address_formats', array($this, 'customize_address_formats'), PHP_INT_MAX);
-				add_filter('woocommerce_formatted_address_force_country_display', array($this, 'customize_force_country_display'), PHP_INT_MAX);
+			if ( $this->is_enabled() ) {
+				add_filter( 'woocommerce_localisation_address_formats', array( $this, 'customize_address_formats' ), PHP_INT_MAX );
+				add_filter( 'woocommerce_formatted_address_force_country_display', array( $this, 'customize_force_country_display' ), PHP_INT_MAX );
 			}
 		}
 
@@ -49,9 +46,8 @@ if (!class_exists('WCJ_Address_Formats')) :
 		 * @param  int|bool $display  Optional. Whether to use GMT timezone. Default false.
 		 * @version 2.7.0
 		 */
-		public function customize_force_country_display($display)
-		{
-			return ('yes' === wcj_get_option('wcj_address_formats_force_country_display', 'no'));
+		public function customize_force_country_display( $display ) {
+			return ( 'yes' === wcj_get_option( 'wcj_address_formats_force_country_display', 'no' ) );
 		}
 
 		/**
@@ -59,14 +55,13 @@ if (!class_exists('WCJ_Address_Formats')) :
 		 *
 		 * @param int|bool $formats  Optional. Whether to use GMT timezone. Default false.
 		 */
-		public function customize_address_formats($formats)
-		{
+		public function customize_address_formats( $formats ) {
 			$modified_formats = array();
 			$default_formats  = $this->get_default_address_formats();
-			foreach ($default_formats as $country_code => $format) {
-				$default_format                    = isset($formats[$country_code]) ? $formats[$country_code] : $format;
-				$format                            = wcj_get_option('wcj_address_formats_country_' . $country_code, $default_format);
-				$modified_formats[$country_code] = $format;
+			foreach ( $default_formats as $country_code => $format ) {
+				$default_format                    = isset( $formats[ $country_code ] ) ? $formats[ $country_code ] : $format;
+				$format                            = wcj_get_option( 'wcj_address_formats_country_' . $country_code, $default_format );
+				$modified_formats[ $country_code ] = $format;
 			}
 			return $modified_formats;
 		}
@@ -76,8 +71,7 @@ if (!class_exists('WCJ_Address_Formats')) :
 		 *
 		 * @return array
 		 */
-		public function get_default_address_formats()
-		{
+		public function get_default_address_formats() {
 			// Common formats.
 			$postcode_before_city = "{company}\n{name}\n{address_1}\n{address_2}\n{postcode} {city}\n{country}";
 			$default              = "{name}\n{company}\n{address_1}\n{address_2}\n{city}\n{state}\n{postcode}\n{country}";
@@ -118,12 +112,12 @@ if (!class_exists('WCJ_Address_Formats')) :
 				'VN'      => "{name}\n{company}\n{address_1}\n{city}\n{country}",
 			);
 			$all_countries = wcj_get_countries();
-			foreach ($all_countries as $country_code => $country_name) {
-				if (!isset($formats[$country_code])) {
-					$formats[$country_code] = $default;
+			foreach ( $all_countries as $country_code => $country_name ) {
+				if ( ! isset( $formats[ $country_code ] ) ) {
+					$formats[ $country_code ] = $default;
 				}
 			}
-			ksort($formats);
+			ksort( $formats );
 			return $formats;
 		}
 	}

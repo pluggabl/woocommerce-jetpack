@@ -19,7 +19,11 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		 */
 	class WCJ_Reports_Stock {
 
-		/** @var array Possible ranges in days values. */
+		/**
+		 * Ranges_in_days
+		 *
+		 * @var array Possible ranges in days values.
+		 */
 		public $ranges_in_days;
 
 		/**
@@ -29,6 +33,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		 * @todo    (maybe) `most_stock_price`, `sales_up`, `good_sales_low_stock`
 		 * @todo    (maybe) `echo __( 'Here you can generate reports. Some reports are generated using all your orders and products, so if you have a lot of them - it may take a while.', 'woocommerce-jetpack' );`
 		 * @todo    (maybe) wcj_get_option( 'woocommerce_manage_stock' ) -> `echo __( 'Please enable stock management in <strong>WooCommerce > Settings > Products > Inventory</strong> to generate stock based reports.', 'woocommerce-jetpack' );`
+		 * @param null $args Get null value.
 		 */
 		public function __construct( $args = null ) {
 			$this->ranges_in_days           = array( 7, 14, 30, 60, 90, 180, 360 );
@@ -93,6 +98,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		 * Gather_products_data.
 		 *
 		 * @version 3.9.0
+		 * @param Array $products_info Get product data.
 		 */
 		public function gather_products_data( &$products_info ) {
 			$offset     = 0;
@@ -153,6 +159,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		 * Gather_orders_data.
 		 *
 		 * @version 3.9.0
+		 * @param Array $products_info Get product data.
 		 */
 		public function gather_orders_data( &$products_info ) {
 			$offset     = 0;
@@ -216,6 +223,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		 * Get_stock_summary.
 		 *
 		 * @version 3.9.0
+		 * @param Array $products_info Get product data.
 		 */
 		public function get_stock_summary( $products_info ) {
 			$info                        = array();
@@ -245,6 +253,11 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 
 		/**
 		 * Gort_products_info.
+		 *
+		 * @param Array  $products_info Get product data.
+		 * @param string $field_name Get field name.
+		 * @param string $second_field_name Get field name.
+		 * @param string $order_of_sorting order shorting.
 		 */
 		public function sort_products_info( &$products_info, $field_name, $second_field_name = '', $order_of_sorting = SORT_DESC ) {
 			$field_name_array = array();

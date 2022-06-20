@@ -37,11 +37,12 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		}
 
 		/**
-		 * get_location.
+		 * Get_location.
 		 *
 		 * @version 4.5.0
 		 * @since   3.4.0
 		 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
+		 * @param string $type defines the type.
 		 */
 		public function get_location( $type ) {
 			switch ( $type ) {
@@ -85,6 +86,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		 * @todo    (maybe) code refactoring
 		 * @todo    (maybe) add more locations options (e.g. "... by city")
 		 * @todo    (maybe) add option to detect customer's country and state by current `$_REQUEST` (as it is now done with postcodes)
+		 * @param array $_available_gateways defines the _available_gateways.
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			$customer_country = $this->get_location( 'country' );

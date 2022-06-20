@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Left_To_Free_Shipping' ) ) :
 		}
 
 		/**
-		 * show_left_to_free_shipping_info_checkout.
+		 * Show_left_to_free_shipping_info_checkout.
 		 *
 		 * @version 2.5.2
 		 * @since   2.4.4
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Left_To_Free_Shipping' ) ) :
 		}
 
 		/**
-		 * show_left_to_free_shipping_info_mini_cart.
+		 * Show_left_to_free_shipping_info_mini_cart.
 		 *
 		 * @version 2.5.2
 		 * @since   2.4.4
@@ -78,7 +78,7 @@ if ( ! class_exists( 'WCJ_Left_To_Free_Shipping' ) ) :
 		}
 
 		/**
-		 * show_left_to_free_shipping_info_cart.
+		 * Show_left_to_free_shipping_info_cart.
 		 *
 		 * @version 2.5.2
 		 * @since   2.4.4
@@ -88,10 +88,11 @@ if ( ! class_exists( 'WCJ_Left_To_Free_Shipping' ) ) :
 		}
 
 		/**
-		 * show_left_to_free_shipping_info.
+		 * Show_left_to_free_shipping_info.
 		 *
 		 * @version 2.4.4
 		 * @since   2.4.4
+		 * @param string | array $content defines the content.
 		 */
 		public function show_left_to_free_shipping_info( $content ) {
 			echo wp_kses_post( wcj_get_left_to_free_shipping( $content ) );

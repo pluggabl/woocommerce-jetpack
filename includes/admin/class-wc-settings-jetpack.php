@@ -1112,10 +1112,6 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				}
 		}
 
-
-
-
-
 	}
 
 endif;

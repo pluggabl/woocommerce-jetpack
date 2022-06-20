@@ -87,8 +87,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * @since   4.6.0
 		 *
 		 * @see https://gist.github.com/TimBHowe/fe9418b9224d8b8cb339
-		 * @param $total
-		 * @param $cart
+		 * @param int   $total defines the total.
+		 * @param array $cart defines the cart.
 		 *
 		 * @return mixed
 		 */
@@ -106,8 +106,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * @since   4.6.0
 		 *
 		 * @see https://gist.github.com/TimBHowe/fe9418b9224d8b8cb339
-		 * @param $tax_totals
-		 *
+		 * @param int | array $tax_totals defines the tax_totals.
 		 * @return array
 		 */
 		public function maybe_remove_tax_totals( $tax_totals ) {
@@ -153,6 +152,9 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 *
 		 * @version 3.3.0
 		 * @since   3.3.0
+		 * @param array          $data defines the data.
+		 * @param string | array $customer defines the customer.
+		 * @param int            $user_id defines the user_id.
 		 */
 		public function add_billing_eu_vat_number_to_ajax_get_customer_details( $data, $customer, $user_id ) {
 			$data['billing']['eu_vat_number'] = get_user_meta( $user_id, 'billing_eu_vat_number', true );
@@ -257,6 +259,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 *
 		 * @version 2.5.2
 		 * @since   2.5.2
+		 * @param string         $replacements defines the replacements.
+		 * @param string | array $args defines the args.
 		 */
 		public function replace_eu_vat_number_in_address_formats( $replacements, $args ) {
 			$field_name                              = 'billing_' . $this->id;
@@ -269,6 +273,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 *
 		 * @version 2.5.2
 		 * @since   2.5.2
+		 * @param array $address_formats defines the address_formats.
 		 */
 		public function add_eu_vat_number_to_address_formats( $address_formats ) {
 			$field_name               = 'billing_' . $this->id;
@@ -284,6 +289,9 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 *
 		 * @version 2.5.2
 		 * @since   2.5.2
+		 * @param array  $fields defines the fields.
+		 * @param int    $customer_id defines the customer_id.
+		 * @param string $name defines the name.
 		 */
 		public function add_eu_vat_number_to_my_account_billing_address( $fields, $customer_id, $name ) {
 			if ( 'billing' === $name ) {
@@ -298,6 +306,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.2
+		 * @param array          $fields defines the fields.
+		 * @param string | array $_order defines the _order.
 		 */
 		public function add_eu_vat_number_to_order_billing_address( $fields, $_order ) {
 			$field_name            = 'billing_' . $this->id;
@@ -310,6 +320,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 *
 		 * @version 3.2.2
 		 * @since   2.4.7
+		 * @param array | string | int $order defines the order.
 		 */
 		public function add_eu_vat_number_to_order_display( $order ) {
 			$order_id          = wcj_get_order_id( $order );
@@ -337,6 +348,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * Add_default_checkout_billing_eu_vat_number.
 		 *
 		 * @version 4.3.0
+		 * @param string | int $default_value defines the default_value.
+		 * @param string | int $field_key defines the field_key.
 		 */
 		public function add_default_checkout_billing_eu_vat_number( $default_value, $field_key ) {
 			$meta                   = get_user_meta( $current_user->ID, 'billing_eu_vat_number', true );
@@ -354,6 +367,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 
 		/**
 		 * Add_eu_vat_number_customer_meta_field.
+		 *
+		 * @param array $fields defines the fields.
 		 */
 		public function add_eu_vat_number_customer_meta_field( $fields ) {
 			$fields['billing']['fields']['billing_eu_vat_number'] = array(
@@ -439,6 +454,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * Wcj_validate_eu_vat_number.
 		 *
 		 * @version 4.6.1
+		 * @param array $param defines the param.
 		 */
 		public function wcj_validate_eu_vat_number( $param ) {
 			$param         = wp_parse_args(
@@ -558,6 +574,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * Checkout_validate_vat.
 		 *
 		 * @version 5.5.0
+		 * @param  array $_posted defines the _posted.
 		 */
 		public function checkout_validate_vat( $_posted ) {
 			$skip_country = wcj_get_option( 'wcj_eu_vat_number_advanced_skip_countries', 'no' );
@@ -599,6 +616,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * Add_billing_eu_vat_number_field_to_admin_order_display.
 		 *
 		 * @version 4.6.0
+		 * @param  array $fields defines the fields.
 		 */
 		public function add_billing_eu_vat_number_field_to_admin_order_display( $fields ) {
 			$vat_number = '';
@@ -631,7 +649,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Add_eu_vat_number_checkout_field_to_frontend.
 		 *
-		 * @version 5.3.7
+		 * @version 5.3.
+		 * @param  array $fields defines the fields.
 		 */
 		public function add_eu_vat_number_checkout_field_to_frontend( $fields ) {
 			$fields['billing'][ 'billing_' . $this->id ] = array(

@@ -18,6 +18,8 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 	class WCJ_Price_By_Country extends WCJ_Module {
 
 		/**
+		 * WCJ_Price_by_Country_Core
+		 *
 		 * @var WCJ_Price_by_Country_Core
 		 *
 		 * @since 4.1.0
@@ -25,6 +27,8 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		public $core;
 
 		/**
+		 * Bkg_process_price_updater
+		 *
 		 * @var WCJ_Price_By_Country_Updater
 		 */
 		public $bkg_process_price_updater;
@@ -122,11 +126,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		 * @version 4.8.0
 		 * @since   4.8.0
 		 *
-		 * @param $amount
-		 * @param $discount
-		 * @param $cart_item
-		 * @param $single
-		 * @param $wc_coupon
+		 * @param int            $amount defines the amount.
+		 * @param int            $discount defines the discount.
+		 * @param array          $cart_item defines the cart_item.
+		 * @param string | array $single defines the single.
+		 * @param string         $wc_coupon defines the wc_coupon.
 		 *
 		 * @return float|int
 		 */
@@ -165,6 +169,8 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		 *
 		 * @version 2.5.3
 		 * @since   2.5.3
+		 * @param array | string $all_sections defines the all_sections.
+		 * @param string         $current_section defines the current_section.
 		 */
 		public function update_products_price_by_country_module_saved( $all_sections, $current_section ) {
 			if ( 'price_by_country' === $current_section && wcj_is_module_enabled( 'price_by_country' ) ) {
@@ -177,6 +183,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		 *
 		 * @version 2.5.3
 		 * @since   2.5.3
+		 * @param int $post_id defines the post_id.
 		 */
 		public function update_products_price_by_country_product_saved_ajax( $post_id ) {
 			wcj_update_products_price_by_country_for_single_product( $post_id );
@@ -187,6 +194,8 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		 *
 		 * @version 2.5.3
 		 * @since   2.5.3
+		 * @param int            $post_id defines the post_id.
+		 * @param array | string $post defines the post.
 		 */
 		public function update_products_price_by_country_product_saved( $post_id, $post ) {
 			wcj_update_products_price_by_country_for_single_product( $post_id );

@@ -86,11 +86,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 				return;
 			}
 			if ( ! wcj_is_user_role( 'administrator' ) || 1 === apply_filters( 'booster_option', 1, '' ) ) {
-				wp_safe_redirect( add_query_arg( 'wcj_generate_country_groups_error', true, esc_url(remove_query_arg( 'wcj_generate_country_groups' )) ) );
+				wp_safe_redirect( add_query_arg( 'wcj_generate_country_groups_error', true, esc_url( remove_query_arg( 'wcj_generate_country_groups' ) ) ) );
 				exit;
 			}
 			// Generation.
-			$currencies       = $this->get_currency_countries( $_GET['wcj_generate_country_groups'] );
+			$currencies       = $this->get_currency_countries( isset( $_GET['wcj_generate_country_groups'] ) );
 			$number_of_groups = count( $currencies );
 			update_option( 'wcj_price_by_country_total_groups_number', $number_of_groups );
 			$i = 0;
@@ -111,7 +111,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 				update_option( 'wcj_price_by_country_exchange_rate_group_' . $i, 1 );
 				update_option( 'wcj_price_by_country_make_empty_price_group_' . $i, 'no' );
 			}
-			wp_safe_redirect( add_query_arg( 'wcj_generate_country_groups_finished', true, esc_url(remove_query_arg( 'wcj_generate_country_groups' ) )) );
+			wp_safe_redirect( add_query_arg( 'wcj_generate_country_groups_finished', true, esc_url( remove_query_arg( 'wcj_generate_country_groups' ) ) ) );
 			exit;
 		}
 

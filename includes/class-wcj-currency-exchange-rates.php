@@ -49,7 +49,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 * @version 5.2.0
 		 * @since   5.2.0
 		 *
-		 * @param $value
+		 * @param string $value defines the value.
 		 *
 		 * @return mixed
 		 */
@@ -83,7 +83,8 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 * @todo    (maybe) move this to `class-wcj-exchange-rates.php`
 		 */
 		public function wcj_ajax_get_exchange_rates() {
-			echo wp_kses_post( wcj_get_exchange_rate( isset( $_POST['wcj_currency_from'] ), isset( $_POST['wcj_currency_to'] ) ) );
+			$nonce = wp_create_nonce();
+			echo wp_kses_post( wcj_get_exchange_rate( isset( $_POST['wcj_currency_from'] ), isset( $_POST['wcj_currency_to'] ), wp_verify_nonce( $nonce ) ) );
 			die();
 		}
 
@@ -91,6 +92,9 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 * Add_currency_pair_setting.
 		 *
 		 * @version 3.2.4
+		 * @param string $currency_from defines the currency_from.
+		 * @param string $currency_to defines the currency_to.
+		 * @param array  $settings defines the settings.
 		 */
 		public function add_currency_pair_setting( $currency_from, $currency_to, $settings ) {
 			if ( $currency_from !== $currency_to ) {
@@ -141,7 +145,8 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 			if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 				// Currency Pairs - Price by Country.
 				if ( 'manual' !== apply_filters( 'booster_option', 'manual', wcj_get_option( 'wcj_price_by_country_auto_exchange_rates', 'manual' ) ) ) {
-					for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+					$wcj_price_by_country_total_groups_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
+					for ( $i = 1; $i <= $wcj_price_by_country_total_groups_number; $i++ ) {
 						$currency_to  = wcj_get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 						$currencies[] = $currency_to;
 					}
@@ -149,8 +154,9 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 			}
 			if ( wcj_is_module_enabled( 'multicurrency' ) ) {
 				// Currency Pairs - Multicurrency.
+				$wcj_multicurrency_total_number = apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) );
 				if ( 'manual' !== apply_filters( 'booster_option', 'manual', wcj_get_option( 'wcj_multicurrency_exchange_rate_update_auto', 'manual' ) ) ) {
-					for ( $i = 1; $i <= apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
+					for ( $i = 1; $i <= $wcj_multicurrency_total_number; $i++ ) {
 						$currency_to  = wcj_get_option( 'wcj_multicurrency_currency_' . $i );
 						$currencies[] = $currency_to;
 					}
@@ -158,8 +164,9 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 			}
 			if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
 				// Currency Pairs - Multicurrency Product Base Price.
+				$wcj_multicurrency_base_price_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
 				if ( 'manual' !== apply_filters( 'booster_option', 'manual', wcj_get_option( 'wcj_multicurrency_base_price_exchange_rate_update', 'manual' ) ) ) {
-					for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
+					for ( $i = 1; $i <= $wcj_multicurrency_base_price_total_number; $i++ ) {
 						$currency_to  = wcj_get_option( 'wcj_multicurrency_base_price_currency_' . $i );
 						$currencies[] = $currency_to;
 					}
@@ -167,8 +174,9 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 			}
 			if ( wcj_is_module_enabled( 'currency_per_product' ) ) {
 				// Currency Pairs - Currency per Product.
+				$wcj_currency_per_product_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_per_product_total_number', 1 ) );
 				if ( 'manual' !== apply_filters( 'booster_option', 'manual', wcj_get_option( 'wcj_currency_per_product_exchange_rate_update', 'manual' ) ) ) {
-					for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_per_product_total_number', 1 ) ); $i++ ) {
+					for ( $i = 1; $i <= $wcj_currency_per_product_total_number; $i++ ) {
 						$currency_to  = wcj_get_option( 'wcj_currency_per_product_currency_' . $i );
 						$currencies[] = $currency_to;
 					}
@@ -194,7 +202,11 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 * Add_currency_pair_server_setting.
 		 *
 		 * @version 3.2.4
-		 * @since   3.2.4
+		 * @since   3.2.
+		 * @param string         $currency_from defines the currency_from.
+		 * @param string         $currency_to defines the currency_to.
+		 * @param string | array $default_server defines the default_server.
+		 * @param array          $settings defines the settings.
 		 */
 		public function add_currency_pair_server_setting( $currency_from, $currency_to, $default_server, $settings ) {
 			if ( $currency_from !== $currency_to ) {
@@ -224,6 +236,10 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 *
 		 * @version 3.4.5
 		 * @since   3.4.5
+		 * @param string         $currency_from defines the currency_from.
+		 * @param string         $currency_to defines the currency_to.
+		 * @param string | array $default_offset defines the default_offset.
+		 * @param array          $settings defines the settings.
 		 */
 		public function add_currency_pair_offset_percent_setting( $currency_from, $currency_to, $default_offset, $settings ) {
 			if ( $currency_from !== $currency_to ) {
@@ -261,6 +277,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 *
 		 * @version 3.4.5
 		 * @since   2.9.0
+		 * @param bool $add_extra_settings defines the add_extra_settings.
 		 */
 		public function get_all_currencies_exchange_rates_settings( $add_extra_settings = false ) {
 			if ( $add_extra_settings ) {

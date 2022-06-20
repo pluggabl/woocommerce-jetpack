@@ -84,6 +84,9 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param string | bool  $supports defines the supports.
+		 * @param string         $feature defines the feature.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function disable_add_to_cart_ajax( $supports, $feature, $_product ) {
 			if ( $this->is_bookings_product( $_product ) && 'ajax_add_to_cart' === $feature ) {
@@ -97,6 +100,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param string | array $return defines the return.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function sold_individually( $return, $_product ) {
 			return ( $this->is_bookings_product( $_product ) ) ? true : $return;
@@ -107,6 +112,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 3.2.4
 		 * @since   2.5.0
+		 * @param string | array $param defines the param.
 		 */
 		public function price_change_ajax( $param ) {
 			$nonce = wp_create_nonce();
@@ -156,6 +162,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param string | array $text defines the text.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function add_to_cart_text( $text, $_product ) {
 			return ( $this->is_bookings_product( $_product ) ) ? __( 'Read more', 'woocommerce' ) : $text;
@@ -166,6 +174,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.0
+		 * @param string         $url defines the url.
+		 * @param string | array $_product defines the _product.
 		 */
 		public function add_to_cart_url( $url, $_product ) {
 			return ( $this->is_bookings_product( $_product ) ) ? get_permalink( wcj_get_product_id_or_variation_parent_id( $_product ) ) : $url;
@@ -176,6 +186,10 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 3.4.0
 		 * @since   3.4.0
+		 * @param  array  $item defines the item.
+		 * @param string $cart_item_key defines the cart_item_key.
+		 * @param array  $values defines the values.
+		 * @param array  $order defines the order.
 		 */
 		public function add_info_to_order_item_meta_wc3( $item, $cart_item_key, $values, $order ) {
 			$meta_keys = array( 'wcj_bookings_price', 'wcj_bookings_date_from', 'wcj_bookings_date_to' );
@@ -191,6 +205,9 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param int    $item_id defines the item_id.
+		 * @param array  $values defines the values.
+		 * @param string $cart_item_key defines the cart_item_key.
 		 */
 		public function add_info_to_order_item_meta( $item_id, $values, $cart_item_key ) {
 			if ( isset( $values['wcj_bookings_price'] ) ) {
@@ -205,6 +222,9 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.2
 		 * @since   2.5.0
+		 * @param string        $name defines the name.
+		 * @param array         $item defines the item.
+		 * @param string | bool $is_cart defines the is_cart.
 		 */
 		public function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
 			if ( $is_cart ) {
@@ -229,6 +249,9 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param string         $name defines the name.
+		 * @param string | array $cart_item defines the cart_item.
+		 * @param string         $cart_item_key defines the cart_item_key.
 		 */
 		public function add_info_to_cart_item_name( $name, $cart_item, $cart_item_key ) {
 			return $this->add_info_to_order_item_name( $name, $cart_item, true );
@@ -239,6 +262,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.2
 		 * @since   2.5.0
+		 * @param string | array $passed defines the passed.
+		 * @param int            $product_id defines the product_id.
 		 */
 		public function validate_bookings_on_add_to_cart( $passed, $product_id ) {
 			$the_product = wc_get_product( $product_id );
@@ -267,6 +292,9 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param string | array $item defines the item.
+		 * @param array          $values defines the values.
+		 * @param string         $key defines the key.
 		 */
 		public function get_cart_item_bookings_price_from_session( $item, $values, $key ) {
 			if ( array_key_exists( 'wcj_bookings_price', $values ) ) {
@@ -280,6 +308,9 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param array $cart_item_data defines the cart_item_data.
+		 * @param int   $product_id defines the product_id.
+		 * @param int   $variation_id defines the variation_id.
 		 */
 		public function add_bookings_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 			$nonce = wp_create_nonce();
@@ -309,6 +340,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param array  $cart_item_data defines the cart_item_data.
+		 * @param string $cart_item_key defines the cart_item_key.
 		 */
 		public function add_bookings_price_to_cart_item( $cart_item_data, $cart_item_key ) {
 			if ( isset( $cart_item_data['wcj_bookings_price'] ) ) {
@@ -399,6 +432,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 4.3.0
 		 * @since   2.5.0
+		 * @param int | string $price_html defines the price_html.
+		 * @param array        $_product defines the _product.
 		 */
 		public function add_per_day_label( $price_html, $_product ) {
 			if (
@@ -415,6 +450,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 4.3.0
 		 * @since   2.5.0
+		 * @param int   $price defines the price.
+		 * @param array $_product defines the _product.
 		 */
 		public function change_price( $price, $_product ) {
 			if (
@@ -431,6 +468,9 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 2.5.0
 		 * @since   2.5.0
+		 * @param string $option_value defines the option_value.
+		 * @param string $option_name defines the option_name.
+		 * @param int    $module_id defines the module_id.
 		 */
 		public function save_meta_box_value( $option_value, $option_name, $module_id ) {
 			if ( true === apply_filters( 'booster_option', false, true ) ) {
@@ -463,6 +503,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.5.0
+		 * @param string $location defines the location.
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
@@ -496,6 +537,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   2.5.0
+		 * @param array $_product defines the _product.
 		 */
 		public function is_bookings_product( $_product ) {
 			return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_wcj_product_bookings_enabled', true ) );

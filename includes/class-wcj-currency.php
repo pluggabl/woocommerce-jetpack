@@ -49,8 +49,9 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		 * @since   3.9.0
 		 */
 		public function get_custom_currencies() {
-			$custom_currencies = array();
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_custom_currency_total_number', 1 ) ); $i++ ) {
+			$custom_currencies                         = array();
+			$wcj_currency_custom_currency_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+			for ( $i = 1; $i <= $wcj_currency_custom_currency_total_number; $i++ ) {
 				$custom_currency_code = wcj_get_option( 'wcj_currency_custom_currency_code_' . $i, '' );
 				$custom_currency_name = wcj_get_option( 'wcj_currency_custom_currency_name_' . $i, '' );
 				if ( '' !== $custom_currency_code && '' !== $custom_currency_name ) {
@@ -110,6 +111,7 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
+		 * @param string | int $currency_code defines the currency_code.
 		 */
 		public function get_additional_currency_symbol( $currency_code ) {
 			return $currency_code;
@@ -119,6 +121,7 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		 * Add_all_currencies.
 		 *
 		 * @version 3.9.0
+		 * @param string | int $currencies defines the currencies.
 		 */
 		public function add_all_currencies( $currencies ) {
 			return array_merge( $currencies, $this->get_additional_currencies(), $this->get_custom_currencies() );
@@ -129,6 +132,8 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
+		 * @param string | int $currency defines the currency.
+		 * @param string       $default_symbol defines the default_symbol.
 		 */
 		public function get_saved_currency_symbol( $currency, $default_symbol ) {
 			$saved_currency_symbol = wcj_get_option( 'wcj_currency_' . $currency, false );
@@ -143,6 +148,8 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		 * Change_currency_symbol.
 		 *
 		 * @version 3.9.0
+		 * @param string       $currency_symbol defines the currency_symbol.
+		 * @param string | int $currency defines the currency.
 		 */
 		public function change_currency_symbol( $currency_symbol, $currency ) {
 			// Maybe return saved value.
@@ -154,7 +161,8 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 				return '';
 			}
 			// Custom currencies.
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_custom_currency_total_number', 1 ) ); $i++ ) {
+			$wcj_currency_custom_currency_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+			for ( $i = 1; $i <= $wcj_currency_custom_currency_total_number; $i++ ) {
 				$custom_currency_code = wcj_get_option( 'wcj_currency_custom_currency_code_' . $i, '' );
 				$custom_currency_name = wcj_get_option( 'wcj_currency_custom_currency_name_' . $i, '' );
 				if ( '' !== $custom_currency_code && '' !== $custom_currency_name && $currency === $custom_currency_code ) {
@@ -172,6 +180,7 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @todo    [dev] (maybe) remove this
+		 * @param array $settings defines the settings.
 		 */
 		public function add_edit_currency_symbol_field( $settings ) {
 			$updated_settings = array();

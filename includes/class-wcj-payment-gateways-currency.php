@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * add_hooks.
+		 * Add_hooks.
 		 *
 		 * @version 3.9.0
 		 * @since   2.3.2
@@ -66,10 +66,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * fix_chosen_payment_method.
+		 * Fix_chosen_payment_method.
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
+		 * @param string | array $post_data defines the post_data.
 		 */
 		public function fix_chosen_payment_method( $post_data ) {
 			$nonce                      = wp_create_nonce();
@@ -85,7 +86,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * get_chosen_payment_method.
+		 * Get_chosen_payment_method.
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
@@ -96,10 +97,12 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * change_shipping_price_by_gateway.
+		 * Change_shipping_price_by_gateway.
 		 *
 		 * @version 3.9.0
 		 * @since   2.4.8
+		 * @param int | array    $package_rates defines the package_rates.
+		 * @param string | array $package defines the package.
 		 */
 		public function change_shipping_price_by_gateway( $package_rates, $package ) {
 			if ( $this->is_cart_or_checkout() ) {
@@ -113,7 +116,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * is_cart_or_checkout.
+		 * Is_cart_or_checkout.
 		 *
 		 * @version 5.3.6
 		 * @since   2.3.0
@@ -140,10 +143,12 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * change_price_by_gateway.
+		 * Change_price_by_gateway.
 		 *
 		 * @version 5.3.8
 		 * @since   2.3.0
+		 * @param string         $price defines the price.
+		 * @param string | array $product defines the product.
 		 */
 		public function change_price_by_gateway( $price, $product ) {
 			if ( $this->is_cart_or_checkout() ) {
@@ -160,10 +165,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * extend_paypal_supported_currencies.
+		 * Extend_paypal_supported_currencies.
 		 *
 		 * @version 3.9.0
 		 * @since   2.3.0
+		 * @param  array $supported_currencies defines the supported_currencies.
 		 */
 		public function extend_paypal_supported_currencies( $supported_currencies ) {
 			if ( $this->is_cart_or_checkout() ) {
@@ -179,10 +185,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * change_currency_code.
+		 * Change_currency_code.
 		 *
 		 * @version 3.9.0
 		 * @since   2.3.0
+		 * @param  string $currency defines the currency.
 		 */
 		public function change_currency_code( $currency ) {
 			if ( $this->is_cart_or_checkout() ) {
@@ -198,7 +205,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * register_script.
+		 * Register_script.
 		 *
 		 * @version 2.9.0
 		 * @since   2.3.0
@@ -208,7 +215,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		}
 
 		/**
-		 * enqueue_checkout_script.
+		 * Enqueue_checkout_script.
 		 *
 		 * @version 2.3.0
 		 * @since   2.3.0

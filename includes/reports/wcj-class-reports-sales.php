@@ -25,6 +25,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		 *
 		 * @version 2.6.0
 		 * @since   2.3.0
+		 * @param null $args Get null value.
 		 */
 		public function __construct( $args = null ) {
 			return true;
@@ -37,11 +38,11 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		 * @since   2.3.0
 		 */
 		public function get_report() {
+			$nonce = wp_create_nonce();
+			$html  = '';
 
-			$html = '';
-
-			$this->year          = isset( $_GET['year'] ) ? $_GET['year'] : gmdate( 'Y' );
-			$this->product_title = isset( $_GET['product_title'] ) ? $_GET['product_title'] : '';
+			$this->year          = isset( $_GET['year'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['year'] ) : gmdate( 'Y' );
+			$this->product_title = isset( $_GET['product_title'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['product_title'] ) : '';
 
 			$html .= $this->get_products_sales();
 
@@ -53,6 +54,8 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param Array $a Get tag title.
+		 * @param Array $b Get tag title.
 		 */
 		public function sort_by_title( $a, $b ) {
 			return strcmp( wp_strip_all_tags( $a['title'] ), wp_strip_all_tags( $b['title'] ) );
@@ -63,6 +66,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		 *
 		 * @version 3.2.4
 		 * @since   3.2.4
+		 * @param Array | string $_product Get product.
 		 */
 		public function do_product_parent_exist( $_product ) {
 			$parent_id = $_product->get_parent_id();
@@ -87,6 +91,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		public function get_products_sales() {
 
 			// Get report data.
+			$nonce         = wp_create_nonce();
 			$products_data = array();
 			$totals_data   = array();
 			$years         = array();
@@ -373,9 +378,9 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $_GET['tab'] . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . isset( $_GET['page'] ) && wp_verify_nonce( $nonce ) . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . isset( $_GET['tab'] ) . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . isset( $_GET['report'] ) . '" />';
 			$filter_form .= '<input type="hidden" name="year" value="' . $this->year . '" />';
 			$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
 			'<input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';

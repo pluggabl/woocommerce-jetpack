@@ -19,7 +19,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 	class WCJ_Multicurrency extends WCJ_Module {
 
 		/**
-		 * @var WCJ_Multicurrency_Price_Updater
+		Bkg_process_price_updater
+		 *
+		 * @var bkg_process_price_updater
 		 */
 		protected $bkg_process_price_updater;
 
@@ -192,9 +194,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.3.3
 		 * @since   5.3.3
 		 *
-		 * @param $option
-		 * @param $key
-		 * @param $method
+		 * @param string | int $option defines the option.
+		 * @param string       $key defines the key.
+		 * @param string       $method defines the method.
 		 *
 		 * @return mixed
 		 */
@@ -214,13 +216,13 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 
 
 		/**
-		 * product_addons_price_raw.
+		 * Product_addons_price_raw.
 		 *
 		 * @version 5.1.1
 		 * @since   5.1.1
 		 *
-		 * @param $price
-		 * @param $addon
+		 * @param int   $price defines the price.
+		 * @param array $addon defines the addon.
 		 *
 		 * @return mixed|string
 		 */
@@ -241,7 +243,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.0.0
 		 * @since   5.0.0
 		 *
-		 * @param $option
+		 * @param array $option defines the option.
 		 *
 		 * @return mixed
 		 */
@@ -265,8 +267,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.0.0
 		 * @since   5.0.0
 		 *
-		 * @param $country
-		 * @param $currency
+		 * @param string       $country defines the country.
+		 * @param int | string $currency defines the currency.
 		 */
 		public function change_currency_by_country( $country, $currency ) {
 			if (
@@ -285,6 +287,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @version 4.9.0
 		 * @since   4.9.0
+		 * @param int | string $value defines the value.
 		 */
 		public function flexible_shipping_compatibility( $value ) {
 			if ( 'yes' !== wcj_get_option( 'wcj_multicurrency_compatibility_flexible_shipping', 'no' ) ) {
@@ -314,8 +317,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @version 5.1.0
 		 * @since   4.9.0
-		 *
-		 * @param $option
+		 * @param array $option defines the option.
 		 *
 		 * @return mixed
 		 */
@@ -347,8 +349,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.1.0
 		 * @since   4.9.0
 		 *
-		 * @param $array
-		 * @param null  $args
+		 * @param array $array defines the array.
+		 * @param null  $args defines the args.
 		 *
 		 * @return array
 		 */
@@ -393,9 +395,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.9.0
 		 * @since   4.9.0
 		 *
-		 * @param $valid
-		 * @param WC_Coupon    $coupon
-		 * @param WC_Discounts $wc_discounts
+		 * @param string $valid defines the valid.
+		 * @param string $coupon defines the  $coupon.
+		 * @param string $wc_discounts defines the  wc_discounts.
 		 *
 		 * @return bool
 		 * @throws Exception
@@ -426,9 +428,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.2.0
 		 * @since   5.2.0
 		 *
-		 * @param $false
-		 * @param $data
-		 * @param $coupon
+		 * @param bool           $false defines the false.
+		 * @param string | array $data defines the data.
+		 * @param string | array $coupon defines the coupon.
 		 *
 		 * @return mixed
 		 */
@@ -453,9 +455,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.4.3
 		 * @since   5.4.3
 		 *
-		 * @param $price_html
-		 * @param $cart_item
-		 * @param $cart_item_key
+		 * @param int    $price_html defines the price_html.
+		 * @param array  $cart_item defines the cart_item.
+		 * @param string $cart_item_key defines the cart_item_key.
 		 *
 		 * @return mixed
 		 */
@@ -473,9 +475,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.6.0
 		 * @since   4.5.0
 		 *
-		 * @param $args
-		 * @param $orderby
-		 * @param $order
+		 * @param string | array $args defines the args.
+		 * @param string         $orderby defines the orderby.
+		 * @param string | array $order defines the order.
 		 *
 		 * @return mixed
 		 */
@@ -535,8 +537,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @see WC_Query::price_filter_post_clauses()
 		 *
-		 * @param $args
-		 * @param $query
+		 * @param array  $args defines the args.
+		 * @param string $query defines the query.
 		 *
 		 * @return mixed
 		 */
@@ -582,7 +584,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
 		 *
-		 * @param $sql
+		 * @param string $sql defines the sql.
+		 * @param string $meta_query_sql defines the meta_query_sql.
+		 * @param string $tax_query_sql defines the tax_query_sql.
 		 *
 		 * @return mixed
 		 */
@@ -647,8 +651,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.4.0
 		 * @since   4.4.0
 		 *
-		 * @param $parsed_data
-		 * @param $raw_data
+		 * @param array          $parsed_data defines the parsed_data.
+		 * @param string | array $raw_data defines the raw_data.
 		 *
 		 * @return mixed
 		 */
@@ -878,9 +882,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.5.0
 		 * @since   4.5.0
 		 *
-		 * @param $option_name
-		 * @param $old_value
-		 * @param $option_value
+		 * @param string | array $option_name defines the option_name.
+		 * @param string | array $old_value defines the old_value.
+		 * @param string         $option_value defines the option_value.
 		 */
 		public function update_min_max_prices_on_exchange_rate_change( $option_name, $old_value, $option_value ) {
 			if (
@@ -913,7 +917,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.6.0
 		 * @since   4.5.0
 		 *
-		 * @param $currency
+		 * @param int | string $currency defines the currency.
 		 *
 		 * @return array
 		 */
@@ -944,8 +948,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.5.0
 		 * @since   4.5.0
 		 *
-		 * @param $post_id
-		 * @param string  $currency_code_param
+		 * @param int          $post_id defines the post_id.
+		 * @param int | string $currency_code_param defines the currency_code_param.
 		 */
 		public function save_min_max_prices_per_product( $post_id, $currency_code_param = '' ) {
 			$product  = wc_get_product( $post_id );
@@ -1000,8 +1004,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.3.0
 		 * @since   4.3.0
 		 *
-		 * @param $value
-		 * @param $coupon
+		 * @param int | string $value defines the value.
+		 * @param int | string $coupon defines the coupon.
 		 *
 		 * @return float|int
 		 */
@@ -1060,8 +1064,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.3.0
 		 * @since   4.3.0
 		 *
-		 * @param $price
-		 * @param $option
+		 * @param int            $price defines the price.
+		 * @param string | array $option defines the option.
 		 *
 		 * @return float|int
 		 */
@@ -1079,8 +1083,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.1.1
 		 * @since   4.3.0
 		 *
-		 * @param $other_data
-		 * @param $cart_item
+		 * @param array $other_data defines the other_data.
+		 * @param array $cart_item defines the cart_item.
 		 *
 		 * @return mixed
 		 */
@@ -1137,6 +1141,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.7
+		 * @param int $price defines the price.
 		 */
 		public function change_price_by_currency_tm_extra_product_options_plugin_cart( $price ) {
 			return $this->change_price( $price, null );
@@ -1147,6 +1152,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.7
+		 * @param int    $price defines the price.
+		 * @param string $type defines the type.
+		 * @param int    $post_id defines the post_id.
 		 */
 		public function change_price_by_currency_tm_extra_product_options_plugin( $price, $type, $post_id ) {
 			return $this->change_price( $price, null );
@@ -1157,6 +1165,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.0
+		 * @param int   $price defines the price.
+		 * @param int   $qty defines the qty.
+		 * @param array $_product defines the _product.
 		 */
 		public function change_price_grouped( $price, $qty, $_product ) {
 			if ( $_product->is_type( 'grouped' ) ) {
@@ -1180,6 +1191,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * Get_variation_prices_hash.
 		 *
 		 * @version 3.8.0
+		 * @param array  $price_hash defines the price_hash.
+		 * @param array  $_product defines the _product.
+		 * @param string $display defines the display.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
 			$currency_code                   = $this->get_current_currency_code();
@@ -1197,6 +1211,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Get_currency_exchange_rate.
 		 *
+		 * @param string $currency_code defines the currency_code.
 		 * @version 2.4.3
 		 */
 		public function get_currency_exchange_rate( $currency_code ) {
@@ -1236,9 +1251,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 4.6.0
 		 * @since   4.6.0
 		 *
-		 * @param $price
-		 * @param $product_id
-		 * @param $filter
+		 * @param int    $price defines the price.
+		 * @param int    $product_id defines the product_id.
+		 * @param string $filter defines the filter.
 		 */
 		public function save_price( $price, $product_id, $filter ) {
 			w_c_j()->modules['multicurrency']->calculated_products_prices[ $product_id ][ $filter ] = $price;
@@ -1248,6 +1263,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * Change_price.
 		 *
 		 * @version 5.3.3
+		 * @param int   $price defines the price.
+		 * @param array $_product defines the _product.
+		 * @param null  $args defines the args.
 		 */
 		public function change_price( $price, $_product, $args = null ) {
 			// Pricing Deals.
@@ -1350,6 +1368,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * Get_current_currency_code.
 		 *
 		 * @version 3.4.0
+		 * @param string $default_currency defines the default_currency.
 		 */
 		public function get_current_currency_code( $default_currency = '' ) {
 			$session_value = wcj_session_get( 'wcj-currency' );
@@ -1374,6 +1393,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * Change_currency_code.
 		 *
 		 * @version 2.5.0
+		 * @param int | string $currency defines the currency.
 		 */
 		public function change_currency_code( $currency ) {
 			if ( $this->do_revert() ) {
@@ -1386,6 +1406,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * Change_price_shipping.
 		 *
 		 * @version 4.9.0
+		 * @param int | string $package_rates defines the package_rates.
+		 * @param string       $package defines the package.
 		 */
 		public function change_price_shipping( $package_rates, $package ) {
 			if (

@@ -18,7 +18,11 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 	 * WCJ_Order_Min_Amount.
 	 */
 	class WCJ_Order_Min_Amount extends WCJ_Module {
+		/**
+		Yith_gift_card_discount.
 
+		@var $yith_gift_card_discount.
+		 */
 		private $yith_gift_card_discount = 0;
 
 		/**
@@ -80,8 +84,8 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 		 * @version 4.9.0
 		 * @since   4.9.0
 		 *
-		 * @param $cart
-		 * @param $discount
+		 * @param string | array $cart defines the cart.
+		 * @param int            $discount defines the discount.
 		 */
 		public function get_yith_gift_cards_discount( $cart, $discount ) {
 			$this->yith_gift_card_discount = $discount;
@@ -191,6 +195,7 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 		 *
 		 * @version 3.2.3
 		 * @todo    (maybe) `if ( is_admin() ) return;`
+		 * @param str | array $wp defines the wp.
 		 */
 		public function stop_from_seeing_checkout( $wp ) {
 			global $woocommerce;

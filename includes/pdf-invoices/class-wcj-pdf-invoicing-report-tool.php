@@ -37,6 +37,10 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param int | string $year Get year.
+		 * @param int | string $month Get month.
+		 * @param int | string $invoice_type Get invoice_type.
+		 * @param int | string $extension Get extension.
 		 */
 		public function get_report_file_name( $year, $month, $invoice_type, $extension ) {
 			$replaced_values = array(
@@ -58,6 +62,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @version 3.4.0
 		 * @since   3.4.0
 		 * @todo    this function is similar to `WCJ_PDF_Invoicing::check_user_roles()` - maybe it should be just one function for both classes..
+		 * @param int $invoice_type_id Get invoice type id.
 		 */
 		public function check_user_roles( $invoice_type_id ) {
 			$allowed_user_roles = wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
@@ -74,7 +79,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @since   2.3.10
 		 */
 		public function generate_report_zip() {
-			if ( isset( $_POST['get_invoices_report_zip'] ) ) {
+			$nonce = wp_create_nonce();
+			if ( isset( $_POST['get_invoices_report_zip'] ) && wp_verify_nonce( $nonce ) ) {
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 					$this->notice = '<div class="error"><p><strong>' . sprintf(
 						/* translators: %s: search term */
@@ -83,9 +89,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 					) .
 					'</strong></p></div>';
 				} else {
-					$_year         = ( ! empty( $_POST['report_year'] ) ) ? $_POST['report_year'] : gmdate( 'Y' );
-					$_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : gmdate( 'n' );
-					$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
+					$_year         = ( ! empty( $_POST['report_year'] ) ) ? isset( $_POST['report_year'] ) : gmdate( 'Y' );
+					$_month        = ( ! empty( $_POST['report_month'] ) ) ? isset( $_POST['report_month'] ) : gmdate( 'n' );
+					$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? isset( $_POST['invoice_type'] ) : 'invoice';
 					if ( ! empty( $_year ) && ! empty( $_month ) && ! empty( $_invoice_type ) ) {
 						if ( $this->check_user_roles( $_invoice_type ) ) {
 							$result = $this->get_invoices_report_zip( $_year, $_month, $_invoice_type );
@@ -108,11 +114,12 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @version 5.5.6
 		 */
 		public function create_invoices_report_tool() {
+			$nonce            = wp_create_nonce();
 			$result_message   = '';
 			$result_message  .= $this->notice;
-			$the_year         = ( ! empty( $_POST['report_year'] ) ) ? $_POST['report_year'] : gmdate( 'Y' );
-			$the_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : gmdate( 'n' );
-			$the_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
+			$the_year         = ( ! empty( $_POST['report_year'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['report_year'] ) : gmdate( 'Y' );
+			$the_month        = ( ! empty( $_POST['report_month'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['report_month'] ) : gmdate( 'n' );
+			$the_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['invoice_type'] ) : 'invoice';
 			if ( isset( $_POST['get_invoices_report'] ) ) {
 				if ( ! empty( $the_year ) && ! empty( $the_month ) && ! empty( $the_invoice_type ) ) {
 					$result_message = $this->get_invoices_report( $the_year, $the_month, $the_invoice_type );
@@ -125,7 +132,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			$html .= '<div class="wrap">';
 			$html .= w_c_j()->modules['pdf_invoicing']->get_tool_header_html( 'invoices_report' );
 			$html .= '<p><form method="post" action="">';
-			// Type
+			// Type.
 			$invoice_type_select_html = '<select name="invoice_type" class="widefat">';
 			$invoice_types            = wcj_get_enabled_invoice_types();
 			foreach ( $invoice_types as $invoice_type ) {
@@ -179,7 +186,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			$html .= $result_message;
 			$html .= '</div>';
 			$html .= '</div>';
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		/**
@@ -187,6 +194,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 *
 		 * @version 3.5.0
 		 * @since   2.3.10
+		 * @param int | string $year Get year.
+		 * @param int | string $month Get month.
+		 * @param int          $invoice_type_id Get invoice type id.
 		 */
 		public function get_invoices_report_zip( $year, $month, $invoice_type_id ) {
 			if ( ! class_exists( 'ZipArchive' ) ) {
@@ -261,13 +271,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			$fp = fopen( $zip_file_path, 'r' );
 			if ( false !== ( $fp ) ) {
 				while ( ! feof( $fp ) ) {
-					echo fread( $fp, 65536 );
+					echo esc_html( fread( $fp, 65536 ) );
 					flush(); // this is essential for large downloads.
 				}
 				fclose( $fp );
 				exit();
 			} else {
-				die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
+				die( esc_html__( 'Unexpected error', 'woocommerce-jetpack' ) );
 			}
 			return true;
 		}
@@ -277,6 +287,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param int | string $year Get year.
+		 * @param int | string $month Get month.
+		 * @param int          $invoice_type_id Get invoice type id.
 		 */
 		public function get_no_documents_found_message( $year, $month, $invoice_type_id ) {
 			/* translators: %%1$s: search term */
@@ -290,9 +303,10 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @since   2.5.7
 		 */
 		public function export_csv() {
-			$_year         = ( ! empty( $_POST['report_year'] ) ) ? $_POST['report_year'] : gmdate( 'Y' );
-			$_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : gmdate( 'm' );
-			$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
+			$nonce         = wp_create_nonce();
+			$_year         = ( ! empty( $_POST['report_year'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['report_year'] ) : gmdate( 'Y' );
+			$_month        = ( ! empty( $_POST['report_month'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['report_month'] ) : gmdate( 'm' );
+			$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['invoice_type'] ) : 'invoice';
 			if ( isset( $_POST['get_invoices_report_csv'] ) ) {
 				$data = $this->get_invoices_report_data( $_year, $_month, $_invoice_type );
 				if ( empty( $data ) ) {
@@ -316,7 +330,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 				header( 'Content-Type: Content-Type: text/html; charset=utf-8' );
 				header( 'Content-Description: File Transfer' );
 				header( 'Content-Length: ' . strlen( $csv ) );
-				echo $csv;
+				echo wp_kses_post( $csv );
 				die();
 			}
 		}
@@ -325,6 +339,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * Invoices Report function.
 		 *
 		 * @version 3.1.0
+		 * @param int | string $year Get year.
+		 * @param int | string $month Get month.
+		 * @param int          $invoice_type_id Get invoice type id.
 		 */
 		public function get_invoices_report( $year, $month, $invoice_type_id ) {
 			$data = $this->get_invoices_report_data( $year, $month, $invoice_type_id );
@@ -338,6 +355,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 *
 		 * @version 4.3.0
 		 * @since   2.5.7
+		 * @param int | string $year Get year.
+		 * @param int | string $month Get month.
+		 * @param int          $invoice_type_id Get invoice type id.
 		 */
 		public function get_invoices_report_data( $year, $month, $invoice_type_id ) {
 
@@ -489,6 +509,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 *
 		 * @version 3.6.0
 		 * @since   3.3.0
+		 * @param Array $columns Get columns.
 		 */
 		public function get_data_headers( $columns ) {
 			$headers     = array();

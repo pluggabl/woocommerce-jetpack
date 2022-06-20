@@ -171,6 +171,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		 * @since   3.4.0
 		 * @todo    (maybe) handle case when `wcj_get_country_by_ip()` returns empty string
 		 * @todo    (maybe) for shipping countries - filter `woocommerce_ship_to_countries` option
+		 * @param string $countries defines the countries.
 		 */
 		public function restrict_countries_by_customer_ip( $countries ) {
 			if (
@@ -218,13 +219,14 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
-		 * @param string $message defines the message.
+		 * @param string       $message defines the message.
+		 * @param int | string $_order defines the _order.
 		 */
 		public function customize_order_received_message( $message, $_order ) {
 			if ( null !== $_order ) {
 				global $post;
-				$post = get_post( wcj_get_order_id( $_order ) );
-				setup_postdata( $post );
+				$posts = get_post( wcj_get_order_id( $_order ) );
+				setup_postdata( $posts );
 			}
 			$message = do_shortcode( wcj_get_option( 'wcj_checkout_customization_order_received_message', __( 'Thank you. Your order has been received.', 'woocommerce' ) ) );
 			if ( null !== $_order ) {
@@ -238,7 +240,10 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		 *
 		 * @version 3.8.0
 		 * @since   2.9.0
-		 * @param string $field defines the field.
+		 * @param string       $field defines the field.
+		 * @param string | int $key defines the key.
+		 * @param string       $args defines the args.
+		 * @param string | int $value defines the value.
 		 */
 		public function maybe_add_description( $field, $key, $args, $value ) {
 			if ( is_user_logged_in() ) {
@@ -272,6 +277,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		 * @see     woocommerce_form_field
 		 * @todo    (maybe) add single option (probably checkbox) to disable all fields
 		 * @todo    (maybe) on `'billing_country', 'shipping_country'` change to simple `select` (i.e. probably remove `wc-enhanced-select` class)
+		 * @param array $checkout_fields defines the checkout_fields.
 		 */
 		public function maybe_disable_fields( $checkout_fields ) {
 			if ( is_user_logged_in() ) {

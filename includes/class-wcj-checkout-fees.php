@@ -73,8 +73,8 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @version 4.6.1
 		 * @since   4.5.0
 		 *
-		 * @param $fee_id
-		 * @param WC_Cart $cart
+		 * @param int                    $fee_id  defines the fee_id.
+		 * @param array | string WC_Cart $cart defines the cart.
 		 *
 		 * @return bool
 		 */
@@ -127,10 +127,12 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		}
 
 		/**
+		 * Get_overlapped_fees.
+		 *
 		 * @version 4.5.0
 		 * @since   4.5.0
 		 *
-		 * @param $valid_fees
+		 * @param int | string $valid_fees defines the valid_fees.
 		 *
 		 * @return array
 		 */
@@ -151,8 +153,8 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @version 4.6.1
 		 * @since   4.5.0
 		 *
-		 * @param bool $only_enabled.
-		 * @param bool $adjust_priority.
+		 * @param bool $only_enabled check enalbed.
+		 * @param bool $adjust_priority check adjust_priority.
 		 *
 		 * @return array
 		 */
@@ -212,8 +214,8 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @version 4.5.0
 		 * @since   4.5.0
 		 *
-		 * @param $cart
-		 * @param bool $ignore_overlapped
+		 * @param string | array $cart define cart details.
+		 * @param bool           $ignore_overlapped define ignore_overlapped.
 		 *
 		 * @return array
 		 */
@@ -274,6 +276,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @todo    options: `countries to include/exclude`
 		 * @todo    options: `user roles to include/exclude`
 		 * @todo    see https://wcbooster.zendesk.com/agent/tickets/446
+		 * @param string | array $cart defines the cart.
 		 */
 		public function add_fees( $cart ) {
 			if ( ! wcj_is_frontend() ) {

@@ -113,7 +113,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 4.8.0
 		 * @since 4.8.0
 		 *
-		 * @param $query
+		 * @param string $query defines the query.
 		 *
 		 * @return mixed
 		 */
@@ -159,8 +159,8 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @see WC_Query::price_filter_post_clauses
 		 *
-		 * @param $args
-		 * @param $wp_query
+		 * @param array  $args defines the args.
+		 * @param string $wp_query defines the wp_query.
 		 *
 		 * @return mixed
 		 */
@@ -170,8 +170,8 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) && wp_verify_nonce( $nonce ) ) ) {
 				return $args;
 			}
-			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
-			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX; // WPCS: input var ok, CSRF ok.
+			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
+			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
 			if ( wc_tax_enabled() && 'incl' === wcj_get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
 				$tax_class = apply_filters( 'woocommerce_price_filter_widget_tax_class', '' ); // Uses standard tax class.
 				$tax_rates = WC_Tax::get_rates( $tax_class );
@@ -209,7 +209,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @since   4.3.1
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
-		 * @param $sql
+		 * @param string $sql defines the sql.
 		 *
 		 * @return string
 		 */
@@ -264,9 +264,9 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 5.0.0
 		 * @since   4.3.1
 		 *
-		 * @param $meta_id
-		 * @param $object_id
-		 * @param $meta_key
+		 * @param int    $meta_id defines the meta_id.
+		 * @param int    $object_id defines the object_id.
+		 * @param string $meta_key defines the meta_key.
 		 */
 		public function update_base_price_meta_on_base_price_currency_update( $meta_id, $object_id, $meta_key ) {
 			$product = wc_get_product( $object_id );
@@ -287,9 +287,9 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 5.0.0
 		 * @since   4.3.1
 		 *
-		 * @param $meta_id
-		 * @param $object_id
-		 * @param $meta_key
+		 * @param int    $meta_id defines the meta_id.
+		 * @param int    $object_id defines the object_id.
+		 * @param string $meta_key defines the meta_key.
 		 */
 		public function update_base_price_meta_on_price_update( $meta_id, $object_id, $meta_key ) {
 			$product = wc_get_product( $object_id );
@@ -310,9 +310,9 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 5.0.0
 		 * @since   4.3.1
 		 *
-		 * @param $option_name
-		 * @param $old_value
-		 * @param $option_value
+		 * @param string $option_name defines the option_name.
+		 * @param string $old_value defines the old_value.
+		 * @param string $option_value defines the option_value.
 		 */
 		public function update_products_base_price_on_exchange_rate_change( $option_name, $old_value, $option_value ) {
 			if (
@@ -338,10 +338,10 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 4.3.1
 		 * @since   4.3.1
 		 *
-		 * @param $meta_id
-		 * @param $object_id
-		 * @param $meta_key
-		 * @param $meta_value
+		 * @param int    $meta_id defines the meta_id.
+		 * @param int    $object_id defines the object_id.
+		 * @param string $meta_key defines the meta_key.
+		 * @param string $meta_value defines the meta_value.
 		 */
 		public function handle_price_filter_compatibility_flag_on_base_price_currency_update( $meta_id, $object_id, $meta_key, $meta_value ) {
 			$product = wc_get_product( $object_id );
@@ -366,10 +366,10 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 4.3.1
 		 * @since   4.3.1
 		 *
-		 * @param $meta_id
-		 * @param $object_id
-		 * @param $meta_key
-		 * @param $meta_value
+		 * @param int    $meta_id defines the meta_id.
+		 * @param int    $object_id defines the object_id.
+		 * @param string $meta_key defines the meta_key.
+		 * @param string $meta_value defines the meta_value.
 		 */
 		public function handle_price_filter_compatibility_flag_on_base_price_update( $meta_id, $object_id, $meta_key, $meta_value ) {
 			$product = wc_get_product( $object_id );
@@ -394,8 +394,8 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 4.3.1
 		 * @since   4.3.1
 		 *
-		 * @param string $compare
-		 * @param string $currency
+		 * @param string $compare defines the compare.
+		 * @param string $currency defines the currency.
 		 *
 		 * @return WP_Query
 		 */
@@ -428,8 +428,8 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @version 4.4.0
 		 * @since   4.3.1
 		 *
-		 * @param $product
-		 * @param null    $price
+		 * @param string | array $product defines the product.
+		 * @param null           $price defines the price.
 		 *
 		 * @return bool
 		 */
@@ -452,6 +452,9 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.0
+		 * @param int   $price defines the price.
+		 * @param int   $qty defines the qty.
+		 * @param array $_product defines the _product.
 		 */
 		public function change_price_grouped( $price, $qty, $_product ) {
 			if ( $_product->is_type( 'grouped' ) ) {
@@ -472,6 +475,8 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.4.8
+		 * @param int   $price defines the price.
+		 * @param array $_product defines the _product.
 		 */
 		public function change_price( $price, $_product ) {
 			return wcj_price_by_product_base_currency( $price, wcj_get_product_id_or_variation_parent_id( $_product ) );
@@ -482,6 +487,9 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @version 3.5.0
 		 * @since   2.4.8
+		 * @param int    $price_hash defines the price_hash.
+		 * @param array  $_product defines the _product.
+		 * @param string $display defines the display.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
 			$multicurrency_base_price_currency          = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_wcj_multicurrency_base_price_currency', true );
@@ -500,6 +508,8 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * @version 3.9.0
 		 * @since   2.4.8
+		 * @param string       $currency_symbol defines the currency_symbol.
+		 * @param string | int $currency defines the currency.
 		 */
 		public function change_currency_symbol_on_product_edit( $currency_symbol, $currency ) {
 			$nonce = wp_create_nonce();

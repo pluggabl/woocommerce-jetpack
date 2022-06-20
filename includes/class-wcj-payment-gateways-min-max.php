@@ -19,9 +19,15 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 	class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 
 		/**
-		 * @version 4.7.0
+		 * Notices
 		 *
-		 * @var array
+		 * @version 4.7.0
+		 * @var array $notice defines array..
+		 */
+		/**
+		 * Notices
+		 *
+		 * @var array $notice.
 		 */
 		private $notices = array();
 
@@ -74,7 +80,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 		 * @version 4.7.0
 		 * @since   4.7.0
 		 *
-		 * @param $_available_gateways
+		 * @param array $_available_gateways defines the _available_gateways.
 		 *
 		 * @return array
 		 */
@@ -129,6 +135,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 		 * @version 4.7.0
 		 * @since   2.4.1
 		 * @todo    (maybe) `wc_clear_notices()`
+		 * @param array $_available_gateways defines the _available_gateways.
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			$remove_response     = $this->remove_payment_gateways( $_available_gateways );

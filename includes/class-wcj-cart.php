@@ -64,8 +64,8 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 			if ( '' !== $custom_content ) {
 				global $post;
 				$product_id = ( ! empty( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : $cart_item['product_id'] );
-				$post       = get_post( $product_id );
-				setup_postdata( $post );
+				$posts      = get_post( $product_id );
+				setup_postdata( $posts );
 				$product_title .= do_shortcode( $custom_content );
 				wp_reset_postdata();
 			}

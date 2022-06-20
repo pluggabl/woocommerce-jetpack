@@ -19,9 +19,18 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 	 * @version 2.5.6
 	 */
 	class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
-
+		/**
+		 * Form_field_ids
+		 *
+		 * @var $form_field_ids
+		 */
 		public static $form_field_ids = array();
-		public static $wcj_settings   = array();
+		/**
+		 * Wcj_settings
+		 *
+		 * @var $wcj_settings
+		 */
+		public static $wcj_settings = array();
 
 		/**
 		 * Constructor shipping class
@@ -30,6 +39,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 * @since   2.5.6
 		 * @access  public
 		 * @return  void
+		 * @param int $instance_id Get instance_id.
 		 */
 		public function __construct( $instance_id = 0 ) {
 			$this->init( $instance_id );
@@ -42,6 +52,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 * @since   2.5.6
 		 * @access  public
 		 * @return  void
+		 * @param int $instance_id Get instance_id.
 		 */
 		public function init( $instance_id ) {
 			$this->id                 = 'booster_custom_shipping_w_zones';
@@ -91,10 +102,10 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 * @version 5.3.4
 		 * @since   4.5.0
 		 *
-		 * @param $settings
-		 * @param $shipping_method
+		 * @param Array  $settings Get settings.
+		 * @param string $shipping_method Get Shipping method.
 		 *
-		 * @return
+		 * @return Array
 		 */
 		public function sanitize_settings( $settings, $shipping_method ) {
 			$settings       = array_filter( $settings );
@@ -120,6 +131,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 *
 		 * @version 4.5.0
 		 * @since   2.6.0
+		 * @param Array $instance_form_fields Get Form fields.
 		 */
 		public function add_table_rows( $instance_form_fields ) {
 			if ( $this->instance_id ) {
@@ -167,7 +179,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
-		 * @param   array $package
+		 * @param   array $package Get pakages.
 		 * @return  bool
 		 */
 		public function is_available( $package ) {
@@ -303,12 +315,14 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 *
 		 * @version 5.3.5
 		 * @since   2.5.6
+		 * @param int $weight Get weight.
 		 */
 		public function calculate_shipping_by_table( $weight ) {
 			if ( 0 === $this->weight_table_total_rows ) {
 				return $this->cost * $weight; // fallback.
 			}
-			$option_name_weight = $option_name_cost = '';
+			$option_name_cost   = '';
+			$option_name_weight = $option_name_cost;
 			for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 				$option_name_weight = 'weight_table_weight_row_' . $i;
 				$option_name_cost   = 'weight_table_cost_row_' . $i;
@@ -325,6 +339,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 * @version 3.9.0
 		 * @since   3.4.0
 		 * @todo    use WC math library instead of `PHPMathParser`
+		 * @param int | string $formula Get formula.
 		 */
 		public function maybe_apply_formula( $formula ) {
 			if ( 'yes' !== $this->apply_formula ) {
@@ -368,7 +383,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 * @version 4.6.0
 		 * @since   2.5.6
 		 * @access  public
-		 * @param   mixed $package
+		 * @param   mixed $package Get packages.
 		 * @return  void
 		 */
 		public function calculate_shipping( $package = array() ) {

@@ -42,6 +42,7 @@ if ( ! class_exists( 'WCJ_Currency_External_Products' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.4.4
+		 * @param string | int $currency defines the currency.
 		 */
 		public function change_currency_code( $currency ) {
 			global $product;

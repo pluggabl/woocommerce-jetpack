@@ -187,6 +187,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 3.0.0
 		 * @since   2.8.0
+		 * @param int $success defines the success.
+		 * @param int $fail defines the fail.
 		 */
 		public function get_result_message( $success, $fail ) {
 			$result_message = '';
@@ -206,6 +208,11 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 5.5.6
 		 * @since   2.8.0
+		 * @param string         $meta_name defines the meta_name.
+		 * @param string         $result_message defines the result_message.
+		 * @param array          $_products defines the _products.
+		 * @param array          $selected_products defines the selected_products.
+		 * @param string | array $set_meta defines the set_meta.
 		 */
 		public function get_tool_html( $meta_name, $result_message, $_products, $selected_products, $set_meta ) {
 			$html  = '';
@@ -230,6 +237,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 3.0.0
 		 * @since   2.8.0
+		 * @param string $meta_name defines the meta_name.
 		 */
 		public function get_html_meta_key_input( $meta_name ) {
 			$meta_html  = '';
@@ -261,6 +269,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param array $_products defines the _products.
+		 * @param array $selected_products defines the selected_products.
 		 */
 		public function get_html_products_select( $_products, $selected_products ) {
 			$products_html  = '';
@@ -288,6 +298,10 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param string         $meta_name defines the meta_name.
+		 * @param array          $_products defines the _products.
+		 * @param array          $selected_products defines the selected_products.
+		 * @param array | string $set_meta defines the set_meta.
 		 */
 		public function get_html_meta_table( $meta_name, $_products, $selected_products, $set_meta ) {
 			$html            = '';
@@ -303,6 +317,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 3.0.0
 		 * @since   2.8.0
+		 * @param string $set_meta defines the set_meta.
+		 * @param string $js_confirmation defines the js_confirmation.
 		 */
 		public function get_html_meta_table_set_single_value( $set_meta, $js_confirmation ) {
 			$single_value_html = '<p>' .
@@ -328,6 +344,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param string $meta_name defines the meta_name.
+		 * @param string $js_confirmation defines the js_confirmation.
 		 */
 		public function get_html_meta_table_buttons( $meta_name, $js_confirmation ) {
 			$html  = '';
@@ -347,6 +365,10 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param string         $meta_name defines the meta_name.
+		 * @param array          $_products defines the _products.
+		 * @param string | array $selected_products defines the selected_products.
+		 * @param string         $js_confirmation defines the js_confirmation.
 		 */
 		public function get_html_meta_table_content( $meta_name, $_products, $selected_products, $js_confirmation ) {
 			$table_data         = array();
@@ -369,7 +391,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				} else {
 					$_post_meta = get_post_meta( $product_id, $meta_name, true );
 					if ( is_array( $_post_meta ) || is_object( $_post_meta ) ) {
-						$_post_meta = print_r( $_post_meta, true );
+						$_post_meta = wp_kses_post( $_post_meta, true );
 					} else {
 						$placeholder = ( ! metadata_exists( 'post', $product_id, $meta_name ) ? ' placeholder="N/A"' : '' );
 						$_post_meta  = '<input' . $placeholder . ' style="width:100%;" type="text" name="wcj_product_bulk_meta_editor_id_' . $product_id . '" value="' .
@@ -397,6 +419,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param array $table_headings defines the table_headings.
+		 * @param array $additional_columns defines the additional_columns.
 		 */
 		public function maybe_add_additional_columns_headings( $table_headings, $additional_columns ) {
 			if ( ! empty( $additional_columns ) ) {
@@ -418,6 +442,9 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param array $row defines the row.
+		 * @param array $additional_columns defines the additional_columns.
+		 * @param array $product_id defines the product_id.
 		 */
 		public function maybe_add_additional_columns_content( $row, $additional_columns, $product_id ) {
 			if ( ! empty( $additional_columns ) ) {

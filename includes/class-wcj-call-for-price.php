@@ -59,6 +59,7 @@ if ( ! class_exists( 'WCJ_Call_For_Price' ) ) :
 		 * @version 3.2.4
 		 * @since   3.2.4
 		 * @todo    not sure if this is really needed
+		 * @param array  $price_hash defines the price hash.
 		 * @param string $_product defines the product.
 		 * @param string $display defines the display.
 		 */
@@ -86,7 +87,7 @@ if ( ! class_exists( 'WCJ_Call_For_Price' ) ) :
 			if ( '' === $_product->get_price() ) {
 				$visible = true;
 				// Published == enabled checkbox.
-				if ( get_post_status( $_variation_id ) != 'publish' ) {
+				if ( get_post_status( $_variation_id ) !== 'publish' ) {
 					$visible = false;
 				}
 			}
@@ -131,6 +132,8 @@ if ( ! class_exists( 'WCJ_Call_For_Price' ) ) :
 		 *
 		 * @version 3.2.4
 		 * @since   2.5.7
+		 * @param int    $price defines the price.
+		 * @param string $_product defines the _product.
 		 */
 		public function make_empty_price( $price, $_product ) {
 			return '';
@@ -153,6 +156,9 @@ if ( ! class_exists( 'WCJ_Call_For_Price' ) ) :
 		 *
 		 * @version 3.2.4
 		 * @todo    recheck if we really need this
+		 * @param string $onsale_html defines the onsale_html.
+		 * @param string $post defines the post.
+		 * @param string $product defines the product.
 		 */
 		public function hide_sales_flash( $onsale_html, $post, $product ) {
 			if ( 'yes' === wcj_get_option( 'wcj_call_for_price_hide_sale_sign', 'yes' ) && '' === $product->get_price() ) {
@@ -166,6 +172,8 @@ if ( ! class_exists( 'WCJ_Call_For_Price' ) ) :
 		 *
 		 * @version 3.2.4
 		 * @todo    `is_page()`
+		 * @param int    $price defines the price.
+		 * @param string $_product defines the _product.
 		 */
 		public function on_empty_price( $price, $_product ) {
 			if ( '' !== wcj_get_option( 'wcj_call_for_price_text_variation' ) && $_product->is_type( 'variation' ) ) {

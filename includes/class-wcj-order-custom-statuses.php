@@ -109,6 +109,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 3.1.2
 		 * @since   3.1.2
+		 * @param bool $cut_prefix defines the cut_prefix.
 		 */
 		public function get_custom_order_statuses( $cut_prefix = false ) {
 			$orders_custom_statuses = wcj_get_option( 'wcj_orders_custom_statuses_array', '' );
@@ -132,6 +133,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 4.0.0
 		 * @since   4.0.0
+		 * @param array | string $_order defines the _order.
 		 */
 		public function get_custom_order_statuses_actions( $_order ) {
 			$status_actions        = array();
@@ -151,6 +153,8 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 4.0.0
 		 * @since   4.0.0
+		 * @param bool $status defines the status.
+		 * @param int  $order_id defines the order_id.
 		 */
 		public function get_custom_order_statuses_action_url( $status, $order_id ) {
 			return wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status . '&order_id=' . $order_id ), 'woocommerce-mark-order-status' );
@@ -161,6 +165,8 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 4.0.0
 		 * @since   4.0.0
+		 * @param array          $actions defines the actions.
+		 * @param array | string $_order defines the _order.
 		 */
 		public function add_custom_order_statuses_order_preview_actions( $actions, $_order ) {
 			$status_actions  = array();
@@ -195,6 +201,8 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 3.1.2
 		 * @since   3.1.2
+		 * @param bool | string  $is_editable defines the is_editable.
+		 * @param array | string $_order defines the _order.
 		 */
 		public function add_custom_order_statuses_to_order_editable( $is_editable, $_order ) {
 			return ( in_array( $_order->get_status(), array_keys( $this->get_custom_order_statuses( true ) ), true ) ? true : $is_editable );
@@ -205,6 +213,8 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 4.0.0
 		 * @since   2.8.0
+		 * @param array | string $actions defines the actions.
+		 * @param array | string $_order defines the _order.
 		 */
 		public function add_custom_status_to_processing_and_completed_actions( $actions, $_order ) {
 			$custom_order_statuses = $this->get_custom_order_statuses();
@@ -246,6 +256,8 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 4.0.0
 		 * @since   2.6.0
+		 * @param array          $actions defines the actions.
+		 * @param array | string $_order defines the _order.
 		 */
 		public function add_custom_status_actions_buttons( $actions, $_order ) {
 			$_status_actions = $this->get_custom_order_statuses_actions( $_order );
@@ -267,6 +279,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 3.6.0
 		 * @since   3.2.2
+		 * @param array | string $status_slug_without_wc_prefix defines the status_slug_without_wc_prefix.
 		 */
 		public function get_status_icon_data( $status_slug_without_wc_prefix ) {
 			$return    = array(
@@ -306,6 +319,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 * Add_custom_order_statuses_to_reports.
 		 *
 		 * @version 3.2.2
+		 * @param array | string $order_statuses defines the order_statuses.
 		 */
 		public function add_custom_order_statuses_to_reports( $order_statuses ) {
 			if ( is_array( $order_statuses ) && in_array( 'completed', $order_statuses, true ) ) {
@@ -319,6 +333,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 * Set_default_order_status.
 		 *
 		 * @version 3.2.2
+		 * @param bool | string $status defines the status.
 		 */
 		public function set_default_order_status( $status ) {
 			$default_status = wcj_get_option( 'wcj_orders_custom_statuses_default_status', 'pending' );
@@ -330,6 +345,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * @version 5.3.3
 		 * @since   5.3.3
+		 * @param int $order_id defines the order_id.
 		 */
 		public function set_default_order_status_forcefully( $order_id ) {
 			if ( ! $order_id ) {
@@ -380,6 +396,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 * @version 4.8.0
 		 *
 		 * @todo Check if there is a way to output the Status Label and not its slug when using the option "Remove Status Prefix", because `wc_get_order_status_name()` has issues when there is no prefix.
+		 * @param bool | string $order_statuses defines the order_statuses.
 		 */
 		public function add_custom_statuses_to_filter( $order_statuses ) {
 			$screen = get_current_screen();
