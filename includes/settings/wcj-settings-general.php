@@ -111,7 +111,7 @@ $settings = array(
 	array(
 		'title'   => __( 'Datepicker/Weekpicker CSS Source', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_general_advanced_datepicker_css',
-		'default' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css',
+		'default' => wcj_plugin_url() . '/includes/css/jquery-ui.css',
 		'type'    => 'text',
 		'css'     => 'width:66%;min-width:300px;',
 	),
