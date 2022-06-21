@@ -186,11 +186,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 		if ( 'no' === wcj_get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
 			$response = file_get_contents( $url );
 		} elseif ( function_exists( 'curl_version' ) ) {
-			$curl = curl_init( $url );
-			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
-			$response = curl_exec( $curl );
-			curl_close( $curl );
+			$response = wp_remote_get( $url );
+			$response = $response[ 'body' ];
 		}
 		return ( '' !== $response ? ( $do_json_decode ? json_decode( $response ) : $response ) : false );
 	}
