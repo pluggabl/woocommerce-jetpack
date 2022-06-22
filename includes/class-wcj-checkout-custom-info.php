@@ -54,7 +54,8 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Info' ) ) :
 		public function add_checkout_custom_info() {
 			$current_filter          = current_filter();
 			$current_filter_priority = wcj_current_filter_priority();
-			$total_number            = $this->wcj_checkout_custom_info_total_number;
+			settype( $current_filter_priority, 'string' );
+			$total_number = $this->wcj_checkout_custom_info_total_number;
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if (
 					'' !== wcj_get_option( 'wcj_checkout_custom_info_content_' . $i ) &&

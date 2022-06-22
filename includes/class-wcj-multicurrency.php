@@ -365,7 +365,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			$change_keys   = $args['change_keys'];
 			$exchange_rate = $args['exchange_rate'];
 			foreach ( $array as $key => $value ) {
-				if ( in_array( $key, $change_keys, true ) ) {
+				if ( in_array( $key, $change_keys ) ) {
 					if (
 						is_array( $array ) &&
 						isset( $array['condition'] ) &&
@@ -974,16 +974,16 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 				$exchange_rate = $this->get_currency_exchange_rate( $currency_code );
 				foreach ( $products as $product_id => $original_price ) {
 					// Regular Price.
-					$nonce = wp_create_nonce();
-					if ( isset( $_POST[ "wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}" ] ) && wp_verify_nonce( $nonce ) ) {
-						$regular_price = isset( $_POST[ "wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}" ] );
+					
+					if ( isset( $_POST[ "wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}" ] ) ) {
+						$regular_price = $_POST[ "wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}" ] ;
 					} else {
 						$regular_price = get_post_meta( $product_id, '_wcj_multicurrency_per_product_regular_price_' . $currency_code, true );
 					}
 
 					// Sale Price.
 					if ( isset( $_POST[ "wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}" ] ) ) {
-						$sale_price = isset( $_POST[ "wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}" ] );
+						$sale_price =  $_POST[ "wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}" ] ;
 					} else {
 						$sale_price = get_post_meta( $product_id, '_wcj_multicurrency_per_product_sale_price_' . $currency_code, true );
 					}
@@ -1028,13 +1028,12 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$nonce         = wp_create_nonce();
 			$session_value = wcj_session_get( 'wcj-currency' );
 			if ( null === ( $session_value ) ) {
 				$currency = $this->get_default_currency();
 			}
-			if ( isset( $_REQUEST['wcj-currency'] ) && wp_verify_nonce( $nonce ) ) {
-				$currency = sanitize_text_field( isset( $_REQUEST['wcj-currency'] ) );
+			if ( isset( $_REQUEST['wcj-currency'] ) ) {
+				$currency = sanitize_text_field( wp_unslash($_REQUEST['wcj-currency'] ) );
 			}
 			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_default_currency_force', 'no' ) ) {
 				$currency = $this->get_default_currency();

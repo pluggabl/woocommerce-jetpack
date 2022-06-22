@@ -82,8 +82,7 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 					$posts_ids[ $type ][]        = $old_slug_object->post_id;
 				}
 				// Actions.
-				$nonce = wp_create_nonce();
-				if ( isset( $_POST['remove_old_products_slugs'] ) || isset( $_POST['remove_old_non_products_slugs'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_POST['remove_old_products_slugs'] ) || isset( $_POST['remove_old_non_products_slugs'] ) ) {
 					$post_ids_to_delete   = join( ',', ( isset( $_POST['remove_old_products_slugs'] ) ? $posts_ids['products'] : $posts_ids['non_products'] ) );
 					$delete_result        = $wpdb->get_results( "DELETE FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)" );
 					$recheck_result       = $wpdb->get_results( "SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug'" );

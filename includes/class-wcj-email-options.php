@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		 *
 		 * @version 3.5.0
 		 * @since   3.5.0
-		 * @param string | array  $_object defines the _object.
+		 * @param string $_object | array  $_object defines the _object.
 		 */
 		public function maybe_check_order_status( $_object ) {
 			$enable_order_statuses = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_emails_forwarding_enable_order_status', '' ) );

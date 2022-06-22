@@ -52,8 +52,8 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		 */
 		public function enqueue_generate_coupon_code_script() {
 			global $pagenow;
-			$nonce = wp_create_nonce();
-			if ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_coupon' === $_GET['post_type'] && wp_verify_nonce( $nonce ) ) {
+			
+			if ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_coupon' === isset( $_GET['post_type'] )) {
 				wp_enqueue_script( 'wcj-coupons-code-generator', wcj_plugin_url() . '/includes/js/wcj-coupons-code-generator.js', array( 'jquery' ), w_c_j()->version, true );
 				wp_localize_script( 'wcj-coupons-code-generator', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			}

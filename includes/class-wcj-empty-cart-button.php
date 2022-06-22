@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Empty_Cart_Button' ) ) :
 		 * @version 2.8.0
 		 */
 		public function add_empty_cart_link() {
-			echo wp_kses_post( $wcj_empty_cart_button_html() );
+			echo wp_kses_post( wcj_empty_cart_button_html() );
 		}
 
 		/**
@@ -79,8 +79,8 @@ if ( ! class_exists( 'WCJ_Empty_Cart_Button' ) ) :
 		 * @version 2.8.0
 		 */
 		public function maybe_empty_cart() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj_empty_cart'] ) && isset( WC()->cart ) && wp_verify_nonce( $nonce ) ) {
+			
+			if ( isset( $_POST['wcj_empty_cart'] ) && isset( WC()->cart )  ) {
 				WC()->cart->empty_cart();
 			}
 		}

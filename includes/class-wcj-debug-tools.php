@@ -50,8 +50,7 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 		 */
 		public function create_debug_tools_tool() {
 			// Delete log.
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
 				update_option( 'wcj_log', '' );
 				if ( wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_log' ) ) ) ) {
 					exit;
@@ -104,8 +103,7 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 			foreach ( $constants_array as $the_constant ) {
 				$system_info[] = array( $the_constant, ( defined( $the_constant ) ? constant( $the_constant ) : __( 'NOT DEFINED', 'woocommerce-jetpack' ) ) );
 			}
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_debug'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_debug'] ) ) {
 				foreach ( $_SERVER as $server_var_id => $server_var_value ) {
 					$system_info[] = array( $server_var_id, esc_html( $server_var_value ) );
 				}

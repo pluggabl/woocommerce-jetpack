@@ -84,7 +84,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 */
 		public function wcj_ajax_get_exchange_rates() {
 			$nonce = wp_create_nonce();
-			echo wp_kses_post( wcj_get_exchange_rate( isset( $_POST['wcj_currency_from'] ), isset( $_POST['wcj_currency_to'] ), wp_verify_nonce( $nonce ) ) );
+			echo wp_kses_post( wcj_get_exchange_rate( sanitize_text_field(wp_unslash( $_POST['wcj_currency_from'] ) ), sanitize_text_field(wp_unslash( $_POST['wcj_currency_to'] ) ) ) );
 			die();
 		}
 

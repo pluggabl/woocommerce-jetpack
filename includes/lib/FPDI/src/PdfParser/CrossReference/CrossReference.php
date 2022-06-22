@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\CrossReference;
 
@@ -24,286 +24,286 @@ use setasign\Fpdi\PdfParser\Type\PdfTypeException;
  *
  * @package setasign\Fpdi\PdfParser\CrossReference
  */
-class CrossReference {
+class CrossReference
+{
+    /**
+     * The byte length in which the "startxref" keyword should be searched.
+     *
+     * @var int
+     */
+    static public $trailerSearchLength = 5500;
 
-	/**
-	 * The byte length in which the "startxref" keyword should be searched.
-	 *
-	 * @var int
-	 */
-	public static $trailerSearchLength = 5500;
+    /**
+     * @var int
+     */
+    protected $fileHeaderOffset = 0;
 
-	/**
-	 * Int
-	 *
-	 * @var int
-	 */
-	protected $fileHeaderOffset = 0;
+    /**
+     * @var PdfParser
+     */
+    protected $parser;
 
-	/**
-	 * PdfParser
-	 *
-	 * @var PdfParser
-	 */
-	protected $parser;
+    /**
+     * @var ReaderInterface[]
+     */
+    protected $readers = [];
 
-	/**
-	 * ReaderInterface
-	 *
-	 * @var ReaderInterface[]
-	 */
-	protected $readers = array();
+    /**
+     * CrossReference constructor.
+     *
+     * @param PdfParser $parser
+     * @throws CrossReferenceException
+     * @throws PdfTypeException
+     */
+    public function __construct(PdfParser $parser, $fileHeaderOffset = 0)
+    {
+        $this->parser = $parser;
+        $this->fileHeaderOffset = $fileHeaderOffset;
 
-	/**
-	 * CrossReference constructor.
-	 *
-	 * @param PdfParser        $parser Get PdfParser.
-	 * @param fileHeaderOffset $fileHeaderOffset Get fileHeaderOffset.
-	 * @throws CrossReferenceException CrossReferenceException.
-	 */
-	public function __construct( PdfParser $parser, $fileHeaderOffset = 0 ) {
-		$this->parser           = $parser;
-		$this->fileHeaderOffset = $fileHeaderOffset;
+        $offset = $this->findStartXref();
+        $reader = null;
+        /** @noinspection TypeUnsafeComparisonInspection */
+        while ($offset != false) { // By doing an unsafe comparsion we ignore faulty references to byte offset 0
+            $reader = $this->readXref($offset + $this->fileHeaderOffset);
+            $trailer = $reader->getTrailer();
+            $this->checkForEncryption($trailer);
+            $this->readers[] = $reader;
 
-		$offset = $this->findStartXref();
-		$reader = null;
-		/** Noinspection TypeUnsafeComparisonInspection */
-		while ( false !== $offset ) { // By doing an unsafe comparsion we ignore faulty references to byte offset 0.
-			$reader  = $this->readXref( $offset + $this->fileHeaderOffset );
-			$trailer = $reader->getTrailer();
-			$this->checkForEncryption( $trailer );
-			$this->readers[] = $reader;
+            if (isset($trailer->value['Prev'])) {
+                $offset = $trailer->value['Prev']->value;
+            } else {
+                $offset = false;
+            }
+        }
 
-			if ( isset( $trailer->value['Prev'] ) ) {
-				$offset = $trailer->value['Prev']->value;
-			} else {
-				$offset = false;
-			}
-		}
+        // fix faulty sub-section header
+        if ($reader instanceof FixedReader) {
+            /**
+             * @var FixedReader $reader
+             */
+            $reader->fixFaultySubSectionShift();
+        }
 
-		// fix faulty sub-section header.
-		if ( $reader instanceof FixedReader ) {
-			/**
-			 * Fix faulty sub-section header.
-			 *
-			 * @var FixedReader $reader.
-			 */
-			$reader->fixFaultySubSectionShift();
-		}
+        if ($reader === null) {
+            throw new CrossReferenceException('No cross-reference found.', CrossReferenceException::NO_XREF_FOUND);
+        }
+    }
 
-		if ( null === $reader ) {
-			throw new CrossReferenceException( 'No cross-reference found.', CrossReferenceException::NO_XREF_FOUND );
-		}
-	}
+    /**
+     * Get the size of the cross reference.
+     *
+     * @return integer
+     */
+    public function getSize()
+    {
+        return $this->getTrailer()->value['Size']->value;
+    }
 
-	/**
-	 * Get the size of the cross reference.
-	 *
-	 * @return integer
-	 */
-	public function getSize() {
-		return $this->getTrailer()->value['Size']->value;
-	}
+    /**
+     * Get the trailer dictionary.
+     *
+     * @return PdfDictionary
+     */
+    public function getTrailer()
+    {
+        return $this->readers[0]->getTrailer();
+    }
 
-	/**
-	 * Get the trailer dictionary.
-	 *
-	 * @return PdfDictionary
-	 */
-	public function getTrailer() {
-		return $this->readers[0]->getTrailer();
-	}
+    /**
+     * Get the cross reference readser instances.
+     *
+     * @return ReaderInterface[]
+     */
+    public function getReaders()
+    {
+        return $this->readers;
+    }
 
-	/**
-	 * Get the cross reference readser instances.
-	 *
-	 * @return ReaderInterface[]
-	 */
-	public function getReaders() {
-		return $this->readers;
-	}
+    /**
+     * Get the offset by an object number.
+     *
+     * @param int $objectNumber
+     * @return integer|bool
+     */
+    public function getOffsetFor($objectNumber)
+    {
+        foreach ($this->getReaders() as $reader) {
+            $offset = $reader->getOffsetFor($objectNumber);
+            if ($offset !== false) {
+                return $offset;
+            }
+        }
 
-	/**
-	 * Get the offset by an object number.
-	 *
-	 * @param int $objectNumber Get objectNumber.
-	 * @return integer|bool
-	 */
-	public function getOffsetFor( $objectNumber ) {
-		foreach ( $this->getReaders() as $reader ) {
-			$offset = $reader->getOffsetFor( $objectNumber );
-			if ( false !== $offset ) {
-				return $offset;
-			}
-		}
+        return false;
+    }
 
-		return false;
-	}
+    /**
+     * Get an indirect object by its object number.
+     *
+     * @param int $objectNumber
+     * @return PdfIndirectObject
+     * @throws CrossReferenceException
+     */
+    public function getIndirectObject($objectNumber)
+    {
+        $offset = $this->getOffsetFor($objectNumber);
+        if ($offset === false) {
+            throw new CrossReferenceException(
+                \sprintf('Object (id:%s) not found.', $objectNumber),
+                CrossReferenceException::OBJECT_NOT_FOUND
+            );
+        }
 
-	/**
-	 * Get an indirect object by its object number.
-	 *
-	 * @param int $objectNumber Get objectNumber.
-	 * @return PdfIndirectObject
-	 * @throws CrossReferenceException CrossReferenceException.
-	 */
-	public function getIndirectObject( $objectNumber ) {
-		$offset = $this->getOffsetFor( $objectNumber );
-		if ( false === $offset ) {
-			throw new CrossReferenceException(
-				\sprintf( 'Object (id:%s) not found.', $objectNumber ),
-				CrossReferenceException::OBJECT_NOT_FOUND
-			);
-		}
+        $parser = $this->parser;
 
-		$parser = $this->parser;
+        $parser->getTokenizer()->clearStack();
+        $parser->getStreamReader()->reset($offset + $this->fileHeaderOffset);
 
-		$parser->getTokenizer()->clearStack();
-		$parser->getStreamReader()->reset( $offset + $this->fileHeaderOffset );
+        try {
+            /** @var PdfIndirectObject $object */
+            $object = $parser->readValue(null, PdfIndirectObject::class);
+        } catch (PdfTypeException $e) {
+            throw new CrossReferenceException(
+                \sprintf('Object (id:%s) not found at location (%s).', $objectNumber, $offset),
+                CrossReferenceException::OBJECT_NOT_FOUND,
+                $e
+            );
+        }
 
-		try {
-			/**
-			 * PdfIndirectObject
-			 *
-			 * @var PdfIndirectObject $object
-			 */
-			$object = $parser->readValue( null, PdfIndirectObject::class );
-		} catch ( PdfTypeException $e ) {
-			throw new CrossReferenceException(
-				\sprintf( 'Object (id:%s) not found at location (%s).', $objectNumber, $offset ),
-				CrossReferenceException::OBJECT_NOT_FOUND,
-				$e
-			);
-		}
+        if ($object->objectNumber !== $objectNumber) {
+            throw new CrossReferenceException(
+                \sprintf('Wrong object found, got %s while %s was expected.', $object->objectNumber, $objectNumber),
+                CrossReferenceException::OBJECT_NOT_FOUND
+            );
+        }
 
-		if ( $object->objectNumber !== $objectNumber ) {
-			throw new CrossReferenceException(
-				\sprintf( 'Wrong object found, got %s while %s was expected.', $object->objectNumber, $objectNumber ),
-				CrossReferenceException::OBJECT_NOT_FOUND
-			);
-		}
+        return $object;
+    }
 
-		return $object;
-	}
+    /**
+     * Read the cross-reference table at a given offset.
+     *
+     * Internally the method will try to evaluate the best reader for this cross-reference.
+     *
+     * @param int $offset
+     * @return ReaderInterface
+     * @throws CrossReferenceException
+     * @throws PdfTypeException
+     */
+    protected function readXref($offset)
+    {
+        $this->parser->getStreamReader()->reset($offset);
+        $this->parser->getTokenizer()->clearStack();
+        $initValue = $this->parser->readValue();
+        
+        return $this->initReaderInstance($initValue);
+    }
 
-	/**
-	 * Read the cross-reference table at a given offset.
-	 *
-	 * Internally the method will try to evaluate the best reader for this cross-reference.
-	 *
-	 * @param int $offset Get int value.
-	 * @return ReaderInterface
-	 * @throws CrossReferenceException CrossReferenceException.
-	 */
-	protected function readXref( $offset ) {
-		$this->parser->getStreamReader()->reset( $offset );
-		$this->parser->getTokenizer()->clearStack();
-		$initValue = $this->parser->readValue();
+    /**
+     * Get a cross-reference reader instance.
+     *
+     * @param PdfToken|PdfIndirectObject $initValue
+     * @return ReaderInterface|bool
+     * @throws CrossReferenceException
+     * @throws PdfTypeException
+     */
+    protected function initReaderInstance($initValue)
+    {
+        $position = $this->parser->getStreamReader()->getPosition()
+            + $this->parser->getStreamReader()->getOffset() + $this->fileHeaderOffset;
 
-		return $this->initReaderInstance( $initValue );
-	}
+        if ($initValue instanceof PdfToken && $initValue->value === 'xref') {
+            try {
+                return new FixedReader($this->parser);
+            } catch (CrossReferenceException $e) {
+                $this->parser->getStreamReader()->reset($position);
+                $this->parser->getTokenizer()->clearStack();
 
-	/**
-	 * Get a cross-reference reader instance.
-	 *
-	 * @param PdfToken|PdfIndirectObject $initValue Get PdfToken.
-	 * @return ReaderInterface|bool
-	 * @throws CrossReferenceException CrossReferenceException.
-	 */
-	protected function initReaderInstance( $initValue ) {
-		$position = $this->parser->getStreamReader()->getPosition()
-			+ $this->parser->getStreamReader()->getOffset() + $this->fileHeaderOffset;
+                return new LineReader($this->parser);
+            }
+        }
 
-		if ( $initValue instanceof PdfToken && 'xref' === $initValue->value ) {
-			try {
-				return new FixedReader( $this->parser );
-			} catch ( CrossReferenceException $e ) {
-				$this->parser->getStreamReader()->reset( $position );
-				$this->parser->getTokenizer()->clearStack();
+        if ($initValue instanceof PdfIndirectObject) {
+            // check for encryption
+            $stream = PdfStream::ensure($initValue->value);
 
-				return new LineReader( $this->parser );
-			}
-		}
+            $type = PdfDictionary::get($stream->value, 'Type');
+            if ($type->value !== 'XRef') {
+                throw new CrossReferenceException(
+                    'The xref position points to an incorrect object type.',
+                    CrossReferenceException::INVALID_DATA
+                );
+            }
 
-		if ( $initValue instanceof PdfIndirectObject ) {
-			// check for encryption.
-			$stream = PdfStream::ensure( $initValue->value );
+            $this->checkForEncryption($stream->value);
 
-			$type = PdfDictionary::get( $stream->value, 'Type' );
-			if ( 'XRef' !== $type->value ) {
-				throw new CrossReferenceException(
-					'The xref position points to an incorrect object type.',
-					CrossReferenceException::INVALID_DATA
-				);
-			}
+            throw new CrossReferenceException(
+                'This PDF document probably uses a compression technique which is not supported by the ' .
+                'free parser shipped with FPDI. (See https://www.setasign.com/fpdi-pdf-parser for more details)',
+                CrossReferenceException::COMPRESSED_XREF
+            );
+        }
 
-			$this->checkForEncryption( $stream->value );
+        throw new CrossReferenceException(
+            'The xref position points to an incorrect object type.',
+            CrossReferenceException::INVALID_DATA
+        );
+    }
 
-			throw new CrossReferenceException(
-				'This PDF document probably uses a compression technique which is not supported by the ' .
-				'free parser shipped with FPDI. (See https://www.setasign.com/fpdi-pdf-parser for more details)',
-				CrossReferenceException::COMPRESSED_XREF
-			);
-		}
+    /**
+     * Check for encryption.
+     *
+     * @param PdfDictionary $dictionary
+     * @throws CrossReferenceException
+     */
+    protected function checkForEncryption(PdfDictionary $dictionary)
+    {
+        if (isset($dictionary->value['Encrypt'])) {
+            throw new CrossReferenceException(
+                'This PDF document is encrypted and cannot be processed with FPDI.',
+                CrossReferenceException::ENCRYPTED
+            );
+        }
+    }
 
-		throw new CrossReferenceException(
-			'The xref position points to an incorrect object type.',
-			CrossReferenceException::INVALID_DATA
-		);
-	}
+    /**
+     * Find the start position for the first cross-reference.
+     *
+     * @return int The byte-offset position of the first cross-reference.
+     * @throws CrossReferenceException
+     */
+    protected function findStartXref()
+    {
+        $reader = $this->parser->getStreamReader();
+        $reader->reset(-self::$trailerSearchLength, self::$trailerSearchLength);
 
-	/**
-	 * Check for encryption.
-	 *
-	 * @param PdfDictionary $dictionary Get dictionary.
-	 * @throws CrossReferenceException CrossReferenceException.
-	 */
-	protected function checkForEncryption( PdfDictionary $dictionary ) {
-		if ( isset( $dictionary->value['Encrypt'] ) ) {
-			throw new CrossReferenceException(
-				'This PDF document is encrypted and cannot be processed with FPDI.',
-				CrossReferenceException::ENCRYPTED
-			);
-		}
-	}
+        $buffer = $reader->getBuffer(false);
+        $pos = \strrpos($buffer, 'startxref');
+        $addOffset = 9;
+        if ($pos === false) {
+            // Some corrupted documents uses startref, instead of startxref
+            $pos = \strrpos($buffer, 'startref');
+            if ($pos === false) {
+                throw new CrossReferenceException(
+                    'Unable to find pointer to xref table',
+                    CrossReferenceException::NO_STARTXREF_FOUND
+                );
+            }
+            $addOffset = 8;
+        }
 
-	/**
-	 * Find the start position for the first cross-reference.
-	 *
-	 * @return int The byte-offset position of the first cross-reference.
-	 * @throws CrossReferenceException CrossReferenceException.
-	 */
-	protected function findStartXref() {
-		$reader = $this->parser->getStreamReader();
-		$reader->reset( -self::$trailerSearchLength, self::$trailerSearchLength );
+        $reader->setOffset($pos + $addOffset);
 
-		$buffer    = $reader->getBuffer( false );
-		$pos       = \strrpos( $buffer, 'startxref' );
-		$addOffset = 9;
-		if ( false === $pos ) {
-			// Some corrupted documents uses startref, instead of startxref.
-			$pos = \strrpos( $buffer, 'startref' );
-			if ( false === $pos ) {
-				throw new CrossReferenceException(
-					'Unable to find pointer to xref table',
-					CrossReferenceException::NO_STARTXREF_FOUND
-				);
-			}
-			$addOffset = 8;
-		}
+        try {
+            $value = $this->parser->readValue(null, PdfNumeric::class);
+        } catch (PdfTypeException $e) {
+            throw new CrossReferenceException(
+                'Invalid data after startxref keyword.',
+                CrossReferenceException::INVALID_DATA,
+                $e
+            );
+        }
 
-		$reader->setOffset( $pos + $addOffset );
-
-		try {
-			$value = $this->parser->readValue( null, PdfNumeric::class );
-		} catch ( PdfTypeException $e ) {
-			throw new CrossReferenceException(
-				'Invalid data after startxref keyword.',
-				CrossReferenceException::INVALID_DATA,
-				$e
-			);
-		}
-
-		return $value->value;
-	}
+        return $value->value;
+    }
 }

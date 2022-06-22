@@ -18,7 +18,7 @@
 			<div class="wcj-welcome-content-inner">
 				<h3> <?php esc_html_e( 'Welcome to booster.', 'woocommerce-jetpack' ); ?> </h3>
 				<p> <?php esc_html_e( 'Thank you for choosing Booster - Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules. All in one WooCommerce plugin.', 'woocommerce-jetpack' ); ?> </p>
-				<a href="<?php echo wp_kses_post( admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) ); ?>" class="wcj-buy-puls-btn"> <?php esc_html_e( 'Launch Booster Settings', 'woocommerce-jetpack' ); ?> </a>
+				<a href="<?php echo esc_url ( admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) ); ?>" class="wcj-buy-puls-btn"> <?php esc_html_e( 'Launch Booster Settings', 'woocommerce-jetpack' ); ?> </a>
 			</div>
 		</div>
 		<div class="wcj-welcome-content-main wcj-welcome-padding-top-0">
@@ -29,19 +29,19 @@
 				<div class="wcj-welcome-content-inner wcj-buy-puls-content-row">
 					<div class="wcj-buy-puls-content-col-4">
 						<div class="wcj-badge">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/30day-guarantee.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/30day-guarantee.png">
 							<span class="wcj-badge-sp-cn"> <?php esc_html_e( '30-Day Risk Free', 'woocommerce-jetpack' ); ?> <br> <?php esc_html_e( 'Money Back Guarantee', 'woocommerce-jetpack' ); ?> </span>
 						</div>
 					</div>
 					<div class="wcj-buy-puls-content-col-4">
 						<div class="wcj-badge">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/wp-logo.svg">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/wp-logo.svg">
 							<span class="wcj-badge-sp-cn"><?php esc_html_e( '400+ 5-Star', 'woocommerce-jetpack' ); ?> <br> <?php esc_html_e( 'Reviews', 'woocommerce-jetpack' ); ?></span>
 						</div>
 					</div>
 					<div class="wcj-buy-puls-content-col-4">
 						<div class="wcj-badge">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/trust-icon.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/trust-icon.png">
 							<span class="wcj-badge-sp-cn"><?php esc_html_e( 'Trusted by', 'woocommerce-jetpack' ); ?> <br> <?php esc_html_e( '100,000+', 'woocommerce-jetpack' ); ?> <br> <?php esc_html_e( 'Websites', 'woocommerce-jetpack' ); ?></span>
 						</div>
 					</div>
@@ -58,7 +58,7 @@
 				<div class="wcj-welcome-content-inner wcj-buy-puls-content-row">
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-pdf.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-pdf.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'PDF Invoicing and Packing Slips', 'woocommerce-jetpack' ); ?> </h4>
@@ -67,7 +67,7 @@
 					</div>
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-add-on.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-add-on.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'Product Addons', 'woocommerce-jetpack' ); ?> </h4>
@@ -76,7 +76,7 @@
 					</div>
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-input-field.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-input-field.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'Product Input Fields', 'woocommerce-jetpack' ); ?> </h4>
@@ -85,7 +85,7 @@
 					</div>
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-button-prices.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-button-prices.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'Button and Price Labels', 'woocommerce-jetpack' ); ?> </h4>
@@ -94,7 +94,7 @@
 					</div>
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-prices-currency.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-prices-currency.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'Prices and Currencies', 'woocommerce-jetpack' ); ?> </h4>
@@ -103,7 +103,7 @@
 					</div>
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-payment-getway.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-payment-getway.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'Payment Gateways', 'woocommerce-jetpack' ); ?> </h4>
@@ -112,7 +112,7 @@
 					</div>
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-cart-checkout.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-cart-checkout.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'Cart and Checkout', 'woocommerce-jetpack' ); ?> </h4>
@@ -121,7 +121,7 @@
 					</div>
 					<div class="wcj-buy-puls-content-col-6 wcj-feature">
 						<div class="wcj-feature-img">
-							<img src="<?php echo wp_kses_post( wcj_plugin_url() ); ?>/assets/images/feature-emails-addtool.png">
+							<img src="<?php echo esc_url ( wcj_plugin_url() ); ?>/assets/images/feature-emails-addtool.png">
 						</div>
 						<div class="wcj-feature-text">
 							<h4> <?php esc_html_e( 'Emails & Additional Tools', 'woocommerce-jetpack' ); ?> </h4>

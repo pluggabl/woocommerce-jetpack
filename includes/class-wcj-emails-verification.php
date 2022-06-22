@@ -131,7 +131,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 * @since   3.1.0
 		 * @param string $output defines the output.
 		 * @param string $column_name defines the column_name.
-		 * @param int $user_id defines the user_id.
+		 * @param int    $user_id defines the user_id.
 		 */
 		public function render_verified_email_column( $output, $column_name, $user_id ) {
 			if ( 'wcj_is_verified_email' === $column_name ) {
@@ -252,8 +252,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 * @since   2.8.0
 		 */
 		public function process_email_verification() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_verified_email'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_verified_email'] ) ) {
 				if ( function_exists( 'wc_add_notice' ) ) {
 					$data = json_decode( base64_decode( isset( $_GET['wcj_verified_email'] ) ), true );
 					if ( ! empty( $data['id'] ) && ! empty( $data['code'] ) && get_user_meta( $data['id'], 'wcj_activation_code', true ) === $data['code'] ) {
@@ -268,7 +267,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 					}
 				}
 			} elseif ( isset( $_GET['wcj_verify_email'] ) ) {
-				$data = json_decode( base64_decode( isset( $_GET['wcj_verify_email'] ) ), true );
+				$data = json_decode( base64_decode( sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ) ), true );
 				if ( ! empty( $data['id'] ) && ! empty( $data['code'] ) && get_user_meta( $data['id'], 'wcj_activation_code', true ) === $data['code'] ) {
 					update_user_meta( $data['id'], 'wcj_is_activated', '1' );
 					if ( 'yes' === wcj_get_option( 'wcj_emails_verification_redirect_on_success', 'yes' ) ) {
@@ -277,7 +276,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 					}
 					$custom_url = wcj_get_option( 'wcj_emails_verification_redirect_on_success_custom_url', '' );
 					$url        = ( '' !== ( $custom_url ) ? $custom_url : wc_get_page_permalink( 'myaccount' ) );
-					wp_safe_redirect( add_query_arg( 'wcj_verified_email', isset( $_GET['wcj_verify_email'] ), $url ) );
+					wp_safe_redirect( add_query_arg( 'wcj_verified_email', sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ), $url ) );
 					exit;
 				} elseif ( ! empty( $data['id'] ) ) {
 					$_notice = do_shortcode(

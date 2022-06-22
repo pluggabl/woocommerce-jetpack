@@ -104,7 +104,7 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 			$nonce   = wp_create_nonce();
 			$arg_key = wcj_get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' );
 			if ( isset( $_GET[ $arg_key ] ) && '' !== $_GET[ $arg_key ] && wp_verify_nonce( $nonce ) ) {
-				$coupon_code = sanitize_text_field( isset( $_GET[ $arg_key ] ) );
+				$coupon_code = sanitize_text_field( ( wp_unslash( $_GET[ $arg_key ] ) ) );
 				$this->maybe_add_products_to_cart( $coupon_code );
 				WC()->cart->add_discount( $coupon_code );
 				wp_safe_redirect( $this->get_redirect_url( $arg_key ) );

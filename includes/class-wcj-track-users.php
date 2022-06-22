@@ -106,10 +106,10 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 				$referer  = get_post_meta( $order_id, '_wcj_track_users_http_referer', true );
 				switch ( $column ) {
 					case 'wcj_track_users_referer':
-						echo wp_kses_post( $referer );
+						echo  $referer;
 						break;
 					case 'wcj_track_users_referer_type':
-						echo wp_kses_post( $this->get_referer_type( $referer ) );
+						echo  $this->get_referer_type( $referer );
 						break;
 				}
 			}

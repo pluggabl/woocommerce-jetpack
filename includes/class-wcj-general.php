@@ -107,10 +107,9 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		 * @todo    [dev] (maybe) optionally via cookies
 		 */
 		public function change_user_role_meta() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_booster_user_role'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_booster_user_role'] ) ) {
 				$current_user_id = get_current_user_id();
-				update_user_meta( $current_user_id, '_wcj_booster_user_role', isset( $_GET['wcj_booster_user_role'] ) );
+				update_user_meta( $current_user_id, '_wcj_booster_user_role', sanitize_text_field( wp_unslash( $_GET['wcj_booster_user_role'] ) ) );
 			}
 		}
 
@@ -194,8 +193,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		 * @since   2.5.3
 		 */
 		public function create_custom_roles_tool() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj_add_new_role'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['wcj_add_new_role'] ) ) {
 				if ( empty( $_POST['wcj_custom_role_id'] ) || empty( $_POST['wcj_custom_role_name'] ) || empty( $_POST['wcj_custom_role_caps'] ) ) {
 					echo '<p style="color:red;font-weight:bold;">' . wp_kses_post( 'All fields are required!', 'woocommerce-jetpack' ) . '</p>';
 				} else {
@@ -203,14 +201,14 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 					if ( is_numeric( $role_id ) ) {
 						echo '<p style="color:red;font-weight:bold;">' . wp_kses_post( 'Role ID must not be numbers only!', 'woocommerce-jetpack' ) . '</p>';
 					} else {
-						$caps_role = get_role( isset( $_POST['wcj_custom_role_caps'] ) );
+						$caps_role = get_role( sanitize_text_field( wp_unslash( $_POST['wcj_custom_role_caps'] ) ) );
 						$caps      = ( ! empty( $caps_role->capabilities ) && is_array( $caps_role->capabilities ) ? $caps_role->capabilities : array() );
-						$result    = add_role( $role_id, isset( $_POST['wcj_custom_role_name'] ), $caps );
+						$result    = add_role( $role_id, sanitize_text_field( wp_unslash( $_POST['wcj_custom_role_name'] ) ), $caps );
 						if ( null !== $result ) {
 							$custom_roles             = wcj_get_option( 'wcj_custom_roles', array() ); // `wcj_custom_roles` option added since Booster v4.0.0
 							$custom_roles[ $role_id ] = array(
-								'display_name' => isset( $_POST['wcj_custom_role_name'] ),
-								'caps_role'    => isset( $_POST['wcj_custom_role_caps'] ),
+								'display_name' => sanitize_text_field( wp_unslash( $_POST['wcj_custom_role_name'] ) ),
+								'caps_role'    => sanitize_text_field( wp_unslash( $_POST['wcj_custom_role_caps'] ) ),
 							);
 							update_option( 'wcj_custom_roles', $custom_roles );
 							echo '<p style="color:green;font-weight:bold;">' . wp_kses_post( 'Role successfully added!', 'woocommerce-jetpack' ) . '</p>';
@@ -222,14 +220,14 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 			}
 
 			if ( isset( $_GET['wcj_delete_role'] ) && '' !== $_GET['wcj_delete_role'] ) {
-				remove_role( isset( $_GET['wcj_delete_role'] ) );
+				remove_role( sanitize_text_field( wp_unslash( $_GET['wcj_delete_role'] ) ) );
 				$custom_roles = wcj_get_option( 'wcj_custom_roles', array() );
 				if ( isset( $custom_roles[ $_GET['wcj_delete_role'] ] ) ) {
 					unset( $custom_roles[ $_GET['wcj_delete_role'] ] );
 					update_option( 'wcj_custom_roles', $custom_roles );
 				}
 				/* translators: %s: translation added */
-				echo '<p style="color:green;font-weight:bold;">' . sprintf( wp_kses_post( 'Role %s successfully deleted!', 'woocommerce-jetpack' ), wp_kses_post( sanitize_text_field( isset( $_GET['wcj_delete_role'] ) ) ) ) . '</p>';
+				echo '<p style="color:green;font-weight:bold;">' . sprintf( wp_kses_post( 'Role %s successfully deleted!', 'woocommerce-jetpack' ), wp_kses_post( sanitize_text_field( wp_unslash( $_GET['wcj_delete_role'] ) ) ) ) . '</p>';
 			}
 			echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			echo wp_kses_post( $this->get_tool_header_html( 'custom_roles' ) );
@@ -240,7 +238,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 			$default_wp_wc_roles = array( 'guest', 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'customer', 'shop_manager' );
 			$custom_roles        = wcj_get_option( 'wcj_custom_roles', array() );
 			foreach ( $existing_roles as $role_key => $role_data ) {
-				$delete_html  = ( in_array( $role_key, $default_wp_wc_roles, true ) )
+				$delete_html  = ( in_array( $role_key, $default_wp_wc_roles ) )
 				? ''
 				: '<a href="' . esc_url( add_query_arg( 'wcj_delete_role', $role_key ) ) . '"' . wcj_get_js_confirmation() . '>' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
 				$caps         = ( ! empty( $custom_roles[ $role_key ]['caps_role'] ) ? $custom_roles[ $role_key ]['caps_role'] : $role_key );
@@ -284,12 +282,12 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 					if ( '' !== ( $email ) ) {
 						foreach ( $load_gateways as $key => $gateway ) {
 							if ( is_string( $gateway ) && 'WC_Gateway_Paypal' === $gateway ) {
-								$load_gateway                 = new $gateway();
-								$load_gateway->settings['email'] = $email;
-							    $load_gateway->settings['receiver_email'] =$load_gateway->settings['email'];
-							    $$load_gateway->email  = $load_gateway->settings['receiver_email'];
-							    $load_gateway->receiver_email = $load_gateway->email;
-								$load_gateways[ $key ]        = $load_gateway;
+								$load_gateway                             = new $gateway();
+								$load_gateway->settings['email']          = $email;
+								$load_gateway->settings['receiver_email'] = $load_gateway->settings['email'];
+								$$load_gateway->email                     = $load_gateway->settings['receiver_email'];
+								$load_gateway->receiver_email             = $load_gateway->email;
+								$load_gateways[ $key ]                    = $load_gateway;
 							}
 						}
 						break;

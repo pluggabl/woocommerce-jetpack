@@ -248,8 +248,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		 * @param string $type defines the type.
 		 */
 		public function multiple_shop_order_statuses( $type ) {
-			$nonce                 = wp_create_nonce();
-			$checked_post_statuses = isset( $_GET['wcj_admin_filter_statuses'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['wcj_admin_filter_statuses'] ) : array();
+			$checked_post_statuses = isset( $_GET['wcj_admin_filter_statuses'] ) ? $_GET['wcj_admin_filter_statuses'] : array();
 			$html                  = '';
 			$html                 .= ( 'checkboxes' === $type ) ?
 				'<span id="wcj_admin_filter_shop_order_statuses">' :
@@ -293,11 +292,10 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		 * @param string $query defines the query.
 		 */
 		public function filter_shop_order_multiple_statuses( $query ) {
-			$nonce = wp_nonce_create();
-			if ( false !== strpos( isset( $_SERVER['REQUEST_URI'] ), '/wp-admin/edit.php' && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) {
+			if ( isset( $_SERVER['REQUEST_URI'] ) && ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) {
 				if ( wcj_current_user_can( 'edit_others_pages' ) ) {
-					if ( isset( $_GET['wcj_admin_filter_statuses'] ) && wp_verify_nonce( $nonce ) ) {
-						$post_statuses                    = isset( $_GET['wcj_admin_filter_statuses'] );
+					if ( isset( $_GET['wcj_admin_filter_statuses'] ) ) {
+						$post_statuses                    = $_GET['wcj_admin_filter_statuses'];
 						$query->query['post_status']      = $post_statuses;
 						$query->query_vars['post_status'] = $post_statuses;
 					}

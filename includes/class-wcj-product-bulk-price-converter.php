@@ -85,11 +85,11 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 			}
 			if ( '' !== $the_price || '' !== $the_modified_price ) {
 				echo '<tr>' .
-					'<td>' . wp_kses_post( get_the_title( $product_id ) ) . '</td>' .
-					'<td>' . implode( ', ', wp_kses_post( $product_cats ) ) . '</td>' .
+					'<td>' .  get_the_title( $product_id )  . '</td>' .
+					'<td>' . implode( ', ',  $product_cats  ) . '</td>' .
 					'<td><em>' . wp_kses_post( $price_type ) . '</em></td>' .
-					'<td>' . wp_kses_post( $the_price ) . '</td>' .
-					'<td>' . wp_kses_post( $the_modified_price ) . '</td>' .
+					'<td>' .  $the_price  . '</td>' .
+					'<td>' . $the_modified_price . '</td>' .
 				'</tr>';
 			}
 		}

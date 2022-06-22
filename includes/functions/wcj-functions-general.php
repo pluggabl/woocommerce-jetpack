@@ -441,8 +441,7 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	 * @param   array $args defines the args.
 	 */
 	function wcj_maybe_add_date_query( $args ) {
-		$nonce = wp_create_nonce();
-		if ( ( isset( $_GET['start_date'] ) && '' !== isset( $_GET['start_date'] ) ) || ( isset( $_GET['end_date'] ) && '' !== isset( $_GET['end_date'] ) && wp_verify_nonce( $nonce ) ) ) {
+		if ( ( isset( $_GET['start_date'] ) && '' !== isset( $_GET['start_date'] ) ) || ( isset( $_GET['end_date'] ) && '' !== isset( $_GET['end_date'] ) ) ) {
 			$date_query              = array();
 			$date_query['inclusive'] = true;
 			if ( isset( $_GET['start_date'] ) && '' !== isset( $_GET['start_date'] ) ) {
@@ -796,8 +795,7 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	 * @return boolean
 	 */
 	function wcj_is_frontend() {
-		$nonce = wp_create_nonce();
-		if ( ! is_admin() && wp_verify_nonce( $nonce ) ) {
+		if ( ! is_admin() ) {
 			return true;
 		} elseif ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array(
@@ -1028,4 +1026,103 @@ if ( ! function_exists( 'wcj_add_wpml_terms_filters' ) ) {
 		add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
 		add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );
 	}
+}
+
+if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
+	/**
+	 * Wcj_add_allowed_html.
+	 *
+	 * @version 1.0.0
+	 * @since   5.6.0
+	 * @param array  $allowed_html to get default allowed html.
+	 * @param string $context to get default context.
+	 */
+	function wcj_add_allowed_html( $allowed_html, $context ) {
+		$allowed_extra_html = array(
+			'input' => array(
+				'type' => true,
+				'name' => true,
+				'value' => true,
+				'id' => true,
+				'checked' => true,
+				'class' => true,
+				'style' => true,
+				'placeholder' => true,
+				'dateformat' => true,
+				'mindate' => true,
+				'maxdate' => true,
+				'firstday' => true,
+				'display' => true,
+				'required' => true,
+				'min' => true,
+				'max' => true,
+			),
+			'textarea' => array(
+				'name' => true,
+				'value' => true,
+				'id' => true,
+				'class' => true,
+				'style' => true,
+				'placeholder' => true,
+				'required' => true,
+			),
+			'select' => array(
+				'multiple' => true,
+				'name' => true,
+				'class' => true,
+				'id' => true,
+				'style' => true,
+				'size' => true
+			),
+			'option' => array(
+				'value' => true,
+				'style' => true,
+				'selected' => true,
+				'class' => true,
+			),
+			'span' => array(
+				'id' => true,
+				'style' => true,
+				'class' => true,
+			),
+			'td' => array(
+				'style' => true,
+				'class' => true,
+			),
+			'tr' => array(
+				'id' => true,
+				'style' => true,
+				'class' => true,
+			),
+			'th' => array(
+				'scope' => true,
+				'style' => true,
+				'class' => true,
+			),
+			'label' => array(
+				'style' => true,
+				'class' => true,
+			),
+			'p' => array(
+				'class' => true,
+				'style' => true,
+			),
+			'button' => array(
+				'style' => true,
+				'class' => true,
+			),
+			'style' => array(
+				'type' => true
+			),
+			'a' => array(
+				'onclick' => true,
+				'onblur' => true,
+				'onfocus' => true,
+				'onchange' => true,
+			)
+		);
+		$allowed_merged_html = array_merge_recursive( $allowed_html, $allowed_extra_html );
+		return $allowed_merged_html;
+	}
+	add_filter( 'wp_kses_allowed_html', 'wcj_add_allowed_html', 10, 2 );
 }

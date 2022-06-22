@@ -137,7 +137,7 @@ if ( ! class_exists( 'WCJ_EU_Countries_VAT_Rates_Tool' ) ) :
 				)
 			);
 			$the_tool_html .= '</div>';
-			echo esc_html( $the_tool_html );
+			echo  $the_tool_html ;
 		}
 	}
 

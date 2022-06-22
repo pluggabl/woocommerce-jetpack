@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- */
+  */
 
 namespace setasign\Fpdi;
 
@@ -17,7 +17,7 @@ namespace setasign\Fpdi;
  * @package setasign\Fpdi
  * @deprecated Class was moved to \setasign\Fpdi\Tcpdf\Fpdi
  */
-class TcpdfFpdi extends \setasign\Fpdi\Tcpdf\Fpdi {
-
-	// this class is moved to \setasign\Fpdi\Tcpdf\Fpdi.
+class TcpdfFpdi extends \setasign\Fpdi\Tcpdf\Fpdi
+{
+    // this class is moved to \setasign\Fpdi\Tcpdf\Fpdi
 }

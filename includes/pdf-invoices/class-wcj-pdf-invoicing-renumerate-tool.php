@@ -150,7 +150,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 				<?php
 				if ( '' !== $renumerate_result ) {
 					echo '<h3>' . wp_kses_post( 'Results', 'woocommerce-jetpack' ) . '</h3>';
-					echo '<p>' . wp_kses_post( $renumerate_result ) . '</p>';
+					echo '<p>' . $renumerate_result . '</p>';
 				}
 				?>
 		</div>

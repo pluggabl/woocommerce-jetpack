@@ -174,13 +174,11 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @param string $title defines the title.
 		 */
 		public function set_custom_page_title( $title ) {
-			$nonce = wp_create_nonce();
 			if (
 				! isset( $_GET['section'] ) ||
 				is_admin() ||
 				! in_the_loop() ||
 				! is_account_page()
-				&& wp_verify_nonce( $nonce )
 			) {
 				return $title;
 			}
@@ -290,9 +288,8 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @param string | array $value defines the value.
 		 */
 		public function customize_dashboard( $value ) {
-			$nonce = wp_create_nonce();
 			// Custom pages.
-			if ( 'yes' === wcj_get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) && wp_verify_nonce( $nonce ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
 				if ( isset( $_GET['section'] ) || 'woocommerce_account_page_endpoint' !== current_filter() ) {
 					if ( ! isset( $this->custom_pages ) ) {
 						$this->get_custom_pages();
@@ -301,7 +298,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					if ( false !== $endpoint ) {
 						$endpoint_tab = wp_list_filter( $this->custom_pages, array( 'endpoint' => $endpoint ) );
 					}
-					$page_id = isset( $_GET['section'] ) ? isset( $_GET['section'] ) : ( false !== $endpoint ? array_keys( wp_list_pluck( $endpoint_tab, 'endpoint' ) )[0] : '' );
+					$page_id = sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) ? sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) : ( false !== $endpoint ? array_keys( wp_list_pluck( $endpoint_tab, 'endpoint' ) )[0] : '' );
 					if ( isset( $this->custom_pages[ $page_id ] ) ) {
 						echo do_shortcode( $this->custom_pages[ $page_id ]['content'] );
 						return;
@@ -420,7 +417,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				$menu_order = array_filter(
 					$menu_order,
 					function ( $item ) use ( $items ) {
-						return in_array( $item, array_keys( $items ), true );
+						return in_array( $item, array_keys( $items ) );
 					}
 				);
 				$items      = array_merge( array_flip( $menu_order ), $items );
@@ -439,8 +436,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 */
 		public function add_registration_extra_fields() {
 			$user_roles_options_html = '';
-			$nonce                   = wp_create_nonce();
-			$current_user_role_input = ( ! empty( $_POST['wcj_user_role'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_POST['wcj_user_role'] ) :
+			$current_user_role_input = ( ! empty( $_POST['wcj_user_role'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_user_role'] ) ) :
 				get_option( 'wcj_my_account_registration_extra_fields_user_role_default', 'customer' );
 			$user_roles_options      = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
 			$all_user_roles          = wcj_get_user_roles_options();
@@ -466,14 +462,13 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @param string         $password_generated defines the password_generated.
 		 */
 		public function process_registration_extra_fields( $customer_id, $new_customer_data, $password_generated ) {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj_user_role'] ) && '' !== $_POST['wcj_user_role'] && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['wcj_user_role'] ) && '' !== $_POST['wcj_user_role'] ) {
 				$user_roles_options = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
-				if ( ! empty( $user_roles_options ) && in_array( $_POST['wcj_user_role'], $user_roles_options, true ) ) {
+				if ( ! empty( $user_roles_options ) && in_array( $_POST['wcj_user_role'], $user_roles_options ) ) {
 					wp_update_user(
 						array(
 							'ID'   => $customer_id,
-							'role' => isset( $_POST['wcj_user_role'] ),
+							'role' => sanitize_text_field( wp_unslash($_POST['wcj_user_role'] ) ),
 						)
 					);
 				}

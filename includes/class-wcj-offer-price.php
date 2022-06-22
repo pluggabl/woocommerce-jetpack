@@ -109,8 +109,8 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 					$styling_options[ $option ] = $default;
 				}
 			}
-			echo wp_kses_post(
-				"<style type=\"text/css\">
+			 
+			echo "<style type=\"text/css\">
 			.wcj-offer-price-modal-content {
 				width: {$styling_options['form_content_width']};
 			}
@@ -128,8 +128,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 			.wcj-offer-price-modal-footer h1, .wcj-offer-price-modal-footer h2, .wcj-offer-price-modal-footer h3, .wcj-offer-price-modal-footer h4, .wcj-offer-price-modal-footer h5, .wcj-offer-price-modal-footer h6 {
 				color: {$styling_options['form_footer_text_color']};
 			}
-		</style>"
-			);
+		</style>" ;
 		}
 
 		/**

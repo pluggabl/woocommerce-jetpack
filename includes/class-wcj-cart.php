@@ -80,7 +80,9 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 		public function add_cart_custom_info() {
 			$current_filter          = current_filter();
 			$current_filter_priority = wcj_current_filter_priority();
-			$total_number            = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cart_custom_info_total_number', 1 ) );
+			settype( $current_filter_priority, 'string' );
+
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cart_custom_info_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if (
 				'' !== wcj_get_option( 'wcj_cart_custom_info_content_' . $i ) &&

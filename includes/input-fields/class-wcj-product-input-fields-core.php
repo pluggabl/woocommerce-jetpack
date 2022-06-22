@@ -803,7 +803,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			ksort( $fields );
 			if ( ! empty( $fields ) ) {
-				echo wp_kses_post( wcj_get_option( 'wcj_product_input_fields_start_template', '' ) ) . implode( wp_kses_post( $fields ) ) . wp_kses_post( wcj_get_option( 'wcj_product_input_fields_end_template', '' ) );
+				echo  wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . implode( wp_kses_post( $fields ) ) .  wcj_get_option( 'wcj_product_input_fields_end_template', '' );
 				$this->are_product_input_fields_displayed = true;
 			}
 		}

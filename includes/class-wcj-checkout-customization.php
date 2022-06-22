@@ -193,11 +193,11 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 			}
 
 			// Get country from a manual order ID created by YITH Request a Quote plugin.
-			$order_billing_country = get_post_meta( $yith_order_id, '_billing_country', true );
 			if ( 'yes' === wcj_get_option( 'wcj_checkout_restrict_countries_based_on_yith_raq', 'no' ) && class_exists( 'YITH_Request_Quote' ) ) {
 				$yith_order_id = WC()->session->get( 'order_awaiting_payment' );
 				if ( ! empty( $yith_order_id ) ) {
-					$user_country = ! empty( $order_billing_country ) ? $order_billing_country : wcj_get_country_by_ip();
+					$order_billing_country = get_post_meta( $yith_order_id, '_billing_country', true );
+					$user_country          = ! empty( $order_billing_country ) ? $order_billing_country : wcj_get_country_by_ip();
 				}
 			}
 			return array( $user_country => wcj_get_country_name_by_code( $user_country ) );
@@ -255,7 +255,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 				$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 				$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
 				if ( ! empty( $fields_to_disable ) ) {
-					if ( in_array( $key, $fields_to_disable, true ) ) {
+					if ( in_array( $key, $fields_to_disable ) ) {
 						$desc = wcj_get_option(
 							'wcj_checkout_customization_disable_fields_for_logged_message',
 							'<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>'

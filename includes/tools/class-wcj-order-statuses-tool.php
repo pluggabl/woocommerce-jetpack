@@ -345,7 +345,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$html .= $this->get_delete_all_custom_statuses_button();
 			$html .= '</div>';
 			$html .= '</div>';
-			echo esc_html( $html );
+			echo wp_kses_post( $html );
 		}
 	}
 

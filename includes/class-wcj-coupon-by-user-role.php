@@ -59,7 +59,7 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 		 */
 		public function coupons_enabled( $is_enabled ) {
 			$disabled_user_roles = wcj_get_option( 'wcj_coupon_by_user_role_disabled', '' );
-			if ( ! empty( $disabled_user_roles ) && in_array( wcj_get_current_user_first_role(), $disabled_user_roles, true ) ) {
+			if ( ! empty( $disabled_user_roles ) && in_array( wcj_get_current_user_first_role(), $disabled_user_roles ) ) {
 				return false;
 			}
 			return $is_enabled;

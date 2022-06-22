@@ -1,61 +1,55 @@
 #!/usr/bin/env php
 <?php
-/**
- * ============================================================+
- * File name   : tcpdf_addfont.php
- * Version     : 1.0.002
- * Begin       : 2013-05-13
- * Last Update : 2013-08-05
- * Authors     : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
- * Remi Collet
- * License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
- * -------------------------------------------------------------------
- * Copyright (C) 2011-2013 Nicola Asuni - Tecnick.com LTD
- *
- * This file is part of TCPDF software library.
- *
- * TCPDF is free software: you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * TCPDF is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the License
- * along with TCPDF. If not, see
- * <http://www.tecnick.com/pagefiles/tcpdf/LICENSE.TXT>.
- *
- * See LICENSE.TXT file for more information.
- * -------------------------------------------------------------------
- *
- * Description : This is a command line script to generate TCPDF fonts.
- *
- * ============================================================+
- *
- * @package Booster_For_WooCommerce/lib
- */
+//============================================================+
+// File name   : tcpdf_addfont.php
+// Version     : 1.0.002
+// Begin       : 2013-05-13
+// Last Update : 2013-08-05
+// Authors     : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
+//               Remi Collet
+// License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
+// -------------------------------------------------------------------
+// Copyright (C) 2011-2013 Nicola Asuni - Tecnick.com LTD
+//
+// This file is part of TCPDF software library.
+//
+// TCPDF is free software: you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+//
+// TCPDF is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the License
+// along with TCPDF. If not, see
+// <http://www.tecnick.com/pagefiles/tcpdf/LICENSE.TXT>.
+//
+// See LICENSE.TXT file for more information.
+// -------------------------------------------------------------------
+//
+// Description : This is a command line script to generate TCPDF fonts.
+//
+//============================================================+
 
 /**
- * This is a command line script to generate TCPDF fonts.
- *
  * @file
  * This is a command line script to generate TCPDF fonts.<br>
  * @package com.tecnick.tcpdf
  * @version 1.0.000
  */
 
-if ( php_sapi_name() !== 'cli' ) {
-	echo 'You need to run this command from console.';
-	exit( 1 );
+if (php_sapi_name() != 'cli') {
+  echo 'You need to run this command from console.';
+  exit(1);
 }
 
-$tcpdf_include_dirs = array( realpath( dirname( __FILE__ ) . '/../tcpdf.php' ), '/usr/share/php/tcpdf/tcpdf.php', '/usr/share/tcpdf/tcpdf.php', '/usr/share/php-tcpdf/tcpdf.php', '/var/www/tcpdf/tcpdf.php', '/var/www/html/tcpdf/tcpdf.php', '/usr/local/apache2/htdocs/tcpdf/tcpdf.php' );
-foreach ( $tcpdf_include_dirs as $tcpdf_include_path ) {
-	if ( @file_exists( $tcpdf_include_path ) ) {
-		require_once $tcpdf_include_path;
+$tcpdf_include_dirs = array(realpath(dirname(__FILE__).'/../tcpdf.php'), '/usr/share/php/tcpdf/tcpdf.php', '/usr/share/tcpdf/tcpdf.php', '/usr/share/php-tcpdf/tcpdf.php', '/var/www/tcpdf/tcpdf.php', '/var/www/html/tcpdf/tcpdf.php', '/usr/local/apache2/htdocs/tcpdf/tcpdf.php');
+foreach ($tcpdf_include_dirs as $tcpdf_include_path) {
+	if (@file_exists($tcpdf_include_path)) {
+		require_once($tcpdf_include_path);
 		break;
 	}
 }
@@ -63,7 +57,7 @@ foreach ( $tcpdf_include_dirs as $tcpdf_include_path ) {
 /**
  * Display help guide for this command.
  */
-function show_help() {
+function showHelp() {
 	$help = <<<EOD
 tcpdf_addfont - command line tool to convert fonts for the TCPDF library.
 
@@ -127,32 +121,23 @@ Options:
 	-h
 	--help      Display this help and exit.
 EOD;
-	echo wp_kses_post( $help ) . "\n\n";
-	exit( 0 );
+	echo $help."\n\n";
+	exit(0);
 }
 
-// remove the name of the executing script.
-array_shift( $argv );
+// remove the name of the executing script
+array_shift($argv);
 
-// no options chosen.
-if ( ! is_array( $argv ) ) {
-	show_help();
+// no options chosen
+if (!is_array($argv)) {
+  showHelp();
 }
 
-// initialize the array of options.
-$options = array(
-	'type'     => '',
-	'enc'      => '',
-	'flags'    => 32,
-	'outpath'  => K_PATH_FONTS,
-	'platid'   => 3,
-	'encid'    => 1,
-	'addcbbox' => false,
-	'link'     => false,
-);
+// initialize the array of options
+$options = array('type'=>'', 'enc'=>'', 'flags'=>32, 'outpath'=>K_PATH_FONTS, 'platid'=>3, 'encid'=>1, 'addcbbox'=>false, 'link'=>false);
 
-// short input options.
-$sopt  = '';
+// short input options
+$sopt = '';
 $sopt .= 't:';
 $sopt .= 'e:';
 $sopt .= 'f:';
@@ -164,8 +149,8 @@ $sopt .= 'l';
 $sopt .= 'i:';
 $sopt .= 'h';
 
-// long input options.
-$lopt   = array();
+// long input options
+$lopt = array();
 $lopt[] = 'type:';
 $lopt[] = 'enc:';
 $lopt[] = 'flags:';
@@ -177,98 +162,108 @@ $lopt[] = 'link';
 $lopt[] = 'fonts:';
 $lopt[] = 'help';
 
-// parse input options.
-$inopt = getopt( $sopt, $lopt );
+// parse input options
+$inopt = getopt($sopt, $lopt);
 
-// import options (with some sanitization).
-foreach ( $inopt as $opt => $val ) {
-	switch ( $opt ) {
+// import options (with some sanitization)
+foreach ($inopt as $opt => $val) {
+	switch ($opt) {
 		case 't':
-		case 'type':
-			if ( in_array( $val, array( 'TrueTypeUnicode', 'TrueType', 'Type1', 'CID0JP', 'CID0KR', 'CID0CS', 'CID0CT' ), true ) ) {
+		case 'type': {
+			if (in_array($val, array('TrueTypeUnicode', 'TrueType', 'Type1', 'CID0JP', 'CID0KR', 'CID0CS', 'CID0CT'))) {
 				$options['type'] = $val;
 			}
 			break;
+		}
 		case 'e':
-		case 'enc':
+		case 'enc': {
 			$options['enc'] = $val;
 			break;
+		}
 		case 'f':
-		case 'flags':
-			$options['flags'] = intval( $val );
+		case 'flags': {
+			$options['flags'] = intval($val);
 			break;
+		}
 		case 'o':
-		case 'outpath':
-			$options['outpath'] = realpath( $val );
-			if ( substr( $options['outpath'], -1 ) !== '/' ) {
+		case 'outpath': {
+			$options['outpath'] = realpath($val);
+			if (substr($options['outpath'], -1) != '/') {
 				$options['outpath'] .= '/';
 			}
 			break;
+		}
 		case 'p':
-		case 'platid':
-			$options['platid'] = min( max( 1, intval( $val ) ), 3 );
+		case 'platid': {
+			$options['platid'] = min(max(1, intval($val)), 3);
 			break;
+		}
 		case 'n':
-		case 'encid':
-			$options['encid'] = min( max( 0, intval( $val ) ), 10 );
+		case 'encid': {
+			$options['encid'] = min(max(0, intval($val)), 10);
 			break;
+		}
 		case 'b':
-		case 'addcbbox':
+		case 'addcbbox': {
 			$options['addcbbox'] = true;
 			break;
+		}
 		case 'l':
-		case 'link':
+		case 'link': {
 			$options['link'] = true;
 			break;
+		}
 		case 'i':
-		case 'fonts':
-			$options['fonts'] = explode( ',', $val );
+		case 'fonts': {
+			$options['fonts'] = explode(',', $val);
 			break;
+		}
 		case 'h':
 		case 'help':
-		default:
-			show_help();
+		default: {
+			showHelp();
 			break;
-	} // end of switch.
-} // end of while loop.
+		}
+	} // end of switch
+} // end of while loop
 
-if ( empty( $options['fonts'] ) ) {
+if (empty($options['fonts'])) {
 	echo "ERROR: missing input fonts (try --help for usage)\n\n";
-	exit( 2 );
+	exit(2);
 }
 
-// check the output path.
-if ( ! is_dir( $options['outpath'] ) || ! is_writable( $options['outpath'] ) ) {
-	echo "ERROR: Can't write to " . wp_kses_post( $options['outpath'] ) . "\n\n";
-	exit( 3 );
+// check the output path
+if (!is_dir($options['outpath']) OR !is_writable($options['outpath'])) {
+	echo "ERROR: Can't write to ".$options['outpath']."\n\n";
+	exit(3);
 }
 
 echo "\n>>> Converting fonts for TCPDF:\n";
 
-echo '*** Output dir set to ' . wp_kses_post( $options['outpath'] ) . "\n";
+echo '*** Output dir set to '.$options['outpath']."\n";
 
-// check if there are conversion errors.
-$error_s = false;
+// check if there are conversion errors
+$errors = false;
 
-foreach ( $options['fonts'] as $font ) {
-	$fontfile = realpath( $font );
-	$fontname = TCPDF_FONTS::addTTFfont( $fontfile, $options['type'], $options['enc'], $options['flags'], $options['outpath'], $options['platid'], $options['encid'], $options['addcbbox'], $options['link'] );
-	if ( false === $fontname ) {
-		$error_s = true;
-		echo "--- ERROR: can't add " . wp_kses_post( $font ) . "\n";
+foreach ($options['fonts'] as $font) {
+	$fontfile = realpath($font);
+	$fontname = TCPDF_FONTS::addTTFfont($fontfile, $options['type'], $options['enc'], $options['flags'], $options['outpath'], $options['platid'], $options['encid'], $options['addcbbox'], $options['link']);
+	if ($fontname === false) {
+		$errors = true;
+		echo "--- ERROR: can't add ".$font."\n";
 	} else {
-		echo '+++ OK   : ' . wp_kses_post( $fontfile ) . ' added as ' . wp_kses_post( $fontname ) . "\n";
+		echo "+++ OK   : ".$fontfile.' added as '.$fontname."\n";
 	}
 }
 
-if ( $error_s ) {
+if ($errors) {
 	echo "--- Process completed with ERRORS!\n\n";
-	exit( 4 );
+	exit(4);
 }
 
 echo ">>> Process successfully completed!\n\n";
-exit( 0 );
+exit(0);
 
-// ============================================================+
-// END OF FILE.
-// ============================================================+
+//============================================================+
+// END OF FILE
+//============================================================+

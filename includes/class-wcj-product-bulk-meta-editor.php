@@ -67,7 +67,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$nonce             = wp_create_nonce();
 			$selected_products = ( isset( $_POST['wcj_product_bulk_meta_editor_products'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_POST['wcj_product_bulk_meta_editor_products'] ) : array();
 			// Output.
-			echo wp_kses_post( $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] ) );
+			echo  $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] );
 		}
 
 		/**

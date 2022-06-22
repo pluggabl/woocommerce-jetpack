@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\Type;
 
@@ -23,249 +23,254 @@ use setasign\FpdiPdfParser\PdfParser\Filter\Predictor;
  *
  * @package setasign\Fpdi\PdfParser\Type
  */
-class PdfStream extends PdfType {
+class PdfStream extends PdfType
+{
+    /**
+     * Parses a stream from a stream reader.
+     *
+     * @param PdfDictionary $dictionary
+     * @param StreamReader $reader
+     * @return self
+     * @throws PdfTypeException
+     */
+    public static function parse(PdfDictionary $dictionary, StreamReader $reader)
+    {
+        $v = new self;
+        $v->value = $dictionary;
+        $v->reader = $reader;
 
-	/**
-	 * Parses a stream from a stream reader.
-	 *
-	 * @param PdfDictionary $dictionary Get dictionary.
-	 * @param StreamReader  $reader Get StreamReader.
-	 * @return self
-	 * @throws PdfTypeException
-	 */
-	public static function parse( PdfDictionary $dictionary, StreamReader $reader ) {
-		$v         = new self();
-		$v->value  = $dictionary;
-		$v->reader = $reader;
+        $offset = $reader->getOffset();
 
-		$offset = $reader->getOffset();
+        // Find the first "newline"
+        while (($firstByte = $reader->getByte($offset)) !== false) {
+            if ($firstByte !== "\n" && $firstByte !== "\r") {
+                $offset++;
+            } else {
+                break;
+            }
+        }
 
-		// Find the first newline.
-		$firstByte = $reader->getByte( $offset );
-		while ( false !== ( $firstByte ) ) {
-			if ( "\n" !== $firstByte && "\r" !== $firstByte ) {
-				$offset++;
-			} else {
-				break;
-			}
-		}
+        if (false === $firstByte) {
+            throw new PdfTypeException(
+                'Unable to parse stream data. No newline after the stream keyword found.',
+                PdfTypeException::NO_NEWLINE_AFTER_STREAM_KEYWORD
+            );
+        }
 
-		if ( false === $firstByte ) {
-			throw new PdfTypeException(
-				'Unable to parse stream data. No newline after the stream keyword found.',
-				PdfTypeException::NO_NEWLINE_AFTER_STREAM_KEYWORD
-			);
-		}
+        $sndByte = $reader->getByte($offset + 1);
+        if ($firstByte === "\n" || $firstByte === "\r") {
+            $offset++;
+        }
 
-		$sndByte = $reader->getByte( $offset + 1 );
-		if ( "\n" === $firstByte || "\r" === $firstByte ) {
-			$offset++;
-		}
+        if ($sndByte === "\n" && $firstByte !== "\n") {
+            $offset++;
+        }
 
-		if ( "\n" === $sndByte && "\n" !== $firstByte ) {
-			$offset++;
-		}
+        $reader->setOffset($offset);
+        // let's only save the byte-offset and read the stream only when needed
+        $v->stream = $reader->getPosition() + $reader->getOffset();
 
-		$reader->setOffset( $offset );
-		// let's only save the byte-offset and read the stream only when needed.
-		$v->stream = $reader->getPosition() + $reader->getOffset();
+        return $v;
+    }
 
-		return $v;
-	}
+    /**
+     * Helper method to create an instance.
+     *
+     * @param PdfDictionary $dictionary
+     * @param string $stream
+     * @return self
+     */
+    public static function create(PdfDictionary $dictionary, $stream)
+    {
+        $v = new self;
+        $v->value = $dictionary;
+        $v->stream = (string) $stream;
 
-	/**
-	 * Helper method to create an instance.
-	 *
-	 * @param PdfDictionary $dictionary Get dictionary.
-	 * @param string        $stream Get stream.
-	 * @return self
-	 */
-	public static function create( PdfDictionary $dictionary, $stream ) {
-		$v         = new self();
-		$v->value  = $dictionary;
-		$v->stream = (string) $stream;
+        return $v;
+    }
 
-		return $v;
-	}
+    /**
+     * Ensures that the passed value is a PdfStream instance.
+     *
+     * @param mixed $stream
+     * @return self
+     * @throws PdfTypeException
+     */
+    public static function ensure($stream)
+    {
+        return PdfType::ensureType(self::class, $stream, 'Stream value expected.');
+    }
 
-	/**
-	 * Ensures that the passed value is a PdfStream instance.
-	 *
-	 * @param mixed $stream Get stream.
-	 * @return self
-	 * @throws PdfTypeException
-	 */
-	public static function ensure( $stream ) {
-		return PdfType::ensureType( self::class, $stream, 'Stream value expected.' );
-	}
+    /**
+     * The stream or its byte-offset position.
+     *
+     * @var int|string
+     */
+    protected $stream;
 
-	/**
-	 * The stream or its byte-offset position.
-	 *
-	 * @var int|string
-	 */
-	protected $stream;
+    /**
+     * The stream reader instance.
+     *
+     * @var StreamReader
+     */
+    protected $reader;
 
-	/**
-	 * The stream reader instance.
-	 *
-	 * @var StreamReader
-	 */
-	protected $reader;
+    /**
+     * Get the stream data.
+     *
+     * @param bool $cache Whether cache the stream data or not.
+     * @return bool|string
+     * @throws PdfTypeException
+     */
+    public function getStream($cache = false)
+    {
+        if (\is_int($this->stream)) {
+            $length = PdfDictionary::get($this->value, 'Length');
+            $this->reader->reset($this->stream, $length->value);
+            if (!($length instanceof PdfNumeric) || $length->value === 0) {
+                while (true) {
+                    $buffer = $this->reader->getBuffer(false);
+                    $length = \strpos($buffer, 'endstream');
+                    if ($length === false) {
+                        if (!$this->reader->increaseLength(100000)) {
+                            return false;
+                        }
+                        continue;
+                    }
+                    break;
+                }
 
-	/**
-	 * Get the stream data.
-	 *
-	 * @param bool $cache Whether cache the stream data or not.
-	 * @return bool|string
-	 * @throws PdfTypeException
-	 */
-	public function getStream( $cache = false ) {
-		if ( \is_int( $this->stream ) ) {
-			$length = PdfDictionary::get( $this->value, 'Length' );
-			$this->reader->reset( $this->stream, $length->value );
-			if ( ! ( $length instanceof PdfNumeric ) || 0 === $length->value ) {
-				while ( true ) {
-					$buffer = $this->reader->getBuffer( false );
-					$length = \strpos( $buffer, 'endstream' );
-					if ( false === $length ) {
-						if ( ! $this->reader->increaseLength( 100000 ) ) {
-							return false;
-						}
-						continue;
-					}
-					break;
-				}
+                $buffer = \substr($buffer, 0, $length);
+                $lastByte = \substr($buffer, -1);
 
-				$buffer   = \substr( $buffer, 0, $length );
-				$lastByte = \substr( $buffer, -1 );
+                // Check for EOL
+                if ($lastByte === "\n") {
+                    $buffer = \substr($buffer, 0, -1);
+                }
 
-				// Check for EOL.
-				if ( "\n" === $lastByte ) {
-					$buffer = \substr( $buffer, 0, -1 );
-				}
+                $lastByte = \substr($buffer, -1);
+                if ($lastByte === "\r") {
+                    $buffer = \substr($buffer, 0, -1);
+                }
 
-				$lastByte = \substr( $buffer, -1 );
-				if ( "\r" === $lastByte ) {
-					$buffer = \substr( $buffer, 0, -1 );
-				}
-			} else {
-				$buffer = $this->reader->getBuffer( false );
-			}
-			if ( false === $cache ) {
-				return $buffer;
-			}
+            } else {
+                $buffer = $this->reader->getBuffer(false);
+            }
+            if ($cache === false) {
+                return $buffer;
+            }
 
-			$this->stream = $buffer;
-			$this->reader = null;
-		}
+            $this->stream = $buffer;
+            $this->reader = null;
+        }
 
-		return $this->stream;
-	}
+        return $this->stream;
+    }
 
-	/**
-	 * Get the unfiltered stream data.
-	 *
-	 * @return string
-	 * @throws FilterException
-	 * @throws PdfParserException
-	 */
-	public function getUnfilteredStream() {
-		$stream  = $this->getStream();
-		$filters = PdfDictionary::get( $this->value, 'Filter' );
-		if ( $filters instanceof PdfNull ) {
-			return $stream;
-		}
+    /**
+     * Get the unfiltered stream data.
+     *
+     * @return string
+     * @throws FilterException
+     * @throws PdfParserException
+     */
+    public function getUnfilteredStream()
+    {
+        $stream = $this->getStream();
+        $filters = PdfDictionary::get($this->value, 'Filter');
+        if ($filters instanceof PdfNull) {
+            return $stream;
+        }
 
-		if ( $filters instanceof PdfArray ) {
-			$filters = $filters->value;
-		} else {
-			$filters = array( $filters );
-		}
+        if ($filters instanceof PdfArray) {
+            $filters = $filters->value;
+        } else {
+            $filters = [$filters];
+        }
 
-		$decodeParams = PdfDictionary::get( $this->value, 'DecodeParms' );
-		if ( $decodeParams instanceof PdfArray ) {
-			$decodeParams = $decodeParams->value;
-		} else {
-			$decodeParams = array( $decodeParams );
-		}
+        $decodeParams = PdfDictionary::get($this->value, 'DecodeParms');
+        if ($decodeParams instanceof PdfArray) {
+            $decodeParams = $decodeParams->value;
+        } else {
+            $decodeParams = [$decodeParams];
+        }
 
-		foreach ( $filters as $key => $filter ) {
-			if ( ! ( $filter instanceof PdfName ) ) {
-				continue;
-			}
+        foreach ($filters as $key => $filter) {
+            if (!($filter instanceof PdfName)) {
+                continue;
+            }
 
-			$decodeParam = null;
-			if ( isset( $decodeParams[ $key ] ) ) {
-				$decodeParam = ( $decodeParams[ $key ] instanceof PdfDictionary ? $decodeParams[ $key ] : null );
-			}
+            $decodeParam = null;
+            if (isset($decodeParams[$key])) {
+                $decodeParam = ($decodeParams[$key] instanceof PdfDictionary ? $decodeParams[$key] : null);
+            }
 
-			switch ( $filter->value ) {
-				case 'FlateDecode':
-				case 'Fl':
-				case 'LZWDecode':
-				case 'LZW':
-					if ( \strpos( $filter->value, 'LZW' ) === 0 ) {
-						$filterObject = new Lzw();
-					} else {
-						$filterObject = new Flate();
-					}
+            switch ($filter->value) {
+                case 'FlateDecode':
+                case 'Fl':
+                case 'LZWDecode':
+                case 'LZW':
+                    if (\strpos($filter->value, 'LZW') === 0) {
+                        $filterObject = new Lzw();
+                    } else {
+                        $filterObject = new Flate();
+                    }
 
-					$stream = $filterObject->decode( $stream );
+                    $stream = $filterObject->decode($stream);
 
-					if ( $decodeParam instanceof PdfDictionary ) {
-						$predictor = PdfDictionary::get( $decodeParam, 'Predictor', PdfNumeric::create( 1 ) );
-						if ( 1 !== $predictor->value ) {
-							if ( ! \class_exists( Predictor::class ) ) {
-								throw new PdfParserException(
-									'This PDF document makes use of features which are only implemented in the ' .
-									'commercial "FPDI PDF-Parser" add-on (see https://www.setasign.com/fpdi-pdf-' .
-									'parser).',
-									PdfParserException::IMPLEMENTED_IN_FPDI_PDF_PARSER
-								);
-							}
+                    if ($decodeParam instanceof PdfDictionary) {
+                        $predictor = PdfDictionary::get($decodeParam, 'Predictor', PdfNumeric::create(1));
+                        if ($predictor->value !== 1) {
+                            if (!\class_exists(Predictor::class)) {
+                                throw new PdfParserException(
+                                    'This PDF document makes use of features which are only implemented in the ' .
+                                    'commercial "FPDI PDF-Parser" add-on (see https://www.setasign.com/fpdi-pdf-' .
+                                    'parser).',
+                                    PdfParserException::IMPLEMENTED_IN_FPDI_PDF_PARSER
+                                );
+                            }
 
-							$colors           = PdfDictionary::get( $decodeParam, 'Colors', PdfNumeric::create( 1 ) );
-							$bitsPerComponent = PdfDictionary::get(
-								$decodeParam,
-								'BitsPerComponent',
-								PdfNumeric::create( 8 )
-							);
+                            $colors = PdfDictionary::get($decodeParam, 'Colors', PdfNumeric::create(1));
+                            $bitsPerComponent = PdfDictionary::get(
+                                $decodeParam,
+                                'BitsPerComponent',
+                                PdfNumeric::create(8)
+                            );
 
-							$columns = PdfDictionary::get( $decodeParam, 'Columns', PdfNumeric::create( 1 ) );
+                            $columns = PdfDictionary::get($decodeParam, 'Columns', PdfNumeric::create(1));
 
-							$filterObject = new Predictor(
-								$predictor->value,
-								$colors->value,
-								$bitsPerComponent->value,
-								$columns->value
-							);
+                            $filterObject = new Predictor(
+                                $predictor->value,
+                                $colors->value,
+                                $bitsPerComponent->value,
+                                $columns->value
+                            );
 
-							$stream = $filterObject->decode( $stream );
-						}
-					}
+                            $stream = $filterObject->decode($stream);
+                        }
+                    }
 
-					break;
-				case 'ASCII85Decode':
-				case 'A85':
-					$filterObject = new Ascii85();
-					$stream       = $filterObject->decode( $stream );
-					break;
+                    break;
+                case 'ASCII85Decode':
+                case 'A85':
+                    $filterObject = new Ascii85();
+                    $stream = $filterObject->decode($stream);
+                    break;
 
-				case 'ASCIIHexDecode':
-				case 'AHx':
-					$filterObject = new AsciiHex();
-					$stream       = $filterObject->decode( $stream );
-					break;
+                case 'ASCIIHexDecode':
+                case 'AHx':
+                    $filterObject = new AsciiHex();
+                    $stream = $filterObject->decode($stream);
+                    break;
 
-				default:
-					throw new FilterException(
-						\sprintf( 'Unsupported filter "%s".', $filter->value ),
-						FilterException::UNSUPPORTED_FILTER
-					);
-			}
-		}
+                default:
+                    throw new FilterException(
+                        \sprintf('Unsupported filter "%s".', $filter->value),
+                        FilterException::UNSUPPORTED_FILTER
+                    );
+            }
+        }
 
-		return $stream;
-	}
+        return $stream;
+    }
 }

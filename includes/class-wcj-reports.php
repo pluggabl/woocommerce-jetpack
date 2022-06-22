@@ -185,7 +185,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_sales() {
 			$report = new WCJ_Reports_Sales();
-			echo wp_kses_post( $report->get_report() );
+			echo $report->get_report();
 		}
 
 		/**
@@ -196,7 +196,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_products_sales_daily() {
 			$report = new WCJ_Reports_Product_Sales_Daily();
-			echo wp_kses_post( $report->get_report() );
+			echo $report->get_report();
 		}
 
 		/**
@@ -207,7 +207,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_monthly_sales() {
 			$report = new WCJ_Reports_Monthly_Sales();
-			echo wp_kses_post( $report->get_report() );
+			echo $report->get_report();
 		}
 
 		/**
@@ -218,7 +218,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_orders_gateways() {
 			$report = new WCJ_Reports_Product_Sales_Gateways();
-			echo wp_kses_post( $report->get_report() );
+			echo $report->get_report();
 		}
 
 		/**
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 					'range_days' => $this->range_days,
 				)
 			);
-			echo wp_kses_post( $report->get_report_html() );
+			echo $report->get_report_html();
 		}
 
 		/**
@@ -239,7 +239,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_customers() {
 			$report = new WCJ_Reports_Customers( array( 'group_countries' => $this->group_countries ) );
-			echo wp_kses_post( $report->get_report() );
+			echo $report->get_report();
 		}
 
 		/**

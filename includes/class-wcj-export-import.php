@@ -102,15 +102,14 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					$data     = $exporter->export_products( $this->fields_helper );
 					break;
 			}
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj_export_filter_all_columns'] ) && '' !== $_POST['wcj_export_filter_all_columns'] && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['wcj_export_filter_all_columns'] ) && '' !== $_POST['wcj_export_filter_all_columns'] ) {
 				foreach ( $data as $row_id => $row ) {
 					if ( 0 === $row_id ) {
 						continue;
 					}
 					$is_filtered = false;
 					foreach ( $row as $cell ) {
-						if ( false !== strpos( $cell, isset( $_POST['wcj_export_filter_all_columns'] ) ) ) {
+						if ( false !== strpos( $cell, sanitize_text_field( wp_unslash( $_POST['wcj_export_filter_all_columns'] ) ) ) ) {
 							$is_filtered = true;
 							break;
 						}
@@ -132,9 +131,8 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @todo    [dev] `strip_tags`
 		 */
 		public function export_xml() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj_export_xml'] ) && wp_verify_nonce( $nonce ) ) {
-				$data = $this->export( isset( $_POST['wcj_export_xml'] ) );
+			if ( isset( $_POST['wcj_export_xml'] ) ) {
+				$data = $this->export( sanitize_text_field( wp_unslash( $_POST['wcj_export_xml'] ) ) );
 				if ( is_array( $data ) ) {
 					$xml  = '';
 					$xml .= '<?xml version = "1.0" encoding = "utf-8" ?>' . PHP_EOL . '<root>' . PHP_EOL;
@@ -152,7 +150,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 						$xml .= '</item>' . PHP_EOL;
 					}
 					$xml .= '</root>';
-					header( 'Content-Disposition: attachment; filename=' . isset( $_POST['wcj_export_xml'] ) . '.xml' );
+					header( 'Content-Disposition: attachment; filename=' . sanitize_text_field( wp_unslash( $_POST['wcj_export_xml'] ) ) . '.xml' );
 					header( 'Content-Type: Content-Type: text/html; charset=utf-8' );
 					header( 'Content-Description: File Transfer' );
 					header( 'Content-Length: ' . strlen( $xml ) );
@@ -201,9 +199,8 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @since   2.4.8
 		 */
 		public function export_csv() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj_export'] ) && wp_verify_nonce( $nonce ) ) {
-				$data = $this->export( isset( $_POST['wcj_export'] ) );
+			if ( isset( $_POST['wcj_export'] ) ) {
+				$data = $this->export( sanitize_text_field( wp_unslash( $_POST['wcj_export'] ) ) );
 				if ( is_array( $data ) ) {
 					$csv = '';
 					foreach ( $data as $row ) {
@@ -213,7 +210,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					if ( 'yes' === wcj_get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
 						$csv = "\xEF\xBB\xBF" . $csv; // UTF-8 BOM.
 					}
-					header( 'Content-Disposition: attachment; filename=' . isset( $_POST['wcj_export'] ) . '.csv' );
+					header( 'Content-Disposition: attachment; filename=' . sanitize_text_field( wp_unslash( $_POST['wcj_export'] ) ) . '.csv' );
 					header( 'Content-Type: Content-Type: text/html; charset=utf-8' );
 					header( 'Content-Description: File Transfer' );
 					header( 'Content-Length: ' . strlen( $csv ) );
@@ -247,10 +244,9 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					break;
 			}
 			if ( ! empty( $fields ) ) {
-				$data  = array();
-				$nonce = wp_create_nonce();
+				$data = array();
 				foreach ( $fields as $field_id => $field_desc ) {
-					$field_value = ( isset( $_POST[ $field_id ] ) && wp_verify_nonce( $nonce ) ) ? isset( $_POST[ $field_id ] ) : '';
+					$field_value = ( isset( $_POST[ $field_id ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) ) : '';
 					$data[]      = array(
 						'<label for="' . $field_id . '">' . $field_desc . '</label>',
 						'<input name="' . $field_id . '" id="' . $field_id . '" type="text" value="' . $field_value . '">',
@@ -282,8 +278,8 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 */
 		public function export_date_fields( $tool_id ) {
 			$nonce               = wp_create_nonce();
-			$current_start_date  = ( isset( $_GET['start_date'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['start_date'] ) : '' );
-			$current_end_date    = ( isset( $_GET['end_date'] ) ? isset( $_GET['end_date'] ) : '' );
+			$current_start_date  = ( isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '' );
+			$current_end_date    = ( isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '' );
 			$predefined_ranges   = array();
 			$predefined_ranges[] = '<a href="' . esc_url( add_query_arg( 'range', 'all_time', esc_url( remove_query_arg( array( 'start_date', 'end_date' ) ) ) ) ) . '">' .
 			__( 'All time', 'woocommerce-jetpack' ) . '</a>';
@@ -323,7 +319,6 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @param int $tool_id defines the tool_id.
 		 */
 		public function create_export_tool( $tool_id ) {
-			$nonce = wp_create_nonce();
 			echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			echo wp_kses_post( $this->get_tool_header_html( 'export_' . $tool_id ) );
 			echo '<p>' . wp_kses_post( $this->export_date_fields( $tool_id ) ) . '</p>';
@@ -340,11 +335,11 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			echo '<button style="float:right;margin-right:10px;" class="button-primary" type="submit" name="wcj_export_filter" value="' . wp_kses_post( $tool_id ) . '">' .
 			wp_kses_post( 'Filter by All Fields', 'woocommerce-jetpack' ) . '</button>';
 			echo '<input style="float:right;margin-right:10px;" type="text" name="wcj_export_filter_all_columns" value="' .
-			( isset( $_POST['wcj_export_filter_all_columns'] ) && wp_verify_nonce( $nonce ) ? isset( $_POST['wcj_export_filter_all_columns'] ) : '' ) . '">';
+			( isset( $_POST['wcj_export_filter_all_columns'] ) ? wp_kses_post( sanitize_text_field( wp_unslash( $_POST['wcj_export_filter_all_columns'] ) ) ) : '' ) . '">';
 			echo '</p>';
 			echo '</form>';
 			$data = $this->export( $tool_id );
-			echo ( wp_kses_post( is_array( $data ) ) ) ? wp_kses_post( $data, array( 'table_class' => 'widefat striped' ) ) : isset( $data );
+			echo wp_kses_post( is_array( $data ) ? wp_kses_post( $data, array( 'table_class' => 'widefat striped' ) ) : ( $data ) );
 			echo '</div>';
 		}
 

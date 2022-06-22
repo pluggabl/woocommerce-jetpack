@@ -98,8 +98,7 @@ if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
 	 */
 	function wcj_is_admin_product_edit_page() {
 		global $pagenow;
-		$nonce = wp_create_nonce();
-		if ( is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() && wp_verify_nonce( $nonce ) ) {
+		if ( is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() ) {
 			return true;
 		} elseif ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && 'woocommerce_load_variations' === $_REQUEST['action'] ) {
 			return true;

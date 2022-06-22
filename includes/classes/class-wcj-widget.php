@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Widget' ) ) :
 			}
 			$html .= $this->get_content( $instance );
 			$html .= $args['after_widget'];
-			echo wp_kses_post( $html );
+			echo $html;
 		}
 
 		/**

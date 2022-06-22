@@ -167,8 +167,8 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 */
 		public function add_default_checkout_custom_fields( $default_value, $field_key ) {
 			if ( is_user_logged_in() ) {
-				$meta         = get_user_meta( $current_user->ID, $field_key, true );
 				$current_user = wp_get_current_user();
+				$meta         = get_user_meta( $current_user->ID, $field_key, true );
 				if ( $meta ) {
 					return $meta;
 				}
@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 					$option_name       = $the_section . '_wcj_checkout_field_' . $i;
 					$option_name_label = $the_section . '_wcj_checkout_field_label_' . $i;
 					$option_name_type  = $the_section . '_wcj_checkout_field_type_' . $i;
-					$post_value        = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : ( isset( $_POST[ '_' . $option_name ] ) ? $_POST[ '_' . $option_name ] : get_post_meta( $order_id, '_' . $option_name, true ) );
+					$post_value        = ( isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ! empty( $_POST[ '_' . $option_name ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) : get_post_meta( $order_id, '_' . $option_name, true );
 					if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
 						update_post_meta( $order_id, '_' . $option_name_type, $the_type );
 						update_post_meta( $order_id, '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
@@ -362,13 +362,13 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 					$type_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_type_', $key );
 					if ( isset( $post_meta[ $type_key ][0] ) && 'checkbox' === $post_meta[ $type_key ][0] ) {
 						$checkbox_value_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_checkbox_value_', $key );
-						$value              = ( isset( $post_meta[ $checkbox_value_key ][0] ) ? $post_meta[ $checkbox_value_key ][0] : $_value );
+						$value              = ( sanitize_text_field( wp_unslash( $post_meta[ $checkbox_value_key ][0] ) ) ? $post_meta[ $checkbox_value_key ][0] : $_value );
 					} elseif ( isset( $post_meta[ $type_key ][0] ) && ( 'radio' === $post_meta[ $type_key ][0] || 'select' === $post_meta[ $type_key ][0] ) ) {
 						$select_values_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_select_options_', $key );
-						$select_values     = ( isset( $post_meta[ $select_values_key ][0] ) ) ? $post_meta[ $select_values_key ][0] : '';
+						$select_values     = ( sanitize_text_field( wp_unslash( $post_meta[ $select_values_key ][0] ) ) ) ? $post_meta[ $select_values_key ][0] : '';
 						if ( ! empty( $select_values ) ) {
 							$select_values_prepared = wcj_get_select_options( $select_values );
-							$value                  = ( isset( $select_values_prepared[ $_value ] ) ? $select_values_prepared[ $_value ] : $_value );
+							$value                  = ( sanitize_text_field( wp_unslash( $select_values_prepared[ $_value ] ) ) ? $select_values_prepared[ $_value ] : $_value );
 						} else {
 							$value = $_value;
 						}
@@ -589,7 +589,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			$products_ex = wcj_get_option( 'wcj_checkout_custom_field_products_ex_' . $i );
 			if ( ! empty( $products_ex ) ) {
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_ex, true ) ) {
+					if ( in_array( $values['product_id'], $products_ex ) ) {
 						return false;
 					}
 				}
@@ -597,7 +597,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			$products_in = wcj_get_option( 'wcj_checkout_custom_field_products_in_' . $i );
 			if ( ! empty( $products_in ) ) {
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_in, true ) ) {
+					if ( in_array( $values['product_id'], $products_in ) ) {
 						return true;
 					}
 				}

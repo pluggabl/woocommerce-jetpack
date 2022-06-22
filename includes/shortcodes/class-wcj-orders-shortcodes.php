@@ -958,7 +958,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			foreach ( $the_items as $item_id => $item ) {
 				switch ( $atts['field'] ) {
 					case '_debug':
-						$items[] = '<pre>' . wp_kses_post( $item, true ) . '</pre>';
+						$items[] = '<pre>' . print_r( $item, true ). '</pre>';
 						break;
 					case '_qty_x_name':
 						$items[] = ( isset( $item['qty'] ) && isset( $item['name'] ) ) ? $item['qty'] . ' x ' . $item['name'] : '';

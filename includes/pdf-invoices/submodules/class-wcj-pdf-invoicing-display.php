@@ -416,7 +416,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 												$invoice_type['title'] . $the_number . $the_date . $maybe_toolptip,
 					);
 					$table_data[] = $actions;
-					echo '<p>' . wp_kses_post( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
+					echo '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
 				}
 			}
 		}

@@ -156,8 +156,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		 * @since   2.5.6
 		 */
 		public function recalculate_price_filter_products_prices() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['recalculate_price_filter_products_prices'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['recalculate_price_filter_products_prices'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) ) {
 				wcj_update_products_price_by_country();
 				global $wcj_notice;
 				$wcj_notice = __( 'Price filter widget product prices recalculated.', 'woocommerce-jetpack' );

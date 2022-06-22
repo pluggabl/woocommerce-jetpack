@@ -330,12 +330,11 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			}
 
 			$table_data = array();
-			$nonce      = wp_create_nonce();
-			if ( wp_verify_nonce( $nonce ) && isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] ) {
+			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] ) {
 				$table_data[] = array(
 					__( 'Product', 'woocommerce-jetpack' ),
 					__( 'Category', 'woocommerce-jetpack' ),
-					isset( $_GET['wcj_attribute'] ),
+					sanitize_text_field( wp_unslash( $_GET['wcj_attribute'] ) ),
 				);
 			} else {
 				$header = $attributes_names;

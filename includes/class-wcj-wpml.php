@@ -195,8 +195,7 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		 * @since   2.4.1
 		 */
 		public function create_wpml_xml_file_tool() {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) {
 				return;
 			}
 			if ( ! isset( $_GET['section'] ) || 'wpml' !== $_GET['section'] ) {

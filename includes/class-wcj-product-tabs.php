@@ -498,7 +498,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 					$key  = 'global_' . $i;
 					$link = wcj_get_option( 'wcj_custom_product_tabs_link_' . $key, '' );
 					if ( '' !== wcj_get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) && '' !== ( $link ) ) {
-						echo wp_kses_post( $this->get_js_link_script( $link, $this->get_tab_key( $key, 'global' ), wcj_get_option( 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) ) );
+						echo $this->get_js_link_script( $link, $this->get_tab_key( $key, 'global' ), wcj_get_option( 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) );
 					}
 				}
 			}
@@ -516,7 +516,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 					if ( '' !== get_post_meta( $current_post_id, '_wcj_custom_product_tabs_title_' . $key, true ) ) {
 						$link = get_post_meta( $current_post_id, '_wcj_custom_product_tabs_link_' . $key, true );
 						if ( '' !== ( $link ) ) {
-							echo wp_kses_post( $this->get_js_link_script( $link, $this->get_tab_key( $key, 'local', $current_post_id ), get_post_meta( $current_post_id, '_wcj_custom_product_tabs_link_new_tab_' . $key, true ) ) );
+							echo $this->get_js_link_script( $link, $this->get_tab_key( $key, 'local', $current_post_id ), get_post_meta( $current_post_id, '_wcj_custom_product_tabs_link_new_tab_' . $key, true ) );
 						}
 					}
 				}
@@ -549,7 +549,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		 * @param string $tab defines the tab.
 		 */
 		public function create_new_custom_product_tab_local( $key, $tab ) {
-			echo wp_kses_post( $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) ) );
+			echo $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) );
 		}
 
 		/**
@@ -560,7 +560,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		 * @param string $tab defines the tab.
 		 */
 		public function create_new_custom_product_tab_global( $key, $tab ) {
-			echo wp_kses_post( $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) ) );
+			echo $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) );
 		}
 
 

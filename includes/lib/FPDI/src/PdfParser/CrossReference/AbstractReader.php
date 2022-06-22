@@ -5,7 +5,7 @@
  * @package   setasign\Fpdi
  * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\CrossReference;
 
@@ -19,78 +19,78 @@ use setasign\Fpdi\PdfParser\Type\PdfTypeException;
  *
  * @package setasign\Fpdi\PdfParser\CrossReference
  */
-abstract class AbstractReader {
+abstract class AbstractReader
+{
+    /**
+     * @var PdfParser
+     */
+    protected $parser;
 
-	/**
-	 * PdfParser
-	 *
-	 * @var PdfParser
-	 */
-	protected $parser;
+    /**
+     * @var PdfDictionary
+     */
+    protected $trailer;
 
-	/**
-	 * PdfDictionary
-	 *
-	 * @var PdfDictionary
-	 */
-	protected $trailer;
+    /**
+     * AbstractReader constructor.
+     *
+     * @param PdfParser $parser
+     * @throws CrossReferenceException
+     * @throws PdfTypeException
+     */
+    public function __construct(PdfParser $parser)
+    {
+        $this->parser = $parser;
+        $this->readTrailer();
+    }
 
-	/**
-	 * AbstractReader constructor.
-	 *
-	 * @param PdfParser $parser Get PdfParser.
-	 * @throws CrossReferenceException CrossReferenceException.
-	 * @throws PdfTypeException PdfTypeException.
-	 */
-	public function __construct( PdfParser $parser ) {
-		$this->parser = $parser;
-		$this->readTrailer();
-	}
+    /**
+     * Get the trailer dictionary.
+     *
+     * @return PdfDictionary
+     */
+    public function getTrailer()
+    {
+        return $this->trailer;
+    }
 
-	/**
-	 * Get the trailer dictionary.
-	 *
-	 * @return PdfDictionary
-	 */
-	public function getTrailer() {
-		return $this->trailer;
-	}
+    /**
+     * Read the trailer dictionary.
+     *
+     * @throws CrossReferenceException
+     * @throws PdfTypeException
+     */
+    protected function readTrailer()
+    {
+        try {
+            $trailerKeyword = $this->parser->readValue(null, PdfToken::class);
+            if ($trailerKeyword->value !== 'trailer') {
+                throw new CrossReferenceException(
+                    \sprintf(
+                        'Unexpected end of cross reference. "trailer"-keyword expected, got: %s.',
+                        $trailerKeyword->value
+                    ),
+                    CrossReferenceException::UNEXPECTED_END
+                );
+            }
+        } catch (PdfTypeException $e) {
+            throw new CrossReferenceException(
+                'Unexpected end of cross reference. "trailer"-keyword expected, got an invalid object type.',
+                CrossReferenceException::UNEXPECTED_END,
+                $e
+            );
+        }
 
-	/**
-	 * Read the trailer dictionary.
-	 *
-	 * @throws CrossReferenceException CrossReferenceException.
-	 */
-	protected function readTrailer() {
-		try {
-			$trailerKeyword = $this->parser->readValue( null, PdfToken::class );
-			if ( 'trailer' !== $trailerKeyword->value ) {
-				throw new CrossReferenceException(
-					\sprintf(
-						'Unexpected end of cross reference. "trailer"-keyword expected, got: %s.',
-						$trailerKeyword->value
-					),
-					CrossReferenceException::UNEXPECTED_END
-				);
-			}
-		} catch ( PdfTypeException $e ) {
-			throw new CrossReferenceException(
-				'Unexpected end of cross reference. "trailer"-keyword expected, got an invalid object type.',
-				CrossReferenceException::UNEXPECTED_END,
-				$e
-			);
-		}
+        try {
+            $trailer = $this->parser->readValue(null, PdfDictionary::class);
+        } catch (PdfTypeException $e) {
+            throw new CrossReferenceException(
+                'Unexpected end of cross reference. Trailer not found.',
+                CrossReferenceException::UNEXPECTED_END,
+                $e
+            );
+        }
 
-		try {
-			$trailer = $this->parser->readValue( null, PdfDictionary::class );
-		} catch ( PdfTypeException $e ) {
-			throw new CrossReferenceException(
-				'Unexpected end of cross reference. Trailer not found.',
-				CrossReferenceException::UNEXPECTED_END,
-				$e
-			);
-		}
-
-		$this->trailer = $trailer;
-	}
+        $this->trailer = $trailer;
+    }
 }
