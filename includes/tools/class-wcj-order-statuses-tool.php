@@ -256,11 +256,6 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$slug_html            = '<input type="text" name="new_status" style="width:100%;"' . ( $is_editing ? ' value="' . substr( $edit_slug, 3 ) . '" readonly' : '' ) . '>';
 			$label_html           = '<input type="text" name="new_status_label" style="width:100%;"' . ( $is_editing ? ' value="' . $edit_label . '"' : '' ) . '>';
 			$icon_code_input_html = '<input type="text" name="new_status_icon_content" value="' . ( $is_editing ? $edit_icon_data['content'] : 'e011' ) . '">';
-			$icon_code_tip        = '<em>' . sprintf(
-				/* translators: %s: search term */
-				__( 'You can check icon codes <a target="_blank" href="%s">here</a>.', 'woocommerce-jetpack' ),
-				'https://rawgit.com/woothemes/woocommerce-icons/master/demo.html'
-			) . '</em>';
 			$icon_color_input_html = '<input type="color" name="new_status_icon_color" value="' . ( $is_editing ? $edit_icon_data['color'] : '#999999' ) . '">';
 			$text_color_input_html = '<input type="color" name="new_status_text_color" value="' . ( $is_editing ? $edit_icon_data['text_color'] : '#000000' ) . '">';
 			$action_button         = '<input class="button-primary" type="submit" name="' . ( $is_editing ? 'edit_custom_status' : 'add_custom_status' ) . '"' .
@@ -279,7 +274,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 				array(
 					$slug_html,
 					$label_html,
-					$icon_code_input_html . '<br>' . $icon_code_tip,
+					$icon_code_input_html,
 					$icon_color_input_html,
 					$text_color_input_html,
 					$action_button . $clear_button,

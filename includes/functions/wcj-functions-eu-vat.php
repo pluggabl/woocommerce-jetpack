@@ -44,11 +44,9 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 				}
 				break;
 			default: // 'curl'
-				if ( function_exists( 'curl_version' ) ) {
-					$curl = curl_init( $api_url );
-					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-					$response = curl_exec( $curl );
-					curl_close( $curl );
+				if ( function_exists( 'wp_remote_get' ) ) {
+					$response = wp_remote_get( $api_url );
+					$response = $response[ 'body' ];
 				} else {
 					return null;
 				}

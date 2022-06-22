@@ -145,7 +145,7 @@ if ( ! class_exists( 'WCJ_Scripts' ) ) :
 		 */
 		public function maybe_enqueue_datepicker_style() {
 			if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === wcj_get_option( 'wcj_general_advanced_disable_datepicker_css', 'no' ) ) ) {
-				$datepicker_css_path = '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css';
+				$datepicker_css_path = wcj_plugin_url() . '/includes/css/jquery-ui.css';
 				if ( wcj_is_module_enabled( 'general' ) ) {
 					$datepicker_css_path = wcj_get_option( 'wcj_general_advanced_datepicker_css', $datepicker_css_path );
 				}
