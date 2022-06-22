@@ -19,6 +19,8 @@ if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
 	 * @version 3.4.0
 	 * @since   3.4.0
 	 * @todo    isn't there an easier way?
+	 * @param   int    $current_id defines the current_id.
+	 * @param   string $direction defines the direction.
 	 */
 	function wcj_get_adjacent_order_id( $current_id, $direction = 'next' ) {
 		$args = array(
@@ -48,6 +50,7 @@ if ( ! function_exists( 'wcj_get_order_status' ) ) {
 	 *
 	 * @version 3.2.2
 	 * @since   3.2.2
+	 * @param   array $_order defines the _order.
 	 */
 	function wcj_get_order_status( $_order ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->post_status : $_order->get_status() );
@@ -60,6 +63,7 @@ if ( ! function_exists( 'wcj_get_order_billing_email' ) ) {
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
+	 * @param   array $_order defines the _order.
 	 */
 	function wcj_get_order_billing_email( $_order ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->billing_email : $_order->get_billing_email() );
@@ -72,6 +76,7 @@ if ( ! function_exists( 'wcj_get_order_date' ) ) {
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
+	 * @param   array $_order defines the _order.
 	 */
 	function wcj_get_order_date( $_order ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->order_date : $_order->get_date_created() );
@@ -84,6 +89,7 @@ if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	 *
 	 * @version 3.1.1
 	 * @since   2.7.0
+	 * @param   array $_order defines the _order.
 	 */
 	function wcj_get_order_id( $_order ) {
 		if ( ! $_order || ! is_object( $_order ) ) {
@@ -99,6 +105,7 @@ if ( ! function_exists( 'wcj_get_order_currency' ) ) {
 	 *
 	 * @version 2.7.0
 	 * @since   2.7.0
+	 * @param   array $_order defines the _order.
 	 */
 	function wcj_get_order_currency( $_order ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->get_order_currency() : $_order->get_currency() );
@@ -113,6 +120,12 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * @version 5.3.0
 	 * @since   2.5.9
+	 * @param   int   $item_id defines the item_id.
+	 * @param   array $item defines the item.
+	 * @param   array $_order defines the _order.
+	 * @param   bool  $exclude_wcj_meta defines the exclude_wcj_meta.
+	 * @param   null  $_product defines the _product.
+	 * @param   array $exclude_meta defines the exclude_meta.
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null, $exclude_meta = array() ) {
 		$meta_info = '';
@@ -192,6 +205,7 @@ if ( ! function_exists( 'wcj_get_order_statuses' ) ) {
 	 *
 	 * @version 3.2.2
 	 * @since   2.9.0
+	 * @param   bool $cut_prefix defines the cut_prefix.
 	 */
 	function wcj_get_order_statuses( $cut_prefix = true ) {
 		$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
@@ -212,6 +226,7 @@ if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
 	 *
 	 * @version 2.8.2
 	 * @since   2.8.0
+	 * @param   array $_order defines the _order.
 	 */
 	function wcj_order_get_payment_method( $_order ) {
 		if ( ! $_order || ! is_object( $_order ) ) {
@@ -232,7 +247,7 @@ if ( ! function_exists( 'wcj_get_order_fees_total' ) ) {
 	 * @version 4.5.0
 	 * @since   4.5.0
 	 *
-	 * @param $_order
+	 * @param   array $_order defines the _order.
 	 *
 	 * @return int
 	 */
@@ -252,7 +267,7 @@ if ( ! function_exists( 'wcj_get_order_fees_total_tax' ) ) {
 	 * @version 4.5.0
 	 * @since   4.5.0
 	 *
-	 * @param $_order
+	 * @param   array $_order defines the _order.
 	 *
 	 * @return int
 	 */

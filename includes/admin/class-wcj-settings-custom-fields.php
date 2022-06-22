@@ -301,7 +301,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 				<?php
 				$nonce = wp_create_nonce();
 				if ( isset( $_GET['section'] ) && wp_verify_nonce( $nonce ) ) {
-					do_action( 'wcj_module_tools_' . isset( $_GET['section'] ) );}
+					do_action( 'wcj_module_tools_' . sanitize_text_field( wp_unslash( $_GET['section'] ) ) );}
 				?>
 			</td>
 		</tr>

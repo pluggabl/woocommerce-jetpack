@@ -36,9 +36,10 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
+			$nonce         = wp_create_nonce();
 			$modified_atts = array_merge(
 				array(
-					'order_id'                            => ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID(),
+					'order_id'                            => ( isset( $_GET['order_id'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['order_id'] ) : get_the_ID(),
 					'hide_currency'                       => 'no',
 					'table_class'                         => '',
 					'shipping_as_item'                    => '', // e.g.: 'Shipping'.
@@ -110,7 +111,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 				$user_roles          = $user_info->roles;
 				$user_roles_to_check = explode( ',', $atts['order_user_roles'] );
 				foreach ( $user_roles_to_check as $user_role_to_check ) {
-					if ( in_array( $user_role_to_check, $user_roles ) ) {
+					if ( in_array( $user_role_to_check, $user_roles, true ) ) {
 						return true;
 					}
 				}
@@ -123,6 +124,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * Wcj_price_shortcode.
 		 *
 		 * @version 3.1.2
+		 * @param int   $raw_price The user defined shortcode raw_price.
+		 * @param array $atts The user defined shortcode attributes.
 		 */
 		private function wcj_price_shortcode( $raw_price, $atts ) {
 			if ( 'yes' === $atts['hide_zero_prices'] && 0 === $raw_price ) {
@@ -135,6 +138,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * Add_item.
 		 *
 		 * @version 2.8.0
+		 * @param array $items The user defined shortcode items.
+		 * @param array $new_item_args The user defined shortcode new_item_args.
 		 */
 		private function add_item( $items, $new_item_args = array() ) {
 			if ( empty( $new_item_args ) ) {
@@ -199,6 +204,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param string $tax_class The user defined shortcode tax_class.
 		 */
 		public function get_tax_class_name( $tax_class ) {
 			$tax_classes       = WC_Tax::get_tax_classes();
@@ -215,14 +221,17 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Get_meta_info.
 		 *
-		 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
+		 * From woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 		 *
 		 * @version 2.5.9
 		 * @since   2.5.8
+		 * @param int            $item_id The user defined shortcode item_id.
+		 * @param array | string $the_product The user defined shortcode the_product.
 		 */
 		public function get_meta_info( $item_id, $the_product ) {
 			$meta_info = '';
-			if ( $metadata = $this->the_order->has_meta( $item_id ) ) {
+			$metadata  = $this->the_order->has_meta( $item_id );
+			if ( $metadata ) {
 				$meta_info = array();
 				foreach ( $metadata as $meta ) {
 
@@ -243,7 +252,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 								'method_id',
 								'cost',
 							)
-						)
+						),
+						true
 					) ) {
 						continue;
 					}
@@ -276,7 +286,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * @todo    `$item['is_custom']` may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 		 * @todo    `if ( '' !== $column_cell_data )` - this may be optional?
 		 * @todo    (maybe) `if ( $columns_total_number !== count( $columns_titles ) || $columns_total_number !== count( $columns_styles ) ) { return __( 'Please recheck that there is the same number of columns in "columns", "columns_titles" and "columns_styles" attributes.', 'woocommerce-jetpack' ); }`
-		 * @param array $atts The user defined shortcode attributes.
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
 		public function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -366,7 +377,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
 						$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
 						if ( is_object( $product_attribute ) ) {
-							if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+							if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options(), true ) ) {
 								continue;
 							}
 						} elseif ( $atts['exclude_by_attribute__value'] === $product_attribute ) {
@@ -381,7 +392,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					$cell_data    = array();
 					foreach ( $cell_columns as $column ) {
 						$column_param = '';
-						if ( false !== ( $pos = strpos( $column, '=' ) ) ) {
+						$pos          = strpos( $column, '=' );
+						if ( false !== ( $pos ) ) {
 							$column_param = substr( $column, $pos + 1 );
 							$column       = substr( $column, 0, $pos );
 						}
@@ -461,6 +473,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * @since   3.2.2
 		 * @todo    option to sort as numbers or as text
 		 * @todo    use id (e.g. `product_sku`) instead of number
+		 * @param array $a The user defined shortcode a.
+		 * @param array $b The user defined shortcode b.
 		 */
 		public function sort_data( $a, $b ) {
 			$key = ( $this->sort_by_column - 1 );
@@ -479,7 +493,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * @version 5.3.0
 		 * @since   5.3.0
 		 *
-		 * @param $item
+		 * @param array $item The user defined shortcode item.
 		 *
 		 * @return string
 		 */
@@ -506,7 +520,15 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * @todo    do we need `pa_` replacement?
 		 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
 		 * @todo    `if ( isset( $option['price'] ) && 'yes' === $atts['wc_extra_product_options_show_price'] )` - `wc_extra_product_options_show_price` is temporary, until price_per_currency issue is solved
-		 * @param array $atts The user defined shortcode attributes.
+		 * @param string         $column The user defined shortcode column.
+		 * @param string         $column_param The user defined shortcode column_param.
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $the_order The user defined shortcode the_order.
+		 * @param array          $columns The user defined shortcode columns.
+		 * @param string         $item_counter The user defined shortcode item_counter.
+		 * @param int            $item_id The user defined shortcode item_id.
+		 * @param array          $item The user defined shortcode item.
+		 * @param array          $the_product The user defined shortcode the_product.
 		 */
 		public function get_cell( $column, $column_param, $atts, $the_order, $columns, $item_counter, $item_id, $item, $the_product ) {
 
@@ -554,7 +576,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					} else {
 						$the_item_title = $this->get_product_item_name( $item );
 						// Variation (if needed).
-						if ( 'yes' === $atts['add_variation_info_to_item_name'] && isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
+						if ( 'yes' === $atts['add_variation_info_to_item_name'] && isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && ! in_array( 'item_variation', $columns, true ) ) {
 							$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';
 							if ( 'yes' === $atts['variation_as_metadata'] ) {
 								$the_item_title .= wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
@@ -632,8 +654,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 						return '';
 					} else {
 						global $post;
-						$post = get_post( $item['product_id'] );
-						setup_postdata( $post );
+						$posts = get_post( $item['product_id'] );
+						setup_postdata( $posts );
 						$the_excerpt = get_the_excerpt();
 						wp_reset_postdata();
 						return $the_excerpt;
@@ -788,8 +810,9 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					return ( ! is_object( $the_product ) ) ? '' : $the_product->get_id();
 
 				case 'product_shipping_class':
+					$shipping_class = $the_product->get_shipping_class();
 					return ( ! is_object( $the_product ) ) ? '' :
-					( '' !== ( $shipping_class = $the_product->get_shipping_class() ) || ! isset( $column_param ) || '' === $column_param ? $shipping_class : $column_param );
+					( '' !== ( $shipping_class ) || ! isset( $column_param ) || '' === $column_param ? $shipping_class : $column_param );
 
 				case 'product_shipping_class_id':
 					return ( ! is_object( $the_product ) ) ? '' : $the_product->get_shipping_class_id();

@@ -65,7 +65,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_function( $atts ) {
-			if ( isset( $atts['function_name'] ) && '' !== $atts['function_name'] && ( $_cart = WC()->cart ) ) {
+			$_cart = WC()->cart;
+			if ( isset( $atts['function_name'] ) && '' !== $atts['function_name'] && ( $_cart ) ) {
 				return $_cart->{$atts['function_name']}();
 			}
 			return '';
@@ -79,7 +80,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_fee_tax( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return wc_price( $_cart->get_fee_tax() );
 			}
 			return '';
@@ -95,7 +97,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_fee_total( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return wc_price( $_cart->get_fee_total() );
 			}
 			return '';
@@ -112,7 +115,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_discount_tax( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return wc_price( $_cart->get_discount_tax() );
 			}
 			return '';
@@ -129,7 +133,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_discount_total( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return wc_price( $_cart->get_discount_total() );
 			}
 			return '';
@@ -144,7 +149,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_items_total_quantity( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return $_cart->get_cart_contents_count();
 			}
 			return '';
@@ -158,7 +164,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_items_total_weight( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return $_cart->get_cart_contents_weight();
 			}
 			return '';
@@ -175,7 +182,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_total( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				if ( 1 !== $atts['multiply_by'] ) {
 					// `get_cart_contents_total()` - Gets cart total. This is the total of items in the cart, but after discounts. Subtotal is before discounts.
 					$cart_total = wc_prices_include_tax() ? WC()->cart->get_cart_contents_total() + WC()->cart->get_cart_contents_tax() : WC()->cart->get_cart_contents_total();
@@ -200,7 +208,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_subtotal( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return $_cart->get_cart_subtotal();
 			}
 			return '';
@@ -214,7 +223,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_subtotal_tax( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return wc_price( $_cart->get_subtotal_tax() );
 			}
 			return '';
@@ -234,7 +244,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_tax( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return $_cart->get_cart_tax();
 			}
 			return '';
@@ -250,7 +261,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_total_ex_tax( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return $_cart->get_total_ex_tax();
 			}
 			return '';
@@ -265,7 +277,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_shipping_total( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return $_cart->get_cart_shipping_total();
 			}
 			return '';
@@ -282,7 +295,8 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_cart_shipping_tax( $atts ) {
-			if ( $_cart = WC()->cart ) {
+			$_cart = WC()->cart;
+			if ( $_cart ) {
 				return wc_price( $_cart->get_shipping_tax() );
 			}
 			return '';

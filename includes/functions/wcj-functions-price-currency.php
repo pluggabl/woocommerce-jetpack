@@ -32,6 +32,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	 * @version 4.1.0
 	 * @since   3.2.2
 	 * @todo    add all corresponding modules
+	 * @param   int | string $module_id defines the module_id.
 	 */
 	function wcj_get_module_price_hooks_priority( $module_id ) {
 		$modules_priorities = array(
@@ -56,6 +57,9 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 	 * @version 5.5.8
 	 * @since   2.7.0
 	 * @todo    use `$module_object->price_hooks_priority` instead of passing `$priority` argument
+	 * @param   array  $module_object defines the module_object.
+	 * @param   string $priority defines the priority.
+	 * @param   bool   $include_shipping defines the include_shipping.
 	 */
 	function wcj_add_change_price_hooks( $module_object, $priority, $include_shipping = true ) {
 		// Prices.
@@ -92,6 +96,9 @@ if ( ! function_exists( 'wcj_remove_change_price_hooks' ) ) {
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @todo    make one function from this and `wcj_add_change_price_hooks()`
+	 * @param   array  $module_object defines the module_object.
+	 * @param   string $priority defines the priority.
+	 * @param   bool   $include_shipping defines the include_shipping.
 	 */
 	function wcj_remove_change_price_hooks( $module_object, $priority, $include_shipping = true ) {
 		// Prices.
@@ -124,6 +131,8 @@ if ( ! function_exists( 'wcj_change_price_shipping_package_rates' ) ) {
 	 *
 	 * @version 3.2.0
 	 * @since   3.2.0
+	 * @param   array $package_rates defines the package_rates.
+	 * @param   int   $multiplier defines the multiplier.
 	 */
 	function wcj_change_price_shipping_package_rates( $package_rates, $multiplier ) {
 		$modified_package_rates = array();
@@ -156,6 +165,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_product_base_currency' )
 	 *
 	 * @version 3.5.0
 	 * @since   2.5.6
+	 * @param   string $currency_code defines the currency_code.
 	 */
 	function wcj_get_currency_exchange_rate_product_base_currency( $currency_code ) {
 		$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
@@ -174,6 +184,8 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	 *
 	 * @version 3.3.0
 	 * @since   2.5.6
+	 * @param   int $price defines the price.
+	 * @param   int $product_id defines the product_id.
 	 */
 	function wcj_price_by_product_base_currency( $price, $product_id ) {
 		if ( '' === $price ) {
@@ -213,6 +225,10 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 	 *
 	 * @version 4.4.0
 	 * @since   2.5.3
+	 * @param   int   $price defines the price.
+	 * @param   array $product defines the product.
+	 * @param   int   $group_id defines the group_id.
+	 * @param   null  $the_current_filter defines the the_current_filter.
 	 */
 	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {
 
@@ -313,9 +329,9 @@ if ( ! function_exists( 'wcj_price_by_country_pretty_price' ) ) {
 	 * @version 4.4.0
 	 * @since   4.4.0
 	 *
-	 * @param $price
-	 * @param int   $precision
-	 * @param int   $multiplier
+	 * @param   int $price defines the price.
+	 * @param   int $precision defines the precision.
+	 * @param   int $multiplier defines the multiplier.
 	 *
 	 * @return float|int
 	 */
@@ -333,9 +349,9 @@ if ( ! function_exists( 'wcj_price_by_country_rounding' ) ) {
 	 * @version 4.4.0
 	 * @since   4.4.0
 	 *
-	 * @param $price
-	 * @param int    $precision
-	 * @param string $rounding
+	 * @param   int    $price defines the price.
+	 * @param   int    $precision defines the precision.
+	 * @param   string $rounding defines the rounding.
 	 *
 	 * @return float
 	 */
@@ -367,6 +383,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product
 	 *
 	 * @version 2.7.0
 	 * @since   2.5.3
+	 * @param   int $product_id defines the product_id.
 	 */
 	function wcj_update_products_price_by_country_for_single_product( $product_id ) {
 		$_product                          = wc_get_product( $product_id );
@@ -454,6 +471,7 @@ if ( ! function_exists( 'wcj_get_current_currency_code' ) ) {
 	 *
 	 * @version 3.4.0
 	 * @since   2.5.0
+	 * @param   string $module defines the module.
 	 */
 	function wcj_get_current_currency_code( $module ) {
 		$current_currency_code = get_woocommerce_currency();
@@ -473,6 +491,7 @@ if ( ! function_exists( 'wcj_get_currency_by_country' ) ) {
 	 *
 	 * @version 4.0.0
 	 * @since   2.5.4
+	 * @param   string $country_code defines the country_code.
 	 */
 	function wcj_get_currency_by_country( $country_code ) {
 		$currency_code                     = '';
@@ -512,6 +531,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
 	 *
 	 * @version 2.5.0
 	 * @since   2.5.0
+	 * @param   string $module defines the module.
+	 * @param   string $currency_code defines the currency_code.
 	 */
 	function wcj_get_currency_exchange_rate( $module, $currency_code ) {
 		$currency_exchange_rate = 1;
@@ -536,6 +557,8 @@ if ( ! function_exists( 'wc_get_variable_product_purchase_price' ) ) {
 	 *
 	 * @version 4.2.0
 	 * @since   4.2.0
+	 * @param   int   $product_id defines the product_id.
+	 * @param   array $args defines the args.
 	 */
 	function wc_get_variable_product_purchase_price( $product_id = 0, $args = array() ) {
 		$product = wc_get_product( $product_id );
@@ -581,6 +604,7 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 	 * Wc_get_product_purchase_price.
 	 *
 	 * @version 4.2.0
+	 * @param   int $product_id defines the product_id.
 	 */
 	function wc_get_product_purchase_price( $product_id = 0 ) {
 		if ( 0 === $product_id ) {
@@ -642,10 +666,10 @@ if ( ! function_exists( 'wcj_price' ) ) {
 	 *
 	 * @version 5.1.0
 	 *
-	 * @param $price
-	 * @param $currency
-	 * @param $hide_currency
-	 * @param null          $args
+	 * @param   int          $price defines the price.
+	 * @param   string       $currency defines the currency.
+	 * @param   string       $hide_currency defines the hide_currency.
+	 * @param   null | array $args defines the args.
 	 *
 	 * @return string
 	 */

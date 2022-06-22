@@ -66,7 +66,7 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 		$prefix = rest_get_url_prefix();
 		if (
 			defined( 'REST_REQUEST' ) && REST_REQUEST || // After WP_REST_Request initialisation.
-			isset( $_GET['rest_route'] ) && wp_verify_nonce( $nonce ) && 0 === strpos( trim( $_GET['rest_route'], '\\/' ), $prefix, 0 ) // Support "plain" permalink settings.
+			isset( $_GET['rest_route'] ) && wp_verify_nonce( $nonce ) && 0 === strpos( trim( isset( $_GET['rest_route'] ), '\\/' ), $prefix, 0 ) // Support "plain" permalink settings.
 		) {
 			return true;
 		}

@@ -399,13 +399,13 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 * @param bool | string $order_statuses defines the order_statuses.
 		 */
 		public function add_custom_statuses_to_filter( $order_statuses ) {
-			$screen = get_current_screen();
-			if (
-			function_exists( 'get_current_screen' ) &&
-			! empty( $screen ) &&
-			'edit-shop_order' === $screen->id
-			) {
-				$custom_order_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
+			if ( function_exists( 'get_current_screen' ) ) {
+				$get_current_screen = get_current_screen();
+				if ( ! empty( $get_current_screen ) && 'edit-shop_order' === $get_current_screen->id ) {
+					$custom_order_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
+				} else {
+					$custom_order_statuses = $this->get_custom_order_statuses();
+				}
 			} else {
 				$custom_order_statuses = $this->get_custom_order_statuses();
 			}

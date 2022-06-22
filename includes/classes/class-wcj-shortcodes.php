@@ -39,6 +39,10 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 *
 		 * @version 4.7.1
 		 * @since   4.7.1
+		 * @param mixed $result Get result.
+		 * @param Array $atts Get shortcode attributes.
+		 * @param  Array $content get content.
+		 * @param  Array $shortcode define shortcodes.
 		 *
 		 * @return mixed
 		 */
@@ -53,6 +57,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 * Add_extra_atts.
 		 *
 		 * @version 2.5.2
+		 * @param Array $atts Get shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
 			if ( ! isset( $this->the_atts ) ) {
@@ -64,6 +69,8 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 
 		/**
 		 * Init_atts.
+		 *
+		 * @param Array $atts Get shortcode attributes.
 		 */
 		public function init_atts( $atts ) {
 			return $atts;
@@ -71,6 +78,8 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 
 		/**
 		 * Add_shortcodes_to_the_list.
+		 *
+		 * @param Array $shortcodes_list Define shortcode list.
 		 */
 		public function add_shortcodes_to_the_list( $shortcodes_list ) {
 			foreach ( $this->the_shortcodes as $the_shortcode ) {
@@ -86,6 +95,9 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 		 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 		 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
+		 * @param Array $atts Get shortcode attributes.
+		 * @param  Array $content get content.
+		 * @param  Array $shortcode define shortcodes.
 		 */
 		public function wcj_shortcode( $atts, $content, $shortcode ) {
 
@@ -247,11 +259,12 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 			}
 
 			// Check if billing country by arg is ok.
+			$nonce = wp_create_nonce();
 			if ( '' !== $atts['billing_country'] ) {
-				$order_id       = $_GET['order_id'];
+				$order_id       = isset( $_GET['order_id'] );
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
-				if ( ! isset( $billing_contry ) ) {
+				if ( ! isset( $billing_contry ) && wp_verify_nonce( $nonce ) ) {
 
 					return '';
 				}
@@ -261,12 +274,13 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 				}
 			}
 			// Check if billing country by arg is ok (not in...).
+			$nonce = wp_create_nonce();
 			if ( '' !== $atts['not_billing_country'] ) {
-				$order_id       = $_GET['order_id'];
+				$order_id       = isset( $_GET['order_id'] );
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
 				if ( isset( $billing_contry ) ) {
-					if ( in_array( $billing_contry, $this->custom_explode( $atts['not_billing_country'] ), true ) ) {
+					if ( in_array( $billing_contry, $this->custom_explode( $atts['not_billing_country'] ), true ) && wp_verify_nonce( $nonce ) ) {
 
 						return '';
 					}
@@ -315,7 +329,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 					$result = str_replace( $atts['find'], $atts['replace'], $result );
 				}
 				if ( 'yes' === $atts['strip_tags'] ) {
-					$result = strip_tags( $result );
+					$result = wp_strip_all_tags( $result );
 				}
 				if ( 1 !== $atts['multiply'] ) {
 					$result = $result * $atts['multiply'];
@@ -332,6 +346,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 *
 		 * @version 2.6.0
 		 * @since   2.6.0
+		 * @param Array $atts Get shortcode attributes.
 		 */
 		public function extra_check( $atts ) {
 			return true;
@@ -341,6 +356,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 * Custom_explode.
 		 *
 		 * @since 2.2.9
+		 * @param string $string_to_explode Define string to explode.
 		 */
 		public function custom_explode( $string_to_explode ) {
 			$string_to_explode = str_replace( ' ', '', $string_to_explode );
@@ -355,7 +371,8 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 * @todo    (maybe) move this to global functions
 		 */
 		public function wcj_get_user_location() {
-			return ( isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ? $_GET['country'] : wcj_get_country_by_ip() );
+			$nonce = wp_create_nonce();
+			return ( isset( $_GET['country'] ) && '' !== isset( $_GET['country'] ) && wcj_is_user_role( 'administrator' ) && wp_verify_nonce( $nonce ) ? isset( $_GET['country'] ) : wcj_get_country_by_ip() );
 		}
 	}
 

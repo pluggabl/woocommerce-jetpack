@@ -325,6 +325,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 2.9.1
 		 * @since   2.9.1
+		 * @param string $option_value Get option value.
+		 * @param string $option_name Get option name.
+		 * @param int    $module_id Get option id.
 		 */
 		public function save_meta_box_validate_value( $option_value, $option_name, $module_id ) {
 			if ( true === apply_filters( 'booster_option', false, true ) ) {
@@ -357,6 +360,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.9.1
+		 * @param String $location Get location.
 		 */
 		public function validate_value_add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
@@ -370,14 +374,15 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   2.9.1
 		 */
 		public function validate_value_admin_notices() {
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) {
+			$nonce = wp_create_nonce();
+			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) && wp_verify_nonce( $nonce ) ) {
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' .
 			sprintf(
 				/* translators: %1$s: translators Added */
-				__( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ),
-				$this->short_desc,
+				esc_html__( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ),
+				wp_kses_post( $this->short_desc ),
 				'https://booster.io/plus/'
 			) .
 			'</div></p></div>';
@@ -399,6 +404,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 4.3.0
 		 * @since   3.2.1
+		 * @param Array $settings get settings.
 		 */
 		public function maybe_fix_settings( $settings ) {
 			if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
@@ -432,6 +438,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 3.2.1
 		 * @since   2.8.0
+		 * @param Array $settings get settings.
 		 */
 		public function add_settings_from_file( $settings ) {
 			$filename = wcj_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
@@ -454,6 +461,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 2.5.3
 		 * @since   2.5.3
+		 * @param string $option_value Get option value.
+		 * @param string $option_name Get option name.
+		 * @param int    $module_id Get module ID.
 		 */
 		public function save_meta_box_value( $option_value, $option_name, $module_id ) {
 			if ( true === apply_filters( 'booster_option', false, true ) ) {
@@ -486,6 +496,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.5.3
+		 *  @param String $location Get location.
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
@@ -499,10 +510,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   2.5.3
 		 */
 		public function admin_notices() {
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
+			$nonce = wp_create_nonce();
+			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) && wp_verify_nonce( $nonce ) ) {
 				return;
 			}
-			echo '<div class="error"><p><div class="message">' . $this->get_the_notice() . '</div></p></div>';
+			echo '<div class="error"><p><div class="message">' . wp_kses_post( $this->get_the_notice() ) . '</div></p></div>';
 		}
 
 		/**
@@ -513,7 +525,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 		 */
 		public function reset_settings() {
-			if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
+			$nonce = wp_create_nonce();
+			if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) && wp_verify_nonce( $nonce ) ) {
 				foreach ( $this->get_settings() as $settings ) {
 					if ( false !== strpos( $settings['id'], '[' ) ) {
 						$id = explode( '[', $settings['id'] );
@@ -534,6 +547,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 2.4.0
 		 * @since   2.3.10
+		 * @param Array  $settings Get settings.
+		 * @param string $module_desc get module desc.
 		 */
 		public function add_standard_settings( $settings = array(), $module_desc = '' ) {
 			if ( isset( $this->tools_array ) && ! empty( $this->tools_array ) ) {
@@ -550,7 +565,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @version 5.3.3
 		 * @since   5.3.3
 		 *
-		 * @param $settings
+		 * @param Array $settings Get settings.
 		 *
 		 * @return array
 		 */
@@ -586,7 +601,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @version 5.3.6
 		 * @since   5.3.6
 		 *
-		 * @param $settings
+		 * @param Array $settings Get settings.
 		 *
 		 * @return array
 		 */
@@ -604,16 +619,19 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @version 3.9.0
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
+		 * @param int   $post_id Get post id.
+		 * @param Array $__post Get post.
 		 */
 		public function save_meta_box( $post_id, $__post ) {
+			$nonce = wp_create_nonce();
 			// Check that we are saving with current metabox displayed.
-			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
+			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) && wp_verify_nonce( $nonce ) ) {
 				return;
 			}
 			// Setup post (just in case...).
 			global $post;
-			$post = get_post( $post_id );
-			setup_postdata( $post );
+			$posts = get_post( $post_id );
+			setup_postdata( $posts );
 			// Save options.
 			foreach ( $this->get_meta_box_options() as $option ) {
 				if ( 'title' === $option['type'] ) {
@@ -621,7 +639,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				}
 				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 				if ( $is_enabled ) {
-					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : ( isset( $option['default'] ) ? $option['default'] : '' );
+					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? isset( $_POST[ $option['name'] ] ) : ( isset( $option['default'] ) ? $option['default'] : '' );
 					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $post_id;
 					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
 					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
@@ -706,7 +724,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 								$selected = '';
 								if ( is_array( $option_value ) ) {
 									foreach ( $option_value as $single_option_value ) {
-										if ( '' !== ( $selected = selected( $single_option_value, $select_option_key, false ) ) ) {
+										$selected = selected( $single_option_value, $select_option_key, false );
+										if ( '' !== $selected ) {
 											break;
 										}
 									}
@@ -762,7 +781,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			}
 			$html .= '</table>';
 			$html .= '<input type="hidden" name="woojetpack_' . $this->id . '_save_post" value="woojetpack_' . $this->id . '_save_post">';
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		/**
@@ -778,6 +797,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * Settings_section.
 		 *
 		 * @version 2.3.0
+		 * @param Array $sections Get sections.
 		 */
 		public function settings_section( $sections ) {
 			$sections[ $this->id ] = isset( $this->section_title ) ? $this->section_title : $this->short_desc;
@@ -789,6 +809,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 2.2.3
 		 * @since   2.2.3
+		 * @param Array $section Get sections.
 		 */
 		public function get_cat_by_section( $section ) {
 			$cats = include wcj_plugin_path() . '/includes/admin/wcj-modules-cats.php';
@@ -820,6 +841,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 2.3.8
 		 * @since   2.2.3
+		 * @param Array $settings Get settings.
 		 */
 		public function add_tools_list( $settings ) {
 			return array_merge(
@@ -849,6 +871,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 5.5.6
 		 * @since   2.3.10
+		 * @param int $tool_id Get tool id.
 		 */
 		public function get_tool_header_html( $tool_id ) {
 			$html = '';
@@ -865,6 +888,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 2.3.10
 		 * @since   2.2.3
+		 * @param Array $tools_array Get Tools array.
+		 * @param Array $args Get args.
 		 */
 		public function add_tools( $tools_array, $args = array() ) {
 			$this->tools_array = $tools_array;
@@ -884,6 +909,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 2.3.10
 		 * @since   2.3.10
+		 * @param Array $tabs Get tabs.
 		 */
 		public function add_module_tools_tabs( $tabs ) {
 			foreach ( $this->tools_array as $tool_id => $tool_data ) {
@@ -918,10 +944,10 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$additional_info_html  = ' - ' . __( 'Deprecated', 'woocommerce-jetpack' );
 				}
 				echo '<tr>';
-				echo '<td style="' . $additional_style_html . '">' . $tool_title . $additional_info_html . '</td>';
-				echo '<td style="' . $additional_style_html . '">' . $this->short_desc . '</td>';
-				echo '<td style="' . $additional_style_html . '">' . $tool_desc . '</td>';
-				echo '<td style="' . $additional_style_html . '">' . $is_enabled_html . '</td>';
+				echo '<td style="' . wp_kses_post( $additional_style_html ) . '">' . wp_kses_post( $tool_title ) . wp_kses_post( $additional_info_html ) . '</td>';
+				echo '<td style="' . wp_kses_post( $additional_style_html ) . '">' . wp_kses_post( $this->short_desc ) . '</td>';
+				echo '<td style="' . wp_kses_post( $additional_style_html ) . '">' . wp_kses_post( $tool_desc ) . '</td>';
+				echo '<td style="' . wp_kses_post( $additional_style_html ) . '">' . wp_kses_post( $is_enabled_html ) . '</td>';
 				echo '</tr>';
 			}
 		}
@@ -937,8 +963,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				$tool_title = $tool_data['title'];
 				echo '<p>';
 				echo ( $this->is_enabled() ) ?
-				'<a href="' . admin_url( 'admin.php?page=wcj-tools&tab=' . $tool_id ) . '"><code>' . $tool_title . '</code></a>' :
-				'<code>' . $tool_title . '</code>';
+				'<a href="' . wp_kses_post( admin_url( 'admin.php?page=wcj-tools&tab=' . $tool_id ) ) . '"><code>' . wp_kses_post( $tool_title ) . '</code></a>' :
+				'<code>' . wp_kses_post( $tool_title ) . '</code>';
 				echo '</p>';
 			}
 		}
@@ -948,6 +974,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @version 5.5.9
 		 * @since   2.4.0
+		 * @param Array $settings Get settings.
 		 */
 		public function add_reset_settings_button( $settings ) {
 			$reset_button_style     = 'background: red; border-color: red; box-shadow: 0 1px 0 red; text-shadow: 0 -1px 1px #a00,1px 0 1px #a00,0 1px 1px #a00,-1px 0 1px #a00;';
@@ -979,6 +1006,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * Only for `module`.
 		 *
 		 * @version 5.2.1
+		 * @param Array  $settings Get settings.
+		 * @param string $module_desc Get module_desc.
 		 */
 		public function add_enable_module_setting( $settings, $module_desc = '' ) {
 			if ( 'module' !== $this->type ) {

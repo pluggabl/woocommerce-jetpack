@@ -25,6 +25,8 @@ if ( ! function_exists( 'wcj_get_shipping_time_table' ) ) {
 	 * @todo    check for "Shipping Time" module to be enabled
 	 * @todo    time in hours (i.e. not days)
 	 * @todo    check for `WC()` etc. to exist
+	 * @param bool $do_use_shipping_instances use shipping instances.
+	 * @param int  $option_id_shipping_class shipping class option id.
 	 */
 	function wcj_get_shipping_time_table( $do_use_shipping_instances, $option_id_shipping_class ) {
 		$shipping_methods = ( $do_use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
@@ -83,6 +85,7 @@ if ( ! function_exists( 'wcj_get_product_shipping_class_term_id' ) ) {
 	 * @version 3.5.0
 	 * @since   3.5.0
 	 * @todo    (maybe) move to `wcj-functions-products.php`
+	 * @param Array $_product Get products.
 	 */
 	function wcj_get_product_shipping_class_term_id( $_product ) {
 		$product_shipping_class = $_product->get_shipping_class();
@@ -103,6 +106,7 @@ if ( ! function_exists( 'wcj_get_shipping_classes' ) ) {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
+	 * @param bool $include_empty_shipping_class empty shipping class.
 	 */
 	function wcj_get_shipping_classes( $include_empty_shipping_class = true ) {
 		$shipping_classes      = WC()->shipping->get_shipping_classes();
@@ -139,6 +143,7 @@ if ( ! function_exists( 'wcj_get_shipping_zones' ) ) {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
+	 * @param bool $include_empty_zone empty shipping zone.
 	 */
 	function wcj_get_shipping_zones( $include_empty_zone = true ) {
 		$zones = WC_Shipping_Zones::get_zones();
@@ -159,6 +164,7 @@ if ( ! function_exists( 'wcj_get_shipping_methods_instances' ) ) {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
+	 * @param bool $full_data shipping method full data.
 	 */
 	function wcj_get_shipping_methods_instances( $full_data = false ) {
 		$shipping_methods = array();
@@ -189,6 +195,7 @@ if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priorit
 	 * @version 3.6.0
 	 * @since   3.2.4
 	 * @todo    add `shipping_by_order_amount` module
+	 * @param int $module_id Get module id.
 	 */
 	function wcj_get_woocommerce_package_rates_module_filter_priority( $module_id ) {
 		$modules_priorities = array(
@@ -213,6 +220,8 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	 * @since   2.4.4
 	 * @return  string
 	 * @todo    (maybe) go through all packages instead of only `$packages[0]`
+	 * @param string $content Get content.
+	 * @param int    $multiply_by shipping multiply by.
 	 */
 	function wcj_get_left_to_free_shipping( $content, $multiply_by = 1 ) {
 		// "You have Free delivery"

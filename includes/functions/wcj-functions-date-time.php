@@ -19,6 +19,9 @@ if ( ! function_exists( 'wcj_get_date_ranges' ) ) {
 	 * @version 3.9.0
 	 * @since   3.9.0
 	 * @todo    maybe we can re-write this in simpler form
+	 * @param   string $start_date defines the start_date.
+	 * @param   string $end_date defines the end_date.
+	 * @param   int    $period defines the period.
 	 */
 	function wcj_get_date_ranges( $start_date, $end_date, $period ) {
 			$return      = array();
@@ -55,6 +58,8 @@ if ( ! function_exists( 'wcj_check_single_date' ) ) {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @param   string $_date defines the _date.
+	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_single_date( $_date, $args ) {
 		$_date = explode( '-', $_date );
@@ -78,6 +83,8 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @param   string $_date defines the _date.
+	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_date( $_date, $args = array() ) {
 		if ( empty( $args ) ) {
@@ -100,6 +107,8 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @param   string $time_from defines the time_from.
+	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_time_from( $time_from, $args ) {
 		$time_from = explode( ':', $time_from );
@@ -119,6 +128,8 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @param   string $time_to defines the time_to.
+	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_time_to( $time_to, $args ) {
 		$time_to = explode( ':', $time_to );
@@ -138,6 +149,8 @@ if ( ! function_exists( 'wcj_check_single_time' ) ) {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @param   string $_time defines the _time.
+	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_single_time( $_time, $args ) {
 		$_time = explode( '-', $_time );
@@ -161,6 +174,8 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @param   string $_time defines the _time.
+	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_time( $_time, $args = array() ) {
 		if ( empty( $args ) ) {
@@ -187,6 +202,7 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 	 * @author  Tristan Jahier
 	 * @version 2.4.0
 	 * @since   2.4.0
+	 * @param   string $php_format defines the php_format.
 	 */
 	function wcj_date_format_php_to_js( $php_format ) {
 		$symbols_matching = array(
@@ -282,8 +298,8 @@ if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
 	 * @version 4.9.0
 	 * @since   4.9.0
 	 *
-	 * @param string $utc_date
-	 * @param null   $format
+	 * @param string $utc_date get utc_Date.
+	 * @param null   $format get format.
 	 *
 	 * @return string
 	 */

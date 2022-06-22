@@ -4,6 +4,7 @@
  *
  * @version 5.4.5
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/classes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,20 +12,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
-
+		/**
+		 * WCJ_PDF_Invoice.
+		 */
 	class WCJ_PDF_Invoice extends WCJ_Invoice {
-
+		/**
+		 * Original_internal_coding.
+		 *
+		 * @var $original_internal_coding
+		 */
 		private $original_internal_coding = '';
 
 		/**
 		 * Constructor.
+		 *
+		 * @param int    $order_id Get order id.
+		 * @param string $invoice_type Get invoice type.
 		 */
-		function __construct( $order_id, $invoice_type ) {
+		public function __construct( $order_id, $invoice_type ) {
 			parent::__construct( $order_id, $invoice_type );
 		}
 
 		/**
-		 * prepare_pdf.
+		 * Prepare_pdf.
 		 *
 		 * @version 5.4.5
 		 * @todo    [dev] check `addTTFfont()`
@@ -32,7 +42,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`
 		 * @todo    [feature] (maybe) option to set different font in footer (and maybe also header)
 		 */
-		function prepare_pdf() {
+		public function prepare_pdf() {
 
 			wcj_check_and_maybe_download_tcpdf_fonts();
 
@@ -46,7 +56,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				);
 			}
 
-			// Create new PDF document
+			// Create new PDF document.
 			require_once wcj_plugin_path() . '/includes/classes/class-wcj-tcpdf.php';
 			$pdf = new WCJ_TCPDF(
 				get_option( 'wcj_invoicing_' . $invoice_type . '_page_orientation', 'P' ),
@@ -59,7 +69,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 
 			$pdf->set_invoice_type( $invoice_type );
 
-			// Set document information
+			// Set document information.
 			$pdf->SetCreator( PDF_CREATOR );
 			$invoice_title = $invoice_type;
 			$invoice_types = wcj_get_invoice_types();
@@ -73,12 +83,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$pdf->SetSubject( 'Invoice PDF' );
 			$pdf->SetKeywords( 'invoice, PDF' );
 
-			// Header - set default header data
+			// Header - set default header data.
 			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_header_enabled', 'yes' ) ) {
 				$the_logo          = '';
 				$the_logo_width_mm = 0;
-				if ( '' != ( $header_image = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ) ) ) ) {
-					$the_logo          = parse_url( $header_image, PHP_URL_PATH );
+				$header_image      = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ) );
+				if ( '' !== $header_image ) {
+					$the_logo          = wp_parse_url( $header_image, PHP_URL_PATH );
 					$the_logo_width_mm = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_header_image_width_mm', 50 );
 					if ( ! file_exists( K_PATH_IMAGES . $the_logo ) ) {
 						$the_logo          = '';
@@ -97,7 +108,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				$pdf->SetPrintHeader( false );
 			}
 
-			// Footer
+			// Footer.
 			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_footer_enabled', 'yes' ) ) {
 				$pdf->setFooterData(
 					wcj_hex2rgb( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_footer_text_color', '#cccccc' ) ),
@@ -109,14 +120,14 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 
 			$tcpdf_font = wcj_get_tcpdf_font( $invoice_type );
 
-			// Set Header and Footer fonts
+			// Set Header and Footer fonts.
 			$pdf->setHeaderFont( array( $tcpdf_font, '', PDF_FONT_SIZE_MAIN ) );
 			$pdf->setFooterFont( array( $tcpdf_font, '', PDF_FONT_SIZE_DATA ) );
 
-			// Set default monospaced font
+			// Set default monospaced font.
 			$pdf->SetDefaultMonospacedFont( PDF_FONT_MONOSPACED );
 
-			// Set margins
+			// Set margins.
 			$pdf->SetMargins(
 				get_option( 'wcj_invoicing_' . $invoice_type . '_margin_left', 15 ),
 				get_option( 'wcj_invoicing_' . $invoice_type . '_margin_top', 27 ),
@@ -125,22 +136,22 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$pdf->SetHeaderMargin( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_margin_header', 10 ) );
 			$pdf->SetFooterMargin( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_margin_footer', 10 ) );
 
-			// Set auto page breaks
+			// Set auto page breaks.
 			$pdf->SetAutoPageBreak( true, wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_margin_bottom', 10 ) );
 
-			// Set image scale factor
+			// Set image scale factor.
 			$pdf->setImageScale( PDF_IMAGE_SCALE_RATIO );
 
-			// Set default font subsetting mode
+			// Set default font subsetting mode.
 			$pdf->setFontSubsetting( true );
 
-			// Set font
+			// Set font.
 			$pdf->SetFont( $tcpdf_font, '', wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ), '', true );
 
-			// Add a page
+			// Add a page.
 			$pdf->AddPage();
 
-			// Set text shadow effect
+			// Set text shadow effect.
 			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_shadowed', 'no' ) ) {
 				$pdf->setTextShadow(
 					array(
@@ -154,9 +165,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				);
 			}
 
-			// Background image
-			if ( '' != ( $background_image = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) ) ) ) {
-				$background_image = 'yes' === ( $parse_bkg_image = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image_parse', 'yes' ) ) ? $_SERVER['DOCUMENT_ROOT'] . parse_url( $background_image, PHP_URL_PATH ) : $background_image;
+			// Background image.
+			$background_image = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) );
+			if ( '' !== $background_image ) {
+				$parse_bkg_image  = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image_parse', 'yes' );
+				$background_image = 'yes' === ( $parse_bkg_image ) ? isset( $_SERVER['DOCUMENT_ROOT'] ) . wp_parse_url( $background_image, PHP_URL_PATH ) : $background_image;
 
 				$pdf->SetAutoPageBreak( false, 0 );
 				$pdf->Image( $background_image, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), '', '', '', false, 300, '', false, false, 0 );
@@ -167,17 +180,20 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		}
 
 		/**
-		 * maybe_replace_tcpdf_method_params.
+		 * Maybe_replace_tcpdf_method_params.
 		 *
 		 * @version 3.6.0
 		 * @since   3.6.0
+		 * @param mixed $html Get pdf html.
+		 * @param mixed $pdf Get pdfs.
 		 */
-		function maybe_replace_tcpdf_method_params( $html, $pdf ) {
+		public function maybe_replace_tcpdf_method_params( $html, $pdf ) {
 			$start_str        = 'wcj_tcpdf_method_params_start';
 			$end_str          = 'wcj_tcpdf_method_params_end';
 			$start_str_length = strlen( $start_str );
 			$end_str_length   = strlen( $end_str );
-			while ( false !== ( $start = strpos( $html, $start_str ) ) ) {
+			$start            = strpos( $html, $start_str );
+			while ( false !== $start ) {
 				$params_start  = $start + $start_str_length;
 				$params_length = strpos( $html, $end_str ) - $params_start;
 				$params        = $pdf->serializeTCPDFtagParameters( unserialize( substr( $html, $params_start, $params_length ) ) );
@@ -187,7 +203,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		}
 
 		/**
-		 * get_html.
+		 * Get_html.
 		 *
 		 * Gets invoice content HTML.
 		 *
@@ -195,15 +211,19 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		 * @since   3.5.0
 		 * @todo    [dev] pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 		 * @todo    [fix] `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
+		 * @param int   $order_id get order id.
+		 * @param mixed $pdf Get pdfs.
 		 */
-		function get_html( $order_id, $pdf ) {
+		public function get_html( $order_id, $pdf ) {
+			$nonce                          = wp_create_nonce();
 			$this->original_internal_coding = mb_internal_encoding();
-			if ( ! empty( $internal_encoding = wcj_get_option( 'wcj_general_advanced_mb_internal_encoding', '' ) ) ) {
+			$internal_encoding              = wcj_get_option( 'wcj_general_advanced_mb_internal_encoding', '' );
+			if ( ! empty( $internal_encoding ) ) {
 				mb_internal_encoding( $internal_encoding );
 			}
 			$_GET['order_id'] = $order_id;
 			$the_order        = wc_get_order( $order_id );
-			if ( ! isset( $_GET['billing_country'] ) ) {
+			if ( ! isset( $_GET['billing_country'] ) && wp_verify_nonce( $nonce ) ) {
 				$_GET['billing_country'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->billing_country : $the_order->get_billing_country() );
 			}
 			if ( ! isset( $_GET['payment_method'] ) ) {
@@ -226,12 +246,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		}
 
 		/**
-		 * get_pdf.
+		 * Get_pdf.
 		 *
 		 * @version 5.1.0
 		 * @todo    [dev] (maybe) `die()` on success
+		 * @param string $dest define dest.
 		 */
-		function get_pdf( $dest ) {
+		public function get_pdf( $dest ) {
 			$pdf     = $this->prepare_pdf();
 			$html    = $this->get_html( $this->order_id, $pdf );
 			$styling = '<style>' . wcj_get_option(
@@ -260,7 +281,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				}
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 					header( 'Content-Length: ' . strlen( $result_pdf ) );
-					echo $result_pdf;
+					echo wp_kses_post( $result_pdf );
 				} else {
 					$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
 					if ( ! file_put_contents( $file_path, $result_pdf ) ) {
@@ -270,14 +291,15 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 						header( 'Content-Length: ' . filesize( $file_path ) );
 					}
 					flush(); // this doesn't really matter.
-					if ( false !== ( $fp = fopen( $file_path, 'r' ) ) ) {
+					$fp = fopen( $file_path, 'r' );
+					if ( false !== ( $fp ) ) {
 						while ( ! feof( $fp ) ) {
-							echo fread( $fp, 65536 );
-							flush(); // this is essential for large downloads
+							echo wp_kses_post( fread( $fp, 65536 ) );
+							flush(); // this is essential for large downloads.
 						}
 						fclose( $fp );
 					} else {
-						die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
+						die( esc_html__( 'Unexpected error', 'woocommerce-jetpack' ) );
 					}
 				}
 			}

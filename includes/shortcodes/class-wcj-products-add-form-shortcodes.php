@@ -5,6 +5,7 @@
  * @version 5.5.9
  * @since   2.5.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/shortcodes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
-
+	/**
+	 * WCJ_Products_Add_Form_Shortcodes.
+	 */
 	class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 
 		/**
@@ -23,7 +26,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		 * @todo    refill image on not validated (or after successful addition); more messages options; more styling options; custom fields;
 		 * @todo    (maybe) `product_id => ( isset( $_GET['wcj_edit_product'] ) ? $_GET['wcj_edit_product'] : 0 )`
 		 */
-		function __construct() {
+		public function __construct() {
 
 			$this->the_shortcodes = array(
 				'wcj_product_add_new',
@@ -73,13 +76,15 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wc_add_new_product.
+		 * Wc_add_new_product.
 		 *
 		 * @version 2.8.0
 		 * @since   2.5.0
 		 * @todo    image gallery: `<input type="file" multiple>` or separate `<input type="file">` for each file; `update_post_meta( $product_id, '_product_image_gallery', implode( ',', $attach_ids ) );`
+		 * @param array $args The user defined shortcode args.
+		 * @param array $shortcode_atts The user defined shortcode shortcode_atts.
 		 */
-		function wc_add_new_product( $args, $shortcode_atts ) {
+		public function wc_add_new_product( $args, $shortcode_atts ) {
 
 			$product_post = array(
 				'post_title'   => $args['title'],
@@ -89,29 +94,29 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				'post_status'  => 'draft',
 			);
 
-			if ( 0 == $shortcode_atts['product_id'] ) {
+			if ( 0 === $shortcode_atts['product_id'] ) {
 				$product_id = wp_insert_post( $product_post );
 			} else {
 				$product_id = $shortcode_atts['product_id'];
 				wp_update_post( array_merge( array( 'ID' => $product_id ), $product_post ) );
 			}
 
-			// Insert the post into the database
-			if ( 0 != $product_id ) {
+			// Insert the post into the database.
+			if ( 0 !== $product_id ) {
 
 				wp_set_object_terms( $product_id, wcj_get_option( 'wcj_product_by_user_product_type', 'simple' ), 'product_type' );
 				wp_set_object_terms( $product_id, $args['cats'], 'product_cat' );
 				wp_set_object_terms( $product_id, $args['tags'], 'product_tag' );
 
 				for ( $i = 1; $i <= $this->the_atts['custom_taxonomies_total']; $i++ ) {
-					if ( 'yes' === $this->the_atts[ 'custom_taxonomy_' . $i . '_enabled' ] && '' != $this->the_atts[ 'custom_taxonomy_' . $i . '_id' ] ) {
+					if ( 'yes' === $this->the_atts[ 'custom_taxonomy_' . $i . '_enabled' ] && '' !== $this->the_atts[ 'custom_taxonomy_' . $i . '_id' ] ) {
 						wp_set_object_terms( $product_id, $args[ 'custom_taxonomy_' . $i ], $this->the_atts[ 'custom_taxonomy_' . $i . '_id' ] );
 					}
 				}
 
 				update_post_meta( $product_id, '_regular_price', $args['regular_price'] );
 				update_post_meta( $product_id, '_sale_price', $args['sale_price'] );
-				if ( '' == $args['sale_price'] ) {
+				if ( '' === $args['sale_price'] ) {
 					update_post_meta( $product_id, '_price', $args['regular_price'] );
 				} else {
 					update_post_meta( $product_id, '_price', $args['sale_price'] );
@@ -123,8 +128,8 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 					update_post_meta( $product_id, '_product_url', $args['external_url'] );
 				}
 
-				// Image
-				if ( '' != $args['image'] && '' != $args['image']['tmp_name'] ) {
+				// Image.
+				if ( '' !== $args['image'] && '' !== $args['image']['tmp_name'] ) {
 					$upload_dir = wp_upload_dir();
 					$filename   = $args['image']['name'];
 					$file       = ( wp_mkdir_p( $upload_dir['path'] ) ) ? $upload_dir['path'] : $upload_dir['basedir'];
@@ -159,18 +164,20 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		}
 
 		/**
-		 * validate_args.
+		 * Validate_args.
 		 *
 		 * @version 2.8.0
 		 * @since   2.5.0
+		 * @param array $args The user defined shortcode args.
+		 * @param array $shortcode_atts The user defined shortcode shortcode_atts.
 		 */
-		function validate_args( $args, $shortcode_atts ) {
+		public function validate_args( $args, $shortcode_atts ) {
 			$errors = '';
-			if ( '' == $args['title'] ) {
+			if ( '' === $args['title'] ) {
 				$errors .= '<li>' . __( 'Title is required!', 'woocommerce-jetpack' ) . '</li>';
 			}
 
-			if ( 'yes' === wcj_get_option( 'wcj_product_by_user_require_unique_title', 'no' ) && 0 == $shortcode_atts['product_id'] ) {
+			if ( 'yes' === wcj_get_option( 'wcj_product_by_user_require_unique_title', 'no' ) && 0 === $shortcode_atts['product_id'] ) {
 				if ( ! function_exists( 'post_exists' ) ) {
 					require_once ABSPATH . 'wp-admin/includes/post.php';
 				}
@@ -195,12 +202,13 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			foreach ( $fields as $field_id => $field_desc ) {
 				if ( 'yes' === $shortcode_atts[ $field_id . '_enabled' ] && 'yes' === $shortcode_atts[ $field_id . '_required' ] ) {
 					$is_missing = false;
-					if ( 'image' === $field_id && ( '' == $args[ $field_id ] || ! isset( $args[ $field_id ]['tmp_name'] ) || '' == $args[ $field_id ]['tmp_name'] ) ) {
+					if ( 'image' === $field_id && ( '' === $args[ $field_id ] || ! isset( $args[ $field_id ]['tmp_name'] ) || '' === $args[ $field_id ]['tmp_name'] ) ) {
 						$is_missing = true;
 					} elseif ( empty( $args[ $field_id ] ) ) {
 						$is_missing = true;
 					}
 					if ( $is_missing ) {
+						/* translators: %s: translation added */
 						$errors .= '<li>' . sprintf( __( '%s is required!', 'woocommerce-jetpack' ), $field_desc ) . '</li>';
 					}
 				}
@@ -213,12 +221,20 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		}
 
 		/**
-		 * maybe_add_taxonomy_field.
+		 * Maybe_add_taxonomy_field.
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param array        $atts The user defined shortcode atts.
+		 * @param array        $args The user defined shortcode args.
+		 * @param int | string $option_id The user defined shortcode option_id.
+		 * @param int | string $taxonomy_id The user defined shortcode taxonomy_id.
+		 * @param string       $title The user defined shortcode title.
+		 * @param string       $input_style The user defined shortcode input_style.
+		 * @param string       $required_mark_html_template The user defined shortcode required_mark_html_template.
+		 * @param array        $table_data The user defined shortcode table_data.
 		 */
-		function maybe_add_taxonomy_field( $atts, $args, $option_id, $taxonomy_id, $title, $input_style, $required_mark_html_template, $table_data ) {
+		public function maybe_add_taxonomy_field( $atts, $args, $option_id, $taxonomy_id, $title, $input_style, $required_mark_html_template, $table_data ) {
 			if ( 'yes' === $atts[ $option_id . '_enabled' ] ) {
 				$product_taxonomies = get_terms( $taxonomy_id, 'orderby=name&hide_empty=0' );
 				if ( is_wp_error( $product_taxonomies ) ) {
@@ -226,7 +242,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				}
 				$required_html                        = ( 'yes' === $atts[ $option_id . '_required' ] ) ? ' required' : '';
 				$required_mark_html                   = ( 'yes' === $atts[ $option_id . '_required' ] ) ? $required_mark_html_template : '';
-				$current_product_taxonomies           = ( 0 != $atts['product_id'] ) ? get_the_terms( $atts['product_id'], $taxonomy_id ) : $args[ $option_id ];
+				$current_product_taxonomies           = ( 0 !== $atts['product_id'] ) ? get_the_terms( $atts['product_id'], $taxonomy_id ) : $args[ $option_id ];
 				$product_taxonomies_as_select_options = '';
 				foreach ( $product_taxonomies as $product_taxonomy ) {
 					$selected = '';
@@ -251,44 +267,47 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_product_add_new.
+		 * Wcj_product_add_new.
 		 *
 		 * @version 5.5.9
 		 * @since   2.5.0
 		 * @todo    `multipart` only if image
+		 * @param array $atts The user defined shortcode atts.
 		 */
-		function wcj_product_add_new( $atts ) {
+		public function wcj_product_add_new( $atts ) {
 
 			$header_html       = '';
 			$notice_html       = '';
 			$input_fields_html = '';
 			$footer_html       = '';
+			$nonce             = wp_create_nonce();
 
 			$args = array(
-				'title'         => isset( $_REQUEST['wcj_add_new_product_title'] ) ? $_REQUEST['wcj_add_new_product_title'] : '',
-				'desc'          => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? $_REQUEST['wcj_add_new_product_desc'] : '',
-				'short_desc'    => isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ? $_REQUEST['wcj_add_new_product_short_desc'] : '',
-				'regular_price' => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? $_REQUEST['wcj_add_new_product_regular_price'] : '',
-				'sale_price'    => isset( $_REQUEST['wcj_add_new_product_sale_price'] ) ? $_REQUEST['wcj_add_new_product_sale_price'] : '',
-				'external_url'  => isset( $_REQUEST['wcj_add_new_product_external_url'] ) ? $_REQUEST['wcj_add_new_product_external_url'] : '',
-				'cats'          => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? $_REQUEST['wcj_add_new_product_cats'] : array(),
-				'tags'          => isset( $_REQUEST['wcj_add_new_product_tags'] ) ? $_REQUEST['wcj_add_new_product_tags'] : array(),
-				'image'         => isset( $_FILES['wcj_add_new_product_image'] ) ? $_FILES['wcj_add_new_product_image'] : '',
+				'title'         => ( isset( $_REQUEST['wcj_add_new_product_title'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_REQUEST['wcj_add_new_product_title'] ) : '',
+				'desc'          => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? isset( $_REQUEST['wcj_add_new_product_desc'] ) : '',
+				'short_desc'    => isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ? isset( $_REQUEST['wcj_add_new_product_short_desc'] ) : '',
+				'regular_price' => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? isset( $_REQUEST['wcj_add_new_product_regular_price'] ) : '',
+				'sale_price'    => isset( $_REQUEST['wcj_add_new_product_sale_price'] ) ? isset( $_REQUEST['wcj_add_new_product_sale_price'] ) : '',
+				'external_url'  => isset( $_REQUEST['wcj_add_new_product_external_url'] ) ? isset( $_REQUEST['wcj_add_new_product_external_url'] ) : '',
+				'cats'          => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? isset( $_REQUEST['wcj_add_new_product_cats'] ) : array(),
+				'tags'          => isset( $_REQUEST['wcj_add_new_product_tags'] ) ? isset( $_REQUEST['wcj_add_new_product_tags'] ) : array(),
+				'image'         => isset( $_FILES['wcj_add_new_product_image'] ) ? isset( $_FILES['wcj_add_new_product_image'] ) : '',
 			);
 			for ( $i = 1; $i <= $this->the_atts['custom_taxonomies_total']; $i++ ) {
-				$param_id                        = 'wcj_add_new_product_' . 'custom_taxonomy_' . $i;
-				$args[ 'custom_taxonomy_' . $i ] = isset( $_REQUEST[ $param_id ] ) ? $_REQUEST[ $param_id ] : array();
+				$param_id                        = 'wcj_add_new_product_custom_taxonomy_' . $i;
+				$args[ 'custom_taxonomy_' . $i ] = isset( $_REQUEST[ $param_id ] ) ? isset( $_REQUEST[ $param_id ] ) : array();
 			}
 
 			if ( isset( $_REQUEST['wcj_add_new_product'] ) ) {
-				if ( true === ( $validate_args = $this->validate_args( $args, $atts ) ) ) {
+				$validate_args = $this->validate_args( $args, $atts );
+				if ( true === ( $validate_args ) ) {
 					$result = $this->wc_add_new_product( $args, $atts );
-					if ( 0 == $result ) {
-						// Error
+					if ( 0 === $result ) {
+						// Error.
 						$notice_html .= '<div class="woocommerce"><ul class="woocommerce-error"><li>' . __( 'Error!', 'woocommerce-jetpack' ) . '</li></ul></div>';
 					} else {
-						// Success
-						if ( 0 == $atts['product_id'] ) {
+						// Success.
+						if ( 0 === $atts['product_id'] ) {
 							$notice_html .= '<div class="woocommerce"><div class="woocommerce-message">' .
 							str_replace(
 								'%product_title%',
@@ -312,23 +331,23 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			}
 
 			if ( isset( $_GET['wcj_edit_product_image_delete'] ) ) {
-				$product_id     = $_GET['wcj_edit_product_image_delete'];
+				$product_id     = isset( $_GET['wcj_edit_product_image_delete'] );
 				$post_author_id = get_post_field( 'post_author', $product_id );
 				$user_ID        = get_current_user_id();
-				if ( $user_ID != $post_author_id ) {
-					echo '<p>' . __( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+				if ( $user_ID !== $post_author_id ) {
+					echo '<p>' . wp_kses_post( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
 				} else {
 					$image_id = get_post_thumbnail_id( $product_id );
 					wp_delete_post( $image_id, true );
 				}
 			}
 
-			if ( 0 != $atts['product_id'] ) {
+			if ( 0 !== $atts['product_id'] ) {
 				$this->the_product = wc_get_product( $atts['product_id'] );
 			}
 
 			$header_html .= '<h3>';
-			$header_html .= ( 0 == $atts['product_id'] ) ? __( 'Add New Product', 'woocommerce-jetpack' ) : __( 'Edit Product', 'woocommerce-jetpack' );
+			$header_html .= ( 0 === $atts['product_id'] ) ? __( 'Add New Product', 'woocommerce-jetpack' ) : __( 'Edit Product', 'woocommerce-jetpack' );
 			$header_html .= '</h3>';
 			$header_html .= '<form method="post" action="' . esc_url( remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) .
 			'" enctype="multipart/form-data">';
@@ -341,7 +360,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			$input_style  = 'width:100%;';
 			$table_data[] = array(
 				'<label for="wcj_add_new_product_title">' . __( 'Title', 'woocommerce-jetpack' ) . $required_mark_html_template . '</label>',
-				'<input required type="text" style="' . $input_style . '" id="wcj_add_new_product_title" name="wcj_add_new_product_title" value="' . ( ( 0 != $atts['product_id'] ) ?
+				'<input required type="text" style="' . $input_style . '" id="wcj_add_new_product_title" name="wcj_add_new_product_title" value="' . ( ( 0 !== $atts['product_id'] ) ?
 					$this->the_product->get_title() : $args['title'] ) . '">',
 			);
 			if ( 'yes' === $atts['desc_enabled'] ) {
@@ -349,7 +368,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				$required_mark_html = ( 'yes' === $atts['desc_required'] ) ? $required_mark_html_template : '';
 				$table_data[]       = array(
 					'<label for="wcj_add_new_product_desc">' . __( 'Description', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
-					'<textarea' . $required_html . ' style="' . $input_style . '" id="wcj_add_new_product_desc" name="wcj_add_new_product_desc">' . ( ( 0 != $atts['product_id'] ) ?
+					'<textarea' . $required_html . ' style="' . $input_style . '" id="wcj_add_new_product_desc" name="wcj_add_new_product_desc">' . ( ( 0 !== $atts['product_id'] ) ?
 						get_post_field( 'post_content', $atts['product_id'] ) : $args['desc'] ) . '</textarea>',
 				);
 			}
@@ -359,15 +378,15 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				$table_data[]       = array(
 					'<label for="wcj_add_new_product_short_desc">' . __( 'Short Description', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
 					'<textarea' . $required_html . ' style="' . $input_style . '" id="wcj_add_new_product_short_desc" name="wcj_add_new_product_short_desc">' .
-						( ( 0 != $atts['product_id'] ) ? get_post_field( 'post_excerpt', $atts['product_id'] ) : $args['short_desc'] ) . '</textarea>',
+						( ( 0 !== $atts['product_id'] ) ? get_post_field( 'post_excerpt', $atts['product_id'] ) : $args['short_desc'] ) . '</textarea>',
 				);
 			}
 			if ( 'yes' === $atts['image_enabled'] ) {
 				$required_html      = ( 'yes' === $atts['image_required'] ) ? ' required' : '';
 				$required_mark_html = ( 'yes' === $atts['image_required'] ) ? $required_mark_html_template : '';
 				$new_image_field    = '<input' . $required_html . ' type="file" id="wcj_add_new_product_image" name="wcj_add_new_product_image" accept="image/*">';
-				if ( 0 != $atts['product_id'] ) {
-					$the_field = ( '' == get_post_thumbnail_id( $atts['product_id'] ) ) ?
+				if ( 0 !== $atts['product_id'] ) {
+					$the_field = ( '' === get_post_thumbnail_id( $atts['product_id'] ) ) ?
 					$new_image_field :
 					'<a href="' . esc_url( add_query_arg( 'wcj_edit_product_image_delete', $atts['product_id'] ) ) . '" onclick="return confirm(\'' .
 						__( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a><br>' .
@@ -386,7 +405,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				$table_data[]       = array(
 					'<label for="wcj_add_new_product_regular_price">' . __( 'Regular Price', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
 					'<input' . $required_html . ' type="number" min="0" step="' . $price_step . '" id="wcj_add_new_product_regular_price" name="wcj_add_new_product_regular_price" value="' .
-						( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_regular_price', true ) : $args['regular_price'] ) . '">',
+						( ( 0 !== $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_regular_price', true ) : $args['regular_price'] ) . '">',
 				);
 			}
 			if ( 'yes' === $atts['sale_price_enabled'] ) {
@@ -395,7 +414,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				$table_data[]       = array(
 					'<label for="wcj_add_new_product_sale_price">' . __( 'Sale Price', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
 					'<input' . $required_html . ' type="number" min="0" step="' . $price_step . '" id="wcj_add_new_product_sale_price" name="wcj_add_new_product_sale_price" value="' .
-						( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_sale_price', true ) : $args['sale_price'] ) . '">',
+						( ( 0 !== $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_sale_price', true ) : $args['sale_price'] ) . '">',
 				);
 			}
 			if ( 'yes' === $atts['external_url_enabled'] ) {
@@ -404,7 +423,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				$table_data[]       = array(
 					'<label for="wcj_add_new_product_external_url">' . __( 'Product URL', 'woocommerce-jetpack' ) . $required_mark_html_template . '</label>',
 					'<input' . $required_html . ' style="' . $input_style . '" type="url" id="wcj_add_new_product_external_url" name="wcj_add_new_product_external_url" value="' .
-						( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_product_url', true ) : $args['external_url'] ) . '">',
+						( ( 0 !== $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_product_url', true ) : $args['external_url'] ) . '">',
 				);
 			}
 			$table_data = $this->maybe_add_taxonomy_field(
@@ -448,7 +467,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				)
 			);
 
-			$footer_html .= '<input type="submit" class="button" name="wcj_add_new_product" value="' . ( ( 0 == $atts['product_id'] ) ?
+			$footer_html .= '<input type="submit" class="button" name="wcj_add_new_product" value="' . ( ( 0 === $atts['product_id'] ) ?
 			__( 'Add', 'woocommerce-jetpack' ) : __( 'Edit', 'woocommerce-jetpack' ) ) . '">';
 			$footer_html .= '</form>';
 

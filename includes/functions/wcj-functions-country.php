@@ -14,6 +14,7 @@ if ( ! function_exists( 'wcj_maybe_add_european_union_countries' ) ) {
 	 * @version 3.6.0
 	 * @since   3.6.0
 	 * @todo    use where needed
+	 * @param   array $countries defines the countries.
 	 */
 	function wcj_maybe_add_european_union_countries( $countries ) {
 		if ( ! empty( $countries ) && in_array( 'EU', $countries, true ) ) {
@@ -49,6 +50,7 @@ if ( ! function_exists( 'wcj_get_country_flag_by_code' ) ) {
 	 * Wcj_get_country_flag_by_code.
 	 *
 	 * @version  2.9.1
+	 * @param   string $country_code defines the country_code.
 	 */
 	function wcj_get_country_flag_by_code( $country_code ) {
 		$img      = '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png';
@@ -65,6 +67,7 @@ if ( ! function_exists( 'wcj_get_customer_country' ) ) {
 	 * @version 2.9.0
 	 * @return  string
 	 * @todo    re-check: there is also `wcj_customer_get_country()`
+	 * @param   int $user_id defines the user_id.
 	 */
 	function wcj_get_customer_country( $user_id ) {
 		$user_meta        = get_user_meta( $user_id );
@@ -134,6 +137,7 @@ if ( ! function_exists( 'wcj_get_country_name_by_code' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @return  string on success, boolean false otherwise
+	 * @param   int | string $country_code defines the country_code.
 	 */
 	function wcj_get_country_name_by_code( $country_code ) {
 		$countries = wcj_get_countries();

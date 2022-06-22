@@ -26,6 +26,7 @@ if ( ! function_exists( 'wcj_get_invoicing_current_image_path_desc' ) ) {
 	 *
 	 * @version 3.4.3
 	 * @since   3.4.3
+	 * @param   string $option_name defines the option_name.
 	 */
 	function wcj_get_invoicing_current_image_path_desc( $option_name ) {
 		$current_image = wcj_get_option( $option_name, '' );
@@ -56,7 +57,7 @@ if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
 			case 'empty':
 				return '';
 			case 'document_root':
-				return $_SERVER['DOCUMENT_ROOT'];
+				return isset( $_SERVER['DOCUMENT_ROOT'] );
 			case 'abspath':
 				return ABSPATH;
 			default: // tcpdf_default.
@@ -151,6 +152,7 @@ if ( ! function_exists( 'wcj_get_tcpdf_font' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @param   string $invoice_type defines the invoice_type.
 	 */
 	function wcj_get_tcpdf_font( $invoice_type ) {
 		return ( wcj_check_tcpdf_fonts_version( true ) ?
@@ -179,6 +181,7 @@ if ( ! function_exists( 'wcj_check_tcpdf_fonts_version' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @param   bool $force_file_check defines the force_file_check.
 	 */
 	function wcj_check_tcpdf_fonts_version( $force_file_check = false ) {
 		if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
@@ -207,6 +210,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 	 * @since   2.9.0
 	 * @todo    (maybe) check file size > 0 or even for exact size (not only if file exists in directory)
 	 * @todo    (maybe) use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)
+	 * @param   bool $force_download defines the force_download.
 	 */
 	function wcj_check_and_maybe_download_tcpdf_fonts( $force_download = false ) {
 		if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
@@ -316,6 +320,7 @@ if ( ! function_exists( 'wcj_get_invoice_create_on' ) ) {
 	 *
 	 * @version 3.2.0
 	 * @since   3.2.0
+	 * @param   string $invoice_type defines the invoice_type.
 	 */
 	function wcj_get_invoice_create_on( $invoice_type ) {
 		$create_on = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_create_on', '' );
@@ -378,6 +383,9 @@ if ( ! function_exists( 'wcj_get_enabled_invoice_types_ids' ) ) {
 if ( ! function_exists( 'wcj_get_pdf_invoice' ) ) {
 	/**
 	 * Wcj_get_pdf_invoice.
+	 *
+	 * @param   int           $order_id defines the order_id.
+	 * @param   int  | string $invoice_type_id defines the invoice_type_id.
 	 */
 	function wcj_get_pdf_invoice( $order_id, $invoice_type_id ) {
 		$the_invoice = new WCJ_PDF_Invoice( $order_id, $invoice_type_id );
@@ -388,6 +396,9 @@ if ( ! function_exists( 'wcj_get_pdf_invoice' ) ) {
 if ( ! function_exists( 'wcj_get_invoice' ) ) {
 	/**
 	 * Wcj_get_invoice.
+	 *
+	 * @param   int  | string $order_id defines the order_id.
+	 * @param   int  | string $invoice_type_id defines the invoice_type_id.
 	 */
 	function wcj_get_invoice( $order_id, $invoice_type_id ) {
 		$the_invoice = new WCJ_Invoice( $order_id, $invoice_type_id );
@@ -400,6 +411,10 @@ if ( ! function_exists( 'wcj_get_invoice_date' ) ) {
 	 * Wcj_get_invoice_date.
 	 *
 	 * @version 2.9.0
+	 * @param   int  | string $order_id defines the order_id.
+	 * @param   int  | string $invoice_type_id defines the invoice_type_id.
+	 * @param   int  | string $extra_days defines the extra_days.
+	 * @param   int  | string $date_format defines the date_format.
 	 */
 	function wcj_get_invoice_date( $order_id, $invoice_type_id, $extra_days, $date_format ) {
 		$the_invoice            = wcj_get_invoice( $order_id, $invoice_type_id );
@@ -416,6 +431,9 @@ if ( ! function_exists( 'wcj_get_invoice_date' ) ) {
 if ( ! function_exists( 'wcj_get_invoice_number' ) ) {
 	/**
 	 * Wcj_get_invoice_number.
+	 *
+	 * @param   int  | string $order_id defines the order_id.
+	 * @param   int  | string $invoice_type_id defines the invoice_type_id.
 	 */
 	function wcj_get_invoice_number( $order_id, $invoice_type_id ) {
 		$the_invoice = wcj_get_invoice( $order_id, $invoice_type_id );
@@ -426,6 +444,9 @@ if ( ! function_exists( 'wcj_get_invoice_number' ) ) {
 if ( ! function_exists( 'wcj_delete_invoice' ) ) {
 	/**
 	 * Wcj_delete_invoice.
+	 *
+	 * @param   int  | string $order_id defines the order_id.
+	 * @param   int  | string $invoice_type_id defines the invoice_type_id.
 	 */
 	function wcj_delete_invoice( $order_id, $invoice_type_id ) {
 		$the_invoice = wcj_get_invoice( $order_id, $invoice_type_id );
@@ -436,6 +457,10 @@ if ( ! function_exists( 'wcj_delete_invoice' ) ) {
 if ( ! function_exists( 'wcj_create_invoice' ) ) {
 	/**
 	 * Wcj_create_invoice.
+	 *
+	 * @param   int  | string $order_id defines the order_id.
+	 * @param   int  | string $invoice_type_id defines the invoice_type_id.
+	 * @param   null          $date defines the date.
 	 */
 	function wcj_create_invoice( $order_id, $invoice_type_id, $date = '' ) {
 		$the_invoice = wcj_get_invoice( $order_id, $invoice_type_id );
@@ -446,6 +471,9 @@ if ( ! function_exists( 'wcj_create_invoice' ) ) {
 if ( ! function_exists( 'wcj_is_invoice_created' ) ) {
 	/**
 	 * Wcj_is_invoice_created.
+	 *
+	 * @param   int  | string $order_id defines the order_id.
+	 * @param   int  | string $invoice_type_id defines the invoice_type_id.
 	 */
 	function wcj_is_invoice_created( $order_id, $invoice_type_id ) {
 		$the_invoice = wcj_get_invoice( $order_id, $invoice_type_id );

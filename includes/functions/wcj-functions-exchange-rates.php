@@ -19,6 +19,8 @@ if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
 	 * @version 3.3.0
 	 * @since   3.2.4
 	 * @todo    (maybe) need to check if `currency_exchange_rates` module `is_enabled()`
+	 * @param   string | int $from defines the from.
+	 * @param   string | int $to defines the to.
 	 */
 	function wcj_get_saved_exchange_rate( $from, $to ) {
 		if ( $from === $to ) {
@@ -88,6 +90,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_server' ) ) {
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_get_currency_exchange_rate_server( $currency_from, $currency_to ) {
 		$server = wcj_get_option( 'wcj_currency_exchange_rates_server_' . sanitize_title( $currency_from . $currency_to ), 'default_server' );
@@ -104,6 +108,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_offset_percent' ) ) {
 	 *
 	 * @version 3.4.5
 	 * @since   3.4.5
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_get_currency_exchange_rate_offset_percent( $currency_from, $currency_to ) {
 		$field_id = 'wcj_currency_exchange_rates_offset_percent_' . sanitize_title( $currency_from . $currency_to );
@@ -120,6 +126,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_server_name' ) ) {
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_get_currency_exchange_rate_server_name( $currency_from, $currency_to ) {
 		$servers = wcj_get_currency_exchange_rate_servers();
@@ -134,6 +142,8 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	 *
 	 * @version 5.2.0
 	 * @since   2.6.0
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
 		if ( $currency_from === $currency_to ) {
@@ -180,6 +190,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	 * @version 3.5.0
 	 * @since   3.2.4
 	 * @todo    use where needed
+	 * @param   string $url defines the url.
+	 * @param   bool   $do_json_decode defines the do_json_decode.
 	 */
 	function wcj_get_currency_exchange_rates_url_response( $url, $do_json_decode = true ) {
 		$response = '';
@@ -202,6 +214,8 @@ if ( ! function_exists( 'wcj_currencyconverterapi_get_exchange_rate' ) ) {
 	 *
 	 * @version 5.5.9
 	 * @since   3.9.0
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_currencyconverterapi_get_exchange_rate( $currency_from, $currency_to ) {
 		$pair    = $currency_from . '_' . $currency_to;
@@ -231,6 +245,7 @@ if ( ! function_exists( 'wcj_boe_get_exchange_rate_gbp' ) ) {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
+	 * @param   string $currency_to defines the currency_to.
 	 */
 	function wcj_boe_get_exchange_rate_gbp( $currency_to ) {
 		if ( 'GBP' === $currency_to ) {
@@ -278,8 +293,8 @@ if ( ! function_exists( 'wcj_boe_get_exchange_rate_gbp' ) ) {
 				$url          = 'http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp?Travel=NIxRSxSUx&FromSeries=1&ToSeries=50&DAT=RNG' . $date_url .
 					'&VFD=Y&xml.x=23&xml.y=18&CSVF=TT&C=' . $currency_codes[ $currency_to ] . '&Filter=N';
 				$xml          = simplexml_load_file( $url );
-				$json_string  = json_encode( $xml );
-				$result_array = json_decode( $json_string, true );
+				$json_string  = wp_json_encode( $xml );
+				$result_array = wp_json_encode( $json_string, true );
 				if ( isset( $result_array['Cube']['Cube'] ) ) {
 					$last_element_index = count( $result_array['Cube']['Cube'] ) - 1;
 					if ( isset( $result_array['Cube']['Cube'][ $last_element_index ]['@attributes']['OBS_VALUE'] ) ) {
@@ -298,6 +313,8 @@ if ( ! function_exists( 'wcj_boe_get_exchange_rate' ) ) {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_boe_get_exchange_rate( $currency_from, $currency_to ) {
 		$gbp_currency_from = wcj_boe_get_exchange_rate_gbp( $currency_from );
@@ -321,6 +338,9 @@ if ( ! function_exists( 'wcj_coinmarketcap_get_exchange_rate_specific' ) ) {
 	 * @see     https://coinmarketcap.com/api/
 	 * @todo    add more `$cryptocurrencies_ids`
 	 * @todo    (maybe) try reverse only if `! isset( $cryptocurrencies_ids[ $currency_from ] )`
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
+	 * @param   bool         $try_reverse defines the try_reverse.
 	 */
 	function wcj_coinmarketcap_get_exchange_rate_specific( $currency_from, $currency_to, $try_reverse = true ) {
 		$return               = false;
@@ -329,8 +349,9 @@ if ( ! function_exists( 'wcj_coinmarketcap_get_exchange_rate_specific' ) ) {
 			'XRP' => 'ripple',
 		);
 		if ( isset( $cryptocurrencies_ids[ $currency_from ] ) ) {
-			$url = 'https://api.coinmarketcap.com/v1/ticker/' . $cryptocurrencies_ids[ $currency_from ] . '/?convert=' . $currency_to;
-			if ( false !== ( $response = wcj_get_currency_exchange_rates_url_response( $url ) ) ) {
+			$url      = 'https://api.coinmarketcap.com/v1/ticker/' . $cryptocurrencies_ids[ $currency_from ] . '/?convert=' . $currency_to;
+			$response = wcj_get_currency_exchange_rates_url_response( $url );
+			if ( false !== ( $response ) ) {
 				$att    = 'price_' . strtolower( $currency_to );
 				$return = ( isset( $response[0]->{$att} ) ? $response[0]->{$att} : false );
 			}
@@ -355,11 +376,14 @@ if ( ! function_exists( 'wcj_coinmarketcap_get_exchange_rate' ) ) {
 	 * @todo    `w_c_j()->modules['currency_exchange_rates']->coinmarketcap_response`
 	 * @todo    `wcj_coinmarketcap_get_exchange_rate_specific()`
 	 * @todo    (maybe) `limit=0`
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
+	 * @param   bool         $try_reverse defines the try_reverse.
 	 */
 	function wcj_coinmarketcap_get_exchange_rate( $currency_from, $currency_to, $try_reverse = true ) {
-		$return = false;
-
-		if ( false !== ( $response = wcj_get_currency_exchange_rates_url_response( 'https://api.coinmarketcap.com/v1/ticker/?convert=' . $currency_to ) ) && is_array( $response ) ) {
+		$return   = false;
+		$response = wcj_get_currency_exchange_rates_url_response( 'https://api.coinmarketcap.com/v1/ticker/?convert=' . $currency_to );
+		if ( false !== ( $response ) && is_array( $response ) ) {
 			foreach ( $response as $pair ) {
 				if ( isset( $pair->symbol ) && $currency_from === $pair->symbol ) {
 					$att    = 'price_' . strtolower( $currency_to );
@@ -384,6 +408,8 @@ if ( ! function_exists( 'wcj_coinbase_get_exchange_rate' ) ) {
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_coinbase_get_exchange_rate( $currency_from, $currency_to ) {
 		$response = wcj_get_currency_exchange_rates_url_response( "https://api.coinbase.com/v2/exchange-rates?currency=$currency_from" );
@@ -397,6 +423,8 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	 *
 	 * @version 4.3.0
 	 * @since   2.6.0
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_ecb_get_exchange_rate( $currency_from, $currency_to ) {
 		$final_rate = false;
@@ -404,26 +432,26 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 			if ( WP_DEBUG === true ) {
 				$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
 			} else {
-				$xml = @simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
+				$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
 			}
-			if ( isset( $xml->Cube->Cube->Cube ) ) {
+			if ( isset( $xml->cube->cube->cube ) ) {
 				if ( 'EUR' === $currency_from ) {
-					$EUR_currency_from_rate = 1;
+					$eur_currency_from_rate = 1;
 				}
 				if ( 'EUR' === $currency_to ) {
-					$EUR_currency_to_rate = 1;
+					$eur_currency_to_rate = 1;
 				}
-				foreach ( $xml->Cube->Cube->Cube as $currency_rate ) {
+				foreach ( $xml->cube->cube->cube as $currency_rate ) {
 					$currency_rate = $currency_rate->attributes();
-					if ( ! isset( $EUR_currency_from_rate ) && $currency_from === $currency_rate->currency ) {
-						$EUR_currency_from_rate = (float) $currency_rate->rate;
+					if ( ! isset( $eur_currency_from_rate ) && $currency_from === $currency_rate->currency ) {
+						$eur_currency_from_rate = (float) $currency_rate->rate;
 					}
-					if ( ! isset( $EUR_currency_to_rate ) && $currency_to === $currency_rate->currency ) {
-						$EUR_currency_to_rate = (float) $currency_rate->rate;
+					if ( ! isset( $eur_currency_to_rate ) && $currency_to === $currency_rate->currency ) {
+						$eur_currency_to_rate = (float) $currency_rate->rate;
 					}
 				}
-				if ( isset( $EUR_currency_from_rate ) && isset( $EUR_currency_to_rate ) && 0 !== $EUR_currency_from_rate ) {
-					$final_rate = round( $EUR_currency_to_rate / $EUR_currency_from_rate, 6 );
+				if ( isset( $eur_currency_from_rate ) && isset( $eur_currency_to_rate ) && 0 !== $eur_currency_from_rate ) {
+					$final_rate = round( $eur_currency_to_rate / $eur_currency_from_rate, 6 );
 				} else {
 					$final_rate = false;
 				}
@@ -433,14 +461,15 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wcj_tcmb_get_exchange_rate_TRY' ) ) {
+if ( ! function_exists( 'wcj_tcmb_get_exchange_rate_try' ) ) {
 	/**
-	 * Wcj_tcmb_get_exchange_rate_TRY.
+	 * Wcj_tcmb_get_exchange_rate_try.
 	 *
 	 * @version 2.7.0
 	 * @since   2.6.0
+	 * @param   string | int $currency_from defines the currency_from.
 	 */
-	function wcj_tcmb_get_exchange_rate_TRY( $currency_from ) {
+	function wcj_tcmb_get_exchange_rate_try( $currency_from ) {
 		if ( 'TRY' === $currency_from ) {
 			return 1;
 		}
@@ -452,7 +481,8 @@ if ( ! function_exists( 'wcj_tcmb_get_exchange_rate_TRY' ) ) {
 					$currency_code = (string) $attributes['CurrencyCode'];
 					if ( $currency_code === $currency_from ) {
 						// Possible values: ForexSelling, ForexBuying, BanknoteSelling, BanknoteBuying. Not used: CrossRateUSD, CrossRateOther.
-						if ( '' !== ( $property_to_check = apply_filters( 'wcj_currency_exchange_rates_tcmb_property_to_check', '' ) ) ) {
+						$property_to_check = apply_filters( 'wcj_currency_exchange_rates_tcmb_property_to_check', '' );
+						if ( '' !== ( $property_to_check ) ) {
 							if ( isset( $the_rate->{$property_to_check} ) ) {
 								$rate = (float) $the_rate->{$property_to_check};
 							} else {
@@ -487,20 +517,22 @@ if ( ! function_exists( 'wcj_tcmb_get_exchange_rate' ) ) {
 	 *
 	 * @version 2.7.0
 	 * @since   2.6.0
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_tcmb_get_exchange_rate( $currency_from, $currency_to ) {
-		$currency_from_TRY = wcj_tcmb_get_exchange_rate_TRY( strtoupper( $currency_from ) );
-		if ( false === $currency_from_TRY ) {
+		$currency_from_try = wcj_tcmb_get_exchange_rate_try( strtoupper( $currency_from ) );
+		if ( false === $currency_from_try ) {
 			return false;
 		}
-		$currency_to_TRY = wcj_tcmb_get_exchange_rate_TRY( strtoupper( $currency_to ) );
-		if ( false === $currency_to_TRY ) {
+		$currency_to_try = wcj_tcmb_get_exchange_rate_try( strtoupper( $currency_to ) );
+		if ( false === $currency_to_try ) {
 			return false;
 		}
-		if ( 1 === $currency_to_TRY ) {
-			return round( $currency_from_TRY, 6 );
+		if ( 1 === $currency_to_try ) {
+			return round( $currency_from_try, 6 );
 		}
-		return round( ( $currency_from_TRY / $currency_to_TRY ), 6 );
+		return round( ( $currency_from_try / $currency_to_try ), 6 );
 	}
 }
 
@@ -511,6 +543,10 @@ if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' 
 	 * @version 5.5.9
 	 * @since   3.9.0
 	 * @return  false or rate
+	 * @param   string | int $currency_from defines the currency_from.
+	 * @param   string | int $currency_to defines the currency_to.
+	 * @param   string       $start_date defines the start_date.
+	 * @param   string       $end_date defines the end_date.
 	 */
 	function wcj_currencyconverterapi_io_get_exchange_rate_average( $currency_from, $currency_to, $start_date, $end_date ) {
 		$pair                 = $currency_from . '_' . $currency_to;

@@ -69,6 +69,8 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Category' ) ) :
 				}
 				foreach ( $product_categories as $product_category ) {
 					foreach ( $categories as $category ) {
+                    settype($product_category->term_id, "string");
+
 						if ( $product_category->term_id === $category ) {
 							return wcj_get_option( 'wcj_add_to_cart_per_category_text_' . $single_or_archive . '_group_' . $i, $add_to_cart_text );
 						}

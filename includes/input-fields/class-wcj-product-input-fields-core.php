@@ -321,6 +321,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param string $field_nr Get fields.
+		 * @param int    $product_id Get product id.
 		 */
 		public function is_enabled_for_product_global( $field_nr, $product_id ) {
 			return wcj_is_enabled_for_product(
@@ -341,6 +343,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param string $field_nr Get fields.
+		 * @param int    $product_id Get product id.
 		 */
 		public function is_enabled( $field_nr, $product_id ) {
 			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $field_nr, $product_id, 'no' );
@@ -352,6 +356,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @version 4.4.0
 		 * @since   2.5.0
+		 * @param Array  $attachments Get attachments.
+		 * @param string $status Get status.
+		 * @param Array  $order Get order.
 		 */
 		public function add_files_to_email_attachments( $attachments, $status, $order ) {
 			if ( is_null( $order ) ) {
@@ -389,6 +396,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * Hide_custom_input_fields_default_output_in_admin_order.
 		 *
 		 * @todo    get actual (max) number of fields in case of local scope
+		 * @param string $hidden_metas Get hidden metas.
 		 */
 		public function hide_custom_input_fields_default_output_in_admin_order( $hidden_metas ) {
 			$total_number = 0;
@@ -409,6 +417,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * Output_custom_input_fields_in_admin_order.
 		 *
 		 * @version 5.5.9
+		 * @param int   $item_id Get item id.
+		 * @param Array $item Get item.
+		 * @param Array $_product Get products.
 		 */
 		public function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 			if ( null === $_product ) {
@@ -451,6 +462,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @version 3.5.0
 		 * @todo    `wcj_get_product_input_field_value()` is almost identical
+		 * @param string $option_name Get option name.
+		 * @param int    $product_id Get product id.
+		 * @param string $default Get default value.
 		 */
 		public function get_value( $option_name, $product_id, $default ) {
 			if ( 'global' === $this->scope ) {
@@ -470,6 +484,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * Validate_product_input_fields_on_add_to_cart.
 		 *
 		 * @version 3.1.0
+		 * @param bool $passed define passed value.
+		 * @param int  $product_id Get product id.
 		 */
 		public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $product_id, 1 ) );
@@ -481,17 +497,17 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 				$type       = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );
 				$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
-
-				if ( 'checkbox' === $type && ! isset( $_POST[ $field_name ] ) ) {
+				$nonce      = wp_create_nonce();
+				if ( 'checkbox' === $type && ! isset( $_POST[ $field_name ] ) && wp_verify_nonce( $nonce ) ) {
 					$_POST[ $field_name ] = 'off';
 				}
 
 				$is_required = $this->get_value( 'wcj_product_input_fields_required_' . $this->scope . '_' . $i, $product_id, 'no' );
 				if ( 'on' === $is_required || 'yes' === $is_required ) {
 					if ( 'file' === $type ) {
-						$field_value = ( isset( $_FILES[ $field_name ]['name'] ) ) ? $_FILES[ $field_name ]['name'] : '';
+						$field_value = ( isset( $_FILES[ $field_name ]['name'] ) ) ? isset( $_FILES[ $field_name ]['name'] ) : '';
 					} else {
-						$field_value = ( isset( $_POST[ $field_name ] ) ) ? $_POST[ $field_name ] : '';
+						$field_value = ( isset( $_POST[ $field_name ] ) ) ? isset( $_POST[ $field_name ] ) : '';
 						if ( 'checkbox' === $type && 'off' === $field_value ) {
 							$field_value = '';
 						}
@@ -508,7 +524,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 					if ( '' !== ( $file_accept ) ) {
 						$file_accept = explode( ',', $file_accept );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-							$file_type = '.' . pathinfo( $_FILES[ $field_name ]['name'], PATHINFO_EXTENSION );
+							$file_type = '.' . pathinfo( isset( $_FILES[ $field_name ]['name'] ), PATHINFO_EXTENSION );
 							if ( ! in_array( $file_type, $file_accept, true ) ) {
 								$passed = false;
 								wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
@@ -518,7 +534,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 					// Validate file max size.
 					$max_file_size = $this->get_value( 'wcj_product_input_fields_type_file_max_size_' . $this->scope . '_' . $i, $product_id, '' );
 					if ( $max_file_size > 0 ) {
-						if ( $_FILES[ $field_name ]['size'] > $max_file_size ) {
+						if ( isset( $_FILES[ $field_name ]['size'] ) > $max_file_size ) {
 							$passed = false;
 							wc_add_notice( __( 'File is too big!', 'woocommerce-jetpack' ), 'error' );
 						}
@@ -535,6 +551,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @version 3.5.0
 		 * @since   3.5.0
 		 * @todo    (maybe) if `$total_number` is not set - use `$default_total_input_fields` instead
+		 * @param int $_product_id get product id.
 		 */
 		public function maybe_update_local_input_fields( $_product_id ) {
 			if ( 'local' !== $this->scope ) {
@@ -568,6 +585,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @version 3.9.1
 		 * @since   3.9.1
+		 * @param string $str Get string value.
 		 */
 		public function maybe_stripslashes( $str ) {
 			return ( 'yes' === wcj_get_option( 'wcj_product_input_fields_stripslashes', 'no' ) ? stripslashes( $str ) : $str );
@@ -636,9 +654,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				}
 
 				if ( $this->is_enabled( $i, $_product_id ) ) {
-
-					$set_value = ( isset( $_POST[ $field_name ] ) ?
-					$this->maybe_stripslashes( $_POST[ $field_name ] ) :
+					$nonce     = wp_create_nonce();
+					$set_value = ( isset( $_POST[ $field_name ] ) && wp_verify_nonce( $nonce ) ?
+					$this->maybe_stripslashes( isset( $_POST[ $field_name ] ) ) :
 					( 'checkbox' === $type ?
 						( 'yes' === $this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $_product_id, 'no' ) ? 'on' : 'off' ) :
 						''
@@ -793,9 +811,12 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_product_input_fields_to_cart_item_data.
 		 *
-		 * from `$_POST` to `$cart_item_data`
+		 * From `$_POST` to `$cart_item_data`
 		 *
 		 * @version 3.9.1
+		 * @param Array $cart_item_data Get cart items.
+		 * @param int   $product_id Get product id.
+		 * @param int   $variation_id Get variation id.
 		 */
 		public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $product_id, 1 ) );
@@ -807,14 +828,15 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				$value_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
 				if ( 'file' === $type ) {
 					if ( isset( $_FILES[ $value_name ] ) ) {
-						$cart_item_data[ $value_name ] = $_FILES[ $value_name ];
+						$cart_item_data[ $value_name ] = isset( $_FILES[ $value_name ] );
 						$tmp_dest_file                 = tempnam( sys_get_temp_dir(), 'wcj' );
 						move_uploaded_file( $cart_item_data[ $value_name ]['tmp_name'], $tmp_dest_file );
 						$cart_item_data[ $value_name ]['tmp_name'] = $tmp_dest_file;
 					}
 				} else {
-					if ( isset( $_POST[ $value_name ] ) ) {
-						$cart_item_data[ $value_name ] = $this->maybe_stripslashes( $_POST[ $value_name ] );
+					$nonce = wp_create_nonce();
+					if ( isset( $_POST[ $value_name ] ) && wp_verify_nonce( $nonce ) ) {
+						$cart_item_data[ $value_name ] = $this->maybe_stripslashes( isset( $_POST[ $value_name ] ) );
 					}
 				}
 			}
@@ -823,6 +845,10 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 		/**
 		 * Aet_cart_item_product_input_fields_from_session.
+		 *
+		 * @param Array  $item Get items.
+		 * @param Array  $values Get values.
+		 * @param string $key Get key value.
 		 */
 		public function get_cart_item_product_input_fields_from_session( $item, $values, $key ) {
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
@@ -838,6 +864,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * Adds product input values to order details (and emails).
 		 *
 		 * @version 3.1.0
+		 * @param string $name Get order item name.
+		 * @param Array  $item Get item data.
+		 * @param bool   $is_cart get is cart value.
 		 */
 		public function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
@@ -892,6 +921,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * Adds product input values to cart item details.
 		 *
 		 * @version 2.4.0
+		 * @param string $name Get order item name.
+		 * @param Array  $cart_item Get cart items.
+		 * @param string $cart_item_key Get cart item key value.
 		 */
 		public function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key ) {
 			return $this->add_product_input_fields_to_order_item_name( $name, $cart_item, true );
@@ -902,6 +934,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @version 4.2.0
 		 * @since   2.9.0
+		 * @param Array $item_data Get item data.
+		 * @param Array $item Get items.
 		 */
 		public function add_product_input_fields_to_cart_item_display_data( $item_data, $item ) {
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
@@ -950,6 +984,10 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @see https://stackoverflow.com/a/49419394/1193038
 		 * @version 4.2.0
 		 * @since   4.2.0
+		 * @param Array  $item Get items.
+		 * @param string $cart_item_key Get cart item key value.
+		 * @param Array  $values Get values.
+		 * @param Array  $order Get order data.
 		 */
 		public function add_product_input_fields_to_order_item_meta( $item, $cart_item_key, $values, $order ) {
 			$this->add_input_fields_to_order_item_meta( $item, '', $values, $cart_item_key );
@@ -960,23 +998,25 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @version 4.2.0
 		 * @since   4.2.0
+		 * @param int    $item_id Get item id.
+		 * @param Array  $values Get values.
+		 * @param string $cart_item_key Get cart item key value.
 		 */
 		public function add_product_input_fields_to_order_item_meta_old( $item_id, $values, $cart_item_key ) {
 			$this->add_input_fields_to_order_item_meta( '', $item_id, $values, $cart_item_key );
 		}
 
 		/**
-		 * @version 4.2.0
-		 * @since   3.4.0
-		 *
 		 * Add_input_fields_to_order_item_meta.
 		 *
-		 * @param $item
-		 * @param $item_id
-		 * @param $values
-		 * @param $cart_item_key
+		 * @version 4.2.0
+		 * @since   3.4.0
+		 * @param Array  $item Get items.
+		 * @param int    $item_id Get item id.
+		 * @param Array  $values Get values.
+		 * @param string $cart_item_key Get cart item key value.
 		 *
-		 * @throws Exception
+		 * @throws Exception Exception.
 		 */
 		public function add_input_fields_to_order_item_meta( $item, $item_id, $values, $cart_item_key ) {
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $values['product_id'], 1 ) );

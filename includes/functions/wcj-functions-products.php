@@ -18,6 +18,7 @@ if ( ! function_exists( 'wcj_maybe_get_product_id_wpml' ) ) {
 	 *
 	 * @version 3.8.0
 	 * @since   3.6.0
+	 * @param int $product_id Get product id.
 	 */
 	function wcj_maybe_get_product_id_wpml( $product_id ) {
 		if ( function_exists( 'icl_object_id' ) && ( 'yes' === wcj_get_option( 'wcj_wpml_use_translation_product_id', 'yes' ) || ! wcj_is_module_enabled( 'wpml' ) ) ) {
@@ -33,6 +34,8 @@ if ( ! function_exists( 'wcj_is_enabled_for_product' ) ) {
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
+	 * @param int   $product_id Get product id.
+	 * @param Array $args Get product args.
 	 */
 	function wcj_is_enabled_for_product( $product_id, $args ) {
 		if ( isset( $args['include_products'] ) && ! empty( $args['include_products'] ) ) {
@@ -81,6 +84,7 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_id' ) ) {
 	 *
 	 * @version 5.5.8
 	 * @since  1.0.0
+	 * @param Array $_product Get products.
 	 */
 	function wcj_get_product_id_or_variation_id( $_product ) {
 		if ( ! $_product || ! is_object( $_product ) ) {
@@ -102,6 +106,7 @@ if ( ! function_exists( 'wcj_get_product_id' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @since   2.7.0
+	 * @param Array $_product Get products.
 	 */
 	function wcj_get_product_id( $_product ) {
 		if ( ! $_product || ! is_object( $_product ) ) {
@@ -121,6 +126,7 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @since   2.7.0
+	 * @param Array $_product Get products.
 	 */
 	function wcj_get_product_id_or_variation_parent_id( $_product ) {
 		if ( ! $_product || ! is_object( $_product ) ) {
@@ -140,6 +146,7 @@ if ( ! function_exists( 'wcj_get_product_status' ) ) {
 	 *
 	 * @version 2.7.0
 	 * @since   2.7.0
+	 * @param Array $_product Get products.
 	 */
 	function wcj_get_product_status( $_product ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_product->post->post_status : $_product->get_status();
@@ -152,6 +159,7 @@ if ( ! function_exists( 'wcj_get_product_total_stock' ) ) {
 	 *
 	 * @version 2.7.0
 	 * @since   2.7.0
+	 * @param Array $_product Get products.
 	 */
 	function wcj_get_product_total_stock( $_product ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -178,6 +186,10 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	 * @version 5.3.8
 	 * @since   2.7.0
 	 * @todo    `$scope` in `WCJ_IS_WC_VERSION_BELOW_3` (i.e. `cart`)
+	 * @param Array      $_product Get products.
+	 * @param null | int $price Get price.
+	 * @param int        $qty Get product qty.
+	 * @param string     $scope Get product scope.
 	 */
 	function wcj_get_product_display_price( $_product, $price = '', $qty = 1, $scope = 'shop' ) {
 		if ( ! $_product || ! is_object( $_product ) ) {
@@ -229,6 +241,9 @@ if ( ! function_exists( 'wcj_get_product_formatted_variation' ) ) {
 	 *
 	 * @version 5.4.0
 	 * @since   2.7.0
+	 * @param Array $variation Get product variations.
+	 * @param  bool  $flat formatted variation attributes.
+	 * @param bool  $include_names Get include names.
 	 */
 	function wcj_get_product_formatted_variation( $variation, $flat = false, $include_names = true ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -246,6 +261,8 @@ if ( ! function_exists( 'wcj_get_product_image_url' ) ) {
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 * @todo    placeholder
+	 * @param int    $product_id Get product id.
+	 * @param string $image_size Get images size.
 	 */
 	function wcj_get_product_image_url( $product_id, $image_size = 'shop_thumbnail' ) {
 		if ( has_post_thumbnail( $product_id ) ) {
@@ -266,6 +283,9 @@ if ( ! function_exists( 'wcj_get_product_input_field_value' ) ) {
 	 *
 	 * @version 3.5.1
 	 * @since   3.5.1
+	 * @param Array  $item  get items.
+	 * @param string $key get item key.
+	 * @param string $field Get field.
 	 */
 	function wcj_get_product_input_field_value( $item, $key, $field ) {
 		$key         = explode( '_', str_replace( '_wcj_product_input_fields_', '', $key ) );
@@ -295,6 +315,9 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 	 * @since   2.4.4
 	 * @return  string
 	 * @todo    (maybe) better handle "file" type
+	 * @param Array  $item  get items.
+	 * @param bool   $do_add_titles add titles.
+	 * @param string $sep  get sep.
 	 */
 	function wcj_get_product_input_fields( $item, $do_add_titles = false, $sep = ', ' ) {
 		$product_input_fields = array();
@@ -324,6 +347,7 @@ if ( ! function_exists( 'wcj_get_index_from_key' ) ) {
 	 * @version 3.0.0
 	 * @since   3.0.0
 	 * @return  string
+	 * @param String $key Get key.
 	 */
 	function wcj_get_index_from_key( $key ) {
 		$index = explode( '_', $key );
@@ -339,6 +363,8 @@ if ( ! function_exists( 'wcj_get_product_addons' ) ) {
 	 * @version 3.0.0
 	 * @since   3.0.0
 	 * @return  string
+	 * @param Array  $item Get items.
+	 * @param string $order_currency Get order currency.
 	 */
 	function wcj_get_product_addons( $item, $order_currency ) {
 
@@ -389,6 +415,11 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 	 * @version 4.1.0
 	 * @todo    [dev] optimize `if ( $variations_only ) { ... }`
 	 * @todo    [dev] maybe use `wc_get_products()` instead of `WP_Query`
+	 * @param Array  $products Get products.
+	 * @param string $post_status get post status.
+	 * @param int    $block_size  Get block size.
+	 * @param bool   $add_variations Add variations.
+	 * @param bool   $variations_only get variation only.
 	 */
 	function wcj_get_products( $products = array(), $post_status = 'any', $block_size = 256, $add_variations = false, $variations_only = false ) {
 		$offset = 0;
@@ -427,6 +458,9 @@ if ( ! function_exists( 'wcj_product_has_terms' ) ) {
 	 *
 	 * @version 3.5.0
 	 * @since   2.8.2
+	 * @param Array  $_product Get product.
+	 * @param string $_values Get values.
+	 * @param String $_term get term.
 	 */
 	function wcj_product_has_terms( $_product, $_values, $_term ) {
 		if ( is_string( $_values ) ) {
@@ -457,6 +491,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
 	 *
 	 * @version 3.3.0
 	 * @since   2.5.0
+	 * @param int $product_id Get product id.
 	 */
 	function wcj_is_product_wholesale_enabled_per_product( $product_id ) {
 		return (
@@ -471,6 +506,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	 * Wcj_is_product_wholesale_enabled.
 	 *
 	 * @version 5.5.8
+	 * @param int $product_id Get product id.
 	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {
 		if ( wcj_is_module_enabled( 'wholesale_price' ) ) {
@@ -520,6 +556,8 @@ if ( ! function_exists( 'wcj_get_the_terms' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @param int    $product_id Get product id.
+	 * @param string $taxonomy  Get taxonomy.
 	 */
 	function wcj_get_the_terms( $product_id, $taxonomy ) {
 		$result = array();
@@ -539,6 +577,9 @@ if ( ! function_exists( 'wcj_is_product_term' ) ) {
 	 *
 	 * @version 3.7.0
 	 * @since   2.9.0
+	 * @param int    $product_id Get product id.
+	 * @param int    $term_ids Get term id.
+	 * @param string $taxonomy  Get taxonomy.
 	 */
 	function wcj_is_product_term( $product_id, $term_ids, $taxonomy ) {
 		if ( empty( $term_ids ) ) {
@@ -563,6 +604,7 @@ if ( ! function_exists( 'wcj_get_terms' ) ) {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @param Array $args Get terms args.
 	 */
 	function wcj_get_terms( $args ) {
 		if ( ! is_array( $args ) ) {

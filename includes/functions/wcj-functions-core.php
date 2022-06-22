@@ -18,6 +18,7 @@ if ( ! function_exists( 'wcj_is_plugin_active_simple' ) ) {
 	 *
 	 * @version 3.4.0
 	 * @since   2.8.0
+	 * @param string $plugin defines the plugin.
 	 * @return  bool
 	 */
 	function wcj_is_plugin_active_simple( $plugin ) {
@@ -52,6 +53,7 @@ if ( ! function_exists( 'wcj_is_plugin_active_by_file' ) ) {
 	 * @version 3.4.0
 	 * @since   3.4.0
 	 * @return  bool
+	 * @param string $plugin_file defines the plugin_file.
 	 */
 	function wcj_is_plugin_active_by_file( $plugin_file ) {
 		foreach ( wcj_get_active_plugins() as $active_plugin ) {
@@ -71,6 +73,8 @@ if ( ! function_exists( 'wcj_is_plugin_activated' ) ) {
 	 * @version 3.4.0
 	 * @since   3.4.0
 	 * @return  bool
+	 * @param string $plugin_folder defines the plugin_folder.
+	 * @param string $plugin_file defines the plugin_file.
 	 */
 	function wcj_is_plugin_activated( $plugin_folder, $plugin_file ) {
 		if ( wcj_is_plugin_active_simple( $plugin_folder . '/' . $plugin_file ) ) {
@@ -88,8 +92,8 @@ if ( ! function_exists( 'wcj_get_option' ) ) {
 	 * @version 5.3.3
 	 * @since   5.3.3
 	 *
-	 * @param $option_name
-	 * @param null        $default Get defult null value.
+	 * @param string $option_name define option_name.
+	 * @param null   $default Get defult null value.
 	 *
 	 * @return  bool
 	 */

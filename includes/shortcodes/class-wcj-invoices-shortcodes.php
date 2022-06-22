@@ -60,10 +60,10 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function init_atts( $atts ) {
-
+			$nonce = wp_create_nonce();
 			// Atts.
-			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID();
+			if ( 0 === $atts['order_id'] && wp_verify_nonce( $nonce ) ) {
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? isset( $_GET['order_id'] ) : get_the_ID();
 				if ( 0 === $atts['order_id'] ) {
 					return false;
 				}

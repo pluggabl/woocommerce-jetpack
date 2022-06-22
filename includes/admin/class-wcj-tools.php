@@ -37,7 +37,7 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		 */
 		public function wcj_new_desing_dashboard_enqueue() {
 			$nonce = wp_create_nonce();
-			$page  = ( isset( $_GET['page'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['page'] ) : '';
+			$page  = ( isset( $_GET['page'] ) && wp_verify_nonce( $nonce ) ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 			if ( 'wcj-tools' === $page ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css', array(), time() );
 				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 			);
 			$html       = '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper wcj_tool_tab_part">';
 			$nonce      = wp_create_nonce();
-			$active_tab = ( isset( $_GET['tab'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['tab'] ) : 'dashboard';
+			$active_tab = ( isset( $_GET['tab'] ) && wp_verify_nonce( $nonce ) ) ? sanitize_text_field( wp_unslash( $_GET['tab'] )) : 'dashboard';
 			foreach ( $tabs as $tab ) {
 				$is_active = ( $active_tab === $tab['id'] ) ? 'nav-tab-active' : '';
 				$html     .= '<a href="' . esc_url(

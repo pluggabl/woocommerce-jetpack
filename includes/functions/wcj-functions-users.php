@@ -18,6 +18,7 @@ if ( ! function_exists( 'wcj_current_user_can' ) ) {
 	 *
 	 * @version 3.9.0
 	 * @since   3.9.0
+	 * @param Array $capability user capability.
 	 */
 	function wcj_current_user_can( $capability ) {
 		if ( ! function_exists( 'wp_get_current_user' ) ) {
@@ -64,6 +65,7 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @return  bool
+	 * @param int $user_id Get user id.
 	 */
 	function is_shop_manager( $user_id = 0 ) {
 		$the_user = ( 0 === $user_id ) ? wp_get_current_user() : get_user_by( 'id', $user_id );
@@ -145,6 +147,7 @@ if ( ! function_exists( 'wcj_get_user_roles' ) ) {
 	 *
 	 * @version 4.9.0
 	 * @since   2.5.3
+	 * @param null $args define args.
 	 */
 	function wcj_get_user_roles( $args = null ) {
 		global $wp_roles;
@@ -192,6 +195,7 @@ if ( ! function_exists( 'wcj_get_user_roles_options' ) ) {
 	 *
 	 * @version 4.9.0
 	 * @since   2.5.3
+	 * @param null $args define args.
 	 */
 	function wcj_get_user_roles_options( $args = null ) {
 		global $wp_roles;
@@ -229,6 +233,8 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 	 * @version 3.7.0
 	 * @since   2.5.0
 	 * @return  bool
+	 * @param string $user_role define userrole.
+	 * @param int    $user_id Get user id.
 	 */
 	function wcj_is_user_role( $user_role, $user_id = 0 ) {
 		if ( ! function_exists( 'wp_get_current_user' ) ) {

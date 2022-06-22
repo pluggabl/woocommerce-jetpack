@@ -18,7 +18,9 @@ if ( ! function_exists( 'wcj_crons_get_all_intervals' ) ) {
 	 * Wcj_crons_get_all_intervals.
 	 *
 	 * @version 3.2.4
-	 * @since   3.2.4
+	 * @since   3.2.4]
+	 * @param   int  $action defines the action.
+	 * @param   null $skip_intervals defines the skip_intervals.
 	 */
 	function wcj_crons_get_all_intervals( $action = '', $skip_intervals = array() ) {
 		if ( '' === $action ) {
@@ -57,6 +59,8 @@ if ( ! function_exists( 'wcj_crons_schedule_the_events' ) ) {
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
+	 * @param   string $event_hook defines the event_hook.
+	 * @param   string $selected_interval defines the selected_interval.
 	 */
 	function wcj_crons_schedule_the_events( $event_hook, $selected_interval ) {
 		$intervals = array_keys( wcj_crons_get_all_intervals() );
@@ -81,6 +85,7 @@ if ( ! function_exists( 'wcj_crons_get_next_event_time_message' ) ) {
 	 * @version 3.2.4
 	 * @since   3.2.4
 	 * @todo    (maybe) move to "date-time" functions
+	 * @param   string $time_option_name defines the time_option_name.
 	 */
 	function wcj_crons_get_next_event_time_message( $time_option_name ) {
 		if ( '' !== wcj_get_option( $time_option_name, '' ) ) {
@@ -103,6 +108,7 @@ if ( ! function_exists( 'wcj_crons_add_custom_intervals' ) ) {
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
+	 * @param   array $schedules defines the schedules.
 	 */
 	function wcj_crons_add_custom_intervals( $schedules ) {
 		$schedules['weekly']    = array(

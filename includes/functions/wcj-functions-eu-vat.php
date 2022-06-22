@@ -19,6 +19,9 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	 * @version 5.5.9
 	 * @since   2.5.7
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 * @param   string $country_code defines the country_code.
+	 * @param   int    $vat_number defines the vat_number.
+	 * @param   string $method defines the method.
 	 */
 	function wcj_validate_vat_no_soap( $country_code, $vat_number, $method ) {
 		$country_code = strtoupper( $country_code );
@@ -64,6 +67,8 @@ if ( ! function_exists( 'wcj_validate_vat_soap' ) ) {
 	 *
 	 * @version 4.7.0
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 * @param   string | int $country_code defines the country_code.
+	 * @param   int          $vat_number defines the vat_number.
 	 */
 	function wcj_validate_vat_soap( $country_code, $vat_number ) {
 		try {
@@ -104,6 +109,9 @@ if ( ! function_exists( 'wcj_validate_vat_with_method' ) ) {
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 * @param   string | int $country_code defines the country_code.
+	 * @param   int          $vat_number defines the vat_number.
+	 * @param   string       $method defines the method.
 	 */
 	function wcj_validate_vat_with_method( $country_code, $vat_number, $method ) {
 		switch ( $method ) {
@@ -122,6 +130,8 @@ if ( ! function_exists( 'wcj_validate_vat' ) ) {
 	 * @version 3.2.2
 	 * @since   2.9.0
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 * @param   string | int $country_code defines the country_code.
+	 * @param   int          $vat_number defines the vat_number.
 	 */
 	function wcj_validate_vat( $country_code, $vat_number ) {
 		$skip_countries = wcj_get_option( 'wcj_eu_vat_number_advanced_skip_countries', array() );

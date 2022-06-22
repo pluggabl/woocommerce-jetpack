@@ -56,10 +56,9 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$nonce            = wp_create_nonce();
 			$country          = isset( $_REQUEST['wcj-country'] );
 			$country_selector = isset( $_REQUEST['wcj_country_selector'] );
-			$req_country      = isset( $country ) && wp_verify_nonce( $nonce ) && ! empty( $country ) ? $country : ( isset( $country_selector ) && ! empty( $country_selector ) ? $country : null );
+			$req_country      = isset( $country ) && ! empty( $country ) ? $country : ( isset( $country_selector ) && ! empty( $country_selector ) ? $country : null );
 			if ( ! empty( $req_country ) ) {
 				wcj_session_set( 'wcj-country', $req_country );
 				do_action( 'wcj_price_by_country_set_country', $req_country, $this->get_currency_by_country( $req_country ) );

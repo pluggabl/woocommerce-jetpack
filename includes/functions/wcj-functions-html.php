@@ -16,6 +16,8 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 	 * Wcj_get_table_html.
 	 *
 	 * @version 4.2.0
+	 * @param array $data defines the data.
+	 * @param array $args defines the args.
 	 */
 	function wcj_get_table_html( $data, $args = array() ) {
 		$defaults = array(
@@ -36,7 +38,7 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 		$html       .= '<tbody>';
 		foreach ( $data as $row_number => $row ) {
 			$row_class  = 'wcj-row wcj-row' . $row_number;
-			$row_class .= $row_number % 2 === 0 ? ' wcj-row-even' : ' wcj-row-odd';
+			$row_class .= 0 === $row_number % 2 ? ' wcj-row-even' : ' wcj-row-odd';
 			$html      .= '<tr' . $row_styles . ' class="' . $row_class . '">';
 			foreach ( $row as $column_number => $value ) {
 				$th_or_td     = ( ( 0 === $row_number && 'horizontal' === $table_heading_type ) || ( 0 === $column_number && 'vertical' === $table_heading_type ) ) ? 'th' : 'td';
@@ -62,6 +64,9 @@ if ( ! function_exists( 'wcj_get_select_html' ) ) {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 * @todo    [dev] `selected`, `class`
+	 * @param int | string $id defines the id.
+	 * @param array        $options defines the options.
+	 * @param null         $style defines the style.
 	 */
 	function wcj_get_select_html( $id, $options, $style = '' ) {
 		$html  = '';
@@ -79,6 +84,11 @@ if ( ! function_exists( 'wcj_get_option_html' ) ) {
 	 * Wcj_get_option_html.
 	 *
 	 * @version 3.3.0
+	 * @param string $option_type defines the option_type.
+	 * @param int    $option_id defines the option_id.
+	 * @param string $option_value defines the option_value.
+	 * @param string $option_description defines the option_description.
+	 * @param string $option_class defines the option_class.
 	 */
 	function wcj_get_option_html( $option_type, $option_id, $option_value, $option_description, $option_class ) {
 

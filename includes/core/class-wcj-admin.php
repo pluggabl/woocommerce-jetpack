@@ -95,15 +95,15 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				<div class="wclj_tl_foot">
 				<div class="wcj-footer">
 					<div class="wcj-review-footer">
-					<p><?php esc_html_( 'Please rate ', 'woocommerce-jetpack' ); ?><strong><?php esc_html_( 'Booster for Woocommerce', 'woocommerce-jetpack' ); ?></strong>
+					<p><?php esc_html( 'Please rate ', 'woocommerce-jetpack' ); ?><strong><?php esc_html( 'Booster for Woocommerce', 'woocommerce-jetpack' ); ?></strong>
 						<span class="wcj-woo-star">
-							<img src="<?php echo esc_html( _wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
-							<img src="<?php echo esc_html( _wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
-							<img src="<?php echo esc_html( _wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
-							<img src="<?php echo esc_html( _wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
-							<img src="<?php echo esc_html( _wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
+							<img src="<?php echo esc_html( wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
+							<img src="<?php echo esc_html( wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
+							<img src="<?php echo esc_html( wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
+							<img src="<?php echo esc_html( wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
+							<img src="<?php echo esc_html( wcj_plugin_url() ) . '/assets/images/star.png'; ?>">
 						</span>
-						<strong><a href="https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?rate=5#new-post" target="_blank"><?php esc_html_( 'WordPress.org', 'woocommerce-jetpack' ); ?></a></strong><?php esc_html_( ' to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ); ?>
+						<strong><a href="https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?rate=5#new-post" target="_blank"><?php esc_html( 'WordPress.org', 'woocommerce-jetpack' ); ?></a></strong><?php esc_html( ' to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ); ?>
 						</p>
 					</div>
 				</div>

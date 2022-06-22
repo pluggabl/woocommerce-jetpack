@@ -119,12 +119,13 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_post_meta_sum.
+		 * Wcj_post_meta_sum.
 		 *
 		 * @version 4.1.0
 		 * @since   4.1.0
+		 * @param array $atts defined shortcode attributes.
 		 */
-		function wcj_post_meta_sum( $atts ) {
+		public function wcj_post_meta_sum( $atts ) {
 			if ( '' === $atts['key'] ) {
 				return '';
 			}
@@ -134,14 +135,15 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_get_option.
+		 * Wcj_get_option.
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
 		 * @todo    [dev] handle multidimensional arrays
 		 * @todo    [dev] maybe also add `get_site_option()`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_get_option( $atts ) {
+		public function wcj_get_option( $atts ) {
 			$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
 			return ( is_array( $result ) ?
 			( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
@@ -149,18 +151,18 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_shipping_costs_table.
+		 * Wcj_shipping_costs_table.
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
 		 * @todo    [dev] sort `$table` before using
 		 * @todo    [feature] add `volume` prop
 		 * @todo    [feature] add `total` prop
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_shipping_costs_table( $atts ) {
-			if ( ! empty( $atts['table'] ) && ( $_cart = WC()->cart ) ) {
-				// E.g.: [wcj_shipping_costs_table cmp="max" prop="quantity" table="10-5|20-7.5|99999-10"]
-				// E.g.: [wcj_shipping_costs_table cmp="min" prop="quantity" table="1-5|11-7.5|21-10"]
+		public function wcj_shipping_costs_table( $atts ) {
+			$_cart = WC()->cart;
+			if ( ! empty( $atts['table'] ) && ( $_cart ) ) {
 				if ( ! isset( $atts['cmp'] ) ) {
 					$atts['cmp'] = 'max';
 				}
@@ -171,7 +173,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					case 'weight':
 						$param_value = $_cart->get_cart_contents_weight();
 						break;
-					default: // 'quantity'
+					default: // 'quantity'.
 						$param_value = $_cart->get_cart_contents_count();
 				}
 				$table = array_map( 'trim', explode( '|', $atts['table'] ) );
@@ -180,7 +182,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				}
 				foreach ( $table as $row ) {
 					$cells = array_map( 'trim', explode( '-', $row ) );
-					if ( 2 != count( $cells ) ) {
+					if ( 2 !== count( $cells ) ) {
 						return '';
 					}
 					if (
@@ -195,13 +197,14 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_upsell_display.
+		 * Wcj_upsell_display.
 		 *
 		 * @version 3.6.0
 		 * @since   3.6.0
 		 * @todo    (maybe) move to Products shortcodes
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_upsell_display( $atts ) {
+		public function wcj_upsell_display( $atts ) {
 			woocommerce_upsell_display(
 				( isset( $atts['limit'] ) ? $atts['limit'] : '-1' ),
 				( isset( $atts['columns'] ) ? $atts['columns'] : 4 ),
@@ -211,12 +214,13 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_cross_sell_display.
+		 * Wcj_cross_sell_display.
 		 *
 		 * @version 3.9.1
 		 * @since   3.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_cross_sell_display( $atts ) {
+		public function wcj_cross_sell_display( $atts ) {
 
 			if ( ! function_exists( 'WC' ) || ! isset( WC()->cart ) ) {
 				return '';
@@ -256,13 +260,14 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_shipping_time_table.
+		 * Wcj_shipping_time_table.
 		 *
 		 * @version 3.5.0
 		 * @since   3.5.0
 		 * @todo    `$atts['shipping_class_term_id']` - class term ID is not visible anywhere for admin, so probably need to use `slug` instead
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_shipping_time_table( $atts ) {
+		public function wcj_shipping_time_table( $atts ) {
 			$do_use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
 			$do_use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
 			$shipping_class_term_id    = ( isset( $atts['shipping_class_term_id'] ) ? $atts['shipping_class_term_id'] : '0' );
@@ -271,38 +276,42 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_wc_session_value.
+		 * Wcj_wc_session_value.
 		 *
 		 * @version 3.4.0
 		 * @since   3.4.0
 		 * @todo    handle arrays
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_wc_session_value( $atts ) {
+		public function wcj_wc_session_value( $atts ) {
 			return ( '' === $atts['key'] ? '' : WC()->session->get( $atts['key'], '' ) );
 		}
 
 		/**
-		 * wcj_session_value.
+		 * Wcj_session_value.
 		 *
 		 * @version 3.4.0
 		 * @since   3.4.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_session_value( $atts ) {
+		public function wcj_session_value( $atts ) {
 			return ( '' === $atts['key'] || ! isset( $_SESSION[ $atts['key'] ] ) ? '' : $_SESSION[ $atts['key'] ] );
 		}
 
 		/**
-		 * wcj_request_value.
+		 * Wcj_request_value.
 		 *
 		 * @version 3.4.0
 		 * @since   3.4.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_request_value( $atts ) {
-			return ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) ? '' : $_REQUEST[ $atts['key'] ] );
+		public function wcj_request_value( $atts ) {
+			$nonce = wp_create_nonce();
+			return ( ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) && wp_verify_nonce( $nonce ) ) ? '' : isset( $_REQUEST[ $atts['key'] ] ) );
 		}
 
 		/**
-		 * wcj_tcpdf_rectangle.
+		 * Wcj_tcpdf_rectangle.
 		 *
 		 * @version 3.4.0
 		 * @since   3.3.0
@@ -311,8 +320,9 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @todo    add options to take `width` and `height` from custom source (e.g. item or order meta)
 		 * @todo    (maybe) move all `tcpdf` shortcodes to `class-wcj-shortcodes-tcpdf.php`
 		 * @todo    (maybe) create general `[wcj_tcpdf_method]` shortcode (not sure how to solve `$params` part though)
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_tcpdf_rectangle( $atts ) {
+		public function wcj_tcpdf_rectangle( $atts ) {
 
 			$style        = 'D';
 			$border_style = array(
@@ -340,36 +350,39 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_tcpdf_barcode.
+		 * Wcj_tcpdf_barcode.
 		 *
 		 * @version 3.3.0
 		 * @since   3.2.4
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_tcpdf_barcode( $atts ) {
+		public function wcj_tcpdf_barcode( $atts ) {
 			return wcj_tcpdf_barcode( $atts );
 		}
 
 		/**
-		 * wcj_barcode.
+		 * Wcj_barcode.
 		 *
 		 * @version 3.3.0
 		 * @since   3.2.4
 		 * @todo    (maybe) current page url as `code`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_barcode( $atts ) {
+		public function wcj_barcode( $atts ) {
 			return wcj_barcode( $atts );
 		}
 
 		/**
-		 * wcj_product_category_count.
+		 * Wcj_product_category_count.
 		 *
 		 * @version 3.2.4
 		 * @since   3.2.4
 		 * @todo    option to use `name` or `term_id` instead of `slug`
 		 * @todo    `pad_counts`
 		 * @todo    add similar `[wcj_product_tag_count]` and `[wcj_product_taxonomy_count]`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_product_category_count( $atts ) {
+		public function wcj_product_category_count( $atts ) {
 			if ( ! isset( $atts['slug'] ) ) {
 				return '';
 			}
@@ -385,29 +398,32 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_button_toggle_tax_display.
+		 * Wcj_button_toggle_tax_display.
 		 *
 		 * @version 3.2.4
 		 * @since   3.2.4
 		 * @todo    (dev) different style/class for different tax state
 		 * @todo    (maybe) `get` instead of `post`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_button_toggle_tax_display( $atts ) {
-			$current_value = ( '' == ( $session_value = wcj_session_get( 'wcj_toggle_tax_display' ) ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+		public function wcj_button_toggle_tax_display( $atts ) {
+			$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
+			$current_value = ( '' === ( $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
 			$label         = $atts[ 'label_' . $current_value ];
 			return '<form method="post" action=""><input type="submit" name="wcj_button_toggle_tax_display"' .
 			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';
 		}
 
 		/**
-		 * wcj_store_address.
+		 * Wcj_store_address.
 		 *
 		 * @version 3.2.1
 		 * @since   3.2.1
 		 * @todo    `force_country_display` - make optional
 		 * @todo    `remove_filter` will remove all `__return_true` functions (even added elsewhere)
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_store_address( $atts ) {
+		public function wcj_store_address( $atts ) {
 			add_filter( 'woocommerce_formatted_address_force_country_display', '__return_true' );
 			$return = WC()->countries->get_formatted_address(
 				array(
@@ -425,51 +441,55 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_wp_option.
+		 * Wcj_wp_option.
 		 *
 		 * @version 3.2.1
 		 * @since   3.2.1
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_wp_option( $atts ) {
-			return ( '' != $atts['option'] ? wcj_get_option( $atts['option'], $atts['default'] ) : '' );
+		public function wcj_wp_option( $atts ) {
+			return ( '' !== $atts['option'] ? wcj_get_option( $atts['option'], $atts['default'] ) : '' );
 		}
 
 		/**
-		 * wcj_current_currency_code.
+		 * Wcj_current_currency_code.
 		 *
 		 * @version 3.1.1
 		 * @since   3.1.1
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_current_currency_code( $atts ) {
+		public function wcj_current_currency_code( $atts ) {
 			return get_woocommerce_currency();
 		}
 
 		/**
-		 * wcj_current_currency_symbol.
+		 * Wcj_current_currency_symbol.
 		 *
 		 * @version 3.1.1
 		 * @since   3.1.1
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_current_currency_symbol( $atts ) {
+		public function wcj_current_currency_symbol( $atts ) {
 			return get_woocommerce_currency_symbol();
 		}
 
 		/**
-		 * wcj_selector.
+		 * Wcj_selector.
 		 *
 		 * @version 5.4.3
 		 * @since   3.1.0
 		 * @todo    add `default` attribute
 		 * @todo    (maybe) add more selector types (e.g.: currency)
 		 * @todo    (maybe) remove country switcher and currency switcher shortcodes and use this shortcode instead
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_selector( $atts ) {
-			$html      = '';
-			$options   = '';
-			$countries = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
-
-			$selected_value = ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ?
-			$_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] :
+		public function wcj_selector( $atts ) {
+			$html           = '';
+			$options        = '';
+			$countries      = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
+			$nonce          = wp_create_nonce();
+			$selected_value = ( ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) && wp_verify_nonce( $nonce ) ) ?
+			isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) :
 			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 			);
 
@@ -477,7 +497,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				case 'wc':
 					$countries = WC()->countries->get_allowed_countries();
 					break;
-				default: // 'all'
+				default: // 'all'.
 					$countries = wcj_get_countries();
 					asort( $options );
 					break;
@@ -487,7 +507,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				case 'product_custom_visibility':
 					$options = wcj_get_select_options( wcj_get_option( 'wcj_product_custom_visibility_options_list', '' ) );
 					break;
-				default: // 'country'
+				default: // 'country'.
 					$options = $countries;
 					asort( $options );
 					break;
@@ -503,50 +523,52 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_site_url.
+		 * Wcj_site_url.
 		 *
 		 * @version 2.9.1
 		 * @since   2.9.1
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_site_url( $atts ) {
+		public function wcj_site_url( $atts ) {
 			return site_url();
 		}
 
 		/**
-		 * wcj_currency_exchange_rate.
+		 * Wcj_currency_exchange_rate.
 		 *
 		 * @version 2.9.0
 		 * @since   2.9.0
 		 * @todo    (maybe) add similar function
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_currency_exchange_rate( $atts ) {
-			return ( '' != $atts['from'] && '' != $atts['to'] ) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $atts['from'] . $atts['to'] ) ) : '';
+		public function wcj_currency_exchange_rate( $atts ) {
+			return ( '' !== $atts['from'] && '' !== $atts['to'] ) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $atts['from'] . $atts['to'] ) ) : '';
 		}
 
 		/**
-		 * wcj_currency_exchange_rate_wholesale_module.
+		 * Wcj_currency_exchange_rate_wholesale_module.
 		 *
 		 * @version 5.4.5
 		 * @since   5.4.5
 		 * @todo    (maybe) add similar function
 		 */
-
-		function wcj_currency_exchange_rate_wholesale_module() {
-			$store_base_currency     = strtolower( get_option( 'woocommerce_currency' ) );
-			 $store_current_currency = strtolower( get_woocommerce_currency() );
-			  return ( '' != $store_base_currency && '' != $store_current_currency ) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $store_base_currency . $store_current_currency ) ) : '';
+		public function wcj_currency_exchange_rate_wholesale_module() {
+			$store_base_currency    = strtolower( get_option( 'woocommerce_currency' ) );
+			$store_current_currency = strtolower( get_woocommerce_currency() );
+			return ( '' !== $store_base_currency && '' !== $store_current_currency ) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $store_base_currency . $store_current_currency ) ) : '';
 
 		}
 
 
 		/**
-		 * wcj_currency_exchange_rates_table.
+		 * Wcj_currency_exchange_rates_table.
 		 *
 		 * @version 2.9.0
 		 * @since   2.9.0
 		 * @todo    (maybe) add similar function
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_currency_exchange_rates_table( $atts ) {
+		public function wcj_currency_exchange_rates_table( $atts ) {
 			$all_currencies = w_c_j()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
 			$table_data     = array();
 			foreach ( $all_currencies as $currency ) {
@@ -566,56 +588,62 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_empty_cart_button.
+		 * Wcj_empty_cart_button.
 		 *
 		 * @version 2.8.0
 		 * @since   2.8.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_empty_cart_button( $atts ) {
+		public function wcj_empty_cart_button( $atts ) {
 			if ( ! wcj_is_module_enabled( 'empty_cart' ) ) {
+				/* translators: %s: translation added */
 				return '<p>' . sprintf( __( '"%s" module is not enabled!', 'woocommerce-jetpack' ), __( 'Empty Cart Button', 'woocommerce-jetpack' ) ) . '</p>';
 			}
 			return wcj_empty_cart_button_html();
 		}
 
 		/**
-		 * wcj_current_time.
+		 * Wcj_current_time.
 		 *
 		 * @version 2.6.0
 		 * @since   2.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_current_time( $atts ) {
+		public function wcj_current_time( $atts ) {
 			return date_i18n( $atts['time_format'], current_time( 'timestamp' ) );
 		}
 
 		/**
-		 * wcj_current_datetime.
+		 * Wcj_current_datetime.
 		 *
 		 * @version 2.6.0
 		 * @since   2.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_current_datetime( $atts ) {
+		public function wcj_current_datetime( $atts ) {
 			return date_i18n( $atts['datetime_format'], current_time( 'timestamp' ) );
 		}
 
 		/**
-		 * wcj_current_timestamp.
+		 * Wcj_current_timestamp.
 		 *
 		 * @version 2.6.0
 		 * @since   2.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_current_timestamp( $atts ) {
+		public function wcj_current_timestamp( $atts ) {
 			return current_time( 'timestamp' );
 		}
 
 		/**
-		 * wcj_customer_order_count.
+		 * Wcj_customer_order_count.
 		 *
 		 * @version 3.4.0
 		 * @since   3.4.0
 		 * @todo    `hide_if_zero`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_customer_order_count( $atts ) {
+		public function wcj_customer_order_count( $atts ) {
 			if ( is_user_logged_in() ) {
 				$current_user = wp_get_current_user();
 				$customer     = new WC_Customer( $current_user->ID );
@@ -626,15 +654,16 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_customer_total_spent.
+		 * Wcj_customer_total_spent.
 		 *
 		 * @version 3.4.0
 		 * @since   3.4.0
 		 * @todo    `hide_if_zero`
 		 * @todo    `hide_currency`
 		 * @todo    (maybe) solve multicurrency issue
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_customer_total_spent( $atts ) {
+		public function wcj_customer_total_spent( $atts ) {
 			if ( is_user_logged_in() ) {
 				$current_user = wp_get_current_user();
 				$customer     = new WC_Customer( $current_user->ID );
@@ -645,7 +674,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_customer_billing_country.
+		 * Wcj_customer_billing_country.
 		 *
 		 * @version 2.5.8
 		 * @since   2.5.8
@@ -653,11 +682,13 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @todo    move all customer shortcodes to new class `WCJ_Customers_Shortcodes` (and there `$this->the_customer = new WC_Customer( $current_user->ID )`)
 		 * @todo    add `[wcj_customer_taxable_address]` (with `$customer->get_taxable_address()`)
 		 * @todo    add `[wcj_customer_prop]` (with `$customer->get_{$atts['key']}()`)
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_customer_billing_country( $atts ) {
+		public function wcj_customer_billing_country( $atts ) {
 			if ( is_user_logged_in() ) {
 				$current_user = wp_get_current_user();
-				if ( '' != ( $meta = get_user_meta( $current_user->ID, 'billing_country', true ) ) ) {
+				$meta         = get_user_meta( $current_user->ID, 'billing_country', true );
+				if ( '' !== ( $meta ) ) {
 					return ( 'yes' === $atts['full_country_name'] ) ? wcj_get_country_name_by_code( $meta ) : $meta;
 				}
 			}
@@ -665,15 +696,17 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_customer_shipping_country.
+		 * Wcj_customer_shipping_country.
 		 *
 		 * @version 2.5.8
 		 * @since   2.5.8
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_customer_shipping_country( $atts ) {
+		public function wcj_customer_shipping_country( $atts ) {
 			if ( is_user_logged_in() ) {
 				$current_user = wp_get_current_user();
-				if ( '' != ( $meta = get_user_meta( $current_user->ID, 'shipping_country', true ) ) ) {
+				$meta         = get_user_meta( $current_user->ID, 'shipping_country', true );
+				if ( '' !== ( $meta ) ) {
 					return ( 'yes' === $atts['full_country_name'] ) ? wcj_get_country_name_by_code( $meta ) : $meta;
 				}
 			}
@@ -681,15 +714,17 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_customer_meta.
+		 * Wcj_customer_meta.
 		 *
 		 * @version 2.5.8
 		 * @since   2.5.8
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_customer_meta( $atts ) {
-			if ( '' != $atts['key'] && is_user_logged_in() ) {
+		public function wcj_customer_meta( $atts ) {
+			if ( '' !== $atts['key'] && is_user_logged_in() ) {
 				$current_user = wp_get_current_user();
-				if ( '' != ( $meta = get_user_meta( $current_user->ID, $atts['key'], true ) ) ) {
+				$meta         = get_user_meta( $current_user->ID, $atts['key'], true );
+				if ( '' !== ( $meta ) ) {
 					return $meta;
 				}
 			}
@@ -697,15 +732,16 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * get_shortcode_currencies.
+		 * Get_shortcode_currencies.
 		 *
 		 * @version 2.4.5
 		 * @since   2.4.5
+		 * @param array $atts The user defined shortcode attributes.
 		 */
 		private function get_shortcode_currencies( $atts ) {
-			// Shortcode currencies
+			// Shortcode currencies.
 			$shortcode_currencies = $atts['currencies'];
-			if ( '' == $shortcode_currencies ) {
+			if ( '' === $shortcode_currencies ) {
 				$shortcode_currencies = array();
 			} else {
 				$shortcode_currencies = str_replace( ' ', '', $shortcode_currencies );
@@ -722,18 +758,19 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_wholesale_price_table (global only).
+		 * Wcj_wholesale_price_table (global only).
 		 *
 		 * @version 3.1.0
 		 * @since   2.4.8
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_wholesale_price_table( $atts ) {
+		public function wcj_wholesale_price_table( $atts ) {
 
 			if ( ! wcj_is_module_enabled( 'wholesale_price' ) ) {
 				return '';
 			}
 
-			// Check for user role options
+			// Check for user role options.
 			$role_option_name_addon = '';
 			$user_roles             = wcj_get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
 			if ( ! empty( $user_roles ) ) {
@@ -746,8 +783,9 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				}
 			}
 
-			$wholesale_price_levels = array();
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
+			$wholesale_price_levels            = array();
+			$wcj_wholesale_price_levels_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) );
+			for ( $i = 1; $i <= $wcj_wholesale_price_levels_number; $i++ ) {
 				$level_qty                = wcj_get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
 				$discount                 = wcj_get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
 				$wholesale_price_levels[] = array(
@@ -762,7 +800,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$i              = -1;
 			foreach ( $wholesale_price_levels as $wholesale_price_level ) {
 				$i++;
-				if ( 0 == $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
+				if ( 0 === $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
 					continue;
 				}
 				$level_max_qty    = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ? $atts['before_level_max_qty'] . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : $atts['last_level_max_qty'];
@@ -799,29 +837,32 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_currency_select_link_list.
+		 * Wcj_currency_select_link_list.
 		 *
 		 * @version 5.5.9
 		 * @since   2.4.5
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_currency_select_link_list( $atts, $content ) {
+		public function wcj_currency_select_link_list( $atts, $content ) {
 			$html                 = '';
 			$shortcode_currencies = $this->get_shortcode_currencies( $atts );
-			// Options
+			// Options.
 			$currencies        = get_woocommerce_currencies();
 			$selected_currency = '';
-			if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
+			$session_value     = wcj_session_get( 'wcj-currency' );
+			if ( null !== ( $session_value ) ) {
 				$selected_currency = $session_value;
 			} else {
 				$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 				if ( ! empty( $module_roles ) ) {
 					$current_user_role = wcj_get_current_user_first_role();
-					if ( in_array( $current_user_role, $module_roles ) ) {
+					if ( in_array( $current_user_role, $module_roles, true ) ) {
 						$selected_currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
 					}
 				}
 			}
-			if ( '' === $selected_currency && '' != $atts['default'] ) {
+			if ( '' === $selected_currency && '' !== $atts['default'] ) {
 				$selected_currency = $atts['default'];
 			}
 			$links             = array();
@@ -836,14 +877,14 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					);
 					$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
 					$the_link                 = '<a href="' . esc_url( add_query_arg( 'wcj-currency', $currency_code ) ) . '">' . $currency_switcher_output . '</a>';
-					if ( $currency_code != $selected_currency ) {
+					if ( $currency_code !== $selected_currency ) {
 						$links[] = $the_link;
 					} else {
 						$first_link = $the_link;
 					}
 				}
 			}
-			if ( '' != $first_link ) {
+			if ( '' !== $first_link ) {
 				$links = array_merge( array( $first_link ), $links );
 			}
 			$html .= implode( '<br>', $links );
@@ -851,33 +892,40 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_get_left_to_free_shipping.
+		 * Wcj_get_left_to_free_shipping.
 		 *
 		 * @version 2.5.8
 		 * @since   2.4.4
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_get_left_to_free_shipping( $atts, $content ) {
+		public function wcj_get_left_to_free_shipping( $atts, $content ) {
 			return wcj_get_left_to_free_shipping( $atts['content'], $atts['multiply_by'] );
 		}
 
 		/**
-		 * wcj_tcpdf_pagebreak.
+		 * Wcj_tcpdf_pagebreak.
 		 *
 		 * @version 2.3.7
 		 * @since   2.3.7
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_tcpdf_pagebreak( $atts, $content ) {
+		public function wcj_tcpdf_pagebreak( $atts, $content ) {
 			return '<tcpdf method="AddPage" />';
 		}
 
 		/**
-		 * get_currency_selector.
+		 * Get_currency_selector.
 		 *
 		 * @version 3.9.0
 		 * @since   2.4.5
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
+		 * @param string         $type The user defined shortcode type.
 		 */
 		private function get_currency_selector( $atts, $content, $type = 'select' ) {
-			// Start
+			// Start.
 			$form_method = $atts['form_method'];
 			$class       = $atts['class'];
 			$style       = $atts['style'];
@@ -887,21 +935,22 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				$html .= '<select name="wcj-currency" id="wcj-currency-select" style="' . $style . '" class="' . $class . '" onchange="this.form.submit()">';
 			}
 			$shortcode_currencies = $this->get_shortcode_currencies( $atts );
-			// Options
+			// Options.
 			$currencies        = get_woocommerce_currencies();
 			$selected_currency = '';
-			if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
+			$session_value     = wcj_session_get( 'wcj-currency' );
+			if ( null !== ( $session_value ) ) {
 				$selected_currency = $session_value;
 			} else {
 				$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 				if ( ! empty( $module_roles ) ) {
 					$current_user_role = wcj_get_current_user_first_role();
-					if ( in_array( $current_user_role, $module_roles ) ) {
+					if ( in_array( $current_user_role, $module_roles, true ) ) {
 						$selected_currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
 					}
 				}
 			}
-			if ( '' === $selected_currency && '' != $atts['default'] ) {
+			if ( '' === $selected_currency && '' !== $atts['default'] ) {
 				wcj_session_set( 'wcj-currency', $atts['default'] );
 				$selected_currency = $atts['default'];
 			}
@@ -914,7 +963,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 						'%currency_symbol%' => get_woocommerce_currency_symbol( $currency_code ),
 					);
 					$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
-					if ( '' == $selected_currency ) {
+					if ( '' === $selected_currency ) {
 						$selected_currency = $currency_code;
 					}
 					if ( 'select' === $type ) {
@@ -924,7 +973,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					}
 				}
 			}
-			// End
+			// End.
 			if ( 'select' === $type ) {
 				$html .= '</select>';
 			}
@@ -933,31 +982,37 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_currency_select_radio_list.
+		 * Wcj_currency_select_radio_list.
 		 *
 		 * @version 2.4.5
 		 * @since   2.4.5
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_currency_select_radio_list( $atts, $content ) {
+		public function wcj_currency_select_radio_list( $atts, $content ) {
 			return $this->get_currency_selector( $atts, $content, 'radio' );
 		}
 
 		/**
-		 * wcj_currency_select_drop_down_list.
+		 * Wcj_currency_select_drop_down_list.
 		 *
 		 * @version 2.4.5
 		 * @since   2.4.3
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_currency_select_drop_down_list( $atts, $content ) {
+		public function wcj_currency_select_drop_down_list( $atts, $content ) {
 			return $this->get_currency_selector( $atts, $content, 'select' );
 		}
 
 		/**
-		 * wcj_country_select_drop_down_list.
+		 * Wcj_country_select_drop_down_list.
 		 *
 		 * @version 4.3.0
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_country_select_drop_down_list( $atts, $content ) {
+		public function wcj_country_select_drop_down_list( $atts, $content ) {
 			$form_method  = $atts['form_method'];
 			$select_class = $atts['class'];
 			$select_style = $atts['style'];
@@ -969,7 +1024,8 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 
 			$countries           = wcj_get_countries();
 			$shortcode_countries = ( empty( $atts['countries'] ) ? array() : array_map( 'trim', explode( ',', $atts['countries'] ) ) );
-			$selected_country    = ( null !== ( $session_value = wcj_session_get( 'wcj-country' ) ) ? $session_value : '' );
+			$session_value       = wcj_session_get( 'wcj-country' );
+			$selected_country    = ( null !== ( $session_value ) ? $session_value : '' );
 			if ( 'yes' === $atts['replace_with_currency'] ) {
 				$currencies_names_and_symbols = wcj_get_woocommerce_currencies_and_symbols();
 			}
@@ -997,47 +1053,56 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_text.
+		 * Wcj_text.
 		 *
 		 * @since 2.2.9
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_text( $atts, $content ) {
+		public function wcj_text( $atts, $content ) {
 
 			return $content;
 		}
 
 		/**
-		 * wcj_wpml.
+		 * Wcj_wpml.
 		 *
 		 * @version 2.2.9
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_wpml( $atts, $content ) {
+		public function wcj_wpml( $atts, $content ) {
 			return do_shortcode( $content );
 		}
 
 		/**
-		 * wcj_wpml_translate.
+		 * Wcj_wpml_translate.
+		 *
+		 * @param array          $atts The user defined shortcode attributes.
+		 * @param array | string $content The user defined shortcode content.
 		 */
-		function wcj_wpml_translate( $atts, $content ) {
+		public function wcj_wpml_translate( $atts, $content ) {
 			return $this->wcj_wpml( $atts, $content );
 		}
 
 		/**
-		 * wcj_current_date.
+		 * Wcj_current_date.
 		 *
 		 * @version 2.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_current_date( $atts ) {
+		public function wcj_current_date( $atts ) {
 			return date_i18n( $atts['date_format'], current_time( 'timestamp' ) );
 		}
 
 		/**
-		 * wcj_image.
+		 * Wcj_image.
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_image( $atts ) {
+		public function wcj_image( $atts ) {
 			return '<img' .
 			' src="' . ( ! empty( $atts['src'] ) ? $atts['src'] : '' ) . '"' .
 			' class="' . ( ! empty( $atts['class'] ) ? $atts['class'] : '' ) . '"' .

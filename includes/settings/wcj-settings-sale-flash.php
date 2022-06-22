@@ -118,7 +118,7 @@ foreach ( $product_terms as $ids => $_product_terms ) {
 					/* translators: %s: translators Added */
 					'title'    => ( isset( $_product_terms[ $term_id ] ) ? $_product_terms[ $term_id ] : sprintf( __( 'Term #%s', 'woocommerce-jetpack' ), $term_id ) ),
 					'desc_tip' => __( 'You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
-					'id'       => "wcj_sale_flash_per_{$id}[{$term_id}]",
+					'id'       => "wcj_sale_flash_per_{$ids}[{$term_id}]",
 					'default'  => '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>',
 					'type'     => 'textarea',
 					'css'      => 'width:100%;',
@@ -131,7 +131,7 @@ foreach ( $product_terms as $ids => $_product_terms ) {
 		array(
 			array(
 				'type' => 'sectionend',
-				'id'   => 'wcj_sale_flash_per_' . $id . '_options',
+				'id'   => 'wcj_sale_flash_per_' . $ids . '_options',
 			),
 		)
 	);

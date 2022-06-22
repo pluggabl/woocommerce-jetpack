@@ -120,11 +120,11 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 					$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
 					if ( '_text' === $custom_tab_section_variation ) {
 						if ( isset( $_POST[ $option_name ] ) ) {
-							update_post_meta( $post_id, '_' . $option_name, isset( $_POST[ $option_name ] ) );
+							! empty( update_post_meta( $post_id, '_' . $option_name, sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) );
 						}
 					} else {
 						if ( isset( $_POST[ $option_name ] ) ) {
-							update_post_meta( $post_id, '_' . $option_name, isset( $_POST[ $option_name ] ) );
+							! empty( update_post_meta( $post_id, '_' . $option_name, sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) );
 						} else {
 							update_post_meta( $post_id, '_' . $option_name, 'off' );
 						}
@@ -287,11 +287,11 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 			$do_apply_global = true;
 			$products_incl   = wcj_get_option( 'wcj_global_price_labels_products_incl', array() );
 			if ( ! empty( $products_incl ) ) {
-				$do_apply_global = ( in_array( $_product_id, $products_incl, true ) );
+				$do_apply_global = ( in_array( $_product_id, $products_incl ) );
 			}
 			$products_excl = wcj_get_option( 'wcj_global_price_labels_products_excl', array() );
 			if ( ! empty( $products_excl ) ) {
-				$do_apply_global = ( ! in_array( $_product_id, $products_excl, true ) );
+				$do_apply_global = ( ! in_array( $_product_id, $products_excl ) );
 			}
 			$product_categories      = get_the_terms( $_product_id, 'product_cat' );
 			$product_categories_incl = wcj_get_option( 'wcj_global_price_labels_product_cats_incl', array() );
@@ -299,7 +299,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 				$do_apply_global = false;
 				if ( ! empty( $product_categories ) ) {
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $product_categories_incl, true ) ) {
+						if ( in_array( $product_category->term_id, $product_categories_incl ) ) {
 							$do_apply_global = true;
 							break;
 						}
@@ -311,7 +311,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 				$do_apply_global = true;
 				if ( ! empty( $product_categories ) ) {
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $product_categories_excl, true ) ) {
+						if ( in_array( $product_category->term_id, $product_categories_excl ) ) {
 							$do_apply_global = false;
 							break;
 						}

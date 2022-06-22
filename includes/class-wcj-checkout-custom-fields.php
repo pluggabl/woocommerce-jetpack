@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 					$option_name       = $the_section . '_wcj_checkout_field_' . $i;
 					$option_name_label = $the_section . '_wcj_checkout_field_label_' . $i;
 					$option_name_type  = $the_section . '_wcj_checkout_field_type_' . $i;
-					$post_value        = isset( $_POST[ $option_name ] ) ? isset( $_POST[ $option_name ] ) : isset( $_POST[ '_' . $option_name ] ) ? isset( $_POST[ '_' . $option_name ] ) : get_post_meta( $order_id, '_' . $option_name, true );
+					$post_value        = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : ( isset( $_POST[ '_' . $option_name ] ) ? $_POST[ '_' . $option_name ] : get_post_meta( $order_id, '_' . $option_name, true ) );
 					if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
 						update_post_meta( $order_id, '_' . $option_name_type, $the_type );
 						update_post_meta( $order_id, '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );

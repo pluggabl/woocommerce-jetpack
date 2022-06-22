@@ -4,6 +4,7 @@
  *
  * @version 5.5.7
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/shortcodes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
-
+	/**
+	 * WCJ_Orders_Shortcodes.
+	 */
 	class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 		/**
@@ -19,7 +22,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 *
 		 * @version 5.4.0
 		 */
-		function __construct() {
+		public function __construct() {
 
 			$this->the_shortcodes = array(
 				'wcj_order_billing_address',
@@ -46,7 +49,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				'wcj_order_items_meta',
 				'wcj_order_items_total_number',
 				'wcj_order_items_total_quantity',
-				'wcj_order_items_total_weight', // deprecated - use 'wcj_order_total_weight' instead
+				'wcj_order_items_total_weight', // deprecated - use 'wcj_order_total_weight' instead.
 				'wcj_order_meta',
 				'wcj_order_notes',
 				'wcj_order_number',
@@ -104,11 +107,12 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * add_extra_atts.
+		 * Add_extra_atts.
 		 *
 		 * @version 5.1.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function add_extra_atts( $atts ) {
+		public function add_extra_atts( $atts ) {
 			$modified_atts = array_merge(
 				array(
 					'order_id'                   => 0,
@@ -163,13 +167,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			return $modified_atts;
 		}
 		/**
-		 * wcj_order_vat_func.
+		 * Wcj_order_vat_func.
 		 *
 		 * @version 5.5.7
 		 * @since   5.5.6
+		 * @param array $attr The user defined shortcode attributes.
 		 */
-
-		function wcj_order_vat_func( $attr ) {
+		public function wcj_order_vat_func( $attr ) {
 			if ( isset( $attr['vat_exempt_text'] ) ) {
 				$vat_exempt_text = $attr['vat_exempt_text'];
 				$order_id        = wcj_get_order_id( $this->the_order );
@@ -177,7 +181,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				foreach ( $order->get_items() as $item_id => $item ) {
 					$tax = $item->get_subtotal_tax();
 
-					if ( $tax == 0 ) {
+					if ( 0 === $tax ) {
 						return $vat_exempt_text;
 					}
 				}
@@ -186,26 +190,27 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 
 		/**
-		 * init_atts.
+		 * Init_atts.
 		 *
 		 * @todo    (maybe) `if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function init_atts( $atts ) {
+		public function init_atts( $atts ) {
 
-			// Atts
+			// Atts.
 			$atts['excl_tax'] = ( 'yes' === $atts['excl_tax'] );
-
-			if ( 0 == $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID();
+			$nonce            = wp_create_nonce();
+			if ( 0 === $atts['order_id'] && wp_verify_nonce( $nonce ) ) {
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? isset( $_GET['order_id'] ) : get_the_ID();
 			}
-			if ( 0 == $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? $_GET['pdf_invoice'] : 0; // PDF Invoices V1 compatibility
+			if ( 0 === $atts['order_id'] ) {
+				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? isset( $_GET['pdf_invoice'] ) : 0; // PDF Invoices V1 compatibility.
 			}
-			if ( 0 == $atts['order_id'] ) {
+			if ( 0 === $atts['order_id'] ) {
 				return false;
 			}
 
-			// Class properties
+			// Class properties.
 			$this->the_order = ( 'shop_order' === get_post_type( $atts['order_id'] ) ) ? wc_get_order( $atts['order_id'] ) : null;
 			if ( ! $this->the_order ) {
 				return false;
@@ -218,18 +223,19 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 
 		/**
-		 * extra_check.
+		 * Extra_check.
 		 *
 		 * @version 2.7.0
 		 * @since   2.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function extra_check( $atts ) {
-			if ( '' != $atts['order_user_roles'] ) {
+		public function extra_check( $atts ) {
+			if ( '' !== $atts['order_user_roles'] ) {
 				$user_info           = get_userdata( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) );
 				$user_roles          = $user_info->roles;
 				$user_roles_to_check = explode( ',', $atts['order_user_roles'] );
 				foreach ( $user_roles_to_check as $user_role_to_check ) {
-					if ( in_array( $user_role_to_check, $user_roles ) ) {
+					if ( in_array( $user_role_to_check, $user_roles, true ) ) {
 						return true;
 					}
 				}
@@ -239,18 +245,19 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_price_shortcode.
+		 * Wcj_price_shortcode.
 		 *
 		 * @version 5.4.0
+		 * @param int   $raw_price The user defined shortcode raw_price.
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-
 		private function wcj_price_shortcode( $raw_price, $atts ) {
-			if ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) {
+			if ( 'yes' === $atts['hide_if_zero'] && 0 === $raw_price ) {
 				return '';
 			} else {
 				$order_currency = wcj_get_order_currency( $this->the_order );
 				if ( '' === $atts['currency'] ) {
-					if ( $atts['hide_currency'] == 'yes' ) {
+					if ( 'yes' === $atts['hide_currency'] ) {
 						return wcj_price( $raw_price, $atts['hide_currency'], $atts );
 					}
 					return wcj_price( $raw_price, $order_currency, $atts['hide_currency'], $atts );
@@ -267,36 +274,39 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 
 		/**
-		 * wcj_order_items_cost.
+		 * Wcj_order_items_cost.
 		 *
 		 * @version 3.3.0
 		 * @since   3.3.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_items_cost( $atts ) {
+		public function wcj_order_items_cost( $atts ) {
 			$atts['type'] = 'items_cost';
 			return $this->wcj_order_profit( $atts );
 		}
 
 		/**
-		 * wcj_order_profit.
+		 * Wcj_order_profit.
 		 *
 		 * @version 3.3.0
 		 * @since   3.3.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_profit( $atts ) {
+		public function wcj_order_profit( $atts ) {
 			$total = 0;
 			foreach ( $this->the_order->get_items() as $item_id => $item ) {
-				$product_id = ( ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )
+				$product_id     = ( ( isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )
 				? $item['variation_id'] : $item['product_id'] );
-				$value      = 0;
-				if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
+				$value          = 0;
+				$purchase_price = wc_get_product_purchase_price( $product_id );
+				if ( 0 !== ( $purchase_price ) ) {
 					if ( 'profit' === $atts['type'] || '' === $atts['type'] ) {
-						// profit
+						// profit.
 						$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->prices_include_tax : $this->the_order->get_prices_include_tax() );
 						$line_total                = ( $_order_prices_include_tax ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'] );
 						$value                     = $line_total - $purchase_price * $item['qty'];
 					} else {
-						// 'items_cost'
+						// 'items_cost'.
 						$value = $purchase_price * $item['qty'];
 					}
 				}
@@ -306,12 +316,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_tcpdf_barcode.
+		 * Wcj_order_tcpdf_barcode.
 		 *
 		 * @version 3.3.0
 		 * @since   3.3.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_tcpdf_barcode( $atts ) {
+		public function wcj_order_tcpdf_barcode( $atts ) {
 			switch ( $atts['code'] ) {
 				case '%url%':
 					$atts['code'] = $this->the_order->get_view_order_url();
@@ -332,27 +343,29 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total_formatted.
+		 * Wcj_order_total_formatted.
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_formatted( $atts ) {
+		public function wcj_order_total_formatted( $atts ) {
 			return $this->the_order->get_formatted_order_total( $atts['tax_display'], ( 'yes' === $atts['display_refunded'] ) );
 		}
 
 		/**
-		 * wcj_order_remaining_refund_amount.
+		 * Wcj_order_remaining_refund_amount.
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_remaining_refund_amount( $atts ) {
+		public function wcj_order_remaining_refund_amount( $atts ) {
 			return $this->wcj_price_shortcode( $this->the_order->get_remaining_refund_amount(), $atts );
 		}
 
 		/**
-		 * wcj_order_refunds_table.
+		 * Wcj_order_refunds_table.
 		 *
 		 * @version  5.4.5
 		 * @since   3.1.0
@@ -361,9 +374,10 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @todo    add `refund_items_quantities` column (`$_item->get_quantity()`)
 		 * @todo    check `$atts['columns']` etc. before starting
 		 * @todo    (maybe) move to new `class-wcj-orders-refunded-shortcodes.php` file
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_refunds_table( $atts ) {
-			$columns    = ( '' == $atts['columns'] ? array() : explode( '|', $atts['columns'] ) );
+		public function wcj_order_refunds_table( $atts ) {
+			$columns    = ( '' === $atts['columns'] ? array() : explode( '|', $atts['columns'] ) );
 			$table_data = array();
 			$i          = 1;
 			foreach ( $this->the_order->get_refunds() as $_refund ) {
@@ -390,7 +404,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 							break;
 						case 'refund_reason_or_title':
 							$reason = $_refund->get_reason();
-							$cell   = ( '' != $reason ? $reason : $_refund->get_post_title() );
+							$cell   = ( '' !== $reason ? $reason : $_refund->get_post_title() );
 							break;
 						case 'refund_amount':
 							$cell = $atts['price_prefix'] . $_refund->get_formatted_refund_amount();
@@ -414,17 +428,17 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			$table_html_args = array(
 				'table_class'     => $atts['table_class'],
 				'columns_classes' => array(),
-				'columns_styles'  => ( '' == $atts['columns_styles'] ? array() : explode( '|', $atts['columns_styles'] ) ),
+				'columns_styles'  => ( '' === $atts['columns_styles'] ? array() : explode( '|', $atts['columns_styles'] ) ),
 			);
-			$columns_titles  = array( ( '' == $atts['columns_titles'] ? array() : explode( '|', $atts['columns_titles'] ) ) );
-			if ( '' != $atts['insert_page_break'] ) {
+			$columns_titles  = array( ( '' === $atts['columns_titles'] ? array() : explode( '|', $atts['columns_titles'] ) ) );
+			if ( '' !== $atts['insert_page_break'] ) {
 				$page_breaks  = explode( '|', $atts['insert_page_break'] );
 				$data_size    = count( $table_data );
 				$slice_offset = 0;
 				$html         = '';
 				$slices       = 0;
 				while ( $slice_offset < $data_size ) {
-					if ( 0 != $slice_offset ) {
+					if ( 0 !== $slice_offset ) {
 						$html .= '<tcpdf method="AddPage" />';
 					}
 					if ( isset( $page_breaks[ $slices ] ) ) {
@@ -442,44 +456,50 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total_tax_refunded.
+		 * Wcj_order_total_tax_refunded.
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_tax_refunded( $atts ) {
+		public function wcj_order_total_tax_refunded( $atts ) {
 			return $this->wcj_price_shortcode( $this->the_order->get_total_tax_refunded(), $atts );
 		}
 
 		/**
-		 * wcj_order_total_shipping_refunded.
+		 * Wcj_order_total_shipping_refunded.
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_shipping_refunded( $atts ) {
+		public function wcj_order_total_shipping_refunded( $atts ) {
 			return $this->wcj_price_shortcode( $this->the_order->get_total_shipping_refunded(), $atts );
 		}
 
 		/**
-		 * wcj_order_total_refunded.
+		 * Wcj_order_total_refunded.
 		 *
 		 * @version 2.5.3
 		 * @since   2.5.3
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_refunded( $atts ) {
+		public function wcj_order_total_refunded( $atts ) {
 			return $this->wcj_price_shortcode( $this->the_order->get_total_refunded(), $atts );
 		}
 
 		/**
-		 * wcj_order_customer_meta.
+		 * Wcj_order_customer_meta.
 		 *
 		 * @version 2.9.0
 		 * @since   2.9.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_customer_meta( $atts ) {
-			if ( '' != $atts['key'] && ( $_customer_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) ) ) {
-				if ( '' != ( $meta = get_user_meta( $_customer_id, $atts['key'], true ) ) ) {
+		public function wcj_order_customer_meta( $atts ) {
+			$_customer_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() );
+			if ( '' !== $atts['key'] && ( $_customer_id ) ) {
+				$meta = get_user_meta( $_customer_id, $atts['key'], true );
+				if ( '' !== ( $meta ) ) {
 					return $meta;
 				}
 			}
@@ -487,15 +507,18 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_customer_data.
+		 * Wcj_order_customer_data.
 		 *
 		 * @version 3.5.0
 		 * @since   3.5.0
 		 * @todo    add similar `[wcj_customer_data]`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_customer_data( $atts ) {
-			if ( '' != $atts['key'] && ( $_customer_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) ) ) {
-				if ( ( $user_data = get_userdata( $_customer_id ) ) && isset( $user_data->{$atts['key']} ) ) {
+		public function wcj_order_customer_data( $atts ) {
+			$_customer_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() );
+			if ( '' !== $atts['key'] && ( $_customer_id ) ) {
+				$user_data = get_userdata( $_customer_id );
+				if ( ( $user_data ) && isset( $user_data->{$atts['key']} ) ) {
 					return $user_data->{$atts['key']};
 				}
 			}
@@ -503,47 +526,51 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_customer_user_roles.
+		 * Wcj_order_customer_user_roles.
 		 *
 		 * @version 2.7.0
 		 * @since   2.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_customer_user_roles( $atts ) {
+		public function wcj_order_customer_user_roles( $atts ) {
 			$user_info = get_userdata( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) );
 			return implode( ', ', $user_info->roles );
 		}
 
 		/**
-		 * wcj_order_customer_user.
+		 * Wcj_order_customer_user.
 		 *
 		 * @version 2.7.0
 		 * @since   2.6.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_customer_user( $atts ) {
+		public function wcj_order_customer_user( $atts ) {
 			return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() );
 		}
 
 		/**
-		 * wcj_order_coupons.
+		 * Wcj_order_coupons.
 		 *
 		 * @version 2.5.8
 		 * @since   2.5.8
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_coupons( $atts ) {
+		public function wcj_order_coupons( $atts ) {
 			return implode( ', ', $this->the_order->get_used_coupons() );
 		}
 
 		/**
-		 * wcj_order_function.
+		 * Wcj_order_function.
 		 *
 		 * @version 2.5.8
 		 * @since   2.5.6
 		 * @todo    add function_params attribute.
 		 * @todo    fix when returning array of arrays or object etc.
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_function( $atts ) {
+		public function wcj_order_function( $atts ) {
 			$function_name = $atts['function_name'];
-			if ( '' != $function_name && method_exists( $this->the_order, $function_name ) ) {
+			if ( '' !== $function_name && method_exists( $this->the_order, $function_name ) ) {
 				$return = $this->the_order->$function_name();
 				return ( is_array( $return ) ) ? implode( ', ', $return ) : $return;
 			}
@@ -555,8 +582,9 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @version 3.2.0
 		 * @since   2.4.8
 		 * @return  string
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_custom_field( $atts ) {
+		public function wcj_order_custom_field( $atts ) {
 			$order_custom_fields = get_post_custom( $atts['order_id'] );
 			$return              = ( isset( $order_custom_fields[ $atts['name'] ][0] ) ) ? $order_custom_fields[ $atts['name'] ][0] : '';
 			if ( null !== $atts['key'] ) {
@@ -567,9 +595,11 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total_fees.
+		 * Wcj_order_total_fees.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_fees( $atts ) {
+		public function wcj_order_total_fees( $atts ) {
 			$total_fees = 0;
 			$the_fees   = $this->the_order->get_fees();
 			foreach ( $the_fees as $the_fee ) {
@@ -579,12 +609,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total_fees_tax.
+		 * Wcj_order_total_fees_tax.
 		 *
 		 * @version 2.5.2
 		 * @since   2.4.8
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_fees_tax( $atts ) {
+		public function wcj_order_total_fees_tax( $atts ) {
 			$total_fees_tax = 0;
 			$the_fees       = $this->the_order->get_fees();
 			foreach ( $the_fees as $the_fee ) {
@@ -594,13 +625,14 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total_fees_incl_tax.
+		 * Wcj_order_total_fees_incl_tax.
 		 *
 		 * @version 2.5.2
 		 * @since   2.4.8
 		 * @todo    probably should use get_line_total
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_fees_incl_tax( $atts ) {
+		public function wcj_order_total_fees_incl_tax( $atts ) {
 			$total_fees = 0;
 			$the_fees   = $this->the_order->get_fees();
 			foreach ( $the_fees as $the_fee ) {
@@ -612,12 +644,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 
 		/**
-		 * wcj_order_total_fees_incl_tax_without_html_custom.
+		 * Wcj_order_total_fees_incl_tax_without_html_custom.
 		 *
 		 * @version 5.4.0
 		 * @todo    probably should use get_line_total
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_fees_incl_tax_without_html_custom( $atts ) {
+		public function wcj_order_total_fees_incl_tax_without_html_custom( $atts ) {
 			$total_fees = 0;
 			$the_fees   = $this->the_order->get_fees();
 			foreach ( $the_fees as $the_fee ) {
@@ -628,9 +661,11 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_fees_html.
+		 * Wcj_order_fees_html.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_fees_html( $atts ) {
+		public function wcj_order_fees_html( $atts ) {
 			$fees_html = '';
 			$the_fees  = $this->the_order->get_fees();
 			foreach ( $the_fees as $the_fee ) {
@@ -640,97 +675,109 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_fee.
+		 * Wcj_order_fee.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_fee( $atts ) {
-			if ( '' == $atts['name'] ) {
+		public function wcj_order_fee( $atts ) {
+			if ( '' === $atts['name'] ) {
 				return '';
 			}
 			$the_fees = $this->the_order->get_fees();
 			foreach ( $the_fees as $the_fee ) {
-				if ( $atts['name'] == $the_fee['name'] ) {
+				if ( $atts['name'] === $the_fee['name'] ) {
 					return $this->wcj_price_shortcode( $the_fee['line_total'], $atts );
 				}
 			}
 			return '';
 		}
 		/**
-		 * wcj_order_shipping_method.
+		 * Wcj_order_shipping_method.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_shipping_method( $atts ) {
+		public function wcj_order_shipping_method( $atts ) {
 			return $this->the_order->get_shipping_method();
 		}
 
 		/**
-		 * wcj_order_payment_method_transaction_id.
+		 * Wcj_order_payment_method_transaction_id.
 		 *
 		 * @version 2.5.6
 		 * @since   2.5.6
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_payment_method_transaction_id( $atts ) {
+		public function wcj_order_payment_method_transaction_id( $atts ) {
 			return $this->the_order->get_transaction_id();
 		}
 
 		/**
-		 * wcj_order_payment_method.
+		 * Wcj_order_payment_method.
 		 *
 		 * @version 2.7.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_payment_method( $atts ) {
+		public function wcj_order_payment_method( $atts ) {
 			return get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method_title', true );
 		}
 
 		/**
-		 * wcj_order_total_width
+		 * Wcj_order_total_width.
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_width( $atts ) {
+		public function wcj_order_total_width( $atts ) {
 			return $this->get_order_total( $atts, 'width' );
 		}
 
 		/**
-		 * wcj_order_total_height
+		 * Wcj_order_total_height.
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_height( $atts ) {
+		public function wcj_order_total_height( $atts ) {
 			return $this->get_order_total( $atts, 'height' );
 		}
 
 		/**
-		 * wcj_order_total_length
+		 * Wcj_order_total_length.
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_length( $atts ) {
+		public function wcj_order_total_length( $atts ) {
 			return $this->get_order_total( $atts, 'length' );
 		}
 
 		/**
-		 * wcj_order_total_weight
+		 * Wcj_order_total_weight.
 		 *
 		 * @version 2.5.7
 		 * @since   2.5.7
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_weight( $atts ) {
+		public function wcj_order_total_weight( $atts ) {
 			return $this->get_order_total( $atts, 'weight' );
 		}
 
 		/**
-		 * get_order_total
+		 * Get_order_total.
 		 *
 		 * @version 4.4.0
 		 * @since   2.5.7
+		 * @param array  $atts The user defined shortcode attributes.
+		 * @param string $param The user defined shortcode param.
 		 */
-		function get_order_total( $atts, $param ) {
+		public function get_order_total( $atts, $param ) {
 			$total     = 0;
 			$the_items = $this->the_order->get_items();
 			foreach ( $the_items as $item_id => $item ) {
-				$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+				$product_id = ( 0 !== $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
 				$_product   = wc_get_product( $product_id );
 				if ( $_product ) {
 					switch ( $param ) {
@@ -749,71 +796,80 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					}
 				}
 			}
-			return ( 0 == $total && 'yes' === $atts['hide_if_zero'] ) ? '' : $total;
+			return ( 0 === $total && 'yes' === $atts['hide_if_zero'] ) ? '' : $total;
 		}
 
 		/**
-		 * wcj_order_items_total_weight.
+		 * Wcj_order_items_total_weight.
 		 *
 		 * @version 2.5.7
 		 * @deprecated 2.5.7
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_items_total_weight( $atts ) {
+		public function wcj_order_items_total_weight( $atts ) {
 			return $this->get_order_total( $atts, 'weight' );
 		}
 
 		/**
-		 * wcj_order_items_total_quantity.
+		 * Wcj_order_items_total_quantity.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_items_total_quantity( $atts ) {
+		public function wcj_order_items_total_quantity( $atts ) {
 			$total_quantity = 0;
 			$the_items      = $this->the_order->get_items();
 			foreach ( $the_items as $the_item ) {
 				$total_quantity += $the_item['qty'];
 			}
-			return ( 0 == $total_quantity && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_quantity;
+			return ( 0 === $total_quantity && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_quantity;
 		}
 
 		/**
-		 * wcj_order_items_total_number.
+		 * Wcj_order_items_total_number.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_items_total_number( $atts ) {
+		public function wcj_order_items_total_number( $atts ) {
 			$total_number = count( $this->the_order->get_items() );
-			return ( 0 == $total_number && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_number;
+			return ( 0 === $total_number && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_number;
 		}
 
 		/**
-		 * wcj_order_billing_address.
+		 * Wcj_order_billing_address.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 *
 		 * @version 2.3.9
 		 */
-		function wcj_order_billing_address( $atts ) {
+		public function wcj_order_billing_address( $atts ) {
 			return apply_filters( 'wcj_order_billing_address', $this->the_order->get_formatted_billing_address(), $atts );
 		}
 
 		/**
-		 * wcj_order_billing_email.
+		 * Wcj_order_billing_email.
 		 *
 		 * @version 5.2.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_billing_email( $atts ) {
+		public function wcj_order_billing_email( $atts ) {
 			return apply_filters( 'wcj_order_billing_email', $this->the_order->get_billing_email(), $atts );
 		}
 
 		/**
-		 * wcj_order_notes.
+		 * Wcj_order_notes.
 		 *
 		 * @version 3.5.0
 		 * @since   3.4.0
 		 * @todo    [dev] (maybe) run `strip_tags` on `comment_content`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_notes( $atts ) {
+		public function wcj_order_notes( $atts ) {
 			$notes = array();
-			if ( '' == $atts['type'] || 'customer_notes' === $atts['type'] ) {
+			if ( '' === $atts['type'] || 'customer_notes' === $atts['type'] ) {
 				foreach ( $this->the_order->get_customer_order_notes() as $note ) {
 					$notes[] = $note->comment_content;
 				}
-			} else { // 'private_notes' or 'all_notes'
+			} else {
 				$args = array(
 					'post_id' => wcj_get_order_id( $this->the_order ),
 					'approve' => 'approve',
@@ -836,23 +892,26 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_customer_note.
+		 * Wcj_order_customer_note.
 		 *
 		 * @version 2.7.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_customer_note( $atts ) {
+		public function wcj_order_customer_note( $atts ) {
 			return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_note : $this->the_order->get_customer_note() );
 		}
 
 		/**
-		 * wcj_order_billing_country_name.
+		 * Wcj_order_billing_country_name.
 		 *
 		 * @version 3.0.0
 		 * @since   3.0.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_billing_country_name( $atts ) {
+		public function wcj_order_billing_country_name( $atts ) {
 			$country_code = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->billing_country : $this->the_order->get_billing_country() );
-			if ( false !== ( $country_name = wcj_get_country_name_by_code( $country_code ) ) ) {
+			$country_name = wcj_get_country_name_by_code( $country_code );
+			if ( false !== ( $country_name ) ) {
 				return $country_name;
 			} else {
 				return $country_code;
@@ -860,14 +919,16 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_shipping_country_name.
+		 * Wcj_order_shipping_country_name.
 		 *
 		 * @version 3.0.0
 		 * @since   3.0.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_shipping_country_name( $atts ) {
+		public function wcj_order_shipping_country_name( $atts ) {
 			$country_code = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->shipping_country : $this->the_order->get_shipping_country() );
-			if ( false !== ( $country_name = wcj_get_country_name_by_code( $country_code ) ) ) {
+			$country_name = wcj_get_country_name_by_code( $country_code );
+			if ( false !== ( $country_name ) ) {
 				return $country_name;
 			} else {
 				return $country_code;
@@ -875,34 +936,37 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_billing_phone.
+		 * Wcj_order_billing_phone.
 		 *
 		 * @version 2.7.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_billing_phone( $atts ) {
+		public function wcj_order_billing_phone( $atts ) {
 			return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->billing_phone : $this->the_order->get_billing_phone() );
 		}
 
 		/**
-		 * wcj_order_items
+		 * Wcj_order_items
 		 *
 		 * @version 3.5.0
 		 * @since   2.5.7
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_items( $atts ) {
+		public function wcj_order_items( $atts ) {
 			$items     = array();
 			$the_items = $this->the_order->get_items();
 			foreach ( $the_items as $item_id => $item ) {
 				switch ( $atts['field'] ) {
 					case '_debug':
-						$items[] = '<pre>' . print_r( $item, true ) . '</pre>';
+						$items[] = '<pre>' . wp_kses_post( $item, true ) . '</pre>';
 						break;
 					case '_qty_x_name':
 						$items[] = ( isset( $item['qty'] ) && isset( $item['name'] ) ) ? $item['qty'] . ' x ' . $item['name'] : '';
 						break;
 					case '_sku':
-						$_product_id = ( 0 != $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
-						if ( $_product = wc_get_product( $_product_id ) ) {
+						$_product_id = ( 0 !== $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+						$_product    = wc_get_product( $_product_id );
+						if ( $_product ) {
 							$items[] = $_product->get_sku();
 						}
 						break;
@@ -935,14 +999,15 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_products_terms.
+		 * Wcj_order_products_terms.
 		 *
 		 * @version 4.2.0
 		 * @since   4.2.0
 		 * @todo    [dev] (maybe) rename (i.e. make alias) to `[wcj_order_product_terms]` (same for `[wcj_order_products_meta]`, `[wcj_order_items_meta]` etc.)
 		 * @todo    [dev] (maybe) make sorting optional (i.e. `$atts['sort']`)
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_products_terms( $atts ) {
+		public function wcj_order_products_terms( $atts ) {
 			if ( '' === $atts['taxonomy'] ) {
 				return '';
 			}
@@ -964,12 +1029,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_products_meta.
+		 * Wcj_order_products_meta.
 		 *
 		 * @version 3.9.0
 		 * @since   3.9.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_products_meta( $atts ) {
+		public function wcj_order_products_meta( $atts ) {
 			if ( '' === $atts['meta_key'] ) {
 				return '';
 			}
@@ -977,7 +1043,8 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			$items = $this->the_order->get_items();
 			foreach ( $items as $item_id => $item ) {
 				$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
-				if ( '' != ( $meta = get_post_meta( $product_id, $atts['meta_key'], true ) ) ) {
+				$meta       = get_post_meta( $product_id, $atts['meta_key'], true );
+				if ( '' !== ( $meta ) ) {
 					$metas[] = $meta;
 				}
 			}
@@ -988,12 +1055,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_items_meta.
+		 * Wcj_order_items_meta.
 		 *
 		 * @version 3.9.0
 		 * @since   2.5.3
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_items_meta( $atts ) {
+		public function wcj_order_items_meta( $atts ) {
 			if ( '' === $atts['meta_key'] ) {
 				return '';
 			}
@@ -1001,7 +1069,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			$the_items   = $this->the_order->get_items();
 			foreach ( $the_items as $item_id => $item ) {
 				$the_meta = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->get_item_meta( $item_id, $atts['meta_key'], true ) : wc_get_order_item_meta( $item_id, $atts['meta_key'], true ) );
-				if ( '' != $the_meta ) {
+				if ( '' !== $the_meta ) {
 					$items_metas[] = $the_meta;
 				}
 			}
@@ -1012,34 +1080,37 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_meta.
+		 * Wcj_order_meta.
 		 *
 		 * @version 2.7.0
 		 * @since   2.2.9
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_meta( $atts ) {
-			return ( '' != $atts['meta_key'] ? get_post_meta( wcj_get_order_id( $this->the_order ), $atts['meta_key'], true ) : '' );
+		public function wcj_order_meta( $atts ) {
+			return ( '' !== $atts['meta_key'] ? get_post_meta( wcj_get_order_id( $this->the_order ), $atts['meta_key'], true ) : '' );
 		}
 
 		/**
-		 * wcj_order_custom_meta_field.
+		 * Wcj_order_custom_meta_field.
 		 *
 		 * @version 2.3.0
 		 * @since   2.2.9
+		 * @param array $atts The user defined shortcode attributes.
 		 * @deprecated
 		 */
-		function wcj_order_custom_meta_field( $atts ) {
+		public function wcj_order_custom_meta_field( $atts ) {
 			return $this->wcj_order_checkout_field( $atts );
 		}
 
 		/**
-		 * wcj_order_checkout_field.
+		 * Wcj_order_checkout_field.
 		 *
 		 * @version 2.8.1
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_checkout_field( $atts ) {
+		public function wcj_order_checkout_field( $atts ) {
 			$field_id = (string) $atts['field_id'];
-			if ( '' == $field_id ) {
+			if ( '' === $field_id ) {
 				return '';
 			}
 			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -1073,13 +1144,14 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_shipping_address.
+		 * Wcj_order_shipping_address.
 		 *
 		 * @version 2.9.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_shipping_address( $atts ) {
+		public function wcj_order_shipping_address( $atts ) {
 			$shipping_address = $this->the_order->get_formatted_shipping_address();
-			if ( '' != $shipping_address ) {
+			if ( '' !== $shipping_address ) {
 				return $shipping_address;
 			} elseif ( 'yes' === $atts['fallback_billing_address'] ) {
 				return $this->the_order->get_formatted_billing_address();
@@ -1089,76 +1161,87 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_status.
+		 * Wcj_order_status.
 		 *
 		 * @version 2.5.6
 		 * @since   2.5.6
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_status( $atts ) {
+		public function wcj_order_status( $atts ) {
 			return $this->the_order->get_status();
 		}
 
 		/**
-		 * wcj_order_status_label.
+		 * Wcj_order_status_label.
 		 *
 		 * @version 2.7.0
 		 * @since   2.7.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_status_label( $atts ) {
+		public function wcj_order_status_label( $atts ) {
 			$status_object = get_post_status_object( 'wc-' . $this->the_order->get_status() );
 			return ( isset( $status_object->label ) ) ? $status_object->label : '';
 		}
 
 		/**
-		 * wcj_order_date.
+		 * Wcj_order_date.
 		 *
 		 * @version 3.2.4
 		 * @todo    (maybe) rename `days` to `extra_days`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_date( $atts ) {
+		public function wcj_order_date( $atts ) {
 			return date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) + $atts['days'] * 24 * 60 * 60 );
 		}
 
 		/**
-		 * wcj_order_time.
+		 * Wcj_order_time.
 		 *
 		 * @version 4.9.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_time( $atts ) {
+		public function wcj_order_time( $atts ) {
 			$order_date = wcj_get_order_date( $this->the_order )->format( 'Y-m-d H:i:s' );
 			return wcj_pretty_utc_date( $order_date, $atts['time_format'] );
 		}
 
 		/**
-		 * wcj_order_number.
+		 * Wcj_order_number.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_number( $atts ) {
+		public function wcj_order_number( $atts ) {
 			return $this->the_order->get_order_number();
 		}
 
 		/**
-		 * wcj_order_id.
+		 * Wcj_order_id.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_id( $atts ) {
+		public function wcj_order_id( $atts ) {
 			return $atts['order_id'];
 		}
 
 		/**
-		 * wcj_order_shipping_price.
+		 * Wcj_order_shipping_price.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 *
 		 * @version 2.5.6
 		 */
-		function wcj_order_shipping_price( $atts ) {
+		public function wcj_order_shipping_price( $atts ) {
 			$the_result = ( $atts['excl_tax'] ) ? $this->the_order->get_total_shipping() : $this->the_order->get_total_shipping() + $this->the_order->get_shipping_tax();
 			return $this->wcj_price_shortcode( $the_result, $atts );
 		}
 
 		/**
-		 * wcj_order_shipping_price_without_html_custom.
+		 * Wcj_order_shipping_price_without_html_custom.
 		 *
 		 * @version 5.4.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_shipping_price_without_html_custom( $atts ) {
+		public function wcj_order_shipping_price_without_html_custom( $atts ) {
 			$the_result = ( $atts['excl_tax'] ) ? $this->the_order->get_total_shipping() : $this->the_order->get_total_shipping() + $this->the_order->get_shipping_tax();
 			return $the_result;
 		}
@@ -1166,43 +1249,48 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 
 		/**
-		 * wcj_order_total_discount.
+		 * Wcj_order_total_discount.
 		 *
 		 * @version 2.4.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_discount( $atts ) {
+		public function wcj_order_total_discount( $atts ) {
 			$the_discount = $this->the_order->get_total_discount( $atts['excl_tax'] );
 			return $this->wcj_price_shortcode( $the_discount, $atts );
 		}
 
 		/**
-		 * wcj_order_shipping_tax.
+		 * Wcj_order_shipping_tax.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_shipping_tax( $atts ) {
+		public function wcj_order_shipping_tax( $atts ) {
 			return $this->wcj_price_shortcode( $this->the_order->get_shipping_tax(), $atts );
 		}
 
 		/**
-		 * wcj_order_total_tax_percent.
+		 * Wcj_order_total_tax_percent.
 		 *
 		 * @version 2.4.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_tax_percent( $atts ) {
+		public function wcj_order_total_tax_percent( $atts ) {
 			$order_total_tax_not_rounded = $this->the_order->get_cart_tax() + $this->the_order->get_shipping_tax();
 			$order_total_excl_tax        = $this->the_order->get_total() - $order_total_tax_not_rounded;
-			$order_total_tax_percent     = ( 0 == $order_total_excl_tax ) ? 0 : $order_total_tax_not_rounded / $order_total_excl_tax * 100;
+			$order_total_tax_percent     = ( 0 === $order_total_excl_tax ) ? 0 : $order_total_tax_not_rounded / $order_total_excl_tax * 100;
 			$order_total_tax_percent     = round( $order_total_tax_percent, $atts['precision'] );
 			apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
 			return number_format( $order_total_tax_percent, $atts['precision'] );
 		}
 
 		/**
-		 * wcj_order_subtotal_by_tax_class.
+		 * Wcj_order_subtotal_by_tax_class.
 		 *
 		 * @version 2.5.4
 		 * @since   2.5.4
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_subtotal_by_tax_class( $atts ) {
+		public function wcj_order_subtotal_by_tax_class( $atts ) {
 			$subtotal_by_tax_class = 0;
 			$tax_class             = ( 'standard' === $atts['tax_class'] ) ? '' : $atts['tax_class'];
 			foreach ( $this->the_order->get_items() as $item ) {
@@ -1214,12 +1302,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total_by_tax_class.
+		 * Wcj_order_total_by_tax_class.
 		 *
 		 * @version 2.5.4
 		 * @since   2.5.4
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_by_tax_class( $atts ) {
+		public function wcj_order_total_by_tax_class( $atts ) {
 			$total_by_tax_class = 0;
 			$tax_class          = ( 'standard' === $atts['tax_class'] ) ? '' : $atts['tax_class'];
 			foreach ( $this->the_order->get_items() as $item ) {
@@ -1231,17 +1320,18 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_tax_by_class.
+		 * Wcj_order_tax_by_class.
 		 *
 		 * @version 2.5.5
 		 * @since   2.5.4
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_tax_by_class( $atts ) {
+		public function wcj_order_tax_by_class( $atts ) {
 			$tax_class          = ( 'standard' === $atts['tax_class'] ) ? '' : $atts['tax_class'];
 			$total_tax_by_class = 0;
 			foreach ( $this->the_order->get_items() as $item ) {
 				if ( $tax_class === $item['tax_class'] ) {
-					// $total_tax_by_class += $this->the_order->get_line_tax( $item );
+
 					$total_tax_by_class += $item['line_tax'];
 				}
 			}
@@ -1249,12 +1339,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_taxes_html.
+		 * Wcj_order_taxes_html.
 		 *
 		 * @version 4.6.0
 		 * @since   2.5.3
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_taxes_html( $atts ) {
+		public function wcj_order_taxes_html( $atts ) {
 			$order_taxes = $this->the_order->get_taxes();
 			$taxes_html  = '';
 			foreach ( $order_taxes as $order_tax ) {
@@ -1270,39 +1361,39 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total_tax.
+		 * Wcj_order_total_tax.
 		 *
 		 * @version 3.1.2
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-
-		function wcj_order_total_tax( $atts ) {
+		public function wcj_order_total_tax( $atts ) {
 			$the_items          = $this->the_order->get_items();
 			$exclude_item_total = 0;
 
 			foreach ( $the_items as $item_id => $item ) {
 				$the_product = $item->get_product( $item );
 
-				// Check if it's not excluded by category
-				if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+				// Check if it's not excluded by category.
+				if ( '' !== $atts['exclude_by_categories'] && $the_product ) {
 					if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
 						$exclude_item_tax += $item->get_subtotal_tax();
 					}
 				}
 
-				// Check if it's not excluded by tag
-				if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+				// Check if it's not excluded by tag.
+				if ( '' !== $atts['exclude_by_tags'] && $the_product ) {
 					if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
 						$exclude_item_tax += $item->get_subtotal_tax();
 					}
 				}
 
-				// Check if it's not excluded by product attribute
-				if ( $the_product && '' != $atts['exclude_by_attribute__name'] ) {
+				// Check if it's not excluded by product attribute.
+				if ( $the_product && '' !== $atts['exclude_by_attribute__name'] ) {
 					$product_attributes = $the_product->get_attributes();
 					if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
 						$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
 						if ( is_object( $product_attribute ) ) {
-							if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+							if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options(), true ) ) {
 								$exclude_item_tax += $item->get_subtotal_tax();
 							}
 						} elseif ( $atts['exclude_by_attribute__name'] ) {
@@ -1314,36 +1405,39 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			$total_tax  = $this->the_order->get_total_tax();
 			$total_tax -= $exclude_item_tax;
 			$total_tax  = $this->wcj_price_shortcode( apply_filters( 'wcj_order_total_tax', $total_tax, $this->the_order ), $atts );
-			// $total_tax -= $exclude_item_tax;
+
 			return $total_tax;
 		}
 
-		  /**
-		   * wcj_order_total_tax_without_html_custom.
-		   *
-		   * @version 5.4.0
-		   */
-		function wcj_order_total_tax_without_html_custom( $atts ) {
+		/**
+		 * Wcj_order_total_tax_without_html_custom.
+		 *
+		 * @version 5.4.0
+		 * @param array $atts The user defined shortcode attributes.
+		 */
+		public function wcj_order_total_tax_without_html_custom( $atts ) {
 			return apply_filters( 'wcj_order_total_tax', $this->the_order->get_total_tax(), $this->the_order );
 		}
 
 
 		/**
-		 * wcj_order_total_tax_after_refund.
+		 * Wcj_order_total_tax_after_refund.
 		 *
 		 * @version 3.1.2
 		 * @since   3.1.2
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_tax_after_refund( $atts ) {
+		public function wcj_order_total_tax_after_refund( $atts ) {
 			return $this->wcj_price_shortcode( ( $this->the_order->get_total_tax() - $this->the_order->get_total_tax_refunded() ), $atts );
 		}
 
 		/**
-		 * wcj_order_subtotal_plus_shipping.
+		 * Wcj_order_subtotal_plus_shipping.
 		 *
 		 * @version 4.5.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_subtotal_plus_shipping( $atts ) {
+		public function wcj_order_subtotal_plus_shipping( $atts ) {
 			$the_subtotal = $this->the_order->get_subtotal();
 			$the_shipping = $this->the_order->get_total_shipping();
 			$fees_total   = 0;
@@ -1354,33 +1448,35 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_subtotal.
+		 * Wcj_order_subtotal.
+		 *
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_subtotal( $atts ) {
+		public function wcj_order_subtotal( $atts ) {
 
 			if ( 'yes' === $atts['round_by_line'] ) {
 				$the_subtotal = 0;
 				foreach ( $this->the_order->get_items() as $item ) {
-					  $the_product = $item->get_product( $item );
-					 // Check if it's not excluded by category
-					if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+					$the_product = $item->get_product( $item );
+					// Check if it's not excluded by category.
+					if ( '' !== $atts['exclude_by_categories'] && $the_product ) {
 						if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
 							continue;
 						}
 					}
-					// Check if it's not excluded by tag
-					if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+					// Check if it's not excluded by tag.
+					if ( '' !== $atts['exclude_by_tags'] && $the_product ) {
 						if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
 							continue;
 						}
 					}
-					// Check if it's not excluded by product attribute
-					if ( '' != $atts['exclude_by_attribute__name'] && $the_product ) {
+					// Check if it's not excluded by product attribute.
+					if ( '' !== $atts['exclude_by_attribute__name'] && $the_product ) {
 						$product_attributes = $the_product->get_attributes();
 						if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
 							$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
 							if ( is_object( $product_attribute ) ) {
-								if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+								if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options(), true ) ) {
 									continue;
 								}
 							} elseif ( $atts['exclude_by_attribute__name'] ) {
@@ -1396,29 +1492,29 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				$exclude_item_total = 0;
 
 				foreach ( $the_items as $item_id => $item ) {
-					  $the_product = $item->get_product( $item );
+					$the_product = $item->get_product( $item );
 
-					  // Check if it's not excluded by category
-					if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+					// Check if it's not excluded by category.
+					if ( '' !== $atts['exclude_by_categories'] && $the_product ) {
 						if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
-							  $exclude_item_subtotal += $item['total'];
+							$exclude_item_subtotal += $item['total'];
 						}
 					}
 
-					// Check if it's not excluded by tag
-					if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+					// Check if it's not excluded by tag.
+					if ( '' !== $atts['exclude_by_tags'] && $the_product ) {
 						if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
 							$exclude_item_subtotal += $item['total'];
 						}
 					}
 
-					// Check if it's not excluded by product attribute
-					if ( $the_product && '' != $atts['exclude_by_attribute__name'] ) {
+					// Check if it's not excluded by product attribute.
+					if ( $the_product && '' !== $atts['exclude_by_attribute__name'] ) {
 						$product_attributes = $the_product->get_attributes();
 						if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
 							$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
 							if ( is_object( $product_attribute ) ) {
-								if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+								if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options(), true ) ) {
 									$exclude_item_subtotal += $item['total'];
 
 								}
@@ -1437,52 +1533,58 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 
 		/**
+		 * Wcj_order_total_without_html_custom.
+		 *
 		 * @version 5.4.0
-		 * wcj_order_total_without_html_custom.
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_without_html_custom( $atts ) {
+		public function wcj_order_total_without_html_custom( $atts ) {
 			$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
 			return $order_total;
 		}
 
 
 		/**
-		 * wcj_order_subtotal_to_display.
+		 * Wcj_order_subtotal_to_display.
 		 *
 		 * @version 3.1.0
 		 * @since   3.1.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_subtotal_to_display( $atts ) {
+		public function wcj_order_subtotal_to_display( $atts ) {
 			return $this->the_order->get_subtotal_to_display( false, $atts['tax_display'] );
 		}
 
 		/**
-		 * wcj_order_total_excl_tax.
+		 * Wcj_order_total_excl_tax.
 		 *
 		 * @version 2.5.6
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_excl_tax( $atts ) {
+		public function wcj_order_total_excl_tax( $atts ) {
 			$order_total = $this->the_order->get_total() - $this->the_order->get_total_tax();
 			$order_total = apply_filters( 'wcj_order_total_excl_tax', $order_total, $this->the_order );
 			return $this->wcj_price_shortcode( $order_total, $atts );
 		}
 
 		/**
-		 * wcj_order_currency.
+		 * Wcj_order_currency.
 		 *
 		 * @version 2.7.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_currency( $atts ) {
+		public function wcj_order_currency( $atts ) {
 			return wcj_get_order_currency( $this->the_order );
 		}
 
 		/**
-		 * wcj_order_total_excl_shipping.
+		 * Wcj_order_total_excl_shipping.
 		 *
 		 * @version 2.5.6
 		 * @since   2.5.6
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_excl_shipping( $atts ) {
+		public function wcj_order_total_excl_shipping( $atts ) {
 			$order_total_excl_shipping = ( true === $atts['excl_tax'] ) ?
 			$this->the_order->get_total() - $this->the_order->get_total_shipping() - $this->the_order->get_total_tax() :
 			$this->the_order->get_total() - $this->the_order->get_total_shipping() - $this->the_order->get_shipping_tax();
@@ -1490,40 +1592,39 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * wcj_order_total.
+		 * Wcj_order_total.
 		 *
 		 * @version 5.3.7
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-
-
-		function wcj_order_total( $atts ) {
+		public function wcj_order_total( $atts ) {
 			$the_items          = $this->the_order->get_items();
 			$exclude_item_total = 0;
 
 			foreach ( $the_items as $item_id => $item ) {
 				$the_product = $item->get_product( $item );
 
-				// Check if it's not excluded by category
-				if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+				// Check if it's not excluded by category.
+				if ( '' !== $atts['exclude_by_categories'] && $the_product ) {
 					if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
 						$exclude_item_total += $item->get_total();
 					}
 				}
 
-				// Check if it's not excluded by tag
-				if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+				// Check if it's not excluded by tag.
+				if ( '' !== $atts['exclude_by_tags'] && $the_product ) {
 					if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
 						$exclude_item_total += $item->get_total();
 					}
 				}
 
-				// Check if it's not excluded by product attribute
-				if ( $the_product && '' != $atts['exclude_by_attribute__name'] ) {
+				// Check if it's not excluded by product attribute.
+				if ( $the_product && '' !== $atts['exclude_by_attribute__name'] ) {
 					$product_attributes = $the_product->get_attributes();
 					if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
 						$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
 						if ( is_object( $product_attribute ) ) {
-							if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+							if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options(), true ) ) {
 								$exclude_item_total += $item->get_total();
 							}
 						} elseif ( $atts['exclude_by_attribute__name'] ) {
@@ -1548,13 +1649,14 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 
 		/**
-		 * wcj_order_total_after_refund.
+		 * Wcj_order_total_after_refund.
 		 *
 		 * @version 3.1.2
 		 * @since   3.1.2
 		 * @todo    (maybe) `get_total_shipping_refunded()`
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_after_refund( $atts ) {
+		public function wcj_order_total_after_refund( $atts ) {
 			$order_total_after_refund = $this->the_order->get_total() - $this->the_order->get_total_refunded();
 			if ( true === $atts['excl_tax'] ) {
 				$order_total_after_refund -= ( $this->the_order->get_total_tax() - $this->the_order->get_total_tax_refunded() );
@@ -1563,28 +1665,30 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		}
 
 		/**
-		 * mb_ucfirst - for wcj_order_total_in_words.
+		 * Mb_ucfirst - for wcj_order_total_in_words.
 		 *
 		 * @version 5.3.6
 		 * @since   2.5.9
+		 * @param string $string The user defined shortcode string.
 		 */
-		function mb_ucfirst( $string ) {
+		public function mb_ucfirst( $string ) {
 			return ucfirst( mb_substr( $string, 0, 1 ) ) . mb_substr( $string, 1 );
 		}
 
 		/**
-		 * wcj_order_total_in_words.
+		 * Wcj_order_total_in_words.
 		 *
 		 * @version 4.1.0
+		 * @param array $atts The user defined shortcode attributes.
 		 */
-		function wcj_order_total_in_words( $atts ) {
+		public function wcj_order_total_in_words( $atts ) {
 
 			$order_total         = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
 			$order_total_whole   = intval( $order_total );
 			$order_total_decimal = round( ( $order_total - $order_total_whole ) * 100 );
 
 			$the_number_in_words  = '%s %s';
-			$the_number_in_words .= ( 0 != $order_total_decimal ) ? ', %s %s.' : '.';
+			$the_number_in_words .= ( 0 !== $order_total_decimal ) ? ', %s %s.' : '.';
 
 			$whole   = ( '' === $atts['whole'] ?
 			( isset( $atts['use_currency_symbol'] ) && 'yes' === $atts['use_currency_symbol'] ?
@@ -1609,7 +1713,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 						$this->mb_ucfirst( trim( convert_number_to_words_bg( $order_total_decimal ) ) ),
 						$decimal
 					);
-				default: // 'EN'
+				default: // 'EN'.
 					return sprintf(
 						$the_number_in_words,
 						ucfirst( convert_number_to_words( $order_total_whole ) ),
