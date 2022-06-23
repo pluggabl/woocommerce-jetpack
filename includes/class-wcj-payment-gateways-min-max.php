@@ -112,12 +112,12 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 					}
 				}
 
-				if ( 0 !== $min && $total_in_cart < $min ) {
+				if ( 0 != $min && $total_in_cart < $min ) {
 					$notices[] = str_replace( array( '%gateway_title%', '%min_amount%' ), array( $gateway->title, wc_price( $min ) ), $notices_template_min );
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
-				if ( 0 !== $max && $total_in_cart > $max ) {
+				if ( 0 != $max && $total_in_cart > $max ) {
 					$notices[] = str_replace( array( '%gateway_title%', '%max_amount%' ), array( $gateway->title, wc_price( $max ) ), $notices_template_max );
 					unset( $_available_gateways[ $key ] );
 					continue;

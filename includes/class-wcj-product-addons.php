@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				// Addons quantity.
 				$qty_triggers = wcj_get_option( 'wcj_product_addons_qty_decrease_triggers', '' );
 				if ( ! empty( $qty_triggers ) ) {
-					if ( in_array( 'woocommerce_new_order', $qty_triggers, true ) ) {
+					if ( in_array( 'woocommerce_new_order', $qty_triggers ) ) {
 						$qty_triggers = array_merge(
 							$qty_triggers,
 							array(
@@ -290,7 +290,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				if (
 				! empty( $variation_id ) &&
 				! empty( $addon['enable_by_variation'] ) &&
-				! in_array( $variation_id, $addon['enable_by_variation'], true )
+				! in_array( $variation_id, $addon['enable_by_variation'] )
 				) {
 					continue;
 				}
@@ -328,15 +328,15 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 			if ( 'by_module' === $apply_price_filters ) {
 				$modules_to_apply = wcj_get_option( 'wcj_product_addons_apply_price_filters_by_module', array() );
 				// Multicurrency Product Base Price module.
-				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency_base_price', $modules_to_apply, true ) ) && w_c_j()->modules['multicurrency_base_price']->is_enabled() ) {
+				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency_base_price', $modules_to_apply ) ) && w_c_j()->modules['multicurrency_base_price']->is_enabled() ) {
 					$price = w_c_j()->modules['multicurrency_base_price']->change_price( $price, $product );
 				}
 				// Multicurrency (Currency Switcher) module.
-				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency', $modules_to_apply, true ) ) && w_c_j()->modules['multicurrency']->is_enabled() ) {
+				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency', $modules_to_apply ) ) && w_c_j()->modules['multicurrency']->is_enabled() ) {
 					$price = w_c_j()->modules['multicurrency']->change_price( $price, $product, array( 'do_save' => false ) );
 				}
 				// Global Discount module.
-				if ( ( empty( $modules_to_apply ) || in_array( 'global_discount', $modules_to_apply, true ) ) && w_c_j()->modules['global_discount']->is_enabled() ) {
+				if ( ( empty( $modules_to_apply ) || in_array( 'global_discount', $modules_to_apply ) ) && w_c_j()->modules['global_discount']->is_enabled() ) {
 					$price = w_c_j()->modules['global_discount']->add_global_discount( $price, $product, 'price' );
 				}
 			} elseif ( 'yes' === $apply_price_filters ) {
@@ -366,8 +366,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @param array | string $param defines the param.
 		 */
 		public function price_change_ajax( $param ) {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_POST['product_id'] ) || 0 === $_POST['product_id'] && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_POST['product_id'] ) || 0 === $_POST['product_id'] ) {
 				die();
 			}
 			$the_product       = wc_get_product( isset( $_POST['product_id'] ) );
@@ -444,7 +443,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 */
 		public function is_global_addon_visible( $i, $product_id ) {
 			$exclude_products = wcj_get_option( 'wcj_product_addons_all_products_exclude_products_' . $i, '' );
-			if ( ! empty( $exclude_products ) && in_array( $product_id, $exclude_products, true ) ) {
+			if ( ! empty( $exclude_products ) && in_array( $product_id, $exclude_products ) ) {
 				return false;
 			}
 			return true;
@@ -715,7 +714,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				if (
 				! empty( $variation_id ) &&
 				! empty( $addon['enable_by_variation'] ) &&
-				! in_array( $variation_id, $addon['enable_by_variation'], true )
+				! in_array( $variation_id, $addon['enable_by_variation'] )
 				) {
 					continue;
 				}

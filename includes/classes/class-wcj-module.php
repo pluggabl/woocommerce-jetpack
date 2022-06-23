@@ -537,7 +537,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						update_option( $settings['id'], $default_value );
 					}
 				}
-				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_reset_settings' ) ) );
+				wp_safe_redirect( remove_query_arg( 'wcj_reset_settings' ) );
 				exit();
 			}
 		}
@@ -623,9 +623,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @param Array $__post Get post.
 		 */
 		public function save_meta_box( $post_id, $__post ) {
-			$nonce = wp_create_nonce();
+			
 			// Check that we are saving with current metabox displayed.
-			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
 				return;
 			}
 			// Setup post (just in case...).
@@ -639,7 +639,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				}
 				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 				if ( $is_enabled ) {
-					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? isset( $_POST[ $option['name'] ] ) : ( isset( $option['default'] ) ? $option['default'] : '' );
+					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $option['name'] ] ) ) : ( sanitize_text_field( wp_unslash( $option['default'] ) ) ? $option['default'] : '' );
 					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $post_id;
 					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
 					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
@@ -816,7 +816,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			foreach ( $cats as $id => $label_info ) {
 				if ( ( ! empty( $label_info['all_cat_ids'] ) ) &&
 				( is_array( $label_info['all_cat_ids'] ) ) &&
-				( in_array( $section, $label_info['all_cat_ids'], true ) )
+				( in_array( $section, $label_info['all_cat_ids'] ) )
 				) {
 					return $id;
 				}

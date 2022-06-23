@@ -221,7 +221,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 */
 		public function cross_sells_columns( $columns ) {
 			$_columns = wcj_get_option( 'wcj_cross_sells_columns', 0 );
-			return ( 0 !== ( $_columns ) ? $_columns : $columns );
+			return ( '0' !== ( $_columns ) ? $_columns : $columns );
 		}
 
 		/**
@@ -233,7 +233,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 */
 		public function cross_sells_total( $limit ) {
 			$_limit = wcj_get_option( 'wcj_cross_sells_total', 0 );
-			return ( 0 !== ( $_limit ) ? $_limit : $limit );
+			return ( '0' !== ( $_limit ) ? $_limit : $limit );
 		}
 
 	}

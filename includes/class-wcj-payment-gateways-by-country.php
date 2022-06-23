@@ -48,31 +48,30 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 			switch ( $type ) {
 				case 'country':
 					$country_type = wcj_get_option( 'wcj_gateways_by_location_country_type', 'billing' );
-					$nonce        = wp_create_nonce();
 
 					switch ( $country_type ) {
 						case 'by_ip':
 							return wcj_get_country_by_ip();
 						case 'shipping':
-							return ( ( ! empty( isset( $_REQUEST['s_country'] ) ) && wp_verify_nonce( $nonce ) ) ? isset( $_REQUEST['s_country'] ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) );
+							return ( ( ! empty( $_REQUEST['s_country'] ) && wp_verify_nonce( $nonce ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_country'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) );
 						default: // 'billing'
-							return ( ! empty( isset( $_REQUEST['country'] ) ) ? isset( $_REQUEST['country'] ) : ( isset( WC()->customer ) ? wcj_customer_get_country() : '' ) );
+							return ( ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country() : '' ) );
 					}
 				case 'state':
 					$state_type = wcj_get_option( 'wcj_gateways_by_location_state_type', 'billing' );
 					switch ( $state_type ) {
 						case 'shipping':
-							return ( ! empty( isset( $_REQUEST['s_state'] ) ) ? isset( $_REQUEST['s_state'] ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state() : '' ) );
+							return ( ! empty( $_REQUEST['s_state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_state'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state() : '' ) );
 						default: // 'billing'
-							return ( ! empty( isset( $_REQUEST['state'] ) ) ? isset( $_REQUEST['state'] ) : ( isset( WC()->customer ) ? wcj_customer_get_country_state() : '' ) );
+							return ( ! empty( $_REQUEST['state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['state'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country_state() : '' ) );
 					}
 				case 'postcode':
 					$postcodes_type = wcj_get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' );
 					switch ( $postcodes_type ) {
 						case 'shipping':
-							return ( ! empty( isset( $_REQUEST['s_postcode'] ) ) ? strtoupper( isset( $_REQUEST['s_postcode'] ) ) : ( ! empty( isset( $_REQUEST['shipping_postcode'] ) ) ? strtoupper( isset( $_REQUEST['shipping_postcode'] ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
+							return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['s_postcode'] ) ) ) : ( ! empty( $_REQUEST['shipping_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['shipping_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
 						default: // 'billing'
-							return ( ! empty( isset( $_REQUEST['postcode'] ) ) ? strtoupper( isset( $_REQUEST['postcode'] ) ) : ( ! empty( isset( $_REQUEST['billing_postcode'] ) ) ? strtoupper( isset( $_REQUEST['billing_postcode'] ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
+							return ( ! empty( $_REQUEST['postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['postcode'] ) ) ) : ( ! empty( $_REQUEST['billing_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['billing_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
 					}
 			}
 		}
@@ -95,24 +94,24 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 			foreach ( $_available_gateways as $key => $gateway ) {
 				if ( '' !== $customer_country ) {
 					$include_countries = wcj_maybe_add_european_union_countries( wcj_get_option( 'wcj_gateways_countries_include_' . $key, '' ) );
-					if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries, true ) ) {
+					if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
 					$exclude_countries = wcj_get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
-					if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries, true ) ) {
+					if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
 				}
 				if ( '' !== $customer_state ) {
 					$include_states = wcj_get_option( 'wcj_gateways_states_include_' . $key, '' );
-					if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states, true ) ) {
+					if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
 					$exclude_states = wcj_get_option( 'wcj_gateways_states_exclude_' . $key, '' );
-					if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states, true ) ) {
+					if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}

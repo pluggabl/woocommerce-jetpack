@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 			$payment_gateway            = ( ( empty( $_POST['payment_method'] ) && wp_verify_nonce( $nonce ) ) ? '' : isset( $_POST['payment_method'] ) );
 			$available_payment_gateways = array_keys( WC()->payment_gateways->get_available_payment_gateways() );
 			if ( ! empty( $available_payment_gateways ) ) {
-				if ( ! in_array( $payment_gateway, $available_payment_gateways, true ) ) {
+				if ( ! in_array( $payment_gateway, $available_payment_gateways ) ) {
 					$_POST['payment_method'] = $available_payment_gateways[0];
 				}
 			} else {

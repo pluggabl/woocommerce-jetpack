@@ -62,7 +62,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 						continue; // ... to next product.
 					}
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $categories_in, true ) ) {
+						if ( in_array( $product_category->term_id, $categories_in ) ) {
 							$current_check = true;
 							break;
 						}
@@ -83,7 +83,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 						continue; // ... to next product.
 					}
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $categories_excl, true ) ) {
+						if ( in_array( $product_category->term_id, $categories_excl ) ) {
 							$current_check = false;
 							break;
 						}
@@ -99,7 +99,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $products_in ) ) {
 				$current_check = false;
 				foreach ( $products as $product_id ) {
-					if ( in_array( $product_id, $products_in, true ) ) {
+					if ( in_array( $product_id, $products_in ) ) {
 						// Current gateway is OK.
 						$current_check = true;
 						break;
@@ -115,7 +115,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $products_excl ) ) {
 				$current_check = true;
 				foreach ( $products as $product_id ) {
-					if ( in_array( $product_id, $products_excl, true ) ) {
+					if ( in_array( $product_id, $products_excl ) ) {
 						$current_check = false;
 						break;
 					}
@@ -149,7 +149,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 				// Check if it is on checkout/order-pay/xxx page.
 			} elseif ( is_wc_endpoint_url( 'order-pay' ) ) {
 				$url_arr = preg_split( '/[\/\?]/', isset( $_SERVER['REQUEST_URI'] ) );
-				if ( in_array( 'order-pay', $url_arr, true ) ) {
+				if ( in_array( 'order-pay', $url_arr ) ) {
 					$order_pay_index = array_search( 'order-pay', $url_arr, true );
 					$order_id        = intval( $url_arr[ $order_pay_index + 1 ] );
 					$order           = wc_get_order( $order_id );

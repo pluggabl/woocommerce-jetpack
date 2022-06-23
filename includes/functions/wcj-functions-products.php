@@ -525,7 +525,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 						if ( ! empty( $product_cats_to_exclude ) && in_array( $product_id, $product_cats_to_exclude, true ) ) {
 							$is_product_eligible_new = false;
 						}
-						return $is_product_eligible_new;
+						return $is_product_eligible_new ?? false;
 					}
 				}
 
@@ -543,7 +543,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 					}
 				}
 
-				return $is_product_eligible;
+				return $is_product_eligible ?? false;
 			}
 		}
 		return false;

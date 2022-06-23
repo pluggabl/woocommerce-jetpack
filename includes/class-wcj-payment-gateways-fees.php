@@ -241,7 +241,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 					$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total :
 					$woocommerce->cart->cart_contents_total );
 				$total_in_cart += 'no' === $this->wcj_get_option( 'include_taxes', $current_gateway ) ? 0 : $woocommerce->cart->get_subtotal_tax() + $woocommerce->cart->get_shipping_tax();
-				if ( '' !== $fee_text && $total_in_cart >= $min_cart_amount && ( 0 === $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway ) ) {
+				if ( '' !== $fee_text && $total_in_cart >= $min_cart_amount && ( '0' === $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway ) ) {
 					$enable_user_wise_charge_discount = wcj_get_option( 'wcj_enable_payment_gateway_charge_discount_userwise' )[ $current_gateway ];
 					if ( 'yes' === $enable_user_wise_charge_discount ) {
 						if ( is_user_logged_in() ) {

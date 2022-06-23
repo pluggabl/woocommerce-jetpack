@@ -63,9 +63,8 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 * @since   5.5.6
 		 */
 		public function wcj_new_desing_dashboard() {
-			$page = $_GET['tab'];
 
-			if ( $page === 'jetpack' ) {
+				if ( isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css' );
 				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );
 				// wp_enqueue_script('wcj-admin-dasboard-js', wcj_plugin_url() . '/includes/js/wcj-new_desing.js');
