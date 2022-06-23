@@ -119,8 +119,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 */
 		public function bulk_actions_pdfs_notices() {
 			global $post_type, $pagenow;
-			$nonce = wp_create_nonce();
-			if ( 'edit.php' === $pagenow && 'shop_order' === $post_type && wp_verify_nonce( $nonce ) ) {
+			if ( 'edit.php' === $pagenow && 'shop_order' === $post_type ) {
 				if ( isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
 					/* translators: %s: translation added */
 					$message = sprintf( wp_kses_post( 'Document generated.', '%s documents generated.', isset( $_REQUEST['generated'] ) ), number_format_i18n( isset( $_REQUEST['generated'] ) ) );
@@ -211,7 +210,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 									'generated_type' => $the_type,
 									'generated_' . $the_type => 1,
 									'ids'            => join( ',', $invoice_num ),
-									'post_status'    => isset( $_GET['post_status'] ),
+									'post_status'    => $_GET['post_status'],
 								),
 								$redirect_to
 							)
@@ -231,7 +230,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 								'generated_type'         => $the_type,
 								'generated_' . $the_type => 1,
 								'ids'                    => join( ',', $post_ids ),
-								'post_status'            => isset( $_GET['post_status'] ),
+								'post_status'            => $_GET['post_status'],
 							),
 							$redirect_to
 						)
@@ -244,7 +243,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 						$redirect_to = esc_url(
 							add_query_arg(
 								array(
-									'post_status' => isset( $_GET['post_status'] ),
+									'post_status' => $_GET['post_status'],
 									'wcj_notice'  => $result,
 								),
 								$redirect_to
@@ -266,7 +265,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 							$redirect_to = esc_url(
 								add_query_arg(
 									array(
-										'post_status' => isset( $_GET['post_status'] ),
+										'post_status' => $_GET['post_status'],
 										'wcj_notice'  => $result,
 									),
 									$redirect_to
@@ -448,9 +447,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @version 3.4.0
 		 */
 		public function catch_args() {
-			$nonce                 = wp_create_nonce();
-			$this->order_id        = ( isset( $_GET['order_id'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['order_id'] ) : 0;
-			$this->invoice_type_id = ( isset( $_GET['invoice_type_id'] ) ) ? isset( $_GET['invoice_type_id'] ) : '';
+			$this->order_id        = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : 0;
+			$this->invoice_type_id = ( isset( $_GET['invoice_type_id'] ) ) ? $_GET['invoice_type_id'] : '';
 			$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' === $_GET['save_pdf_invoice'] );
 			$this->get_invoice     = ( isset( $_GET['get_invoice'] ) && '1' === $_GET['get_invoice'] );
 

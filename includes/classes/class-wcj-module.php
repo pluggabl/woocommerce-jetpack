@@ -704,7 +704,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						}
 						$css          = ( isset( $option['css'] ) ? $option['css'] : '' );
 						$class        = ( isset( $option['class'] ) ? $option['class'] : '' );
-						$show_value   = ( isset( $option['show_value']  && $option['show_value'] );
+						$show_value   = ( isset( $option['show_value'] ) && $option['show_value'] );
 						$input_ending = '';
 						if ( 'select' === $option['type'] ) {
 							if ( isset( $option['multiple'] ) ) {
