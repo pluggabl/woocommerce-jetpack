@@ -38,7 +38,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		 */
 		public function get_report() {
 			$nonce       = wp_create_nonce();
-			$report_type = isset( $_GET['country'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['country'] ) : 'all_countries';
+			$report_type = isset( $_GET['country'] ) && wp_verify_nonce( $nonce ) ? $_GET['country'] : 'all_countries';
 
 			$html = '';
 

@@ -81,7 +81,7 @@ if ( ! class_exists( 'WCJ_Breadcrumbs' ) ) :
 				'#breadcrumbs',
 				'.breadcrumbs-wrapper',
 			);
-			echo '<style>' . implode( ', ', esc_html( $identifiers ) ) . ' { display: none !important; }</style>';
+			echo '<style>' . esc_html( implode( ', ', $identifiers ) ) . ' { display: none !important; }</style>';
 		}
 
 		/**

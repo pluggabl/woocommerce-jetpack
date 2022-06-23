@@ -49,8 +49,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 			add_action( 'woojetpack_after_settings_save', array( $this, 'create_php_file' ), PHP_INT_MAX, 2 );
 
 			if ( $this->is_enabled() ) {
-				$nonce = wp_create_nonce();
-				if ( isset( $_GET['wcj_disable_custom_php'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_GET['wcj_disable_custom_php'] ) ) {
 					if ( wcj_current_user_can( 'manage_woocommerce' ) ) {
 						// Stop custom PHP execution.
 						return;

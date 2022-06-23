@@ -213,9 +213,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		 * @param bool $validation get validations.
 		 */
 		public function disable_pre_get_posts_on_export( $validation ) {
-			$nonce = wp_create_nonce();
 			if (
-			! isset( $_REQUEST['action'] ) && wp_verify_nonce( $nonce ) ||
+			! isset( $_REQUEST['action'] ) ||
 			'woocommerce_do_ajax_product_export' !== $_REQUEST['action']
 			) {
 				return $validation;

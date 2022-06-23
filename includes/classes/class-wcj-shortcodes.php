@@ -259,28 +259,26 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 			}
 
 			// Check if billing country by arg is ok.
-			$nonce = wp_create_nonce();
 			if ( '' !== $atts['billing_country'] ) {
-				$order_id       = isset( $_GET['order_id'] );
+				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) ;
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
-				if ( ! isset( $billing_contry ) && wp_verify_nonce( $nonce ) ) {
+				if ( ! isset( $billing_contry ) ) {
 
 					return '';
 				}
-				if ( ! in_array( $billing_contry, $this->custom_explode( $atts['billing_country'] ), true ) ) {
+				if ( ! in_array( $billing_contry, $this->custom_explode( $atts['billing_country'] ) ) ) {
 
 					return '';
 				}
 			}
 			// Check if billing country by arg is ok (not in...).
-			$nonce = wp_create_nonce();
 			if ( '' !== $atts['not_billing_country'] ) {
-				$order_id       = isset( $_GET['order_id'] );
+				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) );
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
 				if ( isset( $billing_contry ) ) {
-					if ( in_array( $billing_contry, $this->custom_explode( $atts['not_billing_country'] ), true ) && wp_verify_nonce( $nonce ) ) {
+					if ( in_array( $billing_contry, $this->custom_explode( $atts['not_billing_country'] ) ) ) {
 
 						return '';
 					}
@@ -292,14 +290,14 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 				if ( ! isset( $_GET['payment_method'] ) ) {
 					return '';
 				}
-				if ( ! in_array( $_GET['payment_method'], $this->custom_explode( $atts['payment_method'] ), true ) ) {
+				if ( ! in_array( $_GET['payment_method'], $this->custom_explode( $atts['payment_method'] ) ) ) {
 					return '';
 				}
 			}
 			// Check if payment method by arg is ok (not in...).
 			if ( '' !== $atts['not_payment_method'] ) {
 				if ( isset( $_GET['payment_method'] ) ) {
-					if ( in_array( $_GET['payment_method'], $this->custom_explode( $atts['not_payment_method'] ), true ) ) {
+					if ( in_array( $_GET['payment_method'], $this->custom_explode( $atts['not_payment_method'] ) ) ) {
 						return '';
 					}
 				}
@@ -371,8 +369,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 * @todo    (maybe) move this to global functions
 		 */
 		public function wcj_get_user_location() {
-			$nonce = wp_create_nonce();
-			return ( isset( $_GET['country'] ) && '' !== isset( $_GET['country'] ) && wcj_is_user_role( 'administrator' ) && wp_verify_nonce( $nonce ) ? isset( $_GET['country'] ) : wcj_get_country_by_ip() );
+			return ( isset( $_GET['country'] ) && '' !== isset( $_GET['country'] ) && wcj_is_user_role( 'administrator' ) ? sanitize_text_field( wp_unslash( $_GET['country'] ) ) : wcj_get_country_by_ip() );
 		}
 	}
 

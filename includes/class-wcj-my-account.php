@@ -185,7 +185,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			if ( ! isset( $this->custom_pages ) ) {
 				$this->get_custom_pages();
 			}
-			$endpoint = isset( $_GET['section'] );
+			$endpoint = $_GET['section'];
 			return ( isset( $this->custom_pages[ $endpoint ] ) ? $this->custom_pages[ $endpoint ]['title'] : $title );
 
 			return $title;

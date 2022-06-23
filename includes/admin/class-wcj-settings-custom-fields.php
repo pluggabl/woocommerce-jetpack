@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 					style="<?php echo esc_attr( $value['css'] ); ?>"
 					value="<?php echo esc_attr( $option_value ); ?>"
 					class="<?php echo esc_attr( $value['class'] ); ?>"
-					<?php echo wp_kses_post( implode( ' ',  $custom_attributes ) ); ?>
+					<?php echo implode( ' ', wp_kses_post( $custom_attributes ) ); ?>
 					/>
 				<input
 					name="<?php echo esc_attr( $value['id'] . '_button' ); ?>"
@@ -101,7 +101,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 					value="<?php echo esc_attr( $value['value'] ); ?>"
 					title="<?php echo esc_attr( $value_title ); ?>"
 					class="exchage_rate_button"
-					<?php echo  wp_kses_post( implode( ' ', $custom_attributes_button ) ); ?>
+					<?php echo implode( ' ', wp_kses_post( $custom_attributes_button ) ); ?>
 					/>
 			</td>
 		</tr>
@@ -189,7 +189,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 					value="<?php echo esc_attr( $option_value ); ?>"
 					class="<?php echo esc_attr( $value['class'] ); ?>"
 					placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
-					<?php echo wp_kses_post(implode( ' ',  $custom_attributes ) ); ?>
+					<?php echo implode( ' ', wp_kses_post( $custom_attributes ) ); ?>
 					/> 
 					<?php
 					echo wp_kses_post( $description ) . ' ';
@@ -225,7 +225,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 						class="<?php echo esc_attr( isset( $value['class'] ) ? $value['class'] : '' ); ?>"
 						value="1"
 						<?php checked( $option_value, 'yes' ); ?>
-						<?php echo wp_kses_post( implode( ' ',  $custom_attributes ) ); ?>
+						<?php echo implode( ' ', wp_kses_post( $custom_attributes ) ); ?>
 					/> <?php echo wp_kses_post( $description ); ?>
 				</label> <?php echo wp_kses_post( $tooltip_html ); ?>
 			</td>
@@ -299,8 +299,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php
-				$nonce = wp_create_nonce();
-				if ( isset( $_GET['section'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_GET['section'] ) ) {
 					do_action( 'wcj_module_tools_' . sanitize_text_field( wp_unslash( $_GET['section'] ) ) );}
 				?>
 			</td>

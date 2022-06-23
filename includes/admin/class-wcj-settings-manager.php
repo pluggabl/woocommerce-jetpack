@@ -40,17 +40,16 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 				if ( ! function_exists( 'current_user_can' ) || ! current_user_can( 'manage_options' ) ) {
 					return;
 				}
-				$nonce = wp_create_nonce();
-				if ( isset( $_POST['booster_import_settings'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_POST['booster_import_settings'] ) ) {
 					$this->manage_options_import();
 				}
-				if ( isset( $_POST['booster_export_settings'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_POST['booster_export_settings'] ) ) {
 					$this->manage_options_export();
 				}
-				if ( isset( $_POST['booster_reset_settings'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_POST['booster_reset_settings'] ) ) {
 					$this->manage_options_reset();
 				}
-				if ( isset( $_POST['booster_reset_settings_meta'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_POST['booster_reset_settings_meta'] ) ) {
 					$this->manage_options_reset_meta();
 				}
 			}
@@ -64,15 +63,14 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		 */
 		public function manage_options_import() {
 			global $wcj_notice;
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' === $_FILES['booster_import_settings_file']['tmp_name'] && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' === $_FILES['booster_import_settings_file']['tmp_name'] ) {
 				$wcj_notice     .= __( 'Please upload a file to import!', 'woocommerce-jetpack' );
 				$import_settings = array();
 
 				unset( $_POST['booster_import_settings'] );
 			} else {
 				$import_counter  = 0;
-				$import_settings = file_get_contents( isset( $_FILES['booster_import_settings_file']['tmp_name'] ) );
+				$import_settings = file_get_contents( sanitize_text_field( wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] ) ) );
 				$bom             = pack( 'H*', 'EFBBBF' );
 				$import_settings = preg_replace( "/^$bom/", '', $import_settings );
 				$import_settings = explode( PHP_EOL, preg_replace( '~(*BSR_ANYCRLF)\R~', PHP_EOL, $import_settings ) );
@@ -112,8 +110,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 				$values = $module->get_settings();
 				foreach ( $values as $value ) {
 					if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
-						$nonce = wp_create_nonce();
-						if ( isset( $_POST['booster_export_settings'] ) && wp_verify_nonce( $nonce ) ) {
+						if ( isset( $_POST['booster_export_settings'] ) ) {
 							$export_settings[ $value['id'] ] = wcj_get_option( $value['id'], $value['default'] );
 							if ( ! isset( $export_counter[ $module->short_desc ] ) ) {
 								$export_counter[ $module->short_desc ] = 0;

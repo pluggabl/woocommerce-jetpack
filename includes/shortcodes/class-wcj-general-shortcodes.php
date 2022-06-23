@@ -487,8 +487,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$html           = '';
 			$options        = '';
 			$countries      = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
-			$nonce          = wp_create_nonce();
-			$selected_value = ( ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) && wp_verify_nonce( $nonce ) ) ?
+			$selected_value = ( ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) ?
 			isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) :
 			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 			);

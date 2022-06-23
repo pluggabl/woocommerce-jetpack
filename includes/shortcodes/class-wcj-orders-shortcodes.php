@@ -199,12 +199,11 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 			// Atts.
 			$atts['excl_tax'] = ( 'yes' === $atts['excl_tax'] );
-			$nonce            = wp_create_nonce();
-			if ( 0 === $atts['order_id'] && wp_verify_nonce( $nonce ) ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? isset( $_GET['order_id'] ) : get_the_ID();
+			if ( 0 === $atts['order_id'] ) {
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID();
 			}
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? isset( $_GET['pdf_invoice'] ) : 0; // PDF Invoices V1 compatibility.
+				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? sanitize_text_field( wp_unslash( $_GET['pdf_invoice'] ) ) : 0; // PDF Invoices V1 compatibility.
 			}
 			if ( 0 === $atts['order_id'] ) {
 				return false;
@@ -958,7 +957,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			foreach ( $the_items as $item_id => $item ) {
 				switch ( $atts['field'] ) {
 					case '_debug':
-						$items[] = '<pre>' . print_r( $item, true ). '</pre>';
+						$items[] = '<pre>' . wp_kses_post( $item, true ) . '</pre>';
 						break;
 					case '_qty_x_name':
 						$items[] = ( isset( $item['qty'] ) && isset( $item['name'] ) ) ? $item['qty'] . ' x ' . $item['name'] : '';

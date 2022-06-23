@@ -374,8 +374,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   2.9.1
 		 */
 		public function validate_value_admin_notices() {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) {
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' .
@@ -510,8 +509,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   2.5.3
 		 */
 		public function admin_notices() {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' . wp_kses_post( $this->get_the_notice() ) . '</div></p></div>';
@@ -525,8 +523,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 		 */
 		public function reset_settings() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
 				foreach ( $this->get_settings() as $settings ) {
 					if ( false !== strpos( $settings['id'], '[' ) ) {
 						$id = explode( '[', $settings['id'] );
@@ -707,7 +704,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						}
 						$css          = ( isset( $option['css'] ) ? $option['css'] : '' );
 						$class        = ( isset( $option['class'] ) ? $option['class'] : '' );
-						$show_value   = ( isset( $option['show_value'] ) && $option['show_value'] );
+						$show_value   = ( isset( $option['show_value']  && $option['show_value'] );
 						$input_ending = '';
 						if ( 'select' === $option['type'] ) {
 							if ( isset( $option['multiple'] ) ) {
@@ -991,7 +988,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'id'    => 'wcj_' . $this->id . '_reset_settings',
 					'type'  => 'custom_link',
 					'link'  => '<a onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')" class="button-primary" style="' .
-						$reset_button_style . '" href="' . esc_url( add_query_arg( 'wcj_reset_settings', $this->id ) ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+						$reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 				),
 				array(
 					'type' => 'sectionend',

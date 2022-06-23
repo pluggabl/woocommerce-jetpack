@@ -441,14 +441,14 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	 * @param   array $args defines the args.
 	 */
 	function wcj_maybe_add_date_query( $args ) {
-		if ( ( isset( $_GET['start_date'] ) && '' !== isset( $_GET['start_date'] ) ) || ( isset( $_GET['end_date'] ) && '' !== isset( $_GET['end_date'] ) ) ) {
+		if ( ( isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
 			$date_query              = array();
 			$date_query['inclusive'] = true;
-			if ( isset( $_GET['start_date'] ) && '' !== isset( $_GET['start_date'] ) ) {
-				$date_query['after'] = isset( $_GET['start_date'] );
+			if ( $_GET['start_date'] && '' !== $_GET['start_date'] ) {
+				$date_query['after'] = $_GET['start_date'];
 			}
-			if ( isset( $_GET['end_date'] ) && '' !== isset( $_GET['end_date'] ) ) {
-				$date_query['before'] = isset( $_GET['end_date'] );
+			if ( $_GET['end_date'] && '' !== $_GET['end_date'] ) {
+				$date_query['before'] = $_GET['end_date'];
 			}
 			$args['date_query'] = array( $date_query );
 		}
@@ -526,7 +526,7 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 	 * @since   2.5.6
 	 */
 	function wcj_is_bot() {
-		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', isset( $_SERVER['HTTP_USER_AGENT'] ) ) );
+		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) );
 	}
 }
 
@@ -581,7 +581,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 			// Checked.
 			$nonce   = wp_create_nonce();
 			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) && wp_verify_nonce( $nonce ) ) ?
-				wc_clean( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) : $_product->get_variation_default_attribute( $attribute_name );
+				wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
 			if ( $checked !== $attribute_value ) {
 				$is_checked = false;
 			}
@@ -1084,6 +1084,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'id' => true,
 				'style' => true,
 				'class' => true,
+				'data-tip' => true,
 			),
 			'td' => array(
 				'style' => true,

@@ -39,7 +39,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 			$nonce         = wp_create_nonce();
 			$modified_atts = array_merge(
 				array(
-					'order_id'                            => ( isset( $_GET['order_id'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['order_id'] ) : get_the_ID(),
+					'order_id'                            => ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(),
 					'hide_currency'                       => 'no',
 					'table_class'                         => '',
 					'shipping_as_item'                    => '', // e.g.: 'Shipping'.
@@ -357,7 +357,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 			$data         = array();
 			$item_counter = 0;
 			foreach ( $the_items as $item_id => $item ) {
-				$item['is_custom'] = ( isset( $item['is_custom'] ) );
+				$item['is_custom'] = $item['is_custom'];
 				$the_product       = ( true === $item['is_custom'] ) ? null : ( method_exists( $item, 'get_product' ) ? $item->get_product( $item ) : null );
 				// Check if it's not excluded by category.
 				if ( '' !== $atts['exclude_by_categories'] && $the_product ) {

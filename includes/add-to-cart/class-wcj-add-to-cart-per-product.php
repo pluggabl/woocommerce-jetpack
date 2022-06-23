@@ -76,8 +76,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		 */
 		public function save_custom_add_to_cart_meta_box( $post_id, $post ) {
 			// Check that we are saving with custom add to cart metabox displayed.
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) ) {
 				return;
 			}
 			$option_name = 'wcj_custom_add_to_cart_local_single';

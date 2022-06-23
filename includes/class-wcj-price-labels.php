@@ -111,8 +111,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		 * @param string | array $post defines the post.
 		 */
 		public function save_custom_price_labels( $post_id, $post ) {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_POST['woojetpack_price_labels_save_post'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_POST['woojetpack_price_labels_save_post'] ) ) {
 				return;
 			}
 			foreach ( $this->custom_tab_sections as $custom_tab_section ) {

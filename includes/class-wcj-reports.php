@@ -175,8 +175,8 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function catch_arguments() {
 			$nonce                 = wp_create_nonce();
-			$this->report_id       = ( isset( $_GET['report'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['report'] ) : 'on_stock';
-			$this->range_days      = isset( $_GET['period'] ) ? isset( $_GET['period'] ) : 30;
+			$this->report_id       = ( isset( $_GET['report'] ) && wp_verify_nonce( $nonce ) ) ? $_GET['report'] : 'on_stock';
+			$this->range_days      = isset( $_GET['period'] ) ? $_GET['period'] : 30;
 			$this->group_countries = ( 'customers_by_country_sets' === $this->report_id ) ? 'yes' : 'no';
 		}
 

@@ -250,7 +250,7 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 				$wpdb->query( $sql );
 				delete_option( 'wcj_track_users_stats_by_country' );
 				delete_option( 'wcj_track_users_cron_time_last_run' );
-				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_track_users_stats' ) ) );
+				wp_safe_redirect( remove_query_arg( 'wcj_delete_track_users_stats' ) );
 				exit;
 			}
 		}

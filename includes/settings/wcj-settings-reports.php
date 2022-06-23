@@ -204,7 +204,7 @@ foreach ( $reports_and_settings as $report ) {
 			array(
 				array(
 					'title'    => $report['title'],
-					'desc_tip' => 'WooCommerce > Reports > ' . $report['tab_title'] . ' > ' . $report['title'],
+					'desc_tip' => 'WooCommerce &gt; Reports &gt; ' . $report['tab_title'] . ' &gt; ' . $report['title'],
 					'id'       => 'wcj_' . $report['report'] . '_link',
 					'type'     => 'custom_link',
 					'link'     => '<a class="button-primary" '

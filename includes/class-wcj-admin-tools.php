@@ -257,7 +257,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 				}
 			}
 			// Output.
-			echo wp_kses_post( $html );
+			echo $html;
 		}
 
 		/**
@@ -271,7 +271,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			$html .= $this->get_products_atts();
 			$html .= '</div>';
-			echo esc_html( $html );
+			echo wp_kses_post( $html );
 		}
 
 		/**

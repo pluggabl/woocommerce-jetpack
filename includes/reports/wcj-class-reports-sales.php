@@ -41,8 +41,8 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			$nonce = wp_create_nonce();
 			$html  = '';
 
-			$this->year          = isset( $_GET['year'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['year'] ) : gmdate( 'Y' );
-			$this->product_title = isset( $_GET['product_title'] ) && wp_verify_nonce( $nonce ) ? isset( $_GET['product_title'] ) : '';
+			$this->year          = isset( $_GET['year'] ) && wp_verify_nonce( $nonce ) ? $_GET['year'] : gmdate( 'Y' );
+			$this->product_title = isset( $_GET['product_title'] ) && wp_verify_nonce( $nonce ) ? $_GET['product_title'] : '';
 
 			$html .= $this->get_products_sales();
 
@@ -378,9 +378,9 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . isset( $_GET['page'] ) && wp_verify_nonce( $nonce ) . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . isset( $_GET['tab'] ) . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . isset( $_GET['report'] ) . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . $_GET['tab'] . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
 			$filter_form .= '<input type="hidden" name="year" value="' . $this->year . '" />';
 			$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
 			'<input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';

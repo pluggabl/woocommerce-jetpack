@@ -281,7 +281,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			$current_start_date  = ( isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '' );
 			$current_end_date    = ( isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '' );
 			$predefined_ranges   = array();
-			$predefined_ranges[] = '<a href="' . esc_url( add_query_arg( 'range', 'all_time', esc_url( remove_query_arg( array( 'start_date', 'end_date' ) ) ) ) ) . '">' .
+			$predefined_ranges[] = '<a href="' . esc_url( add_query_arg( 'range', 'all_time', remove_query_arg( array( 'start_date', 'end_date' ) ) ) ) . '">' .
 			__( 'All time', 'woocommerce-jetpack' ) . '</a>';
 			foreach ( array_merge( wcj_get_reports_standard_ranges(), wcj_get_reports_custom_ranges() ) as $range_id => $range_data ) {
 				$link                = esc_url(
@@ -323,6 +323,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			echo wp_kses_post( $this->get_tool_header_html( 'export_' . $tool_id ) );
 			echo '<p>' . wp_kses_post( $this->export_date_fields( $tool_id ) ) . '</p>';
 			if ( ! isset( $_GET['range'] ) ) {
+				echo '</div>';
 				return;
 			}
 			echo '<form method="post" action="">';
@@ -339,7 +340,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			echo '</p>';
 			echo '</form>';
 			$data = $this->export( $tool_id );
-			echo wp_kses_post( is_array( $data ) ? wp_kses_post( $data, array( 'table_class' => 'widefat striped' ) ) : ( $data ) );
+			echo is_array( $data ) ? wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) ) : ( $data );
 			echo '</div>';
 		}
 
