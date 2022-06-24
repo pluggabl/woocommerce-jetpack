@@ -100,7 +100,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 			$html .= '</form>';
 			$html .= wcj_get_option( 'wcj_products_per_page_text_after', '</div>' );
 
-			echo wp_kses_post( $html );
+			echo $html;
 		}
 
 		/**
@@ -137,11 +137,10 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		 * @param string $do_save defines the do_save.
 		 */
 		public function get_current_products_per_page_number( $do_save ) {
-			$nonce             = wp_create_nonce();
 			$products_per_page = $this->get_saved_products_per_page_number();
-			if ( isset( $_REQUEST['wcj_products_per_page'] ) && ! empty( $_REQUEST['wcj_products_per_page'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_REQUEST['wcj_products_per_page'] ) && ! empty( $_REQUEST['wcj_products_per_page'] ) ) {
 				if ( $do_save ) {
-					$this->save_products_per_page_number( intval( sanitize_text_field( isset( $_REQUEST['wcj_products_per_page'] ) ) ) );
+					$this->save_products_per_page_number( intval( sanitize_text_field( wp_unslash( $_REQUEST['wcj_products_per_page'] ) ) ) );
 				}
 				return intval( sanitize_text_field( isset( $_REQUEST['wcj_products_per_page'] ) ) );
 			} elseif ( $products_per_page ) {

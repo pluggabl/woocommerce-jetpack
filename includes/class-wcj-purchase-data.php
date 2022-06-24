@@ -98,8 +98,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		 */
 		public function create_import_from_wc_cog_tool() {
 			// Action and Products list.
-			$nonce          = wp_create_nonce();
-			$perform_import = ( isset( $_POST['wcj_import_from_wc_cog'] ) && wp_verify_nonce( $nonce ) );
+			$perform_import = ( isset( $_POST['wcj_import_from_wc_cog'] ) );
 			$table_data     = array();
 			$table_data[]   = array(
 				__( 'Product ID', 'woocommerce-jetpack' ),
@@ -238,14 +237,14 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			if ( 'profit' === $column || 'purchase_cost' === $column ) {
 				$total     = 0;
 				$the_order = wc_get_order( get_the_ID() );
-				if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ), true ) ) {
+				if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ) ) ) {
 					$is_forecasted = false;
 					foreach ( $the_order->get_items() as $item_id => $item ) {
 						$value          = 0;
-						$product_id     = ( isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
+						$product_id     = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
 						? $item['variation_id'] : $item['product_id'] );
 						$purchase_price = wc_get_product_purchase_price( $product_id );
-						if ( 0 !== ( $purchase_price ) ) {
+						if ( 0 != ( $purchase_price ) ) {
 							if ( 'profit' === $column ) {
 								$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->prices_include_tax : $the_order->get_prices_include_tax() );
 								$line_total                = ( $_order_prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
@@ -259,11 +258,11 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 						$total += $value;
 					}
 				}
-				if ( 0 !== $total ) {
+				if ( 0 != $total ) {
 					if ( ! $is_forecasted ) {
 						echo '<span style="color:green;">';
 					}
-					echo wp_kses_post( wc_price( $total ) );
+					echo  wc_price( $total );
 					if ( ! $is_forecasted ) {
 						echo '</span>';
 					}
@@ -297,10 +296,10 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			}
 			foreach ( $products as $product_id => $desc ) {
 				$purchase_price = wc_get_product_purchase_price( $product_id );
-				if ( 0 !== $purchase_price ) {
+				if ( 0 != $purchase_price ) {
 					$the_product = wc_get_product( $product_id );
 					$the_price   = $the_product->get_price();
-					if ( 0 !== $the_price ) {
+					if ( 0 != $the_price ) {
 						$the_profit   = $the_price - $purchase_price;
 						$table_data   = array();
 						$table_data[] = array( __( 'Selling', 'woocommerce-jetpack' ), wc_price( $the_price ) );

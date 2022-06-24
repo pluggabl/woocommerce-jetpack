@@ -303,16 +303,15 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 		public function custom_woocommerce_get_catalog_ordering_args( $args ) {
 
 			// Get ordering from query string.
-			$nonce         = wp_create_nonce();
-			$orderby_value = ( ( WCJ_IS_WC_VERSION_BELOW_3 && wp_verify_nonce( $nonce ) ) ?
-			( isset( $_GET['orderby'] ) ? woocommerce_clean( isset( $_GET['orderby'] ) ) : apply_filters(
+			$orderby_value = ( WCJ_IS_WC_VERSION_BELOW_3 ) ?
+			( isset( $_GET['orderby'] ) ? woocommerce_clean(sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ) : apply_filters(
 				'woocommerce_default_catalog_orderby',
 				get_option( 'woocommerce_default_catalog_orderby' )
 			) ) :
-			( isset( $_GET['orderby'] ) ? wc_clean( isset( $_GET['orderby'] ) ) : apply_filters(
+			( isset( $_GET['orderby'] ) ? wc_clean( sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ) : apply_filters(
 				'woocommerce_default_catalog_orderby',
 				get_option( 'woocommerce_default_catalog_orderby' )
-			) )
+			) 
 			);
 			// Get orderby arg from string.
 			$orderby_value = explode( '-', $orderby_value );

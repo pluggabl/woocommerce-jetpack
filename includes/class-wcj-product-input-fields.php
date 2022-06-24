@@ -156,9 +156,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		 * @since   2.2.2
 		 */
 		public function handle_downloads() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_download_file'] ) && wp_verify_nonce( $nonce ) ) {
-				$file_name  = isset( $_GET['wcj_download_file'] );
+			if ( isset( $_GET['wcj_download_file'] ) ) {
+				$file_name  = sanitize_text_field( wp_unslash( $_GET['wcj_download_file'] ) );
 				$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
 				$file_path  = $upload_dir . '/' . $file_name;
 				if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {

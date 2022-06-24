@@ -160,32 +160,30 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param obj | Array $post Get post.
 		 */
 		public function save_local_product_input_fields_on_product_edit( $post_id, $post ) {
-			// Check that we are saving with input fields displayed.
-			$nonce = wp_create_nonce();
-
-			if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) && wp_verify_nonce( $nonce ) ) {
-				return;
-			}
-			// Save values.
-			$default_total_input_fields       = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
-			$total_input_fields_before_saving = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_local_total_number', $post_id, 1 ) );
-			$total_input_fields_before_saving = ( '' !== $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
-			$options                          = $this->get_options();
-			$values                           = array();
-			$values['local_total_number']     = isset( $_POST['wcj_product_input_fields_local_total_number'] ) ?
-			isset( $_POST['wcj_product_input_fields_local_total_number'] ) : $default_total_input_fields;
-			for ( $i = 1; $i <= $total_input_fields_before_saving; $i++ ) {
-				foreach ( $options as $option ) {
-					$option_name = str_replace( 'wcj_product_input_fields_', '', $option['id'] . $i );
-					if ( isset( $_POST[ $option['id'] . $i ] ) ) {
-						$values[ $option_name ] = isset( $_POST[ $option['id'] . $i ] );
-					} elseif ( 'checkbox' === $option['type'] ) {
-						$values[ $option_name ] = 'off';
-					}
+		// Check that we are saving with input fields displayed.
+		if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) ) {
+			return;
+		}
+		// Save values
+		$default_total_input_fields       = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
+		$total_input_fields_before_saving = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_local_total_number', $post_id, 1 ) );
+		$total_input_fields_before_saving = ( '' != $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
+		$options                          = $this->get_options();
+		$values                           = array();
+		$values['local_total_number']     = isset( $_POST['wcj_product_input_fields_local_total_number'] ) ?
+			$_POST['wcj_product_input_fields_local_total_number'] : $default_total_input_fields;
+		for ( $i = 1; $i <= $total_input_fields_before_saving; $i++ ) {
+			foreach ( $options as $option ) {
+				$option_name = str_replace( 'wcj_product_input_fields_', '', $option['id'] . $i );
+				if ( isset( $_POST[ $option['id'] . $i ] ) ) {
+					$values[ $option_name ] = $_POST[ $option['id'] . $i ];
+				} elseif ( 'checkbox' === $option['type'] ) {
+					$values[ $option_name ] = 'off';
 				}
 			}
-			update_post_meta( $post_id, '_wcj_product_input_fields', $values );
 		}
+		update_post_meta( $post_id, '_wcj_product_input_fields', $values );
+	}
 
 		/**
 		 * Add_local_product_input_fields_meta_box_to_product_edit.
@@ -471,7 +469,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				return wcj_get_option( $option_name, $default );
 			} else { // local.
 				$options = get_post_meta( $product_id, '_wcj_product_input_fields', true );
-				if ( '' !== ( $options ) ) {
+				if ( '' != ( $options ) ) {
 					$option_name = str_replace( 'wcj_product_input_fields_', '', $option_name );
 					return ( isset( $options[ $option_name ] ) ? $options[ $option_name ] : $default );
 				} else { // Booster version  < 3.5.0.
@@ -497,17 +495,17 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 				$type       = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );
 				$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
-				$nonce      = wp_create_nonce();
-				if ( 'checkbox' === $type && ! isset( $_POST[ $field_name ] ) && wp_verify_nonce( $nonce ) ) {
+				
+				if ( 'checkbox' === $type && ! isset( $_POST[ $field_name ] ) ) {
 					$_POST[ $field_name ] = 'off';
 				}
 
 				$is_required = $this->get_value( 'wcj_product_input_fields_required_' . $this->scope . '_' . $i, $product_id, 'no' );
 				if ( 'on' === $is_required || 'yes' === $is_required ) {
 					if ( 'file' === $type ) {
-						$field_value = ( isset( $_FILES[ $field_name ]['name'] ) ) ? isset( $_FILES[ $field_name ]['name'] ) : '';
+						$field_value = ( isset( $_FILES[ $field_name ]['name'] ) ) ? sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['name'] ) ) : '';
 					} else {
-						$field_value = ( isset( $_POST[ $field_name ] ) ) ? isset( $_POST[ $field_name ] ) : '';
+						$field_value = ( isset( $_POST[ $field_name ] ) ) ?sanitize_text_field( wp_unslash( $_POST[ $field_name ] ) ) : '';
 						if ( 'checkbox' === $type && 'off' === $field_value ) {
 							$field_value = '';
 						}
@@ -524,8 +522,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 					if ( '' !== ( $file_accept ) ) {
 						$file_accept = explode( ',', $file_accept );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-							$file_type = '.' . pathinfo( isset( $_FILES[ $field_name ]['name'] ), PATHINFO_EXTENSION );
-							if ( ! in_array( $file_type, $file_accept, true ) ) {
+							$file_type = '.' . pathinfo( sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['name'] ) ), PATHINFO_EXTENSION );
+							if ( ! in_array( $file_type, $file_accept ) ) {
 								$passed = false;
 								wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
 							}
@@ -534,7 +532,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 					// Validate file max size.
 					$max_file_size = $this->get_value( 'wcj_product_input_fields_type_file_max_size_' . $this->scope . '_' . $i, $product_id, '' );
 					if ( $max_file_size > 0 ) {
-						if ( isset( $_FILES[ $field_name ]['size'] ) > $max_file_size ) {
+						if ( sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['size'] ) ) > $max_file_size ) {
 							$passed = false;
 							wc_add_notice( __( 'File is too big!', 'woocommerce-jetpack' ), 'error' );
 						}
@@ -654,9 +652,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				}
 
 				if ( $this->is_enabled( $i, $_product_id ) ) {
-					$nonce     = wp_create_nonce();
-					$set_value = ( isset( $_POST[ $field_name ] ) && wp_verify_nonce( $nonce ) ?
-					$this->maybe_stripslashes( isset( $_POST[ $field_name ] ) ) :
+					
+					$set_value = ( isset( $_POST[ $field_name ] )  ?
+					$this->maybe_stripslashes( sanitize_text_field( wp_unslash( $_POST[ $field_name ] ) ) ) :
 					( 'checkbox' === $type ?
 						( 'yes' === $this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $_product_id, 'no' ) ? 'on' : 'off' ) :
 						''
@@ -803,7 +801,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			ksort( $fields );
 			if ( ! empty( $fields ) ) {
-				echo  wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . implode( wp_kses_post( $fields ) ) .  wcj_get_option( 'wcj_product_input_fields_end_template', '' );
+				echo  wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode(  $fields ) ) .  wcj_get_option( 'wcj_product_input_fields_end_template', '' );
 				$this->are_product_input_fields_displayed = true;
 			}
 		}
@@ -828,7 +826,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				$value_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
 				if ( 'file' === $type ) {
 					if ( isset( $_FILES[ $value_name ] ) ) {
-						$cart_item_data[ $value_name ] = isset( $_FILES[ $value_name ] );
+						$cart_item_data[ $value_name ] =sanitize_text_field( wp_unslash( $_FILES[ $value_name ] ) );
 						$tmp_dest_file                 = tempnam( sys_get_temp_dir(), 'wcj' );
 						move_uploaded_file( $cart_item_data[ $value_name ]['tmp_name'], $tmp_dest_file );
 						$cart_item_data[ $value_name ]['tmp_name'] = $tmp_dest_file;
@@ -836,7 +834,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				} else {
 					$nonce = wp_create_nonce();
 					if ( isset( $_POST[ $value_name ] ) && wp_verify_nonce( $nonce ) ) {
-						$cart_item_data[ $value_name ] = $this->maybe_stripslashes( isset( $_POST[ $value_name ] ) );
+						$cart_item_data[ $value_name ] = $this->maybe_stripslashes( sanitize_text_field( wp_unslash( $_POST[ $value_name ] ) ) );
 					}
 				}
 			}

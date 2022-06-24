@@ -39,11 +39,11 @@ if ( ! class_exists( 'WCJ_Product_Price_by_Formula' ) ) :
 
 				add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-				$nonce = wp_create_nonce();
+				
 				if (
 				( wcj_is_frontend() && 'yes' === wcj_get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) ) ||
 				( 'no' === wcj_get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) && ( wcj_is_frontend() || is_admin() ) ) ||
-				isset( $_GET['wcj_create_products_xml'] ) && wp_verify_nonce( $nonce )
+				isset( $_GET['wcj_create_products_xml'] )
 				) {
 					wcj_add_change_price_hooks( $this, wcj_get_module_price_hooks_priority( 'product_price_by_formula' ), false );
 				}
