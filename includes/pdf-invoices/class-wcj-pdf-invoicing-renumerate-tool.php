@@ -55,15 +55,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 		 */
 		public function create_renumerate_invoices_tool() {
 
-			$result_message     = '';
-			$renumerate_result  = '';
-			$nonce              = wp_create_nonce();
-			$the_invoice_type   = ( ! empty( $_POST['invoice_type'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['invoice_type'] ) : 'invoice';
-			$the_start_number   = ( ! empty( $_POST['start_number'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['start_number'] ) : 0;
-			$the_start_date     = ( ! empty( $_POST['start_date'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['start_date'] ) : '';
-			$the_end_date       = ( ! empty( $_POST['end_date'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['end_date'] ) : '';
-			$the_order_statuses = ( ! empty( $_POST['order_statuses'] ) ) && wp_verify_nonce( $nonce ) ? isset( $_POST['order_statuses'] ) : array();
-			$the_delete_all     = ( isset( $_POST['delete_all'] ) );
+			$result_message    = '';
+			$renumerate_result = '';
+
+			$the_invoice_type   = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
+			$the_start_number   = ( ! empty( $_POST['start_number'] ) ) ? $_POST['start_number'] : 0;
+			$the_start_date     = ( ! empty( $_POST['start_date'] ) ) ? $_POST['start_date'] : '';
+			$the_end_date       = ( ! empty( $_POST['end_date'] ) ) ? $_POST['end_date'] : '';
+			$the_order_statuses = ( ! empty( $_POST['order_statuses'] ) ) ? $_POST['order_statuses'] : array();
+			$the_delete_all     = sanitize_text_field( wp_unslash(
+				$_POST['delete_all'] ) );
 
 			if ( isset( $_POST['renumerate_invoices'] ) ) {
 				if ( ! empty( $the_order_statuses ) ) {
@@ -75,8 +76,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 			}
 
 			?><div class="wcj-setting-jetpack-body">
-			<h2><?php echo wp_kses_post( 'Booster - Renumerate Invoices', 'woocommerce-jetpack' ); ?></h2>
-			<p><?php echo wp_kses_post( 'The tool renumerates invoices from choosen date. Invoice number format is set in WooCommerce > Settings > Booster > PDF Invoicing & Packing Slips > Numbering.', 'woocommerce-jetpack' ); ?></p>
+			<h2><?php echo wp_kses_post( __( 'Booster - Renumerate Invoices', 'woocommerce-jetpack' ) ); ?></h2>
+			<p><?php echo wp_kses_post( __( 'The tool renumerates invoices from choosen date. Invoice number format is set in WooCommerce > Settings > Booster > PDF Invoicing & Packing Slips > Numbering.', 'woocommerce-jetpack' ) ); ?></p>
 			<?php echo wp_kses_post( $result_message ); ?>
 			<p><form method="post" action="">
 				<?php
@@ -136,8 +137,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 					'',
 				);
 
-				// Print all.
-				echo wp_kses_post(
+				// Print all
+				echo wcj_get_table_html(
 					$data,
 					array(
 						'table_class'        => 'widefat striped',
@@ -150,7 +151,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 				<?php
 				if ( '' !== $renumerate_result ) {
 					echo '<h3>' . wp_kses_post( 'Results', 'woocommerce-jetpack' ) . '</h3>';
-					echo '<p>' . $renumerate_result . '</p>';
+					echo '<p>' . wp_kses_post( $renumerate_result ) . '</p>';
 				}
 				?>
 		</div>
@@ -214,7 +215,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 
 					$order_id = $loop->post->ID;
 					if (
-					in_array( $loop->post->post_status, $order_statuses, true ) &&
+					in_array( $loop->post->post_status, $order_statuses ) &&
 					strtotime( $loop->post->post_date ) >= strtotime( $start_date ) &&
 					( strtotime( $loop->post->post_date ) <= strtotime( $end_date ) || '' === $end_date )
 					) {

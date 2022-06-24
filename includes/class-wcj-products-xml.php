@@ -115,15 +115,14 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		 * @since   2.5.7
 		 */
 		public function admin_notices() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_create_products_xml_result'] ) && wp_verify_nonce( $nonce ) ) {
-				if ( 0 === $_GET['wcj_create_products_xml_result'] ) {
+			if ( isset( $_GET['wcj_create_products_xml_result'] ) ) {
+				if ( 0 == $_GET['wcj_create_products_xml_result'] ) {
 					$class   = 'notice notice-error';
 					$message = __( 'An error has occurred while creating products XML file.', 'woocommerce-jetpack' );
 				} else {
 					$class = 'notice notice-success is-dismissible';
 					/* translators: %s: translation added */
-					$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), sanitize_text_field( isset( $_GET['wcj_create_products_xml_result'] ) ) );
+					$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), sanitize_text_field( $_GET['wcj_create_products_xml_result'] ) );
 				}
 				echo '<div class="' . wp_kses_post( $class ) . '"><p>' . wp_kses_post( $message ) . '</p></div>';
 			}
@@ -136,9 +135,8 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		 * @since   2.5.7
 		 */
 		public function wcj_create_products_xml() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_create_products_xml'] ) && wp_verify_nonce( $nonce ) ) {
-				$file_num = isset( $_GET['wcj_create_products_xml'] );
+			if ( isset( $_GET['wcj_create_products_xml'] ) ) {
+				$file_num = $_GET['wcj_create_products_xml'];
 				$result   = $this->create_products_xml( $file_num );
 				if ( false !== $result ) {
 					update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
@@ -282,7 +280,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 					break;
 				}
 				while ( $loop->have_posts() ) {
-					if ( -1 !== $max && $counter >= $max ) {
+					if ( -1 != $max && $counter >= $max ) {
 						break;
 					}
 					$loop->the_post();
@@ -290,13 +288,13 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 					$counter++;
 				}
 				$offset += $block_size;
-				if ( -1 !== $max && $counter >= $max ) {
+				if ( -1 != $max && $counter >= $max ) {
 					break;
 				}
 			}
 			wp_reset_postdata();
 			return file_put_contents(
-				ABSPATH . wcj_get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 === $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
+				ABSPATH . wcj_get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 == $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
 				$this->process_shortcode( $xml_header_template ) . $xml_items . $this->process_shortcode( $xml_footer_template )
 			);
 		}

@@ -148,7 +148,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 		$fp = fopen( $file_path, 'r' );
 		if ( false !== ( $fp ) ) {
 			while ( ! feof( $fp ) ) {
-				echo wp_kses_post( fread( $fp, 65536 ) );
+				echo fread( $fp, 65536 );
 				flush(); // this is essential for large downloads.
 			}
 			fclose( $fp );
@@ -526,7 +526,7 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 	 * @since   2.5.6
 	 */
 	function wcj_is_bot() {
-		return (  $_SERVER['HTTP_USER_AGENT']  && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) );
+		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) );
 	}
 }
 
@@ -579,7 +579,6 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 				$attribute_name = substr( $attribute_full_name, strlen( $prefix ) );
 			}
 			// Checked.
-			
 			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ?
 				wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
 			if ( $checked !== $attribute_value ) {
@@ -1056,6 +1055,8 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'required' => true,
 				'min' => true,
 				'max' => true,
+				'disabled' => true,
+				'onchange' => true,
 			),
 			'textarea' => array(
 				'name' => true,
@@ -1065,6 +1066,8 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'style' => true,
 				'placeholder' => true,
 				'required' => true,
+				'disabled' => true,
+				'onchange' => true,
 			),
 			'select' => array(
 				'multiple' => true,
@@ -1072,19 +1075,23 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'class' => true,
 				'id' => true,
 				'style' => true,
-				'size' => true
+				'size' => true,
+				'disabled' => true,
+				'onchange' => true,
 			),
 			'option' => array(
 				'value' => true,
 				'style' => true,
 				'selected' => true,
 				'class' => true,
+				'disabled' => true,
 			),
 			'span' => array(
 				'id' => true,
 				'style' => true,
 				'class' => true,
 				'data-tip' => true,
+				'disabled' => true,
 			),
 			'td' => array(
 				'style' => true,
@@ -1111,6 +1118,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 			'button' => array(
 				'style' => true,
 				'class' => true,
+				'disabled' => true,
 			),
 			'style' => array(
 				'type' => true
@@ -1120,6 +1128,9 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'onblur' => true,
 				'onfocus' => true,
 				'onchange' => true,
+			),
+			'button' => array(
+				'wcj_data' => true,
 			)
 		);
 		$allowed_merged_html = array_merge_recursive( $allowed_html, $allowed_extra_html );

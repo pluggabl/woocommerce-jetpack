@@ -109,7 +109,6 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 					$styling_options[ $option ] = $default;
 				}
 			}
-			 
 			echo "<style type=\"text/css\">
 			.wcj-offer-price-modal-content {
 				width: {$styling_options['form_content_width']};
@@ -141,8 +140,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 * @param string | array $post defines the post.
 		 */
 		public function delete_offer_price_product_history( $post_id, $post ) {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj_offer_price_delete_history'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['wcj_offer_price_delete_history'] ) ) {
 				delete_post_meta( $post_id, '_wcj_price_offers' );
 				add_action( 'admin_notices', array( $this, 'notice_delete_offer_price_product_history' ) );
 			}
@@ -194,7 +192,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		public function create_offer_price_history_meta_box() {
 			$price_offers = get_post_meta( get_the_ID(), '_wcj_price_offers', true );
 			if ( '' === ( $price_offers ) ) {
-				echo '<em>' . wp_kses_post( 'No price offers yet.', 'woocommerce-jetpack' ) . '</em>';
+				echo '<em>' . wp_kses_post( _e( 'No price offers yet.', 'woocommerce-jetpack' ) ) . '</em>';
 			} else {
 				$average_offers   = array();
 				$all_columns      = $this->get_admin_meta_box_columns();
@@ -360,7 +358,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				'max_price'     => $max_price,
 				'default_price' => $default_price,
 				'price_label'   => str_replace( '\'', '"', $price_label ),
-				'form_header'   => str_replace( '\'', '"', $form_header ),
+				'form_header'   => esc_html( $form_header ),
 				'product_id'    => $product_id,
 			);
 		}
@@ -487,12 +485,12 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 			echo '<p>' .
 			'<button type="submit"' .
 				' name="wcj-offer-price-button"' .
-				' class="wcj-offer-price-button' . wp_kses_post( $additional_class ) . '"' .
-				' value="' . wp_kses_post( $product_id ) . '"' .
-				' style="' . wp_kses_post( wcj_get_option( 'wcj_offer_price_button_style', '' ) ) . '"' .
+				' class="wcj-offer-price-button' . $additional_class . '"' .
+				' value="' . $product_id . '"' .
+				' style="' . wcj_get_option( 'wcj_offer_price_button_style', '' ) . '"' .
 				' wcj_data=\'' . wp_json_encode( $this->get_wcj_data_array( $product_id ) ) . '\'' .
 			'>' .
-				wp_kses_post( get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) ) .
+				get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) .
 			'</button>' .
 			'</p>';
 		}

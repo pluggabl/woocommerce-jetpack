@@ -408,7 +408,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 */
 		public function wcj_button_toggle_tax_display( $atts ) {
 			$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
-			$current_value = ( '' === ( $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+			$current_value = ( '' == ( $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
 			$label         = $atts[ 'label_' . $current_value ];
 			return '<form method="post" action=""><input type="submit" name="wcj_button_toggle_tax_display"' .
 			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';

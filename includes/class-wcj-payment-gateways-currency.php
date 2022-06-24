@@ -153,11 +153,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		public function change_price_by_gateway( $price, $product ) {
 			if ( $this->is_cart_or_checkout() ) {
 				$current_gateway = $this->get_chosen_payment_method();
-				if ( '' !== $current_gateway ) {
+				if ( '' != $current_gateway ) {
 					$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 					$gateway_currency_exchange_rate = str_replace( ',', '.', $gateway_currency_exchange_rate );
 					if ( is_numeric( $price ) ) {
-						$price = $price * $gateway_currency_exchange_rate;
+						$price = $price * (double)$gateway_currency_exchange_rate;
 					}
 				}
 			}

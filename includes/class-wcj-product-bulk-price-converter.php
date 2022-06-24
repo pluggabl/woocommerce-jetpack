@@ -58,8 +58,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 			if ( '' !== $the_price && 0 !== $the_price ) {
 				$precision          = wcj_get_option( 'woocommerce_price_num_decimals', 2 );
 				$the_modified_price = round( $the_price * $multiply_price_by, $precision );
-				$nonce              = wp_create_nonce();
-				if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'booster_option', 0, isset( $_POST['make_pretty_prices_threshold'] ) ) > 0 && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'booster_option', 0, isset( $_POST['make_pretty_prices_threshold'] ) ) > 0 ) {
 					$the_modified_price = $this->make_pretty_price( $the_modified_price );
 				}
 				if ( $the_modified_price < 0 ) {
@@ -104,8 +103,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 		 * @param int           $parent_product_id defines the parent_product_id.
 		 */
 		public function change_price_all_types( $product_id, $multiply_price_by, $is_preview, $parent_product_id ) {
-			$nonce                 = wp_create_nonce();
-			$what_prices_to_modify = ( isset( $_POST['wcj_price_types'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_POST['wcj_price_types'] ) : 'wcj_both';
+			$what_prices_to_modify = ( isset( $_POST['wcj_price_types'] ) ) ? $_POST['wcj_price_types'] : 'wcj_both';
 			if ( 'wcj_both' === $what_prices_to_modify ) {
 				$this->change_price_by_type( $product_id, $multiply_price_by, 'price', $is_preview, $parent_product_id );
 				$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price', $is_preview, $parent_product_id );
@@ -217,14 +215,13 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 					'order'          => 'DESC',
 					'fields'         => 'ids',
 				);
-				$nonce = wp_create_nonce();
-				if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' !== $_POST['wcj_product_cat'] && 'any' !== apply_filters( 'booster_option', 'any', '' ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' !== $_POST['wcj_product_cat'] && 'any' !== apply_filters( 'booster_option', 'any', '' )) {
 					$args['tax_query'] = array(
 						array(
 							'taxonomy' => 'product_cat',
 							'field'    => 'slug',
-							'terms'    => array( isset( $_POST['wcj_product_cat'] ) ),
-							'operator' => ( 'wcj_none' !== isset( $_POST['wcj_product_cat'] ) ) ? 'IN' : 'NOT EXISTS',
+							'terms'    => array( $_POST['wcj_product_cat'] ),
+							'operator' => ( 'wcj_none' !== $_POST['wcj_product_cat'] ) ? 'IN' : 'NOT EXISTS',
 						),
 					);
 				}
@@ -249,11 +246,10 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 		 * @version 3.9.0
 		 */
 		public function create_bulk_price_converter_tool() {
-			$nonce          = wp_create_nonce();
 			$result_message = '';
 
-			$multiply_prices_by = ( isset( $_POST['multiply_prices_by'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_POST['multiply_prices_by'] ) : 1;
-			$is_preview         = isset( $_POST['bulk_change_prices_preview'] );
+			$multiply_prices_by = isset( $_POST['multiply_prices_by'] ) ? $_POST['multiply_prices_by'] : 1;
+			$is_preview         = $_POST['bulk_change_prices_preview'];
 
 			$result_changing_prices = '';
 
@@ -272,7 +268,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 			}
 
 			$select_options_html = '';
-			$selected_option     = ( isset( $_POST['wcj_product_cat'] ) ) ? isset( $_POST['wcj_product_cat'] ) : '';
+			$selected_option     = ( isset( $_POST['wcj_product_cat'] ) ) ? $_POST['wcj_product_cat'] : '';
 			$product_categories  = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
 			if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
 				foreach ( $product_categories as $product_category ) {
@@ -295,7 +291,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 					'',
 				);
 
-				$selected_option_price_types = ( isset( $_POST['wcj_price_types'] ) ) ? isset( $_POST['wcj_price_types'] ) : '';
+				$selected_option_price_types = ( isset( $_POST['wcj_price_types'] ) ) ? $_POST['wcj_price_types'] : '';
 				$data_table[]                = array(
 					__( 'Price type to modify', 'woocommerce-jetpack' ),
 					'<select style="width:100%;" name="wcj_price_types">' .
@@ -319,7 +315,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 						'<em>' . apply_filters( 'booster_message', '', 'desc' ) . '</em>',
 					);
 				}
-				$make_pretty_prices_threshold = isset( $_POST['make_pretty_prices_threshold'] ) ? isset( $_POST['make_pretty_prices_threshold'] ) : 0;
+				$make_pretty_prices_threshold = isset( $_POST['make_pretty_prices_threshold'] ) ? $_POST['make_pretty_prices_threshold'] : 0;
 				$data_table[]                 = array(
 					__( '"Pretty prices" threshold', 'woocommerce-jetpack' ) . wcj_help_tip(
 						__( 'Leave zero to disable.', 'woocommerce-jetpack' ) . ' ' .
@@ -344,7 +340,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 						'',
 					);
 				}
-				echo wp_kses_post(
+				echo (
 					wcj_get_table_html(
 						$data_table,
 						array(
@@ -374,8 +370,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 				return $price;
 			}
 			$the_modified_price = round( $price );
-			$nonce              = wp_create_nonce();
-			if ( $price < isset( $_POST['make_pretty_prices_threshold'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( $price < $_POST['make_pretty_prices_threshold'] ) {
 				$the_modified_price -= 0.01; // E.g. 49.49 -> 48.99 and 49.50 -> 49.99.
 			} else {
 				$mod_10 = $the_modified_price % 10;

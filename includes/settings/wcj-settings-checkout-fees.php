@@ -35,7 +35,7 @@ $total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkou
 $fees_titles  = wcj_get_option( 'wcj_checkout_fees_data_titles', array() );
 $fees         = array();
 for ( $i = 1; $i <= $total_number; $i ++ ) {
-	$fees[ $i ] = null !== $fees_titles ? $fees_titles[ $i ] : '';
+	$fees[ $i ] = null !== $fees_titles && isset( $fees_titles[ $i ] ) ? $fees_titles[ $i ] : '';
 }
 
 for ( $i = 1; $i <= $total_number; $i++ ) {

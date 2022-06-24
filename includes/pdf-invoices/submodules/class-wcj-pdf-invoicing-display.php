@@ -194,8 +194,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		 * Add_order_column.
 		 *
 		 * @version 3.1.0
+		 * @param  array $columns Get order columns.
 		 */
-		public function add_order_column() {
+		public function add_order_column( $columns ) {
 			$invoice_types = wcj_get_enabled_invoice_types();
 			foreach ( $invoice_types as $invoice_type ) {
 				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_page_column', 'yes' ) ) {
@@ -209,11 +210,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		 * Output custom columns for products
 		 *
 		 * @version 5.5.9
-		 * @param   string $column Get order columns.
+		 * @param  string $column Get order columns.
 		 */
 		public function render_order_columns( $column ) {
 			$invoice_types_ids = wcj_get_enabled_invoice_types_ids();
-			if ( ! in_array( $column, $invoice_types_ids, true ) ) {
+			if ( ! in_array( $column, $invoice_types_ids ) ) {
 				return;
 			}
 			$order_id        = get_the_ID();
@@ -350,7 +351,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 			$order_id      = wcj_get_order_id( $_order );
 			$invoice_types = wcj_get_enabled_invoice_types();
 			if ( empty( $invoice_types ) ) {
-				echo '<p style="font-style:italic;">' . esc_html__( 'You have no document types enabled.', 'woocommerce-jetpack' ) . '</p>';
+				echo '<p style="font-style:italic;">' . __( 'You have no document types enabled.', 'woocommerce-jetpack' ) . '</p>';
 			} else {
 				foreach ( $invoice_types as $invoice_type ) {
 					$table_data = array();
@@ -368,7 +369,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 							$query_args['save_pdf_invoice'] = '1';
 							$target                         = '';
 						}
-						$the_url     = esc_url( add_query_arg( $query_args, esc_url( remove_query_arg( array( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) ) ) );
+						$the_url     = esc_url( add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) ) );
 						$the_name    = __( 'View', 'woocommerce-jetpack' );
 						$the_invoice = wcj_get_invoice( $order_id, $invoice_type['id'] );
 						$the_number  = ' [#' . $the_invoice->get_invoice_number() . ']';
@@ -379,7 +380,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 							'delete_invoice_for_order_id' => $order_id,
 							'invoice_type_id'             => $invoice_type['id'],
 						);
-						$the_url     = esc_url( add_query_arg( $query_args, esc_url( remove_query_arg( 'create_invoice_for_order_id' ) ) ) );
+						$the_url     = esc_url( add_query_arg( $query_args, remove_query_arg( 'create_invoice_for_order_id' ) ) );
 						$the_name    = __( 'Delete', 'woocommerce-jetpack' );
 						$delete_link = '<a class="wcj_need_confirmation" href="' . $the_url . '">' . $the_name . '</a>';
 						// Numbering & date.
@@ -397,18 +398,18 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 						// Actions.
 						$actions = array( $view_link . ' | ' . $delete_link . $number_input );
 					} else {
-						// "Create" link.
+						// "Create" link
 						$query_args = array(
 							'create_invoice_for_order_id' => $order_id,
 							'invoice_type_id'             => $invoice_type['id'],
 						);
-						$the_url    = esc_url( add_query_arg( $query_args, esc_url( remove_query_arg( 'delete_invoice_for_order_id' ) ) ) );
+						$the_url    = esc_url( add_query_arg( $query_args, remove_query_arg( 'delete_invoice_for_order_id' ) ) );
 						$the_name   = __( 'Create', 'woocommerce-jetpack' );
 						$actions    = array( '<a class="wcj_need_confirmation" href="' . $the_url . '">' . $the_name . '</a>' );
 					}
 					$maybe_toolptip = '';
 					$_hooks         = wcj_get_invoice_create_on( $invoice_type['id'] );
-					if ( in_array( 'woocommerce_order_partially_refunded_notification', $_hooks, true ) ) {
+					if ( in_array( 'woocommerce_order_partially_refunded_notification', $_hooks ) ) {
 						$maybe_toolptip = wc_help_tip( __( 'In case of partial refund, you need to reload the page to see created document in this meta box.', 'woocommerce-jetpack' ), true );
 					}
 					$table_data[] = array(

@@ -72,7 +72,7 @@ for ( $i = 1; $i <= $xml_total_files; $i++ ) {
 	if ( $this->is_enabled() ) {
 		$products_xml_cron_desc = '<a class="button" title="' .
 			__( 'If you\'ve made any changes in module\'s settings - don\'t forget to save changes before clicking this button.', 'woocommerce-jetpack' ) . '"' .
-			' href="' . esc_url( add_query_arg( 'wcj_create_products_xml', $i, esc_url( remove_query_arg( 'wcj_create_products_xml_result' ) ) ) ) . '">' .
+			' href="' . esc_url( add_query_arg( 'wcj_create_products_xml', $i, remove_query_arg( 'wcj_create_products_xml_result' ) ) ) . '">' .
 			__( 'Create Now', 'woocommerce-jetpack' ) . '</a>' .
 		wcj_crons_get_next_event_time_message( 'wcj_create_products_xml_cron_time_' . $i );
 	}
@@ -84,7 +84,7 @@ for ( $i = 1; $i <= $xml_total_files; $i++ ) {
 			'<code>' . date_i18n( wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' ), wcj_get_option( 'wcj_products_time_file_created_' . $i, '' ) ) . '</code>'
 		);
 	}
-	$default_file_name = ( ( 1 === $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
+	$default_file_name = ( ( 1 == $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
 	$settings          = array_merge(
 		$settings,
 		array(

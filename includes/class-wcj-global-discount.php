@@ -85,14 +85,13 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 * @since   4.8.0
 		 */
 		public function regenerate_wcj_sale_products_in_cache() {
-			$nonce = wp_create_nonce();
 			if (
 			'yes' !== wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' ) ||
 			! isset( $_REQUEST['page'] ) || 'wc-settings' !== $_REQUEST['page'] ||
 			! isset( $_REQUEST['tab'] ) || 'jetpack' !== $_REQUEST['tab'] ||
 			! isset( $_REQUEST['wcj-cat'] ) || 'prices_and_currencies' !== $_REQUEST['wcj-cat'] ||
 			! isset( $_REQUEST['section'] ) || 'global_discount' !== $_REQUEST['section'] ||
-			! isset( $_POST['save'] ) && wp_verify_nonce( $nonce )
+			! isset( $_POST['save'] )
 			) {
 				return;
 			}
@@ -249,13 +248,13 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 */
 		public function change_price( $price, $_product ) {
 			$_current_filter = current_filter();
-			if ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_PRICE_FILTER, 'woocommerce_variation_prices_price', 'woocommerce_product_variation_get_price' ), true ) ) {
+			if ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_PRICE_FILTER, 'woocommerce_variation_prices_price', 'woocommerce_product_variation_get_price' ) ) ) {
 				if ( isset( $_product->wcj_wholesale_price ) ) {
 
 					return $_product->wcj_wholesale_price;
 				}
 				return $this->add_global_discount( $price, $_product, 'price' );
-			} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_SALE_PRICE_FILTER, 'woocommerce_variation_prices_sale_price', 'woocommerce_product_variation_get_sale_price' ), true ) ) {
+			} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_SALE_PRICE_FILTER, 'woocommerce_variation_prices_sale_price', 'woocommerce_product_variation_get_sale_price' ) ) ) {
 				return $this->add_global_discount( $price, $_product, 'sale_price' );
 			} else {
 				return $price;

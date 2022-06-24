@@ -86,13 +86,11 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		 * @since   4.7.0
 		 */
 		public function generate_default_hashids_salt() {
-			$nonce = wp_create_nonce();
 			if (
 			isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] &&
 			isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] &&
 			isset( $_GET['wcj-cat'] ) && 'products' === $_GET['wcj-cat'] &&
 			isset( $_GET['section'] ) && 'sku' === $_GET['section']
-			&& wp_verify_nonce( $nonce )
 			) {
 				if ( empty( wcj_get_option( 'wcj_sku_hashids_salt_default', '' ) ) ) {
 					$length        = 24;
@@ -167,11 +165,11 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		public function add_search_by_sku_to_frontend_posts_search( $where ) {
 			global $pagenow, $wpdb, $wp;
 			if (
-			( is_admin() && 'edit.php' !== $pagenow ) ||
+			( is_admin() && 'edit.php' != $pagenow ) ||
 			! is_search() ||
 			! isset( $wp->query_vars['s'] ) ||
-			( isset( $wp->query_vars['post_type'] ) && 'product' !== $wp->query_vars['post_type'] ) ||
-			( isset( $wp->query_vars['post_type'] ) && is_array( $wp->query_vars['post_type'] ) && ! in_array( 'product', $wp->query_vars['post_type'], true ) )
+			( isset( $wp->query_vars['post_type'] ) && 'product' != $wp->query_vars['post_type'] ) ||
+			( isset( $wp->query_vars['post_type'] ) && is_array( $wp->query_vars['post_type'] ) && ! in_array( 'product', $wp->query_vars['post_type'] ) )
 			) {
 				return $where;
 			}
@@ -190,7 +188,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				$search_ids             = array_merge( $search_ids, $sku_to_id, $sku_to_parent_id );
 			}
 			$search_ids = array_filter( array_map( 'absint', $search_ids ) );
-			if ( count( $search_ids ) > 0 ) {
+			if ( sizeof( $search_ids ) > 0 ) {
 				$where = str_replace( ')))', ") OR ({$wpdb->posts}.ID IN (" . implode( ',', $search_ids ) . '))))', $where );
 			}
 			return $where;
@@ -316,7 +314,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 							$sku_object = $this->generate_sku( $variation['variation_id'], $suffix . '_' . sprintf( '%u', crc32( $variation['variation_id'] ) ), $product_id, wc_get_product( $variation['variation_id'] ) );
 						}
 						$this->set_sku( $variation['variation_id'], $sku_object, $is_preview );
-						if ( 26 === $abc ) {
+						if ( 26 == $abc ) {
 							$abc = 0;
 						}
 					}
@@ -400,7 +398,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 						if ( isset( $atts[ $att_name ] ) ) {
 							if ( $is_variation ) {
 								$slug = $atts[ $att_name ];
-								if ( 0 !== $limit ) {
+								if ( 0 != $limit ) {
 									$slug = substr( $slug, 0, $limit );
 								}
 								$att_res[] = $slug; // array is not necessary here (always one slug).
@@ -408,7 +406,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 								$att_object = $atts[ $att_name ];
 								if ( is_object( $att_object ) && 'WC_Product_Attribute' === get_class( $att_object ) ) {
 									foreach ( $att_object->get_slugs() as $slug ) {
-										if ( 0 !== $limit ) {
+										if ( 0 != $limit ) {
 											$slug = substr( $slug, 0, $limit );
 										}
 										$att_res[] = $slug;
@@ -565,7 +563,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 			$do_generate_new_sku = $sku_object['do_generate_new_sku'];
 			if ( $is_preview ) {
 				$this->preview_buffer .= '<tr>' .
-				'<td>' . ( $this->product_counter++ ) . '</td>' .
+				'<td>' . $this->product_counter++ . '</td>' .
 				'<td>' . $product_id . '</td>' .
 				'<td>' . $product->get_title() . '</td>' .
 				'<td>' . $product_cat . '</td>' .
@@ -627,9 +625,8 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 			$this->maybe_get_sequential_counters();
 			$limit    = 512;
 			$offset   = 0;
-			$nonce    = wp_create_nonce();
-			$start_id = ( ( isset( $_POST['wcj_sku_start_id'] ) && 0 !== isset( $_POST['wcj_sku_start_id'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_POST['wcj_sku_start_id'] ) : 0 );
-			$end_id   = ( isset( $_POST['wcj_sku_end_id'] ) && 0 !== isset( $_POST['wcj_sku_end_id'] ) ? isset( $_POST['wcj_sku_end_id'] ) : PHP_INT_MAX );
+			$start_id = ( ( isset( $_POST['wcj_sku_start_id'] ) && 0 != isset( $_POST['wcj_sku_start_id'] ) ) ? $_POST['wcj_sku_start_id'] : 0 );
+			$end_id   = ( isset( $_POST['wcj_sku_end_id'] ) && 0 != isset( $_POST['wcj_sku_end_id'] ) ? $_POST['wcj_sku_end_id'] : PHP_INT_MAX );
 			while ( true ) {
 				$posts = new WP_Query(
 					array(
@@ -680,13 +677,13 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		 * @param string | bool  $update defines the update.
 		 */
 		public function set_sku_for_new_product( $post_ID, $post, $update ) {
-			if ( 'product' !== $post->post_type ) {
+			if ( 'product' != $post->post_type ) {
 				return;
 			}
 			$do_generate_only_on_first_publish = ( 'yes' === wcj_get_option( 'wcj_sku_new_products_generate_only_on_publish', 'no' ) );
 			if (
 			( false === $update && ! $do_generate_only_on_first_publish ) ||
-			( $do_generate_only_on_first_publish && 'publish' === $post->post_status && '' === get_post_meta( $post_ID, '_sku', true ) )
+			( $do_generate_only_on_first_publish && 'publish' === $post->post_status && '' == get_post_meta( $post_ID, '_sku', true ) )
 			) {
 				$this->maybe_get_sequential_counters();
 				$this->set_sku_with_variable( $post_ID, false );
@@ -702,8 +699,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		public function create_sku_tool() {
 			$result_message = '';
 			$is_preview     = ( isset( $_POST['preview_sku'] ) );
-			$nonce          = wp_create_nonce();
-			if ( isset( $_POST['set_sku'] ) || isset( $_POST['preview_sku'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['set_sku'] ) || isset( $_POST['preview_sku'] ) ) {
 				$this->product_counter = 1;
 				$preview_html          = '<table class="widefat" style="width:50%; min-width: 300px; margin-top: 10px;">';
 				$preview_html         .=
@@ -738,10 +734,10 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 			$html .= '<em>' . __( 'You can optionally limit affected products by main product\'s ID (set option to zero to ignore):', 'woocommerce-jetpack' ) . '</em>';
 			$html .= '<br>';
 			$html .= '<label for="wcj_sku_start_id">' . __( 'Min ID', 'woocommerce-jetpack' ) . ': </label>';
-			$html .= '<input type="number" name="wcj_sku_start_id" id="wcj_sku_start_id" min="0" value="' . ( isset( $_POST['wcj_sku_start_id'] ) ? isset( $_POST['wcj_sku_start_id'] ) : 0 ) . '">';
+			$html .= '<input type="number" name="wcj_sku_start_id" id="wcj_sku_start_id" min="0" value="' . ( isset( $_POST['wcj_sku_start_id'] ) ? $_POST['wcj_sku_start_id'] : 0 ) . '">';
 			$html .= ' ';
 			$html .= '<label for="wcj_sku_end_id">' . __( 'Max ID', 'woocommerce-jetpack' ) . ': </label>';
-			$html .= '<input type="number" name="wcj_sku_end_id" id="wcj_sku_end_id" min="0" value="' . ( isset( $_POST['wcj_sku_end_id'] ) ? isset( $_POST['wcj_sku_end_id'] ) : 0 ) . '">';
+			$html .= '<input type="number" name="wcj_sku_end_id" id="wcj_sku_end_id" min="0" value="' . ( isset( $_POST['wcj_sku_end_id'] ) ? $_POST['wcj_sku_end_id'] : 0 ) . '">';
 			$html .= '</p>';
 			$html .= '</form>';
 			if ( $is_preview ) {
@@ -749,7 +745,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 			}
 			$html .= '</div>';
 			$html .= '</div>';
-			echo wp_kses_post( $html );
+			echo $html;
 		}
 
 		/**

@@ -47,7 +47,7 @@ if ( 'yes' === get_post_meta( wcj_get_product_id( $_product ), '_wcj_price_by_us
 	foreach ( $products as $product_id => $desc ) {
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			if ( ! empty( $visible_roles ) ) {
-				if ( ! in_array( $role_key, $visible_roles, true ) ) {
+				if ( ! in_array( $role_key, $visible_roles ) ) {
 					continue;
 				}
 			}

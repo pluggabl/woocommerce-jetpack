@@ -203,7 +203,7 @@ for ( $i = 1; $i <= $product_tabs_global_total_num; $i++ ) {
 			)
 		);
 	}
-	if ( '' !== wcj_get_option( 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i, '' ) ) {
+	if ( '' != wcj_get_option( 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i, '' ) ) {
 		$settings = array_merge(
 			$settings,
 			array(
@@ -218,7 +218,7 @@ for ( $i = 1; $i <= $product_tabs_global_total_num; $i++ ) {
 			)
 		);
 	}
-	if ( '' !== wcj_get_option( 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i, '' ) ) {
+	if ( '' != wcj_get_option( 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i, '' ) ) {
 		$settings = array_merge(
 			$settings,
 			array(

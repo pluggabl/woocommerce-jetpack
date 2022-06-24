@@ -124,7 +124,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 			$export_settings = 'Booster for WooCommerce v' . wcj_get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
 			header( 'Content-Type: application/download' );
 			header( 'Content-Disposition: attachment; filename=booster_settings.txt' );
-			echo wp_kses_post( $export_settings );
+			echo $export_settings;
 			die();
 		}
 

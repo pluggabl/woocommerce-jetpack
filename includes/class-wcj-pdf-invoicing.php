@@ -122,7 +122,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			if ( 'edit.php' === $pagenow && 'shop_order' === $post_type ) {
 				if ( isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
 					/* translators: %s: translation added */
-					$message = sprintf( wp_kses_post( 'Document generated.', '%s documents generated.', isset( $_REQUEST['generated'] ) ), number_format_i18n( isset( $_REQUEST['generated'] ) ) );
+					$message = sprintf( wp_kses_post( 'Document generated.', '%s documents generated.', sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ), number_format_i18n( sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ) );
+
 					echo wp_kses_post( "<div class='updated'><p>{$message}</p></div>" );
 				}
 				if ( isset( $_GET['wcj_notice'] ) ) {
@@ -153,7 +154,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 							break;
 						default:
 							echo '<div class="notice notice-error"><p>' .
-							sprintf( wp_kses_post( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . wp_kses_post( isset( $_GET['wcj_notice'] ) ) . '</code>' ) .
+							sprintf( wp_kses_post( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . wp_kses_post( $_GET['wcj_notice'] ) . '</code>' ) .
 							'</p></div>';
 							break;
 					}
@@ -447,16 +448,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @version 3.4.0
 		 */
 		public function catch_args() {
-			$this->order_id        = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : 0;
-			$this->invoice_type_id = ( isset( $_GET['invoice_type_id'] ) ) ? $_GET['invoice_type_id'] : '';
-			$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' === $_GET['save_pdf_invoice'] );
-			$this->get_invoice     = ( isset( $_GET['get_invoice'] ) && '1' === $_GET['get_invoice'] );
+			$this->order_id        = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : 0;
+			$this->invoice_type_id = ( isset( $_GET['invoice_type_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['invoice_type_id'] ) ) : '';
+			$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' == $_GET['save_pdf_invoice'] );
+			$this->get_invoice     = ( isset( $_GET['get_invoice'] ) && '1' == $_GET['get_invoice'] );
 
 			if ( isset( $_GET['create_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
-				$this->create_document( isset( $_GET['create_invoice_for_order_id'] ), $this->invoice_type_id );
+				$this->create_document( sanitize_text_field( wp_unslash( $_GET['create_invoice_for_order_id'] ) ), $this->invoice_type_id );
 			}
 			if ( isset( $_GET['delete_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
-				$this->delete_document( isset( $_GET['delete_invoice_for_order_id'] ), $this->invoice_type_id );
+				$this->delete_document( sanitize_text_field( wp_unslash( $_GET['delete_invoice_for_order_id'] ) ), $this->invoice_type_id );
 			}
 		}
 
