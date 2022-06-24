@@ -97,7 +97,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 					if ( ! isset( $this->user_id ) ) {
 						$this->user_id = get_current_user_id();
 					}
-					return in_array( $this->user_id, $user_roles_or_ids_or_membership_plans, true );
+					return in_array( $this->user_id, $user_roles_or_ids_or_membership_plans );
 				case 'user_membership':
 					if ( ! isset( $this->user_id ) ) {
 						$this->user_id = get_current_user_id();

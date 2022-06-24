@@ -100,7 +100,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 * @param string | array $order defines the order.
 		 */
 		public function editable_status( $is_editable, $order ) {
-			return in_array( $order->get_status(), wcj_get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ), true );
+			return in_array( $order->get_status(), wcj_get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ) );
 		}
 
 		/**
@@ -110,15 +110,13 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 * @since   3.4.0
 		 */
 		public function handle_orders_navigation() {
-			$nonce             = wp_create_nonce();
-			$adjacent_order_id = wcj_get_adjacent_order_id( isset( $_GET['post'] ), isset( $_GET['wcj_orders_navigation'] ) );
-			if ( isset( $_GET['wcj_orders_navigation'] ) && wp_verify_nonce( $nonce ) ) {
-				$url = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id ) ?
-				esc_url( remove_query_arg( 'wcj_orders_navigation' ) ) :
+		if ( isset( $_GET['wcj_orders_navigation'] ) ) {
+			$url = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id = wcj_get_adjacent_order_id( $_GET['post'], $_GET['wcj_orders_navigation'] ) ) ?
+				remove_query_arg( 'wcj_orders_navigation' ) :
 				admin_url( 'post.php?post=' . $adjacent_order_id . '&action=edit' ) );
-				wp_safe_redirect( $url );
-				exit;
-			}
+			wp_safe_redirect( $url );
+			exit;
+		}
 		}
 
 		/**
@@ -146,8 +144,8 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 * @todo    this will output the link, even if there no prev/next orders available
 		 */
 		public function create_orders_navigation_meta_box() {
-			echo '<a href="' . esc_url( add_query_arg( 'wcj_orders_navigation', 'prev' ) ) . '">&lt;&lt; ' . wp_kses_post( 'Previous order', 'woocommerce-jetpack' ) . '</a>' .
-			'<a href="' . esc_url( add_query_arg( 'wcj_orders_navigation', 'next' ) ) . '" style="float:right;">' . wp_kses_post( 'Next order', 'woocommerce-jetpack' ) . ' &gt;&gt;</a>';
+			echo '<a href="' . add_query_arg( 'wcj_orders_navigation', 'prev' ) . '">' . '&lt;&lt; ' . __( 'Previous order', 'woocommerce-jetpack' ) . '</a>' .
+			 '<a href="' . add_query_arg( 'wcj_orders_navigation', 'next' ) . '" style="float:right;">' . __( 'Next order', 'woocommerce-jetpack' ) . ' &gt;&gt;' . '</a>';
 		}
 
 		/**
@@ -249,8 +247,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 * @since   3.2.0
 		 */
 		public function admin_notice_regenerate_download_permissions() {
-			$nonce = wp_create_nonce();
-			if ( ! empty( $_REQUEST['wcj_bulk_regenerated_download_permissions'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! empty( $_REQUEST['wcj_bulk_regenerated_download_permissions'] ) ) {
 				$orders_count = intval( $_REQUEST['wcj_bulk_regenerated_download_permissions'] );
 				$message      = sprintf(
 					/* translators: %s: translation added */
@@ -338,7 +335,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 			}
 			$order           = wc_get_order( $order_id );
 			$payment_methods = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_order_auto_complete_payment_methods', array() ) );
-			if ( ! empty( $payment_methods ) && ! in_array( $order->get_payment_method(), $payment_methods, true ) ) {
+			if ( ! empty( $payment_methods ) && ! in_array( $order->get_payment_method(), $payment_methods ) ) {
 				return;
 			}
 			$order->update_status( 'completed' );

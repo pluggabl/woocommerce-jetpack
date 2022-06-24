@@ -83,7 +83,7 @@ if ( ! class_exists( 'WCJ_Shipping_Calculator' ) ) :
 				}
 			}
 			$html .= '</style>';
-			echo wp_kses_post( $html );
+			echo  $html ;
 		}
 
 		/**

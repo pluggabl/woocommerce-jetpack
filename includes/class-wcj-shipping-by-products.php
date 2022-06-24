@@ -126,10 +126,10 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 			foreach ( $this->get_items( $cart_instead_of_package, $package ) as $item ) {
 				switch ( $options_id ) {
 					case 'products':
-						$_product_id = ( $do_add_variations && 0 !== $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
-						if ( $validate_all_for_include && ! in_array( $_product_id, $values, true ) ) {
+						$_product_id = ( $do_add_variations && 0 != $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+						if ( $validate_all_for_include && ! in_array( $_product_id, $values ) ) {
 							return false;
-						} elseif ( ! $validate_all_for_include && in_array( $_product_id, $values, true ) ) {
+						} elseif ( ! $validate_all_for_include && in_array( $_product_id, $values ) ) {
 							return true;
 						}
 						break;
@@ -144,9 +144,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 							}
 						}
 						foreach ( $product_terms as $product_term ) {
-							if ( $validate_all_for_include && ! in_array( $product_term->term_id, $values, true ) ) {
+							if ( $validate_all_for_include && ! in_array( $product_term->term_id, $values ) ) {
 								return false;
-							} elseif ( ! $validate_all_for_include && in_array( $product_term->term_id, $values, true ) ) {
+							} elseif ( ! $validate_all_for_include && in_array( $product_term->term_id, $values ) ) {
 								return true;
 							}
 						}
@@ -154,9 +154,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 					case 'classes':
 						$product                = $item['data'];
 						$product_shipping_class = $product->get_shipping_class_id();
-						if ( $validate_all_for_include && ! in_array( $product_shipping_class, $values, true ) ) {
+						if ( $validate_all_for_include && ! in_array( $product_shipping_class, $values ) ) {
 							return false;
-						} elseif ( ! $validate_all_for_include && in_array( $product_shipping_class, $values, true ) ) {
+						} elseif ( ! $validate_all_for_include && in_array( $product_shipping_class, $values ) ) {
 							return true;
 						}
 						break;

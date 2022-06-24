@@ -74,10 +74,10 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		 * @param String $methods Get methods.
 		 */
 		public function add_wc_shipping_wcj_custom_class( $methods ) {
-			$total_number = wcj_get_option( 'wcj_shipping_custom_shipping_total_number', 1 );
 			if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) {
 				$this->init_template_class();
 			}
+			$total_number = wcj_get_option( 'wcj_shipping_custom_shipping_total_number', 1 );
 			for ( $i = 1; $i <= $total_number; $i ++ ) {
 				$the_method = new WC_Shipping_WCJ_Custom_Template();
 				$the_method->init( $i );

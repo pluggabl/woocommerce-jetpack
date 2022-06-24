@@ -84,15 +84,13 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Qty' ) ) :
 			}
 			$total_qty = WC()->cart->get_cart_contents_count();
 			foreach ( $rates as $rate_key => $rate ) {
-				$min = $this->get_min_max_qty( $rate, 'min' );
-				if ( 0 !== ( $min ) && $total_qty < $min ) {
-					unset( $rates[ $rate_key ] );
-					$max = $this->get_min_max_qty( $rate, 'max' );
-				} elseif ( 0 !== ( $max ) && $total_qty > $max ) {
-					unset( $rates[ $rate_key ] );
-				}
+			if ( 0 != ( $min = $this->get_min_max_qty( $rate, 'min' ) ) && $total_qty < $min ) {
+				unset( $rates[ $rate_key ] );
+			} elseif ( 0 != ( $max = $this->get_min_max_qty( $rate, 'max' ) ) && $total_qty > $max ) {
+				unset( $rates[ $rate_key ] );
 			}
-			return $rates;
+		}
+		return $rates;
 		}
 
 	}

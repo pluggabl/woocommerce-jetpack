@@ -526,7 +526,7 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 	 * @since   2.5.6
 	 */
 	function wcj_is_bot() {
-		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) );
+		return (  $_SERVER['HTTP_USER_AGENT']  && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) );
 	}
 }
 
@@ -579,8 +579,8 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 				$attribute_name = substr( $attribute_full_name, strlen( $prefix ) );
 			}
 			// Checked.
-			$nonce   = wp_create_nonce();
-			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) && wp_verify_nonce( $nonce ) ) ?
+			
+			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ?
 				wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
 			if ( $checked !== $attribute_value ) {
 				$is_checked = false;

@@ -160,7 +160,7 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 		 */
 		public function order_minimum_amount() {
 			$minimum = $this->get_order_minimum_amount_with_user_roles();
-			if ( 0 === $minimum ) {
+			if ( 0 == $minimum ) {
 				return;
 			}
 			$cart_total = $this->get_cart_total_for_minimal_order_amount();
@@ -209,11 +209,11 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 				return;
 			}
 			$minimum = $this->get_order_minimum_amount_with_user_roles();
-			if ( 0 === $minimum ) {
+			if ( 0 == $minimum ) {
 				return;
 			}
 			$the_cart_total = $this->get_cart_total_for_minimal_order_amount();
-			if ( 0 === $the_cart_total ) {
+			if ( 0 == $the_cart_total ) {
 				return;
 			}
 			if ( $the_cart_total < $minimum ) {

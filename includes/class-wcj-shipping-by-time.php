@@ -79,7 +79,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		 */
 		public function parse_time( $value ) {
 			$value = explode( '~', $value );
-			if ( 2 !== count( $value ) ) {
+			if ( 2 != count( $value ) ) {
 				return false;
 			}
 			$time_from = strtotime( $value[0] );
@@ -114,7 +114,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 						$current_time = (int) current_time( 'timestamp' );
 						return ( $current_time >= $parsed_time['time_from'] && $current_time <= $parsed_time['time_to'] );
 					}
-					return ( 'include' === $include_or_exclude ); // not parsable time input - leaving shipping method enabled.
+					return ( 'include' == $include_or_exclude ); // not parsable time input - leaving shipping method enabled.
 			}
 		}
 

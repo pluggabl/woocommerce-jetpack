@@ -198,12 +198,11 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @param array | string $query defines the query.
 		 */
 		public function search_by_custom_number( $query ) {
-			$search = trim( $query->query['s'] );
 			if (
 			! is_admin() ||
 			! property_exists( $query, 'query' ) ||
 			! isset( $query->query['s'] ) ||
-			empty( $search ) ||
+			empty( $search = trim( $query->query['s'] ) ) ||
 			'shop_order' !== $query->query['post_type']
 			) {
 				return;
@@ -230,8 +229,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				}
 			}
 			// Post Status.
-			$nonce       = wp_create_nonce();
-			$post_status = ( isset( $_GET['post_status'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_GET['post_status'] ) : 'any';
+			
+			$post_status = ( isset( $_GET['post_status'] ) ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : 'any';
 
 			// Try to search post by '_wcj_order_number' meta key.
 			$meta_query_args = array(
@@ -344,9 +343,9 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @todo    add more result info (e.g. number of regenerated orders etc.)
 		 */
 		public function create_renumerate_orders_tool() {
-			$nonce          = wp_create_nonce();
+			
 			$result_message = '';
-			if ( isset( $_POST['renumerate_orders'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['renumerate_orders'] ) ) {
 				$this->renumerate_orders();
 				$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 			} else {

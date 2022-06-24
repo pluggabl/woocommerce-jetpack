@@ -64,9 +64,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 				get_option( 'wcj_shipping_by_order_amount_min_instance_' . $rate->instance_id, 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_min_' . $rate->method_id, 0 ) );
 				$max = ( $this->use_shipping_instances ?
 					get_option( 'wcj_shipping_by_order_amount_max_instance_' . $rate->instance_id, 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_max_' . $rate->method_id, 0 ) );
-				if ( 0 !== $min && $total_in_cart < $min ) {
+				if ( 0 != $min && $total_in_cart < $min ) {
 					unset( $rates[ $rate_key ] );
-				} elseif ( 0 !== $max && $total_in_cart > $max ) {
+				} elseif ( 0 != $max && $total_in_cart > $max ) {
 					unset( $rates[ $rate_key ] );
 				}
 			}

@@ -62,7 +62,7 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 			$use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_descriptions_use_shipping_instance', 'no' ) );
 			$option_id              = 'wcj_shipping_description_' . ( $use_shipping_instances ? 'instance_' . $method->instance_id : $method->method_id );
 			$desc                   = wcj_get_option( $option_id, '' );
-			if ( '' !== ( $desc ) ) {
+			if ( '' != ( $desc ) ) {
 				switch ( $this->shipping_descriptions_position ) {
 					case 'before':
 						return $desc . $label;

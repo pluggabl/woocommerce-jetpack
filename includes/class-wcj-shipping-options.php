@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 			if ( is_array( $rates ) ) :
 				foreach ( $rates as $key => $rate ) {
 					if (
-					! in_array( $rate->method_id, $ignored_method_ids, true ) &&
+					! in_array( $rate->method_id, $ignored_method_ids ) &&
 					( empty( $most_expensive_method ) || $rate->cost > $most_expensive_method->cost )
 					) {
 						$most_expensive_method = $rate;
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 				$returned_rates[ $most_expensive_method->id ] = $most_expensive_method;
 			}
 			foreach ( $rates as $key => $rate ) {
-				if ( in_array( $rate->method_id, $ignored_method_ids, true ) ) {
+				if ( in_array( $rate->method_id, $ignored_method_ids ) ) {
 					$returned_rates[ $rate->id ] = $rate;
 				}
 			}
@@ -124,7 +124,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 			$free_shipping_granting_products_type = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' ) );
 			$package_grants_free_shipping         = false;
 			foreach ( $package['contents'] as $item ) {
-				if ( in_array( $item['product_id'], $free_shipping_granting_products, true ) ) {
+				if ( in_array( $item['product_id'], $free_shipping_granting_products ) ) {
 					if ( 'at_least_one' === $free_shipping_granting_products_type ) {
 						return true;
 					} elseif ( ! $package_grants_free_shipping ) {

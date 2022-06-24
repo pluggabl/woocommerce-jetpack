@@ -111,10 +111,10 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 */
 		public function prevent_outdated_min_max( $product_id ) {
 			$product = wc_get_product( $product_id );
-			$nonce   = wp_create_nonce();
+			
 			if (
 			! $product->is_type( 'variable' ) ||
-			isset( $_POST['_wcj_order_quantities_min'] ) && wp_verify_nonce( $nonce )
+			isset( $_POST['_wcj_order_quantities_min'] )
 			) {
 				return;
 			}
