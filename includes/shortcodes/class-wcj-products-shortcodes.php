@@ -721,10 +721,10 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		public function wcj_product_total_sales( $atts ) {
 			$product_custom_fields = get_post_custom( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
 			$total_sales           = ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
-			if ( 0 !== $atts['offset'] && ! is_numeric( $total_sales ) ) {
+			if ( 0 != $atts['offset'] && ! is_numeric( $total_sales ) ) {
 				$total_sales += $atts['offset'];
 			}
-			return ( 0 === $total_sales && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_sales;
+			return ( 0 == $total_sales && 'yes' == $atts['hide_if_zero'] ) ? '' : $total_sales;
 		}
 
 		/**

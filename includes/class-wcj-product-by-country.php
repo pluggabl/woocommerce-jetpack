@@ -80,7 +80,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		 */
 		public function get_check_option() {
 			if ( 'manual' === apply_filters( 'booster_option', 'by_ip', wcj_get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
-				if ( '' === wcj_session_get( 'wcj_selected_country' ) ) {
+				if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
 					$country = wcj_get_country_by_ip();
 					wcj_session_set( 'wcj_selected_country', $country );
 					$check_option = $country;
@@ -90,9 +90,9 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 			} else {
 				$check_option = wcj_get_country_by_ip();
 			}
-			$nonce = wp_create_nonce();
-			if ( 'yes' === wcj_get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) && wp_verify_nonce( $nonce ) ) {
-				$billing_country = ! empty( isset( $_REQUEST['country'] ) ) ? isset( $_REQUEST['country'] ) : '';
+			
+			if ( 'yes' === wcj_get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
+				$billing_country = ! empty( isset( $_REQUEST['country'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : '';
 				if ( ! empty( $billing_country ) ) {
 					$check_option = $billing_country;
 				}
@@ -120,12 +120,11 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		 */
 		public function save_country_in_session() {
 			wcj_session_maybe_start();
-			$nonce = wp_create_nonce();
-			if ( isset( $_REQUEST['wcj_country_selector'] ) && wp_verify_nonce( $nonce ) ) {
-				wcj_session_set( 'wcj_selected_country', isset( $_REQUEST['wcj_country_selector'] ) );
+			if ( isset( $_REQUEST['wcj_country_selector'] )  ) {
+				wcj_session_set( 'wcj_selected_country',sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) ) );
 			}
 			if ( isset( $_REQUEST['wcj-country'] ) ) {
-				wcj_session_set( 'wcj_selected_country', isset( $_REQUEST['wcj-country'] ) );
+				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) );
 			}
 		}
 
@@ -137,7 +136,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		 * @param array $options defines the options.
 		 */
 		public function maybe_extra_options_process( $options ) {
-			if ( in_array( 'EU', $options, true ) ) {
+			if ( in_array( 'EU', $options ) ) {
 				$options = array_merge( $options, wcj_get_european_union_countries() );
 			}
 			return $options;

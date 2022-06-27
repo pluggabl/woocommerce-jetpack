@@ -83,9 +83,8 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		 */
 		public function save_selection_in_session() {
 			wcj_session_maybe_start();
-			$nonce = wp_create_nonce();
-			if ( isset( $_REQUEST['wcj_product_custom_visibility_selector'] ) && wp_verify_nonce( $nonce ) ) {
-				wcj_session_set( 'wcj_selected_product_custom_visibility', isset( $_REQUEST['wcj_product_custom_visibility_selector'] ) );
+			if ( isset( $_REQUEST['wcj_product_custom_visibility_selector'] ) ) {
+				wcj_session_set( 'wcj_selected_product_custom_visibility', sanitize_text_field( wp_unslash( $_REQUEST['wcj_product_custom_visibility_selector'] ) ) );
 			}
 		}
 

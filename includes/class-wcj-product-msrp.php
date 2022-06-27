@@ -149,7 +149,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		public function save_msrp_input_variable( $variation_id, $i ) {
 			$nonce = wp_create_nonce();
 			if ( isset( $_POST['variable_wcj_msrp'][ $i ] ) && wp_verify_nonce( $nonce ) ) {
-				update_post_meta( $variation_id, '_wcj_msrp', wc_clean( isset( $_POST['variable_wcj_msrp'][ $i ] ) ) );
+				update_post_meta( $variation_id, '_wcj_msrp', wc_clean( sanitize_text_field( wp_unslash( $_POST['variable_wcj_msrp'][ $i ] ) ) ) );
 			}
 		}
 
@@ -183,7 +183,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		public function save_msrp_input( $post_id, $__post ) {
 			$nonce = wp_create_nonce();
 			if ( isset( $_POST['_wcj_msrp'] ) && wp_verify_nonce( $nonce ) ) {
-				update_post_meta( $post_id, '_wcj_msrp', isset( $_POST['_wcj_msrp'] ) );
+				update_post_meta( $post_id, '_wcj_msrp', sanitize_text_field( wp_unslash( $_POST['_wcj_msrp'] ) ) );
 			}
 		}
 

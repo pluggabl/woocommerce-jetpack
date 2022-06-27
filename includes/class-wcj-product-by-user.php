@@ -176,7 +176,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 */
 		public function change_my_products_endpoint_title( $title ) {
 			global $wp_query;
-			$is_endpoint = $wp_query->query_vars['wcj-my-products'];
+			$is_endpoint =  $wp_query->query_vars['wcj-my-products'];
 			if ( $is_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
 				// New page title.
 				$title = __( 'Products', 'woocommerce-jetpack' );
@@ -227,71 +227,70 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 * @since   2.5.2
 		 */
 		public function add_my_products_content_my_account_page() {
-
-			$user_ID = get_current_user_id();
-			if ( 0 === $user_ID ) {
-				return;
+		$user_ID = get_current_user_id();
+		if ( 0 == $user_ID ) {
+			return;
+		}
+		if ( isset( $_GET['wcj_delete_product'] ) ) {
+			$product_id = $_GET['wcj_delete_product'];
+			$post_author_id = get_post_field( 'post_author', $product_id );
+			if ( $user_ID != $post_author_id ) {
+				echo '<p>' . __( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+			} else {
+				wp_delete_post( $product_id, true );
 			}
-			if ( isset( $_GET['wcj_delete_product'] ) ) {
-				$product_id     = $_GET['wcj_delete_product'];
-				$post_author_id = get_post_field( 'post_author', $product_id );
-				if ( $user_ID !== $post_author_id ) {
-					echo '<p>' . wp_kses_post( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
-				} else {
-					wp_delete_post( $product_id, true );
-				}
+		}
+		if ( isset( $_GET['wcj_edit_product'] ) ) {
+			$product_id = $_GET['wcj_edit_product'];
+			$post_author_id = get_post_field( 'post_author', $product_id );
+			if ( $user_ID != $post_author_id ) {
+				echo '<p>' . __( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+			} else {
+				echo do_shortcode( '[wcj_product_add_new product_id="' . $product_id . '"]' );
 			}
-			if ( isset( $_GET['wcj_edit_product'] ) ) {
-				$product_id     = $_GET['wcj_edit_product'];
-				$post_author_id = get_post_field( 'post_author', $product_id );
-				if ( $user_ID !== $post_author_id ) {
-					echo '<p>' . wp_kses_post( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
-				} else {
-					echo do_shortcode( '[wcj_product_add_new product_id="' . $product_id . '"]' );
-				}
+		}
+		$offset = 0;
+		$block_size = 256;
+		$products = array();
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'author'         => $user_ID,
+				'fields'         => 'ids',
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) {
+				break;
 			}
-			$offset     = 0;
-			$block_size = 256;
-			$products   = array();
-			while ( true ) {
-				$args = array(
-					'post_type'      => 'product',
-					'post_status'    => 'any',
-					'posts_per_page' => $block_size,
-					'offset'         => $offset,
-					'orderby'        => 'date',
-					'order'          => 'DESC',
-					'author'         => $user_ID,
-					'fields'         => 'ids',
+			foreach ( $loop->posts as $post_id ) {
+				$products[ $post_id ] = array(
+					'title'  => get_the_title( $post_id ),
+					'status' => get_post_status( $post_id ),
 				);
-				$loop = new WP_Query( $args );
-				if ( ! $loop->have_posts() ) {
-					break;
-				}
-				foreach ( $loop->posts as $post_id ) {
-					$products[ $post_id ] = array(
-						'title'  => get_the_title( $post_id ),
-						'status' => get_post_status( $post_id ),
-					);
-				}
-				$offset += $block_size;
 			}
-			if ( 0 !== count( $products ) ) {
-
-				$table_data   = array();
-				$table_data[] = array( '', __( 'Status', 'woocommerce-jetpack' ), __( 'Title', 'woocommerce-jetpack' ), __( 'Actions', 'woocommerce-jetpack' ) );
-				$i            = 0;
-				foreach ( $products as $_product_id => $_product_data ) {
-					$i++;
-					$table_data[] = array(
-						/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
-						'<code>' . $_product_data['status'] . '</code>',
-						$_product_data['title'],
-						'<a class="button" href="' . esc_url( add_query_arg( 'wcj_edit_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a> <a class="button" href="' . esc_url( add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
-					);
-				}
-				echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) );
+			$offset += $block_size;
+		}
+		if ( 0 != count( $products ) ) {
+			$table_data = array();
+			$table_data[] = array( '', __( 'Status', 'woocommerce-jetpack' ), __( 'Title', 'woocommerce-jetpack' ), __( 'Actions', 'woocommerce-jetpack' ) );
+			$i = 0;
+			foreach ( $products as $_product_id => $_product_data ) {
+				$i++;
+				$table_data[] = array(
+					/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
+					'<code>'. $_product_data['status'] . '</code>',
+					$_product_data['title'],
+					'<a class="button" href="' . add_query_arg( 'wcj_edit_product',   $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . ' ' .
+					'<a class="button" href="' . add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
+				);
 			}
+			echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) );
+		}
 		}
 
 	}

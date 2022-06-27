@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( is_admin() ) {
 	foreach ( $this->modules as $module ) {
 		// Modules statuses.
-		if ( '' === $module->parent_id ) { // i.e. not submodule.
+		if ( '' == $module->parent_id ) { // i.e. not submodule.
 			$status_settings         = $module->add_enable_module_setting( array() );
 			$this->module_statuses[] = $status_settings[1];
 		}

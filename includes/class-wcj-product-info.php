@@ -155,9 +155,9 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		public function add_product_info_filters( $single_or_archive ) {
 			// Product Info.
 			if ( ( 'yes' === wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_enabled' ) ) &&
-			( '' !== wcj_get_option( 'wcj_product_info_on_' . $single_or_archive ) ) &&
-			( '' !== wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ) ) &&
-			( '' !== wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) ) ) {
+			( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive ) ) &&
+			( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ) ) &&
+			( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) ) ) {
 				add_action( wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ), array( $this, 'product_info' ), wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) );
 			}
 			// More product Info.
@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		public function apply_product_info_short_codes( $the_product_info, $remove_on_empty ) {
 
 			$product_ids_to_exclude = wcj_get_option( 'wcj_product_info_products_to_exclude', '' );
-			if ( '' !== $product_ids_to_exclude ) {
+			if ( '' != $product_ids_to_exclude ) {
 				$product_ids_to_exclude = str_replace( ' ', '', $product_ids_to_exclude );
 				$product_ids_to_exclude = explode( ',', $product_ids_to_exclude );
 				$product_id             = get_the_ID();
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 				}
 			}
 
-			if ( '' === $the_product_info ) {
+			if ( '' == $the_product_info ) {
 				return;
 			}
 
@@ -298,35 +298,25 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		 * @version 2.4.0
 		 */
 		public function admin_add_product_info_fields( &$settings, $single_or_archive ) {
-			$wcj_more_product_info_on_ = apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) );
-			for ( $i = 1; $i <= $wcj_more_product_info_on_; $i++ ) {
-				$field_id      = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i;
-				$default_value = '';
-				switch ( $i ) {
-					case 1:
-						$default_value = '<ul>';
-						break;
-					case 2:
-						$default_value = '<li>' . __( '[wcj_product_you_save before="You save: <strong>" hide_if_zero="yes" after="</strong>"][wcj_product_you_save_percent hide_if_zero="yes" before=" (" after="%)"]', 'woocommerce-jetpack' ) . '</li>';
-						break;
-					case 3:
-						$default_value = '<li>' . __( '[wcj_product_total_sales before="Total sales: "]', 'woocommerce-jetpack' ) . '</li>';
-						break;
-					case 4:
-						$default_value = '</ul>';
-						break;
-				}
-				$settings[] = array(
-					'title'   => '',
-					'id'      => $field_id,
-					'default' => $default_value,
-					'type'    => 'textarea',
-					'css'     => 'width:50%;min-width:300px;',
-				);
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
+			$field_id = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i ;
+			$default_value = '';
+			switch ( $i ) {
+				case 1: $default_value = '<ul>'; break;
+				case 2: $default_value = '<li>' . __( '[wcj_product_you_save before="You save: <strong>" hide_if_zero="yes" after="</strong>"][wcj_product_you_save_percent hide_if_zero="yes" before=" (" after="%)"]', 'woocommerce-jetpack' ) . '</li>'; break;
+				case 3: $default_value = '<li>' . __( '[wcj_product_total_sales before="Total sales: "]', 'woocommerce-jetpack' ) . '</li>'; break;
+				case 4: $default_value = '</ul>'; break;
 			}
+			$settings[] = array(
+				'title'    => '',
+				'id'       => $field_id,
+				'default'  => $default_value,
+				'type'     => 'textarea',
+				'css'      => 'width:50%;min-width:300px;',
+			);
 		}
-
 	}
+}
 
 endif;
 

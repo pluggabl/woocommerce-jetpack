@@ -173,7 +173,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					case 'weight':
 						$param_value = $_cart->get_cart_contents_weight();
 						break;
-					default: // 'quantity'.
+					default: // quantity.
 						$param_value = $_cart->get_cart_contents_count();
 				}
 				$table = array_map( 'trim', explode( '|', $atts['table'] ) );

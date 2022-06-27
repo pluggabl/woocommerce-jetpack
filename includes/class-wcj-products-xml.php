@@ -122,7 +122,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				} else {
 					$class = 'notice notice-success is-dismissible';
 					/* translators: %s: translation added */
-					$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), sanitize_text_field( $_GET['wcj_create_products_xml_result'] ) );
+					$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), sanitize_text_field(  $_GET['wcj_create_products_xml_result']  ) );
 				}
 				echo '<div class="' . wp_kses_post( $class ) . '"><p>' . wp_kses_post( $message ) . '</p></div>';
 			}
@@ -136,7 +136,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		 */
 		public function wcj_create_products_xml() {
 			if ( isset( $_GET['wcj_create_products_xml'] ) ) {
-				$file_num = $_GET['wcj_create_products_xml'];
+				$file_num =  $_GET['wcj_create_products_xml'];
 				$result   = $this->create_products_xml( $file_num );
 				if ( false !== $result ) {
 					update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
@@ -208,7 +208,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 					'order'          => $order,
 					'offset'         => $offset,
 				);
-				if ( 'all' !== $products_scope ) {
+				if ( 'all' != $products_scope ) {
 					$args['meta_query'] = WC()->query->get_meta_query();
 					switch ( $products_scope ) {
 						case 'sale_only':
