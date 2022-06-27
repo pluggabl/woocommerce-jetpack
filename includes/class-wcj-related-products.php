@@ -389,8 +389,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		 * @version 2.6.0
 		 */
 		public function maybe_delete_product_transients() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_clear_all_products_transients'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_clear_all_products_transients'] ) ) {
 				$offset     = 0;
 				$block_size = 256;
 				while ( true ) {

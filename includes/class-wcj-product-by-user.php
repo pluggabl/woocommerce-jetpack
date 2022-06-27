@@ -176,7 +176,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 */
 		public function change_my_products_endpoint_title( $title ) {
 			global $wp_query;
-			$is_endpoint =  $wp_query->query_vars['wcj-my-products'];
+			$is_endpoint =  isset( $wp_query->query_vars['wcj-my-products'] );
 			if ( $is_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
 				// New page title.
 				$title = __( 'Products', 'woocommerce-jetpack' );
@@ -285,8 +285,8 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 					/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
 					'<code>'. $_product_data['status'] . '</code>',
 					$_product_data['title'],
-					'<a class="button" href="' . add_query_arg( 'wcj_edit_product',   $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . ' ' .
-					'<a class="button" href="' . add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
+					'<a class="button" href="' . esc_url(add_query_arg( 'wcj_edit_product',   $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . ' ' .
+					'<a class="button" href="' . esc_url( add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
 				);
 			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) );

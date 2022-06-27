@@ -61,14 +61,14 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 
 			// Atts.
 			$is_passed_product = false;
-			if ( 0 === $atts['product_id'] ) {
+			if ( 0 == $atts['product_id'] ) {
 				if ( isset( $this->passed_product ) ) {
 					$atts['product_id'] = wcj_get_product_id( $this->passed_product );
 					$is_passed_product  = true;
 				} else {
 					$atts['product_id'] = get_the_ID();
 				}
-				if ( 0 === $atts['product_id'] ) {
+				if ( 0 == $atts['product_id'] ) {
 					return false;
 				}
 			}
@@ -127,7 +127,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 					$the_items  = $the_order->get_items();
 					$item_found = false;
 					foreach ( $the_items as $item ) {
-						if ( in_array( $item['product_id'], $product_ids, true ) ) {
+						if ( in_array( $item['product_id'], $product_ids ) ) {
 							$total_sum += $item['line_total'] + $item['line_tax'];
 							$total_qty += $item['qty'];
 							$item_found = true;
@@ -230,15 +230,15 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 				return '';
 			}
 			if ( $days_remaining > 0 ) {
-				return ( 1 === $days_remaining ) ? $days_remaining . ' day left' : $days_remaining . ' days left';
+				return ( 1 == $days_remaining ) ? $days_remaining . ' day left' : $days_remaining . ' days left';
 			}
 			if ( $hours_remaining > 0 ) {
-				return ( 1 === $hours_remaining ) ? $hours_remaining . ' hour left' : $hours_remaining . ' hours left';
+				return ( 1 == $hours_remaining ) ? $hours_remaining . ' hour left' : $hours_remaining . ' hours left';
 			}
 			if ( $minutes_remaining > 0 ) {
-				return ( 1 === $minutes_remaining ) ? $minutes_remaining . ' minute left' : $minutes_remaining . ' minutes left';
+				return ( 1 == $minutes_remaining ) ? $minutes_remaining . ' minute left' : $minutes_remaining . ' minutes left';
 			}
-			return ( 1 === $seconds_remaining ) ? $seconds_remaining . ' second left' : $seconds_remaining . ' seconds left';
+			return ( 1 == $seconds_remaining ) ? $seconds_remaining . ' second left' : $seconds_remaining . ' seconds left';
 		}
 
 		/**

@@ -187,20 +187,20 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 					if ( 'purchase_cost' === $column ) {
 						$min_cost = min( $purchase_costs );
 						$max_cost = max( $purchase_costs );
-						echo ( isset( $min_cost ) === $max_cost ? wp_kses_post( wc_price( $min_cost ) ) : wp_kses_post( wc_format_price_range( $min_cost, $max_cost ) ) );
+						echo ( $min_cost === $max_cost ? wc_price( $min_cost ) : wc_format_price_range( $min_cost, $max_cost ) );
 					} elseif ( 'profit' === $column ) {
 						$min_profit = min( $profits );
 						$max_profit = max( $profits );
-						echo ( isset( $min_profit ) === $max_profit ? wp_kses_post( wc_price( $min_profit ) ) : wp_kses_post( wc_format_price_range( $min_profit, $max_profit ) ) );
+						echo ( $min_profit === $max_profit ? wc_price( $min_profit ) : wc_format_price_range( $min_profit, $max_profit ) );
 					}
 				} else {
 					$purchase_cost = wc_get_product_purchase_price( $product_id );
 					if ( 'purchase_cost' === $column ) {
-						echo wp_kses_post( wc_price( $purchase_cost ) );
+						echo wc_price( $purchase_cost );
 					} elseif ( 'profit' === $column ) {
 						$_price = $_product->get_price();
 						if ( is_numeric( $_price ) ) {
-							echo wp_kses_post( wc_price( $_price - $purchase_cost ) );
+							echo wc_price( $_price - $purchase_cost );
 						}
 					}
 				}
@@ -262,7 +262,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 					if ( ! $is_forecasted ) {
 						echo '<span style="color:green;">';
 					}
-					echo  wc_price( $total );
+					echo wc_price( $total );
 					if ( ! $is_forecasted ) {
 						echo '</span>';
 					}

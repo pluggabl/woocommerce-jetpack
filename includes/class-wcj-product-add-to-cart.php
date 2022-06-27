@@ -261,8 +261,8 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 			if ( $product->is_type( 'external' ) ) {
 				$button_html = ob_get_contents();
 				ob_end_clean();
-				echo ( wp_kses_post( WCJ_IS_WC_VERSION_BELOW_3_4_0 ) ?
-				wp_kses_post( str_replace( '<a href=', '<a target="_blank" href=', $button_html ) ) : wp_kses_post( str_replace( '<form ', '<form target="_blank" ', $button_html ) ) );
+				echo ( WCJ_IS_WC_VERSION_BELOW_3_4_0 ?
+					str_replace( '<a href=', '<a target="_blank" href=', $button_html ) : str_replace( '<form ', '<form target="_blank" ', $button_html ) );
 			}
 		}
 
@@ -312,7 +312,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		 */
 		public function custom_add_to_cart_loop_url( $url, $_product ) {
 			$custom_url = get_post_meta( get_the_ID(), '_wcj_add_to_cart_button_loop_custom_url', true );
-			if ( 0 !== get_the_ID() && '' !== ( $custom_url ) ) {
+			if ( 0 != get_the_ID() && '' != ( $custom_url ) ) {
 				return $custom_url;
 			}
 			return $url;
@@ -424,7 +424,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 
 							$attribute_name = str_replace( 'attribute_', '', $key );
 							$default_value  = $_productid->get_variation_default_attribute( $attribute_name );
-							if ( $default_value === $attribute_value ) {
+							if ( $default_value == $attribute_value ) {
 
 								$product_id = $variation_values['variation_id'];
 
@@ -444,7 +444,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 				}
 				if ( isset( WC()->cart ) ) {
 						// Check if product already in cart.
-					if ( count( WC()->cart->get_cart() ) > 0 ) {
+					if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
 						foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 							$_product = $values['data'];
 

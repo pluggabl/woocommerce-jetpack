@@ -47,13 +47,10 @@ return array(
 		/* translators: %s: translators Added */
 			sprintf( __( 'If needed, use %s to insert stock quantity.', 'woocommerce-jetpack' ), '<code>%s</code>' ),
 		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) . ' ' .
-			sprintf(
-				/* translators: %2$s %3$s: translators Added */
-				__( 'Used only if %1$s is selected for %2$s in %3$s.', 'woocommerce-jetpack' ),
+			sprintf( __( 'Used only if %s is selected for %s in %s.', 'woocommerce-jetpack' ),
 				'<em>' . __( 'Only show quantity remaining in stock when low', 'woocommerce-jetpack' ) . '</em>',
 				'<em>' . __( 'Stock display format', 'woocommerce' ) . '</em>',
-				'<em>' . __( 'WooCommerce > Settings > Products > Inventory', 'woocommerce-jetpack' )
-			) . '</em>',
+				'<em>' . __( 'WooCommerce &gt Settings &gt Products &gt Inventory', 'woocommerce-jetpack' ) ) . '</em>',
 		'id'       => 'wcj_stock_custom_in_stock_low_amount',
 		'default'  => '',
 		'type'     => 'custom_textarea',

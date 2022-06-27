@@ -111,7 +111,6 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 */
 		public function prevent_outdated_min_max( $product_id ) {
 			$product = wc_get_product( $product_id );
-			
 			if (
 			! $product->is_type( 'variable' ) ||
 			isset( $_POST['_wcj_order_quantities_min'] )

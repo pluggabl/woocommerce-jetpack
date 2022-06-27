@@ -147,8 +147,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		 * @param int $i defines the i.
 		 */
 		public function save_msrp_input_variable( $variation_id, $i ) {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['variable_wcj_msrp'][ $i ] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['variable_wcj_msrp'][ $i ] ) ) {
 				update_post_meta( $variation_id, '_wcj_msrp', wc_clean( sanitize_text_field( wp_unslash( $_POST['variable_wcj_msrp'][ $i ] ) ) ) );
 			}
 		}
@@ -181,8 +180,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		 * @param string | array $__post defines the __post.
 		 */
 		public function save_msrp_input( $post_id, $__post ) {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['_wcj_msrp'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_POST['_wcj_msrp'] ) ) {
 				update_post_meta( $post_id, '_wcj_msrp', sanitize_text_field( wp_unslash( $_POST['_wcj_msrp'] ) ) );
 			}
 		}
@@ -207,7 +205,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 						return strpos( $template, $item ) !== false;
 					}
 				)
-			) === 0 && is_singular() ? 'single' : 'archives';
+			) == 0 && is_singular() ? 'single' : 'archives';
 		}
 
 		/**
@@ -223,7 +221,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		public function display( $price_html, $product ) {
 			$section_id = $this->get_section_id_by_template_path( $this->current_template_path );
 			$display    = wcj_get_option( 'wcj_product_msrp_display_on_' . $section_id, 'show' );
-			if ( 'hide' === $display ) {
+			if ( 'hide' == $display ) {
 				return $price_html;
 			}
 			$product_id = false;
@@ -256,7 +254,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 			}
 			$msrp = apply_filters( 'wcj_product_msrp', get_post_meta( $product_id, $msrp_product_meta_name, true ), $product );
 			$msrp = str_replace( ',', '.', $msrp );
-			if ( '' === $msrp || 0 === $msrp ) {
+			if ( '' == $msrp || 0 == $msrp ) {
 				return $price_html;
 			}
 
@@ -265,7 +263,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 				return $price_html;
 			}
 
-			if ( ( 'show_if_diff' === $display && $msrp === $price ) || ( 'show_if_higher' === $display && $msrp <= $price ) ) {
+			if ( ( 'show_if_diff' == $display && $msrp == $price ) || ( 'show_if_higher' == $display && $msrp <= $price ) ) {
 				return $price_html;
 			}
 
@@ -293,7 +291,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 				'%you_save%'         => str_replace( '%you_save_raw%', wc_price( $you_save_formula_result ), $you_save ),
 				'%you_save_percent%' => str_replace( '%you_save_percent_raw%', round( $you_save_percent_formula_result, $you_save_round ), $you_save_percent ),
 			);
-			return ( 'before_price' === $position ?
+			return ( 'before_price' == $position ?
 			wcj_handle_replacements( $replaced_values, $template ) . $price_html :
 			$price_html . wcj_handle_replacements( $replaced_values, $template ) );
 		}

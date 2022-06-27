@@ -64,10 +64,9 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 		 */
 		public function tax_display_toggle_param() {
 			wcj_session_maybe_start();
-			$nonce = wp_create_nonce();
-			if ( isset( $_REQUEST['wcj_button_toggle_tax_display'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_REQUEST['wcj_button_toggle_tax_display'] ) ) {
 				$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
-				$current_value = ( '' === ( $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+				$current_value = ( '' == ( $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
 				wcj_session_set( 'wcj_toggle_tax_display', ( 'incl' === $current_value ? 'excl' : 'incl' ) );
 			}
 		}
@@ -108,10 +107,10 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 			if ( '' !== ( $display_taxes_by_user_role_roles ) ) {
 				$current_user_roles = wcj_get_current_user_all_roles();
 				foreach ( $current_user_roles as $current_user_first_role ) {
-					if ( in_array( $current_user_first_role, $display_taxes_by_user_role_roles, true ) ) {
+					if ( in_array( $current_user_first_role, $display_taxes_by_user_role_roles ) ) {
 						$option_name = 'option_woocommerce_tax_display_shop' === current_filter() ? 'wcj_product_listings_display_taxes_by_user_role_' . $current_user_first_role : 'wcj_product_listings_display_taxes_on_cart_by_user_role_' . $current_user_first_role;
 						$tax_display = wcj_get_option( $option_name, 'no_changes' );
-						if ( 'no_changes' !== ( $tax_display ) ) {
+						if ( 'no_changes' != ( $tax_display ) ) {
 							return $tax_display;
 						}
 					}
@@ -137,15 +136,15 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 				$products_excl_tax     = wcj_get_option( 'wcj_product_listings_display_taxes_products_excl_tax', '' );
 				$product_cats_incl_tax = wcj_get_option( 'wcj_product_listings_display_taxes_product_cats_incl_tax', '' );
 				$product_cats_excl_tax = wcj_get_option( 'wcj_product_listings_display_taxes_product_cats_excl_tax', '' );
-				if ( '' !== $products_incl_tax || '' !== $products_incl_tax || '' !== $products_incl_tax || '' !== $products_incl_tax ) {
+				if ( '' != $products_incl_tax || '' != $products_incl_tax || '' != $products_incl_tax || '' != $products_incl_tax ) {
 					// Products.
 					if ( ! empty( $products_incl_tax ) ) {
-						if ( in_array( $product_id, $products_incl_tax, true ) ) {
+						if ( in_array( $product_id, $products_incl_tax ) ) {
 							return 'incl';
 						}
 					}
 					if ( ! empty( $products_excl_tax ) ) {
-						if ( in_array( $product_id, $products_excl_tax, true ) ) {
+						if ( in_array( $product_id, $products_excl_tax ) ) {
 							return 'excl';
 						}
 					}
@@ -154,7 +153,7 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 					if ( ! empty( $product_cats_incl_tax ) ) {
 						if ( ! empty( $product_categories ) ) {
 							foreach ( $product_categories as $product_category ) {
-								if ( in_array( $product_category->term_id, $product_cats_incl_tax, true ) ) {
+								if ( in_array( $product_category->term_id, $product_cats_incl_tax ) ) {
 									return 'incl';
 								}
 							}
@@ -163,7 +162,7 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 					if ( ! empty( $product_cats_excl_tax ) ) {
 						if ( ! empty( $product_categories ) ) {
 							foreach ( $product_categories as $product_category ) {
-								if ( in_array( $product_category->term_id, $product_cats_excl_tax, true ) ) {
+								if ( in_array( $product_category->term_id, $product_cats_excl_tax ) ) {
 									return 'excl';
 								}
 							}

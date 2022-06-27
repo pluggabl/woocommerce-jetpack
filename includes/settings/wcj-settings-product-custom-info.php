@@ -32,10 +32,10 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				$extra_filter = trim( $extra_filter );
 				if ( '' !== ( $extra_filter ) ) {
 					$extra_filter = explode( '|', $extra_filter, 2 );
-					if ( 2 === count( $extra_filter ) ) {
+					if ( 2 == count( $extra_filter ) ) {
 						$extra_filter_id    = trim( $extra_filter[0] );
 						$extra_filter_title = trim( $extra_filter[1] );
-						if ( '' !== $extra_filter_id && '' !== $extra_filter_title ) {
+						if ( '' != $extra_filter_id && '' != $extra_filter_title ) {
 							$extra_filters_result[ $extra_filter_id ] = $extra_filter_title;
 						}
 					}

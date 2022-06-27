@@ -124,8 +124,8 @@ if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
 			$single_or_archive_array = array( 'single', 'archive' );
 			foreach ( $single_or_archive_array as $single_or_archive ) {
 				$default_hook                          = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
-				$wcj_product_custom_info_total_number_ = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) );
-				for ( $i = 1; $i <= $wcj_product_custom_info_total_number_; $i++ ) {
+				$wcj_product_custom_info_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) );
+				for ( $i = 1; $i <= $wcj_product_custom_info_total_number; $i++ ) {
 					if ( $this->is_visible( $product_id, $current_filter, $current_filter_priority, $default_hook, $single_or_archive, $i ) ) {
 						echo do_shortcode( wcj_get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) );
 					}

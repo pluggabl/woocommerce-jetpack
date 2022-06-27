@@ -433,8 +433,7 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 			if ( $product ) {
 				$the_id = wcj_get_product_id_or_variation_parent_id( $product );
 			}
-			$nonce = wp_create_nonce();
-			if ( ! $the_id && isset( $_REQUEST['product_id'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! $the_id && isset( $_REQUEST['product_id'] ) ) {
 				$the_id = isset( $_REQUEST['product_id'] );
 			}
 			if ( ! $the_id && isset( $_POST['form'] ) ) { // WooCommerce Bookings plugin.

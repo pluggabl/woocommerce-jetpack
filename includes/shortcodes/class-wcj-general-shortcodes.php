@@ -144,6 +144,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_get_option( $atts ) {
+			echo "ssfdjsljdf";
 			$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
 			return ( is_array( $result ) ?
 			( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
@@ -409,6 +410,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		public function wcj_button_toggle_tax_display( $atts ) {
 			$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
 			$current_value = ( '' == ( $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+			$current_value = '' == $current_value ? 'excl' : $current_value;
 			$label         = $atts[ 'label_' . $current_value ];
 			return '<form method="post" action=""><input type="submit" name="wcj_button_toggle_tax_display"' .
 			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';

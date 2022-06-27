@@ -364,7 +364,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 */
 		public function validate_value_add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
-			return esc_url( add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location ) );
+			return add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location );
 		}
 
 		/**
@@ -380,8 +380,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			echo '<div class="error"><p><div class="message">' .
 			sprintf(
 				/* translators: %1$s: translators Added */
-				esc_html__( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ),
-				wp_kses_post( $this->short_desc ),
+				__( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ),
+				$this->short_desc ),
 				'https://booster.io/plus/'
 			) .
 			'</div></p></div>';

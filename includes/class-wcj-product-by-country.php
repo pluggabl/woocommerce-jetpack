@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 			}
 			
 			if ( 'yes' === wcj_get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
-				$billing_country = ! empty( isset( $_REQUEST['country'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : '';
+				$billing_country = isset( $_REQUEST['country'] ) && ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : '';
 				if ( ! empty( $billing_country ) ) {
 					$check_option = $billing_country;
 				}

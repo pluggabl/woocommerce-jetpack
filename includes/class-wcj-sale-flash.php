@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 			$product_terms = get_the_terms( $product_id, $taxonomy );
 			if ( ! empty( $product_terms ) && isset( $product_terms[0]->term_id ) ) {
 				$term_id = $product_terms[0]->term_id;
-				if ( in_array( $term_id, $this->sale_flash_per_taxonomy[ $taxonomy ]['terms'], true ) ) {
+				if ( in_array( $term_id, $this->sale_flash_per_taxonomy[ $taxonomy ]['terms'] ) ) {
 					return ( isset( $this->sale_flash_per_taxonomy[ $taxonomy ]['html'][ $term_id ] ) ?
 					do_shortcode( $this->sale_flash_per_taxonomy[ $taxonomy ]['html'][ $term_id ] ) :
 					'<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>'

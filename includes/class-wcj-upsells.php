@@ -98,7 +98,7 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 			if ( ! empty( $global_upsells ) ) {
 				$global_upsells = array_unique( $global_upsells );
 				$product_id     = wcj_get_product_id_or_variation_parent_id( $_product );
-				$key            = array_search( $product_id, $global_upsells, true );
+				$key            = array_search( $product_id, $global_upsells );
 				if ( false !== ( $key ) ) {
 					unset( $global_upsells[ $key ] );
 				}
@@ -129,7 +129,7 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 		 */
 		public function upsells_columns( $columns ) {
 			$_columns = wcj_get_option( 'wcj_upsells_columns', 0 );
-			return ( 0 !== ( $_columns ) ? $_columns : $columns );
+			return ( 0 != ( $_columns ) ? $_columns : $columns );
 		}
 
 		/**
@@ -142,7 +142,7 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 		 */
 		public function upsells_total( $limit ) {
 			$_limit = wcj_get_option( 'wcj_upsells_total', 0 );
-			return ( 0 !== ( $_limit ) ? $_limit : $limit );
+			return ( 0 != ( $_limit ) ? $_limit : $limit );
 		}
 
 	}

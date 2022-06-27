@@ -322,7 +322,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 * @param array | string $order_statuses defines the order_statuses.
 		 */
 		public function add_custom_order_statuses_to_reports( $order_statuses ) {
-			if ( is_array( $order_statuses ) && in_array( 'completed', $order_statuses, true ) ) {
+			if ( is_array( $order_statuses ) && in_array( 'completed', $order_statuses ) ) {
 				return array_merge( $order_statuses, array_keys( $this->get_custom_order_statuses( true ) ) );
 			} else {
 				return $order_statuses;
@@ -472,7 +472,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 				?><script type="text/javascript">
 				<?php
 				foreach ( wcj_get_order_statuses() as $key => $order_status ) {
-					if ( in_array( $key, array( 'processing', 'on-hold', 'completed' ), true ) ) {
+					if ( in_array( $key, array( 'processing', 'on-hold', 'completed' ) ) ) {
 						continue;
 					}
 					?>

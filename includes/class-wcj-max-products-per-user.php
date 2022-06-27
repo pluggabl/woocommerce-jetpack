@@ -140,12 +140,11 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		 * @since   3.5.0
 		 */
 		public function calculate_data_notice() {
-			
-			if ( isset( $_GET['wcj_max_products_per_user_calculate_data_finished'] )  ) {
+			if ( isset( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) {
 				$class   = 'notice notice-info';
 				$message = __( 'Data re-calculated.', 'woocommerce-jetpack' ) . ' ' .
 				/* translators: %s: translation added */
-				sprintf( __( '%s order(s) processed.', 'woocommerce-jetpack' ), sanitize_text_field( wp_unslash( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) );
+				sprintf( __( '%s order(s) processed.', 'woocommerce-jetpack' ), $_GET['wcj_max_products_per_user_calculate_data_finished'] );
 				printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 			}
 		}
@@ -158,8 +157,7 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 		 */
 		public function calculate_data() {
-			
-			if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] )  ) {
+			if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) {
 				$offset       = 0;
 				$block_size   = 512;
 				$total_orders = 0;

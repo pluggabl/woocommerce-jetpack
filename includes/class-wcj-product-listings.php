@@ -98,7 +98,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 			}
 			$min_price_limit = wcj_get_option( 'wcj_product_listings_product_visibility_by_price_min', 0 );
 			$max_price_limit = wcj_get_option( 'wcj_product_listings_product_visibility_by_price_max', 0 );
-			return ( ( 0 !== $min_price_limit && $min_price < $min_price_limit ) || ( 0 !== $max_price_limit && $max_price > $max_price_limit ) ? false : $visible );
+			return ( ( 0 != $min_price_limit && $min_price < $min_price_limit ) || ( 0 != $max_price_limit && $max_price > $max_price_limit ) ? false : $visible );
 		}
 
 		/**
@@ -138,7 +138,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 			global $wp_query;
 			if (
 			is_product_category() &&
-			get_option( 'woocommerce_category_archive_display' ) === 'subcategories' &&
+			get_option( 'woocommerce_category_archive_display' ) == 'subcategories' &&
 			'no' === wcj_get_option( 'wcj_product_listings_show_products_if_no_cats_on_archives' )
 			) {
 				$wp_query->post_count    = 0;
@@ -146,7 +146,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 			}
 			if (
 			is_shop() &&
-			get_option( 'woocommerce_shop_page_display' ) === 'subcategories' &&
+			get_option( 'woocommerce_shop_page_display' ) == 'subcategories' &&
 			'no' === wcj_get_option( 'wcj_product_listings_show_products_if_no_cats_on_shop' )
 			) {
 				$wp_query->post_count    = 0;

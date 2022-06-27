@@ -510,16 +510,16 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							$field_value = '';
 						}
 					}
-					if ( '' === $field_value ) {
+					if ( '' == $field_value ) {
 						$passed = false;
 						wc_add_notice( $this->get_value( 'wcj_product_input_fields_required_message_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
 					}
 				}
 
-				if ( 'file' === $type && isset( $_FILES[ $field_name ] ) && '' !== $_FILES[ $field_name ]['name'] ) {
+				if ( 'file' === $type && isset( $_FILES[ $field_name ] ) && '' != $_FILES[ $field_name ]['name'] ) {
 					// Validate file type.
 					$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product_id, '' );
-					if ( '' !== ( $file_accept ) ) {
+					if ( '' != ( $file_accept ) ) {
 						$file_accept = explode( ',', $file_accept );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
 							$file_type = '.' . pathinfo( sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['name'] ) ), PATHINFO_EXTENSION );
@@ -719,13 +719,13 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						case 'select':
 							$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $_product_id, '' );
 							$select_options     = wcj_get_select_options( $select_options_raw, false );
-							if ( '' !== $placeholder ) {
+							if ( '' != $placeholder ) {
 								$select_options = array_replace( array( '' => $placeholder ), $select_options );
 							}
 							$select_options_html = '';
 							if ( ! empty( $select_options ) ) {
 								reset( $select_options );
-								$value = ( '' !== $set_value ? $set_value : key( $select_options ) );
+								$value = ( '' != $set_value ? $set_value : key( $select_options ) );
 								foreach ( $select_options as $select_option_key => $select_option_title ) {
 									$select_options_html .= '<option value="' . $select_option_key . '" ' . selected( $value, $select_option_key, false ) . '>';
 									$select_options_html .= $select_option_title;
@@ -761,8 +761,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 						case 'country':
 							$countries = WC()->countries->get_allowed_countries();
-							if ( count( $countries ) > 1 ) {
-								$value = ( '' !== $set_value ? $set_value : key( $countries ) );
+							if ( sizeof( $countries ) > 1 ) {
+								$value = ( '' != $set_value ? $set_value : key( $countries ) );
 								$field = '<select name="' . $field_name . '" id="' . $field_name . '" class="country_to_state country_select wcj_product_input_fields' . $class . '">' .
 								'<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
 								foreach ( $countries as $ckey => $cvalue ) {
@@ -780,7 +780,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						get_option( 'wcj_product_input_fields_field_template', '<p><label for="%field_id%">%field_title%</label> %field_html%</p>' )
 					);
 					$field_order = $this->get_value( 'wcj_product_input_fields_order_' . $this->scope . '_' . $i, $_product_id, 0 );
-					if ( 0 === ( $field_order ) ) {
+					if ( 0 == ( $field_order ) ) {
 						$field_order = $i;
 					}
 					$fields[ $field_order ] = apply_filters(
@@ -801,7 +801,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			ksort( $fields );
 			if ( ! empty( $fields ) ) {
-				echo  wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode(  $fields ) ) .  wcj_get_option( 'wcj_product_input_fields_end_template', '' );
+				echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode(  $fields ) ) .  wcj_get_option( 'wcj_product_input_fields_end_template', '' );
 				$this->are_product_input_fields_displayed = true;
 			}
 		}
@@ -832,8 +832,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						$cart_item_data[ $value_name ]['tmp_name'] = $tmp_dest_file;
 					}
 				} else {
-					$nonce = wp_create_nonce();
-					if ( isset( $_POST[ $value_name ] ) && wp_verify_nonce( $nonce ) ) {
+					if ( isset( $_POST[ $value_name ] ) ) {
 						$cart_item_data[ $value_name ] = $this->maybe_stripslashes( sanitize_text_field( wp_unslash( $_POST[ $value_name ] ) ) );
 					}
 				}
@@ -904,7 +903,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						$value = maybe_unserialize( $value );
 						$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
 					}
-					if ( '' !== $value && is_string( $value ) ) {
+					if ( '' != $value && is_string( $value ) ) {
 						$name .= str_replace( array( '%title%', '%value%' ), array( $title, $value ), $item_template );
 					}
 				}
