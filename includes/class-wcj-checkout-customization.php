@@ -301,7 +301,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 							if ( ! isset( $checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] ) ) {
 								$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] = array();
 							}
-							$custom_attributes = ( in_array( $field_to_disable, $disable_type_fields) ? array( 'disabled' => 'disabled' ) : array( 'readonly' => 'readonly' ) );
+							$custom_attributes = ( in_array( $field_to_disable, $disable_type_fields ) ? array( 'disabled' => 'disabled' ) : array( 'readonly' => 'readonly' ) );
 							$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] = array_merge(
 								$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'],
 								$custom_attributes

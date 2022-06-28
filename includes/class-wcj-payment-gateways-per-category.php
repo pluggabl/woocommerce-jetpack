@@ -148,9 +148,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 
 				// Check if it is on checkout/order-pay/xxx page.
 			} elseif ( is_wc_endpoint_url( 'order-pay' ) ) {
-				$url_arr = preg_split( '/[\/\?]/', isset( $_SERVER['REQUEST_URI'] ) );
+				$url_arr = preg_split( '/[\/\?]/', $_SERVER['REQUEST_URI'] );
 				if ( in_array( 'order-pay', $url_arr ) ) {
-					$order_pay_index = array_search( 'order-pay', $url_arr, true );
+					$order_pay_index = array_search( 'order-pay', $url_arr );
 					$order_id        = intval( $url_arr[ $order_pay_index + 1 ] );
 					$order           = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $values ) {

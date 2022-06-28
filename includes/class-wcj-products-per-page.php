@@ -91,11 +91,13 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 			$html         = '';
 			$html        .= wcj_get_option( 'wcj_products_per_page_text_before', '<div class="clearfix"></div><div>' );
 			$html        .= '<form action="' . esc_url( remove_query_arg( 'paged' ) ) . '" method="' . $form_method . '">';
-			$_text = wcj_get_option( 'wcj_products_per_page_text',
-			__( 'Products <strong>%from% - %to%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
-			$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $_text );
-			$html .= '</form>';
-			$html .= wcj_get_option( 'wcj_products_per_page_text_after', '</div>' );
+			$_text        = wcj_get_option(
+				'wcj_products_per_page_text',
+				__( 'Products <strong>%1$from% - %to%</strong>. Products on page %2$select_form%', 'woocommerce-jetpack' )
+			);
+			$html        .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $_text );
+			$html        .= '</form>';
+			$html        .= wcj_get_option( 'wcj_products_per_page_text_after', '</div>' );
 
 			echo wp_kses_post( $html );
 		}

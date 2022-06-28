@@ -5,13 +5,16 @@
  * @version 3.9.0
  * @author  Pluggabl LLC.
  * @todo    maybe move this to `functions` folder
+ * @package Booster_For_WooCommerce
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! function_exists( 'wcj_get_paypal_supported_currencies' ) ) {
 	/**
-	 * wcj_get_paypal_supported_currencies.
+	 * Wcj_get_paypal_supported_currencies.
 	 *
 	 * @version 3.9.0
 	 */
@@ -48,7 +51,7 @@ if ( ! function_exists( 'wcj_get_paypal_supported_currencies' ) ) {
 
 if ( ! function_exists( 'wcj_get_country_currency' ) ) {
 	/**
-	 * wcj_get_country_currency.
+	 * Wcj_get_country_currency.
 	 *
 	 * @version 3.3.0
 	 */

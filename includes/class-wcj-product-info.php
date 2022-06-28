@@ -298,25 +298,33 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		 * @version 2.4.0
 		 */
 		public function admin_add_product_info_fields( &$settings, $single_or_archive ) {
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
-			$field_id = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i ;
-			$default_value = '';
-			switch ( $i ) {
-				case 1: $default_value = '<ul>'; break;
-				case 2: $default_value = '<li>' . __( '[wcj_product_you_save before="You save: <strong>" hide_if_zero="yes" after="</strong>"][wcj_product_you_save_percent hide_if_zero="yes" before=" (" after="%)"]', 'woocommerce-jetpack' ) . '</li>'; break;
-				case 3: $default_value = '<li>' . __( '[wcj_product_total_sales before="Total sales: "]', 'woocommerce-jetpack' ) . '</li>'; break;
-				case 4: $default_value = '</ul>'; break;
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
+				$field_id      = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i;
+				$default_value = '';
+				switch ( $i ) {
+					case 1:
+						$default_value = '<ul>';
+						break;
+					case 2:
+						$default_value = '<li>' . __( '[wcj_product_you_save before="You save: <strong>" hide_if_zero="yes" after="</strong>"][wcj_product_you_save_percent hide_if_zero="yes" before=" (" after="%)"]', 'woocommerce-jetpack' ) . '</li>';
+						break;
+					case 3:
+						$default_value = '<li>' . __( '[wcj_product_total_sales before="Total sales: "]', 'woocommerce-jetpack' ) . '</li>';
+						break;
+					case 4:
+						$default_value = '</ul>';
+						break;
+				}
+				$settings[] = array(
+					'title'   => '',
+					'id'      => $field_id,
+					'default' => $default_value,
+					'type'    => 'textarea',
+					'css'     => 'width:50%;min-width:300px;',
+				);
 			}
-			$settings[] = array(
-				'title'    => '',
-				'id'       => $field_id,
-				'default'  => $default_value,
-				'type'     => 'textarea',
-				'css'      => 'width:50%;min-width:300px;',
-			);
 		}
 	}
-}
 
 endif;
 

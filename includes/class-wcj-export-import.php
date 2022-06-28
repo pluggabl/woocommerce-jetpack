@@ -277,7 +277,6 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @param int $tool_id defines the tool_id.
 		 */
 		public function export_date_fields( $tool_id ) {
-			$nonce               = wp_create_nonce();
 			$current_start_date  = ( isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '' );
 			$current_end_date    = ( isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '' );
 			$predefined_ranges   = array();

@@ -85,6 +85,7 @@ $settings = array(
 	array(
 		'title'             => __( 'Attributes Separator', 'woocommerce-jetpack' ),
 		'desc_tip'          => sprintf(
+			/* translators: %s: translators Added */
 			__( 'Used in %s, %s, %s and %s.', 'woocommerce-jetpack' ),
 			'<em>{variation_attributes}</em>',
 			'<em>{variation_attribute=X}</em>',

@@ -45,17 +45,17 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 			$this->current_php_time_limit   = '';
 
 			if ( $this->is_enabled() ) {
-				$php_memory_limit = wcj_get_option( 'wcj_admin_tools_php_memory_limit', "0" );
-				$php_time_limit   = wcj_get_option( 'wcj_admin_tools_php_time_limit', "0" );
+				$php_memory_limit = wcj_get_option( 'wcj_admin_tools_php_memory_limit', '0' );
+				$php_time_limit   = wcj_get_option( 'wcj_admin_tools_php_time_limit', '0' );
 				// PHP Memory Limit.
-				if ( "0" !== ( $php_memory_limit ) ) {
+				if ( '0' !== ( $php_memory_limit ) ) {
 					ini_set( 'memory_limit', $php_memory_limit . 'M' );
 				}
 				/* translators: %s: translation added */
 				$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
 
 				// PHP Time Limit.
-				if ( "0" !== ( $php_time_limit ) ) {
+				if ( '0' !== ( $php_time_limit ) ) {
 					set_time_limit( $php_time_limit );
 				}
 				/* translators: %s: translation added */

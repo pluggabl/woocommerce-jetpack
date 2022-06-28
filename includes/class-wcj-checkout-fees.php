@@ -79,7 +79,6 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @return bool
 		 */
 		public function is_fee_valid( $fee_id, \WC_Cart $cart ) {
-			$nonce   = wp_create_nonce();
 			$fees    = $this->get_fees();
 			$enabled = wcj_get_option( 'wcj_checkout_fees_data_enabled', array() );
 			$values  = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
@@ -111,10 +110,10 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 
 			// Check checkout fields.
 			if ( ! empty( $this->checkout_fields[ $fee_id ] ) ) {
-				if ( isset( $post_data ) || isset( $_REQUEST['post_data'] ) && wp_verify_nonce( $nonce ) ) {
+				if ( isset( $post_data ) || isset( $_REQUEST['post_data'] ) ) {
 					if ( ! isset( $post_data ) ) {
 						$post_data = array();
-						parse_str( isset( $_REQUEST['post_data'] ), $post_data );
+						parse_str( $_REQUEST['post_data'], $post_data );
 					}
 					if ( empty( $post_data[ $this->checkout_fields[ $fee_id ] ] ) ) {
 						return false;

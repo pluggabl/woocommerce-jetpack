@@ -110,13 +110,13 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		 * @since   3.4.0
 		 */
 		public function handle_orders_navigation() {
-		if ( isset( $_GET['wcj_orders_navigation'] ) ) {
-			$url = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id = wcj_get_adjacent_order_id( $_GET['post'], $_GET['wcj_orders_navigation'] ) ) ?
+			if ( isset( $_GET['wcj_orders_navigation'] ) ) {
+				$url = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id = wcj_get_adjacent_order_id( $_GET['post'], $_GET['wcj_orders_navigation'] ) ) ?
 				remove_query_arg( 'wcj_orders_navigation' ) :
 				admin_url( 'post.php?post=' . $adjacent_order_id . '&action=edit' ) );
-			wp_safe_redirect( $url );
-			exit;
-		}
+				wp_safe_redirect( $url );
+				exit;
+			}
 		}
 
 		/**

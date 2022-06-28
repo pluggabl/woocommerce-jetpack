@@ -242,10 +242,9 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $order_id defines the order_id.
 		 */
 		public function update_custom_checkout_fields_order_meta( $order_id ) {
-			$nonce = wp_create_nonce();
 			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
-					if ( 'woocommerce_checkout_update_order_meta' === current_filter() && ! $this->is_visible( $i ) && wp_verify_nonce( $nonce ) ) {
+					if ( 'woocommerce_checkout_update_order_meta' === current_filter() && ! $this->is_visible( $i ) ) {
 						continue;
 					}
 					$the_section       = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
@@ -412,7 +411,6 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $section defines the section.
 		 */
 		public function add_woocommerce_admin_fields( $fields, $section ) {
-			$nonce = wp_create_nonce();
 			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 					$the_section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
@@ -478,7 +476,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 							update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, $the_meta['label'] );
 						}
 					}
-					if ( ! isset( $_POST[ '_' . $section . '_' . $the_key ] ) && wp_verify_nonce( $nonce ) ) {
+					if ( ! isset( $_POST[ '_' . $section . '_' . $the_key ] ) ) {
 						$fields[ $the_key ] = array(
 							'type'          => $the_type,
 							'label'         => ( '' !== get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, true ) ) ?

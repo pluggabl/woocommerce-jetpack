@@ -338,15 +338,15 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 			if ( 'invisible' !== apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 				if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) {
 					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', array() );
-				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) && ! in_array( 'wcj_no_change', isset( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ), true ) ) {
-					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', isset( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) );
+				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) {
+					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', $_REQUEST[ 'wcj_' . $this->id . '_visible' ] );
 				}
 			}
 			if ( 'visible' !== apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 				if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) {
 					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', array() );
-				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_invisible' ], true ) ) {
-					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', isset( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) );
+				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) {
+					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] );
 				}
 			}
 			do_action( 'save_bulk_and_quick_edit_fields_' . $this->id, $post_id, $post );

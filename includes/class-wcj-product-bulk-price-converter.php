@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 			if ( '' !== $the_price && 0 !== $the_price ) {
 				$precision          = wcj_get_option( 'woocommerce_price_num_decimals', 2 );
 				$the_modified_price = round( $the_price * $multiply_price_by, $precision );
-				if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'booster_option', 0, isset( $_POST['make_pretty_prices_threshold'] ) ) > 0 ) {
+				if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'booster_option', 0, $_POST['make_pretty_prices_threshold'] ) > 0 ) {
 					$the_modified_price = $this->make_pretty_price( $the_modified_price );
 				}
 				if ( $the_modified_price < 0 ) {
@@ -84,10 +84,10 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 			}
 			if ( '' !== $the_price || '' !== $the_modified_price ) {
 				echo '<tr>' .
-					'<td>' .  get_the_title( $product_id )  . '</td>' .
-					'<td>' . implode( ', ',  $product_cats  ) . '</td>' .
+					'<td>' . get_the_title( $product_id ) . '</td>' .
+					'<td>' . implode( ', ', $product_cats ) . '</td>' .
 					'<td><em>' . wp_kses_post( $price_type ) . '</em></td>' .
-					'<td>' .  $the_price  . '</td>' .
+					'<td>' . $the_price . '</td>' .
 					'<td>' . $the_modified_price . '</td>' .
 				'</tr>';
 			}
@@ -206,7 +206,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 			$offset     = 0;
 			$block_size = 1024;
 			while ( true ) {
-				$args  = array(
+				$args = array(
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => $block_size,
@@ -215,7 +215,7 @@ if ( ! class_exists( 'WCJ_Bulk_Price_Converter' ) ) :
 					'order'          => 'DESC',
 					'fields'         => 'ids',
 				);
-				if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' !== $_POST['wcj_product_cat'] && 'any' !== apply_filters( 'booster_option', 'any', '' )) {
+				if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' !== $_POST['wcj_product_cat'] && 'any' !== apply_filters( 'booster_option', 'any', '' ) ) {
 					$args['tax_query'] = array(
 						array(
 							'taxonomy' => 'product_cat',

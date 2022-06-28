@@ -88,9 +88,8 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 * @param   string $footer_text get admin footer texts.
 		 */
 		public function admin_footer_text( $footer_text ) {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['page'] ) && wp_verify_nonce( $nonce ) ) {
-				if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && wp_verify_nonce( $nonce ) && 'jetpack' === $_GET['tab'] ) ) {
+			if ( isset( $_GET['page'] ) ) {
+				if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
 					?>
 				<div class="wclj_tl_foot">
 				<div class="wcj-footer">

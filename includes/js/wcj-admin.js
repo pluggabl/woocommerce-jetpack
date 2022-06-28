@@ -15,7 +15,7 @@ jQuery( document ).ready(
 			function showCircles() {
 				subCircles.forEach(
 					circle => {
-                    circle.classList.toggle( "show" );
+						circle.classList.toggle( "show" );
 					}
 				)
 			};

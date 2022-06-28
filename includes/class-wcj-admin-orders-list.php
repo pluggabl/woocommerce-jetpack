@@ -258,7 +258,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 				if ( $total_number > 0 ) {
 					$html .= ( 'checkboxes' === $type ) ?
 						'<input type="checkbox" name="wcj_admin_filter_statuses[]" style="width:16px;height:16px;" value="' . $status_id . '"' .
-						checked( in_array( $status_id, $checked_post_statuses), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' :
+						checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' :
 						'<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses, true ), true, false ) . '>' .
 						$status_title . ' (' . $total_number . ') </option>';
 				}
@@ -315,7 +315,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 			if ( 'shop_order' !== $typenow ) {
 				return;
 			}
-			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) && isset( $_GET['country'] ) && 'all' !== $_GET['country']) {
+			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) && isset( $_GET['country'] ) && 'all' !== $_GET['country'] ) {
 				$query->query_vars['meta_query'][] = array(
 					'key'   => '_billing_country',
 					'value' => $_GET['country'],
@@ -347,7 +347,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 					echo '</select>';
 				}
 				if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
-					$selected_currency = isset( $_GET['currency'] ) ?  $_GET['currency'] : 'all';
+					$selected_currency = isset( $_GET['currency'] ) ? $_GET['currency'] : 'all';
 					$currencies        = array_merge( array( 'all' => __( 'All currencies', 'woocommerce-jetpack' ) ), wcj_get_woocommerce_currencies_and_symbols() );
 					echo '<select id="currency" name="currency">';
 					foreach ( $currencies as $code => $name ) {

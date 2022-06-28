@@ -98,8 +98,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		 * @todo    add success/error message
 		 */
 		public function manually_download_fonts() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_download_fonts'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_download_fonts'] ) ) {
 				delete_option( 'wcj_invoicing_fonts_version' );
 				delete_option( 'wcj_invoicing_fonts_version_timestamp' );
 				wcj_check_and_maybe_download_tcpdf_fonts();

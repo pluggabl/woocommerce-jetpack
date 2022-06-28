@@ -79,8 +79,8 @@ if ( ! class_exists( 'WCJ_Empty_Cart_Button' ) ) :
 		 * @version 2.8.0
 		 */
 		public function maybe_empty_cart() {
-			
-			if ( isset( $_POST['wcj_empty_cart'] ) && isset( WC()->cart )  ) {
+
+			if ( isset( $_POST['wcj_empty_cart'] ) && isset( WC()->cart ) ) {
 				WC()->cart->empty_cart();
 			}
 		}

@@ -39,7 +39,7 @@ if ( ! class_exists( 'WCJ_Product_Price_by_Formula' ) ) :
 
 				add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-				
+
 				if (
 				( wcj_is_frontend() && 'yes' === wcj_get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) ) ||
 				( 'no' === wcj_get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) && ( wcj_is_frontend() || is_admin() ) ) ||
@@ -189,14 +189,12 @@ if ( ! class_exists( 'WCJ_Product_Price_by_Formula' ) ) :
 		 * @since   5.3.0
 		 */
 		public function reset_settings() {
-			$nonce = wp_create_nonce();
 			if (
 			isset( $_GET['wcj_reset_settings'] )
 			&& $this->id === $_GET['wcj_reset_settings']
 			&& wcj_is_user_role( 'administrator' )
 			&& ! isset( $_POST['save'] )
 			&& 'yes' === wcj_get_option( 'wcj_product_price_by_formula_reset_products', 'no' )
-			&& wp_verify_nonce( $nonce )
 			) {
 				global $wpdb;
 				$prefix = '_wcj_product_price_by_formula';
@@ -447,8 +445,7 @@ if ( ! class_exists( 'WCJ_Product_Price_by_Formula' ) ) :
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_GET['wcj_product_price_by_formula_admin_notice'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_GET['wcj_product_price_by_formula_admin_notice'] ) ) {
 				return;
 			}
 			?><div class="error"><p>

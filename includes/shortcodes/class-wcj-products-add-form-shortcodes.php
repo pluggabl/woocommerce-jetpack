@@ -280,7 +280,6 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			$notice_html       = '';
 			$input_fields_html = '';
 			$footer_html       = '';
-			$nonce             = wp_create_nonce();
 
 			$args = array(
 				'title'         => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) : '',

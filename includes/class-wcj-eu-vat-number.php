@@ -123,9 +123,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * @since   3.3.0
 		 */
 		public function admin_validate_vat_and_maybe_remove_taxes() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) && wp_verify_nonce( $nonce ) ) {
-				$order_id = isset( $_GET['validate_vat_and_maybe_remove_taxes'] );
+			if ( isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
+				$order_id = $_GET['validate_vat_and_maybe_remove_taxes'];
 				$order    = wc_get_order( $order_id );
 				if ( $order ) {
 					$vat_id = get_post_meta( $order_id, '_billing_eu_vat_number', true );
@@ -352,7 +351,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * @param string | int $field_key defines the field_key.
 		 */
 		public function add_default_checkout_billing_eu_vat_number( $default_value, $field_key ) {
-			$current_user 			= wp_get_current_user();
+			$current_user           = wp_get_current_user();
 			$meta                   = get_user_meta( $current_user->ID, 'billing_eu_vat_number', true );
 			$eu_vat_number_to_check = wcj_session_get( 'wcj_eu_vat_number_to_check' );
 			if ( '' !== ( $eu_vat_number_to_check ) ) {
@@ -388,10 +387,9 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 				return;
 			}
 			wcj_session_maybe_start();
-			$args  = array();
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['post_data'] ) && wp_verify_nonce( $nonce ) ) {
-				parse_str( isset( $_POST['post_data'] ), $args );
+			$args = array();
+			if ( isset( $_POST['post_data'] ) ) {
+				parse_str( $_POST['post_data'], $args );
 				if ( isset( $args['billing_eu_vat_number'] ) && wcj_session_get( 'wcj_eu_vat_number_to_check' ) !== $args['billing_eu_vat_number'] ) {
 					wcj_session_set( 'wcj_is_eu_vat_number_valid', null );
 					wcj_session_set( 'wcj_eu_vat_number_to_check', null );
@@ -464,7 +462,6 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 					'echo'                       => true,
 				)
 			);
-			$nonce         = wp_create_nonce();
 			$eu_vat_number = isset( $param['wcj_eu_vat_number_to_check'] ) && '' != $param['wcj_eu_vat_number_to_check'] ? $param['wcj_eu_vat_number_to_check'] : '';
 			$eu_vat_number = empty( $eu_vat_number ) && isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' != $_POST['wcj_eu_vat_number_to_check'] ? $_POST['wcj_eu_vat_number_to_check'] : $eu_vat_number;
 			if ( ! empty( $eu_vat_number ) ) {

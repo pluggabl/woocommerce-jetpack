@@ -63,8 +63,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 			$the_start_date     = ( ! empty( $_POST['start_date'] ) ) ? $_POST['start_date'] : '';
 			$the_end_date       = ( ! empty( $_POST['end_date'] ) ) ? $_POST['end_date'] : '';
 			$the_order_statuses = ( ! empty( $_POST['order_statuses'] ) ) ? $_POST['order_statuses'] : array();
-			$the_delete_all     = sanitize_text_field( wp_unslash(
-				$_POST['delete_all'] ) );
+			$the_delete_all     = sanitize_text_field( wp_unslash( $_POST['delete_all'] ) );
 
 			if ( isset( $_POST['renumerate_invoices'] ) ) {
 				if ( ! empty( $the_order_statuses ) ) {

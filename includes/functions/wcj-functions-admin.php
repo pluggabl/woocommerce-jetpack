@@ -188,7 +188,7 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 				$options[ $term_id ] = wp_kses_post( $user->display_name );
 			}
 		}
-		$placeholder = isset( $values['placeholder'] ) ? isset( $values['placeholder'] ) : __( 'Search&hellip;', 'woocommerce-jetpack' );
+		$placeholder = isset( $values['placeholder'] ) ? $values['placeholder'] : __( 'Search&hellip;', 'woocommerce-jetpack' );
 		return array_merge(
 			$values,
 			array(

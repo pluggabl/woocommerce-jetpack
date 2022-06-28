@@ -68,10 +68,9 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 * @since   3.4.5
 		 */
 		public function maybe_update_all_rates() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_currency_exchange_rates_update_now'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_currency_exchange_rates_update_now'] ) ) {
 				do_action( 'auto_update_exchange_rates_hook' );
-				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_currency_exchange_rates_update_now' ) ) );
+				wp_safe_redirect( remove_query_arg( 'wcj_currency_exchange_rates_update_now' ) );
 			}
 		}
 
@@ -83,8 +82,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		 * @todo    (maybe) move this to `class-wcj-exchange-rates.php`
 		 */
 		public function wcj_ajax_get_exchange_rates() {
-			$nonce = wp_create_nonce();
-			echo wp_kses_post( wcj_get_exchange_rate( sanitize_text_field(wp_unslash( $_POST['wcj_currency_from'] ) ), sanitize_text_field(wp_unslash( $_POST['wcj_currency_to'] ) ) ) );
+			echo wcj_get_exchange_rate( sanitize_text_field( wp_unslash( $_POST['wcj_currency_from'] ) ), sanitize_text_field( wp_unslash( $_POST['wcj_currency_to'] ) ) );
 			die();
 		}
 

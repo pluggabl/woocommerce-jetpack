@@ -304,14 +304,14 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 
 			// Get ordering from query string.
 			$orderby_value = ( WCJ_IS_WC_VERSION_BELOW_3 ) ?
-			( isset( $_GET['orderby'] ) ? woocommerce_clean(sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ) : apply_filters(
+			( isset( $_GET['orderby'] ) ? woocommerce_clean( sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ) : apply_filters(
 				'woocommerce_default_catalog_orderby',
 				get_option( 'woocommerce_default_catalog_orderby' )
 			) ) :
 			( isset( $_GET['orderby'] ) ? wc_clean( sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ) : apply_filters(
 				'woocommerce_default_catalog_orderby',
 				get_option( 'woocommerce_default_catalog_orderby' )
-			) 
+			)
 			);
 			// Get orderby arg from string.
 			$orderby_value = explode( '-', $orderby_value );

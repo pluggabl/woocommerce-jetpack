@@ -110,12 +110,12 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 			echo '<style>' . PHP_EOL;
 			$invoice_types = wcj_get_enabled_invoice_types();
 			foreach ( $invoice_types as $invoice_type ) {
-				echo '.view.' . esc_html( isset( $invoice_type['id'] ) ) . '{ color: ' . esc_html( isset( $invoice_type['color'] ) ) . ' !important; }' . PHP_EOL;
-				echo '.view.' . esc_html( isset( $invoice_type['id'] ) ) . '_create { color: ' . esc_html( isset( $invoice_type['color'] ) ) . ' !important; }' . PHP_EOL;
-				echo '.view.' . esc_html( isset( $invoice_type['id'] ) ) . '_delete { color: ' . esc_html( isset( $invoice_type['color'] ) ) . ' !important; }' . PHP_EOL;
-				echo '.view.' . esc_html( isset( $invoice_type['id'] ) ) . '::after { content: "\f498" !important; }' . PHP_EOL;
-				echo '.view.' . esc_html( isset( $invoice_type['id'] ) ) . '_create ::after { content: "\f119" !important; }' . PHP_EOL;
-				echo '.view.' . esc_html( isset( $invoice_type['id'] ) ) . '_delete ::after { content: "\f153" !important; }' . PHP_EOL;
+				echo '.view.' . esc_html( $invoice_type['id'] ) . '{ color: ' . esc_html( $invoice_type['color'] ) . ' !important; }' . PHP_EOL;
+				echo '.view.' . esc_html( $invoice_type['id'] ) . '_create { color: ' . esc_html( $invoice_type['color'] ) . ' !important; }' . PHP_EOL;
+				echo '.view.' . esc_html( $invoice_type['id'] ) . '_delete { color: ' . esc_html( $invoice_type['color'] ) . ' !important; }' . PHP_EOL;
+				echo '.view.' . esc_html( $invoice_type['id'] ) . '::after { content: "\f498" !important; }' . PHP_EOL;
+				echo '.view.' . esc_html( $invoice_type['id'] ) . '_create ::after { content: "\f119" !important; }' . PHP_EOL;
+				echo '.view.' . esc_html( $invoice_type['id'] ) . '_delete ::after { content: "\f153" !important; }' . PHP_EOL;
 			}
 			echo '</style>' . PHP_EOL;
 		}

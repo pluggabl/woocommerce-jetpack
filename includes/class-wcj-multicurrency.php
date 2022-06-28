@@ -560,9 +560,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			global $wpdb;
 			$current_currency_code = $this->get_current_currency_code();
 			$exchange_rate         = $this->get_currency_exchange_rate( $current_currency_code );
-			$nonce                 = wp_create_nonce();
-			$min_price             = ( isset( $_GET['min_price'] ) && wp_verify_nonce( $nonce ) ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
-			$max_price             = ( isset( $_GET['max_price'] ) && wp_verify_nonce( $nonce ) ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
+			$min_price             = ( isset( $_GET['min_price'] ) ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
+			$max_price             = ( isset( $_GET['max_price'] ) ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
 			$min_max_join          = "LEFT JOIN {$wpdb->postmeta} AS pm on pm.post_id = {$wpdb->posts}.ID AND (pm.meta_key IN ('_wcj_multicurrency_per_product_min_price_{$current_currency_code}','_wcj_multicurrency_per_product_max_price_{$current_currency_code}') and pm.meta_value!='')";
 			if ( false === strpos( $args['join'], $min_max_join ) ) {
 				$args['join'] .= " {$min_max_join} ";
@@ -974,16 +973,16 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 				$exchange_rate = $this->get_currency_exchange_rate( $currency_code );
 				foreach ( $products as $product_id => $original_price ) {
 					// Regular Price.
-					
+
 					if ( isset( $_POST[ "wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}" ] ) ) {
-						$regular_price = $_POST[ "wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}" ] ;
+						$regular_price = $_POST[ "wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}" ];
 					} else {
 						$regular_price = get_post_meta( $product_id, '_wcj_multicurrency_per_product_regular_price_' . $currency_code, true );
 					}
 
 					// Sale Price.
 					if ( isset( $_POST[ "wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}" ] ) ) {
-						$sale_price =  $_POST[ "wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}" ] ;
+						$sale_price = $_POST[ "wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}" ];
 					} else {
 						$sale_price = get_post_meta( $product_id, '_wcj_multicurrency_per_product_sale_price_' . $currency_code, true );
 					}
@@ -1033,7 +1032,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 				$currency = $this->get_default_currency();
 			}
 			if ( isset( $_REQUEST['wcj-currency'] ) ) {
-				$currency = sanitize_text_field( wp_unslash($_REQUEST['wcj-currency'] ) );
+				$currency = sanitize_text_field( wp_unslash( $_REQUEST['wcj-currency'] ) );
 			}
 			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_default_currency_force', 'no' ) ) {
 				$currency = $this->get_default_currency();

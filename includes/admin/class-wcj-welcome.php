@@ -72,9 +72,8 @@ if ( ! class_exists( 'WCJ_Welcome' ) ) :
 		 * @version 5.4.1
 		 */
 		public function wcj_redirect_to_getting_started() {
-					$nonce = wp_create_nonce();
 
-			if ( ! get_transient( '_wcj_activation_redirect' ) || isset( $_GET['wcj-redirect'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! get_transient( '_wcj_activation_redirect' ) || isset( $_GET['wcj-redirect'] ) ) {
 				return;
 			}
 

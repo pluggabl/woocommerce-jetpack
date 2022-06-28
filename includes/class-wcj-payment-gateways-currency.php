@@ -73,8 +73,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		 * @param string | array $post_data defines the post_data.
 		 */
 		public function fix_chosen_payment_method( $post_data ) {
-			$nonce                      = wp_create_nonce();
-			$payment_gateway            = ( ( empty( $_POST['payment_method'] ) && wp_verify_nonce( $nonce ) ) ? '' : isset( $_POST['payment_method'] ) );
+			$payment_gateway            = ( empty( $_POST['payment_method'] ) ? '' : $_POST['payment_method'] );
 			$available_payment_gateways = array_keys( WC()->payment_gateways->get_available_payment_gateways() );
 			if ( ! empty( $available_payment_gateways ) ) {
 				if ( ! in_array( $payment_gateway, $available_payment_gateways ) ) {
@@ -157,7 +156,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 					$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 					$gateway_currency_exchange_rate = str_replace( ',', '.', $gateway_currency_exchange_rate );
 					if ( is_numeric( $price ) ) {
-						$price = $price * (double)$gateway_currency_exchange_rate;
+						$price = $price * (float) $gateway_currency_exchange_rate;
 					}
 				}
 			}

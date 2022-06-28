@@ -53,7 +53,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 						case 'by_ip':
 							return wcj_get_country_by_ip();
 						case 'shipping':
-							return ( ( ! empty( $_REQUEST['s_country'] ) && wp_verify_nonce( $nonce ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_country'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) );
+							return ( ( ! empty( $_REQUEST['s_country'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_country'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) );
 						default: // 'billing'
 							return ( ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country() : '' ) );
 					}

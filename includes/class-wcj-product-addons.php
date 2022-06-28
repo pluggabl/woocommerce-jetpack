@@ -294,8 +294,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				) {
 					continue;
 				}
-				$nonce = wp_create_nonce();
-				if ( 'yes' === $addon['is_required'] && wp_verify_nonce( $nonce ) ) {
+				if ( 'yes' === $addon['is_required'] ) {
 					if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) && empty( $addon['default'] ) ) {
 						wc_add_notice( __( 'Some of the required addons are not selected!', 'woocommerce-jetpack' ), 'error' );
 						return false;
@@ -369,12 +368,12 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 			if ( ! isset( $_POST['product_id'] ) || 0 === $_POST['product_id'] ) {
 				die();
 			}
-			$the_product       = wc_get_product( isset( $_POST['product_id'] ) );
-			$parent_product_id = ( $the_product->is_type( 'variation' ) ) ? wp_get_post_parent_id( isset( $_POST['product_id'] ) ) : isset( $_POST['product_id'] );
+			$the_product       = wc_get_product( $_POST['product_id'] );
+			$parent_product_id = ( $the_product->is_type( 'variation' ) ) ? wp_get_post_parent_id( $_POST['product_id'] ) : $_POST['product_id'];
 			$addons            = $this->get_product_addons( $parent_product_id );
 			$the_addons_price  = 0;
 			foreach ( $addons as $addon ) {
-				$price_value = $this->replace_price_template_vars( $addon['price_value'], isset( $_POST['product_id'] ) );
+				$price_value = $this->replace_price_template_vars( $addon['price_value'], $_POST['product_id'] );
 				if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 					if ( ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) || ( 'text' === $addon['type'] && '' !== $_POST[ $addon['checkbox_key'] ] ) ) {
 						$the_addons_price += (float) $price_value;
@@ -392,7 +391,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					}
 				}
 			}
-			if ( 0 !== $the_addons_price ) {
+			if ( 0 != $the_addons_price ) {
 				$the_price         = $the_product->get_price();
 				$the_display_price = wcj_get_product_display_price( $the_product, ( $the_price + $this->maybe_convert_currency( $the_addons_price, $the_product ) ) );
 				echo wp_kses_post( wc_price( $the_display_price ) );
@@ -719,12 +718,11 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					continue;
 				}
 				$price_value = $this->replace_price_template_vars( $addon['price_value'], $variation_id ? $variation_id : $product_id );
-				$nonce       = wp_create_nonce();
 				if (
 				isset( $_POST[ $addon['checkbox_key'] ] ) ||
-				! empty( $addon['default'] && wp_verify_nonce( $nonce ) )
+				! empty( $addon['default'] )
 				) {
-					$checkbox_key = isset( $_POST[ $addon['checkbox_key'] ] ) ? isset( $_POST[ $addon['checkbox_key'] ] ) : ( ! empty( $addon['default'] ) ? $addon['default'] : null );
+					$checkbox_key = isset( $_POST[ $addon['checkbox_key'] ] ) ? $_POST[ $addon['checkbox_key'] ] : ( ! empty( $addon['default'] ) ? $addon['default'] : null );
 					if ( ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) || ( 'text' === $addon['type'] && '' !== $checkbox_key ) ) {
 						$cart_item_data[ $addon['price_key'] ] = $price_value;
 						$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
@@ -775,8 +773,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				$is_required = ( 'yes' === $addon['is_required'] ) ? ' required' : '';
 				if ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) {
 					$is_checked = '';
-					$nonce      = wp_create_nonce();
-					if ( isset( $_POST[ $addon['checkbox_key'] ] ) && wp_verify_nonce( $nonce ) ) {
+					if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 						$is_checked = ' checked';
 					} elseif ( 'checked' === $addon['default'] ) {
 						$is_checked = ' checked';
@@ -798,7 +795,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 						)
 					);
 				} elseif ( 'text' === $addon['type'] ) {
-					$default_value = ( isset( $_POST[ $addon['checkbox_key'] ] ) ? isset( $_POST[ $addon['checkbox_key'] ] ) : $addon['default'] );
+					$default_value = ( isset( $_POST[ $addon['checkbox_key'] ] ) ? $_POST[ $addon['checkbox_key'] ] : $addon['default'] );
 					$maybe_tooltip = ( '' !== $addon['tooltip'] ) ?
 					' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png" title="' . $addon['tooltip'] . '">' :
 					'';

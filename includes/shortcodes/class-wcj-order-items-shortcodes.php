@@ -36,7 +36,6 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
-			$nonce         = wp_create_nonce();
 			$modified_atts = array_merge(
 				array(
 					'order_id'                            => ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(),

@@ -381,7 +381,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			sprintf(
 				/* translators: %1$s: translators Added */
 				__( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ),
-				$this->short_desc ),
+				$this->short_desc,
 				'https://booster.io/plus/'
 			) .
 			'</div></p></div>';
@@ -620,37 +620,37 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @param Array $__post Get post.
 		 */
 		function save_meta_box( $post_id, $__post ) {
-		// Check that we are saving with current metabox displayed.
-		if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
-			return;
-		}
-		// Setup post (just in case...)
-		global $post;
-		$post = get_post( $post_id );
-		setup_postdata( $post );
-		// Save options
-		foreach ( $this->get_meta_box_options() as $option ) {
-			if ( 'title' === $option['type'] ) {
-				continue;
+			// Check that we are saving with current metabox displayed.
+			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
+				return;
 			}
-			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
-			if ( $is_enabled ) {
-				$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : ( isset( $option['default'] ) ? $option['default'] : '' );
-				$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id;
-				$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']      : '_' . $option['name'];
-				if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
-					$option_value = strtotime( $option_value );
-					if ( empty( $option_value ) ) {
-						continue;
-					}
+			// Setup post (just in case...)
+			global $post;
+			$post = get_post( $post_id );
+			setup_postdata( $post );
+			// Save options
+			foreach ( $this->get_meta_box_options() as $option ) {
+				if ( 'title' === $option['type'] ) {
+					continue;
 				}
-				delete_post_meta( $the_post_id, $the_meta_name ); // solves lowercase/uppercase issue
-				update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option['name'], $this->id ) );
+				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
+				if ( $is_enabled ) {
+					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : ( isset( $option['default'] ) ? $option['default'] : '' );
+					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $post_id;
+					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
+					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
+						$option_value = strtotime( $option_value );
+						if ( empty( $option_value ) ) {
+							continue;
+						}
+					}
+					delete_post_meta( $the_post_id, $the_meta_name ); // solves lowercase/uppercase issue
+					update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option['name'], $this->id ) );
+				}
 			}
+			// Reset post
+			wp_reset_postdata();
 		}
-		// Reset post
-		wp_reset_postdata();
-	}
 
 		/**
 		 * Add_meta_box.

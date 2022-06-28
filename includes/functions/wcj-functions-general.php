@@ -1037,101 +1037,101 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	 * @param string $context to get default context.
 	 */
 	function wcj_add_allowed_html( $allowed_html, $context ) {
-		$allowed_extra_html = array(
-			'input' => array(
-				'type' => true,
-				'name' => true,
-				'value' => true,
-				'id' => true,
-				'checked' => true,
-				'class' => true,
-				'style' => true,
+		$allowed_extra_html  = array(
+			'input'    => array(
+				'type'        => true,
+				'name'        => true,
+				'value'       => true,
+				'id'          => true,
+				'checked'     => true,
+				'class'       => true,
+				'style'       => true,
 				'placeholder' => true,
-				'dateformat' => true,
-				'mindate' => true,
-				'maxdate' => true,
-				'firstday' => true,
-				'display' => true,
-				'required' => true,
-				'min' => true,
-				'max' => true,
-				'disabled' => true,
-				'onchange' => true,
+				'dateformat'  => true,
+				'mindate'     => true,
+				'maxdate'     => true,
+				'firstday'    => true,
+				'display'     => true,
+				'required'    => true,
+				'min'         => true,
+				'max'         => true,
+				'disabled'    => true,
+				'onchange'    => true,
 			),
 			'textarea' => array(
-				'name' => true,
-				'value' => true,
-				'id' => true,
-				'class' => true,
-				'style' => true,
+				'name'        => true,
+				'value'       => true,
+				'id'          => true,
+				'class'       => true,
+				'style'       => true,
 				'placeholder' => true,
-				'required' => true,
-				'disabled' => true,
-				'onchange' => true,
+				'required'    => true,
+				'disabled'    => true,
+				'onchange'    => true,
 			),
-			'select' => array(
+			'select'   => array(
 				'multiple' => true,
-				'name' => true,
-				'class' => true,
-				'id' => true,
-				'style' => true,
-				'size' => true,
+				'name'     => true,
+				'class'    => true,
+				'id'       => true,
+				'style'    => true,
+				'size'     => true,
 				'disabled' => true,
 				'onchange' => true,
 			),
-			'option' => array(
-				'value' => true,
-				'style' => true,
+			'option'   => array(
+				'value'    => true,
+				'style'    => true,
 				'selected' => true,
-				'class' => true,
+				'class'    => true,
 				'disabled' => true,
 			),
-			'span' => array(
-				'id' => true,
-				'style' => true,
-				'class' => true,
+			'span'     => array(
+				'id'       => true,
+				'style'    => true,
+				'class'    => true,
 				'data-tip' => true,
 				'disabled' => true,
 			),
-			'td' => array(
+			'td'       => array(
 				'style' => true,
 				'class' => true,
 			),
-			'tr' => array(
-				'id' => true,
+			'tr'       => array(
+				'id'    => true,
 				'style' => true,
 				'class' => true,
 			),
-			'th' => array(
+			'th'       => array(
 				'scope' => true,
 				'style' => true,
 				'class' => true,
 			),
-			'label' => array(
+			'label'    => array(
 				'style' => true,
 				'class' => true,
 			),
-			'p' => array(
+			'p'        => array(
 				'class' => true,
 				'style' => true,
 			),
-			'button' => array(
-				'style' => true,
-				'class' => true,
+			'button'   => array(
+				'style'    => true,
+				'class'    => true,
 				'disabled' => true,
 			),
-			'style' => array(
-				'type' => true
+			'style'    => array(
+				'type' => true,
 			),
-			'a' => array(
-				'onclick' => true,
-				'onblur' => true,
-				'onfocus' => true,
+			'a'        => array(
+				'onclick'  => true,
+				'onblur'   => true,
+				'onfocus'  => true,
 				'onchange' => true,
 			),
-			'button' => array(
+			'button'   => array(
 				'wcj_data' => true,
-			)
+			),
 		);
 		$allowed_merged_html = array_merge_recursive( $allowed_html, $allowed_extra_html );
 		return $allowed_merged_html;

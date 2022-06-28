@@ -57,7 +57,7 @@ if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
 			case 'empty':
 				return '';
 			case 'document_root':
-				return isset( $_SERVER['DOCUMENT_ROOT'] );
+				return $_SERVER['DOCUMENT_ROOT'];
 			case 'abspath':
 				return ABSPATH;
 			default: // tcpdf_default.

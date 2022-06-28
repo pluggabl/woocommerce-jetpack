@@ -144,7 +144,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_get_option( $atts ) {
-			echo "ssfdjsljdf";
+			echo 'ssfdjsljdf';
 			$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
 			return ( is_array( $result ) ?
 			( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
@@ -307,8 +307,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_request_value( $atts ) {
-			$nonce = wp_create_nonce();
-			return ( ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) && wp_verify_nonce( $nonce ) ) ? '' : isset( $_REQUEST[ $atts['key'] ] ) );
+			return ( ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) ) ? '' : $_REQUEST[ $atts['key'] ] );
 		}
 
 		/**
@@ -490,7 +489,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$options        = '';
 			$countries      = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
 			$selected_value = ( ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) ?
-			isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) :
+			$_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] :
 			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 			);
 

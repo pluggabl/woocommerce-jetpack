@@ -170,7 +170,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			foreach ( $custom_statuses as $slug => $label ) {
 				delete_option( 'wcj_orders_custom_status_icon_data_' . $slug );
 			}
-			wp_safe_redirect(  remove_query_arg( 'delete_all' )  );
+			wp_safe_redirect( remove_query_arg( 'delete_all' ) );
 			exit;
 		}
 
@@ -203,9 +203,9 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 					$icon_data       = $this->module->get_status_icon_data( substr( $status, 3 ) );
 					$color_html      = '<input disabled type="color" value="' . $icon_data['color'] . '">';
 					$text_color_html = '<input disabled type="color" value="' . $icon_data['text_color'] . '">';
-				$delete_button   = '<a class="button-primary" href="' . add_query_arg( 'delete', $status, remove_query_arg( 'edit' ) ) .
+					$delete_button   = '<a class="button-primary" href="' . add_query_arg( 'delete', $status, remove_query_arg( 'edit' ) ) .
 					'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
-				$edit_button     = '<a class="button-primary"' . ( '' != apply_filters( 'booster_message', '', 'desc' ) ?
+					$edit_button     = '<a class="button-primary"' . ( '' != apply_filters( 'booster_message', '', 'desc' ) ?
 					' disabled title="' . __( 'Get Booster Plus to enable.', 'woocommerce-jetpack' ) . '"' :
 					' href="' . add_query_arg( 'edit', $status, remove_query_arg( 'delete' ) ) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
 					$row             = array_merge(
@@ -252,9 +252,9 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 				$edit_label            = isset( $custom_order_statuses[ $edit_slug ] ) ? $custom_order_statuses[ $edit_slug ] : '';
 				$edit_icon_data        = $this->module->get_status_icon_data( substr( $edit_slug, 3 ) );
 			}
-			$slug_html            = '<input type="text" name="new_status" style="width:100%;"' . ( $is_editing ? ' value="' . substr( $edit_slug, 3 ) . '" readonly' : '' ) . '>';
-			$label_html           = '<input type="text" name="new_status_label" style="width:100%;"' . ( $is_editing ? ' value="' . $edit_label . '"' : '' ) . '>';
-			$icon_code_input_html = '<input type="text" name="new_status_icon_content" value="' . ( $is_editing ? $edit_icon_data['content'] : 'e011' ) . '">';
+			$slug_html             = '<input type="text" name="new_status" style="width:100%;"' . ( $is_editing ? ' value="' . substr( $edit_slug, 3 ) . '" readonly' : '' ) . '>';
+			$label_html            = '<input type="text" name="new_status_label" style="width:100%;"' . ( $is_editing ? ' value="' . $edit_label . '"' : '' ) . '>';
+			$icon_code_input_html  = '<input type="text" name="new_status_icon_content" value="' . ( $is_editing ? $edit_icon_data['content'] : 'e011' ) . '">';
 			$icon_color_input_html = '<input type="color" name="new_status_icon_color" value="' . ( $is_editing ? $edit_icon_data['color'] : '#999999' ) . '">';
 			$text_color_input_html = '<input type="color" name="new_status_text_color" value="' . ( $is_editing ? $edit_icon_data['text_color'] : '#000000' ) . '">';
 			$action_button         = '<input class="button-primary" type="submit" name="' . ( $is_editing ? 'edit_custom_status' : 'add_custom_status' ) . '"' .
@@ -304,13 +304,13 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		 * @todo    (maybe) use `init` hook for processing actions
 		 */
 		public function process_actions() {
-			
-			if ( isset( $_POST['add_custom_status'] )) {
-				return $this->add_custom_status(  sanitize_text_field( wp_unslash(  $_POST['new_status'] ) ),  sanitize_text_field( wp_unslash( $_POST['new_status_label'] ) ),  sanitize_text_field( wp_unslash( $_POST['new_status_icon_content'] ) ),  sanitize_text_field( wp_unslash( $_POST['new_status_icon_color'] ) ),  sanitize_text_field( wp_unslash( $_POST['new_status_text_color'] ) ) );
+
+			if ( isset( $_POST['add_custom_status'] ) ) {
+				return $this->add_custom_status( sanitize_text_field( wp_unslash( $_POST['new_status'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_label'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_icon_content'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_icon_color'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_text_color'] ) ) );
 			} elseif ( isset( $_POST['edit_custom_status'] ) ) {
-				return $this->edit_custom_status(  sanitize_text_field( wp_unslash(  $_POST['new_status'] ) ),  sanitize_text_field( wp_unslash( $_POST['new_status_label'] ) ),  sanitize_text_field( wp_unslash( $_POST['new_status_icon_content'] ) ),  sanitize_text_field( wp_unslash( $_POST['new_status_icon_color'] ) ),  sanitize_text_field( wp_unslash(  $_POST['new_status_text_color'] ) ) );
+				return $this->edit_custom_status( sanitize_text_field( wp_unslash( $_POST['new_status'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_label'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_icon_content'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_icon_color'] ) ), sanitize_text_field( wp_unslash( $_POST['new_status_text_color'] ) ) );
 			} elseif ( isset( $_GET['delete'] ) && '' !== $_GET['delete'] ) {
-				return $this->delete_custom_status(  sanitize_text_field( wp_unslash( $_GET['delete'] ) ) );
+				return $this->delete_custom_status( sanitize_text_field( wp_unslash( $_GET['delete'] ) ) );
 			} elseif ( isset( $_GET['delete_all'] ) && '' !== $_GET['delete_all'] ) {
 				return $this->delete_custom_status_all();
 			}
@@ -344,7 +344,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$html .= $this->get_delete_all_custom_statuses_button();
 			$html .= '</div>';
 			$html .= '</div>';
-			echo  $html ;
+			echo $html;
 		}
 	}
 

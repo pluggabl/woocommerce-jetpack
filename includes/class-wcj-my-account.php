@@ -468,7 +468,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					wp_update_user(
 						array(
 							'ID'   => $customer_id,
-							'role' => sanitize_text_field( wp_unslash($_POST['wcj_user_role'] ) ),
+							'role' => sanitize_text_field( wp_unslash( $_POST['wcj_user_role'] ) ),
 						)
 					);
 				}
@@ -561,11 +561,11 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				isset( $_GET['order_id'] ) &&
 				isset( $_GET['_wpnonce'] )
 			) {
-				if ( wp_verify_nonce( isset( $_GET['_wpnonce'] ), 'wcj-woocommerce-mark-order-status' ) ) {
-					$_order = wc_get_order( isset( $_GET['order_id'] ) );
+				if ( wp_verify_nonce( $_GET['_wpnonce'], 'wcj-woocommerce-mark-order-status' ) ) {
+					$_order = wc_get_order( $_GET['order_id'] );
 					if ( $_order->get_customer_id() === get_current_user_id() ) {
-						$_order->update_status( isset( $_GET['status'] ) );
-						wp_safe_redirect( esc_url( remove_query_arg( array( 'wcj_action', 'status', 'order_id', '_wpnonce' ) ) ) );
+						$_order->update_status( $_GET['status'] );
+						wp_safe_redirect( remove_query_arg( array( 'wcj_action', 'status', 'order_id', '_wpnonce' ) ) );
 						exit;
 					}
 				}

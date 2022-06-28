@@ -1368,7 +1368,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		public function wcj_order_total_tax( $atts ) {
 			$the_items          = $this->the_order->get_items();
 			$exclude_item_total = 0;
-			$exclude_item_tax = 0;
+			$exclude_item_tax   = 0;
 			foreach ( $the_items as $item_id => $item ) {
 				$the_product = $item->get_product( $item );
 

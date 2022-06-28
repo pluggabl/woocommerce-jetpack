@@ -54,7 +54,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 
 				if ( wcj_is_frontend() ) {
 					$do_load_core = true;
-					if ( ! defined( 'DOING_AJAX' ) && '/wc-api/WC_Gateway_Paypal/' === isset( $_SERVER['REQUEST_URI'] ) ) {
+					if ( ! defined( 'DOING_AJAX' ) && '/wc-api/WC_Gateway_Paypal/' === $_SERVER['REQUEST_URI'] ) {
 						// "Wrong currency in emails" bug fix.
 						$do_load_core = false;
 					}

@@ -230,7 +230,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				}
 			}
 			// Post Status.
-			$post_status = ( isset( $_GET['post_status'] ) ) ?  $_GET['post_status'] : 'any';
+			$post_status = ( isset( $_GET['post_status'] ) ) ? $_GET['post_status'] : 'any';
 
 			// Try to search post by '_wcj_order_number' meta key.
 			$meta_query_args = array(

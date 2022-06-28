@@ -106,10 +106,10 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 				$referer  = get_post_meta( $order_id, '_wcj_track_users_http_referer', true );
 				switch ( $column ) {
 					case 'wcj_track_users_referer':
-						echo  $referer;
+						echo $referer;
 						break;
 					case 'wcj_track_users_referer_type':
-						echo  $this->get_referer_type( $referer );
+						echo $this->get_referer_type( $referer );
 						break;
 				}
 			}
@@ -242,8 +242,7 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 		 * @todo    (maybe) wp_nonce
 		 */
 		public function maybe_delete_track_users_stats() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_GET['wcj_delete_track_users_stats'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wcj_delete_track_users_stats'] ) ) {
 				global $wpdb;
 				$table_name = $wpdb->prefix . 'wcj_track_users';
 				$sql        = "DROP TABLE IF EXISTS $table_name";
@@ -389,7 +388,7 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 				'track_users_ajax_object',
 				array(
 					'ajax_url'     => admin_url( 'admin-ajax.php' ),
-					'http_referer' => ( isset( $_SERVER['HTTP_REFERER'] ) ? isset( $_SERVER['HTTP_REFERER'] ) : 'N/A' ),
+					'http_referer' => ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : 'N/A' ),
 					'user_ip'      => ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() ),
 				)
 			);
@@ -404,11 +403,10 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 		 * @todo    (maybe) optionally do not track selected user roles (e.g. admin)
 		 */
 		public function track_users() {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_POST['wcj_user_ip'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_POST['wcj_user_ip'] ) ) {
 				die();
 			}
-			$user_ip = isset( $_POST['wcj_user_ip'] );
+			$user_ip = $_POST['wcj_user_ip'];
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'wcj_track_users';
 			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) !== $table_name ) {
@@ -439,7 +437,7 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 				'state'   => '',
 			) );
 			// HTTP referrer.
-			$http_referer = ( isset( $_POST['wcj_http_referer'] ) ? isset( $_POST['wcj_http_referer'] ) : 'N/A' );
+			$http_referer = ( isset( $_POST['wcj_http_referer'] ) ? $_POST['wcj_http_referer'] : 'N/A' );
 			// Add row to DB table.
 			$wpdb->insert(
 				$table_name,

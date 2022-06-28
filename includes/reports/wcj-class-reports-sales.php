@@ -38,11 +38,10 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		 * @since   2.3.0
 		 */
 		public function get_report() {
-			$nonce = wp_create_nonce();
-			$html  = '';
+			$html = '';
 
-			$this->year          = isset( $_GET['year'] ) && wp_verify_nonce( $nonce ) ? $_GET['year'] : gmdate( 'Y' );
-			$this->product_title = isset( $_GET['product_title'] ) && wp_verify_nonce( $nonce ) ? $_GET['product_title'] : '';
+			$this->year          = isset( $_GET['year'] ) ? $_GET['year'] : gmdate( 'Y' );
+			$this->product_title = isset( $_GET['product_title'] ) ? $_GET['product_title'] : '';
 
 			$html .= $this->get_products_sales();
 
@@ -91,7 +90,6 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		public function get_products_sales() {
 
 			// Get report data.
-			$nonce         = wp_create_nonce();
 			$products_data = array();
 			$totals_data   = array();
 			$years         = array();

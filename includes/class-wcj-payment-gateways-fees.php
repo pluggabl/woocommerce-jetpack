@@ -147,10 +147,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @since   3.3.0
 		 */
 		public function get_current_gateway() {
-			$nonce   = wp_create_nonce();
 			$gateway = '';
 
-			if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] && wp_verify_nonce( $nonce ) ) {
+			if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) {
 				$gateway = 'paypal_express'; // PayPal for WooCommerce (By Angell EYE).
 			} elseif (
 				( isset( $_GET['wc-ajax'] ) && 'wc_ppec_generate_cart' === $_GET['wc-ajax'] ) ||

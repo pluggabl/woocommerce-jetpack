@@ -62,7 +62,7 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 		public function init_atts( $atts ) {
 			// Atts.
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id']: get_the_ID();
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID();
 				if ( 0 === $atts['order_id'] ) {
 					return false;
 				}

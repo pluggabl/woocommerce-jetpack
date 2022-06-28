@@ -118,11 +118,10 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @return mixed
 		 */
 		public function modify_default_price_filter_hook( $query ) {
-			$nonce = wp_create_nonce();
 			if (
 				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				! isset( $_GET['min_price'] ) ||
-				! isset( $_GET['max_price'] ) && wp_verify_nonce( $nonce )
+				! isset( $_GET['max_price'] )
 			) {
 				return $query;
 			}
@@ -166,8 +165,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		public function price_filter_post_clauses( $args, $wp_query ) {
 			global $wpdb;
-			$nonce = wp_create_nonce();
-			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) && wp_verify_nonce( $nonce ) ) ) {
+			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ) {
 				return $args;
 			}
 			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;

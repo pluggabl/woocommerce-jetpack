@@ -51,10 +51,9 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		 * @since   2.9.0
 		 */
 		public function get_report_args() {
-			$nonce               = wp_create_nonce();
 			$current_time        = (int) current_time( 'timestamp' );
-			$this->start_date    = isset( $_GET['start_date'] ) && wp_verify_nonce( $nonce ) ? $_GET['start_date'] : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
-			$this->end_date      = isset( $_GET['end_date'] ) && wp_verify_nonce( $nonce ) ? $_GET['end_date'] : gmdate( 'Y-m-d', $current_time );
+			$this->start_date    = isset( $_GET['start_date'] ) ? $_GET['start_date'] : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
+			$this->end_date      = isset( $_GET['end_date'] ) ? $_GET['end_date'] : gmdate( 'Y-m-d', $current_time );
 			$this->product_title = isset( $_GET['product_title'] ) ? $_GET['product_title'] : '';
 		}
 
@@ -176,7 +175,6 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		 */
 		public function output_report_header() {
 			// Settings link and dates menu.
-			$nonce         = wp_create_nonce();
 			$settings_link = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=reports' ) . '">' .
 			'<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
 			$menu          = '';

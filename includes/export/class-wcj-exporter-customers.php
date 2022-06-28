@@ -36,6 +36,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 		 *
 		 * @version 3.0.0
 		 * @since   2.4.8
+		 * @param array $fields_helper defines the fields.
 		 */
 		public function export_customers( $fields_helper ) {
 

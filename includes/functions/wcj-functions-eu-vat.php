@@ -46,7 +46,7 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 			default: // 'curl'
 				if ( function_exists( 'wp_remote_get' ) ) {
 					$response = wp_remote_get( $api_url );
-					$response = $response[ 'body' ];
+					$response = $response['body'];
 				} else {
 					return null;
 				}

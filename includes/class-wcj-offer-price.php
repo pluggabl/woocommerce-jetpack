@@ -127,7 +127,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 			.wcj-offer-price-modal-footer h1, .wcj-offer-price-modal-footer h2, .wcj-offer-price-modal-footer h3, .wcj-offer-price-modal-footer h4, .wcj-offer-price-modal-footer h5, .wcj-offer-price-modal-footer h6 {
 				color: {$styling_options['form_footer_text_color']};
 			}
-		</style>" ;
+		</style>";
 		}
 
 		/**
@@ -508,9 +508,8 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 * @todo    (maybe) sanitize $_POST
 		 */
 		public function offer_price() {
-			$nonce = wp_create_nonce();
-			if ( isset( $_POST['wcj-offer-price-submit'] ) && wp_verify_nonce( $nonce ) ) {
-				$product_id = isset( $_POST['wcj-offer-price-product-id'] );
+			if ( isset( $_POST['wcj-offer-price-submit'] ) ) {
+				$product_id = $_POST['wcj-offer-price-product-id'];
 				$_product   = wc_get_product( $product_id );
 				if ( ! is_a( $_product, 'WC_Product' ) ) {
 					return;
@@ -539,15 +538,15 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 					'offer_timestamp'   => current_time( 'timestamp' ),
 					'product_title'     => $_product->get_title(),
 					'product_edit_link' => get_edit_post_link( $_product->get_id() ),
-					'offered_price'     => isset( $_POST['wcj-offer-price-price'] ),
+					'offered_price'     => $_POST['wcj-offer-price-price'],
 					'currency_code'     => get_woocommerce_currency(),
-					'customer_message'  => isset( $_POST['wcj-offer-price-message'] ),
-					'customer_name'     => isset( $_POST['wcj-offer-price-customer-name'] ),
-					'customer_email'    => isset( $_POST['wcj-offer-price-customer-email'] ),
-					'customer_id'       => isset( $_POST['wcj-offer-price-customer-id'] ),
-					'user_ip'           => isset( $_SERVER['REMOTE_ADDR'] ),
-					'user_agent'        => isset( $_SERVER['HTTP_USER_AGENT'] ),
-					'copy_to_customer'  => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? isset( $_POST['wcj-offer-price-customer-copy'] ) : 'no' ),
+					'customer_message'  => $_POST['wcj-offer-price-message'],
+					'customer_name'     => $_POST['wcj-offer-price-customer-name'],
+					'customer_email'    => $_POST['wcj-offer-price-customer-email'],
+					'customer_id'       => $_POST['wcj-offer-price-customer-id'],
+					'user_ip'           => $_SERVER['REMOTE_ADDR'],
+					'user_agent'        => $_SERVER['HTTP_USER_AGENT'],
+					'copy_to_customer'  => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? $_POST['wcj-offer-price-customer-copy'] : 'no' ),
 					'sent_to'           => $email_address,
 				);
 				// Email content.

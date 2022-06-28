@@ -39,7 +39,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		 * @since   2.4.7
 		 */
 		public function get_report() {
-			$html  = '';
+			$html = '';
 			if ( isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
 				// Save rates.
 				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), $_POST['wcj_save_currency_rates_array'] ) );

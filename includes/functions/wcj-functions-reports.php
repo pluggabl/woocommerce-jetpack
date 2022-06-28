@@ -47,22 +47,22 @@ if ( ! function_exists( 'wcj_get_reports_standard_ranges' ) ) {
 		$current_time = (int) current_time( 'timestamp' );
 		return array(
 			'year'        => array(
-				'title'        => __( 'Year', 'woocommerce' ),
+				'title'      => __( 'Year', 'woocommerce' ),
 				'start_date' => gmdate( 'Y-01-01', $current_time ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_month'  => array(
-				'title'        => __( 'Last month', 'woocommerce' ),
+				'title'      => __( 'Last month', 'woocommerce' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( 'first day of previous month', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', strtotime( 'last day of previous month', $current_time ) ),
 			),
 			'this_month'  => array(
-				'title'        => __( 'This month', 'woocommerce' ),
+				'title'      => __( 'This month', 'woocommerce' ),
 				'start_date' => gmdate( 'Y-m-01', $current_time ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_7_days' => array(
-				'title'        => __( 'Last 7 days', 'woocommerce' ),
+				'title'      => __( 'Last 7 days', 'woocommerce' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
@@ -82,62 +82,62 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 		$current_time = (int) current_time( 'timestamp' );
 		return array(
 			'last_14_days'         => array(
-				'title'        => __( 'Last 14 days', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last 14 days', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-14 days', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_30_days'         => array(
-				'title'        => __( 'Last 30 days', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last 30 days', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-30 days', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_3_months'        => array(
-				'title'        => __( 'Last 3 months', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last 3 months', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-3 months', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_6_months'        => array(
-				'title'        => __( 'Last 6 months', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last 6 months', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-6 months', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_12_months'       => array(
-				'title'        => __( 'Last 12 months', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last 12 months', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-12 months', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_24_months'       => array(
-				'title'        => __( 'Last 24 months', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last 24 months', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-24 months', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'last_36_months'       => array(
-				'title'        => __( 'Last 36 months', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last 36 months', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-36 months', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),
 			'same_days_last_month' => array(
-				'title'        => __( 'Same days last month', 'woocommerce-jetpack' ),
+				'title'      => __( 'Same days last month', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-01', strtotime( '-1 month', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', strtotime( '-1 month', $current_time ) ),
 			),
 			'same_days_last_year'  => array(
-				'title'        => __( 'Same days last year', 'woocommerce-jetpack' ),
+				'title'      => __( 'Same days last year', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-01', strtotime( '-1 year', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', strtotime( '-1 year', $current_time ) ),
 			),
 			'last_year'            => array(
-				'title'        => __( 'Last year', 'woocommerce-jetpack' ),
+				'title'      => __( 'Last year', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-01-01', strtotime( '-1 year', $current_time ) ),
 				'end_date'   => gmdate( 'Y-12-31', strtotime( '-1 year', $current_time ) ),
 			),
 			'yesterday'            => array(
-				'title'        => __( 'Yesterday', 'woocommerce-jetpack' ),
+				'title'      => __( 'Yesterday', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', strtotime( '-1 day', $current_time ) ),
 				'end_date'   => gmdate( 'Y-m-d', strtotime( '-1 day', $current_time ) ),
 			),
 			'today'                => array(
-				'title'        => __( 'Today', 'woocommerce-jetpack' ),
+				'title'      => __( 'Today', 'woocommerce-jetpack' ),
 				'start_date' => gmdate( 'Y-m-d', $current_time ),
 				'end_date'   => gmdate( 'Y-m-d', $current_time ),
 			),

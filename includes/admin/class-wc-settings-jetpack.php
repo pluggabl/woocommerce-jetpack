@@ -64,10 +64,10 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 */
 		public function wcj_new_desing_dashboard() {
 
-				if ( isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
+			if ( isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css' );
 				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );
-				// wp_enqueue_script('wcj-admin-dasboard-js', wcj_plugin_url() . '/includes/js/wcj-new_desing.js');
+				// wp_enqueue_script('wcj-admin-dasboard-js', wcj_plugin_url() . '/includes/js/wcj-new_desing.js').
 			}
 		}
 
@@ -81,7 +81,8 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
 				return;
 			}
-			$class        = 'notice notice-info';
+			$class = 'notice notice-info';
+			/* translators: %s: search term */
 			$message      = sprintf( __( 'You\'re using Booster free version. To unlock more features please consider <a target="_blank" href="%s">Upgrade Booster to unlock this feature</a>.', 'woocommerce-jetpack' ), 'https://booster.io/buy-booster/' );
 			$booster_icon = '<span class="wcj-booster-logo"></span>';
 			?>
@@ -112,7 +113,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			  .wcj-review-icon { vertical-align: middle; margin: -6px 0 0 0; }
 			  </style>
 			<?php
-			// echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
+			// echo '<div class="' . $class . '"><p>' . $message . '</p></div>';.
 		}
 		/**
 		 * Create_pro_version_footer_review_notice.
@@ -164,7 +165,8 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				$link       = 'https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?filter=5#new-post';
 				$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
 				$stars_link = '<a href="' . $link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
-				$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %1$s on  <a href="%2$s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
+				/* translators: %s: search term */
+				$message = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %1$s on  <a href="%2$s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
 				?>
 			   <style>
 				  .wcj-review-icon { vertical-align: middle; margin: -6px 0 0 0; }
@@ -208,7 +210,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					( end( $array_keys ) == $id ? '' : '' ) . ' </li>'
 				);
 			}
-			echo '</ul>' . '<br class="clear" />';
+			echo '</ul> <br class="clear" />';
 		}
 
 		/**
@@ -321,6 +323,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 *
 		 * @version 5.5.6
 		 * @since   3.0.0
+		 * @param array $current_section defines the current section.
 		 */
 		public function is_dashboard_section( $current_section ) {
 			return in_array( $current_section, array_merge( array( '', 'all_module', 'by_category', 'active', 'manager' ), array_keys( $this->custom_dashboard_modules ) ), true );
@@ -342,13 +345,14 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			if ( $current_section !== 'by_category' ) {
 				$is_dashboard = $this->is_dashboard_section( $current_section );
 
-				// Deprecated message
+				// Deprecated message.
 				if ( $replacement_module = wcj_is_module_deprecated( $current_section ) ) {
 					echo '<div id="wcj_message" class="error">';
 					echo '<p>';
 					echo '<strong>';
 					echo wp_kses_post(
 						sprintf(
+							/* translators: %s: search term */
 							__( 'Please note that current <em>%1$s</em> module is deprecated and will be removed in future updates. Please use <em>%2$s</em> module instead.', 'woocommerce-jetpack' ),
 							w_c_j()->modules[ $current_section ]->short_desc,
 							'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $replacement_module['cat'] . '&section=' . $replacement_module['module'] ) . '">' .
@@ -373,7 +377,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				}
 
 				if ( 'yes' === wcj_get_option( 'wcj_debug_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_debuging_enabled', 'no' ) ) {
-					// Breadcrumbs
+					// Breadcrumbs.
 					$breadcrumbs_html  = '';
 					$breadcrumbs_html .= '<p>';
 					$breadcrumbs_html .= '<code>';
@@ -416,6 +420,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 * Output_dashboard.
 		 *
 		 * @version 5.5.6
+		 * @param array $current_section defines the current section.
 		 */
 		public function output_dashboard( $current_section ) {
 
@@ -460,7 +465,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					),
 					array(
 						'<button style="width:100px;" class="button-primary" type="submit" name="booster_import_settings">' . __( 'Import', 'woocommerce-jetpack' ) . '</button>' .
-						' ' . '<input type="file" name="booster_import_settings_file">',
+						' <input type="file" name="booster_import_settings_file">',
 						'<em>' . __( 'Import all Booster\'s options from a file.', 'woocommerce-jetpack' ) . '</em>',
 					),
 					array(
@@ -482,7 +487,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 						'<label for="' . $manager_settings_field['id'] . '">' .
 						'<input name="' . $manager_settings_field['id'] . '" id="' . $manager_settings_field['id'] . '" type="' . $manager_settings_field['type'] . '"' .
 						' class="" value="1" ' . checked( wcj_get_option( $manager_settings_field['id'], $manager_settings_field['default'] ), 'yes', false ) . '>' .
-						' ' . '<strong>' . $manager_settings_field['title'] . '</strong>' .
+						' <strong>' . $manager_settings_field['title'] . '</strong>' .
 						'</label>',
 						'<em>' . $manager_settings_field['desc'] . '</em>',
 					);
@@ -508,7 +513,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 						'" id="' . $_settings['id'] .
 						'" type="' . $_settings['type'] .
 						'" class="' . $_settings['class'] .
-						'" value="' . wcj_get_option( $_settings['id'], $_settings['default'] ) . '">' . ' ' . '<em>' . $_settings['desc'] . '</em>' . '</label>',
+						'" value="' . wcj_get_option( $_settings['id'], $_settings['default'] ) . '"> <em>' . $_settings['desc'] . '</em></label>',
 					);
 				}
 				echo wp_kses_post(
@@ -532,6 +537,9 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 
 		/**
 		 * Compare_for_usort.
+		 *
+		 * @param string $a this defines title.
+		 * @param string $b this defines title.
 		 */
 		private function compare_for_usort( $a, $b ) {
 			return strcmp( $a['title'], $b['title'] );
@@ -541,6 +549,8 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 * Output_dashboard_modules.
 		 *
 		 * @version 3.3.0
+		 * @param array  $settings this defines title.
+		 * @param string $cat_id this defines title.
 		 */
 		public function output_dashboard_modules( $settings, $cat_id = '' ) {
 			?>
@@ -589,12 +599,12 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 						}
 					}
 					$total_modules++;
-					$html .= '<tr id="' . $the_feature['id'] . '" ' . 'class="' . $this->active( wcj_get_option( $the_feature['id'] ) ) . '">';
+					$html .= '<tr id="' . $the_feature['id'] . '" class="' . $this->active( wcj_get_option( $the_feature['id'] ) ) . '">';
 					$html .= '<th scope="row" class="check-column">';
 					$html .= '<label class="screen-reader-text" for="' . $the_feature['id'] . '">' . $the_feature['desc'] . '</label>';
 					$html .= '<input type="checkbox" name="' . $the_feature['id'] . '" value="1" id="' . $the_feature['id'] . '" ' . checked( wcj_get_option( $the_feature['id'] ), 'yes', false ) . '>';
 					$html .= '</th>';
-					$html .= '<td class="plugin-title">' . '<strong>' . $the_feature['title'] . '</strong>';
+					$html .= '<td class="plugin-title"><strong>' . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
 					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
 					if ( isset( $the_feature['wcj_link'] ) && '' != $the_feature['wcj_link'] ) {
@@ -609,7 +619,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				}
 				echo wp_kses_post( $html );
 				if ( 0 == $total_modules && 'active_modules_only' === $cat_id ) {
-					echo wp_kses_post( '<tr><td colspan="3">' . '<em>' . __( 'No active modules found.', 'woocommerce-jetpack' ) . '</em>' . '</td></tr>' );
+					echo wp_kses_post( '<tr><td colspan="3"><em>' . __( 'No active modules found.', 'woocommerce-jetpack' ) . '</em></td></tr>' );
 				}
 				?>
 		</tbody>
@@ -641,7 +651,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 * @version 5.3.3
 		 * @since   5.3.3
 		 *
-		 * @param $settings
+		 * @param array $settings defines the settings.
 		 */
 		public function disable_autoload_options_from_section( $settings ) {
 			$fields         = wp_list_filter( $settings, array( 'autoload' => false ) );
@@ -748,7 +758,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 * Get settings array
 		 *
 		 * @version 3.0.0
-		 * @return  array
+		 * @return  array $current_section defines the current section.
 		 */
 		public function get_settings( $current_section = '' ) {
 			if ( ! $this->is_dashboard_section( $current_section ) ) {
@@ -782,7 +792,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				$settings[] = array(
 					'type'  => 'sectionend',
 					'id'    => 'wcj_' . $cat_id . '_options',
-					'title' => '', // for usort
+					'title' => '', // for usort.
 				);
 				return $settings;
 			}
@@ -1072,8 +1082,8 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			</span>
 			<strong><a href="https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?rate=5#new-post" target="_blank"><?php _e( 'WordPress.org', 'woocommerce-jetpack' ); ?></a></strong><?php _e( ' to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ); ?>
 			</p>
-	  	</div>
-	  	<div class="wcj-review-footer wcj-premium-features-footer">
+		  </div>
+		  <div class="wcj-review-footer wcj-premium-features-footer">
 			<h6><?php _e( 'Upgrade today to unlock these popular premium features:', 'woocommerce-jetpack' ); ?></h6>
 			<ul>
 				<li><strong><?php _e( '+ PDF Invoices and Packing slips –', 'woocommerce-jetpack' ); ?></strong><?php _e( 'Add ability to create Proforma Invoices, Credit Notes and Packaging slips', 'woocommerce-jetpack' ); ?></li>

@@ -90,7 +90,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 			} else {
 				$check_option = wcj_get_country_by_ip();
 			}
-			
+
 			if ( 'yes' === wcj_get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
 				$billing_country = isset( $_REQUEST['country'] ) && ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : '';
 				if ( ! empty( $billing_country ) ) {
@@ -120,8 +120,8 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		 */
 		public function save_country_in_session() {
 			wcj_session_maybe_start();
-			if ( isset( $_REQUEST['wcj_country_selector'] )  ) {
-				wcj_session_set( 'wcj_selected_country',sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) ) );
+			if ( isset( $_REQUEST['wcj_country_selector'] ) ) {
+				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) ) );
 			}
 			if ( isset( $_REQUEST['wcj-country'] ) ) {
 				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) );

@@ -254,7 +254,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		public function process_email_verification() {
 			if ( isset( $_GET['wcj_verified_email'] ) ) {
 				if ( function_exists( 'wc_add_notice' ) ) {
-					$data = json_decode( base64_decode( isset( $_GET['wcj_verified_email'] ) ), true );
+					$data = json_decode( base64_decode( $_GET['wcj_verified_email'] ), true );
 					if ( ! empty( $data['id'] ) && ! empty( $data['code'] ) && get_user_meta( $data['id'], 'wcj_activation_code', true ) === $data['code'] ) {
 						wc_add_notice(
 							do_shortcode(
@@ -304,7 +304,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 					)
 				);
 			} elseif ( isset( $_GET['wcj_user_id'] ) ) {
-				$this->reset_and_mail_activation_link( isset( $_GET['wcj_user_id'] ) );
+				$this->reset_and_mail_activation_link( $_GET['wcj_user_id'] );
 				wc_add_notice(
 					do_shortcode(
 						wcj_get_option(

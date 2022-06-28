@@ -39,8 +39,7 @@ if ( ! class_exists( 'WCJ_EU_Countries_VAT_Rates_Tool' ) ) :
 		 * @since   2.3.10
 		 */
 		public function add_eu_countries_vat_rates() {
-			$nonce = wp_create_nonce();
-			if ( ! isset( $_POST['add_eu_countries_vat_rates'] ) && wp_verify_nonce( $nonce ) ) {
+			if ( ! isset( $_POST['add_eu_countries_vat_rates'] ) ) {
 				return;
 			}
 			if ( ! wcj_is_user_role( 'administrator' ) && ! is_shop_manager() ) {
@@ -52,7 +51,7 @@ if ( ! class_exists( 'WCJ_EU_Countries_VAT_Rates_Tool' ) ) :
 					'tax_rate_country'  => $country,
 					'tax_rate'          => $rate,
 
-					'tax_rate_name'     => isset( $_POST['wcj_tax_name'] ) ? isset( $_POST['wcj_tax_name'] ) : __( 'VAT', 'woocommerce' ),
+					'tax_rate_name'     => isset( $_POST['wcj_tax_name'] ) ? $_POST['wcj_tax_name'] : __( 'VAT', 'woocommerce' ),
 					'tax_rate_priority' => 1,
 					'tax_rate_compound' => 0,
 					'tax_rate_shipping' => 1,
@@ -80,8 +79,7 @@ if ( ! class_exists( 'WCJ_EU_Countries_VAT_Rates_Tool' ) ) :
 			$the_tool_html .= $header_html;
 
 			$data           = array();
-			$nonce          = wp_create_nonce();
-			$the_name       = ( isset( $_POST['wcj_tax_name'] ) && wp_verify_nonce( $nonce ) ) ? isset( $_POST['wcj_tax_name'] ) : __( 'VAT', 'woocommerce' );
+			$the_name       = ( isset( $_POST['wcj_tax_name'] ) ) ? $_POST['wcj_tax_name'] : __( 'VAT', 'woocommerce' );
 			$data[]         = array(
 				__( 'Name', 'woocommerce-jetpack' ),
 				'<input class="input-text" type="text" name="wcj_tax_name" value="' . $the_name . '">',
@@ -137,7 +135,7 @@ if ( ! class_exists( 'WCJ_EU_Countries_VAT_Rates_Tool' ) ) :
 				)
 			);
 			$the_tool_html .= '</div>';
-			echo  $the_tool_html ;
+			echo $the_tool_html;
 		}
 	}
 
