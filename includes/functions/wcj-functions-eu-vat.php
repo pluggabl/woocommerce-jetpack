@@ -132,7 +132,7 @@ if ( ! function_exists( 'wcj_validate_vat' ) ) {
 	 * @param   int          $vat_number defines the vat_number.
 	 */
 	function wcj_validate_vat( $country_code, $vat_number ) {
-		$skip_countries = wcj_get_option( 'wcj_eu_vat_number_advanced_skip_countries', array() );
+		$skip_countries = wcj_get_option( 'wcj_eu_vat_number_advanced_skip_countries', 'no' );
 		if ( '' !== ( $skip_countries ) ) {
 			$skip_countries = array_map( 'trim', explode( ',', $skip_countries ) );
 			$skip_countries = array_map( 'strtoupper', $skip_countries );

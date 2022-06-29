@@ -198,12 +198,11 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @param array | string $query defines the query.
 		 */
 		public function search_by_custom_number( $query ) {
-			$search = trim( $query->query['s'] );
 			if (
 			! is_admin() ||
 			! property_exists( $query, 'query' ) ||
 			! isset( $query->query['s'] ) ||
-			empty( $search ) ||
+			empty( $search = trim( $query->query['s'] ) ) ||
 			'shop_order' !== $query->query['post_type']
 			) {
 				return;
