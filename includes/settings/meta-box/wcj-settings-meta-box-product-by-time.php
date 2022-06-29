@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Availability by Time
  *
- * @version 2.9.1
+ * @version 5.6.0
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/meta-boxs

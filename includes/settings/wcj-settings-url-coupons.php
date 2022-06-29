@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - URL Coupons
  *
- * @version 3.1.3
+ * @version 5.6.0
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 5.5.9
+ * @version 5.6.0
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.5.8
+		 * @version 5.6.0
 		 * @since   2.5.2
 		 * @todo    run `add_my_products_endpoint` only if module is enabled
 		 */
@@ -40,9 +40,13 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 			register_deactivation_hook( __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
 			add_filter( 'query_vars', array( $this, 'add_my_products_endpoint_query_var' ), 0 );
 			add_action( 'init', array( $this, 'add_my_products_endpoint' ) );
-			add_action( 'woocommerce_thankyou', array( $this, 'getProductOwnerEmail' ), 10, 1 );
-			add_filter( 'woocommerce_email_headers', array( $this, 'sendemail_to_productowner_order_place_successfully' ), 10, 3 );
-			add_filter( 'woocommerce_email_recipient_no_stock', array( $this, 'change_stock_email_recipient' ), 10, 2 );
+			$sendEmailtoUserProduct = get_option( 'wcj_user_product_email_send' );
+			if($sendEmailtoUserProduct == 'yes') {
+				add_action( 'woocommerce_thankyou', array( $this, 'getProductOwnerEmail'), 10, 1 );
+				add_filter( 'woocommerce_email_headers', array( $this,'sendemail_to_productowner_order_place_successfully'), 10, 3 );
+				add_filter( 'woocommerce_email_recipient_no_stock', array( $this,'change_stock_email_recipient'), 10, 2 );
+			}
+
 
 			if ( $this->is_enabled() ) {
 				if ( 'yes' === wcj_get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
@@ -81,19 +85,16 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Send Email To Product User at success page when email send setting enable
 		 *
-		 * @version 5.5.8
+		 * @version 5.6.0
 		 * @since 1.0.0
 		 * @param string $headers defines the headers.
 		 * @param string $email_id defines the email_id.
 		 * @param array  $order defines the order.
 		 */
 		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $order ) {
-			$useremail                 = $this->getProductOwnerEmail( $order->id );
-			$send_emailto_user_product = get_option( 'wcj_user_product_email_send' );
-			if ( 'yes' === $send_emailto_user_product ) {
-				if ( 'new_order' === $email_id ) {
-					$headers .= 'Cc: Name <' . $useremail . '>' . "\r\n";
-				}
+			$useremail = $this->getProductOwnerEmail( $order->id );
+			if ( 'new_order' === $email_id ) {
+				$headers .= 'Cc: Name <' . $useremail . '>' . "\r\n";
 			}
 			return $headers;
 		}
@@ -101,16 +102,13 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Send Email To Product User at success page when Product is Out Of Stock
 		 *
-		 * @version 5.5.8
+		 * @version 5.6.0
 		 * @since 1.0.0
 		 * @param string $recipient defines the recipient.
 		 * @param array  $product defines the product.
 		 */
 		public function change_stock_email_recipient( $recipient, $product ) {
-			$send_emailto_user_product = get_option( 'wcj_user_product_email_send' );
-			if ( 'yes' === $send_emailto_user_product ) {
-				$recipient = $this->get_out_of_stock_email_to_userproduct_recipient( $recipient, $product );
-			}
+			$recipient = $this->get_out_of_stock_email_to_userproduct_recipient( $recipient, $product );
 			return $recipient;
 		}
 

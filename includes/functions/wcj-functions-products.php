@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 5.5.8
+ * @version 5.6.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -505,7 +505,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	/**
 	 * Wcj_is_product_wholesale_enabled.
 	 *
-	 * @version 5.5.8
+	 * @version 5.6.0
 	 * @param int $product_id Get product id.
 	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {

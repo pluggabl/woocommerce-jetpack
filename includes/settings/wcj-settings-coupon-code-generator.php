@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Coupon Code Generator
  *
- * @version 3.2.3
+ * @version 5.6.0
  * @since   3.2.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

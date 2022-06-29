@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Max Products per User
  *
- * @version 3.5.0
+ * @version 5.6.0
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/meta-boxs

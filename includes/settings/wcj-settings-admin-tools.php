@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 4.9.0
+ * @version 5.6.0
  * @since   2.7.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

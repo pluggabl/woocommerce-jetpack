@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Price by Country
  *
- * @version 4.0.0
+ * @version 5.6.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/meta-boxs

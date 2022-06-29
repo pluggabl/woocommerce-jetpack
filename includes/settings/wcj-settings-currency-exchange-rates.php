@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 5.5.9
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)

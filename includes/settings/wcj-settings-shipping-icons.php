@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Icons
  *
- * @version 3.6.0
+ * @version 5.6.0
  * @since   3.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

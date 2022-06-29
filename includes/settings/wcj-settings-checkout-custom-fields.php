@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 5.3.3
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

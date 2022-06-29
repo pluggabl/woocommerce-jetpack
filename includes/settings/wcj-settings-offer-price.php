@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 5.1.0
+ * @version 5.6.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

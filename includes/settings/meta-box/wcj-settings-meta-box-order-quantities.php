@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Order Min/Max Quantities
  *
- * @version 4.2.0
+ * @version 5.6.0
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @todo    test "Set 0 to use global settings. Set -1 to disable"

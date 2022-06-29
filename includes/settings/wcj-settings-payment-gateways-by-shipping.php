@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Payment Gateways by Shipping
  *
- * @version 3.5.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) remove COD, Custom Booster Payment Gateways (and maybe other payment gateways) that already have `enable_for_methods` option

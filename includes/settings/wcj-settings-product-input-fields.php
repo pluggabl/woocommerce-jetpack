@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 5.4.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)

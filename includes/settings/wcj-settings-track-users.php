@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - User Tracking
  *
- * @version 3.6.0
+ * @version 5.6.0
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

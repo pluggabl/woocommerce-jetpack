@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Availability by Date
  *
- * @version 4.7.0
+ * @version 5.6.0
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @todo    (maybe) Direct Date: all products

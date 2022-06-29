@@ -2,7 +2,7 @@
 /**
  * Booster Elite for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 5.5.8
+ * @version 5.6.0
  * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

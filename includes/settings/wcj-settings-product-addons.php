@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 5.4.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)

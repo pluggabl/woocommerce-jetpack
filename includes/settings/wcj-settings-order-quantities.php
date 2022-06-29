@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 5.4.3
+ * @version 5.6.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) generate settings in loop ( min / max )

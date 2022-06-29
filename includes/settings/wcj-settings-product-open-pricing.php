@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 5.4.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"

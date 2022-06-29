@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Admin Tools
  *
- * @version 3.5.0
+ * @version 5.6.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) sort `$products` with available variations listed at the top

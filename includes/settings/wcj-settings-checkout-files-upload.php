@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 4.2.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

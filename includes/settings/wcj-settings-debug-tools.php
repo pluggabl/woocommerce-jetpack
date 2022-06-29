@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Debug Tools
  *
- * @version 5.5.9
+ * @version 5.6.0
  * @since   4.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

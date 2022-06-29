@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 4.7.1
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/meta-boxs
@@ -36,7 +36,7 @@ if ( ! function_exists( 'wcj_get_product_addons_enable_by_variation_option' ) ) 
 	/**
 	 * Wcj_get_product_addons_enable_by_variation_option.
 	 *
-	 * @version 4.6.1
+	 * @version 5.6.0
 	 * @since   4.6.1
 	 * @param string $index Get product addons.
 	 */

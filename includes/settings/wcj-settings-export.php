@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Export
  *
- * @version 5.1.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add "Additional Export Fields" for "Customers from Orders" and (maybe) "Customers"

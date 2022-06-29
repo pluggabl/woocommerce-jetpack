@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Template Editor
  *
- * @version 4.7.1
+ * @version 5.6.0
  * @since   3.9.0
  * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')

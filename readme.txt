@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 5.5.9
+Stable tag: 5.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -115,9 +115,11 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 **Prices & Currencies**
 
+* *Best Price* - Customers suggest their best price for products (Available in paid Booster bundles).
 * *Bulk Price Converter* - Multiply all products prices by set value.
 * *Currencies* - Add all world currencies and cryptocurrencies to your store; change currency symbol (Available in paid Booster bundles); add custom currencies (1 allowed in free version).
 * *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce (1 allowed in free version).
+  * Various exchange servers available like <a href="http://www.bankofengland.co.uk">Bank of England (BOE)</a>, <a href="http://www.ecb.int">European Central Bank (ECB)</a>, <a href="http://www.tcmb.gov.tr">TCMB</a>, <a href="https://free.currencyconverterapi.com">The Free Currency Converter API</a>, <a href="https://api.coinbase.com">Coinbase</a>, <a href="https://api.coinmarketcap.com">CoinMarketCap</a>
 * *Currency for External Products* - Set different currency for external products.
 * *Currency per Product* - Display prices for products in different currencies (1 currency allowed in free version).
 * *Global Discount* - Add global discount to all products (1 discount group allowed in free version).
@@ -188,6 +190,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * *Coupon Code Generator* - Coupon code generator (Multiple generation algorithms Available in paid Booster bundles).
 * *Coupon by User Role* - Coupons by user roles. Invalidate per Coupon (Available in paid Booster bundles). Custom coupon invalid messages (Available in paid Booster bundles)
 * *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Available in paid Booster bundles). Check for IP Location Country  (Available in paid Booster bundles)
+  * Instant VAT number validation using the <a href="http://ec.europa.eu">European Commission</a>.
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Available in paid Booster bundles). Different button positions on the cart page (Available in paid Booster bundles).
 * *Mini Cart Custom Info* - Add custom info to the mini cart widget (1 block allowed in free version).
 * *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Available in paid Booster bundles).
@@ -271,6 +274,15 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.0 29/06/2022 =
+
+* FIXED - PRICES & CURRENCIES - Wholesale Price - Fixed debug.log warning.
+* FIXED - PAYMENT GATEWAYS - Gateways Fees and Discounts - Updated the payment fee calculation.
+* FIXED - PRODUCTS - User Products - Fixed conflict with product owner notification.
+* FIXED - Added Security vulnerability fixes.
+* WooCommerce 6.6.1 tested
+* WordPress 6.0 tested
 
 = 5.5.9 31/05/2022 =
 

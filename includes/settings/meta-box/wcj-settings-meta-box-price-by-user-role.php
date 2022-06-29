@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Price based on User Role
  *
- * @version 3.6.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add option to disable "Copy to ..." buttons

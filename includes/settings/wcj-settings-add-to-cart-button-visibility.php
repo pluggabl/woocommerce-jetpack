@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart Button Visibility
  *
- * @version 3.9.0
+ * @version 5.6.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    "Per Tag"

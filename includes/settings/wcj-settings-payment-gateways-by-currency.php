@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by Currency
  *
- * @version 3.9.0
+ * @version 5.6.0
  * @since   3.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

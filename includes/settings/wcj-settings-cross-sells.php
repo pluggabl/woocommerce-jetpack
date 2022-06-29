@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cross-sells
  *
- * @version 3.9.0
+ * @version 5.6.0
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

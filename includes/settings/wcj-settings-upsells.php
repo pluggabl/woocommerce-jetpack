@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Upsells
  *
- * @version 3.6.0
+ * @version 5.6.0
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

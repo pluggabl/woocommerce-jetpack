@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product MSRP
  *
- * @version 4.9.0
+ * @version 5.6.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) `wcj_product_msrp_variable_as_simple_enabled`

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product MSRP
  *
- * @version 5.1.0
+ * @version 5.6.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
