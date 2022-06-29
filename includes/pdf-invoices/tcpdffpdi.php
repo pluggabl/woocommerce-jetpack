@@ -7,8 +7,11 @@
  * @version 3.5.2
  * @since   3.5.2
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 return new \setasign\Fpdi\TcpdfFpdi();

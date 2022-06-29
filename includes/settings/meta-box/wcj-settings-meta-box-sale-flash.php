@@ -2,12 +2,15 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Sale Flash
  *
- * @version 3.2.4
+ * @version 5.6.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/meta-boxs
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 return array(
 	array(

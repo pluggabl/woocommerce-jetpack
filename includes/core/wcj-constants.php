@@ -5,9 +5,12 @@
  * @version 3.8.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/core
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! defined( 'WCJ_WC_VERSION' ) ) {
 	/**

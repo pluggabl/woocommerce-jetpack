@@ -2,12 +2,15 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Coupon by User Role
  *
- * @version 3.6.0
+ * @version 5.6.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/meta-boxs
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 return array(
 	array(

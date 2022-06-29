@@ -2,18 +2,21 @@
 /**
  * Booster for WooCommerce Settings - More Button Labels
  *
- * @version 3.3.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/settings
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 return array(
 	array(
-		'title'    => __( 'Place order (Order now) Button', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_checkout_place_order_button_options',
+		'title' => __( 'Place order (Order now) Button', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_checkout_place_order_button_options',
 	),
 	array(
 		'title'    => __( 'Text', 'woocommerce-jetpack' ),
@@ -32,7 +35,7 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_checkout_place_order_button_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_checkout_place_order_button_options',
 	),
 );

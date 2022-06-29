@@ -5,9 +5,12 @@
  * @version 5.4.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/core
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 $wcj_module_files = array(
 	'class-wcj-debug-tools.php',
@@ -134,13 +137,13 @@ $wcj_module_files = array(
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-emails.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-advanced.php',
-	'class-wcj-pdf-invoicing.php'
+	'class-wcj-pdf-invoicing.php',
 );
 
-$this->modules = array();
+$this->modules   = array();
 $wcj_modules_dir = WCJ_PLUGIN_PATH . '/includes/';
 foreach ( $wcj_module_files as $wcj_module_file ) {
-	$module = include_once( $wcj_modules_dir . $wcj_module_file );
+	$module                       = include_once $wcj_modules_dir . $wcj_module_file;
 	$this->modules[ $module->id ] = $module;
 }
 $this->modules = apply_filters( 'wcj_modules_loaded', $this->modules );

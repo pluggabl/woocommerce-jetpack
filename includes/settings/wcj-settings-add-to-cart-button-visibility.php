@@ -2,35 +2,38 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart Button Visibility
  *
- * @version 3.9.0
+ * @version 5.6.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    "Per Tag"
+ * @package Booster_For_WooCommerce/settings
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 $products_cats = wcj_get_terms( 'product_cat' );
 
 return array(
 	array(
-		'title'    => __( 'All Products', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_add_to_cart_button_visibility_global_options',
+		'title' => __( 'All Products', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_add_to_cart_button_visibility_global_options',
 	),
 	array(
-		'title'    => __( 'All Products', 'woocommerce-jetpack' ),
-		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
-		'id'       => 'wcj_add_to_cart_button_global_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'title'   => __( 'All Products', 'woocommerce-jetpack' ),
+		'desc'    => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'      => 'wcj_add_to_cart_button_global_enabled',
+		'default' => 'no',
+		'type'    => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Disable Buttons on Category/Archives Pages', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_add_to_cart_button_disable_archives',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'title'   => __( 'Disable Buttons on Category/Archives Pages', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_add_to_cart_button_disable_archives',
+		'default' => 'no',
+		'type'    => 'checkbox',
 	),
 	array(
 		'desc'     => __( 'Advanced', 'woocommerce-jetpack' ) . ': ' . __( 'Method', 'woocommerce-jetpack' ),
@@ -52,11 +55,11 @@ return array(
 		'css'      => 'width:100%',
 	),
 	array(
-		'title'    => __( 'Disable Buttons on Single Product Pages', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_add_to_cart_button_disable_single',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'title'   => __( 'Disable Buttons on Single Product Pages', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_add_to_cart_button_disable_single',
+		'default' => 'no',
+		'type'    => 'checkbox',
 	),
 	array(
 		'desc'     => __( 'Advanced', 'woocommerce-jetpack' ) . ': ' . __( 'Method', 'woocommerce-jetpack' ),
@@ -78,13 +81,13 @@ return array(
 		'css'      => 'width:100%',
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_add_to_cart_button_visibility_global_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_add_to_cart_button_visibility_global_options',
 	),
 	array(
-		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_add_to_cart_button_visibility_per_product_options',
+		'title' => __( 'Per Product', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_add_to_cart_button_visibility_per_product_options',
 	),
 	array(
 		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
@@ -95,28 +98,28 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_add_to_cart_button_visibility_per_product_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_add_to_cart_button_visibility_per_product_options',
 	),
 	array(
-		'title'    => __( 'Per Category', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_add_to_cart_button_visibility_per_category_options',
+		'title' => __( 'Per Category', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_add_to_cart_button_visibility_per_category_options',
 	),
 	array(
-		'title'    => __( 'Per Category', 'woocommerce-jetpack' ),
-		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
-		'id'       => 'wcj_add_to_cart_button_per_category_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'title'   => __( 'Per Category', 'woocommerce-jetpack' ),
+		'desc'    => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'      => 'wcj_add_to_cart_button_per_category_enabled',
+		'default' => 'no',
+		'type'    => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Disable Buttons on Category/Archives Pages', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_add_to_cart_button_per_category_disable_loop',
-		'default'  => '',
-		'type'     => 'multiselect',
-		'class'    => 'chosen_select',
-		'options'  => $products_cats,
+		'title'   => __( 'Disable Buttons on Category/Archives Pages', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_add_to_cart_button_per_category_disable_loop',
+		'default' => '',
+		'type'    => 'multiselect',
+		'class'   => 'chosen_select',
+		'options' => $products_cats,
 	),
 	array(
 		'desc'     => __( 'Content', 'woocommerce-jetpack' ),
@@ -127,12 +130,12 @@ return array(
 		'css'      => 'width:100%',
 	),
 	array(
-		'title'    => __( 'Disable Buttons on Single Product Pages', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_add_to_cart_button_per_category_disable_single',
-		'default'  => '',
-		'type'     => 'multiselect',
-		'class'    => 'chosen_select',
-		'options'  => $products_cats,
+		'title'   => __( 'Disable Buttons on Single Product Pages', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_add_to_cart_button_per_category_disable_single',
+		'default' => '',
+		'type'    => 'multiselect',
+		'class'   => 'chosen_select',
+		'options' => $products_cats,
 	),
 	array(
 		'desc'     => __( 'Content', 'woocommerce-jetpack' ),
@@ -143,7 +146,7 @@ return array(
 		'css'      => 'width:100%',
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_add_to_cart_button_visibility_per_category_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_add_to_cart_button_visibility_per_category_options',
 	),
 );

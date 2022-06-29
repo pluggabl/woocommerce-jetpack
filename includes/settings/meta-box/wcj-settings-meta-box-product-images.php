@@ -2,12 +2,15 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Images
  *
- * @version 4.1.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/meta-boxs
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 return array(
 	array(

@@ -5,16 +5,21 @@
  * @version 5.3.3
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
+ * @package Booster_For_WooCommerce/functions
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! function_exists( 'wcj_range_match' ) ) {
 	/**
-	 * wcj_range_match.
+	 * Wcj_range_match.
 	 *
 	 * @version 4.0.0
 	 * @since   3.4.0
+	 * @param   string $postcode_range defines the postcode_range.
+	 * @param   string $postcode_to_check defines the postcode_to_check.
 	 */
 	function wcj_range_match( $postcode_range, $postcode_to_check ) {
 		$postcode_range = explode( '...', $postcode_range );
@@ -24,16 +29,18 @@ if ( ! function_exists( 'wcj_range_match' ) ) {
 
 if ( ! function_exists( 'wcj_check_postcode' ) ) {
 	/**
-	 * wcj_check_postcode.
+	 * Wcj_check_postcode.
 	 *
 	 * @version 4.0.0
 	 * @since   3.4.0
+	 * @param   string $postcode_to_check defines the postcode_to_check.
+	 * @param   array  $postcodes defines the postcodes.
 	 */
 	function wcj_check_postcode( $postcode_to_check, $postcodes ) {
 		foreach ( $postcodes as $postcode ) {
 			if (
 				( $postcode === $postcode_to_check ) ||
-				( false !== strpos( $postcode, '*' )   && fnmatch( $postcode, $postcode_to_check ) ) ||
+				( false !== strpos( $postcode, '*' ) && fnmatch( $postcode, $postcode_to_check ) ) ||
 				( false !== strpos( $postcode, '...' ) && wcj_range_match( $postcode, $postcode_to_check ) )
 			) {
 				return true;
@@ -45,19 +52,20 @@ if ( ! function_exists( 'wcj_check_postcode' ) ) {
 
 if ( ! function_exists( 'wcj_help_tip' ) ) {
 	/**
-	 * wcj_help_tip.
+	 * Wcj_help_tip.
 	 *
 	 * @version 3.9.0
 	 * @since   3.9.0
+	 * @param   string $text defines the text.
 	 */
 	function wcj_help_tip( $text ) {
-		return ' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . esc_html( $text ) . '">';
+		return ' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png" title="' . esc_html( $text ) . '">';
 	}
 }
 
 if ( ! function_exists( 'wcj_get_wpml_default_language' ) ) {
 	/**
-	 * wcj_get_wpml_default_language.
+	 * Wcj_get_wpml_default_language.
 	 *
 	 * @version 3.7.0
 	 * @since   3.7.0
@@ -76,10 +84,11 @@ if ( ! function_exists( 'wcj_get_wpml_default_language' ) ) {
 
 if ( ! function_exists( 'wcj_get_array' ) ) {
 	/**
-	 * wcj_get_array.
+	 * Wcj_get_array.
 	 *
 	 * @version 3.6.0
 	 * @since   3.6.0
+	 * @param   array $value defines the value.
 	 */
 	function wcj_get_array( $value ) {
 		return ( ! is_array( $value ) ? array( $value ) : $value );
@@ -88,18 +97,19 @@ if ( ! function_exists( 'wcj_get_array' ) ) {
 
 if ( ! function_exists( 'wcj_is_product_in_cart' ) ) {
 	/**
-	 * wcj_is_product_in_cart.
+	 * Wcj_is_product_in_cart.
 	 *
 	 * @version 3.6.0
 	 * @since   2.9.1
+	 * @param   int $product_id defines the product_id.
 	 */
 	function wcj_is_product_in_cart( $product_id ) {
-		if ( 0 != $product_id ) {
+		if ( 0 !== $product_id ) {
 			if ( isset( WC()->cart->cart_contents ) && is_array( WC()->cart->cart_contents ) ) {
 				foreach ( WC()->cart->cart_contents as $cart_item_key => $cart_item_data ) {
 					if (
-						( isset( $cart_item_data['product_id'] )   && $product_id == $cart_item_data['product_id'] ) ||
-						( isset( $cart_item_data['variation_id'] ) && $product_id == $cart_item_data['variation_id'] )
+						( isset( $cart_item_data['product_id'] ) && $product_id === $cart_item_data['product_id'] ) ||
+						( isset( $cart_item_data['variation_id'] ) && $product_id === $cart_item_data['variation_id'] )
 					) {
 						return true;
 					}
@@ -112,29 +122,34 @@ if ( ! function_exists( 'wcj_is_product_in_cart' ) ) {
 
 if ( ! function_exists( 'wcj_send_file' ) ) {
 	/**
-	 * wcj_send_file.
+	 * Wcj_send_file.
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
 	 * @todo    use where needed
 	 * @todo    add more cases for `$file_type`
+	 * @param   string $file_name defines the file_name.
+	 * @param   string $file_path defines the file_path.
+	 * @param   string $file_type defines the file_type.
+	 * @param   bool   $do_clean_up defines the do_clean_up.
 	 */
 	function wcj_send_file( $file_name, $file_path, $file_type, $do_clean_up = true ) {
 		switch ( $file_type ) {
 			default: // 'zip'
-				header( "Content-Type: application/octet-stream" );
-				header( "Content-Disposition: attachment; filename=" . urlencode( $file_name ) );
-				header( "Content-Type: application/octet-stream" );
-				header( "Content-Type: application/download" );
-				header( "Content-Description: File Transfer" );
-				header( "Content-Length: " . filesize( $file_path ) );
+				header( 'Content-Type: application/octet-stream' );
+				header( 'Content-Disposition: attachment; filename=' . urlencode( $file_name ) );
+				header( 'Content-Type: application/octet-stream' );
+				header( 'Content-Type: application/download' );
+				header( 'Content-Description: File Transfer' );
+				header( 'Content-Length: ' . filesize( $file_path ) );
 				break;
 		}
 		flush(); // this doesn't really matter.
-		if ( false !== ( $fp = fopen( $file_path, "r" ) ) ) {
+		$fp = fopen( $file_path, 'r' );
+		if ( false !== ( $fp ) ) {
 			while ( ! feof( $fp ) ) {
 				echo fread( $fp, 65536 );
-				flush(); // this is essential for large downloads
+				flush(); // this is essential for large downloads.
 			}
 			fclose( $fp );
 			if ( $do_clean_up ) {
@@ -142,18 +157,19 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 			}
 			exit();
 		} else {
-			die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
+			die( wp_kses_post( 'Unexpected error', 'woocommerce-jetpack' ) );
 		}
 	}
 }
 
 if ( ! function_exists( 'wcj_parse_number' ) ) {
 	/**
-	 * wcj_parse_number.
+	 * Wcj_parse_number.
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
 	 * @todo    maybe there is a better way (e.g. `numfmt_parse()`)
+	 * @param   string $number_string defines the number_string.
 	 */
 	function wcj_parse_number( $number_string ) {
 		if ( false !== strpos( $number_string, '.' ) ) {
@@ -166,10 +182,12 @@ if ( ! function_exists( 'wcj_parse_number' ) ) {
 
 if ( ! function_exists( 'wcj_handle_replacements' ) ) {
 	/**
-	 * wcj_handle_replacements.
+	 * Wcj_handle_replacements.
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
+	 * @param   string $replacements defines the replacements.
+	 * @param   string $template defines the template.
 	 */
 	function wcj_handle_replacements( $replacements, $template ) {
 		return str_replace( array_keys( $replacements ), $replacements, $template );
@@ -178,11 +196,12 @@ if ( ! function_exists( 'wcj_handle_replacements' ) ) {
 
 if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
 	/**
-	 * wcj_get_js_confirmation.
+	 * Wcj_get_js_confirmation.
 	 *
 	 * @version 3.4.0
 	 * @since   3.3.0
 	 * @todo    use where needed
+	 * @param   null $confirmation_message defines the confirmation_message.
 	 */
 	function wcj_get_js_confirmation( $confirmation_message = '' ) {
 		if ( '' === $confirmation_message ) {
@@ -194,10 +213,12 @@ if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
 
 if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 	/**
-	 * wcj_tcpdf_method.
+	 * Wcj_tcpdf_method.
 	 *
 	 * @version 3.6.0
 	 * @since   3.4.0
+	 * @param   string $method defines the method.
+	 * @param   string $params defines the params.
 	 */
 	function wcj_tcpdf_method( $method, $params ) {
 		return '<tcpdf method="' . $method . '" wcj_tcpdf_method_params_start' . serialize( $params ) . 'wcj_tcpdf_method_params_end />';
@@ -206,12 +227,13 @@ if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 
 if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 	/**
-	 * wcj_tcpdf_barcode.
+	 * Wcj_tcpdf_barcode.
 	 *
 	 * @version 3.4.0
 	 * @since   3.3.0
 	 * @todo    `color`
 	 * @todo    `align` (try 'T')
+	 * @param   array $atts defines the atts.
 	 */
 	function wcj_tcpdf_barcode( $atts ) {
 		if ( '' === $atts['code'] ) {
@@ -221,7 +243,7 @@ if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
 		}
 		if ( 0 === $atts['width'] ) {
-			$atts['width']  = ( '1D' === $atts['dimension'] ? 80 : 80 );
+			$atts['width'] = ( '1D' === $atts['dimension'] ? 80 : 80 );
 		}
 		if ( 0 === $atts['height'] ) {
 			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 80 );
@@ -230,40 +252,40 @@ if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 			$params = array(
 				$atts['code'],
 				$atts['type'],
-				'',  // x
-				'',  // y
+				'',  // x.
+				'',  // y.
 				$atts['width'],
 				$atts['height'],
-				0.4, // xres
-				array( // style
-					'position'      => 'S',
-					'border'        => false,
-					'padding'       => 4,
-					'fgcolor'       => array( 0, 0, 0 ),
-					'bgcolor'       => array( 255, 255, 255 ),
-					'text'          => false,
+				0.4, // xres.
+				array( // style.
+					'position' => 'S',
+					'border'   => false,
+					'padding'  => 4,
+					'fgcolor'  => array( 0, 0, 0 ),
+					'bgcolor'  => array( 255, 255, 255 ),
+					'text'     => false,
 				),
-				'N', // align
+				'N', // align.
 			);
 		} else {
 			$params = array(
 				$atts['code'],
 				$atts['type'],
-				'',  // x
-				'',  // y
+				'',  // x.
+				'',  // y.
 				$atts['width'],
 				$atts['height'],
-				array( // style
+				array( // style.
 					'border'        => false,
 					'vpadding'      => 'auto',
 					'hpadding'      => 'auto',
 					'fgcolor'       => array( 0, 0, 0 ),
 					'bgcolor'       => array( 255, 255, 255 ),
-					'module_width'  => 1, // width of a single module in points
-					'module_height' => 1, // height of a single module in points
+					'module_width'  => 1, // width of a single module in points.
+					'module_height' => 1, // height of a single module in points.
 				),
-				'N', // align
-				false, // distort
+				'N', // align.
+				false, // distort.
 			);
 		}
 		return wcj_tcpdf_method( ( '1D' === $atts['dimension'] ? 'write1DBarcode' : 'write2DBarcode' ), $params );
@@ -272,12 +294,13 @@ if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 
 if ( ! function_exists( 'wcj_barcode' ) ) {
 	/**
-	 * wcj_barcode.
+	 * Wcj_barcode.
 	 *
 	 * @version 3.4.0
 	 * @since   3.3.0
 	 * @todo    (maybe) "Barcodes" module
 	 * @todo    (maybe) `getBarcodePNG()`
+	 * @param   array $atts defines the atts.
 	 */
 	function wcj_barcode( $atts ) {
 		if ( '' === $atts['code'] ) {
@@ -287,16 +310,16 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
 		}
 		if ( 0 === $atts['width'] ) {
-			$atts['width']  = ( '1D' === $atts['dimension'] ? 2  : 10 );
+			$atts['width'] = ( '1D' === $atts['dimension'] ? 2 : 10 );
 		}
 		if ( 0 === $atts['height'] ) {
 			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 10 );
 		}
 		if ( '1D' === $atts['dimension'] ) {
-			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_1d.php' );
+			require_once WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_1d.php';
 			$barcode = new TCPDFBarcode( $atts['code'], $atts['type'] );
 		} else {
-			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_2d.php' );
+			require_once WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_2d.php';
 			$barcode = new TCPDF2DBarcode( $atts['code'], $atts['type'] );
 		}
 		$barcode_array = $barcode->getBarcodeArray();
@@ -306,7 +329,7 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 
 if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	/**
-	 * wcj_session_maybe_start.
+	 * Wcj_session_maybe_start.
 	 *
 	 * @version 4.3.0
 	 * @since   3.1.0
@@ -319,7 +342,7 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 				}
 				break;
 			default:
-				if ( session_status() == PHP_SESSION_NONE && ! headers_sent() ) {
+				if ( session_status() === PHP_SESSION_NONE && ! headers_sent() ) {
 					$read_and_close = ( 'yes' === wcj_get_option( 'wcj_general_advanced_session_read_and_close', 'no' ) ) && PHP_VERSION_ID > 70000 ? array( 'read_and_close' => true ) : array();
 					session_start( $read_and_close );
 				}
@@ -330,10 +353,12 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 
 if ( ! function_exists( 'wcj_session_set' ) ) {
 	/**
-	 * wcj_session_set.
+	 * Wcj_session_set.
 	 *
 	 * @version 3.4.0
 	 * @since   3.1.0
+	 * @param   string $key defines the key.
+	 * @param   string $value defines the value.
 	 */
 	function wcj_session_set( $key, $value ) {
 		switch ( WCJ_SESSION_TYPE ) {
@@ -342,7 +367,7 @@ if ( ! function_exists( 'wcj_session_set' ) ) {
 					WC()->session->set( $key, $value );
 				}
 				break;
-			default: // 'standard'
+			default: // standard.
 				$_SESSION[ $key ] = $value;
 				break;
 		}
@@ -351,16 +376,18 @@ if ( ! function_exists( 'wcj_session_set' ) ) {
 
 if ( ! function_exists( 'wcj_session_get' ) ) {
 	/**
-	 * wcj_session_get.
+	 * Wcj_session_get.
 	 *
 	 * @version 3.4.0
 	 * @since   3.1.0
+	 * @param   string $key defines the key.
+	 * @param   null   $default defines the default.
 	 */
 	function wcj_session_get( $key, $default = null ) {
 		switch ( WCJ_SESSION_TYPE ) {
 			case 'wc':
 				return ( function_exists( 'WC' ) && WC()->session ? WC()->session->get( $key, $default ) : $default );
-			default: // 'standard'
+			default: // standard.
 				return ( isset( $_SESSION[ $key ] ) ? $_SESSION[ $key ] : $default );
 		}
 	}
@@ -368,10 +395,12 @@ if ( ! function_exists( 'wcj_session_get' ) ) {
 
 if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
 	/**
-	 * wcj_wrap_in_wc_email_template.
+	 * Wcj_wrap_in_wc_email_template.
 	 *
 	 * @version 3.9.0
 	 * @since   3.1.0
+	 * @param   string $content defines the content.
+	 * @param   null   $email_heading defines the email_heading.
 	 */
 	function wcj_wrap_in_wc_email_template( $content, $email_heading = '' ) {
 		return wcj_get_wc_email_part( 'header', $email_heading ) .
@@ -382,10 +411,12 @@ if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
 
 if ( ! function_exists( 'wcj_get_wc_email_part' ) ) {
 	/**
-	 * wcj_get_wc_email_part.
+	 * Wcj_get_wc_email_part.
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
+	 * @param   string $part defines the part.
+	 * @param   null   $email_heading defines the email_heading.
 	 */
 	function wcj_get_wc_email_part( $part, $email_heading = '' ) {
 		ob_start();
@@ -403,19 +434,20 @@ if ( ! function_exists( 'wcj_get_wc_email_part' ) ) {
 
 if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	/**
-	 * wcj_maybe_add_date_query.
+	 * Wcj_maybe_add_date_query.
 	 *
 	 * @version 3.0.0
 	 * @since   3.0.0
+	 * @param   array $args defines the args.
 	 */
 	function wcj_maybe_add_date_query( $args ) {
-		if ( ( isset( $_GET['start_date'] ) && '' != $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' != $_GET['end_date'] ) )  {
-			$date_query = array();
+		if ( ( isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
+			$date_query              = array();
 			$date_query['inclusive'] = true;
-			if ( isset( $_GET['start_date'] ) && '' != $_GET['start_date'] ) {
+			if ( $_GET['start_date'] && '' !== $_GET['start_date'] ) {
 				$date_query['after'] = $_GET['start_date'];
 			}
-			if ( isset( $_GET['end_date'] ) && '' != $_GET['end_date'] ) {
+			if ( $_GET['end_date'] && '' !== $_GET['end_date'] ) {
 				$date_query['before'] = $_GET['end_date'];
 			}
 			$args['date_query'] = array( $date_query );
@@ -426,11 +458,14 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 
 if ( ! function_exists( 'wcj_is_module_deprecated' ) ) {
 	/**
-	 * wcj_is_module_deprecated.
+	 * Wcj_is_module_deprecated.
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @return  array|false
+	 * @param   int  $module_id defines the module_id.
+	 * @param   bool $by_module_option defines the by_module_option.
+	 * @param   bool $check_for_disabled defines the check_for_disabled.
 	 */
 	function wcj_is_module_deprecated( $module_id, $by_module_option = false, $check_for_disabled = false ) {
 		if ( $check_for_disabled ) {
@@ -459,7 +494,7 @@ if ( ! function_exists( 'wcj_is_module_deprecated' ) ) {
 
 if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	/**
-	 * wcj_customer_get_country.
+	 * Wcj_customer_get_country.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
@@ -472,7 +507,7 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 
 if ( ! function_exists( 'wcj_customer_get_country_state' ) ) {
 	/**
-	 * wcj_customer_get_country_state.
+	 * Wcj_customer_get_country_state.
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
@@ -485,7 +520,7 @@ if ( ! function_exists( 'wcj_customer_get_country_state' ) ) {
 
 if ( ! function_exists( 'wcj_is_bot' ) ) {
 	/**
-	 * wcj_is_bot.
+	 * Wcj_is_bot.
 	 *
 	 * @version 3.9.0
 	 * @since   2.5.6
@@ -497,22 +532,24 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 
 if ( ! function_exists( 'wcj_add_files_upload_form_to_checkout_frontend' ) ) {
 	/**
-	 * wcj_add_files_upload_form_to_checkout_frontend.
+	 * Wcj_add_files_upload_form_to_checkout_frontend.
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.2
 	 */
 	function wcj_add_files_upload_form_to_checkout_frontend() {
-		WCJ()->modules['checkout_files_upload']->add_files_upload_form_to_checkout_frontend_all( true );
+		w_c_j()->modules['checkout_files_upload']->add_files_upload_form_to_checkout_frontend_all( true );
 	}
 }
 
 if ( ! function_exists( 'wcj_replace_values_in_template' ) ) {
 	/**
-	 * wcj_replace_values_in_template.
+	 * Wcj_replace_values_in_template.
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
+	 * @param   string $values_to_replace defines the values_to_replace.
+	 * @param   array  $template defines the template.
 	 */
 	function wcj_replace_values_in_template( $values_to_replace, $template ) {
 		return str_replace( array_keys( $values_to_replace ), array_values( $values_to_replace ), $template );
@@ -521,11 +558,13 @@ if ( ! function_exists( 'wcj_replace_values_in_template' ) ) {
 
 if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
-	 * wcj_variation_radio_button.
+	 * Wcj_variation_radio_button.
 	 *
 	 * @version 3.1.0
 	 * @since   2.4.8
 	 * @todo    (maybe) check - maybe we can use `$variation['variation_description']` instead of `get_post_meta( $variation_id, '_variation_description', true )`
+	 * @param   array $_product defines the _product.
+	 * @param   array $variation defines the variation.
 	 */
 	function wcj_variation_radio_button( $_product, $variation ) {
 		$attributes_html                     = '';
@@ -533,59 +572,66 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 		$is_checked                          = true;
 		foreach ( $variation['attributes'] as $attribute_full_name => $attribute_value ) {
 			$attributes_html .= ' ' . $attribute_full_name . '="' . $attribute_value . '"';
-			// Attribute name
+			// Attribute name.
 			$attribute_name = $attribute_full_name;
 			$prefix         = 'attribute_';
 			if ( substr( $attribute_full_name, 0, strlen( $prefix ) ) === $prefix ) {
 				$attribute_name = substr( $attribute_full_name, strlen( $prefix ) );
 			}
-			// Checked
-			$checked = isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ?
+			// Checked.
+			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ?
 				wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
-			if ( $checked != $attribute_value ) {
+			if ( $checked !== $attribute_value ) {
 				$is_checked = false;
 			}
-			// Attribute value
+			// Attribute value.
 			$terms = get_terms( $attribute_name );
 			foreach ( $terms as $term ) {
 				if ( is_object( $term ) && isset( $term->slug ) && $term->slug === $attribute_value && isset( $term->name ) ) {
 					$attribute_value = $term->name;
 				}
 			}
-			// Display values
+			// Display values.
 			$variation_attributes_display_values[] = $attribute_value;
 		}
-		// Variation label
-		$variation_label = wcj_replace_values_in_template( array(
-			'%variation_title%' => implode( ', ', $variation_attributes_display_values ),
-			'%variation_price%' => wc_price( $variation['display_price'] ),
-		), wcj_get_option( 'wcj_add_to_cart_variable_as_radio_variation_label_template', '%variation_title% (%variation_price%)' ) );
-		// Variation ID and "is checked"
-		$variation_id    = $variation['variation_id'];
-		$is_checked      = checked( $is_checked, true, false );
-		// Final HTML
-		$html = '';
-		$html .= '<td class="wcj_variable_as_radio_input_td" style="' . wcj_get_option( 'wcj_add_to_cart_variable_as_radio_input_td_style', 'width:10%;' ) . '">';
-		$html .= '<input id="wcj_variation_' . $variation_id . '" name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' .
+		// Variation label.
+		$variation_label = wcj_replace_values_in_template(
+			array(
+				'%variation_title%' => implode( ', ', $variation_attributes_display_values ),
+				'%variation_price%' => wc_price( $variation['display_price'] ),
+			),
+			wcj_get_option( 'wcj_add_to_cart_variable_as_radio_variation_label_template', '%variation_title% (%variation_price%)' )
+		);
+		// Variation ID and "is checked".
+		$variation_id = $variation['variation_id'];
+		$is_checked   = checked( $is_checked, true, false );
+		// Final HTML.
+		$html                  = '';
+		$html                 .= '<td class="wcj_variable_as_radio_input_td" style="' . wcj_get_option( 'wcj_add_to_cart_variable_as_radio_input_td_style', 'width:10%;' ) . '">';
+		$html                 .= '<input id="wcj_variation_' . $variation_id . '" name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' .
 			$variation_id . '"' . $is_checked . '>';
-		$html .= '</td>';
-		$html .= '<td class="wcj_variable_as_radio_label_td">';
-		$html .= '<label for="wcj_variation_' . $variation_id . '">';
-		$html .= $variation_label;
-		if ( '' != ( $variation_description = get_post_meta( $variation_id, '_variation_description', true ) ) ) {
-			$html .= wcj_replace_values_in_template( array(
-				'%variation_description%' => $variation_description,
-			), wcj_get_option( 'wcj_add_to_cart_variable_as_radio_variation_desc_template', '<br><small>%variation_description%</small>' ) );
+		$html                 .= '</td>';
+		$html                 .= '<td class="wcj_variable_as_radio_label_td">';
+		$html                 .= '<label for="wcj_variation_' . $variation_id . '">';
+		$html                 .= $variation_label;
+		$variation_description = get_post_meta( $variation_id, '_variation_description', true );
+		if ( '' !== ( $variation_description ) ) {
+			$html .= wcj_replace_values_in_template(
+				array(
+					'%variation_description%' => $variation_description,
+				),
+				wcj_get_option( 'wcj_add_to_cart_variable_as_radio_variation_desc_template', '<br><small>%variation_description%</small>' )
+			);
 		}
 		$html .= '</label>';
 		$html .= '</td>';
-		echo $html;
+		echo wp_kses_post( $html );
 	}
 }
 
 if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
-	/*
-	 * wcj_current_filter_priority.
+	/**
+	 * Wcj_current_filter_priority.
 	 *
 	 * @version 2.5.8
 	 * @since   2.4.6
@@ -594,22 +640,24 @@ if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
 		global $wp_filter;
 		$current_filter_data = $wp_filter[ current_filter() ];
 		if ( class_exists( 'WP_Hook' ) && is_a( $current_filter_data, 'WP_Hook' ) ) {
-			// since WordPress v4.7
+			// since WordPress v4.7.
 			return $current_filter_data->current_priority();
 		} else {
-			// before WordPress v4.7
+			// before WordPress v4.7.
 			return key( $current_filter_data );
 		}
 	}
 }
 
 if ( ! function_exists( 'wcj_maybe_implode' ) ) {
-	/*
-	 * wcj_maybe_implode.
+	/**
+	 * Wcj_maybe_implode.
 	 *
 	 * @version 3.2.1
 	 * @since   3.2.1
 	 * @return  string
+	 * @param   array $value defines the value.
+	 * @param   null  $glue defines the glue.
 	 */
 	function wcj_maybe_implode( $value, $glue = ' ' ) {
 		if ( is_array( $value ) ) {
@@ -620,13 +668,15 @@ if ( ! function_exists( 'wcj_maybe_implode' ) ) {
 }
 
 if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
-	/*
-	 * wcj_maybe_unserialize_and_implode.
+	/**
+	 * Wcj_maybe_unserialize_and_implode.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
 	 * @return  string
 	 * @todo    `if ( ! is_array() )`
+	 * @param   array $value defines the value.
+	 * @param   null  $glue defines the glue.
 	 */
 	function wcj_maybe_unserialize_and_implode( $value, $glue = ' ' ) {
 		if ( is_serialized( $value ) ) {
@@ -640,8 +690,8 @@ if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
 }
 
 if ( ! function_exists( 'wcj_get_cart_filters' ) ) {
-	/*
-	 * wcj_get_cart_filters()
+	/**
+	 * Wcj_get_cart_filters()
 	 *
 	 * @version 2.4.4
 	 * @since   2.4.4
@@ -677,14 +727,13 @@ if ( ! function_exists( 'wcj_get_cart_filters' ) ) {
 }
 
 if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
-	/* Used by admin settings page.
-	 *
-	 * @param string $tax_class
+	/**
+	 * Used by admin settings page.
 	 *
 	 * @return array|null|object
-	 *
 	 * @version 2.3.10
 	 * @since   2.3.10
+	 * @param   string $tax_class defines the tax_class.
 	 */
 	function wcj_get_rates_for_tax_class( $tax_class ) {
 		global $wpdb;
@@ -715,20 +764,22 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 
 if ( ! function_exists( 'wcj_get_select_options' ) ) {
 	/**
-	 * wcj_get_select_options()
+	 * Wcj_get_select_options()
 	 *
 	 * @version  4.3.0
 	 * @since    2.3.0
 	 * @return   array
+	 * @param   array $select_options_raw defines the select_options_raw.
+	 * @param   bool  $do_sanitize defines the do_sanitize.
 	 */
 	function wcj_get_select_options( $select_options_raw, $do_sanitize = true ) {
 		if ( '' === $select_options_raw ) {
 			return array();
 		}
 		$select_options_raw = array_map( 'trim', explode( PHP_EOL, $select_options_raw ) );
-		$select_options = array();
+		$select_options     = array();
 		foreach ( $select_options_raw as $select_options_title ) {
-			$select_options_key = ( $do_sanitize ) ? urldecode( sanitize_title( $select_options_title ) ) : $select_options_title;
+			$select_options_key                    = ( $do_sanitize ) ? urldecode( sanitize_title( $select_options_title ) ) : $select_options_title;
 			$select_options[ $select_options_key ] = $select_options_title;
 		}
 		return $select_options;
@@ -737,7 +788,7 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 
 if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	/**
-	 * wcj_is_frontend()
+	 * Wcj_is_frontend()
 	 *
 	 * @since  4.0.0
 	 * @return boolean
@@ -746,9 +797,13 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 		if ( ! is_admin() ) {
 			return true;
 		} elseif ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array( $_REQUEST['action'], array(
+			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array(
+				$_REQUEST['action'],
+				array(
 					'woocommerce_load_variations',
-				) ) );
+				),
+				true
+			) );
 		} else {
 			return false;
 		}
@@ -757,10 +812,12 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 
 if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 	/**
-	 * wcj_get_wcj_uploads_dir.
+	 * Wcj_get_wcj_uploads_dir.
 	 *
 	 * @version 3.9.0
 	 * @todo    no need to `mkdir` after `wcj_get_wcj_uploads_dir`
+	 * @param   null $subdir defines the subdir.
+	 * @param   bool $do_mkdir defines the do_mkdir.
 	 */
 	function wcj_get_wcj_uploads_dir( $subdir = '', $do_mkdir = true ) {
 		$upload_dir = wp_upload_dir();
@@ -773,7 +830,7 @@ if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 		if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
 			mkdir( $upload_dir, 0755, true );
 		}
-		if ( '' != $subdir ) {
+		if ( '' !== $subdir ) {
 			$upload_dir = $upload_dir . '/' . $subdir;
 			if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
 				mkdir( $upload_dir, 0755, true );
@@ -785,16 +842,18 @@ if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 
 if ( ! function_exists( 'wcj_hex2rgb' ) ) {
 	/**
-	 * wcj_hex2rgb.
+	 * Wcj_hex2rgb.
+	 *
+	 * @param   string $hex defines the hex.
 	 */
 	function wcj_hex2rgb( $hex ) {
-		return sscanf( $hex, "#%2x%2x%2x" );
+		return sscanf( $hex, '#%2x%2x%2x' );
 	}
 }
 
 if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 	/**
-	 * wcj_get_the_ip.
+	 * Wcj_get_the_ip.
 	 *
 	 * @version 4.5.0
 	 * @see http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
@@ -816,11 +875,11 @@ if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 
 if ( ! function_exists( 'wcj_get_shortcodes_list' ) ) {
 	/**
-	 * wcj_get_shortcodes_list.
+	 * Wcj_get_shortcodes_list.
 	 */
 	function wcj_get_shortcodes_list() {
 		$the_array = apply_filters( 'wcj_shortcodes_list', array() );
-		return implode( ', ', $the_array )/*  . ' (' . count( $the_array ) . ')' */;
+		return implode( ', ', $the_array );
 	}
 }
 
@@ -839,8 +898,8 @@ if ( ! function_exists( 'wcj_get_cart_item_quantities' ) ) {
 
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 			$product = $values['data'];
-			if ( 'variation' == $product->get_type() ) {
-				$product_id = ( 0 != $values['variation_id'] ? $values['variation_id'] : $values['parent_id'] );
+			if ( 'variation' === $product->get_type() ) {
+				$product_id = ( 0 !== $values['variation_id'] ? $values['variation_id'] : $values['parent_id'] );
 			} else {
 				$product_id = $values['product_id'];
 			}
@@ -860,10 +919,10 @@ if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
 	 * @version 4.6.0
 	 * @since   4.6.0
 	 *
-	 * @param $tag
-	 * @param string $class_name
-	 * @param string $method_name
-	 * @param int $priority
+	 * @param   string $tag defines the tag.
+	 * @param   null   $class_name defines the class_name.
+	 * @param   null   $method_name defines the method_name.
+	 * @param   int    $priority defines the priority.
 	 *
 	 * @return bool
 	 */
@@ -893,10 +952,10 @@ if ( ! function_exists( 'wcj_remove_class_action' ) ) {
 	 * @version 4.6.0
 	 * @since   4.6.0
 	 *
-	 * @param $tag
-	 * @param string $class_name
-	 * @param string $method_name
-	 * @param int $priority
+	 * @param   string $tag defines the tag.
+	 * @param   null   $class_name defines the class_name.
+	 * @param   null   $method_name defines the method_name.
+	 * @param   int    $priority defines the priority.
 	 */
 	function wcj_remove_class_action( $tag, $class_name = '', $method_name = '', $priority = 10 ) {
 		wcj_remove_class_filter( $tag, $class_name, $method_name, $priority );
@@ -912,7 +971,7 @@ if ( ! function_exists( 'wcj_get_data_attributes_html' ) ) {
 	 * @version 4.7.0
 	 * @since   4.7.0
 	 *
-	 * @param  array $data Field data.
+	 * @param array $data defines the data.
 	 *
 	 * @return string
 	 */
@@ -929,7 +988,7 @@ if ( ! function_exists( 'wcj_get_data_attributes_html' ) ) {
 
 if ( ! function_exists( 'wcj_remove_wpml_terms_filters' ) ) {
 	/**
-	 * wcj_remove_wpml_terms_filters.
+	 * Wcj_remove_wpml_terms_filters.
 	 *
 	 * @see https://wpml.org/forums/topic/get-all-terms-of-all-languages-outside-loop/
 	 *
@@ -949,7 +1008,7 @@ if ( ! function_exists( 'wcj_remove_wpml_terms_filters' ) ) {
 
 if ( ! function_exists( 'wcj_add_wpml_terms_filters' ) ) {
 	/**
-	 * wcj_add_wpml_terms_filters.
+	 * Wcj_add_wpml_terms_filters.
 	 *
 	 * @see http://support.themeblvd.com/forums/topic/wpml-sitepress-php-error-on-backend-due-to-layout-builder/
 	 *
@@ -957,7 +1016,7 @@ if ( ! function_exists( 'wcj_add_wpml_terms_filters' ) ) {
 	 * @since   4.7.0
 	 */
 	function wcj_add_wpml_terms_filters() {
-		// restore WPML term filters
+		// restore WPML term filters.
 		global $sitepress;
 		if ( ! $sitepress ) {
 			return;
@@ -966,4 +1025,116 @@ if ( ! function_exists( 'wcj_add_wpml_terms_filters' ) ) {
 		add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
 		add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );
 	}
+}
+
+if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
+	/**
+	 * Wcj_add_allowed_html.
+	 *
+	 * @version 1.0.0
+	 * @since   5.6.0
+	 * @param array  $allowed_html to get default allowed html.
+	 * @param string $context to get default context.
+	 */
+	function wcj_add_allowed_html( $allowed_html, $context ) {
+		$allowed_extra_html  = array(
+			'input'    => array(
+				'type'        => true,
+				'name'        => true,
+				'value'       => true,
+				'id'          => true,
+				'checked'     => true,
+				'class'       => true,
+				'style'       => true,
+				'placeholder' => true,
+				'dateformat'  => true,
+				'mindate'     => true,
+				'maxdate'     => true,
+				'firstday'    => true,
+				'display'     => true,
+				'required'    => true,
+				'min'         => true,
+				'max'         => true,
+				'disabled'    => true,
+				'onchange'    => true,
+			),
+			'textarea' => array(
+				'name'        => true,
+				'value'       => true,
+				'id'          => true,
+				'class'       => true,
+				'style'       => true,
+				'placeholder' => true,
+				'required'    => true,
+				'disabled'    => true,
+				'onchange'    => true,
+			),
+			'select'   => array(
+				'multiple' => true,
+				'name'     => true,
+				'class'    => true,
+				'id'       => true,
+				'style'    => true,
+				'size'     => true,
+				'disabled' => true,
+				'onchange' => true,
+			),
+			'option'   => array(
+				'value'    => true,
+				'style'    => true,
+				'selected' => true,
+				'class'    => true,
+				'disabled' => true,
+			),
+			'span'     => array(
+				'id'       => true,
+				'style'    => true,
+				'class'    => true,
+				'data-tip' => true,
+				'disabled' => true,
+			),
+			'td'       => array(
+				'style' => true,
+				'class' => true,
+			),
+			'tr'       => array(
+				'id'    => true,
+				'style' => true,
+				'class' => true,
+			),
+			'th'       => array(
+				'scope' => true,
+				'style' => true,
+				'class' => true,
+			),
+			'label'    => array(
+				'style' => true,
+				'class' => true,
+			),
+			'p'        => array(
+				'class' => true,
+				'style' => true,
+			),
+			'button'   => array(
+				'style'    => true,
+				'class'    => true,
+				'disabled' => true,
+			),
+			'style'    => array(
+				'type' => true,
+			),
+			'a'        => array(
+				'onclick'  => true,
+				'onblur'   => true,
+				'onfocus'  => true,
+				'onchange' => true,
+			),
+			'button'   => array(
+				'wcj_data' => true,
+			),
+		);
+		$allowed_merged_html = array_merge_recursive( $allowed_html, $allowed_extra_html );
+		return $allowed_merged_html;
+	}
+	add_filter( 'wp_kses_allowed_html', 'wcj_add_allowed_html', 10, 2 );
 }

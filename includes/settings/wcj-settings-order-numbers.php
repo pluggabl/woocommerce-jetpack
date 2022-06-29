@@ -2,27 +2,30 @@
 /**
  * Booster for WooCommerce - Settings - Order Numbers
  *
- * @version 5.1.0
+ * @version 5.6.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `wcj_order_number_counter_previous_order_date` as `hidden` field (for proper module reset)
+ * @package Booster_For_WooCommerce/settings
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+$message = apply_filters( 'booster_message', '', 'desc' );
 return array(
 	array(
-		'title'    => __( 'Order Numbers', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'desc'     => __( 'This section lets you enable sequential order numbering, set custom number prefix, suffix and width.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_numbers_options',
+		'title' => __( 'Order Numbers', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'desc'  => __( 'This section lets you enable sequential order numbering, set custom number prefix, suffix and width.', 'woocommerce-jetpack' ),
+		'id'    => 'wcj_order_numbers_options',
 	),
 	array(
-		'title'    => __( 'Number Generation', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_sequential_enabled',
-		'default'  => 'yes',
-		'type'     => 'select',
-		'options'  => array(
+		'title'   => __( 'Number Generation', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_order_number_sequential_enabled',
+		'default' => 'yes',
+		'type'    => 'select',
+		'options' => array(
 			'yes'        => __( 'Sequential', 'woocommerce-jetpack' ),
 			'no'         => __( 'Order ID', 'woocommerce-jetpack' ),
 			'hash_crc32' => __( 'Pseudorandom - Hash (max 10 digits)', 'woocommerce-jetpack' ),
@@ -57,39 +60,39 @@ return array(
 		'type'     => 'text',
 	),
 	array(
-		'title'    => __( 'Order Number Date Prefix', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'desc_tip' => __( 'Date prefix before order number (optional). This will change the prefixes for all existing orders. Value is passed directly to PHP `date` function, so most of PHP date formats can be used. The only exception is using `\` symbol in date format, as this symbol will be excluded from date. Try: Y-m-d- or mdy.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_date_prefix',
-		'default'  => '',
-		'type'     => 'text',
+		'title'             => __( 'Order Number Date Prefix', 'woocommerce-jetpack' ),
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip'          => __( 'Date prefix before order number (optional). This will change the prefixes for all existing orders. Value is passed directly to PHP `date` function, so most of PHP date formats can be used. The only exception is using `\` symbol in date format, as this symbol will be excluded from date. Try: Y-m-d- or mdy.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_order_number_date_prefix',
+		'default'           => '',
+		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'title'    => __( 'Order Number Width', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'desc_tip' => __( 'Minimum width of number without prefix (zeros will be added to the left side). This will change the minimum width of order number for all existing orders. E.g. set to 5 to have order number displayed as 00001 instead of 1. Leave zero to disable.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_min_width',
-		'default'  => 0,
-		'type'     => 'number',
+		'title'             => __( 'Order Number Width', 'woocommerce-jetpack' ),
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip'          => __( 'Minimum width of number without prefix (zeros will be added to the left side). This will change the minimum width of order number for all existing orders. E.g. set to 5 to have order number displayed as 00001 instead of 1. Leave zero to disable.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_order_number_min_width',
+		'default'           => 0,
+		'type'              => 'number',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'title'    => __( 'Order Number Custom Suffix', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'desc_tip' => __( 'Suffix after order number (optional). This will change the suffixes for all existing orders.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_suffix',
-		'default'  => '',
-		'type'     => 'text',
+		'title'             => __( 'Order Number Custom Suffix', 'woocommerce-jetpack' ),
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip'          => __( 'Suffix after order number (optional). This will change the suffixes for all existing orders.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_order_number_suffix',
+		'default'           => '',
+		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'title'    => __( 'Order Number Date Suffix', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'desc_tip' => __( 'Date suffix after order number (optional). This will change the suffixes for all existing orders. Value is passed directly to PHP `date` function, so most of PHP date formats can be used. The only exception is using `\` symbol in date format, as this symbol will be excluded from date. Try: Y-m-d- or mdy.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_date_suffix',
-		'default'  => '',
-		'type'     => 'text',
+		'title'             => __( 'Order Number Date Suffix', 'woocommerce-jetpack' ),
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip'          => __( 'Date suffix after order number (optional). This will change the suffixes for all existing orders. Value is passed directly to PHP `date` function, so most of PHP date formats can be used. The only exception is using `\` symbol in date format, as this symbol will be excluded from date. Try: Y-m-d- or mdy.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_order_number_date_suffix',
+		'default'           => '',
+		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
@@ -101,49 +104,50 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Enable Order Tracking by Custom Number', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_order_tracking_enabled',
-		'default'  => 'yes',
-		'type'     => 'checkbox',
+		'title'   => __( 'Enable Order Tracking by Custom Number', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_order_number_order_tracking_enabled',
+		'default' => 'yes',
+		'type'    => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Enable Order Admin Search by Custom Number', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_search_by_custom_number_enabled',
-		'default'  => 'yes',
-		'type'     => 'checkbox',
+		'title'   => __( 'Enable Order Admin Search by Custom Number', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_order_number_search_by_custom_number_enabled',
+		'default' => 'yes',
+		'type'    => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Enable Editable Order Number Meta Box', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_number_editable_order_number_meta_box_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
+		'title'             => __( 'Enable Editable Order Number Meta Box', 'woocommerce-jetpack' ),
+		'desc'              => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_order_number_editable_order_number_meta_box_enabled',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+		'desc_tip'          => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'title'    => __( 'Minimal Order ID', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'If you wish to disable order numbering for some (older) orders, you can set order ID to start here.', 'woocommerce-jetpack' ) . ' ' .
+		'title'             => __( 'Minimal Order ID', 'woocommerce-jetpack' ),
+		'desc_tip'          => __( 'If you wish to disable order numbering for some (older) orders, you can set order ID to start here.', 'woocommerce-jetpack' ) . ' ' .
 			__( 'Set to zero to enable numbering for all orders.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_numbers_min_order_id',
-		'default'  => 0,
-		'type'     => 'number',
+		'id'                => 'wcj_order_numbers_min_order_id',
+		'default'           => 0,
+		'type'              => 'number',
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_order_numbers_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_order_numbers_options',
 	),
 	array(
-		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_order_numbers_compatibility',
+		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_order_numbers_compatibility',
 	),
 	array(
 		'title'             => __( 'WPNotif', 'woocommerce-jetpack' ),
-		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc'              => empty( $message ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		/* translators: %s: translators Added */
 		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">WPNotif: WordPress SMS & WhatsApp Notifications</a> plugin fixing the <code>{{wc-tracking-link}}</code> variable.', 'woocommerce-jetpack' ), 'https://wpnotif.unitedover.com/' ),
 		'id'                => 'wcj_order_numbers_compatibility_wpnotif',
 		'default'           => 'no',
@@ -151,20 +155,20 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_order_numbers_compatibility',
+		'type' => 'sectionend',
+		'id'   => 'wcj_order_numbers_compatibility',
 	),
 	array(
-		'title'    => __( 'Orders Renumerate Tool Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_order_numbers_renumerate_tool_options',
+		'title' => __( 'Orders Renumerate Tool Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_order_numbers_renumerate_tool_options',
 	),
 	array(
-		'title'    => __( 'Sort by', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_numbers_renumerate_tool_orderby',
-		'default'  => 'date',
-		'type'     => 'select',
-		'options'  => array(
+		'title'   => __( 'Sort by', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_order_numbers_renumerate_tool_orderby',
+		'default' => 'date',
+		'type'    => 'select',
+		'options' => array(
 			'ID'       => __( 'ID', 'woocommerce-jetpack' ),
 			'date'     => __( 'Date', 'woocommerce-jetpack' ),
 			'modified' => __( 'Last modified date', 'woocommerce-jetpack' ),
@@ -172,17 +176,17 @@ return array(
 		),
 	),
 	array(
-		'title'    => __( 'Sort Ascending or Descending', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_numbers_renumerate_tool_order',
-		'default'  => 'ASC',
-		'type'     => 'select',
-		'options'  => array(
+		'title'   => __( 'Sort Ascending or Descending', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_order_numbers_renumerate_tool_order',
+		'default' => 'ASC',
+		'type'    => 'select',
+		'options' => array(
 			'ASC'  => __( 'Ascending', 'woocommerce-jetpack' ),
 			'DESC' => __( 'Descending', 'woocommerce-jetpack' ),
 		),
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_order_numbers_renumerate_tool_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_order_numbers_renumerate_tool_options',
 	),
 );

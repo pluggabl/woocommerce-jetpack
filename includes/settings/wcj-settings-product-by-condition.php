@@ -2,18 +2,21 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by Condition
  *
- * @version 5.4.0
+ * @version 5.6.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/settings
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 $settings = array(
 	array(
-		'title'    => __( 'Visibility Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_' . $this->id . '_options',
+		'title' => __( 'Visibility Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_' . $this->id . '_options',
 	),
 	array(
 		'title'    => __( 'Hide Visibility', 'woocommerce-jetpack' ),
@@ -47,74 +50,77 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_' . $this->id . '_options',
+		'type' => 'sectionend',
+		'id'   => 'wcj_' . $this->id . '_options',
 	),
 );
 $settings = array_merge( $settings, $this->maybe_add_extra_settings() );
-$settings = array_merge( $settings, array(
+$settings = array_merge(
+	$settings,
 	array(
-		'title'    => __( 'Admin Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_' . $this->id . '_admin_options',
-	),
-	array(
-		'title'    => __( 'Visibility Method', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This option sets how do you want to set product\'s visibility.', 'woocommerce-jetpack' ) . ' ' .
-			__( 'Possible values: "Set visible", "Set invisible" or "Set both".', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_' . $this->id . '_visibility_method',
-		'default'  => 'visible',
-		'type'     => 'select',
-		'options'  => array(
-			'visible'   => __( 'Set visible', 'woocommerce-jetpack' ),
-			'invisible' => __( 'Set invisible', 'woocommerce-jetpack' ),
-			'both'      => __( 'Set both', 'woocommerce-jetpack' ),
+		array(
+			'title' => __( 'Admin Options', 'woocommerce-jetpack' ),
+			'type'  => 'title',
+			'id'    => 'wcj_' . $this->id . '_admin_options',
 		),
-		'desc'     => __( 'Set Visible: Select values in which you want to visible product', 'woocommerce-jetpack' ) .
-			'<br>'. __( 'Set Invisible: Select values in which you want an invisible product', 'woocommerce-jetpack' ) .
-			'<br>'. __( 'Set Both: There will be 2 select box for each above option Visible & Invisible', 'woocommerce-jetpack' ) .
-			'<br>' . apply_filters( 'booster_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-	),
-	array(
-		'title'    => __( 'Select Box Style', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_' . $this->id . '_select_style',
-		'default'  => 'chosen_select',
-		'type'     => 'select',
-		'options'  => array(
-			'chosen_select' => __( 'Chosen select', 'woocommerce-jetpack' ),
-			'standard'      => __( 'Standard', 'woocommerce-jetpack' ),
+		array(
+			'title'             => __( 'Visibility Method', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( 'This option sets how do you want to set product\'s visibility.', 'woocommerce-jetpack' ) . ' ' .
+				__( 'Possible values: "Set visible", "Set invisible" or "Set both".', 'woocommerce-jetpack' ),
+			'id'                => 'wcj_' . $this->id . '_visibility_method',
+			'default'           => 'visible',
+			'type'              => 'select',
+			'options'           => array(
+				'visible'   => __( 'Set visible', 'woocommerce-jetpack' ),
+				'invisible' => __( 'Set invisible', 'woocommerce-jetpack' ),
+				'both'      => __( 'Set both', 'woocommerce-jetpack' ),
+			),
+			'desc'              => __( 'Set Visible: Select values in which you want to visible product', 'woocommerce-jetpack' ) .
+				'<br>' . __( 'Set Invisible: Select values in which you want an invisible product', 'woocommerce-jetpack' ) .
+				'<br>' . __( 'Set Both: There will be 2 select box for each above option Visible & Invisible', 'woocommerce-jetpack' ) .
+				'<br>' . apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
-	),
-	array(
-		'title'    => __( 'Quick Edit', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will add options to the "Quick Edit".', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_' . $this->id . '_admin_quick_edit',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Bulk Edit', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_' . $this->id . '_admin_bulk_edit',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-		'desc_tip' => __( 'This will add options to the "Bulk Actions > Edit".', 'woocommerce-jetpack' ) . '<br>' .
-			apply_filters( 'booster_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-	),
-	array(
-		'title'    => __( 'Products List Column', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will add column to the admin products list.', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_' . $this->id . '_admin_add_column',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_' . $this->id . '_admin_options',
-	),
-) );
+		array(
+			'title'   => __( 'Select Box Style', 'woocommerce-jetpack' ),
+			'id'      => 'wcj_' . $this->id . '_select_style',
+			'default' => 'chosen_select',
+			'type'    => 'select',
+			'options' => array(
+				'chosen_select' => __( 'Chosen select', 'woocommerce-jetpack' ),
+				'standard'      => __( 'Standard', 'woocommerce-jetpack' ),
+			),
+		),
+		array(
+			'title'    => __( 'Quick Edit', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'This will add options to the "Quick Edit".', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_admin_quick_edit',
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		),
+		array(
+			'title'             => __( 'Bulk Edit', 'woocommerce-jetpack' ),
+			'desc'              => __( 'Enable', 'woocommerce-jetpack' ),
+			'id'                => 'wcj_' . $this->id . '_admin_bulk_edit',
+			'default'           => 'no',
+			'type'              => 'checkbox',
+			'desc_tip'          => __( 'This will add options to the "Bulk Actions > Edit".', 'woocommerce-jetpack' ) . '<br>' .
+				apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		),
+		array(
+			'title'    => __( 'Products List Column', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'This will add column to the admin products list.', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_admin_add_column',
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		),
+		array(
+			'type' => 'sectionend',
+			'id'   => 'wcj_' . $this->id . '_admin_options',
+		),
+	)
+);
 return $settings;
