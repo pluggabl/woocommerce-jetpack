@@ -68,10 +68,6 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 			if ( ! $order_id ) {
 				return;
 			}
-			$order = wc_get_order( $order_id );
-			if ( ! $order ) {
-				return -1;
-			}
 
 			foreach ( $order->get_items() as $item_id => $item ) {
 				$productid = $item['product_id'];
@@ -89,11 +85,11 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 * @since 1.0.0
 		 * @param string $headers defines the headers.
 		 * @param string $email_id defines the email_id.
-		 * @param array  $order defines the order.
+		 * @param array  $object defines the object.
 		 */
-		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $order ) {
-			$useremail = $this->getProductOwnerEmail( wcj_get_order_id( $order ) );
-			if ( 'new_order' === $email_id ) {
+		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $object ) {
+			if ( 'new_order' === $email_id && is_a( $object, 'WC_Order' ) ) {
+				$useremail = $this->getProductOwnerEmail( wcj_get_order_id( $object ) );
 				$headers .= 'Cc: Name <' . $useremail . '>' . "\r\n";
 			}
 			return $headers;
