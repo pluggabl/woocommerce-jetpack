@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 5.6.0
+ * @version 5.6.1-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -331,7 +331,7 @@ $settings = array_merge(
 		array(
 			'title'    => __( 'Label', 'woocommerce-jetpack' ),
 			/* translators: %s: translators Added */
-			'desc_tip' => __( 'Replaced values: %1$field_id%, %2$field_label%, %required_html%.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Replaced values: %field_id%, %field_label%, %required_html%.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_checkout_files_upload_form_template_label',
 			/* translators: %s: translators Added */
 			'default'  => '<tr><td colspan="2"><label for="%field_id%">%field_label%</label>%required_html%</td></tr>',
@@ -341,7 +341,7 @@ $settings = array_merge(
 		array(
 			'title'    => __( 'Field', 'woocommerce-jetpack' ),
 			/* translators: %s: translators Added */
-			'desc_tip' => __( 'Replaced values: %1$field_html%, %2$button_html%.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Replaced values: %field_html%, %button_html%.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_checkout_files_upload_form_template_field',
 			/* translators: %s: translators Added */
 			'default'  => '<tr><td style="width:50%;max-width:50vw;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>',
@@ -409,7 +409,7 @@ $settings = array_merge(
 			'desc'     => __( 'Image style', 'woocommerce-jetpack' ),
 			'desc_tip' => sprintf(
 				/* translators: %s: translators Added */
-				__( 'Ignored, if %1$s is not included in %2$s option above.', 'woocommerce-jetpack' ),
+				__( 'Ignored, if %s is not included in %s option above.', 'woocommerce-jetpack' ),
 				'<em>%image%</em>',
 				'<em>' . __( 'Item', 'woocommerce-jetpack' ) . '</em>'
 			),

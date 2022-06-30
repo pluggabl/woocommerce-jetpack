@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Custom Visibility
  *
- * @version 5.2.0
+ * @version 5.6.1-dev
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.1-dev
 		 * @since   3.2.4
 		 */
 		public function __construct() {
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 			$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Custom Visibility" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . '<br>' .
 			sprintf(
 				/* translators: %s: translation added */
-				__( 'You can add selection drop box to frontend with "%1$s" widget (set "Product custom visibility" as "Selector Type") or %2$s shortcode.', 'woocommerce-jetpack' ),
+				__( 'You can add selection drop box to frontend with "%s" widget (set "Product custom visibility" as "Selector Type") or %s shortcode.', 'woocommerce-jetpack' ),
 				__( 'Booster - Selector', 'woocommerce-jetpack' ),
 				'<code>[wcj_selector selector_type="product_custom_visibility"]</code>'
 			);

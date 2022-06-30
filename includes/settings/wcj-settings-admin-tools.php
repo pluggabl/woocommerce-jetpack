@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 5.6.0
+ * @version 5.6.1-dev
  * @since   2.7.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -21,8 +21,8 @@ return array(
 	array(
 		'title'    => __( 'Show Booster Menus Only to Admin', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf(
-			/* translators: %%1$s: translators Added */
-			__( 'Will require %1$s capability to see Booster menus (instead of %2$s capability).', 'woocommerce-jetpack' ),
+			/* translators: %s: translators Added */
+			__( 'Will require %s capability to see Booster menus (instead of %s capability).', 'woocommerce-jetpack' ),
 			'<code>manage_options</code>',
 			'<code>manage_woocommerce</code>'
 		),
@@ -35,7 +35,7 @@ return array(
 		'title'    => __( 'Suppress Admin Connect Notice', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf(
-			/* translators: %%1$s: translators Added */
+			/* translators: %s: translators Added */
 			__( 'Will remove "%s" admin notice.', 'woocommerce-jetpack' ),
 			__( 'Connect your store to WooCommerce.com to receive extensions updates and support.', 'woocommerce-jetpack' )
 		),

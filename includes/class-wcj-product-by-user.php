@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 5.6.0
+ * @version 5.6.1-dev
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -85,14 +85,14 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Send Email To Product User at success page when email send setting enable
 		 *
-		 * @version 5.6.0
+		 * @version 5.6.1-dev
 		 * @since 1.0.0
 		 * @param string $headers defines the headers.
 		 * @param string $email_id defines the email_id.
 		 * @param array  $order defines the order.
 		 */
 		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $order ) {
-			$useremail = $this->getProductOwnerEmail( $order->id );
+			$useremail = $this->getProductOwnerEmail( wcj_get_order_id( $order ) );
 			if ( 'new_order' === $email_id ) {
 				$headers .= 'Cc: Name <' . $useremail . '>' . "\r\n";
 			}

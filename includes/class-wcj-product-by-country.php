@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 5.4.3
+ * @version 5.6.1-dev
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -145,7 +145,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Maybe_add_extra_settings.
 		 *
-		 * @version 5.4.3
+		 * @version 5.6.1-dev
 		 * @since   3.6.0
 		 * @todo    (maybe) move "Country List" inside the "Admin Options" section
 		 */
@@ -161,7 +161,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 					'desc_tip'          => __( 'Possible values: "Automatically by IP" or "Manually".', 'woocommerce-jetpack' ),
 					'desc'              => sprintf(
 						/* translators: %s: translation added */
-						'<p>' . __( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%1$s" widget or %2$s shortcode.', 'woocommerce-jetpack' ),
+						'<p>' . __( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%s" widget or %s shortcode.', 'woocommerce-jetpack' ),
 						__( 'Booster - Selector', 'woocommerce-jetpack' ),
 						'<code>[wcj_selector selector_type="country"]</code>'
 					) .

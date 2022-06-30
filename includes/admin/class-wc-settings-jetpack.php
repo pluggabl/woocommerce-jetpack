@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.5.6
+ * @version 5.6.1-dev
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -96,7 +96,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_free_version_footer_review_notice.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1-dev
 		 * @since   5.3.0
 		 */
 		public function create_free_version_footer_review_notice() {
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			$link       = 'https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?filter=5#new-post';
 			$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
 			$stars_link = '<a href="' . $link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
-			$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %1$s on <a href="%2$s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
+			$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %s on <a href="%s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
 			?>
 				<style>
 			  .wcj-review-icon { vertical-align: middle; margin: -6px 0 0 0; }
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_pro_version_footer_review_notice.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1-dev
 		 * @since   5.3.1
 		 */
 		public function create_pro_version_footer_review_notice() {
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
 				$stars_link = '<a href="' . $link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
 				/* translators: %s: search term */
-				$message = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %1$s on  <a href="%2$s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
+				$message = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %s on  <a href="%s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
 				?>
 			   <style>
 				  .wcj-review-icon { vertical-align: middle; margin: -6px 0 0 0; }
@@ -332,7 +332,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output the settings.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1-dev
 		 * @todo    (maybe) admin_notices
 		 */
 		public function output() {
@@ -353,7 +353,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					echo wp_kses_post(
 						sprintf(
 							/* translators: %s: search term */
-							__( 'Please note that current <em>%1$s</em> module is deprecated and will be removed in future updates. Please use <em>%2$s</em> module instead.', 'woocommerce-jetpack' ),
+							__( 'Please note that current <em>%s</em> module is deprecated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ),
 							w_c_j()->modules[ $current_section ]->short_desc,
 							'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $replacement_module['cat'] . '&section=' . $replacement_module['module'] ) . '">' .
 							$replacement_module['title'] . '</a>'

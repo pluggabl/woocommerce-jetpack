@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 5.5.6
+ * @version 5.6.1-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_exchange_rate_settings_button.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.1-dev
 		 * @param  Array $value Get values.
 		 */
 		public function output_exchange_rate_settings_button( $value ) {
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			$description          = '';
 			$exchange_rate_server = wcj_get_currency_exchange_rate_server_name( $value['custom_attributes_button']['currency_from'], $value['custom_attributes_button']['currency_to'] );
 			/* translators: %s: translation added */
-			$value_title = sprintf( __( 'Grab raw %1$s rate from %2$s.', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server ) .
+			$value_title = sprintf( __( 'Grab raw %s rate from %s.', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server ) .
 			' ' . __( 'Doesn\'t apply rounding, offset etc.', 'woocommerce-jetpack' );
 			?>
 		<tr valign="top">
