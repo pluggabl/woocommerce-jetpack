@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 5.6.0
+Stable tag: 5.6.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.1 01/07/2022 =
+
+* FIXED - PRODUCTS - User Products - Fixed Fatal Error: Uncaught Error: Cannot access protected property XXX::$id.
+* FIXED - PRODUCTS - Tax Display - Fixed Price displayed without taxes as default
+* FIXED - PRODUCTS - Price based on User Role - Parse error: syntax error, unexpected ‘)’ in .../includes/class-wcj-price-by-user-role.php on line 417.
+* FIXED - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Allowing cents to Min, Max & Default input box
+* FIXED - PRICES & CURRENCIES - Bulk Price Converter - PHP Notice:  Undefined index: bulk_change_prices_preview...
+* FIXED - PRICES & CURRENCIES - Global Discount - Fixed Include/Exclude Product Categories, Tags, Products options
+* FIXED - PHP Notice:  Undefined variable: old_option ...
+* FIXED - Added Security vulnerability fixes.
 
 = 5.6.0 29/06/2022 =
 

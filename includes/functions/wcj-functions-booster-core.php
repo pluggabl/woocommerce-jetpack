@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Booster Core
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -38,14 +38,14 @@ if ( ! function_exists( 'wcj_plugin_url' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wcj_plugin_path' ) ) {
+if ( ! function_exists( 'wcj_free_plugin_path' ) ) {
 	/**
 	 * Get the plugin path.
 	 *
 	 * @return string
-	 * @todo   use `WCJ_PLUGIN_PATH` constant instead
+	 * @todo   use `wcj_free_plugin_path` constant instead
 	 */
-	function wcj_plugin_path() {
+	function wcj_free_plugin_path() {
 		return untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../..' ) );
 	}
 }

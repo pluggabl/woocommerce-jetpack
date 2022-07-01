@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 5.5.6
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -104,7 +104,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Load_hashids_lib.
 		 *
-		 * @version 4.7.0
+		 * @version 5.6.1
 		 * @since   4.7.0
 		 *
 		 * @return Hashids\Hashids
@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				return;
 			}
 			if ( empty( $this->hashids ) ) {
-				require_once wcj_plugin_path() . '/includes/lib/hashids/src/Hashids.php';
+				require_once wcj_free_plugin_path() . '/includes/lib/hashids/src/Hashids.php';
 				$sku_format      = wcj_get_option( 'wcj_sku_hashids_sku_format', 'letters_and_numbers' );
 				$characters_case = wcj_get_option( 'wcj_sku_characters_case', 'original' );
 				$letters         = 'original' === $characters_case ? 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' : ( 'lower' === $characters_case ? 'abcdefghijklmnopqrstuvwxyz' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' );

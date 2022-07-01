@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Time
  *
- * @version 5.2.0
+ * @version 5.6.1
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -135,7 +135,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		/**
 		 * Get_extra_option_desc.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.1
 		 * @since   4.0.0
 		 * @param  string $option_id defines the option_id.
 		 */
@@ -145,8 +145,8 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 				$parsed_time = $this->parse_time( $values );
 				if ( $parsed_time ) {
 					return '. ' . sprintf(
-						/* translators: %1$s: translators Added */
-						__( 'According to current time, your time input will be parsed as: from %1$s to %2$s.', 'woocommerce-jetpack' ),
+						/* translators: %s: translators Added */
+						__( 'According to current time, your time input will be parsed as: from %s to %s.', 'woocommerce-jetpack' ),
 						'<code>' . gmdate( 'Y-m-d H:i:s', $parsed_time['time_from'] ) . '</code>',
 						'<code>' . gmdate( 'Y-m-d H:i:s', $parsed_time['time_to'] ) . '</code>'
 					);

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @since   2.5.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_Price_by_Formula' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.7
+		 * @version 5.6.1
 		 * @since   2.5.1
 		 * @todo    use WC math library instead of `PHPMathParser`
 		 */
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Product_Price_by_Formula' ) ) :
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
-				require_once wcj_plugin_path() . '/includes/lib/PHPMathParser/Math.php';
+				require_once wcj_free_plugin_path() . '/includes/lib/PHPMathParser/Math.php';
 
 				add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 5.5.6
+ * @version 5.6.1
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -283,15 +283,15 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Get_no_documents_found_message.
 		 *
-		 * @version 3.1.0
+		 * @version 5.6.1
 		 * @since   3.1.0
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
 		 * @param int          $invoice_type_id Get invoice type id.
 		 */
 		public function get_no_documents_found_message( $year, $month, $invoice_type_id ) {
-			/* translators: %%1$s: search term */
-			return sprintf( __( 'No documents (%1$s) found for %2$d-%3$02d.', 'woocommerce-jetpack' ), $invoice_type_id, $year, $month );
+			/* translators: %s: search term */
+			return sprintf( __( 'No documents (%s) found for %d-%02d.', 'woocommerce-jetpack' ), $invoice_type_id, $year, $month );
 		}
 
 		/**

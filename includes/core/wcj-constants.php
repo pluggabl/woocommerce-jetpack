@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Constants
  *
- * @version 3.8.0
+ * @version 5.6.1
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -107,9 +107,9 @@ if ( ! defined( 'WCJ_VERSION_OPTION' ) ) {
 	/**
 	 * Booster version option name.
 	 *
-	 * @version 3.3.0
+	 * @version 5.6.1
 	 * @since   3.3.0
 	 * @todo    (maybe) option should have `wcj_` prefix (however it will be deleted during "Reset", and "Booster was updated to v..." message will show up)
 	 */
-	define( 'WCJ_VERSION_OPTION', ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ? 'booster_for_woocommerce_version' : 'booster_plus_for_woocommerce_version' ) );
+	define( 'WCJ_VERSION_OPTION', ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ? 'booster_for_woocommerce_version' : 'booster_plus_for_woocommerce_version' ) );
 }

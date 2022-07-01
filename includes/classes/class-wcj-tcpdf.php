@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - TCPDF
  *
- * @version 4.3.0
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @todo    (maybe) `Header()`
  * @package Booster_For_WooCommerce/classes
@@ -16,11 +16,11 @@ if ( ! class_exists( 'WCJ_TCPDF' ) ) :
 
 	// Enable custom TCPDF config.
 	define( 'K_TCPDF_EXTERNAL_CONFIG', true );
-	require_once wcj_plugin_path() . '/includes/lib/tcpdf_config.php';
+	require_once wcj_free_plugin_path() . '/includes/lib/tcpdf_config.php';
 
 	// Include TCPDF library.
 	if ( ! class_exists( 'TCPDF' ) ) {
-		require_once wcj_plugin_path() . '/includes/lib/tcpdf/tcpdf.php';
+		require_once wcj_free_plugin_path() . '/includes/lib/tcpdf/tcpdf.php';
 	}
 	/**
 	 * WCJ_TCPDF.

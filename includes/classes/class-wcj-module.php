@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -300,16 +300,16 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Handle_deprecated_options.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.1
 		 * @since   3.8.0
 		 */
 		public function handle_deprecated_options() {
 			$deprecated_options = $this->get_deprecated_options();
-			$old_value          = wcj_get_option( $old_option, null );
 			if ( $deprecated_options ) {
 				foreach ( $deprecated_options as $new_option => $old_options ) {
 					$new_value = wcj_get_option( $new_option, array() );
 					foreach ( $old_options as $new_key => $old_option ) {
+						$old_value = wcj_get_option( $old_option, null );
 						if ( null !== ( $old_value ) ) {
 							$new_value[ $new_key ] = $old_value;
 							delete_option( $old_option );
@@ -390,11 +390,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Get_meta_box_options.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.1
 		 * @since   2.8.0
 		 */
 		public function get_meta_box_options() {
-			$filename = wcj_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-' . str_replace( '_', '-', $this->id ) . '.php';
+			$filename = wcj_free_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-' . str_replace( '_', '-', $this->id ) . '.php';
 			return ( file_exists( $filename ) ? require $filename : array() );
 		}
 
@@ -435,12 +435,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_settings_from_file.
 		 *
-		 * @version 3.2.1
+		 * @version 5.6.1
 		 * @since   2.8.0
 		 * @param Array $settings get settings.
 		 */
 		public function add_settings_from_file( $settings ) {
-			$filename = wcj_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
+			$filename = wcj_free_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
 			$settings = ( file_exists( $filename ) ? require $filename : $settings );
 			return $this->maybe_fix_settings( $settings );
 		}
@@ -595,7 +595,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Handle_hide_on_free_parameter.
 		 *
-		 * @version 5.3.6
+		 * @version 5.6.1
 		 * @since   5.3.6
 		 *
 		 * @param Array $settings Get settings.
@@ -603,7 +603,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @return array
 		 */
 		public function handle_hide_on_free_parameter( $settings ) {
-			if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			if ( 'woocommerce-jetpack.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 				return $settings;
 			}
 			$settings = wp_list_filter( $settings, array( 'hide_on_free' => true ), 'NOT' );
@@ -803,12 +803,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Get_cat_by_section.
 		 *
-		 * @version 2.2.3
+		 * @version 5.6.1
 		 * @since   2.2.3
 		 * @param Array $section Get sections.
 		 */
 		public function get_cat_by_section( $section ) {
-			$cats = include wcj_plugin_path() . '/includes/admin/wcj-modules-cats.php';
+			$cats = include wcj_free_plugin_path() . '/includes/admin/wcj-modules-cats.php';
 			foreach ( $cats as $id => $label_info ) {
 				if ( ( ! empty( $label_info['all_cat_ids'] ) ) &&
 				( is_array( $label_info['all_cat_ids'] ) ) &&

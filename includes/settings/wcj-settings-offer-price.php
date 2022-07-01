@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 5.6.0
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -321,9 +321,9 @@ return array(
 		'title'   => __( 'Email Recipient', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Can be comma separated list.', 'woocommerce-jetpack' ) . ' ' .
 			sprintf(
-				/* translators: %1$s: translators Added */
+				/* translators: %s: translators Added */
 				__(
-					'Use %1$s to send to administrator email: %2$s.',
+					'Use %s to send to administrator email: %s.',
 					'woocommerce-jetpack'
 				),
 				'<code>%admin_email%</code>',
@@ -352,8 +352,8 @@ return array(
 			sprintf( __( 'Product: %s', 'woocommerce-jetpack' ), '<a href="%product_edit_link%">%product_title%</a>' ) . '<br>' . PHP_EOL .
 			/* translators: %s: translators Added */
 			sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
-			/* translators: %1$s %2$s: translators Added */
-			sprintf( __( 'From: %1$s %2$s', 'woocommerce-jetpack' ), '%customer_name%', '%customer_email%' ) . '<br>' . PHP_EOL .
+			/* translators: %s %s: translators Added */
+			sprintf( __( 'From: %s %s', 'woocommerce-jetpack' ), '%customer_name%', '%customer_email%' ) . '<br>' . PHP_EOL .
 			/* translators: %s: translators Added */
 			sprintf( __( 'Message: %s', 'woocommerce-jetpack' ), '%customer_message%' ),
 		'css'     => 'width:100%;height:200px;',

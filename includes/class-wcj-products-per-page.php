@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 5.2.0
+ * @version 5.6.1
  * @since   2.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -53,7 +53,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		/**
 		 * Add_products_per_page_form.
 		 *
-		 * @version 4.7.0
+		 * @version 5.6.1
 		 * @since   2.5.3
 		 */
 		public function add_products_per_page_form() {
@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 			$html        .= '<form action="' . esc_url( remove_query_arg( 'paged' ) ) . '" method="' . $form_method . '">';
 			$_text        = wcj_get_option(
 				'wcj_products_per_page_text',
-				__( 'Products <strong>%1$from% - %to%</strong>. Products on page %2$select_form%', 'woocommerce-jetpack' )
+				__( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' )
 			);
 			$html        .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $_text );
 			$html        .= '</form>';

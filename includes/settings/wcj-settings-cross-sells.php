@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cross-sells
  *
- * @version 5.6.0
+ * @version 5.6.1
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -133,8 +133,8 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 				'desc'              => __( 'Enable', 'woocommerce-jetpack' ),
 				'desc_tip'          => __( 'Enable this, if you want original products to be removed from cart and replaced with cross-sells, if customer adds cross-sells on cart page.', 'woocommerce-jetpack' ) . '<br>' .
 					sprintf(
-						/* translators: %1$s: translators Added */
-						__( 'Please note that this option will work only if "%1$s" option is disabled in %2$s.', 'woocommerce-jetpack' ),
+						/* translators: %s: translators Added */
+						__( 'Please note that this option will work only if "%s" option is disabled in %s.', 'woocommerce-jetpack' ),
 						__( 'Enable AJAX add to cart buttons on archives', 'woocommerce' ),
 						'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=products' ) . '">' .
 						__( 'WooCommerce > Settings > Products > General > Shop pages > Add to cart behaviour', 'woocommerce-jetpack' ) . '</a>'

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 5.1.1
+ * @version 5.6.1
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
@@ -475,22 +475,22 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Add_settings_from_file.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.1
 		 * @since   3.6.0
 		 * @param mixed $settings get settings.
 		 */
 		public function add_settings_from_file( $settings ) {
-			return $this->maybe_fix_settings( require wcj_plugin_path() . '/includes/settings/wcj-settings-product-by-condition.php' );
+			return $this->maybe_fix_settings( require wcj_free_plugin_path() . '/includes/settings/wcj-settings-product-by-condition.php' );
 		}
 
 		/**
 		 * Met_meta_box_options.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.1
 		 * @since   3.6.0
 		 */
 		public function get_meta_box_options() {
-			$filename = wcj_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php';
+			$filename = wcj_free_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php';
 			return ( file_exists( $filename ) ? require $filename : array() );
 		}
 

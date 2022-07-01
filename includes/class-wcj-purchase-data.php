@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.5.6
+ * @version 5.6.1
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.0
+		 * @version 5.6.1
 		 * @todo    (maybe) pre-calculate profit for orders
 		 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 		 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s', 'woocommerce-jetpack' ),
+					__( '<strong>PHP code:</strong> by using %s function, e.g.: %s', 'woocommerce-jetpack' ),
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_profit]\'&nbsp;);</code>'
 				) .

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 5.3.3
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -296,7 +296,7 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 	/**
 	 * Wcj_barcode.
 	 *
-	 * @version 3.4.0
+	 * @version 5.6.1
 	 * @since   3.3.0
 	 * @todo    (maybe) "Barcodes" module
 	 * @todo    (maybe) `getBarcodePNG()`
@@ -316,10 +316,10 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 10 );
 		}
 		if ( '1D' === $atts['dimension'] ) {
-			require_once WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_1d.php';
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_1d.php';
 			$barcode = new TCPDFBarcode( $atts['code'], $atts['type'] );
 		} else {
-			require_once WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_2d.php';
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_2d.php';
 			$barcode = new TCPDF2DBarcode( $atts['code'], $atts['type'] );
 		}
 		$barcode_array = $barcode->getBarcodeArray();
@@ -1031,7 +1031,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 1.0.0
+	 * @version 5.6.1
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1057,6 +1057,15 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'max'         => true,
 				'disabled'    => true,
 				'onchange'    => true,
+				'step'		  => true,
+				'changeyear'  => true,
+				'yearrange'   => true,
+				'timeformat'  => true,
+				'interval'    => true,
+				'readonly'    => true,
+				'data-blocked_dates'        => true,
+				'currentday_time_limit'     => true,
+				'data-blocked_dates_format' => true,
 			),
 			'textarea' => array(
 				'name'        => true,

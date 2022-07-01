@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.5.6
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -23,7 +23,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.0
+		 * @version 5.6.1
 		 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 		 */
 		public function __construct() {
@@ -45,7 +45,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: search term */
-					__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
+					__( '<strong>PHP code:</strong> by using %s function,<br> e.g.: %s', 'woocommerce-jetpack' ),
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_checkout_field meta_key = "billing_wcj_checkout_field_1]\'&nbsp;);</code>'
 				) .

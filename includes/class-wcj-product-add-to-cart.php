@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 5.5.8
+ * @version 5.6.1
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -347,7 +347,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Adds radio buttons template for variations
 		 *
-		 * @version 4.6.0
+		 * @version 5.6.1
 		 * @since   4.3.0
 		 * @see woocommerce_variable_add_to_cart()
 		 */
@@ -362,7 +362,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 					'selected_attributes'  => $product->get_default_attributes(),
 				),
 				'',
-				WCJ_PLUGIN_PATH . '/includes/templates/'
+				WCJ_FREE_PLUGIN_PATH . '/includes/templates/'
 			);
 			?>
 		<style>

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -321,7 +321,7 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 		/**
 		 * Track_users_by_country_dashboard_widget.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.1
 		 * @since   2.9.1
 		 * @todo    (maybe) display all info (IP, referer etc.) on country click
 		 * @todo    (maybe) display stats by day and/or month
@@ -370,8 +370,8 @@ if ( ! class_exists( 'WCJ_User_Tracking' ) ) :
 			$_time              = wcj_get_option( 'wcj_track_users_cron_time_schedule', '' );
 			$cron_next_schedule = ( '' !== ( $_time ) ? gmdate( 'Y-m-d H:i:s', $_time ) : '-' );
 			echo '<p>' .
-			sprintf( wp_kses_post( 'Stats generated at %1$s. Next update is scheduled at %2$s.', 'woocommerce-jetpack' ), wp_kses_post( $cron_last_run ), wp_kses_post( $cron_next_schedule ) ) . ' ' .
-			'<a href="' . esc_url( add_query_arg( 'wcj_track_users_update_county_stats', '1' ) ) . '">' . wp_kses_post( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
+			sprintf( __( 'Stats generated at %s. Next update is scheduled at %s.', 'woocommerce-jetpack' ), $cron_last_run, $cron_next_schedule ) . ' ' .
+			'<a href="' . esc_url( add_query_arg( 'wcj_track_users_update_county_stats', '1' ) ) . '">' . __( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
 			'</p>';
 		}
 

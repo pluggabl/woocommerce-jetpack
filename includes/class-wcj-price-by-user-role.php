@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -305,7 +305,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 4.7.1
+		 * @version 5.6.1
 		 * @since   2.5.0
 		 * @todo    (maybe) add "enable compound multipliers" option
 		 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
@@ -413,7 +413,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 					WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,
 					'woocommerce_variation_prices_regular_price',
 					'woocommerce_product_variation_get_regular_price',
-				),
+				)
 			) ) {
 				return $price;
 			}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 5.2.0
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -186,7 +186,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Create_offer_price_history_meta_box.
 		 *
-		 * @version 4.4.0
+		 * @version 5.6.1
 		 * @since   2.9.0
 		 */
 		public function create_offer_price_history_meta_box() {
@@ -254,9 +254,9 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				echo wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) );
 				foreach ( $average_offers as $average_offer_currency_code => $average_offer_data ) {
 					echo '<p>' . sprintf(
-						wp_kses_post( 'Average offer: %1$s (from %2$s offer(s))', 'woocommerce-jetpack' ),
-						wp_kses_post( wc_price( ( $average_offer_data['offers_sum'] / $average_offer_data['total_offers'] ), array( 'currency' => $average_offer_currency_code ) ) ),
-						wp_kses_post( $average_offer_data['total_offers'] )
+						__( 'Average offer: %s (from %s offer(s))', 'woocommerce-jetpack' ),
+						wc_price( ( $average_offer_data['offers_sum'] / $average_offer_data['total_offers'] ), array( 'currency' => $average_offer_currency_code ) ),
+						$average_offer_data['total_offers']
 					) . '</p>';
 				}
 				echo '<p>' .

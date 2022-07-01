@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version 3.9.0
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -49,12 +49,12 @@ if ( ! function_exists( 'wcj_get_country_flag_by_code' ) ) {
 	/**
 	 * Wcj_get_country_flag_by_code.
 	 *
-	 * @version  2.9.1
+	 * @version  5.6.1
 	 * @param   string $country_code defines the country_code.
 	 */
 	function wcj_get_country_flag_by_code( $country_code ) {
 		$img      = '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png';
-		$img_path = wcj_plugin_path() . $img;
+		$img_path = wcj_free_plugin_path() . $img;
 		$img_src  = wcj_plugin_url() . ( file_exists( $img_path ) ? $img : '/assets/images/flag-icons/no-flag.png' );
 		return '<img src="' . $img_src . '" title="' . wcj_get_country_name_by_code( $country_code ) . '">';
 	}

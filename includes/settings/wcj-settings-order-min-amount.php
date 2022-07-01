@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Minimum Amount
  *
- * @version 5.6.0
+ * @version 5.6.1
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -55,8 +55,8 @@ $settings = array(
 	array(
 		'title'             => __( 'Error message', 'woocommerce-jetpack' ),
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
-		/* translators: %1$s: translators Added */
-		'desc_tip'          => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %1$s to place your order, your current order total is %2$s.', 'woocommerce-jetpack' ),
+		/* translators: %s: translators Added */
+		'desc_tip'          => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_order_minimum_amount_error_message',
 		/* translators: %s: translators Added */
 		'default'           => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
@@ -74,8 +74,8 @@ $settings = array(
 	array(
 		'title'             => __( 'Message on cart page', 'woocommerce-jetpack' ),
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
-		/* translators: %2$s: translators Added */
-		'desc_tip'          => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %1$s to place your order, your current order total is %2$s.', 'woocommerce-jetpack' ),
+		/* translators: %s: translators Added */
+		'desc_tip'          => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_order_minimum_amount_cart_notice_message',
 		/* translators: %s: translators Added */
 		'default'           => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',

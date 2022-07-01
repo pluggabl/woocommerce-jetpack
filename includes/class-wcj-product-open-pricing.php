@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -494,7 +494,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_input_field_to_frontend.
 		 *
-		 * @version 4.2.0
+		 * @version 5.6.1
 		 * @since   2.4.8
 		 */
 		public function add_open_price_input_field_to_frontend() {
@@ -515,8 +515,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 				$default_price_step = 1 / pow( 10, absint( wcj_get_option( 'woocommerce_price_num_decimals', 2 ) ) );
 				$custom_attributes  = '';
 				$custom_attributes .= 'step="' . wcj_get_option( 'wcj_product_open_price_price_step', $default_price_step ) . '" ';
-				$custom_attributes .= ( '' === $min_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? 'min="0" ' : 'min="' . $min_price . '" ';
-				$custom_attributes .= ( '' === $max_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? '' : 'max="' . $max_price . '" ';
+				$custom_attributes .= ( '' == $min_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? 'min="0" ' : 'min="' . $min_price . '" ';
+				$custom_attributes .= ( '' == $max_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? '' : 'max="' . $max_price . '" ';
 				$input_field        = '<input '
 				. 'type="number" '
 				. 'class="text" '

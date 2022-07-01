@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - My Account
  *
- * @version 5.6.0
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -126,8 +126,8 @@ $settings         = array_merge(
 		array(
 			'desc'    => __( 'Custom menu items.', 'woocommerce-jetpack' ) . ' ' .
 				sprintf(
-					/* translators: %1$s: translators Added */
-					__( 'Add in %1$s format. One per line. E.g.: %2$s.', 'woocommerce-jetpack' ),
+					/* translators: %s: translators Added */
+					__( 'Add in %s format. One per line. E.g.: %s.', 'woocommerce-jetpack' ),
 					'<code>endpoint|label|link</code>',
 					'<code>shop|Shop|/shop/</code>'
 				),

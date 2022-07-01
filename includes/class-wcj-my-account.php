@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -282,7 +282,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Customize_dashboard.
 		 *
-		 * @version 4.8.0
+		 * @version 5.6.1
 		 * @since   3.8.0
 		 * @see     woocommerce/templates/myaccount/dashboard.php
 		 * @param string | array $value defines the value.
@@ -326,7 +326,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				echo '<p>';
 				/* translators: 1: user display name 2: logout url */
 				printf(
-					wp_kses_post( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ),
+					__( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ),
 					'<strong>' . esc_html( $current_user->display_name ) . '</strong>',
 					esc_url( wc_logout_url( wc_get_page_permalink( 'myaccount' ) ) )
 				);
@@ -336,7 +336,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			if ( 'no' === wcj_get_option( 'wcj_my_account_custom_dashboard_hide_info', 'no' ) ) {
 				echo '<p>';
 				printf(
-					wp_kses_post( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' ),
+					__( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' ),
 					esc_url( wc_get_endpoint_url( 'orders' ) ),
 					esc_url( wc_get_endpoint_url( 'edit-address' ) ),
 					esc_url( wc_get_endpoint_url( 'edit-account' ) )
@@ -478,7 +478,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Add_my_account_custom_info.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.1
 		 * @since   3.4.0
 		 */
 		public function add_my_account_custom_info() {
@@ -489,7 +489,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				if (
 					'' !== wcj_get_option( 'wcj_my_account_custom_info_content_' . $i ) &&
 					wcj_get_option( 'wcj_my_account_custom_info_hook_' . $i, 'woocommerce_account_dashboard' ) === $current_filter &&
-					wcj_get_option( 'wcj_my_account_custom_info_priority_' . $i, 10 ) === $current_filter_priority
+					wcj_get_option( 'wcj_my_account_custom_info_priority_' . $i, '10' ) === (string)$current_filter_priority
 				) {
 					echo do_shortcode( wcj_get_option( 'wcj_my_account_custom_info_content_' . $i ) );
 				}

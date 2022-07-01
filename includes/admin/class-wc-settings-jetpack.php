@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.5.6
+ * @version 5.6.1
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -74,11 +74,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_free_version_notice_about_plus.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1
 		 * @since   5.3.0
 		 */
 		public function create_free_version_notice_about_plus() {
-			if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			if ( 'woocommerce-jetpack.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 				return;
 			}
 			$class = 'notice notice-info';
@@ -96,18 +96,18 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_free_version_footer_review_notice.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1
 		 * @since   5.3.0
 		 */
 		public function create_free_version_footer_review_notice() {
-			if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			if ( 'woocommerce-jetpack.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 				return;
 			}
 			$class      = 'notice notice-info inline';
 			$link       = 'https://wordpress.org/support/plugin/woocommerce-jetpack/reviews/?filter=5#new-post';
 			$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
 			$stars_link = '<a href="' . $link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
-			$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %1$s on <a href="%2$s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
+			$message    = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %s on <a href="%s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
 			?>
 				<style>
 			  .wcj-review-icon { vertical-align: middle; margin: -6px 0 0 0; }
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_pro_version_footer_review_notice.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1
 		 * @since   5.3.1
 		 */
 		public function create_pro_version_footer_review_notice() {
@@ -158,7 +158,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					</div>
 				</div>
 				<?php
-				if ( 'booster-plus-for-woocommerce.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+				if ( 'booster-plus-for-woocommerce.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 							return;
 				}
 				$class      = 'notice notice-info inline';
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				$star       = '<span class="wcj-review-icon dashicons dashicons-star-filled"></span>';
 				$stars_link = '<a href="' . $link . '" target="_blank">' . $star . $star . $star . $star . $star . '</a>';
 				/* translators: %s: search term */
-				$message = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %1$s on  <a href="%2$s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
+				$message = sprintf( __( 'Please rate <strong>Booster for WooCommerce</strong> %s on  <a href="%s" target="_blank">WordPress.org</a> to help us spread the word. Thank you from Booster team!', 'woocommerce-jetpack' ), $stars_link, $link );
 				?>
 			   <style>
 				  .wcj-review-icon { vertical-align: middle; margin: -6px 0 0 0; }
@@ -332,7 +332,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output the settings.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1
 		 * @todo    (maybe) admin_notices
 		 */
 		public function output() {
@@ -353,7 +353,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					echo wp_kses_post(
 						sprintf(
 							/* translators: %s: search term */
-							__( 'Please note that current <em>%1$s</em> module is deprecated and will be removed in future updates. Please use <em>%2$s</em> module instead.', 'woocommerce-jetpack' ),
+							__( 'Please note that current <em>%s</em> module is deprecated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ),
 							w_c_j()->modules[ $current_section ]->short_desc,
 							'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $replacement_module['cat'] . '&section=' . $replacement_module['module'] ) . '">' .
 							$replacement_module['title'] . '</a>'
@@ -419,7 +419,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output_dashboard.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1
 		 * @param array $current_section defines the current section.
 		 */
 		public function output_dashboard( $current_section ) {
@@ -527,7 +527,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				);
 			}
 
-			$plugin_data  = get_plugin_data( WCJ_PLUGIN_FILE );
+			$plugin_data  = get_plugin_data( WCJ_FREE_PLUGIN_FILE );
 			$plugin_title = ( isset( $plugin_data['Name'] ) ? '[' . $plugin_data['Name'] . '] ' : '' );
 			echo wp_kses_post(
 				'<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . $plugin_title .
@@ -807,7 +807,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 
 		public function version_details() {
 
-			$file = wcj_plugin_path() . '/version-details.txt';
+			$file = wcj_free_plugin_path() . '/version-details.txt';
 			if ( file_exists( $file ) ) {
 
 				$doc  = file_get_contents( $file );

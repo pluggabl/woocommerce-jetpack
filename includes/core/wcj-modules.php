@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 5.4.0
+ * @version 5.6.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -141,7 +141,7 @@ $wcj_module_files = array(
 );
 
 $this->modules   = array();
-$wcj_modules_dir = WCJ_PLUGIN_PATH . '/includes/';
+$wcj_modules_dir = WCJ_FREE_PLUGIN_PATH . '/includes/';
 foreach ( $wcj_module_files as $wcj_module_file ) {
 	$module                       = include_once $wcj_modules_dir . $wcj_module_file;
 	$this->modules[ $module->id ] = $module;

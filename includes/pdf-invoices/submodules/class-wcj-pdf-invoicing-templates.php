@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Templates
  *
- * @version 3.1.0
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -35,14 +35,14 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Templates' ) ) :
 		/**
 		 * Get_default_template.
 		 *
-		 * @version 3.1.0
+		 * @version 5.6.1
 		 * @since   3.1.0
 		 * @param int $invoice_type_id Get invoice ID.
 		 */
 		public function get_default_template( $invoice_type_id ) {
 			if ( ! isset( $this->default_template[ $invoice_type_id ] ) ) {
 				$default_template_filename = ( false === strpos( $invoice_type_id, 'custom_doc_' ) ? $invoice_type_id : 'custom_doc' );
-				$default_template_filename = wcj_plugin_path() . '/includes/settings/pdf-invoicing/wcj-content-template-' . $default_template_filename . '.php';
+				$default_template_filename = wcj_free_plugin_path() . '/includes/settings/pdf-invoicing/wcj-content-template-' . $default_template_filename . '.php';
 				if ( file_exists( $default_template_filename ) ) {
 					ob_start();
 					include $default_template_filename;

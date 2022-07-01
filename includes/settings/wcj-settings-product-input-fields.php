@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 5.6.0
+ * @version 5.6.1
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
@@ -406,8 +406,8 @@ $settings = array_merge(
 		array(
 			'title'    => __( 'Strip Slashes', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			/* translators: %1$s: translators Added */
-			'desc_tip' => sprintf( __( 'Enable this if you have single quotes %1$s converted to %2$s.', 'woocommerce-jetpack' ), '<code>\'</code>', '<code>\\\'</code>' ),
+			/* translators: %s: translators Added */
+			'desc_tip' => sprintf( __( 'Enable this if you have single quotes %s converted to %s.', 'woocommerce-jetpack' ), '<code>\'</code>', '<code>\\\'</code>' ),
 			'id'       => 'wcj_product_input_fields_stripslashes',
 			'default'  => 'no',
 			'type'     => 'checkbox',

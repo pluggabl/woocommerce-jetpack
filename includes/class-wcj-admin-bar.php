@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 4.1.0
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -131,7 +131,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		/**
 		 * Get_nodes_booster_modules.
 		 *
-		 * @version 3.1.0
+		 * @version 5.6.1
 		 * @since   2.9.0
 		 * @todo    (maybe) dashes instead of underscores
 		 * @todo    (maybe) dashboard > alphabetically - list all modules
@@ -139,7 +139,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		 */
 		public function get_nodes_booster_modules() {
 			$nodes                = array();
-			$cats                 = include wcj_plugin_path() . '/includes/admin/wcj-modules-cats.php';
+			$cats                 = include wcj_free_plugin_path() . '/includes/admin/wcj-modules-cats.php';
 			$this->active_modules = array();
 			foreach ( $cats as $id => $label_info ) {
 				$nodes[ $id ] = array(

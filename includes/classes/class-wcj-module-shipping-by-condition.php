@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 5.3.5
+ * @version 5.6.1
  * @since   3.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
@@ -97,12 +97,12 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 		/**
 		 * Add_settings_from_file.
 		 *
-		 * @version 3.2.1
+		 * @version 5.6.1
 		 * @since   3.2.1
 		 * @param mixed $settings get settings.
 		 */
 		public function add_settings_from_file( $settings ) {
-			return $this->maybe_fix_settings( require wcj_plugin_path() . '/includes/settings/wcj-settings-shipping-by-condition.php' );
+			return $this->maybe_fix_settings( require wcj_free_plugin_path() . '/includes/settings/wcj-settings-shipping-by-condition.php' );
 		}
 
 		/**

@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 5.4.0
+ * @version 5.6.1
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -213,7 +213,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * Initialise settings form fields.
 		 *
-		 * @version 5.4.0
+		 * @version 5.6.1
 		 * @todo    (maybe) `chosen_select` class in `trigger`.
 		 */
 		public function init_form_fields() {
@@ -236,8 +236,8 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 				$status_triggers[ 'woocommerce_order_status_' . $slug . '_notification' ] = sprintf( __( 'Order status updated to %s', 'woocommerce-jetpack' ), $name );
 				foreach ( $order_statuses as $slug2 => $name2 ) {
 					if ( $slug !== $slug2 ) {
-						/* translators: %2$s: search term */
-						$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %1$s to %2$s', 'woocommerce-jetpack' ), $name, $name2 );
+						/* translators: %s: search term */
+						$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %s to %s', 'woocommerce-jetpack' ), $name, $name2 );
 					}
 				}
 			}
