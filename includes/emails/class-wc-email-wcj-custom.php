@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -213,7 +213,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * Initialise settings form fields.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @todo    (maybe) `chosen_select` class in `trigger`.
 		 */
 		public function init_form_fields() {

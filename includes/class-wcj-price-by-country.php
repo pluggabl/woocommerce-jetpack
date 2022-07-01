@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 5.2.0
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -112,11 +112,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		/**
 		 * Init_bkg_process_class.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.1
 		 * @since   5.1.0
 		 */
 		public function init_bkg_process_class() {
-			require_once wcj_plugin_path() . '/includes/background-process/class-wcj-price-by-country-updater.php';
+			require_once wcj_free_plugin_path() . '/includes/background-process/class-wcj-price-by-country-updater.php';
 			$this->bkg_process_price_updater = new WCJ_Price_By_Country_Updater();
 		}
 

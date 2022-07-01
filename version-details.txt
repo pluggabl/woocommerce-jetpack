@@ -1,6 +1,5 @@
-= 5.6.0 29/06/2022 =
+= 5.6.1 01/07/2022 =
 
-* FIXED - PRICES & CURRENCIES - Wholesale Price - Fixed debug.log warning.
-* FIXED - PAYMENT GATEWAYS - Gateways Fees and Discounts - Updated the payment fee calculation.
-* WooCommerce 6.6.1 tested
-* WordPress 6.0 tested
+* FIXED - PRODUCTS - User Products - Fixed Fatal Error: Uncaught Error: Cannot access protected property XXX::$id.
+* FIXED - PRODUCTS - Tax Display - Fixed Price displayed without taxes as default
+* FIXED - PRODUCTS - Price based on User Role - Parse error: syntax error, unexpected ‘)’ in .../includes/class-wcj-price-by-user-role.php on line 417.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.9.0
+ * @version 5.6.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -36,7 +36,7 @@ $wcj_function_files = array(
 	'wcj-functions-reports.php',
 );
 
-$wcj_functions_dir = WCJ_PLUGIN_PATH . '/includes/functions/';
+$wcj_functions_dir = WCJ_FREE_PLUGIN_PATH . '/includes/functions/';
 foreach ( $wcj_function_files as $wcj_function_file ) {
 	include_once $wcj_functions_dir . $wcj_function_file;
 }

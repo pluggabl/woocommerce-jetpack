@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -74,11 +74,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_free_version_notice_about_plus.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1
 		 * @since   5.3.0
 		 */
 		public function create_free_version_notice_about_plus() {
-			if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			if ( 'woocommerce-jetpack.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 				return;
 			}
 			$class = 'notice notice-info';
@@ -96,11 +96,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_free_version_footer_review_notice.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   5.3.0
 		 */
 		public function create_free_version_footer_review_notice() {
-			if ( 'woocommerce-jetpack.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+			if ( 'woocommerce-jetpack.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 				return;
 			}
 			$class      = 'notice notice-info inline';
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_pro_version_footer_review_notice.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   5.3.1
 		 */
 		public function create_pro_version_footer_review_notice() {
@@ -158,7 +158,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					</div>
 				</div>
 				<?php
-				if ( 'booster-plus-for-woocommerce.php' !== basename( WCJ_PLUGIN_FILE ) ) {
+				if ( 'booster-plus-for-woocommerce.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 							return;
 				}
 				$class      = 'notice notice-info inline';
@@ -332,7 +332,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output the settings.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @todo    (maybe) admin_notices
 		 */
 		public function output() {
@@ -419,7 +419,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output_dashboard.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.1
 		 * @param array $current_section defines the current section.
 		 */
 		public function output_dashboard( $current_section ) {
@@ -527,7 +527,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				);
 			}
 
-			$plugin_data  = get_plugin_data( WCJ_PLUGIN_FILE );
+			$plugin_data  = get_plugin_data( WCJ_FREE_PLUGIN_FILE );
 			$plugin_title = ( isset( $plugin_data['Name'] ) ? '[' . $plugin_data['Name'] . '] ' : '' );
 			echo wp_kses_post(
 				'<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . $plugin_title .
@@ -807,7 +807,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 
 		public function version_details() {
 
-			$file = wcj_plugin_path() . '/version-details.txt';
+			$file = wcj_free_plugin_path() . '/version-details.txt';
 			if ( file_exists( $file ) ) {
 
 				$doc  = file_get_contents( $file );

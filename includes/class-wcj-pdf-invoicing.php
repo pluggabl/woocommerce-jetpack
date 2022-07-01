@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.5.9
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -304,8 +304,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			if ( empty( $files ) ) {
 				return 'merge_pdfs_no_files';
 			}
-			require_once wcj_plugin_path() . '/includes/lib/FPDI/src/autoload.php';
-			$fpdi_pdf = require_once wcj_plugin_path() . '/includes/pdf-invoices/tcpdffpdi.php';
+			require_once wcj_free_plugin_path() . '/includes/lib/FPDI/src/autoload.php';
+			$fpdi_pdf = require_once wcj_free_plugin_path() . '/includes/pdf-invoices/tcpdffpdi.php';
 			$fpdi_pdf->SetTitle( 'docs.pdf' );
 			$fpdi_pdf->setPrintHeader( false );
 			$fpdi_pdf->setPrintFooter( false );

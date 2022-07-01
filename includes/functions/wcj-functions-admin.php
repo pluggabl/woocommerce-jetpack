@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 5.4.8
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -30,7 +30,7 @@ if ( ! function_exists( 'wcj_get_module_category' ) ) {
 	/**
 	 * Wcj_get_module_category.
 	 *
-	 * @version 3.3.0
+	 * @version 5.6.1
 	 * @since   3.3.0
 	 * @todo    better solution for `global $wcj_modules_cats`
 	 * @todo    use this function where needed (e.g. in `class-wc-settings-jetpack.php`)
@@ -39,7 +39,7 @@ if ( ! function_exists( 'wcj_get_module_category' ) ) {
 	function wcj_get_module_category( $module_id ) {
 		global $wcj_modules_cats;
 		if ( ! isset( $wcj_modules_cats ) ) {
-			$wcj_modules_cats = include WCJ_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php';
+			$wcj_modules_cats = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php';
 		}
 		foreach ( $wcj_modules_cats as $cat_id => $cat_data ) {
 			if ( ! empty( $cat_data['all_cat_ids'] ) && in_array( $module_id, $cat_data['all_cat_ids'], true ) ) {

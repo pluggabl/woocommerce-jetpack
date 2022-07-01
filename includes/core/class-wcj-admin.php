@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 5.3.0
+ * @version 5.6.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.3.0
+		 * @version 5.6.1
 		 * @since   3.2.4
 		 */
 		public function __construct() {
@@ -34,10 +34,10 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 
 				if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
 					add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_wcj_settings_tab' ), 1 );
-					add_filter( 'plugin_action_links_' . plugin_basename( WCJ_PLUGIN_FILE ), array( $this, 'action_links' ) );
+					add_filter( 'plugin_action_links_' . plugin_basename( WCJ_FREE_PLUGIN_FILE ), array( $this, 'action_links' ) );
 					add_action( 'admin_menu', array( $this, 'booster_menu' ), 100 );
 					add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 2 );
-					if ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ) {
+					if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
 						add_action( 'admin_notices', array( $this, 'check_plus_version' ) );
 					}
 				}
@@ -130,7 +130,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Show action links on the plugin screen
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.1
 		 * @param   mixed $links get links.
 		 * @return  array
 		 */
@@ -139,7 +139,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
 				'<a href="' . esc_url( 'https://booster.io/' ) . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 			);
-			if ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ) {
+			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
 				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
 			} else {
 				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/my-account/booster-contact/' ) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
@@ -150,11 +150,11 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Add Jetpack settings tab to WooCommerce settings.
 		 *
-		 * @version 3.2.4
+		 * @version 5.6.1
 		 * @param   array $settings get module settings.
 		 */
 		public function add_wcj_settings_tab( $settings ) {
-			$_settings = include WCJ_PLUGIN_PATH . '/includes/admin/class-wc-settings-jetpack.php';
+			$_settings = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wc-settings-jetpack.php';
 			$_settings->add_module_statuses( w_c_j()->module_statuses );
 			$settings[] = $_settings;
 			return $settings;

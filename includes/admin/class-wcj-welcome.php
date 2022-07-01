@@ -2,7 +2,7 @@
 /**
  * Booster getting started
  *
- * @version 5.4.3
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -87,10 +87,10 @@ if ( ! class_exists( 'WCJ_Welcome' ) ) :
 		/**
 		 * Wcj_welcome_screen_content.
 		 *
-		 * @version 5.4.1
+		 * @version 5.6.1
 		 */
 		public function wcj_welcome_screen_content() {
-			require_once WCJ_PLUGIN_PATH . '/includes/admin/wcj-welcome-screen-content.php';
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-welcome-screen-content.php';
 		}
 
 		/**

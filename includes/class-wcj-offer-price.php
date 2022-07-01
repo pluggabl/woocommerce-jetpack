@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -186,7 +186,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Create_offer_price_history_meta_box.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   2.9.0
 		 */
 		public function create_offer_price_history_meta_box() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @since   2.5.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -336,7 +336,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Maybe_apply_formula.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.1
 		 * @since   3.4.0
 		 * @todo    use WC math library instead of `PHPMathParser`
 		 * @param int | string $formula Get formula.
@@ -346,7 +346,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 				return $formula;
 			}
 			$formula = do_shortcode( $formula );
-			require_once wcj_plugin_path() . '/includes/lib/PHPMathParser/Math.php';
+			require_once wcj_free_plugin_path() . '/includes/lib/PHPMathParser/Math.php';
 			$math      = new WCJ_Math();
 			$variables = array(
 				'quantity' => $this->get_total_cart_quantity(),

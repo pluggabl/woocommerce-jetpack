@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -282,7 +282,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Customize_dashboard.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   3.8.0
 		 * @see     woocommerce/templates/myaccount/dashboard.php
 		 * @param string | array $value defines the value.
@@ -478,7 +478,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Add_my_account_custom_info.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   3.4.0
 		 */
 		public function add_my_account_custom_info() {

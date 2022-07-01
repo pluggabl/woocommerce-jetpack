@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -28,7 +28,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @todo    check if we can just always execute `init()` on `init` hook
 		 */
 		public function __construct() {
@@ -98,12 +98,12 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Init_bkg_process_class.
 		 *
-		 * @version 4.5.0
+		 * @version 5.6.1
 		 * @since   4.5.0
 		 */
 		public function init_bkg_process_class() {
 			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_update_prices_on_exch_update', 'no' ) ) {
-				require_once wcj_plugin_path() . '/includes/background-process/class-wcj-multicurrency-price-updater.php';
+				require_once wcj_free_plugin_path() . '/includes/background-process/class-wcj-multicurrency-price-updater.php';
 				$this->bkg_process_price_updater = new WCJ_Multicurrency_Price_Updater();
 			}
 		}
@@ -218,7 +218,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Product_addons_price_raw.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   5.1.1
 		 *
 		 * @param int   $price defines the price.
@@ -315,7 +315,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Get_wc_tree_table_rate_settings.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   4.9.0
 		 * @param array $option defines the option.
 		 *
@@ -346,7 +346,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Recursively_convert_wc_tree_settings.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   4.9.0
 		 *
 		 * @param array $array defines the array.
@@ -690,7 +690,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @see price-slider.js, init_price_filter()
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   4.3.0
 		 */
 		public function add_compatibility_with_price_filter_widget() {
@@ -1078,7 +1078,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Finds old add-ons fields on cart and replace by correct price.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   4.3.0
 		 *
 		 * @param array $other_data defines the other_data.
@@ -1246,7 +1246,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Saves price so it won't be necessary to calculate it multiple times.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   4.6.0
 		 *
 		 * @param int    $price defines the price.

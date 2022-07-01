@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 5.2.0
+ * @version 5.6.1
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -211,7 +211,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Display.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.1
 		 * @since   3.6.0
 		 * @todo    (maybe) multicurrency
 		 * @todo    (feature) (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
@@ -268,7 +268,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 			}
 
 			// WCJ Math.
-			require_once wcj_plugin_path() . '/includes/lib/PHPMathParser/Math.php';
+			require_once wcj_free_plugin_path() . '/includes/lib/PHPMathParser/Math.php';
 			$math = new WCJ_Math();
 
 			// You Save Formula.

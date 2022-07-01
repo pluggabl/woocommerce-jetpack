@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @todo    (maybe) option to change local and global fields order (i.e. output local fields before the global)
 		 */
 		public function __construct() {

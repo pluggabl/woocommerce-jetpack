@@ -3,7 +3,7 @@
  * Plugin Name: Booster for WooCommerce
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules.All in one WooCommerce plugin.
- * Version: 5.6.0
+ * Version: 5.6.1
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
@@ -30,17 +30,22 @@ if ( ! wcj_is_plugin_activated( 'woocommerce', 'woocommerce.php' ) ) {
 }
 
 // Check if Plus is active.
-if ( 'woocommerce-jetpack.php' === basename( __FILE__ ) && wcj_is_plugin_activated( 'booster-plus-for-woocommerce', 'booster-plus-for-woocommerce.php' ) ) {
+if ( 'woocommerce-jetpack.php' === basename( __FILE__ ) &&
+	( wcj_is_plugin_activated( 'booster-plus-for-woocommerce', 'booster-plus-for-woocommerce.php' ) ||
+	wcj_is_plugin_activated( 'booster-elite-for-woocommerce', 'booster-elite-for-woocommerce.php' ) ||
+	wcj_is_plugin_activated( 'booster-basic-for-woocommerce', 'booster-basic-for-woocommerce.php' ) ||
+	wcj_is_plugin_activated( 'booster-pro-for-woocommerce', 'booster-pro-for-woocommerce.php' ) )
+) {
 	return;
 }
 
-if ( ! defined( 'WCJ_PLUGIN_FILE' ) ) {
+if ( ! defined( 'WCJ_FREE_PLUGIN_FILE' ) ) {
 	/**
-	 * WCJ_PLUGIN_FILE.
+	 * WCJ_FREE_PLUGIN_FILE.
 	 *
-	 * @since 3.2.4
+	 * @since 5.6.1
 	 */
-	define( 'WCJ_PLUGIN_FILE', __FILE__ );
+	define( 'WCJ_FREE_PLUGIN_FILE', __FILE__ );
 }
 
 if ( ! class_exists( 'WC_Jetpack' ) ) :
@@ -54,16 +59,13 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 	 */
 	final class WC_Jetpack {
 
-
-
-
 		/**
 		 * Booster for WooCommerce version.
 		 *
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '5.6.0';
+		public $version = '5.6.1';
 
 		/**
 		 * The single instance of the class

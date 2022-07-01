@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Custom Visibility
  *
- * @version 5.6.1-dev
+ * @version 5.6.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 5.6.1
 		 * @since   3.2.4
 		 */
 		public function __construct() {

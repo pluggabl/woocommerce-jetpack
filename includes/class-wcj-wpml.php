@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 5.1.0
+ * @version 5.6.1
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -208,11 +208,11 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		/**
 		 * Create_wpml_xml_file.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.1
 		 * @see     https://wpml.org/documentation/support/language-configuration-files/#admin-texts
 		 */
 		public function create_wpml_xml_file() {
-			$file_path = wcj_plugin_path() . '/wpml-config.xml';
+			$file_path = wcj_free_plugin_path() . '/wpml-config.xml';
 			$handle    = fopen( $file_path, 'w' );
 			if ( false !== ( $handle ) ) {
 				fwrite( $handle, '<wpml-config>' . PHP_EOL );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Multicurrency
  *
- * @version 4.0.0
+ * @version 5.6.1
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Widget_Multicurrency' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.1
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */
@@ -51,7 +51,8 @@ if ( ! class_exists( 'WCJ_Widget_Multicurrency' ) ) :
 			if ( ! wcj_is_module_enabled( 'multicurrency' ) ) {
 				return __( 'Multicurrency module not enabled!', 'woocommerce-jetpack' );
 			} else {
-				switch ( $instance['switcher_type'] ) {
+				$switcher_type = isset( $instance['switcher_type'] ) ? $instance['switcher_type'] : '';
+				switch ( $switcher_type ) {
 					case 'link_list':
 						return do_shortcode( '[wcj_currency_select_link_list]' );
 					case 'radio_list':

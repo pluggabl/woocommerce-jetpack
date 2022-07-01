@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 				return $value;
 			}
 			$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
-			if ( '' !== ( $session_value ) ) {
+			if ( '' !== ( $session_value ) && NULL !== ( $session_value ) ) {
 				return $session_value;
 			}
 			return $value;

@@ -1,7 +1,7 @@
 /**
  * wcj-admin.
  *
- * @version 5.4.2
+ * @version 5.6.1
  * @since   2.5.3
  */
 
@@ -308,9 +308,6 @@ img.wcj-rocket-icon:hover {
 }
 .wclj_tl_foot .wcj-review-footer {
   margin-bottom: 0px;
-}
-#wpfooter {
-  position: relative;
 }
 .wclj_tl_foot .wcj-review-footer label,
 .wclj_tl_foot .wcj-review-footer p {
