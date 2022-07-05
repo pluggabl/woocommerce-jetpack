@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Add to Cart per Product
  *
- * @version 2.7.0
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -71,12 +71,15 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		/**
 		 * Save_custom_add_to_cart_meta_box.
 		 *
+		 * @version 5.6.2-dev
+		 *
 		 * @param int   $post_id Get post Id.
 		 * @param Array $post Get post.
 		 */
 		public function save_custom_add_to_cart_meta_box( $post_id, $post ) {
+			$nonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
 			// Check that we are saving with custom add to cart metabox displayed.
-			if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) ) {
+			if ( ! $nonce || ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) ) {
 				return;
 			}
 			$option_name = 'wcj_custom_add_to_cart_local_single';
@@ -103,6 +106,9 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 
 		/**
 		 * Create_custom_add_to_cart_meta_box.
+		 *
+		 * @version 5.6.2-dev
+		 *
 		 */
 		public function create_custom_add_to_cart_meta_box() {
 
@@ -138,7 +144,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 			}
 			$html .= '</table>';
 			$html .= '<input type="hidden" name="woojetpack_custom_add_to_cart_save_post" value="woojetpack_custom_add_to_cart_save_post">';
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 	}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -23,7 +23,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.5
 		 * @todo    styling options
 		 */
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					$the_hook = wcj_get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' );
-					if ( 'disable' != ( $the_hook ) ) {
+					if ( 'disable' !== ( $the_hook ) ) {
 						add_action( $the_hook, array( $this, 'add_files_upload_form_to_checkout_frontend' ), wcj_get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 ) );
 					}
 					if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_add_to_thankyou_' . $i, 'no' ) ) {
@@ -123,7 +123,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Add_files_to_order_display.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.4.7
 		 * @todo    (maybe) somehow add `%image%` to emails also
 		 * @param string | int $order defines the order.
@@ -148,11 +148,11 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			}
 			for ( $i = 1; $i <= $total_files; $i++ ) {
 				$real_file_name = get_post_meta( $order_id, '_wcj_checkout_files_upload_real_name_' . $i, true );
-				if ( '' != $real_file_name ) {
+				if ( '' !== $real_file_name ) {
 					$img = '';
 					if ( $do_add_img ) {
 						$order_file_name = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . get_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i, true );
-						if ( @is_array( getimagesize( $order_file_name ) ) ) {
+						if ( is_array( getimagesize( $order_file_name ) ) ) {
 							$link = add_query_arg(
 								array(
 									'wcj_download_checkout_file' => $i,
@@ -172,7 +172,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					);
 				}
 			}
-			if ( '' != $html ) {
+			if ( '' !== $html ) {
 				echo $template_before . $html . $template_after;
 			}
 		}
@@ -196,7 +196,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Validate_on_checkout.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.5
 		 * @param string $posted defines the posted.
 		 */
@@ -206,7 +206,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				if (
 				'yes' === wcj_get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) &&
 				$this->is_visible( $i ) &&
-				'disable' != wcj_get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' )
+				'disable' !== wcj_get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' )
 				) {
 					if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_required_' . $i, 'no' ) && null === wcj_session_get( 'wcj_checkout_files_upload_' . $i ) ) {
 						// Is required.
@@ -219,11 +219,11 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					$file_name   = $file_name['name'];
 					$file_type   = '.' . pathinfo( $file_name, PATHINFO_EXTENSION );
 					$file_accept = wcj_get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' );
-					if ( '' != ( $file_accept ) ) {
+					if ( '' !== $file_accept && null !== $file_accept ) {
 						// Validate file type.
 						$file_accept = explode( ',', $file_accept );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-							if ( ! in_array( $file_type, $file_accept ) ) {
+							if ( ! in_array( $file_type, $file_accept, true ) ) {
 								$this->add_notice(
 									sprintf(
 										wcj_get_option(
@@ -278,7 +278,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Create_file_admin_order_meta_box.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.4.5
 		 */
 		public function create_file_admin_order_meta_box() {
@@ -289,7 +289,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			for ( $i = 1; $i <= $total_files; $i++ ) {
 				$order_file_name = get_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i, true );
 				$real_file_name  = get_post_meta( $order_id, '_wcj_checkout_files_upload_real_name_' . $i, true );
-				if ( '' != $order_file_name ) {
+				if ( '' !== $order_file_name && null !== $order_file_name ) {
 					$files_exists = true;
 					$html        .= '<p><a href="' . add_query_arg(
 						array(
@@ -311,7 +311,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Is_extension_blocked.
 		 *
-		 * @version 3.2.3
+		 * @version 5.6.2-dev
 		 * @since   3.2.3
 		 * @param string $ext defines the ext.
 		 */
@@ -328,7 +328,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				'bat|exe|cmd|sh|php|php0|php1|php2|php3|php4|php5|php6|php7|php8|php9|ph|ph0|ph1|ph2|ph3|ph4|ph5|ph6|ph7|ph8|ph9|pl|cgi|386|dll|com|torrent|js|app|jar|pif|vb|vbscript|wsf|asp|cer|csr|jsp|drv|sys|ade|adp|bas|chm|cpl|crt|csh|fxp|hlp|hta|inf|ins|isp|jse|htaccess|htpasswd|ksh|lnk|mdb|mde|mdt|mdw|msc|msi|msp|mst|ops|pcd|prg|reg|scr|sct|shb|shs|url|vbe|vbs|wsc|wsf|wsh|html|htm'
 			);
 			$blocked_file_exts = explode( '|', $blocked_file_exts );
-			return in_array( $ext, $blocked_file_exts );
+			return in_array( $ext, $blocked_file_exts, true );
 		}
 
 		/**
@@ -369,7 +369,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Remove_files_on_empty_cart.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 * @param string         $cart_item_key defines the cart_item_key.
 		 * @param string | array $cart defines the cart.
@@ -381,7 +381,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$wcj_checkout_files_upload_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 				for ( $i = 1; $i <= $wcj_checkout_files_upload_total_number; $i++ ) {
 					$session_data = wcj_session_get( 'wcj_checkout_files_upload_' . $i );
-					if ( null != ( $session_data ) ) {
+					if ( null !== $session_data && '' !== $session_data ) {
 						$any_files_removed = true;
 						if ( isset( $session_data['tmp_name'] ) ) {
 							unlink( $session_data['tmp_name'] );
@@ -411,7 +411,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Process_checkout_files_upload.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   2.4.5
 		 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 		 * @todo    `$this->additional_admin_emails_settings` - more customization options, e.g.: admin email, subject, content, from
@@ -487,11 +487,12 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			// Upload file.
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( isset( $_POST[ 'wcj_upload_checkout_file_' . $i ] ) ) {
-					$file_name = 'wcj_checkout_files_upload_' . $i;
-					if ( isset( $_FILES[ $file_name ] ) && '' != $_FILES[ $file_name ]['tmp_name'] ) {
+					$file_name      = 'wcj_checkout_files_upload_' . $i;
+					$temp_file_name = isset( $_FILES[ $file_name ]['tmp_name'] ) ? sanitize_text_field( wp_unslash( $_FILES[ $file_name ]['tmp_name'] ) ) : '';
+					if ( isset( $_FILES[ $file_name ] ) && '' !== $temp_file_name && null !== $temp_file_name ) {
 						// Validate.
 						$is_valid       = true;
-						$real_file_name = $_FILES[ $file_name ]['name'];
+						$real_file_name = isset( $_FILES[ $file_name ]['name'] ) ? sanitize_text_field( wp_unslash( $_FILES[ $file_name ]['name'] ) ) : '';
 						$file_type      = '.' . pathinfo( $real_file_name, PATHINFO_EXTENSION );
 						$file_accept    = wcj_get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' );
 						if ( '' != ( $file_accept ) ) {
@@ -531,8 +532,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						if ( $is_valid ) {
 							// To session.
 							$tmp_dest_file = tempnam( sys_get_temp_dir(), 'wcj' );
-							move_uploaded_file( $_FILES[ $file_name ]['tmp_name'], $tmp_dest_file );
-							$session_data             = $_FILES[ $file_name ];
+							move_uploaded_file( $temp_file_name, $tmp_dest_file );
+							$session_data             = array_map( 'sanitize_text_field', wp_unslash( $_FILES[ $file_name ] ) );
 							$session_data['tmp_name'] = $tmp_dest_file;
 							wcj_session_set( $file_name, $session_data );
 							$this->add_notice(
@@ -542,7 +543,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 										/* translators: %s: search term */
 										__( 'File "%s" was successfully uploaded.', 'woocommerce-jetpack' )
 									),
-									$_FILES[ $file_name ]['name']
+									$real_file_name
 								)
 							);
 							// To order.
@@ -562,7 +563,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 										wcj_handle_replacements(
 											array(
 												'%order_id%'  => sanitize_text_field( wp_unslash( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ),
-												'%file_name%' => $_FILES[ $file_name ]['name'],
+												'%file_name%' => $real_file_name,
 											),
 											$admin_email_content
 										),
@@ -575,8 +576,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 							do_action(
 								'wcj_checkout_files_upload',
 								'upload_file',
-								( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ? $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] : false ),
-								$_FILES[ $file_name ]['name']
+								( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ) : false ),
+								$real_file_name
 							);
 						}
 					} else {
@@ -593,16 +594,18 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			// Admin file download.
 			if ( isset( $_GET['wcj_download_checkout_file_admin'] ) ) {
 				$tmp_file_name = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . sanitize_text_field( wp_unslash( $_GET['wcj_download_checkout_file_admin'] ) );
-				$file_name     = get_post_meta( $_GET['post'], '_' . 'wcj_checkout_files_upload_real_name_' . sanitize_text_field( wp_unslash( $_GET['wcj_checkout_file_number'] ) ), true );
-				if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
-					header( 'Expires: 0' );
-					header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
-					header( 'Cache-Control: private', false );
-					header( 'Content-disposition: attachment; filename=' . $file_name );
-					header( 'Content-Transfer-Encoding: binary' );
-					header( 'Content-Length: ' . filesize( $tmp_file_name ) );
-					readfile( $tmp_file_name );
-					exit();
+				if ( isset( $_GET['post'] ) && isset( $_GET['wcj_checkout_file_number'] ) ) {
+					$file_name = get_post_meta( sanitize_text_field( wp_unslash( $_GET['post'] ) ), '_wcj_checkout_files_upload_real_name_' . sanitize_text_field( wp_unslash( $_GET['wcj_checkout_file_number'] ) ), true );
+					if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
+						header( 'Expires: 0' );
+						header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
+						header( 'Cache-Control: private', false );
+						header( 'Content-disposition: attachment; filename=' . $file_name );
+						header( 'Content-Transfer-Encoding: binary' );
+						header( 'Content-Length: ' . filesize( $tmp_file_name ) );
+						readfile( $tmp_file_name );
+						exit();
+					}
 				}
 			}
 			// Admin all files delete.
@@ -610,7 +613,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$order_id    = sanitize_text_field( wp_unslash( $_GET['wcj_download_checkout_file_admin_delete_all'] ) );
 				$total_files = get_post_meta( $order_id, '_wcj_checkout_files_total_files', true );
 				for ( $i = 1; $i <= $total_files; $i++ ) {
-					if ( '' != ( $order_file_name = get_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_' . $i, true ) ) ) {
+					$order_file_name = get_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i, true );
+					if ( '' !== $order_file_name ) {
 						unlink( wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name );
 					}
 					delete_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i );
@@ -625,7 +629,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$i = sanitize_text_field( wp_unslash( $_GET['wcj_download_checkout_file'] ) );
 				if ( ! empty( $_GET['wcj_download_checkout_file_order_id'] ) ) {
 					$order_id = sanitize_text_field( wp_unslash( $_GET['wcj_download_checkout_file_order_id'] ) );
-					if ( ! ( $order = wc_get_order( $order_id ) ) ) {
+					$order    = wc_get_order( $order_id );
+					if ( ! $order ) {
 						return;
 					}
 					if ( isset( $_GET['key'] ) ) {
@@ -661,7 +666,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Is_visible.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.7
 		 * @param int $i defines the value of i.
 		 * @param int $order_id defines the order_id.
@@ -774,7 +779,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				}
 			}
 
-			// Include by product tag
+			// Include by product tag.
 			$tags_in = wcj_get_option( 'wcj_checkout_files_upload_show_tags_in_' . $i );
 			if ( ! empty( $tags_in ) ) {
 				$do_skip_by_tags = true;
@@ -965,7 +970,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Add_files_upload_form_to_checkout_frontend_all.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.2
 		 * @param bool $is_direct_call check the is_direct_call.
 		 */
@@ -978,7 +983,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			}
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				$is_filter_ok = ( $is_direct_call ) ? true : (
-				 wcj_get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) === $current_filter &&
+				wcj_get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) === $current_filter &&
 				wcj_get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 ) == $current_filter_priority
 				);
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) && $is_filter_ok && $this->is_visible( $i ) ) {

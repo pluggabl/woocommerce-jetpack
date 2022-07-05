@@ -1,9 +1,10 @@
 /**
- * wcj-datepicker.
+ * Wcj-datepicker.
  *
  * @version 5.2.0
  * @todo    maybe_exclude_dates: `date.getDate()`, `date.getFullYear()`
  * @see     maybe_exclude_dates: https://stackoverflow.com/questions/501943/can-the-jquery-ui-datepicker-be-made-to-disable-saturdays-and-sundays-and-holid
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( document ).ready(
@@ -12,7 +13,7 @@ jQuery( document ).ready(
 			function () {
 				var mindate = jQuery( this ).attr( "mindate" );
 				if (mindate === 'zero') {
-					  mindate = 0;
+					mindate = 0;
 				}
 				var maxdate = jQuery( this ).attr( "maxdate" );
 				if (maxdate === 'zero') {
@@ -32,8 +33,9 @@ jQuery( document ).ready(
 				function maybe_exclude_dates(date){
 					var exclude_days = jQuery( this ).attr( "excludedays" );
 					if (typeof exclude_days !== typeof undefined && exclude_days !== false) {
-						var day = date.getDay();
-						for (var i = 0; i < exclude_days.length; i++) {
+						var day                 = date.getDay();
+						var exclude_days_length = exclude_days.length;
+						for (var i = 0; i < exclude_days_length; i++) {
 							if (day == exclude_days[i]) {
 								return [false];
 							}
@@ -41,8 +43,9 @@ jQuery( document ).ready(
 					}
 					var exclude_months = jQuery( this ).attr( "excludemonths" );
 					if (typeof exclude_months !== typeof undefined && exclude_months !== false) {
-						var month = date.getMonth() + 1;
-						for (var i = 0; i < exclude_months.length; i++) {
+						var month                 = date.getMonth() + 1;
+						var exclude_months_length = exclude_months.length;
+						for (var i = 0; i < exclude_months_length; i++) {
 							if (month == exclude_months[i]) {
 								return [false];
 							}

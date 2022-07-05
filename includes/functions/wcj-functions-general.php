@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -496,12 +496,12 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	/**
 	 * Wcj_customer_get_country.
 	 *
-	 * @version 2.8.0
+	 * @version 5.6.2-dev
 	 * @since   2.8.0
 	 * @todo    (maybe) move to `wcj-functions-users.php`
 	 */
 	function wcj_customer_get_country() {
-		return ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
+		return (string)( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
 	}
 }
 

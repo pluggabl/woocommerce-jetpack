@@ -1,9 +1,11 @@
 /**
- * wcj-pdf-invoicing.
+ * Wcj-pdf-invoicing.
  *
- * version 2.5.2
- * since   2.5.2
+ * @version 5.6.2-dev
+ * @since   2.5.2
+ * @package Booster_For_WooCommerce/includes/JS
  */
+
 jQuery( document ).ready(
 	function() {
 		jQuery( 'a.wcj_need_confirmation' ).click(

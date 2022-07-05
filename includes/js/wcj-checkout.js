@@ -1,12 +1,15 @@
-/*
- * wcj-checkout.js
+/**
+ * Wcj-checkout.js
+ *
+ * @version 5.6.2-dev
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery(
 	function( $ ) {
-		// Define that JavaScript code should be executed in "strict mode"
+		// Define that JavaScript code should be executed in "strict mode".
 		"use strict";
-		// Trigger WooCommerce's `update_checkout` function, when customer changes payment method
+		// Trigger WooCommerce's `update_checkout` function, when customer changes payment method.
 		$( 'body' ).on(
 			'change',
 			'input[name="payment_method"]',

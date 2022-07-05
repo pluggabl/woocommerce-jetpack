@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Renumerate Tool
  *
- * @version 5.5.6
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -51,19 +51,19 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 		/**
 		 * Add Renumerate Invoices tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2-dev
 		 */
 		public function create_renumerate_invoices_tool() {
 
 			$result_message    = '';
 			$renumerate_result = '';
 
-			$the_invoice_type   = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
-			$the_start_number   = ( ! empty( $_POST['start_number'] ) ) ? $_POST['start_number'] : 0;
-			$the_start_date     = ( ! empty( $_POST['start_date'] ) ) ? $_POST['start_date'] : '';
-			$the_end_date       = ( ! empty( $_POST['end_date'] ) ) ? $_POST['end_date'] : '';
-			$the_order_statuses = ( ! empty( $_POST['order_statuses'] ) ) ? $_POST['order_statuses'] : array();
-			$the_delete_all     = sanitize_text_field( wp_unslash( $_POST['delete_all'] ) );
+			$the_invoice_type   = ( ! empty( $_POST['invoice_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['invoice_type'] ) ) : 'invoice';
+			$the_start_number   = ( ! empty( $_POST['start_number'] ) ) ? sanitize_text_field( wp_unslash( $_POST['start_number'] ) ) : 0;
+			$the_start_date     = ( ! empty( $_POST['start_date'] ) ) ? sanitize_text_field( wp_unslash( $_POST['start_date'] ) ) : '';
+			$the_end_date       = ( ! empty( $_POST['end_date'] ) ) ? sanitize_text_field( wp_unslash( $_POST['end_date'] ) ) : '';
+			$the_order_statuses = ( ! empty( $_POST['order_statuses'] ) ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['order_statuses'] ) ) : array();
+			$the_delete_all     = ( isset( $_POST['delete_all'] ) );
 
 			if ( isset( $_POST['renumerate_invoices'] ) ) {
 				if ( ! empty( $the_order_statuses ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
- * @version 3.8.0
+ * @version 5.6.2-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -32,7 +32,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.2
 		 */
 		public function manage_options() {
@@ -40,16 +40,17 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 				if ( ! function_exists( 'current_user_can' ) || ! current_user_can( 'manage_options' ) ) {
 					return;
 				}
-				if ( isset( $_POST['booster_import_settings'] ) ) {
+				$wpnonce = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' );
+				if ( $wpnonce && isset( $_POST['booster_import_settings'] ) ) {
 					$this->manage_options_import();
 				}
-				if ( isset( $_POST['booster_export_settings'] ) ) {
+				if ( $wpnonce && isset( $_POST['booster_export_settings'] ) ) {
 					$this->manage_options_export();
 				}
-				if ( isset( $_POST['booster_reset_settings'] ) ) {
+				if ( $wpnonce && isset( $_POST['booster_reset_settings'] ) ) {
 					$this->manage_options_reset();
 				}
-				if ( isset( $_POST['booster_reset_settings_meta'] ) ) {
+				if ( $wpnonce && isset( $_POST['booster_reset_settings_meta'] ) ) {
 					$this->manage_options_reset_meta();
 				}
 			}
@@ -66,8 +67,10 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 			if ( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' === $_FILES['booster_import_settings_file']['tmp_name'] ) {
 				$wcj_notice     .= __( 'Please upload a file to import!', 'woocommerce-jetpack' );
 				$import_settings = array();
-
-				unset( $_POST['booster_import_settings'] );
+				$wpnonce         = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' );
+				if ( $wpnonce ) {
+					unset( $_POST['booster_import_settings'] );
+				}
 			} else {
 				$import_counter  = 0;
 				$import_settings = file_get_contents( sanitize_text_field( wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] ) ) );
@@ -99,18 +102,19 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_export.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.2
 		 * @see     http://php.net/manual/en/function.header.php
 		 */
 		public function manage_options_export() {
 			$export_settings = array();
 			$export_counter  = array();
+			$wpnonce         = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' );
 			foreach ( w_c_j()->modules as $module ) {
 				$values = $module->get_settings();
 				foreach ( $values as $value ) {
 					if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
-						if ( isset( $_POST['booster_export_settings'] ) ) {
+						if ( $wpnonce && isset( $_POST['booster_export_settings'] ) ) {
 							$export_settings[ $value['id'] ] = wcj_get_option( $value['id'], $value['default'] );
 							if ( ! isset( $export_counter[ $module->short_desc ] ) ) {
 								$export_counter[ $module->short_desc ] = 0;
