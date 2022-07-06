@@ -1,10 +1,13 @@
 /**
- * wcj-order-quantities.js
  *
- * @version 4.2.0
+ * Wcj-order-quantities.
+ *
+ * @version 5.6.2-dev
  * @since   3.2.2
  * @todo    [dev] maybe `jQuery('[name=quantity]').val('0')` on `jQuery.isEmptyObject(product_quantities[variation_id])` (instead of `return`)
- */
+ *
+ * @package Booster_For_WooCommerce/includes/JS
+ **/
 
 function check_qty(){
 	var variation_id = jQuery( '[name=variation_id]' ).val();

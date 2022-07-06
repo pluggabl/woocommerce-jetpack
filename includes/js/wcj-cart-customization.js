@@ -1,9 +1,11 @@
 /**
- * wcj-cart-customization.
+ * Wcj-cart-customization.
  *
- * @version 2.8.0
+ * @version 5.6.2-dev
  * @since   2.8.0
  * @todo    (maybe) fix when cart is emptied (i.e. after products removed)
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( document ).ready(

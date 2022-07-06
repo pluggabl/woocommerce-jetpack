@@ -1,9 +1,10 @@
 /**
- * wcj-admin.
+ * Wcj-New Design.
  *
- * @version 5.4.9
+ * @version 5.6.2-dev
  * @since   5.4.2
- */
+ * @package Booster_For_WooCommerce/includes/JS
+ **/
 
 jQuery( document ).ready(
 	function () {
@@ -14,9 +15,7 @@ jQuery( document ).ready(
 
 			function showCircles() {
 				subCircles.forEach(
-					circle => {
-						circle.classList.toggle( "show" );
-					}
+					circle => {circle.classList.toggle( "show" );}
 				)
 			};
 		}

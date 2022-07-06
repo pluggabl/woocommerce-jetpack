@@ -1,9 +1,11 @@
 /**
- * wcj-custom-tabs-yoast-seo.
+ * Wcj-custom-tabs-yoast-seo.
  *
- * @version 3.2.4
+ * @version 5.6.2-dev
  * @since   3.2.4
  * @see     https://return-true.com/adding-content-to-yoast-seo-analysis-using-yoastseojs/
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 (function($) {

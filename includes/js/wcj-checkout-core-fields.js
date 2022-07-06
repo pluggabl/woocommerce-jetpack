@@ -1,8 +1,9 @@
 /**
- * wcj-checkout-core-fields.
+ * Wcj-checkout-core-fields.
  *
- * @version 5.4.7
+ * @version 5.6.2-dev
  * @since   5.4.7
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( document ).ready(

@@ -1,8 +1,10 @@
 /**
- * wcj-price-by-user-role-admin.js
+ * Wcj-price-by-user-role-admin.js
  *
- * @version 3.6.0
+ * @version 5.6.2-dev
  * @since   3.6.0
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( document ).ready(

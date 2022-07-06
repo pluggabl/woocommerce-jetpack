@@ -1066,6 +1066,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'data-blocked_dates'        => true,
 				'currentday_time_limit'     => true,
 				'data-blocked_dates_format' => true,
+				'onclick'  => true,
 			),
 			'textarea' => array(
 				'name'        => true,

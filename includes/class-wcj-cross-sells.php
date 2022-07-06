@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 				foreach ( $_cart->get_cart() as $cart_item_key => $values ) {
 					$_product       = wc_get_product( $values['product_id'] );
 					$cross_sell_ids = $_product->get_cross_sell_ids();
-					if ( in_array( $product_id, $cross_sell_ids ) ) {
+					if ( in_array( $product_id, $cross_sell_ids, true ) ) {
 						$product_ids_to_remove[] = $values['product_id'];
 					}
 				}
@@ -108,12 +108,18 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 * @todo    [dev] AJAX
 		 */
 		public function remove_from_cart_by_product_id() {
-			$_cart = WC()->cart;
-			if ( isset( $_GET['wcj-remove-from-cart'] ) ) {
+			echo "csk";
+			$_cart   = WC()->cart;
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+
+			if ( isset( $_GET['wcj-remove-from-cart'] ) && $wpnonce ) {
 				if ( isset( $_cart ) ) {
-					$product_ids_to_remove = explode( ',', $_GET['wcj-remove-from-cart'] );
+					$product_ids_to_remove = explode( ',', sanitize_text_field( wp_unslash( $_GET['wcj-remove-from-cart'] ) ) );
 					foreach ( $_cart->get_cart() as $cart_item_key => $values ) {
-						if ( in_array( $values['product_id'], $product_ids_to_remove ) ) {
+						if ( in_array( $values['product_id'], $product_ids_to_remove, true ) ) {
 							$_cart->remove_cart_item( $cart_item_key );
 						}
 					}

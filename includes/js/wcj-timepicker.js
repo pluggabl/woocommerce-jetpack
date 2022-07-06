@@ -1,9 +1,12 @@
 /**
  * Booster for WooCommerce - Timepicker JS
  *
- * @version 2.7.0
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
+
 jQuery( document ).ready(
 	function() {
 		jQuery( "input[display='time']" ).each(

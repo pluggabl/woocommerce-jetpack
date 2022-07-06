@@ -1,8 +1,10 @@
 /**
- * wcj-bookings.
+ * Wcj-bookings.
  *
- * version 4.3.0
- * since   2.5.0
+ * @version 5.6.2-dev
+ * @since   2.5.0
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 var _ajax_object = ajax_object;
