@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -245,7 +245,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_add_edit_table() {
-			$is_editing = sanitize_text_field( wp_unslash( $_GET['edit'] ) );
+				$is_editing = ( isset( $_GET['edit'] ) );
 			if ( $is_editing ) {
 				$edit_slug             = sanitize_text_field( wp_unslash( $_GET['edit'] ) );
 				$custom_order_statuses = $this->module->get_custom_order_statuses();
@@ -331,11 +331,12 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Create_tool.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2-dev
 		 * @since   3.2.2
 		 */
 		public function create_tool() {
 			$html  = '';
+			$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			$html .= '<div class="wrap">';
 			$html .= $this->process_actions();
 			$html .= $this->module->get_tool_header_html( $this->id );
@@ -344,7 +345,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$html .= $this->get_delete_all_custom_statuses_button();
 			$html .= '</div>';
 			$html .= '</div>';
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 	}
 

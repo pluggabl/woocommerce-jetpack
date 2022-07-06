@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -237,7 +237,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Update_custom_checkout_fields_order_meta.
 		 *
-		 * @version 5.4.3
+		 * @version 5.6.2-dev
 		 *
 		 * @param string $order_id defines the order_id.
 		 */
@@ -252,7 +252,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 					$option_name       = $the_section . '_wcj_checkout_field_' . $i;
 					$option_name_label = $the_section . '_wcj_checkout_field_label_' . $i;
 					$option_name_type  = $the_section . '_wcj_checkout_field_type_' . $i;
-					$post_value        = ( isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ! empty( $_POST[ '_' . $option_name ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) : get_post_meta( $order_id, '_' . $option_name, true );
+					$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : get_post_meta( $order_id, '_' . $option_name, true ) );
 					if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
 						update_post_meta( $order_id, '_' . $option_name_type, $the_type );
 						update_post_meta( $order_id, '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );

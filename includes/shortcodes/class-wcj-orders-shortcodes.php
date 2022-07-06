@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.5.7
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -246,12 +246,12 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_price_shortcode.
 		 *
-		 * @version 5.4.0
+		 * @version 5.6.2-dev
 		 * @param int   $raw_price The user defined shortcode raw_price.
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		private function wcj_price_shortcode( $raw_price, $atts ) {
-			if ( 'yes' === $atts['hide_if_zero'] && 0 === $raw_price ) {
+			if ( 'yes' === $atts['hide_if_zero'] && (float)0 === $raw_price ) {
 				return '';
 			} else {
 				$order_currency = wcj_get_order_currency( $this->the_order );

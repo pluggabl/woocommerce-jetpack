@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Info
  *
- * @version 5.2.0
+ * @version 5.6.2-dev
  * @since   2.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
 		/**
 		 * Check_content_and_filter.
 		 *
-		 * @version 2.9.0
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 * @param string $current_filter defines the current_filter.
 		 * @param string $current_filter_priority defines the current_filter_priority.
@@ -82,14 +82,14 @@ if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
 			return (
 			'' !== wcj_get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) &&
 			wcj_get_option( 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i, $default_hook ) === $current_filter &&
-			wcj_get_option( 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i, 10 ) === $current_filter_priority
+			wcj_get_option( 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i, 10 ) === (string)$current_filter_priority
 			);
 		}
 
 		/**
 		 * Check_included_and_excluded.
 		 *
-		 * @version 3.5.0
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 * @param int    $product_id defines the product_id.
 		 * @param string $single_or_archive defines the single_or_archive.
@@ -107,8 +107,8 @@ if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
 			( empty( $product_cats_to_include ) || wcj_is_product_term( $product_id, $product_cats_to_include, 'product_cat' ) ) &&
 			( empty( $product_tags_to_exclude ) || ! wcj_is_product_term( $product_id, $product_tags_to_exclude, 'product_tag' ) ) &&
 			( empty( $product_tags_to_include ) || wcj_is_product_term( $product_id, $product_tags_to_include, 'product_tag' ) ) &&
-			( empty( $products_to_exclude ) || ! in_array( $product_id, $products_to_exclude, true ) ) &&
-			( empty( $products_to_include ) || in_array( $product_id, $products_to_include, true ) )
+			( empty( $products_to_exclude ) || ! in_array( (string)$product_id, $products_to_exclude, true ) ) &&
+			( empty( $products_to_include ) || in_array( (string)$product_id, $products_to_include, true ) )
 			);
 		}
 
