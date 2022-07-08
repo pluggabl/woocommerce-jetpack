@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,11 +75,12 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Generate_report_zip.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2-dev
 		 * @since   2.3.10
 		 */
 		public function generate_report_zip() {
-			if ( isset( $_POST['get_invoices_report_zip'] ) ) {
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			if ( $wpnonce && isset( $_POST['get_invoices_report_zip'] ) ) {
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 					$this->notice = '<div class="error"><p><strong>' . sprintf(
 						/* translators: %s: search term */
@@ -88,9 +89,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 					) .
 					'</strong></p></div>';
 				} else {
-					$_year         = ( ! empty( $_POST['report_year'] ) ) ? $_POST['report_year'] : gmdate( 'Y' );
-					$_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : gmdate( 'n' );
-					$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
+					$_year         = ( ! empty( $_POST['report_year'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_year'] ) ) : gmdate( 'Y' );
+					$_month        = ( ! empty( $_POST['report_month'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_month'] ) ) : gmdate( 'n' );
+					$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['invoice_type'] ) ) : 'invoice';
 					if ( ! empty( $_year ) && ! empty( $_month ) && ! empty( $_invoice_type ) ) {
 						if ( $this->check_user_roles( $_invoice_type ) ) {
 							$result = $this->get_invoices_report_zip( $_year, $_month, $_invoice_type );
@@ -110,15 +111,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Add Invoices Report tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2-dev
 		 */
 		public function create_invoices_report_tool() {
+			$wpnonce          = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
 			$result_message   = '';
 			$result_message  .= $this->notice;
-			$the_year         = ( ! empty( $_POST['report_year'] ) ) ? $_POST['report_year'] : gmdate( 'Y' );
-			$the_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : gmdate( 'n' );
-			$the_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
-			if ( isset( $_POST['get_invoices_report'] ) ) {
+			$the_year         = ( $wpnonce && ! empty( $_POST['report_year'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_year'] ) ) : gmdate( 'Y' );
+			$the_month        = ( $wpnonce && ! empty( $_POST['report_month'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_month'] ) ) : gmdate( 'n' );
+			$the_invoice_type = ( $wpnonce && ! empty( $_POST['invoice_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['invoice_type'] ) ) : 'invoice';
+			if ( $wpnonce && isset( $_POST['get_invoices_report'] ) ) {
 				if ( ! empty( $the_year ) && ! empty( $the_month ) && ! empty( $the_invoice_type ) ) {
 					$result_message = $this->get_invoices_report( $the_year, $the_month, $the_invoice_type );
 				} else {
@@ -261,7 +263,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 				return $this->get_no_documents_found_message( $year, $month, $invoice_type_id );
 			}
 
-			header( 'Content-Disposition: attachment; filename=' . urlencode( $zip_file_name ) );
+			header( 'Content-Disposition: attachment; filename=' . rawurlencode( $zip_file_name ) );
 			header( 'Content-Type: application/download' );
 			header( 'Content-Description: File Transfer' );
 			header( 'Content-Length: ' . filesize( $zip_file_path ) );
@@ -283,7 +285,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Get_no_documents_found_message.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   3.1.0
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -291,7 +293,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 */
 		public function get_no_documents_found_message( $year, $month, $invoice_type_id ) {
 			/* translators: %s: search term */
-			return sprintf( __( 'No documents (%s) found for %d-%02d.', 'woocommerce-jetpack' ), $invoice_type_id, $year, $month );
+			return sprintf( __( 'No documents (%1$s) found for %2$d-%3$02d.', 'woocommerce-jetpack' ), $invoice_type_id, $year, $month );
 		}
 
 		/**
@@ -301,10 +303,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @since   2.5.7
 		 */
 		public function export_csv() {
-			$_year         = ( ! empty( $_POST['report_year'] ) ) ? $_POST['report_year'] : gmdate( 'Y' );
-			$_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : gmdate( 'm' );
-			$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
-			if ( isset( $_POST['get_invoices_report_csv'] ) ) {
+			$wpnonce       = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$_year         = ( $wpnonce && ! empty( $_POST['report_year'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_year'] ) ) : gmdate( 'Y' );
+			$_month        = ( $wpnonce && ! empty( $_POST['report_month'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_month'] ) ) : gmdate( 'm' );
+			$_invoice_type = ( $wpnonce && ! empty( $_POST['invoice_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['invoice_type'] ) ) : 'invoice';
+			if ( $wpnonce && isset( $_POST['get_invoices_report_csv'] ) ) {
 				$data = $this->get_invoices_report_data( $_year, $_month, $_invoice_type );
 				if ( empty( $data ) ) {
 					$this->notice = '<div class="error"><p><strong>' . $this->get_no_documents_found_message( $_year, $_month, $_invoice_type ) . '</strong></p></div>';
@@ -428,8 +431,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 							$order_cart_total_excl_tax += $item->get_total();
 						}
 						$order_shipping_total_excl_tax = $the_order->get_shipping_total();
-						$order_cart_tax_percent        = ( 0 == $order_cart_total_excl_tax ? 0 : $order_cart_tax / $order_cart_total_excl_tax );
-						$order_shipping_tax_percent    = ( 0 == $order_shipping_total_excl_tax ? 0 : $order_shipping_tax / $order_shipping_total_excl_tax );
+						$order_cart_tax_percent        = ( 0 === $order_cart_total_excl_tax ? 0 : $order_cart_tax / $order_cart_total_excl_tax );
+						$order_shipping_tax_percent    = ( 0 === $order_shipping_total_excl_tax ? 0 : $order_shipping_tax / $order_shipping_total_excl_tax );
 
 						$row = array();
 						foreach ( $columns as $column ) {

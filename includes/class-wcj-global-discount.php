@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Add_wcj_sale_ids_to_products_shortcode.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   4.8.0
 		 *
 		 * @param array          $args defines the args.
@@ -67,8 +67,8 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 */
 		public function add_wcj_sale_ids_to_products_shortcode( $args, $atts, $type ) {
 			if (
-			'sale_products' != $type ||
-			'yes' != wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' )
+			'sale_products' !== $type ||
+			'yes' !== wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' )
 			) {
 				return $args;
 			}
@@ -81,12 +81,17 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Regenerate_wcj_sale_products_in_cache.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   4.8.0
 		 */
 		public function regenerate_wcj_sale_products_in_cache() {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ) ) : true;
+			}
 			if (
-			'yes' != wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' ) ||
+			! $wpnonce ||
+			'yes' !== wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' ) ||
 			! isset( $_REQUEST['page'] ) || 'wc-settings' !== $_REQUEST['page'] ||
 			! isset( $_REQUEST['tab'] ) || 'jetpack' !== $_REQUEST['tab'] ||
 			! isset( $_REQUEST['wcj-cat'] ) || 'prices_and_currencies' !== $_REQUEST['wcj-cat'] ||
@@ -202,14 +207,14 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 
 					// Scope.
 					$scope = wcj_get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' );
-					if ( 'all' != $scope ) {
+					if ( 'all' !== $scope ) {
 						$wc_sale_products = wc_get_product_ids_on_sale();
-						if ( 'only_on_sale' == $scope ) {
+						if ( 'only_on_sale' === $scope ) {
 							$args['post__in'] = $wc_sale_products;
 							if ( empty( $wc_sale_products ) ) {
 								$args['post_type'] = 'do_not_search';
 							}
-						} elseif ( 'only_not_on_sale' == $scope ) {
+						} elseif ( 'only_not_on_sale' === $scope ) {
 							$args['post__not_in'] = $wc_sale_products;
 						}
 					}
@@ -240,7 +245,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.3.8
+		 * @version 5.6.2-dev
 		 * @since   3.1.0
 		 * @todo    `WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER, 'woocommerce_variation_prices_regular_price', 'woocommerce_product_variation_get_regular_price'`
 		 * @param  int            $price defines the price.
@@ -248,13 +253,13 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		 */
 		public function change_price( $price, $_product ) {
 			$_current_filter = current_filter();
-			if ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_PRICE_FILTER, 'woocommerce_variation_prices_price', 'woocommerce_product_variation_get_price' ) ) ) {
+			if ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_PRICE_FILTER, 'woocommerce_variation_prices_price', 'woocommerce_product_variation_get_price' ), true ) ) {
 				if ( isset( $_product->wcj_wholesale_price ) ) {
 
 					return $_product->wcj_wholesale_price;
 				}
 				return $this->add_global_discount( $price, $_product, 'price' );
-			} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_SALE_PRICE_FILTER, 'woocommerce_variation_prices_sale_price', 'woocommerce_product_variation_get_sale_price' ) ) ) {
+			} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_SALE_PRICE_FILTER, 'woocommerce_variation_prices_sale_price', 'woocommerce_product_variation_get_sale_price' ), true ) ) {
 				return $this->add_global_discount( $price, $_product, 'sale_price' );
 			} else {
 				return $price;
@@ -264,7 +269,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Change_price_grouped.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 * @param int            $price defines the price.
 		 * @param int            $qty defines the qty.
@@ -276,7 +281,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 					$the_price   = get_post_meta( $child_id, '_price', true );
 					$the_product = wc_get_product( $child_id );
 					$the_price   = wcj_get_product_display_price( $the_product, $the_price, 1 );
-					if ( $the_price == $price ) {
+					if ( $the_price === $price ) {
 						return $this->add_global_discount( $price, $the_product, 'price' );
 					}
 				}
@@ -287,7 +292,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Calculate_price.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 * @param int            $price defines the price.
 		 * @param int            $coefficient defines the coefficient.
@@ -302,7 +307,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 			( $price + $coefficient );
 			$return_price              = ( $return_price >= 0 ? $return_price : 0 );
 			$final_correction_function = wcj_get_option( 'wcj_global_discount_sale_final_correction_func_' . $group, 'none' );
-			if ( 'none' != ( $final_correction_function ) ) {
+			if ( 'none' !== ( $final_correction_function ) ) {
 				$final_correction_coef = wcj_get_option( 'wcj_global_discount_sale_final_correction_coef_' . $group, 1 );
 				$return_price          = $final_correction_function( $return_price / $final_correction_coef ) * $final_correction_coef;
 			}
@@ -348,7 +353,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Check_if_applicable_by_product_scope.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   3.1.0
 		 * @param string | array $_product defines the _product.
 		 * @param int            $price defines the price.
@@ -358,7 +363,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		public function check_if_applicable_by_product_scope( $_product, $price, $price_type, $scope ) {
 			$return = true;
 			if ( 'sale_price' === $price_type ) {
-				if ( 0 == $price ) {
+				if ( '0' === (string) $price ) {
 					// The product is currently not on sale.
 					if ( 'only_on_sale' === $scope ) {
 						$return = false;
@@ -371,9 +376,9 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 				}
 			} else {
 				wcj_remove_change_price_hooks( $this, $this->price_hooks_priority, false );
-				if ( 'only_on_sale' === $scope && 0 == $_product->get_sale_price() ) {
+				if ( 'only_on_sale' === $scope && '0' === (string) $_product->get_sale_price() ) {
 					$return = false;
-				} elseif ( 'only_not_on_sale' === $scope && 0 != $_product->get_sale_price() ) {
+				} elseif ( 'only_not_on_sale' === $scope && '0' !== (string) $_product->get_sale_price() ) {
 					$return = false;
 				}
 				wcj_add_change_price_hooks( $this, $this->price_hooks_priority, false );
@@ -384,7 +389,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Add_global_discount.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 * @param int            $price defines the price.
 		 * @param string | array $_product defines the _product.
@@ -401,11 +406,11 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 					continue; // no changes by current discount group.
 				}
 				$coefficient = wcj_get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
-				if ( 0 != $coefficient ) {
+				if ( 0 !== $coefficient ) {
 					if ( ! $this->check_if_applicable_by_product_scope( $_product, $price, $price_type, wcj_get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) ) ) {
 						continue; // no changes by current discount group.
 					}
-					if ( 'sale_price' === $price_type && 0 == (int) $price ) {
+					if ( 'sale_price' === $price_type && 0 === (int) $price ) {
 						$price = $_product->get_regular_price();
 					}
 					return $this->calculate_price( $price, $coefficient, $i ); // discount applied.

@@ -124,7 +124,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 	/**
 	 * Wcj_send_file.
 	 *
-	 * @version 3.5.0
+	 * @version 5.6.2-dev
 	 * @since   3.5.0
 	 * @todo    use where needed
 	 * @todo    add more cases for `$file_type`
@@ -137,7 +137,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 		switch ( $file_type ) {
 			default: // 'zip'
 				header( 'Content-Type: application/octet-stream' );
-				header( 'Content-Disposition: attachment; filename=' . urlencode( $file_name ) );
+				header( 'Content-Disposition: attachment; filename=' . rawurlencode( $file_name ) );
 				header( 'Content-Type: application/octet-stream' );
 				header( 'Content-Type: application/download' );
 				header( 'Content-Description: File Transfer' );
@@ -436,19 +436,23 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	/**
 	 * Wcj_maybe_add_date_query.
 	 *
-	 * @version 3.0.0
+	 * @version 5.6.2-dev
 	 * @since   3.0.0
 	 * @param   array $args defines the args.
 	 */
 	function wcj_maybe_add_date_query( $args ) {
-		if ( ( isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
+		$wpnonce = true;
+		if ( function_exists( 'wp_verify_nonce' ) ) {
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+		}
+		if ( ( $wpnonce && isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
 			$date_query              = array();
 			$date_query['inclusive'] = true;
-			if ( $_GET['start_date'] && '' !== $_GET['start_date'] ) {
-				$date_query['after'] = $_GET['start_date'];
+			if ( isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) {
+				$date_query['after'] = sanitize_text_field( wp_unslash( $_GET['start_date'] ) );
 			}
-			if ( $_GET['end_date'] && '' !== $_GET['end_date'] ) {
-				$date_query['before'] = $_GET['end_date'];
+			if ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) {
+				$date_query['before'] = sanitize_text_field( wp_unslash( $_GET['end_date'] ) );
 			}
 			$args['date_query'] = array( $date_query );
 		}
@@ -501,7 +505,7 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	 * @todo    (maybe) move to `wcj-functions-users.php`
 	 */
 	function wcj_customer_get_country() {
-		return (string)( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
+		return (string) ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
 	}
 }
 
@@ -522,11 +526,11 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 	/**
 	 * Wcj_is_bot.
 	 *
-	 * @version 3.9.0
+	 * @version 5.6.2-dev
 	 * @since   2.5.6
 	 */
 	function wcj_is_bot() {
-		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) );
+		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) );
 	}
 }
 
@@ -560,7 +564,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
 	 * Wcj_variation_radio_button.
 	 *
-	 * @version 3.1.0
+	 * @version 5.6.2-dev
 	 * @since   2.4.8
 	 * @todo    (maybe) check - maybe we can use `$variation['variation_description']` instead of `get_post_meta( $variation_id, '_variation_description', true )`
 	 * @param   array $_product defines the _product.
@@ -580,7 +584,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 			}
 			// Checked.
 			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ?
-				wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
+				wc_clean( sanitize_text_field( wp_unslash( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ) : $_product->get_variation_default_attribute( $attribute_name );
 			if ( $checked !== $attribute_value ) {
 				$is_checked = false;
 			}
@@ -1031,7 +1035,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 5.6.1
+	 * @version 5.6.2-dev
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1039,34 +1043,34 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	function wcj_add_allowed_html( $allowed_html, $context ) {
 		$allowed_extra_html  = array(
 			'input'    => array(
-				'type'        => true,
-				'name'        => true,
-				'value'       => true,
-				'id'          => true,
-				'checked'     => true,
-				'class'       => true,
-				'style'       => true,
-				'placeholder' => true,
-				'dateformat'  => true,
-				'mindate'     => true,
-				'maxdate'     => true,
-				'firstday'    => true,
-				'display'     => true,
-				'required'    => true,
-				'min'         => true,
-				'max'         => true,
-				'disabled'    => true,
-				'onchange'    => true,
-				'step'		  => true,
-				'changeyear'  => true,
-				'yearrange'   => true,
-				'timeformat'  => true,
-				'interval'    => true,
-				'readonly'    => true,
+				'type'                      => true,
+				'name'                      => true,
+				'value'                     => true,
+				'id'                        => true,
+				'checked'                   => true,
+				'class'                     => true,
+				'style'                     => true,
+				'placeholder'               => true,
+				'dateformat'                => true,
+				'mindate'                   => true,
+				'maxdate'                   => true,
+				'firstday'                  => true,
+				'display'                   => true,
+				'required'                  => true,
+				'min'                       => true,
+				'max'                       => true,
+				'disabled'                  => true,
+				'onchange'                  => true,
+				'step'                      => true,
+				'changeyear'                => true,
+				'yearrange'                 => true,
+				'timeformat'                => true,
+				'interval'                  => true,
+				'readonly'                  => true,
 				'data-blocked_dates'        => true,
 				'currentday_time_limit'     => true,
 				'data-blocked_dates_format' => true,
-				'onclick'  => true,
+				'onclick'                   => true,
 			),
 			'textarea' => array(
 				'name'        => true,
@@ -1138,6 +1142,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'onblur'   => true,
 				'onfocus'  => true,
 				'onchange' => true,
+				'target'   => true,
 			),
 			'button'   => array(
 				'wcj_data' => true,

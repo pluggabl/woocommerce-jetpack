@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -114,13 +114,14 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Bulk_actions_pdfs_notices.
 		 *
-		 * @version 5.4.9
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 */
 		public function bulk_actions_pdfs_notices() {
 			global $post_type, $pagenow;
 			if ( 'edit.php' === $pagenow && 'shop_order' === $post_type ) {
-				if ( isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+				if ( $wpnonce && isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
 					/* translators: %s: translation added */
 					$message = sprintf( wp_kses_post( 'Document generated.', '%s documents generated.', sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ), number_format_i18n( sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ) );
 
@@ -154,7 +155,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 							break;
 						default:
 							echo '<div class="notice notice-error"><p>' .
-							sprintf( wp_kses_post( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . wp_kses_post( $_GET['wcj_notice'] ) . '</code>' ) .
+							/* translators: %s: translation added */
+							sprintf( wp_kses_post( __( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . sanitize_text_field( wp_unslash( $_GET['wcj_notice'] ) ) . '</code>' ) ) .
 							'</p></div>';
 							break;
 					}
@@ -165,7 +167,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Processes the PDF bulk actions.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 		 *
@@ -211,7 +213,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 									'generated_type' => $the_type,
 									'generated_' . $the_type => 1,
 									'ids'            => join( ',', $invoice_num ),
-									'post_status'    => $_GET['post_status'],
+									'post_status'    => isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : '',
 								),
 								$redirect_to
 							)
@@ -231,7 +233,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 								'generated_type'         => $the_type,
 								'generated_' . $the_type => 1,
 								'ids'                    => join( ',', $post_ids ),
-								'post_status'            => $_GET['post_status'],
+								'post_status'            => isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : '',
 							),
 							$redirect_to
 						)
@@ -244,7 +246,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 						$redirect_to = esc_url(
 							add_query_arg(
 								array(
-									'post_status' => $_GET['post_status'],
+									'post_status' => isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : '',
 									'wcj_notice'  => $result,
 								),
 								$redirect_to
@@ -266,7 +268,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 							$redirect_to = esc_url(
 								add_query_arg(
 									array(
-										'post_status' => $_GET['post_status'],
+										'post_status' => isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : '',
 										'wcj_notice'  => $result,
 									),
 									$redirect_to
@@ -445,18 +447,22 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Catch_args.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 */
 		public function catch_args() {
-			$this->order_id        = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : 0;
-			$this->invoice_type_id = ( isset( $_GET['invoice_type_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['invoice_type_id'] ) ) : '';
-			$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' == $_GET['save_pdf_invoice'] );
-			$this->get_invoice     = ( isset( $_GET['get_invoice'] ) && '1' == $_GET['get_invoice'] );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$this->order_id        = ( $wpnonce && isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : 0;
+			$this->invoice_type_id = ( $wpnonce && isset( $_GET['invoice_type_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['invoice_type_id'] ) ) : '';
+			$this->save_as_pdf     = ( $wpnonce && isset( $_GET['save_pdf_invoice'] ) && '1' === $_GET['save_pdf_invoice'] );
+			$this->get_invoice     = ( $wpnonce && isset( $_GET['get_invoice'] ) && '1' === $_GET['get_invoice'] );
 
-			if ( isset( $_GET['create_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
+			if ( $wpnonce && isset( $_GET['create_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
 				$this->create_document( sanitize_text_field( wp_unslash( $_GET['create_invoice_for_order_id'] ) ), $this->invoice_type_id );
 			}
-			if ( isset( $_GET['delete_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
+			if ( $wpnonce && isset( $_GET['delete_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
 				$this->delete_document( sanitize_text_field( wp_unslash( $_GET['delete_invoice_for_order_id'] ) ), $this->invoice_type_id );
 			}
 		}

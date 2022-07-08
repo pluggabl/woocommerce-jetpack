@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 5.5.6
+ * @version 5.6.2-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Create_product_bulk_meta_editor_tool.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @todo    (maybe) real permalink instead of `/?p=`
 		 * @todo    (maybe) `wc_add_notice`
@@ -60,19 +60,23 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 * @todo    (maybe) multiple meta keys
 		 */
 		public function create_product_bulk_meta_editor_tool() {
-			// Actions
+			// Actions.
 			$result = $this->perform_actions();
-			// Preparing products data
-			$_products         = wcj_get_products( array(), 'any', 512, ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_bulk_meta_editor_add_variations', 'no' ) ) ) );
-			$selected_products = isset( $_POST['wcj_product_bulk_meta_editor_products'] ) ? $_POST['wcj_product_bulk_meta_editor_products'] : array();
-			// Output
+			// Preparing products data.
+			$_products = wcj_get_products( array(), 'any', 512, ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_bulk_meta_editor_add_variations', 'no' ) ) ) );
+			$wpnonce   = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$selected_products = $wpnonce && isset( $_POST['wcj_product_bulk_meta_editor_products'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['wcj_product_bulk_meta_editor_products'] ) ) : array();
+			// Output.
 			echo $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] );
 		}
 
 		/**
 		 * Perform_actions.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @todo    break this into separate functions
 		 */
@@ -80,28 +84,33 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$meta_name      = '';
 			$set_meta       = '';
 			$result_message = '';
-			if (
-			isset( $_POST['wcj_product_bulk_meta_editor_save_single'] ) && 0 != $_POST['wcj_product_bulk_meta_editor_save_single'] &&
+			$wpnonce        = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( $wpnonce &&
+			isset( $_POST['wcj_product_bulk_meta_editor_save_single'] ) && null !== $_POST['wcj_product_bulk_meta_editor_save_single'] && 0 !== $_POST['wcj_product_bulk_meta_editor_save_single'] &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
-				$meta_name   = $_POST['wcj_product_bulk_meta_editor_meta'];
-				$success     = 0;
-				$fail        = 0;
-				$_product_id = $_POST['wcj_product_bulk_meta_editor_save_single'];
-				if ( update_post_meta( $_product_id, $meta_name, $_POST[ 'wcj_product_bulk_meta_editor_id_' . $_product_id ] ) ) {
+				$meta_name                       = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_meta'] ) );
+				$success                         = 0;
+				$fail                            = 0;
+				$_product_id                     = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_save_single'] ) );
+				$wcj_product_bulk_meta_editor_id = isset( $_POST[ 'wcj_product_bulk_meta_editor_id_' . $_product_id ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wcj_product_bulk_meta_editor_id_' . $_product_id ] ) ) : '';
+				if ( update_post_meta( $_product_id, $meta_name, $wcj_product_bulk_meta_editor_id ) ) {
 					$success++;
 				} else {
 					$fail++;
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
-			isset( $_POST['wcj_product_bulk_meta_editor_delete_single'] ) && 0 != $_POST['wcj_product_bulk_meta_editor_delete_single'] &&
+			isset( $_POST['wcj_product_bulk_meta_editor_delete_single'] ) && 0 > $_POST['wcj_product_bulk_meta_editor_delete_single'] &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
-				$meta_name   = $_POST['wcj_product_bulk_meta_editor_meta'];
+				$meta_name   = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_meta'] ) );
 				$success     = 0;
 				$fail        = 0;
-				$_product_id = $_POST['wcj_product_bulk_meta_editor_delete_single'];
+				$_product_id = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_delete_single'] ) );
 				if ( delete_post_meta( $_product_id, $meta_name ) ) {
 					$success++;
 				} else {
@@ -112,7 +121,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			isset( $_POST['wcj_product_bulk_meta_editor_save_all'] ) &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
-				$meta_name        = $_POST['wcj_product_bulk_meta_editor_meta'];
+				$meta_name        = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_meta'] ) );
 				$key_start_length = strlen( 'wcj_product_bulk_meta_editor_id_' );
 				$success          = 0;
 				$fail             = 0;
@@ -131,7 +140,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			isset( $_POST['wcj_product_bulk_meta_editor_delete_all'] ) &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
-				$meta_name        = $_POST['wcj_product_bulk_meta_editor_meta'];
+				$meta_name        = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_meta'] ) );
 				$key_start_length = strlen( 'wcj_product_bulk_meta_editor_id_' );
 				$success          = 0;
 				$fail             = 0;
@@ -151,8 +160,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			isset( $_POST['wcj_product_bulk_meta_editor_set_meta'] ) &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
-				$meta_name        = $_POST['wcj_product_bulk_meta_editor_meta'];
-				$set_meta         = $_POST['wcj_product_bulk_meta_editor_set_meta'];
+				$meta_name        = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_meta'] ) );
+				$set_meta         = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_set_meta'] ) );
 				$key_start_length = strlen( 'wcj_product_bulk_meta_editor_id_' );
 				$success          = 0;
 				$fail             = 0;
@@ -168,10 +177,10 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif ( isset( $_POST['wcj_product_bulk_meta_editor_show'] ) ) {
-				if ( '' === $_POST['wcj_product_bulk_meta_editor_show_meta'] ) {
+				if ( isset( $_POST['wcj_product_bulk_meta_editor_show_meta'] ) && '' === $_POST['wcj_product_bulk_meta_editor_show_meta'] ) {
 					$result_message = '<p><div class="error"><p>' . __( 'Please enter meta key.', 'woocommerce-jetpack' ) . '</p></div></p>';
 				}
-				$meta_name = $_POST['wcj_product_bulk_meta_editor_show_meta'];
+				$meta_name = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_show_meta'] ) );
 			}
 			return array(
 				'meta_name'      => $meta_name,
@@ -264,7 +273,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Get_html_products_select.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @param array $_products defines the _products.
 		 * @param array $selected_products defines the selected_products.
@@ -273,11 +282,11 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$products_html  = '';
 			$products_html .= '<select name="wcj_product_bulk_meta_editor_products[]" multiple style="height:300px;width:100%;">';
 			foreach ( $_products as $product_id => $product_title ) {
-				$selected       = ( empty( $selected_products ) || in_array( $product_id, $selected_products ) ? ' selected' : '' );
+				$selected       = ( empty( $selected_products ) || in_array( (string) $product_id, $selected_products, true ) ? ' selected' : '' );
 				$products_html .= '<option' . $selected . ' value="' . $product_id . '">' . $product_title . '</option>';
 			}
 			$products_html .= '</select>';
-			$tip            = '<p style="font-style:italic;color:gray;">' . '* ' .
+			$tip            = '<p style="font-style:italic;color:gray;">* ' .
 			__( 'Hold <strong>Control</strong> key to select multiple products. Press <strong>Control</strong> + <strong>A</strong> to select all products.', 'woocommerce-jetpack' ) .
 			'</p>';
 			$table_data     = array();
@@ -361,14 +370,14 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Get_html_meta_table_content.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @param string         $meta_name defines the meta_name.
 		 * @param array          $_products defines the _products.
 		 * @param string | array $selected_products defines the selected_products.
 		 * @param string         $js_confirmation defines the js_confirmation.
 		 */
-		function get_html_meta_table_content( $meta_name, $_products, $selected_products, $js_confirmation ) {
+		public function get_html_meta_table_content( $meta_name, $_products, $selected_products, $js_confirmation ) {
 			$table_data         = array();
 			$table_headings     = array(
 				__( 'Product', 'woocommerce-jetpack' ),
@@ -379,11 +388,11 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$table_headings     = $this->maybe_add_additional_columns_headings( $table_headings, $additional_columns );
 			$table_data[]       = $table_headings;
 			foreach ( $_products as $product_id => $product_title ) {
-				if ( ! in_array( $product_id, $selected_products ) ) {
+				if ( ! in_array( (string) $product_id, $selected_products, true ) ) {
 					continue;
 				}
 				if ( ! metadata_exists( 'post', $product_id, $meta_name ) && 'yes' === wcj_get_option( 'wcj_product_bulk_meta_editor_check_if_exists', 'no' ) ) {
-					$_post_meta    = '<em>' . 'N/A' . '</em>';
+					$_post_meta    = '<em>N/A</em>';
 					$save_button   = '';
 					$delete_button = '';
 				} else {
@@ -415,20 +424,20 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Maybe_add_additional_columns_headings.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @param array $table_headings defines the table_headings.
 		 * @param array $additional_columns defines the additional_columns.
 		 */
 		public function maybe_add_additional_columns_headings( $table_headings, $additional_columns ) {
 			if ( ! empty( $additional_columns ) ) {
-				if ( in_array( 'product_id', $additional_columns ) ) {
+				if ( in_array( 'product_id', $additional_columns, true ) ) {
 					$table_headings[] = __( 'Product ID', 'woocommerce-jetpack' );
 				}
-				if ( in_array( 'product_status', $additional_columns ) ) {
+				if ( in_array( 'product_status', $additional_columns, true ) ) {
 					$table_headings[] = __( 'Product status', 'woocommerce-jetpack' );
 				}
-				if ( in_array( 'product_all_meta_keys', $additional_columns ) ) {
+				if ( in_array( 'product_all_meta_keys', $additional_columns, true ) ) {
 					$table_headings[] = __( 'Meta keys', 'woocommerce-jetpack' );
 				}
 			}
@@ -438,7 +447,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Maybe_add_additional_columns_content.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @param array $row defines the row.
 		 * @param array $additional_columns defines the additional_columns.
@@ -446,13 +455,13 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		 */
 		public function maybe_add_additional_columns_content( $row, $additional_columns, $product_id ) {
 			if ( ! empty( $additional_columns ) ) {
-				if ( in_array( 'product_id', $additional_columns ) ) {
+				if ( in_array( 'product_id', $additional_columns, true ) ) {
 					$row[] = $product_id;
 				}
-				if ( in_array( 'product_status', $additional_columns ) ) {
+				if ( in_array( 'product_status', $additional_columns, true ) ) {
 					$row[] = get_post_status( $product_id );
 				}
-				if ( in_array( 'product_all_meta_keys', $additional_columns ) ) {
+				if ( in_array( 'product_all_meta_keys', $additional_columns, true ) ) {
 					$row[] = '<details style="color:gray;">' .
 					'<summary><em>' . __( 'Show all', 'woocommerce-jetpack' ) . '</em></summary>' .
 					'<p>' . implode( '<br>', array_keys( get_post_meta( $product_id ) ) ) . '</p>' .

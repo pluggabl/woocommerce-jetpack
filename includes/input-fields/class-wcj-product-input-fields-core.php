@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -155,28 +155,29 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Save product input fields on Product Edit.
 		 *
-		 * @version 3.5.0
+		 * @version 5.6.2-dev
 		 * @param int         $post_id Get post ID.
 		 * @param obj | Array $post Get post.
 		 */
 		public function save_local_product_input_fields_on_product_edit( $post_id, $post ) {
+			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
 			// Check that we are saving with input fields displayed.
-			if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) ) {
+			if ( ! $wpnonce || ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) ) {
 				return;
 			}
 			// Save values.
 			$default_total_input_fields       = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
 			$total_input_fields_before_saving = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_local_total_number', $post_id, 1 ) );
-			$total_input_fields_before_saving = ( '' != $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
+			$total_input_fields_before_saving = ( '' !== $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
 			$options                          = $this->get_options();
 			$values                           = array();
 			$values['local_total_number']     = isset( $_POST['wcj_product_input_fields_local_total_number'] ) ?
-			$_POST['wcj_product_input_fields_local_total_number'] : $default_total_input_fields;
+			sanitize_text_field( wp_unslash( $_POST['wcj_product_input_fields_local_total_number'] ) ) : $default_total_input_fields;
 			for ( $i = 1; $i <= $total_input_fields_before_saving; $i++ ) {
 				foreach ( $options as $option ) {
 					$option_name = str_replace( 'wcj_product_input_fields_', '', $option['id'] . $i );
 					if ( isset( $_POST[ $option['id'] . $i ] ) ) {
-						$values[ $option_name ] = $_POST[ $option['id'] . $i ];
+						$values[ $option_name ] = isset( $_POST[ $option['id'] . $i ] ) ? sanitize_text_field( wp_unslash( $_POST[ $option['id'] . $i ] ) ) : '';
 					} elseif ( 'checkbox' === $option['type'] ) {
 						$values[ $option_name ] = 'off';
 					}
@@ -458,7 +459,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Get_value.
 		 *
-		 * @version 3.5.0
+		 * @version 5.6.2-dev
 		 * @todo    `wcj_get_product_input_field_value()` is almost identical
 		 * @param string $option_name Get option name.
 		 * @param int    $product_id Get product id.
@@ -469,7 +470,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				return wcj_get_option( $option_name, $default );
 			} else { // local.
 				$options = get_post_meta( $product_id, '_wcj_product_input_fields', true );
-				if ( '' != ( $options ) ) {
+				if ( '' !== ( $options ) ) {
 					$option_name = str_replace( 'wcj_product_input_fields_', '', $option_name );
 					return ( isset( $options[ $option_name ] ) ? $options[ $option_name ] : $default );
 				} else { // Booster version  < 3.5.0.
@@ -481,11 +482,18 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Validate_product_input_fields_on_add_to_cart.
 		 *
-		 * @version 3.1.0
+		 * @version 5.6.2-dev
 		 * @param bool $passed define passed value.
 		 * @param int  $product_id Get product id.
 		 */
 		public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			if ( ! $wpnonce ) {
+				return $passed;
+			}
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $product_id, 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 
@@ -510,20 +518,20 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							$field_value = '';
 						}
 					}
-					if ( '' == $field_value ) {
+					if ( '' === $field_value ) {
 						$passed = false;
 						wc_add_notice( $this->get_value( 'wcj_product_input_fields_required_message_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
 					}
 				}
 
-				if ( 'file' === $type && isset( $_FILES[ $field_name ] ) && '' != $_FILES[ $field_name ]['name'] ) {
+				if ( 'file' === $type && isset( $_FILES[ $field_name ] ) && '' !== $_FILES[ $field_name ]['name'] ) {
 					// Validate file type.
 					$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product_id, '' );
-					if ( '' != ( $file_accept ) ) {
+					if ( '' !== ( $file_accept ) ) {
 						$file_accept = explode( ',', $file_accept );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
 							$file_type = '.' . pathinfo( sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['name'] ) ), PATHINFO_EXTENSION );
-							if ( ! in_array( $file_type, $file_accept ) ) {
+							if ( ! in_array( $file_type, $file_accept, true ) ) {
 								$passed = false;
 								wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
 							}
@@ -592,7 +600,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_product_input_fields_to_frontend.
 		 *
-		 * @version 3.9.1
+		 * @version 5.6.2-dev
 		 * @todo    `$set_value` - add "default" option for all other types except checkbox
 		 * @todo    `$set_value` - 'file' type
 		 * @todo    add `required` attributes
@@ -603,6 +611,13 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			global $product;
 			if ( ! $product ) {
+				return;
+			}
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			if ( ! $wpnonce ) {
 				return;
 			}
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
@@ -719,13 +734,13 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						case 'select':
 							$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $_product_id, '' );
 							$select_options     = wcj_get_select_options( $select_options_raw, false );
-							if ( '' != $placeholder ) {
+							if ( '' !== $placeholder ) {
 								$select_options = array_replace( array( '' => $placeholder ), $select_options );
 							}
 							$select_options_html = '';
 							if ( ! empty( $select_options ) ) {
 								reset( $select_options );
-								$value = ( '' != $set_value ? $set_value : key( $select_options ) );
+								$value = ( '' !== $set_value ? $set_value : key( $select_options ) );
 								foreach ( $select_options as $select_option_key => $select_option_title ) {
 									$select_options_html .= '<option value="' . $select_option_key . '" ' . selected( $value, $select_option_key, false ) . '>';
 									$select_options_html .= $select_option_title;
@@ -761,8 +776,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 						case 'country':
 							$countries = WC()->countries->get_allowed_countries();
-							if ( sizeof( $countries ) > 1 ) {
-								$value = ( '' != $set_value ? $set_value : key( $countries ) );
+							if ( count( $countries ) > 1 ) {
+								$value = ( '' !== $set_value ? $set_value : key( $countries ) );
 								$field = '<select name="' . $field_name . '" id="' . $field_name . '" class="country_to_state country_select wcj_product_input_fields' . $class . '">' .
 								'<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
 								foreach ( $countries as $ckey => $cvalue ) {
@@ -780,7 +795,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						get_option( 'wcj_product_input_fields_field_template', '<p><label for="%field_id%">%field_title%</label> %field_html%</p>' )
 					);
 					$field_order = $this->get_value( 'wcj_product_input_fields_order_' . $this->scope . '_' . $i, $_product_id, 0 );
-					if ( 0 == ( $field_order ) ) {
+					if ( '0' === (string) $field_order ) {
 						$field_order = $i;
 					}
 					$fields[ $field_order ] = apply_filters(
@@ -811,12 +826,19 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * From `$_POST` to `$cart_item_data`
 		 *
-		 * @version 3.9.1
+		 * @version 5.6.2-dev
 		 * @param Array $cart_item_data Get cart items.
 		 * @param int   $product_id Get product id.
 		 * @param int   $variation_id Get variation id.
 		 */
 		public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			if ( ! $wpnonce ) {
+				return $cart_item_data;
+			}
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $product_id, 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( ! $this->is_enabled( $i, $product_id ) ) {
@@ -903,7 +925,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						$value = maybe_unserialize( $value );
 						$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
 					}
-					if ( '' != $value && is_string( $value ) ) {
+					if ( '' !== $value && is_string( $value ) ) {
 						$name .= str_replace( array( '%title%', '%value%' ), array( $title, $value ), $item_template );
 					}
 				}

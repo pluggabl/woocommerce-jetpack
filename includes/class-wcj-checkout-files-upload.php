@@ -429,7 +429,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					if ( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ) {
 						$order_id        = sanitize_text_field( wp_unslash( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) );
 						$order_file_name = get_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i, true );
-						if ( '' != $order_file_name ) {
+						if ( '' !== $order_file_name && null !== $order_file_name ) {
 							$file_path = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
 							unlink( $file_path );
 							$file_name = get_post_meta( $order_id, '_wcj_checkout_files_upload_real_name_' . $i, true );
@@ -445,7 +445,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 							);
 							delete_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i );
 							delete_post_meta( $order_id, '_wcj_checkout_files_upload_real_name_' . $i );
-							if ( in_array( 'remove_file', $this->additional_admin_emails_settings['actions'] ) ) {
+							if ( in_array( 'remove_file', $this->additional_admin_emails_settings['actions'], true ) ) {
 								wp_mail(
 									$admin_email,
 									wcj_handle_replacements(
@@ -495,11 +495,11 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						$real_file_name = isset( $_FILES[ $file_name ]['name'] ) ? sanitize_text_field( wp_unslash( $_FILES[ $file_name ]['name'] ) ) : '';
 						$file_type      = '.' . pathinfo( $real_file_name, PATHINFO_EXTENSION );
 						$file_accept    = wcj_get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' );
-						if ( '' != ( $file_accept ) ) {
+						if ( '' !== ( $file_accept ) ) {
 							// Validate file type.
 							$file_accept = explode( ',', $file_accept );
 							if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-								if ( ! in_array( $file_type, $file_accept ) ) {
+								if ( ! in_array( $file_type, $file_accept, true ) ) {
 									$this->add_notice(
 										sprintf(
 											wcj_get_option(
@@ -549,7 +549,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 							// To order.
 							if ( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ) {
 								$this->add_files_to_order( sanitize_text_field( wp_unslash( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ), null );
-								if ( in_array( 'upload_file', $this->additional_admin_emails_settings['actions'] ) ) {
+								if ( in_array( 'upload_file', $this->additional_admin_emails_settings['actions'], true ) ) {
 									$attachments = ( 'no' === $this->additional_admin_emails_settings['do_attach'] ?
 										array() : array( $this->get_order_full_file_name( sanitize_text_field( wp_unslash( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ), $i ) ) );
 									wp_mail(
@@ -640,7 +640,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						}
 					} else {
 						// My Account.
-						if ( ! wcj_is_user_logged_in() || $order->get_customer_id() != wcj_get_current_user_id() ) {
+						if ( ! wcj_is_user_logged_in() || $order->get_customer_id() !== wcj_get_current_user_id() ) {
 							return;
 						}
 					}
@@ -673,20 +673,20 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 */
 		public function is_visible( $i, $order_id = 0 ) {
 
-			if ( apply_filters( 'wcj_checkout_files_always_visible_on_empty_cart', false ) && 0 == $order_id && WC()->cart->is_empty() ) {
+			if ( apply_filters( 'wcj_checkout_files_always_visible_on_empty_cart', false ) && '0' === (string) $order_id && WC()->cart->is_empty() ) {
 				// Added for "One Page Checkout" plugin compatibility.
 				return true;
 			}
 
 			// Include by user role.
 			$user_roles = wcj_get_option( 'wcj_checkout_files_upload_show_user_roles_' . $i, '' );
-			if ( ! empty( $user_roles ) && ! in_array( wcj_get_current_user_first_role(), $user_roles ) ) {
+			if ( ! empty( $user_roles ) && ! in_array( wcj_get_current_user_first_role(), $user_roles, true ) ) {
 				return false;
 			}
 
 			// Exclude by user role.
 			$user_roles = wcj_get_option( 'wcj_checkout_files_upload_hide_user_roles_' . $i, '' );
-			if ( ! empty( $user_roles ) && in_array( wcj_get_current_user_first_role(), $user_roles ) ) {
+			if ( ! empty( $user_roles ) && in_array( wcj_get_current_user_first_role(), $user_roles, true ) ) {
 				return false;
 			}
 
@@ -694,14 +694,14 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			$products_in = wcj_get_option( 'wcj_checkout_files_upload_show_products_in_' . $i );
 			if ( ! empty( $products_in ) ) {
 				$do_skip_by_products = true;
-				if ( 0 != $order_id ) {
+				if ( 0 > $order_id ) {
 					$the_order = wc_get_order( $order_id );
 					$the_items = $the_order->get_items();
 				} else {
 					$the_items = WC()->cart->get_cart();
 				}
 				foreach ( $the_items as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_in ) ) {
+					if ( in_array( (string) $values['product_id'], $products_in, true ) ) {
 						$do_skip_by_products = false;
 						break;
 					}
@@ -714,14 +714,14 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			// Exclude by product id.
 			$products_in = wcj_get_option( 'wcj_checkout_files_upload_hide_products_in_' . $i );
 			if ( ! empty( $products_in ) ) {
-				if ( 0 != $order_id ) {
+				if ( 0 > $order_id ) {
 					$the_order = wc_get_order( $order_id );
 					$the_items = $the_order->get_items();
 				} else {
 					$the_items = WC()->cart->get_cart();
 				}
 				foreach ( $the_items as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_in ) ) {
+					if ( in_array( (string) $values['product_id'], $products_in, true ) ) {
 						return false;
 					}
 				}
@@ -731,7 +731,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			$categories_in = wcj_get_option( 'wcj_checkout_files_upload_show_cats_in_' . $i );
 			if ( ! empty( $categories_in ) ) {
 				$do_skip_by_cats = true;
-				if ( 0 != $order_id ) {
+				if ( 0 > $order_id ) {
 					$the_order = wc_get_order( $order_id );
 					$the_items = $the_order->get_items();
 				} else {
@@ -743,7 +743,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						continue;
 					}
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $categories_in ) ) {
+						if ( in_array( (string) $product_category->term_id, $categories_in, true ) ) {
 							$do_skip_by_cats = false;
 							break;
 						}
@@ -760,7 +760,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			// Exclude by product category.
 			$categories_in = wcj_get_option( 'wcj_checkout_files_upload_hide_cats_in_' . $i );
 			if ( ! empty( $categories_in ) ) {
-				if ( 0 != $order_id ) {
+				if ( 0 > $order_id ) {
 					$the_order = wc_get_order( $order_id );
 					$the_items = $the_order->get_items();
 				} else {
@@ -772,7 +772,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						continue;
 					}
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $categories_in ) ) {
+						if ( in_array( (string) $product_category->term_id, $categories_in, true ) ) {
 							return false;
 						}
 					}
@@ -783,7 +783,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			$tags_in = wcj_get_option( 'wcj_checkout_files_upload_show_tags_in_' . $i );
 			if ( ! empty( $tags_in ) ) {
 				$do_skip_by_tags = true;
-				if ( 0 != $order_id ) {
+				if ( 0 > $order_id ) {
 					$the_order = wc_get_order( $order_id );
 					$the_items = $the_order->get_items();
 				} else {
@@ -795,7 +795,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						continue;
 					}
 					foreach ( $product_tags as $product_tag ) {
-						if ( in_array( $product_tag->term_id, $tags_in ) ) {
+						if ( in_array( (string) $product_tag->term_id, $tags_in, true ) ) {
 							$do_skip_by_tags = false;
 							break;
 						}
@@ -812,7 +812,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			// Exclude by product tag.
 			$tags_in = wcj_get_option( 'wcj_checkout_files_upload_hide_tags_in_' . $i );
 			if ( ! empty( $tags_in ) ) {
-				if ( 0 != $order_id ) {
+				if ( 0 > $order_id ) {
 					$the_order = wc_get_order( $order_id );
 					$the_items = $the_order->get_items();
 				} else {
@@ -824,7 +824,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						continue;
 					}
 					foreach ( $product_tags as $product_tag ) {
-						if ( in_array( $product_tag->term_id, $tags_in ) ) {
+						if ( in_array( (string) $product_tag->term_id, $tags_in, true ) ) {
 							return false;
 						}
 					}
@@ -837,7 +837,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Maybe_get_image.
 		 *
-		 * @version 3.7.0
+		 * @version 5.6.2-dev
 		 * @since   3.7.0
 		 * @param string $link defines the link.
 		 * @param int    $i defines the value of i.
@@ -846,7 +846,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		public function maybe_get_image( $link, $i, $order_id = 0 ) {
 			if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_form_template_field_show_images', 'no' ) ) {
 				$order = wc_get_order( $order_id );
-				if ( 0 != $order_id && isset( $_GET['key'] ) && ( $order ) && $order->key_is_valid( sanitize_text_field( wp_unslash( $_GET['key'] ) ) ) ) {
+				if ( 0 > $order_id && isset( $_GET['key'] ) && ( $order ) && $order->key_is_valid( sanitize_text_field( wp_unslash( $_GET['key'] ) ) ) ) {
 					$order_file_name = get_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i, true );
 					$tmp_file_name   = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
 				} else {
@@ -863,7 +863,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Get_the_form.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.5.0
 		 * @param int    $i defines the value of i.
 		 * @param string $file_name defines the file_name.
@@ -874,7 +874,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			$html     .= '<form enctype="multipart/form-data" action="" method="POST">';
 			$html     .= wcj_get_option( 'wcj_checkout_files_upload_form_template_before', '<table>' );
 			$the_label = wcj_get_option( 'wcj_checkout_files_upload_label_' . $i, '' );
-			if ( '' != ( $the_label ) ) {
+			if ( '' !== $the_label && null !== $the_label ) {
 				$template      = wcj_get_option(
 					'wcj_checkout_files_upload_form_template_label',
 					'<tr><td colspan="2"><label for="%field_id%">%field_label%</label>%required_html%</td></tr>'
@@ -887,7 +887,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					$template
 				);
 			}
-			if ( '' == $file_name ) {
+			if ( '' === $file_name ) {
 				$field_html  = '<input type="file" name="wcj_checkout_files_upload_' . $i . '" id="wcj_checkout_files_upload_' . $i .
 				'" accept="' . wcj_get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) . '">';
 				$button_html = '<input type="submit"' .
@@ -924,7 +924,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$template
 			);
 			$html    .= wcj_get_option( 'wcj_checkout_files_upload_form_template_after', '</table>' );
-			if ( 0 != $order_id ) {
+			if ( 0 > $order_id ) {
 				$html .= '<input type="hidden" name="wcj_checkout_files_upload_order_id_' . $i . '" value="' . $order_id . '">';
 			}
 			$html .= '</form>';
@@ -984,7 +984,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				$is_filter_ok = ( $is_direct_call ) ? true : (
 				wcj_get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) === $current_filter &&
-				wcj_get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 ) == $current_filter_priority
+				(string) wcj_get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 ) === (string) $current_filter_priority
 				);
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) && $is_filter_ok && $this->is_visible( $i ) ) {
 					$session_data = wcj_session_get( 'wcj_checkout_files_upload_' . $i );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.5.6
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -192,7 +192,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Search_by_custom_number.
 		 *
-		 * @version 4.2.0
+		 * @version 5.6.2-dev
 		 * @since   2.6.0
 		 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
 		 * @param array | string $query defines the query.
@@ -202,11 +202,12 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			! is_admin() ||
 			! property_exists( $query, 'query' ) ||
 			! isset( $query->query['s'] ) ||
-			empty( $search = trim( $query->query['s'] ) ) ||
+			empty( trim( $query->query['s'] ) ) ||
 			'shop_order' !== $query->query['post_type']
 			) {
 				return;
 			}
+			$search = trim( $query->query['s'] );
 			remove_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
 
 			// Get prefix and suffix options.
@@ -229,7 +230,11 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				}
 			}
 			// Post Status.
-			$post_status = ( isset( $_GET['post_status'] ) ) ? $_GET['post_status'] : 'any';
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			$post_status = ( $wpnonce && isset( $_GET['post_status'] ) ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : 'any';
 
 			// Try to search post by '_wcj_order_number' meta key.
 			$meta_query_args = array(
@@ -251,7 +256,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			);
 
 			// If found, create the query by meta_key.
-			if ( 1 == $search_query->found_posts ) {
+			if ( 1 === $search_query->found_posts ) {
 				$query->set( 'post_status', $post_status );
 				$query->set( 's', '' );
 				$query->set( 'post__in', array() );
@@ -337,13 +342,17 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Add Renumerate Orders tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2-dev
 		 * @todo    restyle
 		 * @todo    add more result info (e.g. number of regenerated orders etc.)
 		 */
 		public function create_renumerate_orders_tool() {
 			$result_message = '';
-			if ( isset( $_POST['renumerate_orders'] ) ) {
+			$wpnonce        = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			if ( $wpnonce && isset( $_POST['renumerate_orders'] ) ) {
 				$this->renumerate_orders();
 				$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 			} else {

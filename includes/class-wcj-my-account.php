@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -169,26 +169,30 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Set_custom_page_title.
 		 *
-		 * @version 4.5.0
+		 * @version 5.6.2-dev
 		 * @since   4.3.0
 		 * @param string $title defines the title.
 		 */
 		public function set_custom_page_title( $title ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
 			if (
+				$wpnonce && (
 				! isset( $_GET['section'] ) ||
 				is_admin() ||
 				! in_the_loop() ||
 				! is_account_page()
+				)
 			) {
 				return $title;
 			}
 			if ( ! isset( $this->custom_pages ) ) {
 				$this->get_custom_pages();
 			}
-			$endpoint = $_GET['section'];
+			$endpoint = sanitize_text_field( wp_unslash( $_GET['section'] ) );
 			return ( isset( $this->custom_pages[ $endpoint ] ) ? $this->custom_pages[ $endpoint ]['title'] : $title );
-
-			return $title;
 		}
 
 		/**
@@ -282,7 +286,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Customize_dashboard.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   3.8.0
 		 * @see     woocommerce/templates/myaccount/dashboard.php
 		 * @param string | array $value defines the value.
@@ -298,7 +302,9 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					if ( false !== $endpoint ) {
 						$endpoint_tab = wp_list_filter( $this->custom_pages, array( 'endpoint' => $endpoint ) );
 					}
-					$page_id = sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) ? sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) : ( false !== $endpoint ? array_keys( wp_list_pluck( $endpoint_tab, 'endpoint' ) )[0] : '' );
+					$wpnonce = true;
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+					$page_id = $wpnonce && sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) ? sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) : ( false !== $endpoint ? array_keys( wp_list_pluck( $endpoint_tab, 'endpoint' ) )[0] : '' );
 					if ( isset( $this->custom_pages[ $page_id ] ) ) {
 						echo do_shortcode( $this->custom_pages[ $page_id ]['content'] );
 						return;
@@ -324,9 +330,9 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 
 			if ( 'no' === wcj_get_option( 'wcj_my_account_custom_dashboard_hide_hello', 'no' ) ) {
 				echo '<p>';
-				/* translators: 1: user display name 2: logout url */
 				printf(
-					__( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ),
+					/* translators: 1: user display name 2: logout url */
+					wp_kses_post( __( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ) ),
 					'<strong>' . esc_html( $current_user->display_name ) . '</strong>',
 					esc_url( wc_logout_url( wc_get_page_permalink( 'myaccount' ) ) )
 				);
@@ -336,7 +342,8 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			if ( 'no' === wcj_get_option( 'wcj_my_account_custom_dashboard_hide_info', 'no' ) ) {
 				echo '<p>';
 				printf(
-					__( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' ),
+					/* translators: 1: user display name 2: logout url */
+					wp_kses_post( __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' ) ),
 					esc_url( wc_get_endpoint_url( 'orders' ) ),
 					esc_url( wc_get_endpoint_url( 'edit-address' ) ),
 					esc_url( wc_get_endpoint_url( 'edit-account' ) )
@@ -390,7 +397,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Customize_menu.
 		 *
-		 * @version 5.1.1
+		 * @version 5.6.2-dev
 		 * @since   3.8.0
 		 * @todo    (maybe) option to disable menu
 		 * @param array $items defines the items.
@@ -417,7 +424,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				$menu_order = array_filter(
 					$menu_order,
 					function ( $item ) use ( $items ) {
-						return in_array( $item, array_keys( $items ) );
+						return in_array( $item, array_keys( $items ), true );
 					}
 				);
 				$items      = array_merge( array_flip( $menu_order ), $items );
@@ -428,7 +435,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Add_registration_extra_fields.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 * @todo    (maybe) more fields to choose from (i.e. not only "user role" field)
 		 * @todo    (maybe) customizable position (check for other hooks or at least customizable priority on `woocommerce_register_form`)
@@ -436,7 +443,8 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 */
 		public function add_registration_extra_fields() {
 			$user_roles_options_html = '';
-			$current_user_role_input = ( ! empty( $_POST['wcj_user_role'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_user_role'] ) ) :
+			$wpnonce                 = isset( $_REQUEST['woocommerce-register-nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['woocommerce-register-nonce'] ) ? $_REQUEST['woocommerce-register-nonce'] : '' ), 'woocommerce-register' ) : true;
+			$current_user_role_input = ( $wpnonce && ! empty( $_POST['wcj_user_role'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_user_role'] ) ) :
 				get_option( 'wcj_my_account_registration_extra_fields_user_role_default', 'customer' );
 			$user_roles_options      = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
 			$all_user_roles          = wcj_get_user_roles_options();
@@ -454,7 +462,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Process_registration_extra_fields.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 * @todo    (maybe) optional admin confirmation for some user roles (probably will need to create additional `...-pending` user roles)
 		 * @param id             $customer_id defines the customer_id.
@@ -462,9 +470,10 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @param string         $password_generated defines the password_generated.
 		 */
 		public function process_registration_extra_fields( $customer_id, $new_customer_data, $password_generated ) {
-			if ( isset( $_POST['wcj_user_role'] ) && '' !== $_POST['wcj_user_role'] ) {
+			$wpnonce = isset( $_REQUEST['woocommerce-register-nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['woocommerce-register-nonce'] ) ? $_REQUEST['woocommerce-register-nonce'] : '' ), 'woocommerce-register' ) : true;
+			if ( $wpnonce && isset( $_POST['wcj_user_role'] ) && '' !== $_POST['wcj_user_role'] ) {
 				$user_roles_options = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
-				if ( ! empty( $user_roles_options ) && in_array( $_POST['wcj_user_role'], $user_roles_options ) ) {
+				if ( ! empty( $user_roles_options ) && in_array( $_POST['wcj_user_role'], $user_roles_options, true ) ) {
 					wp_update_user(
 						array(
 							'ID'   => $customer_id,
@@ -478,7 +487,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Add_my_account_custom_info.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   3.4.0
 		 */
 		public function add_my_account_custom_info() {
@@ -489,7 +498,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				if (
 					'' !== wcj_get_option( 'wcj_my_account_custom_info_content_' . $i ) &&
 					wcj_get_option( 'wcj_my_account_custom_info_hook_' . $i, 'woocommerce_account_dashboard' ) === $current_filter &&
-					wcj_get_option( 'wcj_my_account_custom_info_priority_' . $i, '10' ) === (string)$current_filter_priority
+					wcj_get_option( 'wcj_my_account_custom_info_priority_' . $i, '10' ) === (string) $current_filter_priority
 				) {
 					echo do_shortcode( wcj_get_option( 'wcj_my_account_custom_info_content_' . $i ) );
 				}
@@ -551,7 +560,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Process_woocommerce_mark_order_status.
 		 *
-		 * @version 2.9.0
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 */
 		public function process_woocommerce_mark_order_status() {
@@ -561,10 +570,10 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				isset( $_GET['order_id'] ) &&
 				isset( $_GET['_wpnonce'] )
 			) {
-				if ( wp_verify_nonce( $_GET['_wpnonce'], 'wcj-woocommerce-mark-order-status' ) ) {
-					$_order = wc_get_order( $_GET['order_id'] );
+				if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'wcj-woocommerce-mark-order-status' ) ) {
+					$_order = wc_get_order( sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) );
 					if ( $_order->get_customer_id() === get_current_user_id() ) {
-						$_order->update_status( $_GET['status'] );
+						$_order->update_status( sanitize_text_field( wp_unslash( $_GET['status'] ) ) );
 						wp_safe_redirect( remove_query_arg( array( 'wcj_action', 'status', 'order_id', '_wpnonce' ) ) );
 						exit;
 					}

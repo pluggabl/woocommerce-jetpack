@@ -301,7 +301,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 				<?php
 				$wpnonce = true;
 				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
 				}
 				if ( $wpnonce && isset( $_GET['section'] ) ) {
 					do_action( 'wcj_module_tools_' . sanitize_text_field( wp_unslash( $_GET['section'] ) ) );}

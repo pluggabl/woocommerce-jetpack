@@ -63,8 +63,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 * @since   5.5.6
 		 */
 		public function wcj_new_desing_dashboard() {
-
-			if ( isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			if ( $wpnonce && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css', array(), w_c_j()->version );
 				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );
 			}
@@ -193,7 +196,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 */
 		public function output_cats_submenu() {
 			global $current_section;
-			$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$current_cat = $wpnonce && empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) );
 			if ( empty( $this->cats ) ) {
 				return;}
 			echo '<ul class="wcj-dashboard-header">';
@@ -204,9 +211,9 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					$dashboard_section = '&section=by_category';
 				}
 				echo wp_kses_post(
-					'<li class="wcj-header-item ' . ( $current_cat == $id ? 'active' : '' ) . '"><a
+					'<li class="wcj-header-item ' . ( $current_cat === $id ? 'active' : '' ) . '"><a
                        href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . sanitize_title( $id ) . '' . $dashboard_section ) . '"
-                       class="' . ( $current_cat == $id ? 'current' : '' ) . '">' . $label_info['label'] . '</a> ' .
+                       class="' . ( $current_cat === $id ? 'current' : '' ) . '">' . $label_info['label'] . '</a> ' .
 					( end( $array_keys ) === $id ? '' : '' ) . ' </li>'
 				);
 			}
@@ -221,8 +228,12 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 */
 		public function output_sections_submenu() {
 			global $current_section;
-			$sections    = $this->get_sections();
-			$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
+			$sections = $this->get_sections();
+			$wpnonce  = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$current_cat = $wpnonce && empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) );
 			if ( 'dashboard' === $current_cat ) {
 
 				// Counting modules.
@@ -248,13 +259,13 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 						$sections[ $custom_dashboard_module_id ] = $custom_dashboard_module_data['title'];
 					}
 				}
-				if ( '' == $current_section ) {
+				if ( '' === $current_section ) {
 					$current_section = 'by_category';
 				}
 			}
 			if ( ! empty( $this->cats[ $current_cat ]['all_cat_ids'] ) ) {
 				foreach ( $sections as $id => $label ) {
-					if ( ! in_array( $id, $this->cats[ $current_cat ]['all_cat_ids'] ) ) {
+					if ( ! in_array( $id, $this->cats[ $current_cat ]['all_cat_ids'], true ) ) {
 						unset( $sections[ $id ] );
 					}
 				}
@@ -279,7 +290,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 
 			foreach ( $menu as $id => $label ) {
 				$url          = admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . $current_cat . '&section=' . sanitize_title( $id ) );
-				$menu_links[] = '<li class="wcj-sidebar-item ' . ( $current_section == $id ? 'active' : '' ) . '"><a href="' . $url . '" class="' . ( $current_section == $id ? 'current' : '' ) . '">' . $label . '</a></li>';
+				$menu_links[] = '<li class="wcj-sidebar-item ' . ( $current_section === $id ? 'active' : '' ) . '"><a href="' . $url . '" class="' . ( $current_section === $id ? 'current' : '' ) . '">' . $label . '</a></li>';
 			}
 			echo wp_kses_post( implode( ' ', $menu_links ) . '<br class="clear" />' );
 		}
@@ -291,7 +302,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		public function get_cat_by_section( $section ) {
 			foreach ( $this->cats as $id => $label_info ) {
 				if ( ! empty( $label_info['all_cat_ids'] ) ) {
-					if ( in_array( $section, $label_info['all_cat_ids'] ) ) {
+					if ( in_array( $section, $label_info['all_cat_ids'], true ) ) {
 						return $id;
 					}
 				}
@@ -339,14 +350,14 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 
 			global $current_section, $wcj_notice;
 
-			if ( '' != $wcj_notice ) {
+			if ( '' !== $wcj_notice ) {
 				echo wp_kses_post( '<div id="wcj_message" class="updated"><p><strong>' . $wcj_notice . '</strong></p></div>' );
 			}
 			if ( 'by_category' !== $current_section ) {
-				$is_dashboard = $this->is_dashboard_section( $current_section );
-
+				$is_dashboard       = $this->is_dashboard_section( $current_section );
+				$replacement_module = wcj_is_module_deprecated( $current_section );
 				// Deprecated message.
-				if ( $replacement_module = wcj_is_module_deprecated( $current_section ) ) {
+				if ( $replacement_module ) {
 					echo '<div id="wcj_message" class="error">';
 					echo '<p>';
 					echo '<strong>';
@@ -394,8 +405,12 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 							break;
 						}
 					}
-					if ( $is_dashboard && isset( $_GET['wcj-cat'] ) && 'dashboard' != $_GET['wcj-cat'] ) {
-						$breadcrumbs_html .= $this->cats[ $_GET['wcj-cat'] ]['label'];
+					$wpnonce = true;
+					if ( function_exists( 'wp_verify_nonce' ) ) {
+						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+					}
+					if ( $wpnonce && $is_dashboard && isset( $_GET['wcj-cat'] ) && 'dashboard' !== $_GET['wcj-cat'] ) {
+						$breadcrumbs_html .= $this->cats[ sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) ]['label'];
 					}
 					if ( ! $is_dashboard ) {
 						$breadcrumbs_html .= ' > ';
@@ -420,12 +435,12 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output_dashboard.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @param array $current_section defines the current section.
 		 */
 		public function output_dashboard( $current_section ) {
 
-			if ( '' == $current_section ) {
+			if ( '' === $current_section ) {
 				$current_section = 'by_category';
 			}
 
@@ -434,7 +449,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			echo wp_kses_post( '<h3>' . $the_settings[0]['title'] . '</h3>' );
 			if ( isset( $this->custom_dashboard_modules[ $current_section ] ) ) {
 				echo wp_kses_post( '<p>' . $this->custom_dashboard_modules[ $current_section ]['desc'] . '</p>' );
-			} elseif ( 'manager' != $current_section ) {
+			} elseif ( 'manager' !== $current_section ) {
 				echo wp_kses_post( '<p>' . $the_settings[0]['desc'] . '</p>' );
 			} else {
 				echo wp_kses_post( '<p>' . __( 'This section lets you export, import or reset all Booster\'s modules settings.', 'woocommerce-jetpack' ) . '</p>' );
@@ -447,8 +462,12 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					if ( 'dashboard' === $cat_id ) {
 						continue;
 					}
-					if ( isset( $_GET['wcj-cat'] ) && 'dashboard' != $_GET['wcj-cat'] ) {
-						if ( $cat_id != $_GET['wcj-cat'] ) {
+					$wpnonce = true;
+					if ( function_exists( 'wp_verify_nonce' ) ) {
+						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+					}
+					if ( $wpnonce && isset( $_GET['wcj-cat'] ) && 'dashboard' !== $_GET['wcj-cat'] ) {
+						if ( $cat_id !== $_GET['wcj-cat'] ) {
 							continue;
 						}
 					} else {
@@ -590,12 +609,12 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					if ( wcj_is_module_deprecated( $section, false, true ) ) {
 						continue;
 					}
-					if ( '' != $cat_id ) {
+					if ( '' !== $cat_id ) {
 						if ( 'active_modules_only' === $cat_id ) {
 							if ( 'no' === wcj_get_option( $the_feature['id'], 'no' ) ) {
 								continue;
 							}
-						} elseif ( $cat_id != $this->get_cat_by_section( $section ) ) {
+						} elseif ( $cat_id !== $this->get_cat_by_section( $section ) ) {
 							continue;
 						}
 					}
@@ -608,7 +627,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					$html .= '<td class="plugin-title"><strong>' . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
 					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
-					if ( isset( $the_feature['wcj_link'] ) && '' != $the_feature['wcj_link'] ) {
+					if ( isset( $the_feature['wcj_link'] ) && '' !== $the_feature['wcj_link'] ) {
 						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
 					}
 					$html .= '</div>';
@@ -619,7 +638,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					$html .= '</tr>';
 				}
 				echo wp_kses_post( $html );
-				if ( 0 == $total_modules && 'active_modules_only' === $cat_id ) {
+				if ( 0 === $total_modules && 'active_modules_only' === $cat_id ) {
 					echo wp_kses_post( '<tr><td colspan="3"><em>' . __( 'No active modules found.', 'woocommerce-jetpack' ) . '</em></td></tr>' );
 				}
 				?>
@@ -649,7 +668,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Disable_autoload_options.
 		 *
-		 * @version 5.3.3
+		 * @version 5.6.2-dev
 		 * @since   5.3.3
 		 *
 		 * @param array $settings defines the settings.
@@ -659,13 +678,10 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			$fields         = wp_list_filter( $fields, array( 'type' => 'title' ), 'NOT' );
 			$fields         = wp_list_filter( $fields, array( 'type' => 'sectionend' ), 'NOT' );
 			$field_ids      = wp_list_pluck( $fields, 'id' );
-			$fields_ids_str = '\'' . implode( '\',\'', $field_ids ) . '\'';
+			$fields_ids_str = '"' . implode( '","', $field_ids ) . '"';
 			global $wpdb;
-			$sql = "
-            UPDATE {$wpdb->options} SET autoload = 'no'
-            WHERE option_name IN ({$fields_ids_str}) AND autoload != 'no'
-            ";
-			$wpdb->query( $sql );
+
+			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET autoload = 'no' WHERE option_name IN (" . implode( ', ', array_fill( 0, count( $field_ids ), '%s' ) ) . ") AND autoload != 'no'", $field_ids ) );
 		}
 
 		/**
@@ -775,7 +791,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			} elseif ( isset( $this->custom_dashboard_modules[ $current_section ] ) ) {
 				return $this->custom_dashboard_modules[ $current_section ]['settings'];
 			} else {
-				$cat_id     = ( isset( $_GET['wcj-cat'] ) && '' !== $_GET['wcj-cat'] ) ? $_GET['wcj-cat'] : 'dashboard';
+				$wpnonce = true;
+				if ( function_exists( 'wp_verify_nonce' ) ) {
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+				}
+				$cat_id     = $wpnonce && ( isset( $_GET['wcj-cat'] ) && '' !== $_GET['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) : 'dashboard';
 				$settings[] = array(
 					'title' => __( 'Booster for WooCommerce', 'woocommerce-jetpack' ) . ' - ' . $this->cats[ $cat_id ]['label'],
 					'type'  => 'title',
@@ -807,6 +827,8 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 
 		/**
 		 * Add_module_statuses.
+		 *
+		 * @param array $statuses All module statuses.
 		 */
 		public function add_module_statuses( $statuses ) {
 			$this->module_statuses = $statuses;
@@ -836,9 +858,13 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 */
 		public function dasboard_menu() {
 			global $current_section;
-			$_section = isset( $_GET['section'] ) ? $_GET['section'] : '';
-			$_wcj_cat = isset( $_GET['wcj-cat'] ) ? $_GET['wcj-cat'] : '';
-			$_wcj_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : '';
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			$_section = $wpnonce && isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '';
+			$_wcj_cat = $wpnonce && isset( $_GET['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) : '';
+			$_wcj_tab = $wpnonce && isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 			if ( 'jetpack' === $_wcj_tab && ( '' === $_section || 'by_category' === $_section ) && ( '' === $_wcj_cat || 'dashboard' === $_wcj_cat ) ) {
 				?>
 			<style>

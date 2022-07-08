@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -36,7 +36,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Prepare_pdf.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @todo    [dev] check `addTTFfont()`
 		 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster for WooCommerce' )`
 		 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`
@@ -49,7 +49,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$invoice_type = $this->invoice_type;
 
 			$page_format = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_page_format', 'A4' );
-			if ( 'custom' == $page_format ) {
+			if ( 'custom' === $page_format ) {
 				$page_format = array(
 					get_option( 'wcj_invoicing_' . $invoice_type . '_page_format_custom_width', 0 ),
 					get_option( 'wcj_invoicing_' . $invoice_type . '_page_format_custom_height', 0 ),
@@ -74,7 +74,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$invoice_title = $invoice_type;
 			$invoice_types = wcj_get_invoice_types();
 			foreach ( $invoice_types as $invoice_type_data ) {
-				if ( $invoice_type == $invoice_type_data['id'] ) {
+				if ( $invoice_type === $invoice_type_data['id'] ) {
 					$invoice_title = $invoice_type_data['title'];
 					break;
 				}
@@ -169,7 +169,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$background_image = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) );
 			if ( '' !== $background_image ) {
 				$parse_bkg_image  = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image_parse', 'yes' );
-				$background_image = 'yes' === ( $parse_bkg_image ) ? sanitize_text_field( wp_unslash( $_SERVER['DOCUMENT_ROOT'] ) ) . wp_parse_url( $background_image, PHP_URL_PATH ) : $background_image;
+				$document_root    = isset( $_SERVER['DOCUMENT_ROOT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['DOCUMENT_ROOT'] ) ) : '';
+				$background_image = 'yes' === ( $parse_bkg_image ) ? $document_root . wp_parse_url( $background_image, PHP_URL_PATH ) : $background_image;
 
 				$pdf->SetAutoPageBreak( false, 0 );
 				$pdf->Image( $background_image, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), '', '', '', false, 300, '', false, false, 0 );
@@ -247,7 +248,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Get_pdf.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2-dev
 		 * @todo    [dev] (maybe) `die()` on success
 		 * @param string $dest define dest.
 		 */
@@ -267,16 +268,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 					return null;
 				}
 				return $file_path;
-			} elseif ( 'D' == $dest || 'I' == $dest ) {
-				if ( 'D' == $dest ) {
+			} elseif ( 'D' === $dest || 'I' === $dest ) {
+				if ( 'D' === $dest ) {
 					header( 'Content-Type: application/octet-stream' );
-					header( 'Content-Disposition: attachment; filename=' . urlencode( $file_name ) );
+					header( 'Content-Disposition: attachment; filename=' . rawurlencode( $file_name ) );
 					header( 'Content-Type: application/octet-stream' );
 					header( 'Content-Type: application/download' );
 					header( 'Content-Description: File Transfer' );
 				} elseif ( 'I' === $dest ) {
 					header( 'Content-type: application/pdf' );
-					header( 'Content-Disposition: inline; filename=' . urlencode( $file_name ) );
+					header( 'Content-Disposition: inline; filename=' . rawurlencode( $file_name ) );
 				}
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 					header( 'Content-Length: ' . strlen( $result_pdf ) );

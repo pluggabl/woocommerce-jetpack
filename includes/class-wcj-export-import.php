@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -72,7 +72,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export.
 		 *
-		 * @version 2.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 * @todo    [dev] when filtering now using `strpos`, but other options would be `stripos` (case-insensitive) or strict equality
 		 * @todo    [dev] (maybe) do filtering directly in WP_Query
@@ -102,7 +102,11 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					$data     = $exporter->export_products( $this->fields_helper );
 					break;
 			}
-			if ( isset( $_POST['wcj_export_filter_all_columns'] ) && '' !== $_POST['wcj_export_filter_all_columns'] ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( $wpnonce && isset( $_POST['wcj_export_filter_all_columns'] ) && '' !== $_POST['wcj_export_filter_all_columns'] ) {
 				foreach ( $data as $row_id => $row ) {
 					if ( 0 === $row_id ) {
 						continue;
@@ -125,13 +129,17 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_xml.
 		 *
-		 * @version 2.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.5.9
 		 * @todo    [dev] templates for xml_start, xml_end, xml_item.
 		 * @todo    [dev] `strip_tags`
 		 */
 		public function export_xml() {
-			if ( isset( $_POST['wcj_export_xml'] ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( $wpnonce && isset( $_POST['wcj_export_xml'] ) ) {
 				$data = $this->export( sanitize_text_field( wp_unslash( $_POST['wcj_export_xml'] ) ) );
 				if ( is_array( $data ) ) {
 					$xml  = '';
@@ -154,7 +162,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					header( 'Content-Type: Content-Type: text/html; charset=utf-8' );
 					header( 'Content-Description: File Transfer' );
 					header( 'Content-Length: ' . strlen( $xml ) );
-					echo wp_kses_post( $xml );
+					echo $xml;
 					die();
 				}
 			}
@@ -165,7 +173,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 *
 		 * @see https://stackoverflow.com/a/4617967/1193038
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2-dev
 		 * @since   5.1.0
 		 *
 		 * @param array $row defines the row.
@@ -195,11 +203,15 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_csv.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 */
 		public function export_csv() {
-			if ( isset( $_POST['wcj_export'] ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( $wpnonce && isset( $_POST['wcj_export'] ) ) {
 				$data = $this->export( sanitize_text_field( wp_unslash( $_POST['wcj_export'] ) ) );
 				if ( is_array( $data ) ) {
 					$csv = '';
@@ -223,13 +235,17 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_filter_fields.
 		 *
-		 * @version 2.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.5.5
 		 * @todo    [dev] filter each field separately
 		 * @param int $tool_id defines the tool_id.
 		 */
 		public function export_filter_fields( $tool_id ) {
-			$fields = array();
+			$fields  = array();
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			switch ( $tool_id ) {
 				case 'orders':
 					$fields = array(
@@ -246,7 +262,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			if ( ! empty( $fields ) ) {
 				$data = array();
 				foreach ( $fields as $field_id => $field_desc ) {
-					$field_value = ( isset( $_POST[ $field_id ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) ) : '';
+					$field_value = ( $wpnonce && isset( $_POST[ $field_id ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) ) : '';
 					$data[]      = array(
 						'<label for="' . $field_id . '">' . $field_desc . '</label>',
 						'<input name="' . $field_id . '" id="' . $field_id . '" type="text" value="' . $field_value . '">',
@@ -270,15 +286,19 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_date_fields.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @since   3.0.0
 		 * @todo    [dev] maybe make `$dateformat` optional
 		 * @todo    [dev] mark current (i.e. active) link (if exists)
 		 * @param int $tool_id defines the tool_id.
 		 */
 		public function export_date_fields( $tool_id ) {
-			$current_start_date  = ( isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '' );
-			$current_end_date    = ( isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '' );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$current_start_date  = ( $wpnonce && isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '' );
+			$current_end_date    = ( $wpnonce && isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '' );
 			$predefined_ranges   = array();
 			$predefined_ranges[] = '<a href="' . esc_url( add_query_arg( 'range', 'all_time', remove_query_arg( array( 'start_date', 'end_date' ) ) ) ) . '">' .
 			__( 'All time', 'woocommerce-jetpack' ) . '</a>';
@@ -313,15 +333,19 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Create_export_tool.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 * @param int $tool_id defines the tool_id.
 		 */
 		public function create_export_tool( $tool_id ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			echo wp_kses_post( $this->get_tool_header_html( 'export_' . $tool_id ) );
 			echo '<p>' . wp_kses_post( $this->export_date_fields( $tool_id ) ) . '</p>';
-			if ( ! isset( $_GET['range'] ) ) {
+			if ( $wpnonce && ! isset( $_GET['range'] ) ) {
 				echo '</div>';
 				return;
 			}
