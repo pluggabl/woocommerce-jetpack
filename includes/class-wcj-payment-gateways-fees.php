@@ -147,8 +147,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @since   3.3.0
 		 */
 		public function get_current_gateway() {
-			$gateway = '';
 
+			
+			$gateway = '';
 			if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) {
 				$gateway = 'paypal_express'; // PayPal for WooCommerce (By Angell EYE).
 			} elseif (
@@ -267,7 +268,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 							$final_fee_to_add = $fee_value;
 							break;
 						case 'percent':
-							$final_fee_to_add = ($fee_value / 100) * $total_in_cart;
+							$final_fee_to_add = ( $fee_value / 100 ) * $total_in_cart;
 							if ( 'yes' === $this->wcj_get_option( 'round', $current_gateway ) ) {
 								$final_fee_to_add = round( $final_fee_to_add, $this->wcj_get_option( 'round_precision', $current_gateway ) );
 							}

@@ -300,7 +300,7 @@ if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
 	 *
 	 * @param string $utc_date get utc_Date.
 	 * @param null   $format get format.
-	 *
+	 * @throws InvalidArgumentException InvalidArgumentException.
 	 * @return string
 	 */
 	function wcj_pretty_utc_date( string $utc_date, $format = null ) {

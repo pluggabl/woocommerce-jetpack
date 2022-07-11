@@ -70,8 +70,7 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 					get_option( 'wcj_shipping_' . $options_id . '_include_' . $rate->method_id, '' )
 					);
 					if ( ! empty( $include ) ) {
-						if ( $this->check( $options_id, $include, 'include', $package ) ) {
-						} else {
+						if ( ! $this->check( $options_id, $include, 'include', $package ) ) {
 							unset( $rates[ $rate_key ] );
 						}
 					}

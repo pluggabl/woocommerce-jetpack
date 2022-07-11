@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
+if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 	/**
 	 * WCJ_Max_products_Per_User.
 	 */
-	class WCJ_Max_products_Per_User extends WCJ_Module {
+	class WCJ_Max_Products_Per_User extends WCJ_Module {
 
 		/**
 		 * Constructor.
@@ -144,7 +144,7 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 				$class   = 'notice notice-info';
 				$message = __( 'Data re-calculated.', 'woocommerce-jetpack' ) . ' ' .
 				/* translators: %s: translation added */
-				sprintf( __( '%s order(s) processed.', 'woocommerce-jetpack' ), $_GET['wcj_max_products_per_user_calculate_data_finished'] );
+				sprintf( __( '%s order(s) processed.', 'woocommerce-jetpack' ), sanitize_text_field( wp_unslash( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) );
 				printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 			}
 		}
@@ -156,41 +156,36 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		 * @since   3.5.0
 		 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 		 */
-		public function calculate_data() {
-			if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) {
-				$offset       = 0;
-				$block_size   = 512;
-				$total_orders = 0;
-				while ( true ) {
-					$args = array(
-						'post_type'      => 'shop_order',
-						'post_status'    => $this->order_status,
-						'posts_per_page' => $block_size,
-						'orderby'        => 'ID',
-						'order'          => 'DESC',
-						'offset'         => $offset,
-						'fields'         => 'ids',
-					);
-					$loop = new WP_Query( $args );
-					if ( ! $loop->have_posts() ) {
-						break;
-					}
-					foreach ( $loop->posts as $_order_id ) {
-						$this->save_quantities( $_order_id );
-						$total_orders++;
-					}
-					$offset += $block_size;
-				}
-				wp_safe_redirect(
-					add_query_arg(
-						'wcj_max_products_per_user_calculate_data_finished',
-						$total_orders,
-						esc_url( remove_query_arg( 'wcj_max_products_per_user_calculate_data' ) )
-					)
+		function calculate_data() {
+		if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) {
+			$offset       = 0;
+			$block_size   = 512;
+			$total_orders = 0;
+			while( true ) {
+				$args = array(
+					'post_type'      => 'shop_order',
+					'post_status'    => $this->order_status,
+					'posts_per_page' => $block_size,
+					'orderby'        => 'ID',
+					'order'          => 'DESC',
+					'offset'         => $offset,
+					'fields'         => 'ids',
 				);
-				exit;
+				$loop = new WP_Query( $args );
+				if ( ! $loop->have_posts() ) {
+					break;
+				}
+				foreach ( $loop->posts as $_order_id ) {
+					$this->save_quantities( $_order_id );
+					$total_orders++;
+				}
+				$offset += $block_size;
 			}
+			wp_safe_redirect( add_query_arg( 'wcj_max_products_per_user_calculate_data_finished', $total_orders,
+				remove_query_arg( 'wcj_max_products_per_user_calculate_data' ) ) );
+			exit;
 		}
+	}
 
 		/**
 		 * Add_report_meta_box.
@@ -389,4 +384,4 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 
 endif;
 
-return new WCJ_Max_products_Per_User();
+return new WCJ_Max_Products_Per_User();

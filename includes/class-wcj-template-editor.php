@@ -54,7 +54,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		 * @param string | array $current_section defines the current_section.
 		 */
 		public function create_templates( $sections, $current_section ) {
-			if ( $this->id == $current_section ) {
+			if ( $this->id === $current_section ) {
 				$this->delete_dir( wcj_get_wcj_uploads_dir( 'templates' ) );
 				$templates_content = wcj_get_option( 'wcj_template_editor_templates_content', array() );
 				foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		 * @param string $default_path defines the default_path.
 		 */
 		public function replace_template( $located, $template_name, $args, $template_path, $default_path ) {
-			if ( in_array( $template_name, $this->templates_to_edit ) ) {
+			if ( in_array( $template_name, $this->templates_to_edit, true ) ) {
 				$modified_template = wcj_get_wcj_uploads_dir( 'templates', false ) . DIRECTORY_SEPARATOR . $template_name;
 				return ( file_exists( $modified_template ) ? $modified_template : $located );
 			}
@@ -101,7 +101,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		public function get_path_by_template( $template ) {
 			$templates_by_path = wcj_get_option( 'wcj_template_editor_templates_by_path', array() );
 			foreach ( $templates_by_path as $path => $templates ) {
-				if ( in_array( $template, $templates ) ) {
+				if ( in_array( $template, $templates, true ) ) {
 					return $path;
 				}
 			}

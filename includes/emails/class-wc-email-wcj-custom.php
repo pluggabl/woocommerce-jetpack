@@ -236,8 +236,8 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 				$status_triggers[ 'woocommerce_order_status_' . $slug . '_notification' ] = sprintf( __( 'Order status updated to %s', 'woocommerce-jetpack' ), $name );
 				foreach ( $order_statuses as $slug2 => $name2 ) {
 					if ( $slug !== $slug2 ) {
-						/* translators: %s: search term */
-						$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %s to %s', 'woocommerce-jetpack' ), $name, $name2 );
+						/* translators: %1$s,%2$s: search term */
+						$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %1$s to %2$s', 'woocommerce-jetpack' ), $name, $name2 );
 					}
 				}
 			}

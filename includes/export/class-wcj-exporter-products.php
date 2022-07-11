@@ -36,6 +36,8 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 		 *
 		 * @version 2.7.0
 		 * @since   2.5.7
+		 * @param Array | obj $_product Get product.
+		 * @param Array       $which_info Get product info.
 		 */
 		public function get_variable_or_grouped_product_info( $_product, $which_info ) {
 			$all_variations_data = array();
@@ -68,6 +70,7 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 		 * @version 3.0.0
 		 * @since   2.5.3
 		 * @todo    product attributes
+		 * @param Array $fields_helper Get fields info.
 		 */
 		public function export_products( $fields_helper ) {
 

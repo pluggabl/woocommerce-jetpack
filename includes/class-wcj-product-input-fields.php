@@ -42,7 +42,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>PHP code:</strong> by using %s function,<br> e.g.: %s', 'woocommerce-jetpack' ),
+					__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_1]\'&nbsp;);</code>'
 				) .
