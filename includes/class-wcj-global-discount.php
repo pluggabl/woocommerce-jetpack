@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Get_wcj_sale_products.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   4.8.0
 		 *
 		 * @return array|mixed
@@ -182,7 +182,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 
 					// Tax Query.
 					if ( ! empty( $cats ) || ! empty( $tags ) ) {
-						$args['tax_query'] = array(
+						$args['tax_query'] = array(// phpcs:ignore
 							'relation' => 'AND',
 						);
 						if ( ! empty( $cats ) ) {

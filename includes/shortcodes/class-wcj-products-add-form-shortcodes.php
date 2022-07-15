@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -269,18 +269,21 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_add_new.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.5.0
 		 * @todo    `multipart` only if image
 		 * @param array $atts The user defined shortcode atts.
 		 */
 		public function wcj_product_add_new( $atts ) {
-
+			$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
 			$header_html       = '';
 			$notice_html       = '';
 			$input_fields_html = '';
 			$footer_html       = '';
 
+			if ( ! $wpnonce ) {
+				return;
+			}
 			$args = array(
 				'title'         => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) : '',
 				'desc'          => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_desc'] ) ) : '',

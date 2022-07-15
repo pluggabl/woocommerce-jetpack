@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -241,17 +241,18 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 2.5.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
-			if ( ! isset( $_GET['wcj_product_price_by_user_role_admin_notice'] ) ) {
+			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			if ( ! $wpnonce || ! isset( $_GET['wcj_product_price_by_user_role_admin_notice'] ) ) {
 				return;
 			}
 			?><div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. __( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' )
+				. wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' ) )
 				. '</div>';
 			?>
 		</p></div>
@@ -305,7 +306,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   2.5.0
 		 * @todo    (maybe) add "enable compound multipliers" option
 		 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
@@ -313,7 +314,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @param int   $price defines the price.
 		 * @param array $_product defines the _product.
 		 */
-		function change_price( $price, $_product ) {
+		public function change_price( $price, $_product ) {
 
 			$current_user_role = wcj_get_current_user_first_role();
 			$_current_filter   = current_filter();
@@ -329,35 +330,39 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				}
 			}
 
-			// Per product
+			// Per product.
 			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
-				if ( 'yes' === get_post_meta( wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) ), '_' . 'wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
+				if ( 'yes' === get_post_meta( wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) ), '_wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
 					$_product_id = wcj_maybe_get_product_id_wpml( wcj_get_product_id( $_product ) );
-					if ( 'yes' === get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_empty_price_' . $current_user_role, true ) ) {
+					if ( 'yes' === get_post_meta( $_product_id, '_wcj_price_by_user_role_empty_price_' . $current_user_role, true ) ) {
 						return '';
 					}
+					$regular_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_regular_price_' . $current_user_role, true );
 					if ( 'multiplier' === wcj_get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) ) {
-						if ( '' !== ( $multiplier_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_multiplier_' . $current_user_role, true ) ) ) {
-							// Maybe disable for regular price hooks
+						$multiplier_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_multiplier_' . $current_user_role, true );
+						if ( '' !== $multiplier_per_product ) {
+							// Maybe disable for regular price hooks.
 							if ( $this->disable_for_regular_price && in_array(
 								$_current_filter,
 								array(
 									WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,
 									'woocommerce_variation_prices_regular_price',
 									'woocommerce_product_variation_get_regular_price',
-								)
+								),
+								true
 							) ) {
 								return $price;
 							}
 							return ( '' === $price ) ? $price : $price * $multiplier_per_product;
 						}
-					} elseif ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
+					} elseif ( '' !== $regular_price_per_product ) {
 						if ( in_array(
 							$_current_filter,
 							array(
 								'woocommerce_get_price_including_tax',
 								'woocommerce_get_price_excluding_tax',
-							)
+							),
+							true
 						) ) {
 							return wcj_get_product_display_price( $_product );
 						} elseif ( in_array(
@@ -366,9 +371,10 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 								WCJ_PRODUCT_GET_PRICE_FILTER,
 								'woocommerce_variation_prices_price',
 								'woocommerce_product_variation_get_price',
-							)
+							),
+							true
 						) ) {
-							$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_sale_price_' . $current_user_role, true );
+							$sale_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_sale_price_' . $current_user_role, true );
 							$return                 = ( '' !== $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
 							return apply_filters( 'wcj_price_by_user_role_get_price', $return, $_product );
 						} elseif ( in_array(
@@ -377,7 +383,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 								WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,
 								'woocommerce_variation_prices_regular_price',
 								'woocommerce_product_variation_get_regular_price',
-							)
+							),
+							true
 						) ) {
 							return $regular_price_per_product;
 						} elseif ( in_array(
@@ -386,9 +393,10 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 								WCJ_PRODUCT_GET_SALE_PRICE_FILTER,
 								'woocommerce_variation_prices_sale_price',
 								'woocommerce_product_variation_get_sale_price',
-							)
+							),
+							true
 						) ) {
-							$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_sale_price_' . $current_user_role, true );
+							$sale_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_sale_price_' . $current_user_role, true );
 							return ( '' !== $sale_price_per_product ) ? $sale_price_per_product : $price;
 						}
 					}
@@ -413,7 +421,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 					WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,
 					'woocommerce_variation_prices_regular_price',
 					'woocommerce_product_variation_get_regular_price',
-				)
+				),
+				true
 			) ) {
 				return $price;
 			}

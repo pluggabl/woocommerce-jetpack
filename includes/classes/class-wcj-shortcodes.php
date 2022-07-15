@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 5.4.8
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -91,7 +91,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_shortcode.
 		 *
-		 * @version 5.4.8
+		 * @version 5.6.2-dev
 		 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 		 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 		 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -260,25 +260,31 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 
 			// Check if billing country by arg is ok.
 			if ( '' !== $atts['billing_country'] ) {
-				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) );
+				if ( ! isset( $_GET['order_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+					return '';
+				}
+				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
 				if ( ! isset( $billing_contry ) ) {
 
 					return '';
 				}
-				if ( ! in_array( $billing_contry, $this->custom_explode( $atts['billing_country'] ) ) ) {
+				if ( ! in_array( $billing_contry, $this->custom_explode( $atts['billing_country'] ), true ) ) {
 
 					return '';
 				}
 			}
 			// Check if billing country by arg is ok (not in...).
 			if ( '' !== $atts['not_billing_country'] ) {
-				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) );
+				if ( ! isset( $_GET['order_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+					return '';
+				}
+				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
 				if ( isset( $billing_contry ) ) {
-					if ( in_array( $billing_contry, $this->custom_explode( $atts['not_billing_country'] ) ) ) {
+					if ( in_array( $billing_contry, $this->custom_explode( $atts['not_billing_country'] ), true ) ) {
 
 						return '';
 					}
@@ -287,17 +293,17 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 
 			// Check if payment method by arg is ok.
 			if ( '' !== $atts['payment_method'] ) {
-				if ( ! isset( $_GET['payment_method'] ) ) {
+				if ( ! isset( $_GET['payment_method'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 					return '';
 				}
-				if ( ! in_array( $_GET['payment_method'], $this->custom_explode( $atts['payment_method'] ) ) ) {
+				if ( ! in_array( $_GET['payment_method'], $this->custom_explode( $atts['payment_method'] ), true ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 					return '';
 				}
 			}
 			// Check if payment method by arg is ok (not in...).
 			if ( '' !== $atts['not_payment_method'] ) {
-				if ( isset( $_GET['payment_method'] ) ) {
-					if ( in_array( $_GET['payment_method'], $this->custom_explode( $atts['not_payment_method'] ) ) ) {
+				if ( isset( $_GET['payment_method'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+					if ( in_array( $_GET['payment_method'], $this->custom_explode( $atts['not_payment_method'] ), true ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 						return '';
 					}
 				}
@@ -365,11 +371,11 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_get_user_location.
 		 *
-		 * @version 3.1.0
+		 * @version 5.6.2-dev
 		 * @todo    (maybe) move this to global functions
 		 */
 		public function wcj_get_user_location() {
-			return ( isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ? sanitize_text_field( wp_unslash( $_GET['country'] ) ) : wcj_get_country_by_ip() );
+			return ( isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ? sanitize_text_field( wp_unslash( $_GET['country'] ) ) : wcj_get_country_by_ip() ); // phpcs:ignore WordPress.Security.NonceVerification
 		}
 	}
 

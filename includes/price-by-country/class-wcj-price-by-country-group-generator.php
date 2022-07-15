@@ -2,8 +2,9 @@
 /**
  * Booster for WooCommerce - Price By Country - Group Generator
  *
- * @version 3.9.0
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,40 +13,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 
+	/**
+	 * WCJ_Price_By_Country_Group_Generator {.
+	 */
 	class WCJ_Price_By_Country_Group_Generator {
 
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 */
-		function __construct() {
+		public function __construct() {
 			require_once 'wcj-country-currency.php';
 			add_action( 'admin_init', array( $this, 'create_all_countries_groups' ) );
 			add_action( 'admin_notices', array( $this, 'create_all_countries_groups_notices' ) );
 		}
 
 		/**
-		 * create_all_countries_groups_notices.
+		 * Create_all_countries_groups_notices.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @since   3.9.0
 		 */
-		function create_all_countries_groups_notices() {
-			if ( isset( $_GET['wcj_generate_country_groups_finished'] ) ) {
-				echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Country groups successfully generated.', 'woocommerce-jetpack' ) . '</p></div>';
+		public function create_all_countries_groups_notices() {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
 			}
-			if ( isset( $_GET['wcj_generate_country_groups_error'] ) ) {
-				echo '<div class="notice notice-error"><p>' . __( 'Country groups generation failed.', 'woocommerce-jetpack' ) . '</p></div>';
+			if ( $wpnonce && isset( $_GET['wcj_generate_country_groups_finished'] ) ) {
+				echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Country groups successfully generated.', 'woocommerce-jetpack' ) . '</p></div>';
+			}
+			if ( $wpnonce && isset( $_GET['wcj_generate_country_groups_error'] ) ) {
+				echo '<div class="notice notice-error"><p>' . esc_html__( 'Country groups generation failed.', 'woocommerce-jetpack' ) . '</p></div>';
 			}
 		}
 
 		/**
-		 * get_currency_countries.
+		 * Get_currency_countries.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
+		 *
+		 * @param string $limit_currencies limit of the currencies.
 		 */
-		function get_currency_countries( $limit_currencies = '' ) {
+		public function get_currency_countries( $limit_currencies = '' ) {
 			if ( 'paypal_only' === $limit_currencies ) {
 				$default_currency            = get_woocommerce_currency();
 				$paypal_supported_currencies = wcj_get_paypal_supported_currencies();
@@ -54,7 +64,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 			$currencies       = array();
 			foreach ( $country_currency as $country => $currency ) {
 				if ( 'paypal_only' === $limit_currencies ) {
-					if ( ! in_array( $currency, $paypal_supported_currencies ) ) {
+					if ( ! in_array( $currency, $paypal_supported_currencies, true ) ) {
 						$currency = $default_currency;
 					}
 				}
@@ -64,25 +74,29 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 		}
 
 		/**
-		 * create_all_countries_groups.
+		 * Create_all_countries_groups.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @todo    add nonce verification
 		 */
-		function create_all_countries_groups() {
-			// Verification
-			if ( ! isset( $_GET['wcj_generate_country_groups'] ) ) {
+		public function create_all_countries_groups() {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			// Verification.
+			if ( ! $wpnonce || ! isset( $_GET['wcj_generate_country_groups'] ) ) {
 				return;
 			}
-			if ( isset( $_POST['save'] ) ) {
+			if ( $wpnonce && isset( $_POST['save'] ) ) {
 				return;
 			}
 			if ( ! wcj_is_user_role( 'administrator' ) || 1 === apply_filters( 'booster_option', 1, '' ) ) {
 				wp_safe_redirect( add_query_arg( 'wcj_generate_country_groups_error', true, remove_query_arg( 'wcj_generate_country_groups' ) ) );
 				exit;
 			}
-			// Generation
-			$currencies       = $this->get_currency_countries( $_GET['wcj_generate_country_groups'] );
+			// Generation.
+			$currencies       = $this->get_currency_countries( sanitize_text_field( wp_unslash( $_GET['wcj_generate_country_groups'] ) ) );
 			$number_of_groups = count( $currencies );
 			update_option( 'wcj_price_by_country_total_groups_number', $number_of_groups );
 			$i = 0;

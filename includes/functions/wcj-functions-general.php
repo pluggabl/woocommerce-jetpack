@@ -1138,11 +1138,12 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'type' => true,
 			),
 			'a'        => array(
-				'onclick'  => true,
-				'onblur'   => true,
-				'onfocus'  => true,
-				'onchange' => true,
-				'target'   => true,
+				'onclick'       => true,
+				'onblur'        => true,
+				'onfocus'       => true,
+				'onchange'      => true,
+				'target'        => true,
+				'wcj-copy-data' => true,
 			),
 			'button'   => array(
 				'wcj_data' => true,

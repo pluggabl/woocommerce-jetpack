@@ -231,7 +231,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			$sections = $this->get_sections();
 			$wpnonce  = true;
 			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
 			}
 			$current_cat = $wpnonce && empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) );
 			if ( 'dashboard' === $current_cat ) {
@@ -681,7 +681,9 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			$fields_ids_str = '"' . implode( '","', $field_ids ) . '"';
 			global $wpdb;
 
-			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET autoload = 'no' WHERE option_name IN (" . implode( ', ', array_fill( 0, count( $field_ids ), '%s' ) ) . ") AND autoload != 'no'", $field_ids ) );
+			if ( count( $field_ids ) > 0 ) {
+				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET autoload = 'no' WHERE option_name IN (" . implode( ', ', array_fill( 0, count( $field_ids ), '%s' ) ) . ") AND autoload != 'no'", $field_ids ) );
+			}
 		}
 
 		/**

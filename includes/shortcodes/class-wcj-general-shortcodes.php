@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -121,7 +121,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_post_meta_sum.
 		 *
-		 * @version 4.1.0
+		 * @version 5.6.2-dev
 		 * @since   4.1.0
 		 * @param array $atts defined shortcode attributes.
 		 */
@@ -130,7 +130,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				return '';
 			}
 			global $wpdb;
-			$sum = $wpdb->get_var( $wpdb->prepare( "SELECT sum(meta_value) FROM $wpdb->postmeta WHERE meta_key = %s", $atts['key'] ) );
+			$sum = $wpdb->get_var( $wpdb->prepare( "SELECT sum(meta_value) FROM $wpdb->postmeta WHERE meta_key = %s", $atts['key'] ) ); // WPCS: db call ok and cache ok.
 			return ( ! empty( $atts['offset'] ) ? $sum + $atts['offset'] : $sum );
 		}
 
@@ -144,7 +144,6 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_get_option( $atts ) {
-			echo 'ssfdjsljdf';
 			$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
 			return ( is_array( $result ) ?
 			( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
@@ -302,12 +301,12 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_request_value.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 * @since   3.4.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_request_value( $atts ) {
-			return ( ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) ) ? '' : $_REQUEST[ $atts['key'] ] );
+			return ( ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) ) ? '' : sanitize_text_field( wp_unslash( $_REQUEST[ $atts['key'] ] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 		}
 
 		/**
@@ -400,7 +399,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_button_toggle_tax_display.
 		 *
-		 * @version 3.2.4
+		 * @version 5.6.2-dev
 		 * @since   3.2.4
 		 * @todo    (dev) different style/class for different tax state
 		 * @todo    (maybe) `get` instead of `post`
@@ -408,8 +407,8 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 */
 		public function wcj_button_toggle_tax_display( $atts ) {
 			$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
-			$current_value = ( '' == ( $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
-			$current_value = '' == $current_value ? 'excl' : $current_value;
+			$current_value = ( ( '' === $session_value || null === $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+			$current_value = '' === $current_value ? 'excl' : $current_value;
 			$label         = $atts[ 'label_' . $current_value ];
 			return '<form method="post" action=""><input type="submit" name="wcj_button_toggle_tax_display"' .
 			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';
@@ -477,7 +476,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_selector.
 		 *
-		 * @version 5.4.3
+		 * @version 5.6.2-dev
 		 * @since   3.1.0
 		 * @todo    add `default` attribute
 		 * @todo    (maybe) add more selector types (e.g.: currency)
@@ -488,8 +487,8 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$html           = '';
 			$options        = '';
 			$countries      = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
-			$selected_value = ( ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) ?
-			$_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] :
+			$selected_value = ( ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) ? // phpcs:ignore WordPress.Security.NonceVerification
+			sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) : // phpcs:ignore WordPress.Security.NonceVerification
 			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 			);
 
@@ -605,34 +604,34 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_current_time.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2-dev
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_time( $atts ) {
-			return date_i18n( $atts['time_format'], current_time( 'timestamp' ) );
+			return date_i18n( $atts['time_format'], gmdate( 'U' ) );
 		}
 
 		/**
 		 * Wcj_current_datetime.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2-dev
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_datetime( $atts ) {
-			return date_i18n( $atts['datetime_format'], current_time( 'timestamp' ) );
+			return date_i18n( $atts['datetime_format'], gmdate( 'U' ) );
 		}
 
 		/**
 		 * Wcj_current_timestamp.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2-dev
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_timestamp( $atts ) {
-			return current_time( 'timestamp' );
+			return gmdate( 'U' );
 		}
 
 		/**
@@ -1092,7 +1091,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_date( $atts ) {
-			return date_i18n( $atts['date_format'], current_time( 'timestamp' ) );
+			return date_i18n( $atts['date_format'], gmdate( 'U' ) );
 		}
 
 		/**

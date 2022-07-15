@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @todo    (maybe) pre-calculate profit for orders
 		 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 		 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>PHP code:</strong> by using %s function, e.g.: %s', 'woocommerce-jetpack' ),
+					__( '<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s', 'woocommerce-jetpack' ),
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_profit]\'&nbsp;);</code>'
 				) .
@@ -93,12 +93,16 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_import_from_wc_cog_tool.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 */
 		public function create_import_from_wc_cog_tool() {
 			// Action and Products list.
-			$perform_import = ( isset( $_POST['wcj_import_from_wc_cog'] ) );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$perform_import = ( $wpnonce && isset( $_POST['wcj_import_from_wc_cog'] ) );
 			$table_data     = array();
 			$table_data[]   = array(
 				__( 'Product ID', 'woocommerce-jetpack' ),
@@ -159,7 +163,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Render_product_columns.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 * @param string $column defines the column.
 		 */
@@ -187,20 +191,20 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 					if ( 'purchase_cost' === $column ) {
 						$min_cost = min( $purchase_costs );
 						$max_cost = max( $purchase_costs );
-						echo ( $min_cost === $max_cost ? wc_price( $min_cost ) : wc_format_price_range( $min_cost, $max_cost ) );
+						echo wp_kses_post( $min_cost === $max_cost ? wc_price( $min_cost ) : wc_format_price_range( $min_cost, $max_cost ) );
 					} elseif ( 'profit' === $column ) {
 						$min_profit = min( $profits );
 						$max_profit = max( $profits );
-						echo ( $min_profit === $max_profit ? wc_price( $min_profit ) : wc_format_price_range( $min_profit, $max_profit ) );
+						echo wp_kses_post( $min_profit === $max_profit ? wc_price( $min_profit ) : wc_format_price_range( $min_profit, $max_profit ) );
 					}
 				} else {
 					$purchase_cost = wc_get_product_purchase_price( $product_id );
 					if ( 'purchase_cost' === $column ) {
-						echo wc_price( $purchase_cost );
+						echo wp_kses_post( wc_price( $purchase_cost ) );
 					} elseif ( 'profit' === $column ) {
 						$_price = $_product->get_price();
 						if ( is_numeric( $_price ) ) {
-							echo wc_price( $_price - $purchase_cost );
+							echo wp_kses_post( wc_price( $_price - $purchase_cost ) );
 						}
 					}
 				}
@@ -227,7 +231,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Output custom columns for orders.
 		 *
-		 * @version 2.7.0
+		 * @version 5.6.2-dev
 		 * @since   2.2.4
 		 * @todo    forecasted profit `$value = $line_total * $average_profit_margin`
 		 * @todo    (maybe) use `[wcj_order_profit]` and `[wcj_order_items_cost]`
@@ -237,14 +241,14 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			if ( 'profit' === $column || 'purchase_cost' === $column ) {
 				$total     = 0;
 				$the_order = wc_get_order( get_the_ID() );
-				if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ) ) ) {
+				if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ), true ) ) {
 					$is_forecasted = false;
 					foreach ( $the_order->get_items() as $item_id => $item ) {
 						$value          = 0;
-						$product_id     = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
+						$product_id     = ( isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
 						? $item['variation_id'] : $item['product_id'] );
 						$purchase_price = wc_get_product_purchase_price( $product_id );
-						if ( 0 != ( $purchase_price ) ) {
+						if ( 0 !== ( $purchase_price ) && '0' !== ( $purchase_price ) ) {
 							if ( 'profit' === $column ) {
 								$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->prices_include_tax : $the_order->get_prices_include_tax() );
 								$line_total                = ( $_order_prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
@@ -258,11 +262,11 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 						$total += $value;
 					}
 				}
-				if ( 0 != $total ) {
+				if ( 0 > $total ) {
 					if ( ! $is_forecasted ) {
 						echo '<span style="color:green;">';
 					}
-					echo wc_price( $total );
+					echo wp_kses_post( wc_price( $total ) );
 					if ( ! $is_forecasted ) {
 						echo '</span>';
 					}
@@ -273,7 +277,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_meta_box.
 		 *
-		 * @version 4.5.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.5
 		 * @todo    (maybe) min_profit
 		 */
@@ -296,10 +300,10 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			}
 			foreach ( $products as $product_id => $desc ) {
 				$purchase_price = wc_get_product_purchase_price( $product_id );
-				if ( 0 != $purchase_price ) {
+				if ( 0 > $purchase_price ) {
 					$the_product = wc_get_product( $product_id );
 					$the_price   = $the_product->get_price();
-					if ( 0 != $the_price ) {
+					if ( 0 > $the_price ) {
 						$the_profit   = $the_price - $purchase_price;
 						$table_data   = array();
 						$table_data[] = array( __( 'Selling', 'woocommerce-jetpack' ), wc_price( $the_price ) );

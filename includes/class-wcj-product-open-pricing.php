@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -233,11 +233,15 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 2.4.8
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 */
 		public function admin_notices() {
-			if ( ! isset( $_GET['wcj_product_open_price_admin_notice'] ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( ! $wpnonce || ! isset( $_GET['wcj_product_open_price_admin_notice'] ) ) {
 				return;
 			}
 			?><div class="error"><p>
@@ -359,16 +363,20 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Validate_open_price_on_add_to_cart.
 		 *
-		 * @version 4.2.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 * @param string $passed defines the passed.
 		 * @param int    $product_id defines the product_id.
 		 */
 		public function validate_open_price_on_add_to_cart( $passed, $product_id ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			$the_product = wc_get_product( $product_id );
 			if ( $this->is_open_price_product( $the_product ) ) {
 				// Empty price.
-				if ( ! isset( $_POST['wcj_open_price'] ) || '' === $_POST['wcj_open_price'] ) {
+				if ( ! $wpnonce || ! isset( $_POST['wcj_open_price'] ) || '' === $_POST['wcj_open_price'] ) {
 					wc_add_notice( wcj_get_option( 'wcj_product_open_price_messages_required', __( 'Price is required!', 'woocommerce-jetpack' ) ), 'error' );
 					return false;
 				}
@@ -378,7 +386,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 					wc_add_notice(
 						wcj_handle_replacements(
 							array(
-								'%price%'     => $this->wc_price_shop_currency( $_POST['wcj_open_price'] ),
+								'%price%'     => $this->wc_price_shop_currency( sanitize_text_field( wp_unslash( $_POST['wcj_open_price'] ) ) ),
 								'%min_price%' => $this->wc_price_shop_currency( $min_price ),
 							),
 							get_option( 'wcj_product_open_price_messages_to_small', __( 'Entered price is too small!', 'woocommerce-jetpack' ) )
@@ -393,7 +401,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 					wc_add_notice(
 						wcj_handle_replacements(
 							array(
-								'%price%'     => $this->wc_price_shop_currency( $_POST['wcj_open_price'] ),
+								'%price%'     => $this->wc_price_shop_currency( sanitize_text_field( wp_unslash( $_POST['wcj_open_price'] ) ) ),
 								'%max_price%' => $this->wc_price_shop_currency( $max_price ),
 							),
 							get_option( 'wcj_product_open_price_messages_to_big', __( 'Entered price is too big!', 'woocommerce-jetpack' ) )
@@ -425,7 +433,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_to_cart_item_data.
 		 *
-		 * @version 4.4.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 * @todo    [dev] (maybe) better conversion for Currency Switcher module (i.e. include rounding)
 		 * @param array $cart_item_data defines the cart_item_data.
@@ -433,8 +441,12 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		 * @param int   $variation_id defines the variation_id.
 		 */
 		public function add_open_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-			if ( isset( $_POST['wcj_open_price'] ) ) {
-				$cart_item_data['wcj_open_price'] = $_POST['wcj_open_price'];
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( $wpnonce && isset( $_POST['wcj_open_price'] ) ) {
+				$cart_item_data['wcj_open_price'] = sanitize_text_field( wp_unslash( $_POST['wcj_open_price'] ) );
 				$product_bundles_divide           = wcj_get_option( 'wcj_product_open_price_woosb_product_bundles_divide', 'no' );
 				if ( 'no' !== ( $product_bundles_divide ) ) {
 					// "WPC Product Bundles for WooCommerce" plugin.
@@ -494,7 +506,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_input_field_to_frontend.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 */
 		public function add_open_price_input_field_to_frontend() {
@@ -503,6 +515,10 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 			}
 			$the_product = wc_get_product();
 			if ( $this->is_open_price_product( $the_product ) ) {
+				$wpnonce = true;
+				if ( function_exists( 'wp_verify_nonce' ) ) {
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+				}
 				// Title.
 				$title = wcj_get_option( 'wcj_product_open_price_label_frontend', __( 'Name Your Price', 'woocommerce-jetpack' ) );
 				// Prices.
@@ -511,12 +527,12 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 				$max_price     = $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_wcj_product_open_price_max_price', true ) );
 				$default_price = $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_wcj_product_open_price_default_price', true ) );
 				// Input field.
-				$value              = ( isset( $_POST['wcj_open_price'] ) ) ? $_POST['wcj_open_price'] : $default_price;
+				$value              = ( $wpnonce && isset( $_POST['wcj_open_price'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_open_price'] ) ) : $default_price;
 				$default_price_step = 1 / pow( 10, absint( wcj_get_option( 'woocommerce_price_num_decimals', 2 ) ) );
 				$custom_attributes  = '';
 				$custom_attributes .= 'step="' . wcj_get_option( 'wcj_product_open_price_price_step', $default_price_step ) . '" ';
-				$custom_attributes .= ( '' == $min_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? 'min="0" ' : 'min="' . $min_price . '" ';
-				$custom_attributes .= ( '' == $max_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? '' : 'max="' . $max_price . '" ';
+				$custom_attributes .= ( '' === $min_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? 'min="0" ' : 'min="' . $min_price . '" ';
+				$custom_attributes .= ( '' === $max_price || 'no' === wcj_get_option( 'wcj_product_open_price_enable_js_validation', 'no' ) ) ? '' : 'max="' . $max_price . '" ';
 				$input_field        = '<input '
 				. 'type="number" '
 				. 'class="text" '

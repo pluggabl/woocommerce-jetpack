@@ -258,17 +258,17 @@ if ( ! function_exists( 'wcj_get_product_image_url' ) ) {
 	/**
 	 * Wcj_get_product_image_url.
 	 *
-	 * @version 2.5.7
+	 * @version 5.6.2-dev
 	 * @since   2.5.7
 	 * @todo    placeholder
 	 * @param int    $product_id Get product id.
 	 * @param string $image_size Get images size.
 	 */
 	function wcj_get_product_image_url( $product_id, $image_size = 'shop_thumbnail' ) {
+		$parent_id = wp_get_post_parent_id( $product_id );
 		if ( has_post_thumbnail( $product_id ) ) {
 			$image_url = get_the_post_thumbnail_url( $product_id, $image_size );
-			$parent_id = wp_get_post_parent_id( $product_id );
-		} elseif ( ( $parent_id ) && has_post_thumbnail( $parent_id ) ) {
+		} elseif ( $parent_id && has_post_thumbnail( $parent_id ) ) {
 			$image_url = get_the_post_thumbnail_url( $parent_id, $image_size );
 		} else {
 			$image_url = '';

@@ -162,7 +162,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					header( 'Content-Type: Content-Type: text/html; charset=utf-8' );
 					header( 'Content-Description: File Transfer' );
 					header( 'Content-Length: ' . strlen( $xml ) );
-					echo $xml;
+					echo $xml; // phpcs:ignore WordPress.Security.EscapeOutput
 					die();
 				}
 			}
@@ -363,7 +363,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			echo '</p>';
 			echo '</form>';
 			$data = $this->export( $tool_id );
-			echo is_array( $data ) ? wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) ) : ( $data );
+			echo is_array( $data ) ? wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) ) : ( $data ); // phpcs:ignore WordPress.Security.EscapeOutput
 			echo '</div>';
 		}
 
