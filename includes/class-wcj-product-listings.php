@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 5.3.6
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -80,7 +80,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 		/**
 		 * Product_visibility_by_price.
 		 *
-		 * @version 3.2.4
+		 * @version 5.6.2-dev
 		 * @since   3.2.3
 		 * @todo    grouped products
 		 * @todo    (maybe) as new "Product Visibility by Price" module
@@ -98,7 +98,8 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 			}
 			$min_price_limit = wcj_get_option( 'wcj_product_listings_product_visibility_by_price_min', 0 );
 			$max_price_limit = wcj_get_option( 'wcj_product_listings_product_visibility_by_price_max', 0 );
-			return ( ( 0 != $min_price_limit && $min_price < $min_price_limit ) || ( 0 != $max_price_limit && $max_price > $max_price_limit ) ? false : $visible );
+
+			return ( ( (string) 0 !== $min_price_limit && $min_price < $min_price_limit ) || ( (string) 0 !== $max_price_limit && $max_price > $max_price_limit && '' !== $max_price_limit ) ? false : $visible );
 		}
 
 		/**

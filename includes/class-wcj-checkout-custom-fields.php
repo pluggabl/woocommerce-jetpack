@@ -45,7 +45,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: search term */
-					__( '<strong>PHP code:</strong> by using %s function,<br> e.g.: %s', 'woocommerce-jetpack' ),
+					__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_checkout_field meta_key = "billing_wcj_checkout_field_1]\'&nbsp;);</code>'
 				) .
@@ -252,6 +252,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 					$option_name       = $the_section . '_wcj_checkout_field_' . $i;
 					$option_name_label = $the_section . '_wcj_checkout_field_label_' . $i;
 					$option_name_type  = $the_section . '_wcj_checkout_field_type_' . $i;
+
 					$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : get_post_meta( $order_id, '_' . $option_name, true ) );
 					if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
 						update_post_meta( $order_id, '_' . $option_name_type, $the_type );
@@ -544,7 +545,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Is_visible.
 		 *
-		 * @version 4.2.0
+		 * @version 5.6.2-dev
 		 * @since   2.6.0
 		 * @todo    add "user roles to include/exclude"
 		 * @param string $i defines the i.
@@ -587,7 +588,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			$products_ex = wcj_get_option( 'wcj_checkout_custom_field_products_ex_' . $i );
 			if ( ! empty( $products_ex ) ) {
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_ex ) ) {
+					if ( in_array( (string) $values['product_id'], $products_ex, true ) ) {
 						return false;
 					}
 				}
@@ -595,7 +596,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			$products_in = wcj_get_option( 'wcj_checkout_custom_field_products_in_' . $i );
 			if ( ! empty( $products_in ) ) {
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_in ) ) {
+					if ( in_array( (string) $values['product_id'], $products_in, true ) ) {
 						return true;
 					}
 				}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency Converter
  *
- * @version 5.3.8
+ * @version 5.6.2-dev
  * @since   2.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -68,15 +68,21 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Fix_chosen_payment_method.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @since   3.9.0
 		 * @param string | array $post_data defines the post_data.
 		 */
 		public function fix_chosen_payment_method( $post_data ) {
-			$payment_gateway            = ( empty( $_POST['payment_method'] ) ? '' : $_POST['payment_method'] );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+
+			$payment_gateway            = ( empty( $_POST['payment_method'] ) ? '' : sanitize_text_field( wp_unslash( $_POST['payment_method'] ) ) );
 			$available_payment_gateways = array_keys( WC()->payment_gateways->get_available_payment_gateways() );
-			if ( ! empty( $available_payment_gateways ) ) {
-				if ( ! in_array( $payment_gateway, $available_payment_gateways ) ) {
+			if ( ! empty( $available_payment_gateways ) && $wpnonce ) {
+
+				if ( ! in_array( $payment_gateway, $available_payment_gateways, true ) ) {
 					$_POST['payment_method'] = $available_payment_gateways[0];
 				}
 			} else {
@@ -144,7 +150,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Change_price_by_gateway.
 		 *
-		 * @version 5.3.8
+		 * @version 5.6.2-dev
 		 * @since   2.3.0
 		 * @param string         $price defines the price.
 		 * @param string | array $product defines the product.
@@ -152,7 +158,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		public function change_price_by_gateway( $price, $product ) {
 			if ( $this->is_cart_or_checkout() ) {
 				$current_gateway = $this->get_chosen_payment_method();
-				if ( '' != $current_gateway ) {
+
+				if ( '' !== $current_gateway ) {
 					$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 					$gateway_currency_exchange_rate = str_replace( ',', '.', $gateway_currency_exchange_rate );
 					if ( is_numeric( $price ) ) {

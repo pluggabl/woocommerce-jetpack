@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 5.2.0
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -106,12 +106,13 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 
 		/**
 		 * Save_custom_price_labels.
-		 *
+		 * @version 5.6.2-dev
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
 		 */
 		public function save_custom_price_labels( $post_id, $post ) {
-			if ( ! isset( $_POST['woojetpack_price_labels_save_post'] ) ) {
+			$nonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			if ( ! isset( $_POST['woojetpack_price_labels_save_post'] ) && $nonce ) {
 				return;
 			}
 			foreach ( $this->custom_tab_sections as $custom_tab_section ) {
@@ -239,7 +240,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		/**
 		 * Custom_price - front end.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
 		 * @param int            $price defines the price.
 		 * @param string | array $product defines the product.
@@ -286,11 +287,11 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 			$do_apply_global = true;
 			$products_incl   = wcj_get_option( 'wcj_global_price_labels_products_incl', array() );
 			if ( ! empty( $products_incl ) ) {
-				$do_apply_global = ( in_array( $_product_id, $products_incl ) );
+				$do_apply_global = ( in_array( (string) $_product_id, $products_incl, true ) );
 			}
 			$products_excl = wcj_get_option( 'wcj_global_price_labels_products_excl', array() );
 			if ( ! empty( $products_excl ) ) {
-				$do_apply_global = ( ! in_array( $_product_id, $products_excl ) );
+				$do_apply_global = ( ! in_array( (string) $_product_id, $products_excl, true ) );
 			}
 			$product_categories      = get_the_terms( $_product_id, 'product_cat' );
 			$product_categories_incl = wcj_get_option( 'wcj_global_price_labels_product_cats_incl', array() );
@@ -298,7 +299,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 				$do_apply_global = false;
 				if ( ! empty( $product_categories ) ) {
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $product_categories_incl ) ) {
+						if ( in_array( (string) $product_category->term_id, $product_categories_incl, true ) ) {
 							$do_apply_global = true;
 							break;
 						}
@@ -310,7 +311,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 				$do_apply_global = true;
 				if ( ! empty( $product_categories ) ) {
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $product_categories_excl ) ) {
+						if ( in_array( (string) $product_category->term_id, $product_categories_excl, true ) ) {
 							$do_apply_global = false;
 							break;
 						}

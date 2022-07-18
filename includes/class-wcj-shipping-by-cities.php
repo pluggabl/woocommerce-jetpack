@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Cities
  *
- * @version 5.2.0
+ * @version 5.6.2-dev
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -60,7 +60,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 * @todo    `$_REQUEST['city']` (i.e. billing city)
 		 * @todo    `get_base_city()` - do we really need this?
@@ -72,13 +72,23 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 		public function check( $options_id, $values, $include_or_exclude, $package ) {
 			switch ( $options_id ) {
 				case 'cities':
+					$wpnonce = true;
+					if ( function_exists( 'wp_verify_nonce' ) ) {
+						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+					}
+
 					$user_city     = WC()->customer->get_shipping_city();
-					$customer_city = strtoupper( ( isset( $_REQUEST['s_city'] ) ) ? $_REQUEST['s_city'] : ( isset( $_REQUEST['calc_shipping_city'] ) ? $_REQUEST['calc_shipping_city'] : ( ! empty( $user_city ) ? $user_city : WC()->countries->get_base_city() ) ) );
+					$customer_city = strtoupper( ( isset( $_REQUEST['s_city'] ) && $wpnonce ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_city'] ) ) : ( isset( $_REQUEST['calc_shipping_city'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['calc_shipping_city'] ) ) : ( ! empty( $user_city ) ? $user_city : WC()->countries->get_base_city() ) ) );
 					$values        = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
-					return in_array( $customer_city, $values );
+
+					return in_array( $customer_city, $values, true );
 				case 'postcodes':
+					$wpnonce = true;
+					if ( function_exists( 'wp_verify_nonce' ) ) {
+						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+					}
 					$customer_shipping_postcode = WC()->customer->get_shipping_postcode();
-					$customer_postcode          = strtoupper( isset( $_REQUEST['s_postcode'] ) ? ( $_REQUEST['s_postcode'] ) : ( ! empty( $customer_shipping_postcode ) ? $customer_shipping_postcode : WC()->countries->get_base_postcode() ) );
+					$customer_postcode          = strtoupper( ( isset( $_REQUEST['s_postcode'] ) && $wpnonce ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_postcode'] ) ) : ( ! empty( $customer_shipping_postcode ) ? $customer_shipping_postcode : WC()->countries->get_base_postcode() ) );
 					$postcodes                  = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
 					return wcj_check_postcode( $customer_postcode, $postcodes );
 			}

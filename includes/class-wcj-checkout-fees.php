@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 5.2.0
+ * @version 5.6.2-dev
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Validate fee without considering overlapping.
 		 *
-		 * @version 4.6.1
+		 * @version 5.6.2-dev
 		 * @since   4.5.0
 		 *
 		 * @param int                    $fee_id  defines the fee_id.
@@ -109,11 +109,20 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 			}
 
 			// Check checkout fields.
-			if ( ! empty( $this->checkout_fields[ $fee_id ] ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+
+			if ( ! empty( $this->checkout_fields[ $fee_id ] ) && $wpnonce ) {
 				if ( isset( $post_data ) || isset( $_REQUEST['post_data'] ) ) {
 					if ( ! isset( $post_data ) ) {
 						$post_data = array();
-						parse_str( $_REQUEST['post_data'], $post_data );
+						parse_str(
+							sanitize_text_field( wp_unslash( $_REQUEST['post_data'] ) ),
+							$post_data
+						);
+
 					}
 					if ( empty( $post_data[ $this->checkout_fields[ $fee_id ] ] ) ) {
 						return false;

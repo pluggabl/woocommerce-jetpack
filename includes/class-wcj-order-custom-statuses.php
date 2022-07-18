@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 5.3.3
+ * @version 5.6.2-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -318,11 +318,11 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Add_custom_order_statuses_to_reports.
 		 *
-		 * @version 3.2.2
+		 * @version 5.6.2-dev
 		 * @param array | string $order_statuses defines the order_statuses.
 		 */
 		public function add_custom_order_statuses_to_reports( $order_statuses ) {
-			if ( is_array( $order_statuses ) && in_array( 'completed', $order_statuses ) ) {
+			if ( is_array( $order_statuses ) && in_array( 'completed', $order_statuses, true ) ) {
 				return array_merge( $order_statuses, array_keys( $this->get_custom_order_statuses( true ) ) );
 			} else {
 				return $order_statuses;

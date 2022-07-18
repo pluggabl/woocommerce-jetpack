@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Stock
  *
- * @version 5.6.0
+ * @version 5.6.2-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -48,8 +48,8 @@ return array(
 			sprintf( __( 'If needed, use %s to insert stock quantity.', 'woocommerce-jetpack' ), '<code>%s</code>' ),
 		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) . ' ' .
 			sprintf(
-			/* translators: %s: translators Added */
-				__( 'Used only if %s is selected for %s in %s.', 'woocommerce-jetpack' ),
+			/* translators: %1$s:%2$s:%3$s: translators Added */
+				__( 'Used only if %1$s is selected for %2$s in %3$s.', 'woocommerce-jetpack' ),
 				'<em>' . __( 'Only show quantity remaining in stock when low', 'woocommerce-jetpack' ) . '</em>',
 				'<em>' . __( 'Stock display format', 'woocommerce' ) . '</em>',
 				'<em>' . __( 'WooCommerce &gt Settings &gt Products &gt Inventory', 'woocommerce-jetpack' )

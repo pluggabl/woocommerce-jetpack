@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon by User Role
  *
- * @version 5.2.0
+ * @version 5.6.2-dev
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -53,13 +53,13 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 		/**
 		 * Coupons_enabled.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 * @param string | bool $is_enabled check the coupons enabled.
 		 */
 		public function coupons_enabled( $is_enabled ) {
 			$disabled_user_roles = wcj_get_option( 'wcj_coupon_by_user_role_disabled', '' );
-			if ( ! empty( $disabled_user_roles ) && in_array( wcj_get_current_user_first_role(), $disabled_user_roles ) ) {
+			if ( ! empty( $disabled_user_roles ) && in_array( wcj_get_current_user_first_role(), $disabled_user_roles, true ) ) {
 				return false;
 			}
 			return $is_enabled;

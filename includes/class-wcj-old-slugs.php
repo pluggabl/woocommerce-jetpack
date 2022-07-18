@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Old Slugs
  *
- * @version 5.5.6
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -43,9 +43,10 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 		/**
 		 * Create_old_slugs_tool.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 */
 		public function create_old_slugs_tool() {
+
 			global $wpdb;
 			$wp_postmeta_table  = $wpdb->prefix . 'postmeta';
 			$all_old_slugs      = $wpdb->get_results( "SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' ORDER BY post_id" );
@@ -82,7 +83,13 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 					$posts_ids[ $type ][]        = $old_slug_object->post_id;
 				}
 				// Actions.
-				if ( isset( $_POST['remove_old_products_slugs'] ) || isset( $_POST['remove_old_non_products_slugs'] ) ) {
+
+				$wpnonce = true;
+				if ( function_exists( 'wp_verify_nonce' ) ) {
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+				}
+
+				if ( isset( $_POST['remove_old_products_slugs'] ) || isset( $_POST['remove_old_non_products_slugs'] ) && $wpnonce ) {
 					$post_ids_to_delete   = join( ',', ( isset( $_POST['remove_old_products_slugs'] ) ? $posts_ids['products'] : $posts_ids['non_products'] ) );
 					$delete_result        = $wpdb->get_results( "DELETE FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)" );
 					$recheck_result       = $wpdb->get_results( "SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug'" );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 				}
 
 				// Add to Cart on Visit.
-				if ( 'no' != wcj_get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
+				if ( 'no' !== wcj_get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
 					add_action( 'wp', array( $this, 'add_to_cart_on_visit' ), 98 );
 				}
 
@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Replace_external_with_custom_add_to_cart_on_single_end.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.3
 		 */
 		public function replace_external_with_custom_add_to_cart_on_single_end() {
@@ -261,8 +261,10 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 			if ( $product->is_type( 'external' ) ) {
 				$button_html = ob_get_contents();
 				ob_end_clean();
-				echo ( WCJ_IS_WC_VERSION_BELOW_3_4_0 ?
-					str_replace( '<a href=', '<a target="_blank" href=', $button_html ) : str_replace( '<form ', '<form target="_blank" ', $button_html ) );
+				echo wp_kses_post(
+					WCJ_IS_WC_VERSION_BELOW_3_4_0 ?
+					( str_replace( '<a href=', '<a target="_blank" href=', $button_html ) ) : ( str_replace( '<form ', '<form target="_blank" ', $button_html ) )
+				);
 			}
 		}
 
@@ -305,14 +307,15 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Custom_add_to_cart_loop_url.
 		 *
-		 * @version 2.5.6
+		 * @version 5.6.2-dev
 		 * @since   2.5.6
 		 * @param string $url defines the url.
 		 * @param array  $_product defines the _product.
 		 */
 		public function custom_add_to_cart_loop_url( $url, $_product ) {
+
 			$custom_url = get_post_meta( get_the_ID(), '_wcj_add_to_cart_button_loop_custom_url', true );
-			if ( 0 != get_the_ID() && '' != ( $custom_url ) ) {
+			if ( 0 !== get_the_ID() && '' !== ( $custom_url ) ) {
 				return $custom_url;
 			}
 			return $url;
@@ -321,7 +324,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Enqueue_disable_quantity_add_to_cart_script.
 		 *
-		 * @version 2.5.2
+		 * @version 5.6.2-dev
 		 * @since   2.5.2
 		 * @todo    add "hide" (not just disable) option
 		 */
@@ -330,7 +333,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 			( 'yes' === wcj_get_option( 'wcj_add_to_cart_quantity_disable', 'no' ) && is_product() ) ||
 			( 'yes' === wcj_get_option( 'wcj_add_to_cart_quantity_disable_cart', 'no' ) && is_cart() )
 			) {
-				wp_enqueue_script( 'wcj-disable-quantity', wcj_plugin_url() . '/includes/js/wcj-disable-quantity.js', array( 'jquery' ) );
+				wp_enqueue_script( 'wcj-disable-quantity', wcj_plugin_url() . '/includes/js/wcj-disable-quantity.js', array( 'jquery' ), w_c_j()->version, true );
 			}
 		}
 
@@ -374,12 +377,17 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Maybe_redirect_to_url.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 * @param string     $url defines the url.
 		 * @param bool | int $product_id defines the product_id.
 		 */
 		public function maybe_redirect_to_url( $url, $product_id = false ) {
-			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) && $wpnonce ) {
 				if ( ! $product_id ) {
 					$product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
 				}
@@ -404,7 +412,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Add item to cart on visit.
 		 *
-		 * @version 5.5.8
+		 * @version 5.6.2-dev
 		 * @todo    (maybe) optionally add product every time page is visited (instead of only once)
 		 */
 		public function add_to_cart_on_visit() {
@@ -416,6 +424,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 				$_productid = wc_get_product( get_the_ID() );
 
 				if ( $_productid->is_type( 'variable' ) ) {
+
 					$default_attributes = $_productid->get_default_attributes();
 
 					foreach ( $_productid->get_available_variations() as $variation_values ) {
@@ -424,7 +433,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 
 							$attribute_name = str_replace( 'attribute_', '', $key );
 							$default_value  = $_productid->get_variation_default_attribute( $attribute_name );
-							if ( $default_value == $attribute_value ) {
+							if ( $default_value === $attribute_value ) {
 
 								$product_id = $variation_values['variation_id'];
 
@@ -444,7 +453,8 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 				}
 				if ( isset( WC()->cart ) ) {
 						// Check if product already in cart.
-					if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
+
+					if ( count( WC()->cart->get_cart() ) > 0 ) {
 						foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 							$_product = $values['data'];
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -313,7 +313,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_time_since_last_sale.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.0
 		 * @param   array $atts Shortcode atts.
 		 */
@@ -345,7 +345,8 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 						// Run through all order's items.
 						if ( $item['product_id'] === $atts['product_id'] ) {
 							// Found sale!
-							return sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U', $order_id ), current_time( 'timestamp' ) ) );
+							/* translators: %s: search term */
+							return sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U', $order_id ), (int) gmdate( 'U' ) ) );
 						}
 					}
 				}
@@ -714,17 +715,17 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_total_sales.
 		 *
-		 * @version 5.3.8
+		 * @version 5.6.2-dev
 		 * @since   2.2.6
 		 * @param   array $atts Shortcode atts.
 		 */
 		public function wcj_product_total_sales( $atts ) {
 			$product_custom_fields = get_post_custom( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
 			$total_sales           = ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
-			if ( 0 != $atts['offset'] && ! is_numeric( $total_sales ) ) {
+			if ( '0' !== $atts['offset'] && ! is_numeric( $total_sales ) ) {
 				$total_sales += $atts['offset'];
 			}
-			return ( 0 == $total_sales && 'yes' == $atts['hide_if_zero'] ) ? '' : $total_sales;
+			return ( '0' === $total_sales && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_sales;
 		}
 
 		/**
@@ -895,7 +896,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Get product meta.
 		 *
-		 * @version 5.3.7
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 * @return  string
 		 * @param   array $atts Shortcode atts.
@@ -905,9 +906,9 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				return '';
 			}
 			// Checking get_post_meta type ie. Array or String.
-			$checking_Postmeta_value = gettype( get_post_meta( $atts['product_id'], $atts['name'], true ) );
+			$checking_postmeta_value = gettype( get_post_meta( $atts['product_id'], $atts['name'], true ) );
 			// if get_post_meta return Array.
-			if ( 'array' === $checking_Postmeta_value ) {
+			if ( 'array' === $checking_postmeta_value ) {
 				// convert Array To String.
 				return implode( ',', get_post_meta( $atts['product_id'], $atts['name'], true ) );
 			}
@@ -928,7 +929,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Returns product (modified) price.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @todo    variable products: a) not range; and b) price by country.
 		 * @return  string The product (modified) price
 		 * @param   array $atts Shortcode atts.
@@ -975,9 +976,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 					return ( 'min' === $atts['min_or_max'] ? $min : $max );
 				}
 				return ( $min !== $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
-			}
-			// Simple etc.
-			else {
+			} else {
 				$the_price = $this->the_product->get_price();
 				if ( '' !== $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
 					$the_price = $the_price * $atts['multiply_by'];

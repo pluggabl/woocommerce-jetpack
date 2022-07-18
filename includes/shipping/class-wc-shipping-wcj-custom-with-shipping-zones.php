@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.5.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 					'title'             => __( 'Apply Formula and Shortcodes to Costs', 'woocommerce' ),
 					'description'       => sprintf(
 						/* translators: %s: search term */
-						__( 'You can use %s and %s params in formula, e.g.: %s. Also you can use shortcodes, e.g.: %s.', 'woocommerce-jetpack' ),
+						__( 'You can use %1$s and %2$s params in formula, e.g.: %3$s. Also you can use shortcodes, e.g.: %4$s.', 'woocommerce-jetpack' ),
 						'<em>weight</em>',
 						'<em>quantity</em>',
 						'<em>2.5+weight</em>',

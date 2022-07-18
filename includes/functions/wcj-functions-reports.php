@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Reports
  *
- * @version 3.2.4
+ * @version 5.6.2-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -40,11 +40,11 @@ if ( ! function_exists( 'wcj_get_reports_standard_ranges' ) ) {
 	/**
 	 * Wcj_get_reports_standard_ranges.
 	 *
-	 * @version 3.2.4
+	 * @version 5.6.2-dev
 	 * @since   2.9.0
 	 */
 	function wcj_get_reports_standard_ranges() {
-		$current_time = (int) current_time( 'timestamp' );
+		$current_time = (int) gmdate( 'U' );
 		return array(
 			'year'        => array(
 				'title'      => __( 'Year', 'woocommerce' ),
@@ -74,12 +74,12 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 	/**
 	 * Wcj_get_reports_custom_ranges.
 	 *
-	 * @version 3.2.4
+	 * @version 5.6.2-dev
 	 * @since   2.9.0
 	 * @todo    fix `-1 month` - sometimes it produces the wrong result (e.g. on current gmdate = "2018.03.30")
 	 */
 	function wcj_get_reports_custom_ranges() {
-		$current_time = (int) current_time( 'timestamp' );
+		$current_time = (int) gmdate( 'U' );
 		return array(
 			'last_14_days'         => array(
 				'title'      => __( 'Last 14 days', 'woocommerce-jetpack' ),

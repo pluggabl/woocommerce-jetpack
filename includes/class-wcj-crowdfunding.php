@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Crowdfunding
  *
- * @version 5.4.0
+ * @version 5.6.2-dev
  * @since   2.2.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 		/**
 		 * Check_dates.
 		 *
-		 * @version 2.7.0
+		 * @version 5.6.2-dev
 		 * @since   2.2.6
 		 * @param bool           $purchasable defines the purchasable.
 		 * @param string | array $_product defines the _product.
@@ -88,10 +88,10 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 				$end_date_str   = get_post_meta( $_product_id, '_wcj_crowdfunding_deadline', true );
 				$start_date     = ( '' !== $start_date_str ) ? strtotime( $start_date_str ) : 0;
 				$end_date       = ( '' !== $end_date_str ) ? strtotime( $end_date_str ) : 0;
-				if ( $start_date > 0 && ( $start_date - current_time( 'timestamp' ) ) > 0 ) {
+				if ( $start_date > 0 && ( $start_date - (int) gmdate( 'U' ) ) > 0 ) {
 					$purchasable = false;
 				}
-				if ( $end_date > 0 && ( $end_date - current_time( 'timestamp' ) ) < 0 ) {
+				if ( $end_date > 0 && ( $end_date - (int) gmdate( 'U' ) ) < 0 ) {
 					$purchasable = false;
 				}
 			}

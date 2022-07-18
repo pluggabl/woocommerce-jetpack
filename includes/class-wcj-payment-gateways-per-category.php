@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways per Product or Category
  *
- * @version 4.6.0
+ * @version 5.6.2-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		/**
 		 * Is_gateway_allowed.
 		 *
-		 * @version 4.6.0
+		 * @version 5.6.2-dev
 		 * @since   4.6.0
 		 *
 		 * @param string | int $gateway_id defines the gateway_id.
@@ -62,7 +62,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 						continue; // ... to next product.
 					}
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $categories_in ) ) {
+
+						if ( in_array( (string) $product_category->term_id, $categories_in, true ) ) {
 							$current_check = true;
 							break;
 						}
@@ -83,7 +84,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 						continue; // ... to next product.
 					}
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $categories_excl ) ) {
+
+						if ( in_array( (string) $product_category->term_id, $categories_excl, true ) ) {
 							$current_check = false;
 							break;
 						}
@@ -131,7 +133,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		/**
 		 * Filter_available_payment_gateways_per_category.
 		 *
-		 * @version 4.6.0
+		 * @version 5.6.2-dev
 		 * @todo    [dev] (maybe) `if ( ! is_checkout() ) { return $available_gateways; }`
 		 * @param array $available_gateways defines the available_gateways.
 		 */
@@ -148,9 +150,10 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 
 				// Check if it is on checkout/order-pay/xxx page.
 			} elseif ( is_wc_endpoint_url( 'order-pay' ) ) {
-				$url_arr = preg_split( '/[\/\?]/', $_SERVER['REQUEST_URI'] );
-				if ( in_array( 'order-pay', $url_arr ) ) {
-					$order_pay_index = array_search( 'order-pay', $url_arr );
+				$url_arr = preg_split( '/[\/\?]/', ( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' ) );
+
+				if ( in_array( 'order-pay', $url_arr, true ) ) {
+					$order_pay_index = array_search( 'order-pay', $url_arr, true );
 					$order_id        = intval( $url_arr[ $order_pay_index + 1 ] );
 					$order           = wc_get_order( $order_id );
 					foreach ( $order->get_items() as $item_id => $values ) {

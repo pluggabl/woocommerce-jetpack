@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 5.4.9
+ * @version 5.6.2-dev
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -107,13 +107,14 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		/**
 		 * Get_product_currency.
 		 *
-		 * @version 5.4.9
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`.
 		 * @param int $product_id defines the product_id.
 		 */
-		function get_product_currency( $product_id ) {
-			// By users or user roles
+		public function get_product_currency( $product_id ) {
+
+			// By users or user roles.
 			$do_check_by_users        = ( 'yes' === get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) );
 			$do_check_by_user_roles   = ( 'yes' === get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) );
 			$do_check_by_product_cats = ( 'yes' === get_option( 'wcj_currency_per_product_by_product_cats_enabled', 'no' ) );
@@ -132,7 +133,8 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( $do_check_by_users ) {
 						$users = get_option( 'wcj_currency_per_product_users_' . $i, '' );
-						if ( ! empty( $users ) && in_array( $product_author_id, $users ) ) {
+
+						if ( ! empty( $users ) && in_array( $product_author_id, $users, true ) ) {
 							return get_option( 'wcj_currency_per_product_currency_' . $i );
 						}
 					}
@@ -162,7 +164,7 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 					}
 				}
 			}
-			// By product meta
+			// By product meta.
 			return ( $this->is_currency_per_product_by_product_enabled ? get_post_meta( $product_id, '_wcj_currency_per_product_currency', true ) : false );
 		}
 
@@ -422,22 +424,27 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		/**
 		 * Get_current_product_id_and_currency.
 		 *
-		 * @version 2.9.0
+		 * @version 5.6.2-dev
 		 * @since   2.7.0
 		 */
 		public function get_current_product_id_and_currency() {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			// Get ID.
 			$the_id = false;
 			global $product;
-			if ( $product ) {
+			if ( $product && $wpnonce ) {
 				$the_id = wcj_get_product_id_or_variation_parent_id( $product );
 			}
 			if ( ! $the_id && isset( $_REQUEST['product_id'] ) ) {
-				$the_id = $_REQUEST['product_id'];
+				$the_id = isset( $_REQUEST['product_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['product_id'] ) ) : '';
 			}
 			if ( ! $the_id && isset( $_POST['form'] ) ) { // WooCommerce Bookings plugin.
-				$posted = array();
-				parse_str( $_POST['form'], $posted );
+				$posted    = array();
+				$post_form = isset( $_POST['form'] ) ? sanitize_text_field( wp_unslash( $_POST['form'] ) ) : '';
+				parse_str( $post_form, $posted );
 				$the_id = isset( $posted['add-to-cart'] ) ? $posted['add-to-cart'] : 0;
 			}
 			$eventon_wc_product_id = get_post_meta( get_the_ID(), 'tx_woocommerce_product_id', true );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 5.2.0
+ * @version 5.6.2-dev
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -238,7 +238,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Maybe_add_description.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 * @param string       $field defines the field.
 		 * @param string | int $key defines the key.
@@ -255,7 +255,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 				$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', wcj_get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 				$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
 				if ( ! empty( $fields_to_disable ) ) {
-					if ( in_array( $key, $fields_to_disable ) ) {
+					if ( in_array( $key, $fields_to_disable, true ) ) {
 						$desc = wcj_get_option(
 							'wcj_checkout_customization_disable_fields_for_logged_message',
 							'<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>'
@@ -272,7 +272,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Maybe_disable_fields.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 * @see     woocommerce_form_field
 		 * @todo    (maybe) add single option (probably checkbox) to disable all fields
@@ -301,7 +301,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 							if ( ! isset( $checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] ) ) {
 								$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] = array();
 							}
-							$custom_attributes = ( in_array( $field_to_disable, $disable_type_fields ) ? array( 'disabled' => 'disabled' ) : array( 'readonly' => 'readonly' ) );
+							$custom_attributes = ( in_array( $field_to_disable, $disable_type_fields, true ) ? array( 'disabled' => 'disabled' ) : array( 'readonly' => 'readonly' ) );
 							$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] = array_merge(
 								$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'],
 								$custom_attributes

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -174,13 +174,14 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Save_msrp_input.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $__post defines the __post.
 		 */
 		public function save_msrp_input( $post_id, $__post ) {
-			if ( isset( $_POST['_wcj_msrp'] ) ) {
+			$nonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			if ( isset( $_POST['_wcj_msrp'] ) && $nonce ) {
 				update_post_meta( $post_id, '_wcj_msrp', sanitize_text_field( wp_unslash( $_POST['_wcj_msrp'] ) ) );
 			}
 		}
@@ -188,7 +189,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Get_section_id_by_template_path.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2-dev
 		 * @since   5.1.0
 		 *
 		 * @param string $template defines the template.
@@ -196,6 +197,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		 * @return string
 		 */
 		public function get_section_id_by_template_path( $template ) {
+
 			$archive_detection_method = wcj_get_option( 'wcj_product_msrp_archive_detection_method', 'loop' );
 			$archive_detection_method = array_values( array_filter( explode( PHP_EOL, $archive_detection_method ) ) );
 			return count(
@@ -205,13 +207,13 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 						return strpos( $template, $item ) !== false;
 					}
 				)
-			) == 0 && is_singular() ? 'single' : 'archives';
+			) === 0 && is_singular() ? 'single' : 'archives';
 		}
 
 		/**
 		 * Display.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 * @todo    (maybe) multicurrency
 		 * @todo    (feature) (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
@@ -221,7 +223,8 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		public function display( $price_html, $product ) {
 			$section_id = $this->get_section_id_by_template_path( $this->current_template_path );
 			$display    = wcj_get_option( 'wcj_product_msrp_display_on_' . $section_id, 'show' );
-			if ( 'hide' == $display ) {
+
+			if ( 'hide' === $display ) {
 				return $price_html;
 			}
 			$product_id = false;
@@ -254,7 +257,8 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 			}
 			$msrp = apply_filters( 'wcj_product_msrp', get_post_meta( $product_id, $msrp_product_meta_name, true ), $product );
 			$msrp = str_replace( ',', '.', $msrp );
-			if ( '' == $msrp || 0 == $msrp ) {
+
+			if ( '' === $msrp || (string) 0 === $msrp ) {
 				return $price_html;
 			}
 
@@ -263,7 +267,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 				return $price_html;
 			}
 
-			if ( ( 'show_if_diff' == $display && $msrp == $price ) || ( 'show_if_higher' == $display && $msrp <= $price ) ) {
+			if ( ( 'show_if_diff' === $display && $msrp === $price ) || ( 'show_if_higher' === $display && $msrp <= $price ) ) {
 				return $price_html;
 			}
 
@@ -291,7 +295,8 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 				'%you_save%'         => str_replace( '%you_save_raw%', wc_price( $you_save_formula_result ), $you_save ),
 				'%you_save_percent%' => str_replace( '%you_save_percent_raw%', round( $you_save_percent_formula_result, $you_save_round ), $you_save_percent ),
 			);
-			return ( 'before_price' == $position ?
+
+			return ( 'before_price' === $position ?
 			wcj_handle_replacements( $replaced_values, $template ) . $price_html :
 			$price_html . wcj_handle_replacements( $replaced_values, $template ) );
 		}

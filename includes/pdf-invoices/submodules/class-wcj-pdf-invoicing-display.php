@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -209,12 +209,12 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Output custom columns for products
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @param  string $column Get order columns.
 		 */
 		public function render_order_columns( $column ) {
 			$invoice_types_ids = wcj_get_enabled_invoice_types_ids();
-			if ( ! in_array( $column, $invoice_types_ids ) ) {
+			if ( ! in_array( $column, $invoice_types_ids, true ) ) {
 				return;
 			}
 			$order_id        = get_the_ID();
@@ -343,7 +343,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Create_invoices_meta_box.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 */
 		public function create_invoices_meta_box() {
@@ -351,7 +351,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 			$order_id      = wcj_get_order_id( $_order );
 			$invoice_types = wcj_get_enabled_invoice_types();
 			if ( empty( $invoice_types ) ) {
-				echo '<p style="font-style:italic;">' . __( 'You have no document types enabled.', 'woocommerce-jetpack' ) . '</p>';
+				echo '<p style="font-style:italic;">' . wp_kses_post( 'You have no document types enabled.', 'woocommerce-jetpack' ) . '</p>';
 			} else {
 				foreach ( $invoice_types as $invoice_type ) {
 					$table_data = array();
@@ -409,7 +409,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 					}
 					$maybe_toolptip = '';
 					$_hooks         = wcj_get_invoice_create_on( $invoice_type['id'] );
-					if ( in_array( 'woocommerce_order_partially_refunded_notification', $_hooks ) ) {
+					if ( in_array( 'woocommerce_order_partially_refunded_notification', $_hooks, true ) ) {
 						$maybe_toolptip = wc_help_tip( __( 'In case of partial refund, you need to reload the page to see created document in this meta box.', 'woocommerce-jetpack' ), true );
 					}
 					$table_data[] = array(
@@ -417,7 +417,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 												$invoice_type['title'] . $the_number . $the_date . $maybe_toolptip,
 					);
 					$table_data[] = $actions;
-					echo '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
+					echo '<p>' . wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) ) . '</p>';
 				}
 			}
 		}

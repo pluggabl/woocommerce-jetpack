@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 5.3.6
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -68,27 +68,28 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		/**
 		 * Create.
 		 *
-		 * @version 5.3.6
+		 * @version 5.6.2-dev
 		 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 		 * @todo    used get_option instead wcj_get_option to get current numbering_counter.
 		 * @param number $date get date.
 		 */
 		public function create( $date = '' ) {
+
 			$order_id     = $this->order_id;
 			$invoice_type = $this->invoice_type;
-			if ( 'yes' == wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_skip_zero_total', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_skip_zero_total', 'no' ) ) {
 				$_order = wc_get_order( $order_id );
-				if ( 0 == $_order->get_total() ) {
+				if ( 0 === (int) $_order->get_total() ) {
 					return;
 				}
 			}
-			if ( 'yes' == wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled', 'no' ) ) {
+			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled', 'no' ) ) {
 				$the_invoice_number = get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
 				update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', ( $the_invoice_number + 1 ) );
 			} else {
 				$the_invoice_number = $order_id;
 			}
-			$the_date = ( '' == $date ) ? current_time( 'timestamp' ) : $date;
+			$the_date = ( '' === $date ) ? (string) gmdate( 'U' ) : $date;
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
 		}
