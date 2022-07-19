@@ -212,8 +212,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_price_by_user_role_per_product_settings_enabled',
-					'meta_value'     => 'yes',
+					'meta_key'       => '_wcj_price_by_user_role_per_product_settings_enabled', // phpcs:ignore
+					'meta_value'     => 'yes', // phpcs:ignore
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -225,7 +225,6 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			}
 			return $option_value;
 		}
-
 		/**
 		 * Add_notice_query_var.
 		 *
@@ -235,7 +234,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-			return esc_url( add_query_arg( array( 'wcj_product_price_by_user_role_admin_notice' => true ), $location ) );
+			return add_query_arg( array( 'wcj_product_price_by_user_role_admin_notice' => true ), $location );
 		}
 
 		/**
@@ -245,7 +244,10 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
-			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			if ( ! $wpnonce || ! isset( $_GET['wcj_product_price_by_user_role_admin_notice'] ) ) {
 				return;
 			}

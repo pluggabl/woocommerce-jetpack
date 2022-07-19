@@ -60,12 +60,12 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 					add_filter( 'woocommerce_admin_reports', array( $this, 'add_sales_reports' ) );
 					add_action( 'init', array( $this, 'catch_arguments' ) );
 
-					include_once 'reports/wcj-class-reports-customers.php';
-					include_once 'reports/wcj-class-reports-stock.php';
-					include_once 'reports/wcj-class-reports-sales-daily.php';
+					include_once 'reports/class-wcj-reports-customers.php';
+					include_once 'reports/class-wcj-reports-stock.php';
+					include_once 'reports/class-wcj-reports-product-sales-daily.php';
 					include_once 'reports/wcj-class-reports-sales-gateways.php';
-					include_once 'reports/wcj-class-reports-sales.php';
-					include_once 'reports/wcj-class-reports-monthly-sales.php';
+					include_once 'reports/class-wcj-reports-sales.php';
+					include_once 'reports/class-wcj-reports-monthly-sales.php';
 
 					add_action( 'admin_bar_menu', array( $this, 'add_custom_order_reports_ranges_to_admin_bar' ), PHP_INT_MAX );
 					add_action( 'admin_bar_menu', array( $this, 'add_custom_order_reports_ranges_by_month_to_admin_bar' ), PHP_INT_MAX );

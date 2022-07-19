@@ -51,10 +51,14 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		 * @since   2.9.0
 		 */
 		public function get_report_args() {
-			$current_time        = (int) current_time( 'timestamp' );
-			$this->start_date    = isset( $_GET['start_date'] ) ? $_GET['start_date'] : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
-			$this->end_date      = isset( $_GET['end_date'] ) ? $_GET['end_date'] : gmdate( 'Y-m-d', $current_time );
-			$this->product_title = isset( $_GET['product_title'] ) ? $_GET['product_title'] : '';
+			$current_time = (int) gmdate( 'U' );
+			$wpnonce      = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$this->start_date    = $wpnonce && isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
+			$this->end_date      = isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : gmdate( 'Y-m-d', $current_time );
+			$this->product_title = isset( $_GET['product_title'] ) ? sanitize_text_field( wp_unslash( $_GET['product_title'] ) ) : '';
 		}
 
 		/**
@@ -195,11 +199,15 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 			// Product and date filter form.
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $_GET['tab'] . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . ( $wpnonce && ! empty( $_GET['page'] ) ) . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . ( $wpnonce && ! empty( $_GET['tab'] ) ) . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . ( $wpnonce && ! empty( $_GET['report'] ) ) . '" />';
 			$filter_form .= '<label style="font-style:italic;" for="start_date">' . __( 'From:', 'woocommerce-jetpack' ) . '</label> ' .
 			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js( 'Y-m-d' ) . '" name="start_date" title="" value="' . $this->start_date . '" />';
 			$filter_form .= ' ';

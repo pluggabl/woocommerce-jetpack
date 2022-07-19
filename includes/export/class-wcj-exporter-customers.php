@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 		/**
 		 * Export_customers.
 		 *
-		 * @version 3.0.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 * @param array $fields_helper defines the fields.
 		 */
@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 							$row[] = $customer->last_name;
 							break;
 						case 'customer-debug':
-							$row[] = '<pre>' . print_r( $customer, true ) . '</pre>';
+							$row[] = '<pre>' . print_r( $customer, true ) . '</pre>'; // phpcs:ignore
 							break;
 					}
 				}

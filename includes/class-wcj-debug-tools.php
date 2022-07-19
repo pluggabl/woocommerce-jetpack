@@ -53,8 +53,7 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 			if ( function_exists( 'wp_verify_nonce' ) ) {
 				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
 			}
-
-			if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) && $wpnonce ) {
+			if ( $wpnonce && isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
 				update_option( 'wcj_log', '' );
 				if ( wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_log' ) ) ) ) {
 					exit;

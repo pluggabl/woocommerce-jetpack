@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Options
  *
- * @version 5.2.0
+ * @version 5.6.2-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 		/**
 		 * Show_most_expensive_shipping.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.2-dev
 		 * @since   5.2.0
 		 *
 		 * @param array          $rates defines the rates.
@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 			if ( is_array( $rates ) ) :
 				foreach ( $rates as $key => $rate ) {
 					if (
-					! in_array( $rate->method_id, $ignored_method_ids ) &&
+					! in_array( $rate->method_id, $ignored_method_ids, true ) &&
 					( empty( $most_expensive_method ) || $rate->cost > $most_expensive_method->cost )
 					) {
 						$most_expensive_method = $rate;
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 				$returned_rates[ $most_expensive_method->id ] = $most_expensive_method;
 			}
 			foreach ( $rates as $key => $rate ) {
-				if ( in_array( $rate->method_id, $ignored_method_ids ) ) {
+				if ( in_array( $rate->method_id, $ignored_method_ids, true ) ) {
 					$returned_rates[ $rate->id ] = $rate;
 				}
 			}
@@ -110,7 +110,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 		/**
 		 * Free_shipping_by_product.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2-dev
 		 * @since   2.6.0
 		 * @return  bool
 		 * @param string | bool $is_available defines the is_available.
@@ -124,7 +124,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 			$free_shipping_granting_products_type = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' ) );
 			$package_grants_free_shipping         = false;
 			foreach ( $package['contents'] as $item ) {
-				if ( in_array( $item['product_id'], $free_shipping_granting_products ) ) {
+				if ( in_array( $item['product_id'], $free_shipping_granting_products, true ) ) {
 					if ( 'at_least_one' === $free_shipping_granting_products_type ) {
 						return true;
 					} elseif ( ! $package_grants_free_shipping ) {

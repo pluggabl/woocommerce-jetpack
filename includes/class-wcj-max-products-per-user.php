@@ -157,35 +157,40 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 		 */
 		function calculate_data() {
-		if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) {
-			$offset       = 0;
-			$block_size   = 512;
-			$total_orders = 0;
-			while( true ) {
-				$args = array(
-					'post_type'      => 'shop_order',
-					'post_status'    => $this->order_status,
-					'posts_per_page' => $block_size,
-					'orderby'        => 'ID',
-					'order'          => 'DESC',
-					'offset'         => $offset,
-					'fields'         => 'ids',
+			if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) {
+				$offset       = 0;
+				$block_size   = 512;
+				$total_orders = 0;
+				while ( true ) {
+					$args = array(
+						'post_type'      => 'shop_order',
+						'post_status'    => $this->order_status,
+						'posts_per_page' => $block_size,
+						'orderby'        => 'ID',
+						'order'          => 'DESC',
+						'offset'         => $offset,
+						'fields'         => 'ids',
+					);
+					$loop = new WP_Query( $args );
+					if ( ! $loop->have_posts() ) {
+						break;
+					}
+					foreach ( $loop->posts as $_order_id ) {
+						$this->save_quantities( $_order_id );
+						$total_orders++;
+					}
+					$offset += $block_size;
+				}
+				wp_safe_redirect(
+					add_query_arg(
+						'wcj_max_products_per_user_calculate_data_finished',
+						$total_orders,
+						remove_query_arg( 'wcj_max_products_per_user_calculate_data' )
+					)
 				);
-				$loop = new WP_Query( $args );
-				if ( ! $loop->have_posts() ) {
-					break;
-				}
-				foreach ( $loop->posts as $_order_id ) {
-					$this->save_quantities( $_order_id );
-					$total_orders++;
-				}
-				$offset += $block_size;
+				exit;
 			}
-			wp_safe_redirect( add_query_arg( 'wcj_max_products_per_user_calculate_data_finished', $total_orders,
-				remove_query_arg( 'wcj_max_products_per_user_calculate_data' ) ) );
-			exit;
 		}
-	}
 
 		/**
 		 * Add_report_meta_box.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 5.4.5
+ * @version 5.6.2-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    per variation
@@ -62,7 +62,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		/**
 		 * Get_price_for_cart.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 * @since   3.4.0
 		 * @param int   $price defines the price.
 		 * @param  array $_product defines the _product.
@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		public function get_price_for_cart( $price, $_product ) {
 			$product_prices_include_tax = ( 'yes' === wcj_get_option( 'woocommerce_prices_include_tax' ) );
 			$cart_prices_include_tax    = ( 'incl' === wcj_get_option( 'woocommerce_tax_display_cart' ) );
-			if ( $product_prices_include_tax != $cart_prices_include_tax ) {
+			if ( $product_prices_include_tax !== $cart_prices_include_tax ) {
 				return ( $cart_prices_include_tax ?
 				wc_get_price_including_tax(
 					$_product,
@@ -129,7 +129,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 			if ( isset( $cart_item['wcj_wholesale_price'] ) ) {
 				$the_quantity = $this->get_quantity( WC()->cart, $cart_item );
 				$discount     = $this->get_discount_by_quantity( $the_quantity, $cart_item['product_id'] );
-				if ( 0 != $discount ) {
+				if ( '0' !== $discount ) {
 					$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $cart_item['product_id'] ) )
 					? get_post_meta( $cart_item['product_id'], '_wcj_wholesale_price_discount_type', true )
 					: wcj_get_option( 'wcj_wholesale_price_discount_type', 'percent' );
@@ -239,7 +239,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 			? get_post_meta( $product_id, '_wcj_wholesale_price_discount_type', true )
 			: wcj_get_option( 'wcj_wholesale_price_discount_type', 'percent' );
 			if ( 'price_directly' === $discount_type ) {
-				return ( 0 != $discount ) ? apply_filters( 'wcj_get_wholesale_price', $discount, $product_id ) : $price;
+				return ( '0' !== $discount ) ? apply_filters( 'wcj_get_wholesale_price', $discount, $product_id ) : $price;
 			} elseif ( 'percent' === $discount_type ) {
 				return $price * ( 1.0 - ( $discount / 100.0 ) );
 			} else {
@@ -302,7 +302,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 
 				// If other discount was applied in cart.
 				if ( 'yes' === wcj_get_option( 'wcj_wholesale_price_apply_only_if_no_other_discounts', 'no' ) ) {
-					if ( WC()->cart->get_total_discount() > 0 || sizeof( WC()->cart->applied_coupons ) > 0 ) {
+					if ( WC()->cart->get_total_discount() > 0 || count( WC()->cart->applied_coupons ) > 0 ) {
 						continue;
 					}
 				}
@@ -314,7 +314,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 					if ( 'yes' === wcj_get_option( 'wcj_wholesale_price_rounding_enabled', 'yes' ) ) {
 						$wholesale_price = round( $wholesale_price, wcj_get_option( 'woocommerce_price_num_decimals', 2 ) );
 					}
-					if ( $wholesale_price != $price ) {
+					if ( $wholesale_price !== $price ) {
 						// Setting wholesale price.
 						WC()->cart->cart_contents[ $item_key ]['data']->wcj_wholesale_price = $wholesale_price;
 						WC()->cart->cart_contents[ $item_key ]['wcj_wholesale_price']       = $wholesale_price;

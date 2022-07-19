@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -91,14 +91,18 @@ if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
 	/**
 	 * Wcj_is_admin_product_edit_page.
 	 *
-	 * @version 3.6.0
+	 * @version 5.6.2-dev
 	 * @since   3.2.4
 	 * @todo    use where appropriate
 	 * @todo    (maybe) move to `wcj-functions-conditional.php`
 	 */
 	function wcj_is_admin_product_edit_page() {
 		global $pagenow;
-		if ( is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() ) {
+			$wpnonce = true;
+		if ( function_exists( 'wp_verify_nonce' ) ) {
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+		}
+		if ( $wpnonce && is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() ) {
 			return true;
 		} elseif ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && 'woocommerce_load_variations' === $_REQUEST['action'] ) {
 			return true;

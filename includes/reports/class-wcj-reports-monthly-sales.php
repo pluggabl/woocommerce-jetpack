@@ -40,9 +40,13 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		 */
 		public function get_report() {
 			$html = '';
-			if ( isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}           
+			if ( $wpnonce && isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
 				// Save rates.
-				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), $_POST['wcj_save_currency_rates_array'] ) );
+				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), sanitize_text_field( wp_unslash( $_POST['wcj_save_currency_rates_array'] ) ) ) );
 				$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates saved.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			} elseif ( isset( $_POST['wcj_reset_currency_rates'] ) ) {
 				// Delete rates.
@@ -50,7 +54,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 				$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates deleted.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			}
 			// Show report.
-			$this->year = isset( $_GET['year'] ) ? $_GET['year'] : gmdate( 'Y' );
+			$this->year = isset( $_GET['year'] ) ? sanitize_text_field( wp_unslash( $_GET['year'] ) ) : gmdate( 'Y' );
 			$html      .= $this->get_monthly_sales_report();
 			return $html;
 		}
@@ -111,11 +115,15 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 
 			$order_currencies_array        = array();
 			$order_currencies_array_totals = array();
-			$report_currency               = ( isset( $_GET['currency'] ) && 'merge' !== isset( $_GET['currency'] ) ) ? $_GET['currency'] : get_woocommerce_currency();
-			$block_size                    = 256;
-			$table_data                    = array();
-			$do_forecast                   = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_forecast', 'no' ) );
-			$do_include_today              = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_include_today', 'no' ) );
+			$wpnonce                       = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$report_currency  = ( $wpnonce && isset( $_GET['currency'] ) && 'merge' !== isset( $_GET['currency'] ) ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency();
+			$block_size       = 256;
+			$table_data       = array();
+			$do_forecast      = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_forecast', 'no' ) );
+			$do_include_today = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_include_today', 'no' ) );
 			for ( $i = 1; $i <= 12; $i++ ) {
 				$current_months_averages   = array();
 				$total_orders              = 0;

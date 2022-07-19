@@ -54,7 +54,7 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		 * @since   4.5.0
 		 */
 		public function init_template_class() {
-			require_once 'shipping/class-wc-shipping-wcj-custom.php';
+			require_once 'shipping/class-wc-shipping-wcj-custom-template.php';
 		}
 
 		/**

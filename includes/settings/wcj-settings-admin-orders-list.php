@@ -90,7 +90,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'type'    => 'select',
 				'options' => array(
 					'no'             => __( 'No', 'woocommerce-jetpack' ),
-					'meta_value'     => __( 'By meta (as text)', 'woocommerce-jetpack' ),
+					'meta_value'     => __( 'By meta (as text)', 'woocommerce-jetpack' ), // phpcs:ignore
 					'meta_value_num' => __( 'By meta (as numbers)', 'woocommerce-jetpack' ),
 				),
 			),

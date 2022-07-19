@@ -251,7 +251,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		private function wcj_price_shortcode( $raw_price, $atts ) {
-			if ( 'yes' === $atts['hide_if_zero'] && (float)0 === $raw_price ) {
+			if ( 'yes' === $atts['hide_if_zero'] && (float) 0 === $raw_price ) {
 				return '';
 			} else {
 				$order_currency = wcj_get_order_currency( $this->the_order );
