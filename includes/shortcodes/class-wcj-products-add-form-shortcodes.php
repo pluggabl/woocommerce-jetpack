@@ -291,7 +291,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				'regular_price' => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_regular_price'] ) ) : '',
 				'sale_price'    => isset( $_REQUEST['wcj_add_new_product_sale_price'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_sale_price'] ) ) : '',
 				'external_url'  => isset( $_REQUEST['wcj_add_new_product_external_url'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_external_url'] ) ) : '',
-				'cats'          => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_cats'] ) ) : array(),
+				'cats'          => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['wcj_add_new_product_cats'] ) ) : array(),
 				'tags'          => isset( $_REQUEST['wcj_add_new_product_tags'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_tags'] ) ) : array(),
 				'image'         => isset( $_FILES['wcj_add_new_product_image'] ) ? sanitize_text_field( wp_unslash( $_FILES['wcj_add_new_product_image'] ) ) : '',
 			);

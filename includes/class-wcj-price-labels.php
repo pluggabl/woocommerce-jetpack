@@ -106,6 +106,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 
 		/**
 		 * Save_custom_price_labels.
+		 *
 		 * @version 5.6.2-dev
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.

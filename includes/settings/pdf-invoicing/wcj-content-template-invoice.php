@@ -1,3 +1,4 @@
+<?php //phpcs:ignore ?>
 <h1>Invoice</h1>
 <p>
 <table class="pdf_invoice_heading_table">

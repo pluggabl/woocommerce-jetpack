@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -152,12 +152,12 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		/**
 		 * Handle_downloads.
 		 *
-		 * @version 2.5.0
+		 * @version 5.6.2-dev
 		 * @since   2.2.2
 		 */
 		public function handle_downloads() {
-			if ( isset( $_GET['wcj_download_file'] ) ) {
-				$file_name  = sanitize_text_field( wp_unslash( $_GET['wcj_download_file'] ) );
+			if ( isset( $_GET['wcj_download_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				$file_name  = sanitize_text_field( wp_unslash( $_GET['wcj_download_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
 				$file_path  = $upload_dir . '/' . $file_name;
 				if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
@@ -167,7 +167,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 					header( 'Content-disposition: attachment; filename=' . $file_name );
 					header( 'Content-Transfer-Encoding: binary' );
 					header( 'Content-Length: ' . filesize( $file_path ) );
-					readfile( $file_path );
+					readfile( $file_path ); //phpcs:ignore
 					exit();
 				}
 			}

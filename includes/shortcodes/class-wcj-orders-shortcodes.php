@@ -109,7 +109,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2-dev
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
@@ -135,7 +135,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					'item_number'                => 'all',
 					'field'                      => 'name',
 					'order_user_roles'           => '',
-					'meta_key'                   => '',
+					'meta_key'                   => '', // phpcs:ignore
 					'tax_class'                  => '',
 					'fallback_billing_address'   => 'no',
 					'tax_display'                => '',
@@ -200,10 +200,11 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			// Atts.
 			$atts['excl_tax'] = ( 'yes' === $atts['excl_tax'] );
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID();
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(); // phpcs:ignore WordPress.Security.NonceVerification
 			}
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? sanitize_text_field( wp_unslash( $_GET['pdf_invoice'] ) ) : 0; // PDF Invoices V1 compatibility.
+				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? sanitize_text_field( wp_unslash( $_GET['pdf_invoice'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+				// PDF Invoices V1 compatibility.
 			}
 			if ( 0 === $atts['order_id'] ) {
 				return false;

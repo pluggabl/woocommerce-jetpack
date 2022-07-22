@@ -1,0 +1,6 @@
+{
+    "0" : "= 5.6.1 01/07/2022 =",
+    "1" : "* FIXED - PRODUCTS - User Products - Fixed Fatal Error: Uncaught Error: Cannot access protected property XXX::$id.",
+    "2" : "* FIXED - PRODUCTS - Tax Display - Fixed Price displayed without taxes as default",
+    "3" : "* FIXED - PRODUCTS - Price based on User Role - Parse error: syntax error, unexpected ‘)’ in .../includes/class-wcj-price-by-user-role.php on line 417."
+}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 5.6.0
+ * @version 5.6.2-dev
  * @since   2.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -143,18 +143,16 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		/**
 		 * Get_current_gateway.
 		 *
-		 * @version 4.8.0
+		 * @version 5.6.2-dev
 		 * @since   3.3.0
 		 */
 		public function get_current_gateway() {
-
-			
 			$gateway = '';
-			if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) {
+			if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$gateway = 'paypal_express'; // PayPal for WooCommerce (By Angell EYE).
 			} elseif (
-				( isset( $_GET['wc-ajax'] ) && 'wc_ppec_generate_cart' === $_GET['wc-ajax'] ) ||
-				( isset( $_GET['startcheckout'] ) && 'true' === $_GET['startcheckout'] )
+				( isset( $_GET['wc-ajax'] ) && 'wc_ppec_generate_cart' === $_GET['wc-ajax'] ) || // phpcs:ignore WordPress.Security.NonceVerification
+				( isset( $_GET['startcheckout'] ) && 'true' === $_GET['startcheckout'] ) // phpcs:ignore WordPress.Security.NonceVerification
 			) {
 				$gateway = 'ppec_paypal'; // WooCommerce PayPal Express Checkout Payment Gateway (By WooCommerce).
 			} else {

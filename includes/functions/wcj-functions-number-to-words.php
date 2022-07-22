@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Numbers to Words
  *
- * @version 2.5.0
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -16,7 +16,7 @@ if ( ! function_exists( 'convert_number_to_words' ) ) {
 	/**
 	 * Convert_number_to_words.
 	 *
-	 * @version 2.5.0
+	 * @version 5.6.2-dev
 	 * @since   2.5.0
 	 * @param int $number Get Number.
 	 */
@@ -70,8 +70,8 @@ if ( ! function_exists( 'convert_number_to_words' ) ) {
 
 		if ( ( $number >= 0 && (int) $number < 0 ) || (int) $number < 0 - PHP_INT_MAX ) {
 			// overflow.
-			trigger_error(
-				'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
+			trigger_error( //phpcs:ignore
+				'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				E_USER_WARNING
 			);
 			return false;

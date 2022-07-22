@@ -128,8 +128,8 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 				}
 				$args['where_meta'] = array(
 					array(
-						'meta_key'   => '_order_currency',
-						'meta_value' => isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(),
+						'meta_key'   => '_order_currency', //phpcs:ignore
+						'meta_value' => isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(), //phpcs:ignore
 						'operator'   => '=',
 					),
 				);

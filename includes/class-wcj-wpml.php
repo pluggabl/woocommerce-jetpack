@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -191,14 +191,14 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		/**
 		 * Create_wpml_xml_file.
 		 *
-		 * @version 2.5.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.1
 		 */
 		public function create_wpml_xml_file_tool() {
-			if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) {
+			if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}
-			if ( ! isset( $_GET['section'] ) || 'wpml' !== $_GET['section'] ) {
+			if ( ! isset( $_GET['section'] ) || 'wpml' !== $_GET['section'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}
 			$this->create_wpml_xml_file();
@@ -208,10 +208,11 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		/**
 		 * Create_wpml_xml_file.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2-dev
 		 * @see     https://wpml.org/documentation/support/language-configuration-files/#admin-texts
 		 */
 		public function create_wpml_xml_file() {
+			// phpcs:disable
 			$file_path = wcj_free_plugin_path() . '/wpml-config.xml';
 			$handle    = fopen( $file_path, 'w' );
 			if ( false !== ( $handle ) ) {
@@ -247,6 +248,7 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 				fwrite( $handle, '</wpml-config>' . PHP_EOL );
 				fclose( $handle );
 			}
+			// phpcs:enable
 		}
 
 		/**

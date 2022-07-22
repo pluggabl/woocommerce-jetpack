@@ -251,7 +251,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					'update_post_term_cache' => false,
 					'post_status'            => $post_status,
 					'post_type'              => 'shop_order',
-					'meta_query'             => $meta_query_args,
+					'meta_query'             => $meta_query_args, //phpcs:ignore
 				)
 			);
 
@@ -444,7 +444,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Add/update order_number meta to order.
 		 *
-		 * @version 5.4.6
+		 * @version 5.6.2-dev
 		 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 		 * @param int  $order_id defines the order_id.
 		 * @param bool $do_overwrite defines the do_overwrite.
@@ -460,6 +460,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				}
 				if ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'yes' === wcj_get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
 					global $wpdb;
+					// phpcs:disable
 					$wpdb->query( 'START TRANSACTION' );
 					$wp_options_table = $wpdb->prefix . 'options';
 					$result_select    = $wpdb->get_row( "SELECT * FROM $wp_options_table WHERE option_name = 'wcj_order_number_counter'" );
@@ -475,6 +476,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					} else {
 						$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback.
 					}
+					// phpcs:enable
 				} else {
 					if ( 'hash_crc32' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 						$current_order_number = sprintf( '%u', crc32( $order_id ) );

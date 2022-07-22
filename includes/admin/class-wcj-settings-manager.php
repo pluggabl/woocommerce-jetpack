@@ -59,7 +59,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_import.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.2
 		 */
 		public function manage_options_import() {
@@ -73,7 +73,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 				}
 			} else {
 				$import_counter  = 0;
-				$import_settings = file_get_contents( sanitize_text_field( wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] ) ) );
+				$import_settings = file_get_contents( sanitize_text_field( wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] ) ) ); //phpcs:ignore
 				$bom             = pack( 'H*', 'EFBBBF' );
 				$import_settings = preg_replace( "/^$bom/", '', $import_settings );
 				$import_settings = explode( PHP_EOL, preg_replace( '~(*BSR_ANYCRLF)\R~', PHP_EOL, $import_settings ) );
@@ -128,14 +128,14 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 			$export_settings = 'Booster for WooCommerce v' . wcj_get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
 			header( 'Content-Type: application/download' );
 			header( 'Content-Disposition: attachment; filename=booster_settings.txt' );
-			echo $export_settings;
+			echo $export_settings; //phpcs:ignore
 			die();
 		}
 
 		/**
 		 * Manage_options_reset_meta.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 * @since   3.4.0
 		 * @todo    order items meta
 		 * @todo    `... LIKE 'wcj_%'`
@@ -143,7 +143,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		public function manage_options_reset_meta() {
 			global $wpdb, $wcj_notice;
 			$delete_counter_meta = 0;
-			$plugin_meta         = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" );
+			$plugin_meta         = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // WPCS: db call ok and cache ok.
 			foreach ( $plugin_meta as $meta ) {
 				delete_post_meta( $meta->post_id, $meta->meta_key );
 				$delete_counter_meta++;
@@ -155,13 +155,13 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_reset.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.2
 		 */
 		public function manage_options_reset() {
 			global $wpdb, $wcj_notice;
 			$delete_counter_options = 0;
-			$plugin_options         = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%'" );
+			$plugin_options         = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%'" ); // WPCS: db call ok and cache ok.
 			foreach ( $plugin_options as $option ) {
 				delete_option( $option->option_name );
 				delete_site_option( $option->option_name );

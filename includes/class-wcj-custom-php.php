@@ -79,7 +79,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		/**
 		 * Create_php_file.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2-dev
 		 * @since   4.0.0
 		 * @todo    [dev] `unlink` and `rmdir` on settings reset
 		 * @todo    [dev] on empty content - delete dir also (`rmdir`).
@@ -91,7 +91,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				$file_content = wcj_get_option( 'wcj_custom_php', '' );
 				if ( '' !== $file_content ) {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php' ) . DIRECTORY_SEPARATOR . 'booster.php';
-					file_put_contents( $file_path, '<?php' . PHP_EOL . $file_content );
+					file_put_contents( $file_path, '<?php' . PHP_EOL . $file_content ); // phpcs:ignore
 				} else {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
 					if ( file_exists( $file_path ) ) {

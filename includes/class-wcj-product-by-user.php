@@ -182,7 +182,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Custom help to add new items into an array after a selected item.
 		 *
-		 * @version 2.5.7
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 * @param array  $items defines the items.
 		 * @param string $new_items defines the new_items.
@@ -192,7 +192,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 */
 		public function insert_after_helper( $items, $new_items, $after ) {
 			// Search for the item position and +1 since is after the selected item key.
-			$position = array_search( $after, array_keys( $items ) ) + 1;
+			$position = array_search( $after, array_keys( $items ), true ) + 1;
 			// Insert the new item.
 			$array  = array_slice( $items, 0, $position, true );
 			$array += $new_items;
@@ -287,7 +287,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 						<a class="button" href="' . esc_url( add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
 					);
 				}
-				echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) );
+				echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ); //phpcs:ignore
 			}
 		}
 

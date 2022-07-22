@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 4.5.0
+		 * @version 5.6.2-dev
 		 * @todo    [dev] maybe expand `$this->desc` (e.g.: Custom roles tool, shortcodes in WordPress text widgets etc.)
 		 */
 		public function __construct() {
@@ -49,7 +49,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 				$php_time_limit   = wcj_get_option( 'wcj_admin_tools_php_time_limit', '0' );
 				// PHP Memory Limit.
 				if ( '0' !== ( $php_memory_limit ) ) {
-					ini_set( 'memory_limit', $php_memory_limit . 'M' );
+					ini_set( 'memory_limit', $php_memory_limit . 'M' ); //phpcs:ignore
 				}
 				/* translators: %s: translation added */
 				$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );

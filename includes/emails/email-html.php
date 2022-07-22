@@ -1,3 +1,4 @@
+<?php //phpcs:ignore ?>
 <h1>Email</h1>
 <p>
 <table>

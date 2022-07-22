@@ -128,7 +128,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				'width'                 => 0,
 				'height'                => 0,
 				'color'                 => 'black',
-				'meta_key'              => '',
+				'meta_key'              => '', //phpcs:ignore
 			);
 
 			parent::__construct();

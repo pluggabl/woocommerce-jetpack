@@ -97,7 +97,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 				$wp_admin_bar->add_node( $args );
 
 				$custom_range_nonce = wp_create_nonce( 'custom_range' );
-				$current_time       = (int) current_time( 'timestamp' );
+				$current_time       = (int) gmdate( 'U' );
 				for ( $i = 1; $i <= 12; $i++ ) {
 					$month_start_date = strtotime( gmdate( 'Y-m-01', $current_time ) . " -$i months" );
 					$month_num        = gmdate( 'm', $month_start_date );
@@ -185,40 +185,40 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_sales() {
 			$report = new WCJ_Reports_Sales();
-			echo $report->get_report();
+			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
 		 * Get_report_products_sales_daily.
 		 *
-		 * @version 2.9.0
+		 * @version 5.6.2-dev
 		 * @since   2.9.0
 		 */
 		public function get_report_products_sales_daily() {
 			$report = new WCJ_Reports_Product_Sales_Daily();
-			echo $report->get_report();
+			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
 		 * Get_report_monthly_sales.
 		 *
-		 * @version 2.4.7
+		 * @version 5.6.2-dev
 		 * @since   2.4.7
 		 */
 		public function get_report_monthly_sales() {
 			$report = new WCJ_Reports_Monthly_Sales();
-			echo $report->get_report();
+			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
 		 * Get_report_orders_gateways.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2-dev
 		 * @since   3.6.0
 		 */
 		public function get_report_orders_gateways() {
 			$report = new WCJ_Reports_Product_Sales_Gateways();
-			echo $report->get_report();
+			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 					'range_days' => $this->range_days,
 				)
 			);
-			echo $report->get_report_html();
+			echo $report->get_report_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -239,7 +239,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_customers() {
 			$report = new WCJ_Reports_Customers( array( 'group_countries' => $this->group_countries ) );
-			echo $report->get_report();
+			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**

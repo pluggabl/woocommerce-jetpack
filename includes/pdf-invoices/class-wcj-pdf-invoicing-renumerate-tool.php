@@ -137,7 +137,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 				);
 
 				// Print all.
-				echo wcj_get_table_html(
+				echo wcj_get_table_html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					$data,
 					array(
 						'table_class'        => 'widefat striped',

@@ -581,7 +581,9 @@ if ( ! function_exists( 'wc_get_variable_product_purchase_price' ) ) {
 		$final_purchase_prices = array();
 		switch ( $args['search'] ) {
 			case 'min_variation':
-				if(!empty($purchase_prices)) $final_purchase_prices = array( min( $purchase_prices ) );
+				if ( ! empty( $purchase_prices ) ) {
+					$final_purchase_prices = array( min( $purchase_prices ) );
+				}
 				break;
 			case 'max_variation':
 				$final_purchase_prices = array( max( $purchase_prices ) );

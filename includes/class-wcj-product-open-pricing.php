@@ -186,7 +186,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 2.5.0
+		 * @version 5.6.2-dev
 		 * @since   2.4.8
 		 * @param string $option_value defines the option_value.
 		 * @param string $option_name defines the option_name.
@@ -204,8 +204,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_product_open_price_enabled',
-					'meta_value'     => 'yes',
+					'meta_key'       => '_wcj_product_open_price_enabled', //phpcs:ignore
+					'meta_value'     => 'yes', //phpcs:ignore
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );

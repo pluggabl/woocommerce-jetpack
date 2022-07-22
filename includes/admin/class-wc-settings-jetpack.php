@@ -682,7 +682,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			global $wpdb;
 
 			if ( count( $field_ids ) > 0 ) {
-				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET autoload = 'no' WHERE option_name IN (" . implode( ', ', array_fill( 0, count( $field_ids ), '%s' ) ) . ") AND autoload != 'no'", $field_ids ) );
+				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET autoload = 'no' WHERE option_name IN (" . implode( ', ', array_fill( 0, count( $field_ids ), '%s' ) ) . ") AND autoload != 'no'", $field_ids ) ); // WPCS: db call ok and cache ok.
 			}
 		}
 
@@ -841,13 +841,20 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 */
 		public function version_details() {
 
-			$file = wcj_free_plugin_path() . '/version-details.txt';
-			if ( file_exists( $file ) ) {
+			$file = wcj_plugin_url() . '/version-details.json';
 
-				$doc  = file_get_contents( $file );
-				$line = explode( "\n", $doc );
-				foreach ( $line as $newline ) {
-					echo wp_kses_post( $newline . '<br>' );
+			$response = wp_remote_get(
+				$file,
+				array(
+					'headers' => array(
+						'Accept' => 'application/json',
+					),
+				)
+			);
+			if ( ( ! is_wp_error( $response ) ) && ( 200 === wp_remote_retrieve_response_code( $response ) ) ) {
+				$response_body = json_decode( $response['body'] );
+				foreach ( $response_body as $key => $lines ) {
+					echo wp_kses_post( $lines . '<br>' );
 				}
 			}
 

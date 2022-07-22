@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Sales
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -34,14 +34,17 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version 2.3.9
+		 * @version 5.6.2-dev
 		 * @since   2.3.0
 		 */
 		public function get_report() {
-			$html = '';
-
-			$this->year          = isset( $_GET['year'] ) ? $_GET['year'] : gmdate( 'Y' );
-			$this->product_title = isset( $_GET['product_title'] ) ? $_GET['product_title'] : '';
+			$html    = '';
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			$this->year          = $wpnonce && isset( $_GET['year'] ) ? sanitize_text_field( wp_unslash( $_GET['year'] ) ) : gmdate( 'Y' );
+			$this->product_title = $wpnonce && isset( $_GET['product_title'] ) ? sanitize_text_field( wp_unslash( $_GET['product_title'] ) ) : '';
 
 			$html .= $this->get_products_sales();
 
@@ -79,7 +82,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		/**
 		 * Get_products_sales.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.3.0
 		 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
 		 * @todo    display more info for "Parent product deleted" and "Product deleted"
@@ -211,7 +214,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 				__( 'Total', 'woocommerce-jetpack' ),
 			);
 			foreach ( $years as $year => $value ) {
-				if ( $year !== $this->year ) {
+				if ( $year !== (int) $this->year ) {
 					continue;
 				}
 				for ( $i = 12; $i >= 1; $i-- ) {
@@ -243,7 +246,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 					'<strong>' . wc_price( $profit ) . '</strong>',
 				);
 				foreach ( $years as $year => $value ) {
-					if ( $year !== $this->year ) {
+					if ( $year !== (int) $this->year ) {
 						continue;
 					}
 					for ( $i = 12; $i >= 1; $i-- ) {
@@ -308,7 +311,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			$totals_sales_by_month     = 0;
 			$totals_sales_by_month_sum = 0;
 			foreach ( $years as $year => $value ) {
-				if ( $year !== $this->year ) {
+				if ( $year !== (int) $this->year ) {
 					continue;
 				}
 				for ( $i = 12; $i >= 1; $i-- ) {
@@ -374,11 +377,19 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			$page   = $wpnonce && isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$tab    = $wpnonce && isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			$report = $wpnonce && isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $_GET['tab'] . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . $page . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . $tab . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . $report . '" />';
 			$filter_form .= '<input type="hidden" name="year" value="' . $this->year . '" />';
 			$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
 			'<input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';

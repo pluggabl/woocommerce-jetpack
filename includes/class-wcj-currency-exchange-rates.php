@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency Exchange Rates
  *
- * @version 5.4.0
+ * @version 5.6.2-dev
  * @since   2.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -64,11 +64,11 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		/**
 		 * Maybe_update_all_rates.
 		 *
-		 * @version 3.4.5
+		 * @version 5.6.2-dev
 		 * @since   3.4.5
 		 */
 		public function maybe_update_all_rates() {
-			if ( isset( $_GET['wcj_currency_exchange_rates_update_now'] ) ) {
+			if ( isset( $_GET['wcj_currency_exchange_rates_update_now'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				do_action( 'auto_update_exchange_rates_hook' );
 				wp_safe_redirect( remove_query_arg( 'wcj_currency_exchange_rates_update_now' ) );
 			}
@@ -77,12 +77,14 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		/**
 		 * Wcj_ajax_get_exchange_rates.
 		 *
-		 * @version 2.7.0
+		 * @version 5.6.2-dev
 		 * @since   2.6.0
 		 * @todo    (maybe) move this to `class-wcj-exchange-rates.php`
 		 */
 		public function wcj_ajax_get_exchange_rates() {
-			echo wcj_get_exchange_rate( sanitize_text_field( wp_unslash( $_POST['wcj_currency_from'] ) ), sanitize_text_field( wp_unslash( $_POST['wcj_currency_to'] ) ) );
+			$wcj_currency_from = isset( $_POST['wcj_currency_from'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_currency_from'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+			$wcj_currency_to   = isset( $_POST['wcj_currency_to'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_currency_to'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+			echo wcj_get_exchange_rate( $wcj_currency_from, $wcj_currency_to ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			die();
 		}
 

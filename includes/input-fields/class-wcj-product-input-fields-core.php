@@ -540,7 +540,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 					// Validate file max size.
 					$max_file_size = $this->get_value( 'wcj_product_input_fields_type_file_max_size_' . $this->scope . '_' . $i, $product_id, '' );
 					if ( $max_file_size > 0 ) {
-						if ( sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['size'] ) ) > $max_file_size ) {
+						if ( isset( $_FILES[ $field_name ]['size'] ) && sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['size'] ) ) > $max_file_size ) {
 							$passed = false;
 							wc_add_notice( __( 'File is too big!', 'woocommerce-jetpack' ), 'error' );
 						}
@@ -781,7 +781,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 								$field = '<select name="' . $field_name . '" id="' . $field_name . '" class="country_to_state country_select wcj_product_input_fields' . $class . '">' .
 								'<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
 								foreach ( $countries as $ckey => $cvalue ) {
-									$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . __( $cvalue, 'woocommerce' ) . '</option>';
+									$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . __( $cvalue, 'woocommerce' ) . '</option>'; //phpcs:ignore
 								}
 								$field .= '</select>';
 								$html   = $field;
@@ -816,7 +816,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			ksort( $fields );
 			if ( ! empty( $fields ) ) {
-				echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode( $fields ) ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' );
+				echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode( $fields ) ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$this->are_product_input_fields_displayed = true;
 			}
 		}
@@ -848,7 +848,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				$value_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
 				if ( 'file' === $type ) {
 					if ( isset( $_FILES[ $value_name ] ) ) {
-						$cart_item_data[ $value_name ] = sanitize_text_field( wp_unslash( $_FILES[ $value_name ] ) );
+						$cart_item_data[ $value_name ] = array_map( 'sanitize_text_field', wp_unslash( $_FILES[ $value_name ] ) );
 						$tmp_dest_file                 = tempnam( sys_get_temp_dir(), 'wcj' );
 						move_uploaded_file( $cart_item_data[ $value_name ]['tmp_name'], $tmp_dest_file );
 						$cart_item_data[ $value_name ]['tmp_name'] = $tmp_dest_file;
@@ -1028,7 +1028,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_input_fields_to_order_item_meta.
 		 *
-		 * @version 4.2.0
+		 * @version 5.6.2-dev
 		 * @since   3.4.0
 		 * @param Array  $item Get items.
 		 * @param int    $item_id Get item id.
@@ -1053,8 +1053,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							mkdir( $upload_dir, 0755, true );
 						}
 						$upload_dir_and_name = $upload_dir . '/' . $name;
-						$file_data           = file_get_contents( $tmp_name );
-						file_put_contents( $upload_dir_and_name, $file_data );
+						$file_data           = file_get_contents( $tmp_name ); //phpcs:ignore
+						file_put_contents( $upload_dir_and_name, $file_data ); //phpcs:ignore
 						unlink( $tmp_name );
 						$input_field_value['tmp_name']   = addslashes( $upload_dir_and_name );
 						$input_field_value['wcj_type']   = 'file';

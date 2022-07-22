@@ -42,6 +42,10 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 
 		/**
 		 * Add_variable_pricing.
+		 *
+		 * @param object $loop defines the loop.
+		 * @param object $variation_data defines the variation data.
+		 * @param object $variation defines the variation.
 		 */
 		public function add_variable_pricing( $loop, $variation_data, $variation ) {
 			$this->create_custom_meta_box( 'variable', $variation->ID );
@@ -49,6 +53,9 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 
 		/**
 		 * Create_custom_meta_box.
+		 *
+		 * @param string $simple_or_variable defines the product us simple or variable product.
+		 * @param int    $product_id defines the product id.
 		 */
 		public function create_custom_meta_box( $simple_or_variable, $product_id = 0 ) {
 
@@ -70,7 +77,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 			}
 
 			// Output.
-			echo $html;
+			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -78,7 +85,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		 */
 		public function add_hidden_save() {
 			$meta_box_id = 'price_by_country';
-			echo '<input type="hidden" name="woojetpack_' . $meta_box_id . '_save_post" value="woojetpack_' . $meta_box_id . '_save_post">';
+			echo '<input type="hidden" name="woojetpack_' . esc_html( $meta_box_id ) . '_save_post" value="woojetpack_' . esc_html( $meta_box_id ) . '_save_post">';
 		}
 
 		/**
@@ -125,6 +132,10 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 
 		/**
 		 * Save options.
+		 *
+		 * @param string $post_id defines the post id.
+		 * @param string $total_options_groups defines the total groups options.
+		 * @param string $variation_id_addon defines the variation addon id.
 		 */
 		private function save_options( $post_id, $total_options_groups, $variation_id_addon = '' ) {
 			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
@@ -145,6 +156,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		 *
 		 * @version 5.6.2-dev
 		 * @since   2.3.9
+		 * @param string $product_id defines the product id.
 		 */
 		public function save_custom_meta_box_on_product_edit_ajax( $product_id ) {
 			return $this->save_custom_meta_box_on_product_edit( $product_id, /* 'ajax' */ null );
@@ -152,6 +164,9 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 
 		/**
 		 * Save Custom Meta Box on Product Edit.
+		 *
+		 * @param string $post_id defines the post id.
+		 * @param object $post defines the post object.
 		 */
 		public function save_custom_meta_box_on_product_edit( $post_id, $post ) {
 			$wpnonce     = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
@@ -184,6 +199,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 
 		/**
 		 * Get_option_field_html.
+		 *
+		 * @param string $current_post_id defines the current post id.
+		 * @param int    $option_id defines the option id.
+		 * @param array  $option defines the option.
+		 * @param string $variation_id_addon defines the variation addon id.
 		 */
 		private function get_option_field_html( $current_post_id, $option_id, $option, $variation_id_addon = '' ) {
 			$html         = '';
@@ -196,7 +216,12 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		/**
 		 * Get_all_options_html.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2-dev
+		 *
+		 * @param string $simple_or_variable defines the product us simple or variable product.
+		 * @param string $current_post_id defines the current post id.
+		 * @param string $total_number defines the total number of options.
+		 * @param string $variation_id_addon defines the variation addon id.
 		 */
 		private function get_all_options_html( $simple_or_variable, $current_post_id, $total_number, $variation_id_addon = '' ) {
 			$html    = '';

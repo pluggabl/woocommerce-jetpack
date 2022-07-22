@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *

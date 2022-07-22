@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - EU VAT
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	/**
 	 * Wcj_validate_vat_no_soap.
 	 *
-	 * @version 5.5.9
+	 * @version 5.6.2-dev
 	 * @since   2.5.7
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 * @param   string $country_code defines the country_code.
@@ -38,7 +38,7 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 		switch ( $method ) {
 			case 'file_get_contents':
 				if ( ini_get( 'allow_url_fopen' ) ) {
-					$response = file_get_contents( $api_url );
+					$response = file_get_contents( $api_url ); //phpcs:ignore
 				} else {
 					return null;
 				}

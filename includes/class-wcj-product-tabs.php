@@ -549,7 +549,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		 * @param string $tab defines the tab.
 		 */
 		public function create_new_custom_product_tab_local( $key, $tab ) {
-			echo $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) );
+			echo $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -560,7 +560,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		 * @param string $tab defines the tab.
 		 */
 		public function create_new_custom_product_tab_global( $key, $tab ) {
-			echo $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) );
+			echo $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 
@@ -756,7 +756,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 						)
 					);
 				}
-				echo $html;
+				echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			$html = '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
 			echo wp_kses_post( $html );

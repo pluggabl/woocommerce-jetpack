@@ -67,7 +67,7 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 		/**
 		 * Export_products.
 		 *
-		 * @version 3.0.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.3
 		 * @todo    product attributes
 		 * @param Array $fields_helper Get fields info.
@@ -275,7 +275,12 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 								$additional_field_value = wcj_get_option( 'wcj_export_products_fields_additional_value_' . $i, '' );
 								if ( '' !== ( $additional_field_value ) ) {
 									if ( 'meta' === wcj_get_option( 'wcj_export_products_fields_additional_type_' . $i, 'meta' ) ) {
-										$row[] = get_post_meta( $product_id, $additional_field_value, true );
+										$additional_field_data = get_post_meta( $product_id, $additional_field_value, true );
+										if ( is_array( $additional_field_data ) ) {
+											$row[] = implode( ',', maybe_unserialize( $additional_field_data ) );
+										} else {
+											$row[] = $additional_field_data;
+										}
 									} else {
 										global $post;
 										$post_data = get_post( $product_id );

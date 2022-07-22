@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 						$row[] = wcj_get_product_input_fields( $item );
 						break;
 					case 'item-debug':
-						$row[] = '<pre>' . print_r( $item, true ) . '</pre>';
+						$row[] = '<pre>' . print_r( $item, true ) . '</pre>'; //phpcs:ignore
 						break;
 					case 'item-name':
 						$row[] = $item['name'];
@@ -317,12 +317,12 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 							$additional_field_value = wcj_get_option( 'wcj_export_orders_fields_additional_value_' . $i, '' );
 							if ( '' !== ( $additional_field_value ) ) {
 								if ( 'meta' === wcj_get_option( 'wcj_export_orders_fields_additional_type_' . $i, 'meta' ) ) {
-									$row[] = $this->safely_get_post_meta( $order_id, $additional_field_value );
+									$row[] = wp_strip_all_tags( html_entity_decode( $this->safely_get_post_meta( $order_id, $additional_field_value ) ) );
 								} else {
 									global $post;
 									$post_data = get_post( $order_id );
 									setup_postdata( $post_data );
-									$row[] = do_shortcode( $additional_field_value );
+									$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
 									wp_reset_postdata();
 								}
 							} else {
@@ -426,7 +426,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 											global $post;
 											$post_data = get_post( $order_id );
 											setup_postdata( $post_data );
-											$row[] = do_shortcode( $additional_field_value );
+											$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
 											wp_reset_postdata();
 											break;
 										case 'shortcode_product':

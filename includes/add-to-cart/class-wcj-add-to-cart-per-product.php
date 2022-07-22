@@ -108,7 +108,6 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		 * Create_custom_add_to_cart_meta_box.
 		 *
 		 * @version 5.6.2-dev
-		 *
 		 */
 		public function create_custom_add_to_cart_meta_box() {
 

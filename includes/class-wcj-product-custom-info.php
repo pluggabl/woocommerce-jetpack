@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
+if ( ! class_exists( 'WCJ_Product_Custom_Info' ) ) :
 	/**
-	 * WCJ_Product_Custom_info.
+	 * WCJ_Product_Custom_Info.
 	 */
-	class WCJ_Product_Custom_info extends WCJ_Module {
+	class WCJ_Product_Custom_Info extends WCJ_Module {
 
 		/**
 		 * Constructor.
@@ -82,7 +82,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
 			return (
 			'' !== wcj_get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) &&
 			wcj_get_option( 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i, $default_hook ) === $current_filter &&
-			wcj_get_option( 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i, 10 ) === (string)$current_filter_priority
+			wcj_get_option( 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i, '10' ) === (string) $current_filter_priority
 			);
 		}
 
@@ -107,8 +107,8 @@ if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
 			( empty( $product_cats_to_include ) || wcj_is_product_term( $product_id, $product_cats_to_include, 'product_cat' ) ) &&
 			( empty( $product_tags_to_exclude ) || ! wcj_is_product_term( $product_id, $product_tags_to_exclude, 'product_tag' ) ) &&
 			( empty( $product_tags_to_include ) || wcj_is_product_term( $product_id, $product_tags_to_include, 'product_tag' ) ) &&
-			( empty( $products_to_exclude ) || ! in_array( (string)$product_id, $products_to_exclude, true ) ) &&
-			( empty( $products_to_include ) || in_array( (string)$product_id, $products_to_include, true ) )
+			( empty( $products_to_exclude ) || ! in_array( (string) $product_id, $products_to_exclude, true ) ) &&
+			( empty( $products_to_include ) || in_array( (string) $product_id, $products_to_include, true ) )
 			);
 		}
 
@@ -137,4 +137,4 @@ if ( ! class_exists( 'WCJ_Product_Custom_info' ) ) :
 
 endif;
 
-return new WCJ_Product_Custom_info();
+return new WCJ_Product_Custom_Info();

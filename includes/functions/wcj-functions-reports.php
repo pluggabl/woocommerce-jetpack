@@ -16,12 +16,12 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 	/**
 	 * Wcj_get_product_sales_daily_report_columns.
 	 *
-	 * @version 2.9.0
+	 * @version 5.6.2-dev
 	 * @since   2.9.0
 	 */
 	function wcj_get_product_sales_daily_report_columns() {
 		return array(
-			'date'                 => __( 'date', 'woocommerce-jetpack' ),
+			'date'                   => __( 'date', 'woocommerce-jetpack' ),
 			'daily_total_sum'        => __( 'Daily Total Sum', 'woocommerce-jetpack' ),
 			'daily_total_quantity'   => __( 'Daily Total Quantity', 'woocommerce-jetpack' ),
 			'product_id'             => __( 'Product ID', 'woocommerce-jetpack' ),

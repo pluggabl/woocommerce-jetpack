@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Booster Core
  *
- * @version 5.6.1
+ * @version 5.6.2-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -54,7 +54,7 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 	/**
 	 * Checks if the current request is a WP REST API request.
 	 *
-	 * @version 5.5.9
+	 * @version 5.6.2-dev
 	 * @since   4.3.0
 	 *
 	 * @author  matzeeable
@@ -65,15 +65,18 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 		$prefix = rest_get_url_prefix();
 		if (
 			defined( 'REST_REQUEST' ) && REST_REQUEST || // After WP_REST_Request initialisation.
-			isset( $_GET['rest_route'] ) && 0 === strpos( trim( $_GET['rest_route'], '\\/' ), $prefix, 0 ) // Support "plain" permalink settings.
+			isset( $_GET['rest_route'] ) && 0 === strpos( trim( $_GET['rest_route'], '\\/' ), $prefix, 0 ) // phpcs:ignore
+			// Support "plain" permalink settings.
 		) {
 			return true;
 		}
 		// URL Path begins with wp-json/ (your REST prefix).
 		// Also supports WP installations in subfolders.
-		$rest_url    = wp_parse_url( site_url( $prefix ) );
-		$current_url = wp_parse_url( add_query_arg( array() ) );
-		return ( 0 === strpos( $current_url['path'], $rest_url['path'], 0 ) );
+		$rest_url         = wp_parse_url( site_url( $prefix ) );
+		$current_url      = wp_parse_url( add_query_arg( array() ) );
+		$current_url_path = isset( $current_url['path'] ) ? $current_url['path'] : '';
+		$rest_url_path    = isset( $rest_url['path'] ) ? $rest_url['path'] : '';
+		return ( 0 === strpos( $current_url_path, $rest_url_path, 0 ) );
 	}
 }
 

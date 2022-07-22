@@ -43,12 +43,12 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Maybe_delete_payment_gateway_input_fields.
 		 *
-		 * @version 3.3.0
+		 * @version 5.6.2-dev
 		 * @since   3.3.0
 		 */
 		public function maybe_delete_payment_gateway_input_fields() {
-			if ( isset( $_GET['wcj_delete_payment_gateway_input_fields'] ) ) {
-				$order_id = $_GET['wcj_delete_payment_gateway_input_fields'];
+			if ( isset( $_GET['wcj_delete_payment_gateway_input_fields'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				$order_id = sanitize_text_field( wp_unslash( $_GET['wcj_delete_payment_gateway_input_fields'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				delete_post_meta( $order_id, '_wcj_custom_payment_gateway_input_fields' );
 				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_payment_gateway_input_fields' ) ) );
 				exit;
@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Check_required_wcj_input_fields.
 		 *
-		 * @version 3.0.1
+		 * @version 5.6.2-dev
 		 * @since   3.0.1
 		 * @param array          $data defines the data.
 		 * @param string | array $errors defines the errors.
@@ -66,12 +66,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		public function check_required_wcj_input_fields( $data, $errors ) {
 			$payment_method = $data['payment_method'];
 			if ( 'jetpack_custom_gateway' === substr( $payment_method, 0, 22 ) ) {
+				$wpnonce = isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? $_REQUEST['woocommerce-process-checkout-nonce'] : '' ), 'woocommerce-process_checkout' ) : false;
 				foreach ( $_POST as $key => $value ) {
 					if ( 'wcj_input_field_' === substr( $key, 0, 16 ) ) {
-						if ( isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
+						if ( $wpnonce && isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
 							$is_required_set = ( isset( $_POST[ $key . '_required' ] ) && 'yes' === $_POST[ $key . '_required' ] );
 							if ( $is_required_set && '' === $value ) {
-								$label = ( isset( $_POST[ 'label_for_' . $key ] ) ? $_POST[ 'label_for_' . $key ] : substr( $key, 16 ) );
+								$label = ( isset( $_POST[ 'label_for_' . $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'label_for_' . $key ] ) ) : substr( $key, 16 ) );
 								/* translators: %s: translation added */
 								$errors->add( 'booster', sprintf( __( '<strong>%s</strong> is a required field.', 'woocommerce-jetpack' ), $label ) );
 							}
@@ -138,7 +139,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Update_custom_payment_gateways_fields_order_meta.
 		 *
-		 * @version 4.7.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.2
 		 * @param int    $order_id defines the order_id.
 		 * @param string $posted defines the posted.
@@ -147,12 +148,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 			$payment_method = get_post_meta( $order_id, '_payment_method', true );
 			if ( 'jetpack_custom_gateway' === substr( $payment_method, 0, 22 ) ) {
 				$input_fields = array();
+				$wpnonce      = isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? $_REQUEST['woocommerce-process-checkout-nonce'] : '' ), 'woocommerce-process_checkout' ) : false;
 				foreach ( $_POST as $key => $value ) {
 					if ( 'wcj_input_field_' === substr( $key, 0, 16 ) ) {
 						if ( ! is_array( $value ) ) {
-							if ( isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
+							if ( $wpnonce && isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
 								if ( isset( $_POST[ 'label_for_' . $key ] ) ) {
-									$input_fields[ $_POST[ 'label_for_' . $key ] ] = $value;
+									$input_fields[ sanitize_text_field( wp_unslash( $_POST[ 'label_for_' . $key ] ) ) ] = $value;
 								} else {
 									$input_fields[ substr( $key, 16 ) ] = $value;
 								}

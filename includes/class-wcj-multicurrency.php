@@ -944,7 +944,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 					'_wcj_multicurrency_per_product_regular_price_' . esc_html( $currency ),
 					'_wcj_multicurrency_per_product_sale_price_' . esc_html( $currency )
 				)
-			);
+			); // WPCS: db call ok and cache ok.
 
 			return $product_ids;
 		}

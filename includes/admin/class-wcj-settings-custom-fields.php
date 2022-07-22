@@ -156,7 +156,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_wcj_number_plus_checkbox_start.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @param  Array $value Get values.
 		 */
@@ -170,7 +170,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			}
 			// Description handling.
 			$field_description = WC_Admin_Settings::get_field_description( $value );
-			extract( $field_description );
+			extract( $field_description ); //phpcs:ignore
 			// Option value.
 			$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
 			// Output.
@@ -212,7 +212,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			}
 			// Description handling.
 			$field_description = WC_Admin_Settings::get_field_description( $value );
-			extract( $field_description );
+			extract( $field_description ); //phpcs:ignore
 			// Option value.
 			$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
 			// Output.
@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_custom_textarea.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2-dev
 		 * @since   2.2.6
 		 * @param  Array $value Get values.
 		 */
@@ -265,7 +265,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		<tr valign="top">
 			<th scope="row" class="titledesc">
 				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-				<?php echo $tooltip_html; ?>
+				<?php echo $tooltip_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> 
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php echo wp_kses_post( $description ); ?>

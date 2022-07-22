@@ -1,3 +1,4 @@
+<?php //phpcs:ignore ?>
 Order Date: [wcj_order_date]
 Order Nr.: [wcj_order_number]
 Buyer: [wcj_order_billing_address]

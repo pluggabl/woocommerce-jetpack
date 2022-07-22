@@ -430,7 +430,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 					'<label for="wcj_product_bookings_date_to">' . wcj_get_option( 'wcj_product_bookings_label_date_to', __( 'Date to' ) ) . '</label>',
 					'<input firstday="0"' . $date_to_exclude_days . $date_to_exclude_months . ' dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_to" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
 				);
-				echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none' ) );
+				echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<div class="wcj-bookings-price-wrapper"><div class="wcj-value"></div><div class="wcj-loader"></div></div>';
 				echo '<div style="display:none !important;" name="wcj_bookings_message"><p style="color:red;"></p></div>';
 				$this->are_bookings_input_fields_displayed = true;
@@ -494,8 +494,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_product_bookings_enabled',
-					'meta_value'     => 'yes',
+					'meta_key'       => '_wcj_product_bookings_enabled', //phpcs:ignore
+					'meta_value'     => 'yes', //phpcs:ignore
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -527,7 +527,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
-			if ( ! isset( $_GET['wcj_product_bookings_admin_notice'] ) ) {
+			if ( ! isset( $_GET['wcj_product_bookings_admin_notice'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}
 			?>

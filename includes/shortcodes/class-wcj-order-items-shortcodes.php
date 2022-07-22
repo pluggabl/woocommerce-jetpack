@@ -141,7 +141,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Add_item.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2-dev
 		 * @param array $items The user defined shortcode items.
 		 * @param array $new_item_args The user defined shortcode new_item_args.
 		 */
@@ -149,7 +149,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 			if ( empty( $new_item_args ) ) {
 				return $items;
 			}
-			extract( $new_item_args );
+			extract( $new_item_args ); // phpcs:ignore
 			// Create item.
 			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 				$item = array(
@@ -227,7 +227,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 *
 		 * From woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 		 *
-		 * @version 2.5.9
+		 * @version 5.6.2-dev
 		 * @since   2.5.8
 		 * @param int            $item_id The user defined shortcode item_id.
 		 * @param array | string $the_product The user defined shortcode the_product.
@@ -270,10 +270,10 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					// Get attribute data.
 					if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
 						$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-						$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-						$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
+						$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ); // phpcs:ignore
+						$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value']; // phpcs:ignore
 					} else {
-						$meta['meta_key'] = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
+						$meta['meta_key'] = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key']; // phpcs:ignore
 					}
 					$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
 				}
@@ -540,7 +540,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 				case 'item_debug':
 				case 'debug':
-					return print_r( $item, true );
+					return print_r( $item, true ); // phpcs:ignore
 
 				case 'item_regular_price':
 				case 'product_regular_price':
@@ -560,7 +560,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 				case 'product_categories':
 					return ( is_object( $the_product ) ) ?
-					strip_tags( ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $item['product_id'] ) ) ) :
+					strip_tags( ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $item['product_id'] ) ) ) : // phpcs:ignore
 					'';
 
 				case 'item_tax_class':

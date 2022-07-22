@@ -127,9 +127,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 				switch ( $options_id ) {
 					case 'products':
 						$_product_id = ( $do_add_variations && 0 > $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
-						if ( $validate_all_for_include && ! in_array( $_product_id, $values ) ) {
+						if ( $validate_all_for_include && ! in_array( (string) $_product_id, $values, true ) ) {
 							return false;
-						} elseif ( ! $validate_all_for_include && in_array( $_product_id, $values ) ) {
+						} elseif ( ! $validate_all_for_include && in_array( (string) $_product_id, $values, true ) ) {
 							return true;
 						}
 						break;
@@ -144,9 +144,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 							}
 						}
 						foreach ( $product_terms as $product_term ) {
-							if ( $validate_all_for_include && ! in_array( $product_term->term_id, $values ) ) {
+							if ( $validate_all_for_include && ! in_array( (string) $product_term->term_id, $values, true ) ) {
 								return false;
-							} elseif ( ! $validate_all_for_include && in_array( $product_term->term_id, $values ) ) {
+							} elseif ( ! $validate_all_for_include && in_array( (string) $product_term->term_id, $values, true ) ) {
 								return true;
 							}
 						}
@@ -154,9 +154,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 					case 'classes':
 						$product                = $item['data'];
 						$product_shipping_class = $product->get_shipping_class_id();
-						if ( $validate_all_for_include && ! in_array( $product_shipping_class, $values ) ) {
+						if ( $validate_all_for_include && ! in_array( (string) $product_shipping_class, $values, true ) ) {
 							return false;
-						} elseif ( ! $validate_all_for_include && in_array( $product_shipping_class, $values ) ) {
+						} elseif ( ! $validate_all_for_include && in_array( (string) $product_shipping_class, $values, true ) ) {
 							return true;
 						}
 						break;

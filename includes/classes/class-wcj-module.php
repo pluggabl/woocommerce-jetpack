@@ -323,7 +323,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_validate_value.
 		 *
-		 * @version 2.9.1
+		 * @version 5.6.2-dev
 		 * @since   2.9.1
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -341,8 +341,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_' . $this->meta_box_validate_value,
-					'meta_value'     => 'yes',
+					'meta_key'       => '_' . $this->meta_box_validate_value, //phpcs:ignore
+					'meta_value'     => 'yes', //phpcs:ignore
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -374,7 +374,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   2.9.1
 		 */
 		public function validate_value_admin_notices() {
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) {
+			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' .
@@ -458,7 +458,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 2.5.3
+		 * @version 5.6.2-dev
 		 * @since   2.5.3
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -476,8 +476,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 3,
-					'meta_key'       => '_' . $this->co,
-					'meta_value'     => 'yes',
+					'meta_key'       => '_' . $this->co, //phpcs:ignore
+					'meta_value'     => 'yes', //phpcs:ignore
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -626,7 +626,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 */
 		public function save_meta_box( $post_id, $__post ) {
 			// Check that we are saving with current metabox displayed.
-			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
+			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}
 			// Setup post (just in case...).
@@ -635,12 +635,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			setup_postdata( $_post );
 			// Save options.
 			foreach ( $this->get_meta_box_options() as $option ) {
-				if ( 'title' === $option['type'] ) {
+				if ( ! $option || '' === $option || 'title' === $option['type'] ) {
 					continue;
 				}
 				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 				if ( $is_enabled ) {
-					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $option['name'] ] ) ) : ( isset( $option['default'] ) ? $option['default'] : '' );
+					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $option['name'] ] ) ) : ( isset( $option['default'] ) ? $option['default'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification
 					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $post_id;
 					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
 					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {

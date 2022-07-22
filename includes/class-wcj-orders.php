@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.2-dev
 		 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 		 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 		 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					if ( 'disabled' !== apply_filters( 'booster_option', 'disabled', wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
 						add_action( 'init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
 						add_action( 'admin_init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
-						add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' );
+						add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' ); //phpcs:ignore
 						add_action( 'wcj_bulk_regenerate_download_permissions_all_orders_cron', array( $this, 'bulk_regenerate_download_permissions_all_orders' ) );
 					}
 				}

@@ -101,7 +101,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $products_in ) ) {
 				$current_check = false;
 				foreach ( $products as $product_id ) {
-					if ( in_array( $product_id, $products_in ) ) {
+					if ( in_array( (string) $product_id, $products_in, true ) ) {
 						// Current gateway is OK.
 						$current_check = true;
 						break;
@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $products_excl ) ) {
 				$current_check = true;
 				foreach ( $products as $product_id ) {
-					if ( in_array( $product_id, $products_excl ) ) {
+					if ( in_array( (string) $product_id, $products_excl, true ) ) {
 						$current_check = false;
 						break;
 					}

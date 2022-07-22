@@ -1,3 +1,4 @@
+<?php //phpcs:ignore ?>
 <h1>Custom Document</h1>
 <p>
 <table class="pdf_invoice_heading_table">

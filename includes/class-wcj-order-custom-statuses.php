@@ -358,7 +358,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Register_custom_post_statuses.
 		 *
-		 * @version 4.8.0
+		 * @version 5.6.2-dev
 		 */
 		public function register_custom_post_statuses() {
 			$custom_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
@@ -372,7 +372,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 						'show_in_admin_all_list'    => true,
 						'show_in_admin_status_list' => true,
 						/* translators: %s: translation added */
-						'label_count'               => _n_noop( $label . ' <span class="count">(%s)</span>', $label . ' <span class="count">(%s)</span>' ),
+						'label_count'               => _n_noop( $label . ' <span class="count">(%s)</span>', $label . ' <span class="count">(%s)</span>' ), //phpcs:ignore
 					)
 				);
 			}
@@ -463,7 +463,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * Using Javascript until WordPress core fixes: http://core.trac.wordpress.org/ticket/16031
 		 *
-		 * @version 3.2.2
+		 * @version 5.6.2-dev
 		 * @since   2.2.7
 		 */
 		public function bulk_admin_footer() {
@@ -472,7 +472,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 				?><script type="text/javascript">
 				<?php
 				foreach ( wcj_get_order_statuses() as $key => $order_status ) {
-					if ( in_array( $key, array( 'processing', 'on-hold', 'completed' ) ) ) {
+					if ( in_array( $key, array( 'processing', 'on-hold', 'completed' ), true ) ) {
 						continue;
 					}
 					?>

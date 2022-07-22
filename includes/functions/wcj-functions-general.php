@@ -145,15 +145,15 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 				break;
 		}
 		flush(); // this doesn't really matter.
-		$fp = fopen( $file_path, 'r' );
+		$fp = fopen( $file_path, 'r' ); //phpcs:ignore
 		if ( false !== ( $fp ) ) {
 			while ( ! feof( $fp ) ) {
-				echo fread( $fp, 65536 );
+				echo fread( $fp, 65536 ); //phpcs:ignore
 				flush(); // this is essential for large downloads.
 			}
-			fclose( $fp );
+			fclose( $fp ); //phpcs:ignore
 			if ( $do_clean_up ) {
-				@unlink( $file_path );
+				@unlink( $file_path ); //phpcs:ignore
 			}
 			exit();
 		} else {
@@ -221,7 +221,7 @@ if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 	 * @param   string $params defines the params.
 	 */
 	function wcj_tcpdf_method( $method, $params ) {
-		return '<tcpdf method="' . $method . '" wcj_tcpdf_method_params_start' . serialize( $params ) . 'wcj_tcpdf_method_params_end />';
+		return '<tcpdf method="' . $method . '" wcj_tcpdf_method_params_start' . serialize( $params ) . 'wcj_tcpdf_method_params_end />'; //phpcs:ignore
 	}
 }
 
@@ -583,8 +583,8 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 				$attribute_name = substr( $attribute_full_name, strlen( $prefix ) );
 			}
 			// Checked.
-			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ?
-				wc_clean( sanitize_text_field( wp_unslash( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ) : $_product->get_variation_default_attribute( $attribute_name );
+			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ? // phpcs:ignore WordPress.Security.NonceVerification
+				wc_clean( sanitize_text_field( wp_unslash( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ) : $_product->get_variation_default_attribute( $attribute_name ); // phpcs:ignore WordPress.Security.NonceVerification
 			if ( $checked !== $attribute_value ) {
 				$is_checked = false;
 			}
@@ -684,7 +684,7 @@ if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
 	 */
 	function wcj_maybe_unserialize_and_implode( $value, $glue = ' ' ) {
 		if ( is_serialized( $value ) ) {
-			$value = unserialize( $value );
+			$value = unserialize( $value ); //phpcs:ignore
 			if ( is_array( $value ) ) {
 				$value = implode( $glue, $value );
 			}
@@ -735,7 +735,7 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 	 * Used by admin settings page.
 	 *
 	 * @return array|null|object
-	 * @version 2.3.10
+	 * @version 5.6.2-dev
 	 * @since   2.3.10
 	 * @param   string $tax_class defines the tax_class.
 	 */
@@ -743,8 +743,8 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 		global $wpdb;
 
 		// Get all the rates and locations. Snagging all at once should significantly cut down on the number of queries.
-		$rates     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;", sanitize_title( $tax_class ) ) );
-		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" );
+		$rates     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;", sanitize_title( $tax_class ) ) ); // WPCS: db call ok and cache ok.
+		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" ); // WPCS: db call ok and cache ok.
 
 		// Set the rates keys equal to their ids.
 		$rates = array_combine( wp_list_pluck( $rates, 'tax_rate_id' ), $rates );
@@ -794,15 +794,15 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	/**
 	 * Wcj_is_frontend()
 	 *
-	 * @since  4.0.0
+	 * @since  5.6.2-dev
 	 * @return boolean
 	 */
 	function wcj_is_frontend() {
 		if ( ! is_admin() ) {
 			return true;
 		} elseif ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array(
-				$_REQUEST['action'],
+			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array( // phpcs:ignore WordPress.Security.NonceVerification
+				$_REQUEST['action'], // phpcs:ignore WordPress.Security.NonceVerification
 				array(
 					'woocommerce_load_variations',
 				),

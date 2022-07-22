@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			}
 			$selected_products = $wpnonce && isset( $_POST['wcj_product_bulk_meta_editor_products'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['wcj_product_bulk_meta_editor_products'] ) ) : array();
 			// Output.
-			echo $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] );
+			echo $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -398,7 +398,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				} else {
 					$_post_meta = get_post_meta( $product_id, $meta_name, true );
 					if ( is_array( $_post_meta ) || is_object( $_post_meta ) ) {
-						$_post_meta = print_r( $_post_meta, true );
+						$_post_meta = print_r( $_post_meta, true ); // phpcs:ignore
 					} else {
 						$placeholder = ( ! metadata_exists( 'post', $product_id, $meta_name ) ? ' placeholder="N/A"' : '' );
 						$_post_meta  = '<input' . $placeholder . ' style="width:100%;" type="text" name="wcj_product_bulk_meta_editor_id_' . $product_id . '" value="' .

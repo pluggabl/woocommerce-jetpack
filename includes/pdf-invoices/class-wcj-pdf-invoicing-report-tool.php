@@ -192,7 +192,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Get_invoices_report_zip.
 		 *
-		 * @version 3.5.0
+		 * @version 5.6.2-dev
 		 * @since   2.3.10
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -229,9 +229,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 					'post_status'    => 'any',
 					'posts_per_page' => $block_size,
 					'orderby'        => 'meta_value_num',
-					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date',
+					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', //phpcs:ignore
 					'order'          => 'ASC',
-					'meta_query'     => array(
+					'meta_query'     => array( //phpcs:ignore
 						array(
 							'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
 							'value'   => array( $first_minute, $last_minute ),
@@ -268,13 +268,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			header( 'Content-Description: File Transfer' );
 			header( 'Content-Length: ' . filesize( $zip_file_path ) );
 			flush(); // this doesn't really matter.
-			$fp = fopen( $zip_file_path, 'r' );
+			$fp = fopen( $zip_file_path, 'r' ); //phpcs:ignore
 			if ( false !== ( $fp ) ) {
 				while ( ! feof( $fp ) ) {
-					echo fread( $fp, 65536 );
+					echo fread( $fp, 65536 ); //phpcs:ignore
 					flush(); // this is essential for large downloads.
 				}
-				fclose( $fp );
+				fclose( $fp ); //phpcs:ignore
 				exit();
 			} else {
 				die( esc_html__( 'Unexpected error', 'woocommerce-jetpack' ) );
@@ -353,7 +353,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Invoices Report Data function.
 		 *
-		 * @version 4.3.0
+		 * @version 5.6.2-dev
 		 * @since   2.5.7
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -384,9 +384,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 					'post_status'    => 'any',
 					'posts_per_page' => $block_size,
 					'orderby'        => 'meta_value_num',
-					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date',
+					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', //phpcs:ignore
 					'order'          => 'ASC',
-					'meta_query'     => array(
+					'meta_query'     => array( //phpcs:ignore
 						array(
 							'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
 							'value'   => array( $first_minute, $last_minute ),

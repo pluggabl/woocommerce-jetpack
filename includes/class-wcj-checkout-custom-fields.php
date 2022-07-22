@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 					$option_name_label = $the_section . '_wcj_checkout_field_label_' . $i;
 					$option_name_type  = $the_section . '_wcj_checkout_field_type_' . $i;
 
-					$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : get_post_meta( $order_id, '_' . $option_name, true ) );
+					$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : get_post_meta( $order_id, '_' . $option_name, true ) ); // phpcs:ignore WordPress.Security.NonceVerification
 					if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
 						update_post_meta( $order_id, '_' . $option_name_type, $the_type );
 						update_post_meta( $order_id, '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
@@ -405,13 +405,17 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_woocommerce_admin_fields.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2-dev
 		 * @todo    converting from before version 2.3.0: section?
 		 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 		 * @param string $fields defines the fields.
 		 * @param string $section defines the section.
 		 */
 		public function add_woocommerce_admin_fields( $fields, $section ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), '' ) : true;
+			}
 			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 					$the_section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
@@ -566,7 +570,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 						continue;
 					}
 					foreach ( $product_categories as $product_category ) {
-						if ( in_array( $product_category->term_id, $categories_ex, true ) ) {
+						if ( in_array( (string) $product_category->term_id, $categories_ex, true ) ) {
 							return false;
 						}
 					}

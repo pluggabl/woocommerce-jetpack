@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @since   2.4.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -35,15 +35,15 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version 2.9.1
+		 * @version 5.6.2-dev
 		 * @since   2.4.7
 		 */
 		public function get_report() {
-			$html = '';
+			$html    = '';
 			$wpnonce = true;
 			if ( function_exists( 'wp_verify_nonce' ) ) {
 				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}           
+			}
 			if ( $wpnonce && isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
 				// Save rates.
 				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), sanitize_text_field( wp_unslash( $_POST['wcj_save_currency_rates_array'] ) ) ) );

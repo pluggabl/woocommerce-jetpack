@@ -1,8 +1,8 @@
-<?php
+<?php //phpcs:ignore
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.5.9
+ * @version 5.6.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -39,7 +39,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 	/**
 	 * WCJ_Related_Products.
 	 */
-	class WCJ_Related_Products extends WCJ_Module {
+	class WCJ_Related_Products extends WCJ_Module { //phpcs:ignore
 
 
 		/**
@@ -194,7 +194,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Get_related_products_ids_wc3.
 		 *
-		 * @version 4.1.0
+		 * @version 5.6.2-dev
 		 * @since   2.8.0
 		 * @param int $product_id defines the product_id.
 		 */
@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				if ( 'global' === wcj_get_option( 'wcj_product_info_related_products_by_attribute_attribute_type', 'global' ) ) {
 					// Relate by Global Attributes.
 					// http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/.
-					$args['tax_query'] = array(
+					$args['tax_query'] = array( //phpcs:ignore
 						array(
 							'taxonomy' => 'pa_' . $attribute_name,
 							'field'    => 'name',
@@ -232,9 +232,9 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				} else {
 					// Relate by Local Product Attributes.
 					// http://snippet.fm/snippets/query-woocommerce-products-product-specific-custom-attribute/.
-					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value );
+					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ); //phpcs:ignore
 					// extended version: $serialized_value = serialize( $attribute_name ) . 'a:6:{' . serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ) . serialize( 'position' );.
-					$args['meta_query'] = array(
+					$args['meta_query'] = array( //phpcs:ignore
 						array(
 							'key'     => '_product_attributes',
 							'value'   => $serialized_value,
@@ -273,11 +273,11 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 			if ( false !== $include_ids ) {
 				$include_ids = implode( ',', array_map( 'absint', $include_ids ) );
 			}
-				$cats_array = array();
-				$tags_array = array();
-				$_product   = wc_get_product( $product_id );
+			$cats_array = array();
+			$tags_array = array();
+			$_product   = wc_get_product( $product_id );
 
-				$exclude_ids = array_merge( array( 0, $product_id ), $_product->get_upsell_ids() );
+			$exclude_ids = array_merge( array( 0, $product_id ), $_product->get_upsell_ids() );
 			if ( false === $include_ids ) {
 				$include_ids = array( 0 );
 				$limit       = 0;
@@ -286,30 +286,30 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				$limit  = $limit > 0 ? $limit : 5;
 				$limit += 20;
 			}
-								global $wpdb;
+			global $wpdb;
 
-				// Arrays to string.
-				$exclude_ids = implode( ',', array_map( 'absint', $exclude_ids ) );
-				$cats_array  = implode( ',', array_map( 'absint', $cats_array ) );
-				$tags_array  = implode( ',', array_map( 'absint', $tags_array ) );
+			// Arrays to string.
+			$exclude_ids = implode( ',', array_map( 'absint', $exclude_ids ) );
+			$cats_array  = implode( ',', array_map( 'absint', $cats_array ) );
+			$tags_array  = implode( ',', array_map( 'absint', $tags_array ) );
 
-				$limit            = absint( $limit );
-				$_query           = array();
-				$_query['fields'] = "SELECT DISTINCT ID FROM {$wpdb->posts} p";
-				$_query['join']   = " INNER JOIN {$wpdb->term_relationships} tr ON (p.ID = tr.object_id)";
-				$_query['join']  .= " INNER JOIN {$wpdb->term_taxonomy} tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id)";
-				$_query['join']  .= " INNER JOIN {$wpdb->terms} t ON (t.term_id = tt.term_id)";
-				$_query['where']  = ' WHERE 1=1';
-				$_query['where'] .= " AND p.post_status = 'publish'";
-				$_query['where'] .= " AND p.post_type = 'product'";
-				$_query['where'] .= " AND p.ID NOT IN ( {$exclude_ids} )";
-				//
-				// Pluggabl.
+			$limit            = absint( $limit );
+			$_query           = array();
+			$_query['fields'] = "SELECT DISTINCT ID FROM {$wpdb->posts} p";
+			$_query['join']   = " INNER JOIN {$wpdb->term_relationships} tr ON (p.ID = tr.object_id)";
+			$_query['join']  .= " INNER JOIN {$wpdb->term_taxonomy} tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id)";
+			$_query['join']  .= " INNER JOIN {$wpdb->terms} t ON (t.term_id = tt.term_id)";
+			$_query['where']  = ' WHERE 1=1';
+			$_query['where'] .= " AND p.post_status = 'publish'";
+			$_query['where'] .= " AND p.post_type = 'product'";
+			$_query['where'] .= " AND p.ID NOT IN ( {$exclude_ids} )";
+			//
+			// Pluggabl.
 			if ( ! is_array( $include_ids ) && $include_ids ) {
 				$_query['where'] .= " AND p.ID IN ( {$include_ids} )";
 			}
 
-				$product_visibility_term_ids = wc_get_product_visibility_term_ids();
+			$product_visibility_term_ids = wc_get_product_visibility_term_ids();
 
 			if ( $product_visibility_term_ids['exclude-from-catalog'] ) {
 				$_query['where'] .= ' AND t.term_id !=' . $product_visibility_term_ids['exclude-from-catalog'];
@@ -385,11 +385,11 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Maybe_delete_product_transients.
 		 *
-		 * @since   3.1.1
+		 * @since   5.6.2-dev
 		 * @version 2.6.0
 		 */
 		public function maybe_delete_product_transients() {
-			if ( isset( $_GET['wcj_clear_all_products_transients'] ) ) {
+			if ( isset( $_GET['wcj_clear_all_products_transients'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$offset     = 0;
 				$block_size = 256;
 				while ( true ) {
@@ -419,7 +419,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Related_products_args.
 		 *
-		 * @version 4.1.0
+		 * @version 5.6.2-dev
 		 * @todo    save custom results as product transient (for < WC3)
 		 * @param array $args defines the args.
 		 */
@@ -434,7 +434,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 			$orderby         = wcj_get_option( 'wcj_product_info_related_products_orderby', 'rand' );
 			$args['orderby'] = $orderby;
 			if ( 'meta_value' === $orderby || 'meta_value_num' === $orderby ) {
-				$args['meta_key'] = wcj_get_option( 'wcj_product_info_related_products_orderby_meta_value_meta_key', '' );
+				$args['meta_key'] = wcj_get_option( 'wcj_product_info_related_products_orderby_meta_value_meta_key', '' ); //phpcs:ignore
 			}
 			// Order.
 			if ( 'rand' !== $orderby ) {
@@ -459,7 +459,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				if ( 'global' === wcj_get_option( 'wcj_product_info_related_products_by_attribute_attribute_type', 'global' ) ) {
 					// Relate by Global Attributes.
 					// http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/.
-					$args['tax_query'] = array(
+					$args['tax_query'] = array( //phpcs:ignore
 						array(
 							'taxonomy' => 'pa_' . $attribute_name,
 							'field'    => 'name',
@@ -469,9 +469,9 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				} else {
 					// Relate by Local Product Attributes.
 					// http://snippet.fm/snippets/query-woocommerce-products-product-specific-custom-attribute/.
-					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value );
+					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ); //phpcs:ignore
 					// extended version: $serialized_value = serialize( $attribute_name ) . 'a:6:{' . serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ) . serialize( 'position' );.
-					$args['meta_query'] = array(
+					$args['meta_query'] = array( //phpcs:ignore
 						array(
 							'key'     => '_product_attributes',
 							'value'   => $serialized_value,

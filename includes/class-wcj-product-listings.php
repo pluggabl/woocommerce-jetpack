@@ -139,7 +139,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 			global $wp_query;
 			if (
 			is_product_category() &&
-			get_option( 'woocommerce_category_archive_display' ) == 'subcategories' &&
+			get_option( 'woocommerce_category_archive_display' ) === 'subcategories' &&
 			'no' === wcj_get_option( 'wcj_product_listings_show_products_if_no_cats_on_archives' )
 			) {
 				$wp_query->post_count    = 0;
@@ -147,7 +147,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 			}
 			if (
 			is_shop() &&
-			get_option( 'woocommerce_shop_page_display' ) == 'subcategories' &&
+			get_option( 'woocommerce_shop_page_display' ) === 'subcategories' &&
 			'no' === wcj_get_option( 'wcj_product_listings_show_products_if_no_cats_on_shop' )
 			) {
 				$wp_query->post_count    = 0;
