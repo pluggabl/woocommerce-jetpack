@@ -283,7 +283,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * FIXED - EMAILS & MISC. - Export - Array to string conversion for the "Additional Export Products Fields" value.
 * FIXED - PHP Warning: Undefined array key "path" in /includes/functions/wcj-functions-booster-core.php ...
 * FIXED - Added Security vulnerability fixes.
-* WooCommerce 6.6.1 tested
+* WooCommerce 6.7.0 tested
 * WordPress 6.0.1 tested
 
 = 5.6.1 01/07/2022 =
