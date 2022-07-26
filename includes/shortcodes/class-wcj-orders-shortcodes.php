@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -109,7 +109,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
@@ -247,7 +247,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_price_shortcode.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param int   $raw_price The user defined shortcode raw_price.
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -480,12 +480,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_total_refunded.
 		 *
-		 * @version 2.5.3
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_total_refunded( $atts ) {
-			return $this->wcj_price_shortcode( $this->the_order->get_total_refunded(), $atts );
+			$refund_total = ( $atts['excl_tax'] ) ? $this->the_order->get_total_refunded() - $this->the_order->get_total_tax_refunded() : $this->the_order->get_total_refunded();
+			return $this->wcj_price_shortcode( $refund_total, $atts );
 		}
 
 		/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -143,7 +143,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		/**
 		 * Get_current_gateway.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.3.0
 		 */
 		public function get_current_gateway() {

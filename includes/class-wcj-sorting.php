@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sorting
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -298,7 +298,7 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 		 * Add new sorting options to WooCommerce sorting.
 		 *
 		 * @param array $args Get args.
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function custom_woocommerce_get_catalog_ordering_args( $args ) {
 			// Get ordering from query string.

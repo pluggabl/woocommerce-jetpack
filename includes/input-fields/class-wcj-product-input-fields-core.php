@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -155,7 +155,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Save product input fields on Product Edit.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param int         $post_id Get post ID.
 		 * @param obj | Array $post Get post.
 		 */
@@ -459,7 +459,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Get_value.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    `wcj_get_product_input_field_value()` is almost identical
 		 * @param string $option_name Get option name.
 		 * @param int    $product_id Get product id.
@@ -482,7 +482,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Validate_product_input_fields_on_add_to_cart.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param bool $passed define passed value.
 		 * @param int  $product_id Get product id.
 		 */
@@ -600,7 +600,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_product_input_fields_to_frontend.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    `$set_value` - add "default" option for all other types except checkbox
 		 * @todo    `$set_value` - 'file' type
 		 * @todo    add `required` attributes
@@ -826,7 +826,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * From `$_POST` to `$cart_item_data`
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param Array $cart_item_data Get cart items.
 		 * @param int   $product_id Get product id.
 		 * @param int   $variation_id Get variation id.
@@ -1028,7 +1028,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_input_fields_to_order_item_meta.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @param Array  $item Get items.
 		 * @param int    $item_id Get item id.

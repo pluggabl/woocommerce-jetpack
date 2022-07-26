@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - URL Coupons
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -95,7 +95,7 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 		/**
 		 * Maybe_apply_url_coupon.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.7.0
 		 * @todo    (maybe) options to add products to cart with query arg
 		 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}

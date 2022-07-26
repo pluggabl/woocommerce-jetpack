@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Time
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_By_Time' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @todo    per category
 		 * @todo    per tag

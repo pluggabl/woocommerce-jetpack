@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -59,7 +59,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Wcj_new_desing_dashboard.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.5.6
 		 */
 		public function wcj_new_desing_dashboard() {
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_free_version_notice_about_plus.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.3.0
 		 */
 		public function create_free_version_notice_about_plus() {
@@ -98,7 +98,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_free_version_footer_review_notice.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.3.0
 		 */
 		public function create_free_version_footer_review_notice() {
@@ -121,7 +121,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Create_pro_version_footer_review_notice.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.3.1
 		 */
 		public function create_pro_version_footer_review_notice() {
@@ -192,7 +192,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output cats
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function output_cats_submenu() {
 			global $current_section;
@@ -223,7 +223,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output sections (modules) sub menu.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) for case insensitive sorting: `array_multisort( array_map( 'strtolower', $menu ), $menu );` instead of `asort( $menu );` (see http://php.net/manual/en/function.asort.php)
 		 */
 		public function output_sections_submenu() {
@@ -343,7 +343,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output the settings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) admin_notices
 		 */
 		public function output() {
@@ -435,7 +435,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output_dashboard.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array $current_section defines the current section.
 		 */
 		public function output_dashboard( $current_section ) {
@@ -568,7 +568,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output_dashboard_modules.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array  $settings this defines title.
 		 * @param string $cat_id this defines title.
 		 */
@@ -668,7 +668,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Disable_autoload_options.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.3.3
 		 *
 		 * @param array $settings defines the settings.
@@ -689,7 +689,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Booster_message_global.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 */
 		public function booster_message_global() {
@@ -702,7 +702,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Get_manager_settings.
 		 *
-		 * @version5.6.2-dev
+		 * @version5.6.2
 		 * @since   2.6.0
 		 * @return  array
 		 */
@@ -781,7 +781,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Get settings array
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array $current_section defines the current section array.
 		 * @return array $current_section defines the current section.
 		 */
@@ -863,7 +863,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Dasboard_menu.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function dasboard_menu() {
 			global $current_section;

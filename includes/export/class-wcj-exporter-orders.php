@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Get_export_orders_row.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.9
 		 * @param array  $fields_ids defines the order field ids.
 		 * @param int    $order_id defines the order id.
@@ -218,7 +218,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 * @param object $fields_helper defines the fields helper.
 		 *
@@ -341,7 +341,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders_items.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.9
 		 * @param object $fields_helper defines the fields helper.
 		 */
@@ -455,7 +455,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Safely_get_post_meta.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @todo    handle multidimensional arrays
 		 * @param int    $post_id defines the post id.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -152,7 +152,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		/**
 		 * Handle_downloads.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.2.2
 		 */
 		public function handle_downloads() {

@@ -67,7 +67,7 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 		/**
 		 * Export_products.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @todo    product attributes
 		 * @param Array $fields_helper Get fields info.

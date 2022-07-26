@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon Code Generator
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.2.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		/**
 		 * Enqueue_generate_coupon_code_script.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.3
 		 */
 		public function enqueue_generate_coupon_code_script() {

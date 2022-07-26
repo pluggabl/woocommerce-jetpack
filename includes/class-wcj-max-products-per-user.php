@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -62,10 +62,23 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 					$status = substr( $status, 3 );
 					add_action( 'woocommerce_order_status_' . $status, array( $this, 'save_quantities' ), PHP_INT_MAX );
 				}
+				add_filter( 'woocommerce_duplicate_product_exclude_meta', array( $this, 'wcj_filter_woocommerce_duplicate_product_exclude_meta' ), 10, 1 );
 				add_action( 'add_meta_boxes', array( $this, 'add_report_meta_box' ) );
 				add_action( 'admin_init', array( $this, 'calculate_data' ) );
 				add_action( 'admin_notices', array( $this, 'calculate_data_notice' ) );
 			}
+		}
+
+		/**
+		 *
+		 * Wcj_filter_woocommerce_duplicate_product_exclude_meta.
+		 *
+		 * @version 5.6.2
+		 * @since  5.6.2
+		 * @param int $meta_data defines the meta data of the product.
+		 */
+		public function wcj_filter_woocommerce_duplicate_product_exclude_meta( $meta_data ) {
+			return array_merge( $meta_data, array( '_wcj_max_products_per_user_report' ) );
 		}
 
 		/**
@@ -136,7 +149,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Calculate_data_notice.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.5.0
 		 */
 		public function calculate_data_notice() {
@@ -152,7 +165,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Calculate_data.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.5.0
 		 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 		 */

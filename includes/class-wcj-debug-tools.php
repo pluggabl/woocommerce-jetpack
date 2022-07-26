@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Debug Tools
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -45,7 +45,7 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 		/**
 		 * Create_debug_tools_tool.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function create_debug_tools_tool() {
 			// Delete log.
@@ -87,7 +87,7 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 		/**
 		 * Get_system_info_table_array.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @todo    [feature] (maybe) 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE'
 		 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Info
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -238,7 +238,7 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 		$settings,
 		array(
 			array(
-				'title' => $single_or_archive_desc . ': ' . __( 'Advancedss Options', 'woocommerce-jetpack' ),
+				'title' => $single_or_archive_desc . ': ' . __( 'Advanced Options', 'woocommerce-jetpack' ),
 				'type'  => 'title',
 				'id'    => 'wcj_product_custom_info_advanced_options_' . $single_or_archive,
 			),

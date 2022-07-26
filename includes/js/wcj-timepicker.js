@@ -1,7 +1,7 @@
 /**
  * Booster for WooCommerce - Timepicker JS
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  *
  * @package Booster_For_WooCommerce/includes/JS

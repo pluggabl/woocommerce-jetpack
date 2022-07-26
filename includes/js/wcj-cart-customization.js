@@ -1,7 +1,7 @@
 /**
  * Wcj-cart-customization.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.8.0
  * @todo    (maybe) fix when cart is emptied (i.e. after products removed)
  *

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price By Country - Group Generator
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function __construct() {
 			require_once 'wcj-country-currency.php';
@@ -32,7 +32,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 		/**
 		 * Create_all_countries_groups_notices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.9.0
 		 */
 		public function create_all_countries_groups_notices() {
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 		/**
 		 * Get_currency_countries.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 *
 		 * @param string $limit_currencies limit of the currencies.
 		 */
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 		/**
 		 * Create_all_countries_groups.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    add nonce verification
 		 */
 		public function create_all_countries_groups() {

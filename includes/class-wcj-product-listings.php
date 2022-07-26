@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -80,7 +80,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 		/**
 		 * Product_visibility_by_price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.3
 		 * @todo    grouped products
 		 * @todo    (maybe) as new "Product Visibility by Price" module

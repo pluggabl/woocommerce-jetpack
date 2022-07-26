@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -119,7 +119,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Admin_validate_vat_and_maybe_remove_taxes.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.3.0
 		 */
 		public function admin_validate_vat_and_maybe_remove_taxes() {
@@ -384,7 +384,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Start_session.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function start_session() {
 			if ( is_admin() ) {
@@ -459,7 +459,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Wcj_validate_eu_vat_number.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array $param defines the param.
 		 */
 		public function wcj_validate_eu_vat_number( $param ) {
@@ -509,7 +509,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Need_to_exclude_vat.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.6.0
 		 *
 		 * @return bool

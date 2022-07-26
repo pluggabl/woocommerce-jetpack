@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -313,7 +313,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_time_since_last_sale.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.0
 		 * @param   array $atts Shortcode atts.
 		 */
@@ -715,7 +715,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_total_sales.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.2.6
 		 * @param   array $atts Shortcode atts.
 		 */
@@ -896,7 +896,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Get product meta.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @return  string
 		 * @param   array $atts Shortcode atts.
@@ -929,7 +929,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Returns product (modified) price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    variable products: a) not range; and b) price by country.
 		 * @return  string The product (modified) price
 		 * @param   array $atts Shortcode atts.

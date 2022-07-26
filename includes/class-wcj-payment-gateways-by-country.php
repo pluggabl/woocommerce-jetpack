@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.4.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -39,7 +39,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		/**
 		 * Get_location.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
 		 * @param string $type defines the type.
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		/**
 		 * Available_payment_gateways.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) rename module to "Payment Gateways by (Customer's) Location"
 		 * @todo    (maybe) check naming, should be `wcj_gateways_by_location_` (however it's too long...)
 		 * @todo    (maybe) code refactoring

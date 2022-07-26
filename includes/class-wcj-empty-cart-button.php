@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Empty Cart Button
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes

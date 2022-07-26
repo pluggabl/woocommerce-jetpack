@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Cities
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -60,7 +60,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @todo    `$_REQUEST['city']` (i.e. billing city)
 		 * @todo    `get_base_city()` - do we really need this?

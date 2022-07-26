@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by User Role
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -42,7 +42,7 @@ if ( ! class_exists( 'WCJ_Product_By_User_Role' ) ) :
 		/**
 		 * Maybe_add_extra_settings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.9.0
 		 *
 		 * @return array

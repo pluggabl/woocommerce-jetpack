@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    [dev] maybe expand `$this->desc` (e.g.: Custom roles tool, shortcodes in WordPress text widgets etc.)
 		 */
 		public function __construct() {
@@ -102,7 +102,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Change_user_role_meta.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    [dev] (maybe) optionally via cookies
 		 */
@@ -193,7 +193,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Create_custom_roles_tool.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 */
 		public function create_custom_roles_tool() {

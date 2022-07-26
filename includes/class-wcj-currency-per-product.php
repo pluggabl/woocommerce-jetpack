@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		/**
 		 * Get_product_currency.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`.
 		 * @param int $product_id defines the product_id.
@@ -424,7 +424,7 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		/**
 		 * Get_current_product_id_and_currency.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.7.0
 		 */
 		public function get_current_product_id_and_currency() {

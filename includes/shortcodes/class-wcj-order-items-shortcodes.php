@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -32,7 +32,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
@@ -141,7 +141,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Add_item.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array $items The user defined shortcode items.
 		 * @param array $new_item_args The user defined shortcode new_item_args.
 		 */
@@ -227,7 +227,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 *
 		 * From woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.8
 		 * @param int            $item_id The user defined shortcode item_id.
 		 * @param array | string $the_product The user defined shortcode the_product.

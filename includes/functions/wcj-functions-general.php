@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -124,7 +124,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 	/**
 	 * Wcj_send_file.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   3.5.0
 	 * @todo    use where needed
 	 * @todo    add more cases for `$file_type`
@@ -436,7 +436,7 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	/**
 	 * Wcj_maybe_add_date_query.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   3.0.0
 	 * @param   array $args defines the args.
 	 */
@@ -500,7 +500,7 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	/**
 	 * Wcj_customer_get_country.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.8.0
 	 * @todo    (maybe) move to `wcj-functions-users.php`
 	 */
@@ -526,7 +526,7 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 	/**
 	 * Wcj_is_bot.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.5.6
 	 */
 	function wcj_is_bot() {
@@ -564,7 +564,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
 	 * Wcj_variation_radio_button.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.4.8
 	 * @todo    (maybe) check - maybe we can use `$variation['variation_description']` instead of `get_post_meta( $variation_id, '_variation_description', true )`
 	 * @param   array $_product defines the _product.
@@ -735,7 +735,7 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 	 * Used by admin settings page.
 	 *
 	 * @return array|null|object
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.3.10
 	 * @param   string $tax_class defines the tax_class.
 	 */
@@ -794,7 +794,7 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	/**
 	 * Wcj_is_frontend()
 	 *
-	 * @since  5.6.2-dev
+	 * @since  5.6.2
 	 * @return boolean
 	 */
 	function wcj_is_frontend() {
@@ -1035,7 +1035,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.

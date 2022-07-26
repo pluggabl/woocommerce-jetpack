@@ -1,7 +1,7 @@
 /**
  * Wcj-New Design.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   5.4.2
  * @package Booster_For_WooCommerce/includes/JS
  **/

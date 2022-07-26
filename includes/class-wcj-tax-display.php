@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Tax Display
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -59,7 +59,7 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 		/**
 		 * Tax_display_toggle_param.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.4
 		 */
 		public function tax_display_toggle_param() {
@@ -78,7 +78,7 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 		/**
 		 * Tax_display_toggle.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.4
 		 * @todo    [dev] widget
 		 * @todo    [dev] (maybe) floating button or at least give CSS instructions ($)
@@ -99,7 +99,7 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 		/**
 		 * Tax_display_by_user_role.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.0
 		 * @param string $value Get Value.
 		 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    per variation
@@ -62,7 +62,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		/**
 		 * Get_price_for_cart.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @param int   $price defines the price.
 		 * @param  array $_product defines the _product.

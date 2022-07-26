@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Time
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -99,7 +99,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.0.0
 		 * @param  string $options_id defines the options_id.
 		 * @param  array  $values defines the values.

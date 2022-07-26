@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Reports
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 	/**
 	 * Wcj_get_product_sales_daily_report_columns.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.9.0
 	 */
 	function wcj_get_product_sales_daily_report_columns() {
@@ -40,7 +40,7 @@ if ( ! function_exists( 'wcj_get_reports_standard_ranges' ) ) {
 	/**
 	 * Wcj_get_reports_standard_ranges.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.9.0
 	 */
 	function wcj_get_reports_standard_ranges() {
@@ -74,7 +74,7 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 	/**
 	 * Wcj_get_reports_custom_ranges.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.9.0
 	 * @todo    fix `-1 month` - sometimes it produces the wrong result (e.g. on current gmdate = "2018.03.30")
 	 */

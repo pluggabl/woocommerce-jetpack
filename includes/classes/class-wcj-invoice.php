@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		/**
 		 * Create.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 		 * @todo    used get_option instead wcj_get_option to get current numbering_counter.
 		 * @param number $date get date.

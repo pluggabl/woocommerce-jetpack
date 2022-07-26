@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -238,7 +238,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Maybe_add_description.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @param string       $field defines the field.
 		 * @param string | int $key defines the key.
@@ -272,7 +272,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Maybe_disable_fields.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @see     woocommerce_form_field
 		 * @todo    (maybe) add single option (probably checkbox) to disable all fields

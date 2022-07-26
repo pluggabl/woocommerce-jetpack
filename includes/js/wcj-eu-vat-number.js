@@ -1,7 +1,7 @@
 /**
  * Wu-vat-number.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @package Booster_For_WooCommerce/includes/JS
  */
 

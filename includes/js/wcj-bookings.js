@@ -1,7 +1,7 @@
 /**
  * Wcj-bookings.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.0
  *
  * @package Booster_For_WooCommerce/includes/JS

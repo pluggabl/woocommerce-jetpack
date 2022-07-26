@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency Exchange Rates
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -64,7 +64,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		/**
 		 * Maybe_update_all_rates.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.5
 		 */
 		public function maybe_update_all_rates() {
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		/**
 		 * Wcj_ajax_get_exchange_rates.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @todo    (maybe) move this to `class-wcj-exchange-rates.php`
 		 */

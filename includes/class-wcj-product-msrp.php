@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -141,7 +141,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Save_msrp_input_variable.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param int $variation_id defines the variation_id.
 		 * @param int $i defines the i.
@@ -174,7 +174,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Save_msrp_input.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $__post defines the __post.
@@ -189,7 +189,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Get_section_id_by_template_path.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @param string $template defines the template.
@@ -213,7 +213,7 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Display.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @todo    (maybe) multicurrency
 		 * @todo    (feature) (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP

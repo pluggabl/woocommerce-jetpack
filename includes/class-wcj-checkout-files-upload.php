@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -23,7 +23,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.5
 		 * @todo    styling options
 		 */
@@ -123,7 +123,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Add_files_to_order_display.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.7
 		 * @todo    (maybe) somehow add `%image%` to emails also
 		 * @param string | int $order defines the order.
@@ -196,7 +196,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Validate_on_checkout.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.5
 		 * @param string $posted defines the posted.
 		 */
@@ -278,7 +278,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Create_file_admin_order_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.5
 		 */
 		public function create_file_admin_order_meta_box() {
@@ -311,7 +311,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Is_extension_blocked.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.3
 		 * @param string $ext defines the ext.
 		 */
@@ -334,7 +334,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Add_files_to_order.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.5
 		 * @param int    $order_id defines the order_id.
 		 * @param string $posted defines the posted.
@@ -369,7 +369,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Remove_files_on_empty_cart.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param string         $cart_item_key defines the cart_item_key.
 		 * @param string | array $cart defines the cart.
@@ -411,7 +411,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Process_checkout_files_upload.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.5
 		 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 		 * @todo    `$this->additional_admin_emails_settings` - more customization options, e.g.: admin email, subject, content, from
@@ -666,7 +666,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Is_visible.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.7
 		 * @param int $i defines the value of i.
 		 * @param int $order_id defines the order_id.
@@ -837,7 +837,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Maybe_get_image.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.7.0
 		 * @param string $link defines the link.
 		 * @param int    $i defines the value of i.
@@ -863,7 +863,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Get_the_form.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @param int    $i defines the value of i.
 		 * @param string $file_name defines the file_name.
@@ -934,7 +934,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Add_files_upload_form_to_thankyou_and_myaccount_page.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @param int $order_id defines the order_id.
 		 */
@@ -970,7 +970,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Add_files_upload_form_to_checkout_frontend_all.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.2
 		 * @param bool $is_direct_call check the is_direct_call.
 		 */

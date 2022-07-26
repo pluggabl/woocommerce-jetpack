@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -91,7 +91,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_shortcode.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 		 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 		 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -371,7 +371,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_get_user_location.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) move this to global functions
 		 */
 		public function wcj_get_user_location() {

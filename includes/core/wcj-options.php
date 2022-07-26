@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Options
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @todo    (dev) move version updated stuff to another file

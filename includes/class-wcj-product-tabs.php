@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    code refactoring and clean-up
 		 */
 		public function __construct() {
@@ -48,7 +48,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Enqueue_admin_scripts.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.4
 		 */
 		public function enqueue_admin_scripts() {
@@ -66,7 +66,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Get_tab_key.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @param string $tab_option_key defines the tab_option_key.
 		 * @param string $scope defines the scope.
@@ -83,7 +83,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Customize_default_tabs.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @param array $tabs defines the tabs.
 		 */
@@ -130,7 +130,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Gets local title, including from other possible languages when using WPML.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.2.0
 		 *
 		 * @param int    $product_id defines the product_id.
@@ -159,7 +159,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Add_custom_product_tabs.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @todo    add visibility by user roles
 		 * @param string $scope defines the scope.
@@ -217,7 +217,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Customize the product tabs.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string $tabs defines the tabs.
 		 */
 		public function customize_product_tabs( $tabs ) {
@@ -243,7 +243,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Is_global_tab_visible.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param int $i defines the i.
 		 * @param int $_product_id defines the _product_id.
@@ -369,7 +369,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Is_local_tab_visible.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.7
 		 * @param string $custom_tab_index defines the custom_tab_index.
 		 * @param int    $product_id defines the product_id.
@@ -461,7 +461,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Get_js_link_script.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param string $link defines the link.
 		 * @param string $tab_key defines the tab_key.
@@ -485,7 +485,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Maybe_add_js_links.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 */
 		public function maybe_add_js_links() {
@@ -526,7 +526,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Get_tab_output.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.5
 		 * @param string $content defines the content.
 		 */
@@ -544,7 +544,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Create_new_custom_product_tab_local.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string $key defines the key.
 		 * @param string $tab defines the tab.
 		 */
@@ -555,7 +555,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Create_new_custom_product_tab_global.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string $key defines the key.
 		 * @param string $tab defines the tab.
 		 */
@@ -567,7 +567,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Save_custom_tabs_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    rewrite as standard `WCJ_Module` function
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
@@ -611,7 +611,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Add_custom_tabs_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function add_custom_tabs_meta_box() {
 			add_meta_box(
@@ -627,7 +627,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Create_custom_tabs_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function create_custom_tabs_meta_box() {
 			$current_post_id   = wcj_maybe_get_product_id_wpml( get_the_ID() );

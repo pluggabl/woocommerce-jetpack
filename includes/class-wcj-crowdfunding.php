@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Crowdfunding
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 		/**
 		 * Check_dates.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.2.6
 		 * @param bool           $purchasable defines the purchasable.
 		 * @param string | array $_product defines the _product.

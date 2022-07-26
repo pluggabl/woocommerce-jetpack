@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
 	/**
 	 * Wcj_get_adjacent_order_id.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   3.4.0
 	 * @todo    isn't there an easier way?
 	 * @param   int    $current_id defines the current_id.

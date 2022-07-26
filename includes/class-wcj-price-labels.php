@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		/**
 		 * Save_custom_price_labels.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
 		 */
@@ -241,7 +241,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		/**
 		 * Custom_price - front end.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
 		 * @param int            $price defines the price.
 		 * @param string | array $product defines the product.

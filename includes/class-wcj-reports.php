@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Add_custom_order_reports_ranges_by_month_to_admin_bar.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.2.4
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
@@ -128,7 +128,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Add_custom_order_reports_ranges_to_admin_bar.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
@@ -191,7 +191,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Get_report_products_sales_daily.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
 		public function get_report_products_sales_daily() {
@@ -202,7 +202,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Get_report_monthly_sales.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.7
 		 */
 		public function get_report_monthly_sales() {
@@ -213,7 +213,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Get_report_orders_gateways.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 */
 		public function get_report_orders_gateways() {

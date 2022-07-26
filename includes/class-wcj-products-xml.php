@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    create all files at once (manually and synchronize update)
@@ -111,7 +111,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 */
 		public function admin_notices() {
@@ -131,7 +131,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Wcj_create_products_xml.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 */
 		public function wcj_create_products_xml() {
@@ -149,7 +149,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Create_products_xml_cron.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param  string $interval defines the interval.
 		 * @param  int    $file_num defines the file_num.
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Create_products_xml.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param  int $file_num defines the file_num.
 		 */

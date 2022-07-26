@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Generate_report_zip.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.3.10
 		 */
 		public function generate_report_zip() {
@@ -111,7 +111,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Add Invoices Report tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function create_invoices_report_tool() {
 			$wpnonce          = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
@@ -192,7 +192,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Get_invoices_report_zip.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.3.10
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -285,7 +285,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Get_no_documents_found_message.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -353,7 +353,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Invoices Report Data function.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways per Product or Category
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		/**
 		 * Is_gateway_allowed.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.6.0
 		 *
 		 * @param string | int $gateway_id defines the gateway_id.
@@ -133,7 +133,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		/**
 		 * Filter_available_payment_gateways_per_category.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    [dev] (maybe) `if ( ! is_checkout() ) { return $available_gateways; }`
 		 * @param array $available_gateways defines the available_gateways.
 		 */

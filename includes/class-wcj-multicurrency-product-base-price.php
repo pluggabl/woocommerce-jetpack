@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -110,7 +110,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Modify_default_price_filter_hook.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since 4.8.0
 		 *
 		 * @param string $query defines the query.
@@ -118,14 +118,10 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @return mixed
 		 */
 		public function modify_default_price_filter_hook( $query ) {
-			$wpnonce = false;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
 			if (
 				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
-				! isset( $_GET['min_price'] ) ||
-				! isset( $_GET['max_price'] ) && $wpnonce
+				! isset( $_GET['min_price'] ) || // phpcs:ignore WordPress.Security.NonceVerification
+				! isset( $_GET['max_price'] ) // phpcs:ignore WordPress.Security.NonceVerification
 			) {
 				return $query;
 			}
@@ -157,7 +153,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Price_filter_post_clauses.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since 4.8.0
 		 *
 		 * @see WC_Query::price_filter_post_clauses

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Amount
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 		/**
 		 * Available_shipping_methods.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.1
 		 * @todo    [dev] currency conversion
 		 * @todo    apply_filters( 'booster_option' )

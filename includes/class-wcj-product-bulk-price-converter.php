@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bulk Price Converter
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		/**
 		 * Change_price_by_type.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param int           $product_id defines the product_id.
 		 * @param string        $multiply_price_by defines the multiply_price_by.
 		 * @param string        $price_type defines the price_type.
@@ -100,7 +100,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		/**
 		 * Change_price_all_types.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param int           $product_id defines the product_id.
 		 * @param int           $multiply_price_by defines the multiply_price_by.
 		 * @param string | bool $is_preview defines the is_preview.
@@ -189,7 +189,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		/**
 		 * Change_all_products_prices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (dev) clear products transients after converting prices
 		 * @param int           $multiply_prices_by defines the multiply_prices_by.
 		 * @param string | bool $is_preview defines the is_preview.
@@ -256,7 +256,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		/**
 		 * Create_bulk_price_converter_tool.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function create_bulk_price_converter_tool() {
 			$result_message = '';
@@ -377,7 +377,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		/**
 		 * Make_pretty_price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.4
 		 * @param int $price defines the price.
 		 */

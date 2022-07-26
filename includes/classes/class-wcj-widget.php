@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget
  *
- * @version 3.1.0
+ * @version 5.6.2
  * @since   3.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
@@ -38,7 +38,7 @@ if ( ! class_exists( 'WCJ_Widget' ) ) :
 		/**
 		 * Outputs the content of the widget.
 		 *
-		 * @version 3.1.0
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @param   array $args get widget args.
 		 * @param   array $instance Saved values from database.
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Widget' ) ) :
 			}
 			$html .= $this->get_content( $instance );
 			$html .= $args['after_widget'];
-			echo wp_kses_post( $html );
+			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**

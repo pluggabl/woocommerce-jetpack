@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -169,7 +169,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Set_custom_page_title.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.3.0
 		 * @param string $title defines the title.
 		 */
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Customize_dashboard.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.8.0
 		 * @see     woocommerce/templates/myaccount/dashboard.php
 		 * @param string | array $value defines the value.
@@ -397,7 +397,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Customize_menu.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.8.0
 		 * @todo    (maybe) option to disable menu
 		 * @param array $items defines the items.
@@ -435,7 +435,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Add_registration_extra_fields.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @todo    (maybe) more fields to choose from (i.e. not only "user role" field)
 		 * @todo    (maybe) customizable position (check for other hooks or at least customizable priority on `woocommerce_register_form`)
@@ -462,7 +462,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Process_registration_extra_fields.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @todo    (maybe) optional admin confirmation for some user roles (probably will need to create additional `...-pending` user roles)
 		 * @param id             $customer_id defines the customer_id.
@@ -487,7 +487,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Add_my_account_custom_info.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 */
 		public function add_my_account_custom_info() {
@@ -560,7 +560,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Process_woocommerce_mark_order_status.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
 		public function process_woocommerce_mark_order_status() {

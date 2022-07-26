@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -28,7 +28,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    check if we can just always execute `init()` on `init` hook
 		 */
 		public function __construct() {
@@ -218,7 +218,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Product_addons_price_raw.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.1
 		 *
 		 * @param int   $price defines the price.
@@ -315,7 +315,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Get_wc_tree_table_rate_settings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.9.0
 		 * @param array $option defines the option.
 		 *
@@ -346,7 +346,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Recursively_convert_wc_tree_settings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.9.0
 		 *
 		 * @param array $array defines the array.
@@ -394,7 +394,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Check_woocommerce_coupon_min_max_amount
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.9.0
 		 *
 		 * @param string       $valid defines the valid.
@@ -427,7 +427,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Fix_wc_coupon_discount_amount.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.2.0
 		 *
 		 * @param bool           $false defines the false.
@@ -534,7 +534,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * First it removes products witch `_wcj_multicurrency_per_product_regular_price_{$current_currency_code}` meta don't match min and max.
 		 * Then it adds products witch `_wcj_multicurrency_per_product_regular_price_{$current_currency_code}` meta match min and max.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.5.0
 		 *
 		 * @see WC_Query::price_filter_post_clauses()
@@ -696,7 +696,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 *
 		 * @see price-slider.js, init_price_filter()
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.3.0
 		 */
 		public function add_compatibility_with_price_filter_widget() {
@@ -919,7 +919,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Gets all products, or products with variations containing meta '_wcj_multicurrency_per_product_regular_price_{currency}' or '_wcj_multicurrency_per_product_sale_price_{currency}'.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.5.0
 		 *
 		 * @param int | string $currency defines the currency.
@@ -952,7 +952,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Updates min and max prices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.5.0
 		 *
 		 * @param int          $post_id defines the post_id.
@@ -1031,7 +1031,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Init.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.5
 		 */
 		public function init() {
@@ -1091,7 +1091,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Finds old add-ons fields on cart and replace by correct price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.3.0
 		 *
 		 * @param array $other_data defines the other_data.
@@ -1273,7 +1273,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param int   $price defines the price.
 		 * @param array $_product defines the _product.
 		 * @param null  $args defines the args.
@@ -1378,7 +1378,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Get_current_currency_code.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string $default_currency defines the default_currency.
 		 */
 		public function get_current_currency_code( $default_currency = '' ) {

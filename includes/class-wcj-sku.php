@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -82,7 +82,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Generate_default_hashids_salt.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.7.0
 		 */
 		public function generate_default_hashids_salt() {
@@ -160,7 +160,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Add_search_by_sku_to_frontend_posts_search.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @see     https://plugins.svn.wordpress.org/search-by-sku-for-woocommerce/
 		 * @param string $where defines the where.
@@ -272,7 +272,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Set_sku_with_variable.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    `as_variable_with_suffix` - handle cases with more than 26 variations
 		 * @param int           $product_id defines the product_id.
 		 * @param string | bool $is_preview defines the is_preview.
@@ -360,7 +360,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Maybe_process_attributes.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param array  $_product defines the _product.
 		 * @param string $format_template defines the format_template.
@@ -545,7 +545,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Set_sku.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    deprecate `{prefix}` and `{suffix}`
 		 * @todo    `{tag_prefix}`, `{tag_suffix}`
 		 * @todo    (maybe) remove some "replaced values" that can be replaced by Booster products shortcodes, e.g.: `[wcj_product_slug]` (and update description in settings)
@@ -617,7 +617,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Set_all_products_skus.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string | bool $is_preview defines the is_preview.
 		 */
 		public function set_all_products_skus( $is_preview ) {
@@ -670,7 +670,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Set_sku_for_new_product.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) set `wcj_sku_new_products_generate_only_on_publish` to `yes` by default
 		 * @param string | int   $post_ID defines the post_ID.
 		 * @param string | array $post defines the post.
@@ -694,7 +694,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Create_sku_tool
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function create_sku_tool() {
 			$result_message = '';

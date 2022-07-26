@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -23,7 +23,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @todo    (maybe) add "in progress" ajax message
 		 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -273,7 +273,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Validate_on_add_to_cart.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.5
 		 * @param array | string $passed defines the passed.
 		 * @param int            $product_id defines the product_id.
@@ -317,7 +317,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Maybe_convert_currency.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param int          $price defines the price.
 		 * @param null | array $product defines the product.
@@ -347,7 +347,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Clean_and_explode.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.7.0
 		 * @todo    move this to global functions (`wcj_clean_and_explode()`)
 		 * @param array  $delimiter defines the delimiter.
@@ -360,7 +360,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Price_change_ajax.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @param array | string $param defines the param.
 		 */
@@ -434,7 +434,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Is_global_addon_visible.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.0.0
 		 * @todo    add "include only products"
 		 * @todo    add "include/exclude categories/tags"
@@ -701,7 +701,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Add_addons_price_to_cart_item_data.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @param array $cart_item_data defines the cart_item_data.
 		 * @param int   $product_id defines the product_id.
@@ -751,7 +751,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Add_addons_to_frontend.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 */
 		public function add_addons_to_frontend() {

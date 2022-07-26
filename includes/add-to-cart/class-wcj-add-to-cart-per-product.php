@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Add to Cart per Product
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -71,7 +71,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		/**
 		 * Save_custom_add_to_cart_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 *
 		 * @param int   $post_id Get post Id.
 		 * @param Array $post Get post.
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		/**
 		 * Create_custom_add_to_cart_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function create_custom_add_to_cart_meta_box() {
 

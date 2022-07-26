@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Descriptions
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 		 * Shipping_description.
 		 *
 		 * @version 3.6.0
-		 * @since   5.6.2-dev
+		 * @since   5.6.2
 		 * @todo    `shipping_descriptions_position` on per method basis
 		 * @param String $label Get shipping label.
 		 * @param String $method Get shipping method.

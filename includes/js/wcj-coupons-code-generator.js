@@ -1,7 +1,7 @@
 /**
  * Wcj-coupons-code-generator.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.1.3
  *
  * @package Booster_For_WooCommerce/includes/JS

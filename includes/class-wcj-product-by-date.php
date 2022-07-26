@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @todo    per category
 		 * @todo    per tag

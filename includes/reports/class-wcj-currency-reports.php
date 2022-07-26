@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Currency
  *
- * @version  5.6.2-dev
+ * @version  5.6.2
  * @author   Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -29,7 +29,7 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		/**
 		 * Add_reports_currency_to_admin_bar.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param int | string $wp_admin_bar Difine admin_bar.
 		 */
 		public function add_reports_currency_to_admin_bar( $wp_admin_bar ) {
@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		/**
 		 * Change_currency_symbol_reports.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string $currency_symbol Get currency symbol.
 		 * @param string $currency Get currency.
 		 */
@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		/**
 		 * Filter_reports.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param Array $args Get args.
 		 */
 		public function filter_reports( $args ) {

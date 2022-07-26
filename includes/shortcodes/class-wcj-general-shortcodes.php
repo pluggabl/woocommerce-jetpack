@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -121,7 +121,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_post_meta_sum.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.1.0
 		 * @param array $atts defined shortcode attributes.
 		 */
@@ -301,7 +301,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_request_value.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -399,7 +399,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_button_toggle_tax_display.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.4
 		 * @todo    (dev) different style/class for different tax state
 		 * @todo    (maybe) `get` instead of `post`
@@ -476,7 +476,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_selector.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @todo    add `default` attribute
 		 * @todo    (maybe) add more selector types (e.g.: currency)
@@ -604,7 +604,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_current_time.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -615,7 +615,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_current_datetime.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -626,7 +626,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_current_timestamp.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */

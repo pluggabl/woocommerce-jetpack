@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		/**
 		 * Replace_with_cross_sells_to_url.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.9.0
 		 * @todo    [dev] re-check variable products
 		 * @param string         $url defines the url.
@@ -103,7 +103,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		/**
 		 * Remove_from_cart_by_product_id.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.9.0
 		 * @todo    [dev] AJAX
 		 */

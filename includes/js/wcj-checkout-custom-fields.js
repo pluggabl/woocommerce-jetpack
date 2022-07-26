@@ -1,7 +1,7 @@
 /**
  * Wcj-checkout-custom-fields.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.2.0
  *
  * @package Booster_For_WooCommerce/includes/JS

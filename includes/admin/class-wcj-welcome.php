@@ -2,7 +2,7 @@
 /**
  * Booster getting started
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -73,7 +73,7 @@ if ( ! class_exists( 'WCJ_Welcome' ) ) :
 		/**
 		 * Wcj_redirect_to_getting_started.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function wcj_redirect_to_getting_started() {
 			$wpnonce = true;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -194,7 +194,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Get_related_products_ids_wc3.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param int $product_id defines the product_id.
 		 */
@@ -385,7 +385,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Maybe_delete_product_transients.
 		 *
-		 * @since   5.6.2-dev
+		 * @since   5.6.2
 		 * @version 2.6.0
 		 */
 		public function maybe_delete_product_transients() {
@@ -419,7 +419,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Related_products_args.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    save custom results as product transient (for < WC3)
 		 * @param array $args defines the args.
 		 */

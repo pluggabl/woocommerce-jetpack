@@ -2,9 +2,9 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 6.0
+Tested up to: 6.0.1
 Requires PHP: 5.6
-Stable tag: 5.6.1
+Stable tag: 5.6.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.2 27/07/2022 =
+
+* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added a new shortcode Attribute to exclude tax in order to refund the Total. [wcj_order_shipping_price excl_tax="yes" ]
+* FIXED - SHIPPING & ORDERS - Maximum Products per User - Remove Max product per user meta from product while duplicating Product.
+* FIXED - EMAILS & MISC. - Export - Escape the html content from the "Additional Export Orders Fields" value.
+* FIXED - EMAILS & MISC. - Export - Array to string conversion for the "Additional Export Products Fields" value.
+* FIXED - PHP Warning: Undefined array key "path" in /includes/functions/wcj-functions-booster-core.php ...
+* FIXED - Added Security vulnerability fixes.
+* WooCommerce 6.6.1 tested
+* WordPress 6.0.1 tested
 
 = 5.6.1 01/07/2022 =
 

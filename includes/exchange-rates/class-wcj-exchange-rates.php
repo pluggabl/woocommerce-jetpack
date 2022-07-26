@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -37,7 +37,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 		/**
 		 * Wcj_ajax_get_exchange_rates_average.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.2
 		 */
 		public function wcj_ajax_get_exchange_rates_average() {
@@ -52,7 +52,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 		/**
 		 * Register_script.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function register_script() {
 			if (
@@ -85,7 +85,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 		/**
 		 * Enqueue_exchange_rates_script.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function enqueue_exchange_rates_script() {
 			if (

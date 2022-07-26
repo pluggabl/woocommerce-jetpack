@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -49,7 +49,7 @@ if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
 	/**
 	 * Wcj_get_invoicing_default_images_directory.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   3.4.2
 	 */
 	function wcj_get_invoicing_default_images_directory() {
@@ -206,7 +206,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 	/**
 	 * Wcj_check_and_maybe_download_tcpdf_fonts.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.9.0
 	 * @todo    (maybe) check file size > 0 or even for exact size (not only if file exists in directory)
 	 * @todo    (maybe) use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)

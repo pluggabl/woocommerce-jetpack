@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Template Editor
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		/**
 		 * Create_templates.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.9.0
 		 * @todo    [dev] also delete on "Reset settings"
 		 * @param string | array $sections defines the sections.

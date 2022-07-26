@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Add_wcj_sale_ids_to_products_shortcode.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.8.0
 		 *
 		 * @param array          $args defines the args.
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Regenerate_wcj_sale_products_in_cache.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.8.0
 		 */
 		public function regenerate_wcj_sale_products_in_cache() {
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Get_wcj_sale_products.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.8.0
 		 *
 		 * @return array|mixed
@@ -245,7 +245,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @todo    `WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER, 'woocommerce_variation_prices_regular_price', 'woocommerce_product_variation_get_regular_price'`
 		 * @param  int            $price defines the price.
@@ -269,7 +269,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Change_price_grouped.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param int            $price defines the price.
 		 * @param int            $qty defines the qty.
@@ -292,7 +292,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Calculate_price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param int            $price defines the price.
 		 * @param int            $coefficient defines the coefficient.
@@ -353,7 +353,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Check_if_applicable_by_product_scope.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 * @param string | array $_product defines the _product.
 		 * @param int            $price defines the price.
@@ -389,7 +389,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Add_global_discount.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param int            $price defines the price.
 		 * @param string | array $_product defines the _product.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -555,7 +555,7 @@ if ( ! function_exists( 'wc_get_variable_product_purchase_price' ) ) {
 	/**
 	 * Wc_get_product_purchase_price.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   4.2.0
 	 * @param   int   $product_id defines the product_id.
 	 * @param   array $args defines the args.

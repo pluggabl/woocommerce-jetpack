@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -323,7 +323,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_validate_value.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -370,7 +370,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Validate_value_admin_notices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 */
 		public function validate_value_admin_notices() {
@@ -458,7 +458,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -505,7 +505,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 */
 		public function admin_notices() {
@@ -522,7 +522,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Reset_settings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.0
 		 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 		 */
@@ -618,7 +618,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
 		 * @param int   $post_id Get post id.
@@ -808,7 +808,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Get_cat_by_section.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.2.3
 		 * @param Array $section Get sections.
 		 */

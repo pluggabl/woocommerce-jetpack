@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes

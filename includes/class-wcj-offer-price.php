@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_styling.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.7.0
 		 */
 		public function add_styling() {
@@ -134,7 +134,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Delete_offer_price_product_history.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    (maybe) add successful deletion notice
 		 * @param int            $post_id defines the post_id.
@@ -369,7 +369,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_offer_price_form.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    (maybe) fix when empty header
 		 * @todo    (maybe) style options for input fields (class, style)
@@ -472,7 +472,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_offer_price_button.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
 		public function add_offer_price_button() {
@@ -502,7 +502,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Offer_price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    (maybe) separate customer copy email template and subject
 		 * @todo    (maybe) redirect (no notice though)

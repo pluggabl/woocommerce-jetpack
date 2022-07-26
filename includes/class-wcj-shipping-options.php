@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Options
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 		/**
 		 * Show_most_expensive_shipping.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.2.0
 		 *
 		 * @param array          $rates defines the rates.
@@ -110,7 +110,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 		/**
 		 * Free_shipping_by_product.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @return  bool
 		 * @param string | bool $is_available defines the is_available.

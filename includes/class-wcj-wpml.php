@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -191,7 +191,7 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		/**
 		 * Create_wpml_xml_file.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.1
 		 */
 		public function create_wpml_xml_file_tool() {
@@ -208,7 +208,7 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		/**
 		 * Create_wpml_xml_file.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @see     https://wpml.org/documentation/support/language-configuration-files/#admin-texts
 		 */
 		public function create_wpml_xml_file() {

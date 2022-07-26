@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Welcome Screen Content
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */

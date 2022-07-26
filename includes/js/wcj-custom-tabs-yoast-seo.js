@@ -1,7 +1,7 @@
 /**
  * Wcj-custom-tabs-yoast-seo.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.2.4
  * @see     https://return-true.com/adding-content-to-yoast-seo-analysis-using-yoastseojs/
  *

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -186,7 +186,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 * @param string $option_value defines the option_value.
 		 * @param string $option_name defines the option_name.
@@ -233,7 +233,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 */
 		public function admin_notices() {
@@ -363,7 +363,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Validate_open_price_on_add_to_cart.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 * @param string $passed defines the passed.
 		 * @param int    $product_id defines the product_id.
@@ -433,7 +433,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_to_cart_item_data.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 * @todo    [dev] (maybe) better conversion for Currency Switcher module (i.e. include rounding)
 		 * @param array $cart_item_data defines the cart_item_data.
@@ -506,7 +506,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_input_field_to_frontend.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 */
 		public function add_open_price_input_field_to_frontend() {

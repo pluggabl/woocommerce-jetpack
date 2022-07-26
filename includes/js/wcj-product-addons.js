@@ -1,7 +1,7 @@
 /**
  * Wcj-product-addons.
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.3
  * @todo    `text` type - update price not only on change, but on each pressed key
  * @todo    fix the issue with custom price labels module

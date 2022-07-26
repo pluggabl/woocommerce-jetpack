@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Local
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === wcj_get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  * @package Booster_For_WooCommerce/includes/Price_By_Country
@@ -22,7 +22,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function __construct() {
 			add_action( 'woocommerce_ajax_save_product_variations', array( $this, 'save_custom_meta_box_on_product_edit_ajax' ), PHP_INT_MAX, 1 );
@@ -154,7 +154,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		/**
 		 * Save Custom Meta Box on Product Edit - variations "Save Changes" button (ajax).
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.3.9
 		 * @param string $product_id defines the product id.
 		 */
@@ -216,7 +216,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		/**
 		 * Get_all_options_html.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 *
 		 * @param string $simple_or_variable defines the product us simple or variable product.
 		 * @param string $current_post_id defines the current post id.

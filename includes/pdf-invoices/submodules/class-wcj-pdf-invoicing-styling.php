@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Styling
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		/**
 		 * Download_fonts.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @version 2.9.0
 		 * @param int $interval Get time interval.
 		 */
@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		/**
 		 * Manually_download_fonts.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @version 2.9.0
 		 * @todo    add success/error message
 		 */

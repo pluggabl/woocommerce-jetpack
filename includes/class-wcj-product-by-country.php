@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Get_check_option.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 */
 		public function get_check_option() {
@@ -115,7 +115,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Save_country_in_session.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 */
 		public function save_country_in_session() {
@@ -145,7 +145,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Maybe_add_extra_settings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @todo    (maybe) move "Country List" inside the "Admin Options" section
 		 */

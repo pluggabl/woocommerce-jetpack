@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency Converter
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Fix_chosen_payment_method.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.9.0
 		 * @param string | array $post_data defines the post_data.
 		 */
@@ -150,7 +150,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Change_price_by_gateway.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.3.0
 		 * @param string         $price defines the price.
 		 * @param string | array $product defines the product.

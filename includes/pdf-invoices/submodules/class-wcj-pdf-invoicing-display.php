@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -209,7 +209,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Output custom columns for products
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param  string $column Get order columns.
 		 */
 		public function render_order_columns( $column ) {
@@ -343,7 +343,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Create_invoices_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 */
 		public function create_invoices_meta_box() {

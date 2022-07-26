@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 4.2.0
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -15,7 +15,7 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 	/**
 	 * Wcj_get_table_html.
 	 *
-	 * @version 4.2.0
+	 * @version 5.6.2
 	 * @param array $data defines the data.
 	 * @param array $args defines the args.
 	 */

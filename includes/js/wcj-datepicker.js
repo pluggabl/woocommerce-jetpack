@@ -1,7 +1,7 @@
 /**
  * Wcj-datepicker.
  *
- * @version 5.2.0
+ * @version 5.6.2
  * @todo    maybe_exclude_dates: `date.getDate()`, `date.getFullYear()`
  * @see     maybe_exclude_dates: https://stackoverflow.com/questions/501943/can-the-jquery-ui-datepicker-be-made-to-disable-saturdays-and-sundays-and-holid
  * @package Booster_For_WooCommerce/includes/JS

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) pre-calculate profit for orders
 		 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 		 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_import_from_wc_cog_tool.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
 		public function create_import_from_wc_cog_tool() {
@@ -163,7 +163,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Render_product_columns.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @param string $column defines the column.
 		 */
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Output custom columns for orders.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.2.4
 		 * @todo    forecasted profit `$value = $line_total * $average_profit_margin`
 		 * @todo    (maybe) use `[wcj_order_profit]` and `[wcj_order_items_cost]`
@@ -277,7 +277,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.5
 		 * @todo    (maybe) min_profit
 		 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -32,7 +32,7 @@ if ( ! function_exists( 'wcj_is_enabled_for_product' ) ) {
 	/**
 	 * Wcj_is_enabled_for_product.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   3.1.0
 	 * @param int   $product_id Get product id.
 	 * @param Array $args Get product args.
@@ -258,7 +258,7 @@ if ( ! function_exists( 'wcj_get_product_image_url' ) ) {
 	/**
 	 * Wcj_get_product_image_url.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.5.7
 	 * @todo    placeholder
 	 * @param int    $product_id Get product id.
@@ -505,7 +505,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	/**
 	 * Wcj_is_product_wholesale_enabled.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @param int $product_id Get product id.
 	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 		 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 		 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -94,7 +94,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Editable_status.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.0.0
 		 * @param string | bool  $is_editable defines the is_editable.
 		 * @param string | array $order defines the order.
@@ -106,7 +106,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Handle_orders_navigation.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 */
 		public function handle_orders_navigation() {
@@ -141,7 +141,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Create_orders_navigation_meta_box.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @todo    this will output the link, even if there no prev/next orders available
 		 */
@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Admin_notice_regenerate_download_permissions.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.2.0
 		 */
 		public function admin_notice_regenerate_download_permissions() {
@@ -339,7 +339,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Auto Complete all WooCommerce orders.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) at first check if status is not `completed` already (however `WC_Order::set_status()` checks that anyway)
 		 * @param int $order_id defines the order_id.
 		 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Invoices
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -57,7 +57,7 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
-		 * @version 5.6.2-dev.
+		 * @version 5.6.2.
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function init_atts( $atts ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -110,7 +110,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Price_change_ajax.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @param string | array $param defines the param.
 		 */
@@ -264,7 +264,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Validate_bookings_on_add_to_cart.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @param string | array $passed defines the passed.
 		 * @param int            $product_id defines the product_id.
@@ -312,7 +312,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Add_bookings_price_to_cart_item_data.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @param array $cart_item_data defines the cart_item_data.
 		 * @param int   $product_id defines the product_id.
@@ -398,7 +398,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Add_input_fields_to_frontend.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @todo    more options: exclude days (1-31), exact availability dates, mindate, maxdate, firstday, dateformat etc.
 		 */
@@ -476,7 +476,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @param string $option_value defines the option_value.
 		 * @param string $option_name defines the option_name.
@@ -523,7 +523,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {

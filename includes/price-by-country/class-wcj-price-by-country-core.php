@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    [dev] check if we can just always execute `init()` on `init` hook
 		 */
 		public function __construct() {
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Init.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
 		public function init() {
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Gets currency by country.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.1.0
 		 *
 		 * @param string $country defines the country.
@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Saves currency on session by country.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.1.0
 		 *
 		 * @param string $country defines the country.
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Maybe_init_customer_country_by_ip.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
 		public function maybe_init_customer_country_by_ip() {
@@ -125,7 +125,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Add_hooks.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function add_hooks() {
 
@@ -194,7 +194,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Set_default_checkout_country.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.3.0
 		 *
 		 * @param string $default_country defins the default country.
@@ -215,7 +215,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Handle_wc_points_rewards_settings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.2.0
 		 *
 		 * @param string $value defines the value for points reward.
@@ -242,7 +242,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Convert_free_shipping_min_amount.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @param string $option defines the option for shipping.
@@ -267,7 +267,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Append_price_filter_post_meta_join.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @param string $sql defines the sql query.
@@ -287,7 +287,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Get_price_filter_post_meta_join.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @param string $country_group_id defines the group id of country.
@@ -302,7 +302,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Price_filter_post_clauses_sort.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @param array  $args defines the arguments.
@@ -337,7 +337,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Price_filter_post_clauses.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @see WC_Query::price_filter_post_clauses()
@@ -378,7 +378,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 *
 		 * @see price-slider.js->init_price_filter()
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 */
 		public function add_compatibility_with_price_filter_widget() {
@@ -485,7 +485,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Woocommerce_price_filter_sql.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
@@ -547,7 +547,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Format_price_after_including_excluding_tax.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.4.0
 		 *
 		 * @param string $return_price defines the return price.
@@ -568,7 +568,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Enqueue_wselect_scripts.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.4
 		 */
 		public function enqueue_wselect_scripts() {
@@ -580,7 +580,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Price_filter_meta_query.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @param string $meta_query defines the meta query.
 		 * @param string $_wc_query defines the wc query.
@@ -600,7 +600,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Change_price_grouped.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @param string $price defines the product price.
 		 * @param string $qty defines the quantity of product.
@@ -627,7 +627,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Get_customer_country_by_ip.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 */
 		public function get_customer_country_by_ip() {
@@ -653,7 +653,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Change_price_shipping.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 *
 		 * @param string $package_rates defines the rates of the package.
 		 * @param object $package defines the shipping package object.
@@ -671,7 +671,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Get_customer_country_group_id.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 		 */
 		public function get_customer_country_group_id() {
@@ -737,7 +737,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Gets country group id.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.1.0
 		 * @param string $country country code from the group of country.
 		 *
@@ -786,7 +786,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Get_variation_prices_hash.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.3
 		 * @param array  $price_hash contains price related data.
 		 * @param object $_product object of the product.
@@ -811,7 +811,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string $price defines the price for conversion.
 		 * @param object $product Product Object.
 		 */

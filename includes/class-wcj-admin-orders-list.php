@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -223,7 +223,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter_shop_order_multiple_statuses_not_completed_link.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */
@@ -246,7 +246,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Multiple_shop_order_statuses.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param string $type defines the type.
 		 */
@@ -294,7 +294,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter_shop_order_multiple_statuses.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */
@@ -317,7 +317,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter the orders in admin based on options.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @access  public
 		 * @param   mixed $query defines the query.
 		 * @return  void
@@ -348,7 +348,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filters for post types.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function restrict_manage_posts() {
 			global $typenow, $wp_query;

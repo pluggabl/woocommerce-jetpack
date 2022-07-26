@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Info
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Info' ) ) :
 		/**
 		 * Check_content_and_filter.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @param string $current_filter defines the current_filter.
 		 * @param string $current_filter_priority defines the current_filter_priority.
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Info' ) ) :
 		/**
 		 * Check_included_and_excluded.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @param int    $product_id defines the product_id.
 		 * @param string $single_or_archive defines the single_or_archive.

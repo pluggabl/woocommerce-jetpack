@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -36,7 +36,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Prepare_pdf.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    [dev] check `addTTFfont()`
 		 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster for WooCommerce' )`
 		 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`
@@ -183,7 +183,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Maybe_replace_tcpdf_method_params.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param mixed $html Get pdf html.
 		 * @param mixed $pdf Get pdfs.
@@ -208,7 +208,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		 *
 		 * Gets invoice content HTML.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.5.0
 		 * @todo    [dev] pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 		 * @todo    [fix] `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
@@ -248,7 +248,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Get_pdf.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    [dev] (maybe) `die()` on success
 		 * @param string $dest define dest.
 		 */

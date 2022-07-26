@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,7 +16,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * WCJ_Track_Users.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 */
 	class WCJ_Track_Users extends WCJ_Module {
@@ -96,7 +96,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Render_order_columns.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param string $column defines the column.
 		 */
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users_update_county_stats.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @todo    (maybe) `wp_nonce`
 		 */
@@ -215,7 +215,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Add_http_referer_to_order.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @todo    add "all orders by referer type" stats
 		 * @param int $order_id defines the order_id.
@@ -237,7 +237,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Maybe_delete_track_users_stats.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @todo    (maybe) wp_nonce
 		 */
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Generate_track_users_stats_by_country.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @param string | int $scope defines the scope.
 		 */
@@ -320,7 +320,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users_by_country_dashboard_widget.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @todo    (maybe) display all info (IP, referer etc.) on country click
 		 * @todo    (maybe) display stats by day and/or month
@@ -378,7 +378,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Enqueue_track_users_script.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 */
 		public function enqueue_track_users_script() {
@@ -397,7 +397,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @todo    (maybe) customizable `$time_expired`
 		 * @todo    (maybe) optionally do not track selected user roles (e.g. admin)

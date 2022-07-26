@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Orders List
  *
- * @version 5.6.0
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

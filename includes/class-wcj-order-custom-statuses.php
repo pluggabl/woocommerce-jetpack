@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -318,7 +318,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Add_custom_order_statuses_to_reports.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param array | string $order_statuses defines the order_statuses.
 		 */
 		public function add_custom_order_statuses_to_reports( $order_statuses ) {
@@ -358,7 +358,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Register_custom_post_statuses.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 */
 		public function register_custom_post_statuses() {
 			$custom_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
@@ -463,7 +463,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * Using Javascript until WordPress core fixes: http://core.trac.wordpress.org/ticket/16031
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.2.7
 		 */
 		public function bulk_admin_footer() {

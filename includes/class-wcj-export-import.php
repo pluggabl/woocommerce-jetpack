@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -72,7 +72,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 * @todo    [dev] when filtering now using `strpos`, but other options would be `stripos` (case-insensitive) or strict equality
 		 * @todo    [dev] (maybe) do filtering directly in WP_Query
@@ -129,7 +129,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_xml.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.9
 		 * @todo    [dev] templates for xml_start, xml_end, xml_item.
 		 * @todo    [dev] `strip_tags`
@@ -173,7 +173,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 *
 		 * @see https://stackoverflow.com/a/4617967/1193038
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @param array $row defines the row.
@@ -203,7 +203,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_csv.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 */
 		public function export_csv() {
@@ -235,7 +235,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_filter_fields.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.5
 		 * @todo    [dev] filter each field separately
 		 * @param int $tool_id defines the tool_id.
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_date_fields.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.0.0
 		 * @todo    [dev] maybe make `$dateformat` optional
 		 * @todo    [dev] mark current (i.e. active) link (if exists)
@@ -333,7 +333,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Create_export_tool.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.4.8
 		 * @param int $tool_id defines the tool_id.
 		 */

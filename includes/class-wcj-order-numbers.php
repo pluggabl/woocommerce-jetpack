@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -192,7 +192,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Search_by_custom_number.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
 		 * @param array | string $query defines the query.
@@ -342,7 +342,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Add Renumerate Orders tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    restyle
 		 * @todo    add more result info (e.g. number of regenerated orders etc.)
 		 */
@@ -444,7 +444,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Add/update order_number meta to order.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 		 * @param int  $order_id defines the order_id.
 		 * @param bool $do_overwrite defines the do_overwrite.

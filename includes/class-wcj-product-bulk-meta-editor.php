@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Create_product_bulk_meta_editor_tool.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @todo    (maybe) real permalink instead of `/?p=`
 		 * @todo    (maybe) `wc_add_notice`
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Perform_actions.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @todo    break this into separate functions
 		 */
@@ -273,7 +273,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Get_html_products_select.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param array $_products defines the _products.
 		 * @param array $selected_products defines the selected_products.
@@ -370,7 +370,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Get_html_meta_table_content.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param string         $meta_name defines the meta_name.
 		 * @param array          $_products defines the _products.
@@ -424,7 +424,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Maybe_add_additional_columns_headings.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param array $table_headings defines the table_headings.
 		 * @param array $additional_columns defines the additional_columns.
@@ -447,7 +447,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Maybe_add_additional_columns_content.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param array $row defines the row.
 		 * @param array $additional_columns defines the additional_columns.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -81,7 +81,7 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 	/**
 	 * Wcj_check_date.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.9.1
 	 * @param   string $_date defines the _date.
 	 * @param   array  $args defines the args.
@@ -173,7 +173,7 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	/**
 	 * Wcj_check_time.
 	 *
-	 * @version 5.6.2-dev
+	 * @version 5.6.2
 	 * @since   2.8.0
 	 * @param   string $_time defines the _time.
 	 * @param   array  $args defines the args.

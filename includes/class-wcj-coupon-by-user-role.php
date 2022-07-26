@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon by User Role
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -53,7 +53,7 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 		/**
 		 * Coupons_enabled.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param string | bool $is_enabled check the coupons enabled.
 		 */

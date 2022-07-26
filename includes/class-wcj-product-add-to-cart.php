@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Replace_external_with_custom_add_to_cart_on_single_end.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 */
 		public function replace_external_with_custom_add_to_cart_on_single_end() {
@@ -307,7 +307,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Custom_add_to_cart_loop_url.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.6
 		 * @param string $url defines the url.
 		 * @param array  $_product defines the _product.
@@ -324,7 +324,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Enqueue_disable_quantity_add_to_cart_script.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   2.5.2
 		 * @todo    add "hide" (not just disable) option
 		 */
@@ -377,7 +377,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Maybe_redirect_to_url.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @param string     $url defines the url.
 		 * @param bool | int $product_id defines the product_id.
 		 */
@@ -412,7 +412,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Add item to cart on visit.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @todo    (maybe) optionally add product every time page is visited (instead of only once)
 		 */
 		public function add_to_cart_on_visit() {

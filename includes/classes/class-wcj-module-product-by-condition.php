@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 5.6.2-dev
+ * @version 5.6.2
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
@@ -83,7 +83,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Get_invisible_products_ids.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.7.1
 		 *
 		 * @param null $params Get params.
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Get_invisible_products_query_args.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.7.1
 		 *
 		 * @return array
@@ -154,7 +154,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Delete_invisible_products_transient.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.7.1
 		 *
 		 * @param null $params Get params.
@@ -207,7 +207,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Disables pre_get_posts query when exporting products.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   4.7.0
 		 * @param bool $validation get validations.
 		 */
@@ -305,7 +305,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Save_bulk_and_quick_edit_fields.
 		 *
-		 * @version 5.6.2-dev
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param int       $post_id get post id.
 		 * @param obj|Array $post get post.
