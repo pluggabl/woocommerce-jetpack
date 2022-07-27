@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -42,7 +42,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>PHP code:</strong> by using %s function,<br> e.g.: %s', 'woocommerce-jetpack' ),
+					__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_1]\'&nbsp;);</code>'
 				) .
@@ -152,12 +152,12 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		/**
 		 * Handle_downloads.
 		 *
-		 * @version 2.5.0
+		 * @version 5.6.2
 		 * @since   2.2.2
 		 */
 		public function handle_downloads() {
-			if ( isset( $_GET['wcj_download_file'] ) ) {
-				$file_name  = sanitize_text_field( wp_unslash( $_GET['wcj_download_file'] ) );
+			if ( isset( $_GET['wcj_download_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				$file_name  = sanitize_text_field( wp_unslash( $_GET['wcj_download_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
 				$file_path  = $upload_dir . '/' . $file_name;
 				if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
@@ -167,7 +167,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 					header( 'Content-disposition: attachment; filename=' . $file_name );
 					header( 'Content-Transfer-Encoding: binary' );
 					header( 'Content-Length: ' . filesize( $file_path ) );
-					readfile( $file_path );
+					readfile( $file_path ); //phpcs:ignore
 					exit();
 				}
 			}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - URL Coupons
  *
- * @version 5.2.0
+ * @version 5.6.2
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -95,14 +95,18 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 		/**
 		 * Maybe_apply_url_coupon.
 		 *
-		 * @version 2.9.1
+		 * @version 5.6.2
 		 * @since   2.7.0
 		 * @todo    (maybe) options to add products to cart with query arg
 		 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}
 		 */
 		public function maybe_apply_url_coupon() {
 			$arg_key = wcj_get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' );
-			if ( isset( $_GET[ $arg_key ] ) && '' !== $_GET[ $arg_key ] ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( isset( $_GET[ $arg_key ] ) && '' !== $_GET[ $arg_key ] && $wpnonce ) {
 				$coupon_code = sanitize_text_field( ( wp_unslash( $_GET[ $arg_key ] ) ) );
 				$this->maybe_add_products_to_cart( $coupon_code );
 				WC()->cart->add_discount( $coupon_code );

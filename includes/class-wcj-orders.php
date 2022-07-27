@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 5.5.9
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.2
 		 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 		 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 		 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					if ( 'disabled' !== apply_filters( 'booster_option', 'disabled', wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
 						add_action( 'init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
 						add_action( 'admin_init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
-						add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' );
+						add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' ); //phpcs:ignore
 						add_action( 'wcj_bulk_regenerate_download_permissions_all_orders_cron', array( $this, 'bulk_regenerate_download_permissions_all_orders' ) );
 					}
 				}
@@ -94,24 +94,26 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Editable_status.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2
 		 * @since   4.0.0
 		 * @param string | bool  $is_editable defines the is_editable.
 		 * @param string | array $order defines the order.
 		 */
 		public function editable_status( $is_editable, $order ) {
-			return in_array( $order->get_status(), wcj_get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ) );
+			return in_array( $order->get_status(), wcj_get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ), true );
 		}
 
 		/**
 		 * Handle_orders_navigation.
 		 *
-		 * @version 3.4.0
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 */
 		public function handle_orders_navigation() {
 			if ( isset( $_GET['wcj_orders_navigation'] ) ) {
-				$url = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id = wcj_get_adjacent_order_id( $_GET['post'], $_GET['wcj_orders_navigation'] ) ) ?
+				$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'wcj-order-meta-nonce' ) : true;
+				$adjacent_order_id = $wpnonce && isset( $_GET['post'] ) && isset( $_GET['wcj_orders_navigation'] ) ? wcj_get_adjacent_order_id( sanitize_text_field( wp_unslash( $_GET['post'] ) ), sanitize_text_field( wp_unslash( $_GET['wcj_orders_navigation'] ) ) ) : false;
+				$url               = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id ) ?
 				remove_query_arg( 'wcj_orders_navigation' ) :
 				admin_url( 'post.php?post=' . $adjacent_order_id . '&action=edit' ) );
 				wp_safe_redirect( $url );
@@ -139,13 +141,21 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Create_orders_navigation_meta_box.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @todo    this will output the link, even if there no prev/next orders available
 		 */
 		public function create_orders_navigation_meta_box() {
-			echo '<a href="' . add_query_arg( 'wcj_orders_navigation', 'prev' ) . '">' . '&lt;&lt; ' . __( 'Previous order', 'woocommerce-jetpack' ) . '</a>' .
-			 '<a href="' . add_query_arg( 'wcj_orders_navigation', 'next' ) . '" style="float:right;">' . __( 'Next order', 'woocommerce-jetpack' ) . ' &gt;&gt;' . '</a>';
+			$query_arg_prev = array(
+				'wcj_orders_navigation' => 'prev',
+				'_wpnonce'              => wp_create_nonce( 'wcj-order-meta-nonce' ),
+			);
+			$query_arg_next = array(
+				'wcj_orders_navigation' => 'next',
+				'_wpnonce'              => wp_create_nonce( 'wcj-order-meta-nonce' ),
+			);
+			echo '<a href="' . esc_url( add_query_arg( $query_arg_prev ) ) . '">&lt;&lt; ' . esc_html__( 'Previous order', 'woocommerce-jetpack' ) . '</a>' .
+			'<a href="' . esc_url( add_query_arg( $query_arg_next ) ) . '" style="float:right;">' . esc_html__( 'Next order', 'woocommerce-jetpack' ) . ' &gt;&gt;</a>';
 		}
 
 		/**
@@ -243,10 +253,14 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Admin_notice_regenerate_download_permissions.
 		 *
-		 * @version 3.2.0
+		 * @version 5.6.2
 		 * @since   3.2.0
 		 */
 		public function admin_notice_regenerate_download_permissions() {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
 			if ( ! empty( $_REQUEST['wcj_bulk_regenerated_download_permissions'] ) ) {
 				$orders_count = intval( $_REQUEST['wcj_bulk_regenerated_download_permissions'] );
 				$message      = sprintf(
@@ -325,7 +339,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Auto Complete all WooCommerce orders.
 		 *
-		 * @version 3.7.0
+		 * @version 5.6.2
 		 * @todo    (maybe) at first check if status is not `completed` already (however `WC_Order::set_status()` checks that anyway)
 		 * @param int $order_id defines the order_id.
 		 */
@@ -335,7 +349,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 			}
 			$order           = wc_get_order( $order_id );
 			$payment_methods = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_order_auto_complete_payment_methods', array() ) );
-			if ( ! empty( $payment_methods ) && ! in_array( $order->get_payment_method(), $payment_methods ) ) {
+			if ( ! empty( $payment_methods ) && ! in_array( $order->get_payment_method(), $payment_methods, true ) ) {
 				return;
 			}
 			$order->update_status( 'completed' );

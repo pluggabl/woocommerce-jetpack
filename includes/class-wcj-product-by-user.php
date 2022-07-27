@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.0
+		 * @version 5.6.2
 		 * @since   2.5.2
 		 * @todo    run `add_my_products_endpoint` only if module is enabled
 		 */
@@ -40,13 +40,12 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 			register_deactivation_hook( __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
 			add_filter( 'query_vars', array( $this, 'add_my_products_endpoint_query_var' ), 0 );
 			add_action( 'init', array( $this, 'add_my_products_endpoint' ) );
-			$sendEmailtoUserProduct = get_option( 'wcj_user_product_email_send' );
-			if($sendEmailtoUserProduct == 'yes') {
-				add_action( 'woocommerce_thankyou', array( $this, 'getProductOwnerEmail'), 10, 1 );
-				add_filter( 'woocommerce_email_headers', array( $this,'sendemail_to_productowner_order_place_successfully'), 10, 3 );
-				add_filter( 'woocommerce_email_recipient_no_stock', array( $this,'change_stock_email_recipient'), 10, 2 );
+			$send_email_to_user_product = get_option( 'wcj_user_product_email_send', 'no' );
+			if ( 'yes' === $send_email_to_user_product ) {
+				add_action( 'woocommerce_thankyou', array( $this, 'getProductOwnerEmail' ), 10, 1 );
+				add_filter( 'woocommerce_email_headers', array( $this, 'sendemail_to_productowner_order_place_successfully' ), 10, 3 );
+				add_filter( 'woocommerce_email_recipient_no_stock', array( $this, 'change_stock_email_recipient' ), 10, 2 );
 			}
-
 
 			if ( $this->is_enabled() ) {
 				if ( 'yes' === wcj_get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
@@ -82,7 +81,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Send Email To Product User at success page when email send setting enable
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2
 		 * @since 1.0.0
 		 * @param string $headers defines the headers.
 		 * @param string $email_id defines the email_id.
@@ -91,7 +90,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $object ) {
 			if ( 'new_order' === $email_id && is_a( $object, 'WC_Order' ) ) {
 				$useremail = $this->getProductOwnerEmail( wcj_get_order_id( $object ) );
-				$headers .= 'Cc: Name <' . $useremail . '>' . "\r\n";
+				$headers  .= 'Cc: Name <' . $useremail . '>' . "\r\n";
 			}
 			return $headers;
 		}
@@ -183,7 +182,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Custom help to add new items into an array after a selected item.
 		 *
-		 * @version 2.5.7
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param array  $items defines the items.
 		 * @param string $new_items defines the new_items.
@@ -193,7 +192,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 */
 		public function insert_after_helper( $items, $new_items, $after ) {
 			// Search for the item position and +1 since is after the selected item key.
-			$position = array_search( $after, array_keys( $items ) ) + 1;
+			$position = array_search( $after, array_keys( $items ), true ) + 1;
 			// Insert the new item.
 			$array  = array_slice( $items, 0, $position, true );
 			$array += $new_items;
@@ -218,28 +217,32 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Add_my_products_content_my_account_page.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2
 		 * @since   2.5.2
 		 */
 		public function add_my_products_content_my_account_page() {
 			$user_ID = get_current_user_id();
-			if ( 0 == $user_ID ) {
+			if ( 0 === $user_ID ) {
 				return;
 			}
-			if ( isset( $_GET['wcj_delete_product'] ) ) {
-				$product_id     = $_GET['wcj_delete_product'];
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( $wpnonce && isset( $_GET['wcj_delete_product'] ) ) {
+				$product_id     = sanitize_text_field( wp_unslash( $_GET['wcj_delete_product'] ) );
 				$post_author_id = get_post_field( 'post_author', $product_id );
-				if ( $user_ID != $post_author_id ) {
-					echo '<p>' . __( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+				if ( (string) $user_ID !== $post_author_id ) {
+					echo '<p>' . esc_html__( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
 				} else {
 					wp_delete_post( $product_id, true );
 				}
 			}
-			if ( isset( $_GET['wcj_edit_product'] ) ) {
-				$product_id     = $_GET['wcj_edit_product'];
+			if ( $wpnonce && isset( $_GET['wcj_edit_product'] ) ) {
+				$product_id     = sanitize_text_field( wp_unslash( $_GET['wcj_edit_product'] ) );
 				$post_author_id = get_post_field( 'post_author', $product_id );
-				if ( $user_ID != $post_author_id ) {
-					echo '<p>' . __( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+				if ( (string) $user_ID !== $post_author_id ) {
+					echo '<p>' . esc_html__( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
 				} else {
 					echo do_shortcode( '[wcj_product_add_new product_id="' . $product_id . '"]' );
 				}
@@ -270,7 +273,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 				}
 				$offset += $block_size;
 			}
-			if ( 0 != count( $products ) ) {
+			if ( 0 !== count( $products ) ) {
 				$table_data   = array();
 				$table_data[] = array( '', __( 'Status', 'woocommerce-jetpack' ), __( 'Title', 'woocommerce-jetpack' ), __( 'Actions', 'woocommerce-jetpack' ) );
 				$i            = 0;
@@ -280,11 +283,11 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 						/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
 						'<code>' . $_product_data['status'] . '</code>',
 						$_product_data['title'],
-						'<a class="button" href="' . esc_url( add_query_arg( 'wcj_edit_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . ' ' .
-						'<a class="button" href="' . esc_url( add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
+						'<a class="button" href="' . esc_url( add_query_arg( 'wcj_edit_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>
+						<a class="button" href="' . esc_url( add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
 					);
 				}
-				echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) );
+				echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ); //phpcs:ignore
 			}
 		}
 

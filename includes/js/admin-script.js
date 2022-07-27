@@ -1,7 +1,15 @@
+/**
+ * Admin-script.
+ *
+ * @version 5.6.2
+ *
+ * @package Booster_For_WooCommerce/includes/JS
+ */
+
 var acc = document.getElementsByClassName( "wcj-accordion" );
 var i;
-
-for (i = 0; i < acc.length; i++) {
+var acc_length = acc.length;
+for (i = 0; i < acc_length; i++) {
 	acc[i].addEventListener(
 		"click",
 		function() {

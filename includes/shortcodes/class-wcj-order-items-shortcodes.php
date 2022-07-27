@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 5.3.1
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -32,13 +32,18 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 3.3.0
+		 * @version 5.6.2
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
+
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			$modified_atts = array_merge(
 				array(
-					'order_id'                            => ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(),
+					'order_id'                            => ( isset( $_GET['order_id'] ) && $wpnonce ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(),
 					'hide_currency'                       => 'no',
 					'table_class'                         => '',
 					'shipping_as_item'                    => '', // e.g.: 'Shipping'.
@@ -136,7 +141,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Add_item.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2
 		 * @param array $items The user defined shortcode items.
 		 * @param array $new_item_args The user defined shortcode new_item_args.
 		 */
@@ -144,7 +149,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 			if ( empty( $new_item_args ) ) {
 				return $items;
 			}
-			extract( $new_item_args );
+			extract( $new_item_args ); // phpcs:ignore
 			// Create item.
 			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 				$item = array(
@@ -222,7 +227,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		 *
 		 * From woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 		 *
-		 * @version 2.5.9
+		 * @version 5.6.2
 		 * @since   2.5.8
 		 * @param int            $item_id The user defined shortcode item_id.
 		 * @param array | string $the_product The user defined shortcode the_product.
@@ -265,10 +270,10 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					// Get attribute data.
 					if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
 						$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-						$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-						$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
+						$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ); // phpcs:ignore
+						$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value']; // phpcs:ignore
 					} else {
-						$meta['meta_key'] = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
+						$meta['meta_key'] = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key']; // phpcs:ignore
 					}
 					$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
 				}
@@ -535,7 +540,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 				case 'item_debug':
 				case 'debug':
-					return print_r( $item, true );
+					return print_r( $item, true ); // phpcs:ignore
 
 				case 'item_regular_price':
 				case 'product_regular_price':
@@ -555,7 +560,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 				case 'product_categories':
 					return ( is_object( $the_product ) ) ?
-					strip_tags( ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $item['product_id'] ) ) ) :
+					strip_tags( ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $item['product_id'] ) ) ) : // phpcs:ignore
 					'';
 
 				case 'item_tax_class':

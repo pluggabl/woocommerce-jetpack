@@ -1,8 +1,9 @@
 /**
- * wcj-admin.
+ * Wcj-admin.
  *
- * @version 5.5.0
+ * @version 5.6.2
  * @since   5.4.2
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( document ).ready(
@@ -10,13 +11,11 @@ jQuery( document ).ready(
 		/* Quick Links Footer - Popup */
 		let circleBadge = document.querySelector( '.circle-badge' ),
 		subCircles      = document.querySelectorAll( '.subCircles > div' );
-		if (null !== circleBadge) { // ADDED THIS
+		if (null !== circleBadge) { // ADDED THIS.
 			circleBadge.addEventListener( 'click', showCircles );
 			function showCircles() {
 				subCircles.forEach(
-					circle => {
-						circle.classList.toggle( "show" );
-					}
+					circle => { circle.classList.toggle( "show" ); }
 				)
 			};
 		}
@@ -51,9 +50,9 @@ jQuery( document ).ready(
 					function (response) {
 						if (response.success === true) {
 							if (response.data.is_subscribed === false && response.data.email !== "" ) {
-								msgId = 1; // Subscribe to the List
+								msgId = 1; // Subscribe to the List.
 							} else if (response.data.is_subscribed === true) {
-								msgId = 2; // Email already subscribed
+								msgId = 2; // Email already subscribed.
 							}
 						}
 						window.location = redirectUrl + msgId + "#subscribe-email";

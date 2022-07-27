@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Welcome Screen Content
  *
- * @version 5.4.8
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -139,18 +139,22 @@
 						<input class="subscribe-email-btn" type="button" name="submit_email_to_klaviyo" value="Submit">
 					</form>
 					<?php
-					if ( isset( $_REQUEST['msg'] ) ) {
+					$wpnonce = true;
+					if ( function_exists( 'wp_verify_nonce' ) ) {
+						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+					}
+					if ( $wpnonce && isset( $_REQUEST['msg'] ) ) {
 						$subscribe_message    = '';
 						$subscribe_message_id = sanitize_text_field( wp_unslash( $_REQUEST['msg'] ) );
-						if ( 1 === $subscribe_message_id ) {
-							$subscribe_message = 'Thank you for subscribing your email';
-						} elseif ( 2 === $subscribe_message_id ) {
-							$subscribe_message = 'You have already subscribed your email';
-						} elseif ( 3 === $subscribe_message_id ) {
-							$subscribe_message = 'Something went wrong with your subscription. Please after some time !';
+						if ( '1' === $subscribe_message_id ) {
+							$subscribe_message = sprintf( __( 'Thank you for subscribing your email', 'woocommerce-jetpack' ) );
+						} elseif ( '2' === $subscribe_message_id ) {
+							$subscribe_message = sprintf( __( 'You have already subscribed your email', 'woocommerce-jetpack' ) );
+						} elseif ( '3' === $subscribe_message_id ) {
+							$subscribe_message = sprintf( __( 'Something went wrong with your subscription. Please after some time !', 'woocommerce-jetpack' ) );
 						}
 						/* translators: %s: translation added */
-						echo '<p style="color: #f46c5e;">' . wp_kses_post( sprintf( __( '%s', 'woocommerce-jetpack' ), $subscribe_message ) ) . '</p>';
+						echo '<p style="color: #f46c5e;">' . wp_kses_post( $subscribe_message ) . '</p>';
 					}
 					?>
 				</div>

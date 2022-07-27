@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Calculator
  *
- * @version 5.2.0
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -67,7 +67,7 @@ if ( ! class_exists( 'WCJ_Shipping_Calculator' ) ) :
 		/**
 		 * Add_custom_styles.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2
 		 */
 		public function add_custom_styles() {
 			$html = '<style type="text/css">';
@@ -83,7 +83,7 @@ if ( ! class_exists( 'WCJ_Shipping_Calculator' ) ) :
 				}
 			}
 			$html .= '</style>';
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		/**

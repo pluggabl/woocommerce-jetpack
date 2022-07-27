@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Orders List
  *
- * @version 5.6.0
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -90,7 +90,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'type'    => 'select',
 				'options' => array(
 					'no'             => __( 'No', 'woocommerce-jetpack' ),
-					'meta_value'     => __( 'By meta (as text)', 'woocommerce-jetpack' ),
+					'meta_value'     => __( 'By meta (as text)', 'woocommerce-jetpack' ), // phpcs:ignore
 					'meta_value_num' => __( 'By meta (as numbers)', 'woocommerce-jetpack' ),
 				),
 			),

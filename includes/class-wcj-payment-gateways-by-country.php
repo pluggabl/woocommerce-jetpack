@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 4.5.0
+ * @version 5.6.2
  * @since   2.4.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -39,7 +39,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		/**
 		 * Get_location.
 		 *
-		 * @version 4.5.0
+		 * @version 5.6.2
 		 * @since   3.4.0
 		 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
 		 * @param string $type defines the type.
@@ -53,25 +53,25 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 						case 'by_ip':
 							return wcj_get_country_by_ip();
 						case 'shipping':
-							return ( ( ! empty( $_REQUEST['s_country'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_country'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) );
+							return ( ( ! empty( $_REQUEST['s_country'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_country'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 						default: // 'billing'
-							return ( ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country() : '' ) );
+							return ( ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 					}
 				case 'state':
 					$state_type = wcj_get_option( 'wcj_gateways_by_location_state_type', 'billing' );
 					switch ( $state_type ) {
 						case 'shipping':
-							return ( ! empty( $_REQUEST['s_state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_state'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state() : '' ) );
+							return ( ! empty( $_REQUEST['s_state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_state'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 						default: // 'billing'
-							return ( ! empty( $_REQUEST['state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['state'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country_state() : '' ) );
+							return ( ! empty( $_REQUEST['state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['state'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country_state() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 					}
 				case 'postcode':
 					$postcodes_type = wcj_get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' );
 					switch ( $postcodes_type ) {
 						case 'shipping':
-							return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['s_postcode'] ) ) ) : ( ! empty( $_REQUEST['shipping_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['shipping_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
+							return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['s_postcode'] ) ) ) : ( ! empty( $_REQUEST['shipping_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['shipping_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 						default: // 'billing'
-							return ( ! empty( $_REQUEST['postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['postcode'] ) ) ) : ( ! empty( $_REQUEST['billing_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['billing_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
+							return ( ! empty( $_REQUEST['postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['postcode'] ) ) ) : ( ! empty( $_REQUEST['billing_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['billing_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 					}
 			}
 		}
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		/**
 		 * Available_payment_gateways.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2
 		 * @todo    (maybe) rename module to "Payment Gateways by (Customer's) Location"
 		 * @todo    (maybe) check naming, should be `wcj_gateways_by_location_` (however it's too long...)
 		 * @todo    (maybe) code refactoring
@@ -94,24 +94,24 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 			foreach ( $_available_gateways as $key => $gateway ) {
 				if ( '' !== $customer_country ) {
 					$include_countries = wcj_maybe_add_european_union_countries( wcj_get_option( 'wcj_gateways_countries_include_' . $key, '' ) );
-					if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
+					if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries, true ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
 					$exclude_countries = wcj_get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
-					if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries ) ) {
+					if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries, true ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
 				}
 				if ( '' !== $customer_state ) {
 					$include_states = wcj_get_option( 'wcj_gateways_states_include_' . $key, '' );
-					if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states ) ) {
+					if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states, true ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
 					$exclude_states = wcj_get_option( 'wcj_gateways_states_exclude_' . $key, '' );
-					if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states ) ) {
+					if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states, true ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}

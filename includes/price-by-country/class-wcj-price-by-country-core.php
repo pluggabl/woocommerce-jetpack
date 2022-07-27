@@ -2,28 +2,32 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.5.7
+ * @version 5.6.2
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
+if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 
-	class WCJ_Price_by_Country_Core {
+	/**
+	 * WCJ_Price_By_Country_Core.
+	 */
+	class WCJ_Price_By_Country_Core {
 
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @todo    [dev] check if we can just always execute `init()` on `init` hook
 		 */
-		function __construct() {
+		public function __construct() {
 			$this->customer_country_group_id = null;
 			if ( ( 'no' === get_option( 'wcj_price_by_country_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) && ! wcj_is_admin_product_edit_page() ) {
-				if ( in_array( get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ), array( 'by_user_selection', 'by_ip_then_by_user_selection' ) ) ) {
+				if ( in_array( get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ), array( 'by_ip', 'by_user_selection', 'by_ip_then_by_user_selection' ), true ) ) {
 					if ( 'wc' === WCJ_SESSION_TYPE ) {
 						// `init()` executed on `init` hook because we need to use `WC()->session`
 						add_action( 'init', array( $this, 'init' ) );
@@ -39,20 +43,30 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 						$this->add_hooks();
 					}
 				}
-				// `maybe_init_customer_country_by_ip()` executed on `init` hook - in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready
+				// `maybe_init_customer_country_by_ip()` executed on `init` hook - in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready.
 				add_action( 'init', array( $this, 'maybe_init_customer_country_by_ip' ) );
 			}
 		}
 
 		/**
-		 * init.
+		 * Init.
 		 *
-		 * @version 5.0.0
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
-		function init() {
+		public function init() {
 			wcj_session_maybe_start();
-			$req_country = isset( $_REQUEST['wcj-country'] ) && ! empty( $country = $_REQUEST['wcj-country'] ) ? $country : ( isset( $_REQUEST['wcj_country_selector'] ) && ! empty( $country = $_REQUEST['wcj_country_selector'] ) ? $country : null );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$country     = isset( $_REQUEST['wcj-country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) : '';
+			$req_country = null;
+			if ( $wpnonce && ! empty( $country ) ) {
+				$req_country = $country;
+			} elseif ( isset( $_REQUEST['wcj_country_selector'] ) && ! empty( $_REQUEST['wcj_country_selector'] ) ) {
+				$req_country = sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) );
+			}
 			if ( ! empty( $req_country ) ) {
 				wcj_session_set( 'wcj-country', $req_country );
 				do_action( 'wcj_price_by_country_set_country', $req_country, $this->get_currency_by_country( $req_country ) );
@@ -62,28 +76,28 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		/**
 		 * Gets currency by country.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   4.1.0
 		 *
-		 * @param $country
+		 * @param string $country defines the country.
 		 *
 		 * @return bool|mixed|void
 		 */
-		function get_currency_by_country( $country ) {
+		public function get_currency_by_country( $country ) {
 			$group_id              = $this->get_country_group_id( $country );
 			$country_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $group_id );
-			return ( '' != $country_currency_code ? $country_currency_code : false );
+			return ( '' !== $country_currency_code && null !== $country_currency_code ? $country_currency_code : false );
 		}
 
 		/**
 		 * Saves currency on session by country.
 		 *
-		 * @version 4.1.0
+		 * @version 5.6.2
 		 * @since   4.1.0
 		 *
-		 * @param $country
+		 * @param string $country defines the country.
 		 */
-		function save_currency_on_session_by_country( $country ) {
+		public function save_currency_on_session_by_country( $country ) {
 			$currency = $this->get_currency_by_country( $country );
 			if ( ! empty( $currency ) ) {
 				wcj_session_set( 'wcj-currency', $currency );
@@ -91,15 +105,16 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * maybe_init_customer_country_by_ip.
+		 * Maybe_init_customer_country_by_ip.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
-		function maybe_init_customer_country_by_ip() {
+		public function maybe_init_customer_country_by_ip() {
 			if ( 'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 				if ( null === wcj_session_get( 'wcj-country' ) ) {
-					if ( null != ( $country = $this->get_customer_country_by_ip() ) ) {
+					$country = $this->get_customer_country_by_ip();
+					if ( null !== $country && '' !== $country ) {
 						wcj_session_set( 'wcj-country', $country );
 						do_action( 'wcj_price_by_country_set_country', $country, $this->get_currency_by_country( $country ) );
 					}
@@ -108,26 +123,26 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * add_hooks.
+		 * Add_hooks.
 		 *
-		 * @version 5.4.5
+		 * @version 5.6.2
 		 */
-		function add_hooks() {
+		public function add_hooks() {
 
-			// Select with flags
+			// Select with flags.
 			if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_wselect_scripts' ) );
 			}
 
 			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'price_by_country' );
 
-			// Price hooks
+			// Price hooks.
 			wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 
-			// Currency hooks
+			// Currency hooks.
 			add_filter( 'woocommerce_currency', array( $this, 'change_currency_code' ), $this->price_hooks_priority, 1 );
 
-			// Price Filter Widget
+			// Price Filter Widget.
 			if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_product_query_meta_query', array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_price_filter_sql', array( $this, 'woocommerce_price_filter_sql' ), 10, 3 );
@@ -139,7 +154,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 					function ( $query ) {
 						$group_id              = $this->get_customer_country_group_id();
 						$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-						if ( 1 == (float) $country_exchange_rate ) {
+						if ( (float) 1 === (float) $country_exchange_rate ) {
 							return;
 						}
 						wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'order_by_price_asc_post_clauses', 0 );
@@ -156,7 +171,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 				);
 			}
 
-			// Price Format
+			// Price Format.
 			if ( wcj_is_frontend() ) {
 				if ( 'wc_get_price_to_display' === get_option( 'wcj_price_by_country_price_format_method', 'get_price' ) ) {
 					add_filter( 'woocommerce_get_price_including_tax', array( $this, 'format_price_after_including_excluding_tax' ), PHP_INT_MAX, 3 );
@@ -164,32 +179,32 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 				}
 			}
 
-			// Free Shipping
+			// Free Shipping.
 			add_filter( 'woocommerce_shipping_free_shipping_instance_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
 			add_filter( 'woocommerce_shipping_free_shipping_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
 
-			// WooCommerce Points and Rewards plugin
-			add_filter( 'option_' . 'wc_points_rewards_redeem_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
-			add_filter( 'option_' . 'wc_points_rewards_earn_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
+			// WooCommerce Points and Rewards plugin.
+			add_filter( 'option_wc_points_rewards_redeem_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
+			add_filter( 'option_wc_points_rewards_earn_points_ratio', array( $this, 'handle_wc_points_rewards_settings' ) );
 
-			// Auto set default checkout billing country
+			// Auto set default checkout billing country.
 			add_action( 'default_checkout_billing_country', array( $this, 'set_default_checkout_country' ), 900 );
 		}
 
 		/**
-		 * set_default_checkout_country.
+		 * Set_default_checkout_country.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   5.3.0
 		 *
-		 * @param $default_country
+		 * @param string $default_country defins the default country.
 		 *
 		 * @return array|null|string
 		 */
-		function set_default_checkout_country( $default_country ) {
+		public function set_default_checkout_country( $default_country ) {
 			if (
-			'yes' != get_option( 'wcj_price_by_country_set_dft_checkout_billing_country', 'no' ) ||
-			empty( $country = null !== ( $country = wcj_session_get( 'wcj-country' ) ) ? $country : ( $country = $this->get_customer_country_by_ip() ) )
+			'yes' !== get_option( 'wcj_price_by_country_set_dft_checkout_billing_country', 'no' ) ||
+			empty( $country = null !== ( $country = wcj_session_get( 'wcj-country' ) ) ? $country : ( $country = $this->get_customer_country_by_ip() ) ) //phpcs:ignore
 			) {
 				return $default_country;
 			}
@@ -198,16 +213,16 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * handle_wc_points_rewards_settings.
+		 * Handle_wc_points_rewards_settings.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   5.2.0
 		 *
-		 * @param $value
+		 * @param string $value defines the value for points reward.
 		 *
 		 * @return string
 		 */
-		function handle_wc_points_rewards_settings( $value ) {
+		public function handle_wc_points_rewards_settings( $value ) {
 			if (
 			'yes' !== get_option( 'wcj_price_by_country_comp_woo_points_rewards', 'no' )
 			|| empty( $value )
@@ -225,18 +240,18 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * convert_free_shipping_min_amount.
+		 * Convert_free_shipping_min_amount.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
-		 * @param $option
-		 * @param $key
-		 * @param $method
+		 * @param string $option defines the option for shipping.
+		 * @param string $key defines the key for shipping.
+		 * @param string $method defines the method for shipping.
 		 *
 		 * @return mixed
 		 */
-		function convert_free_shipping_min_amount( $option, $key, $method ) {
+		public function convert_free_shipping_min_amount( $option, $key, $method ) {
 			if (
 			'no' === get_option( 'wcj_price_by_country_compatibility_free_shipping', 'no' )
 			|| 'min_amount' !== $key
@@ -250,13 +265,13 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * append_price_filter_post_meta_join.
+		 * Append_price_filter_post_meta_join.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
-		 * @param $sql
-		 * @param $country_group_id
+		 * @param string $sql defines the sql query.
+		 * @param string $country_group_id defines the country group.
 		 *
 		 * @return string
 		 */
@@ -270,12 +285,12 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * get_price_filter_post_meta_join.
+		 * Get_price_filter_post_meta_join.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
-		 * @param $country_group_id
+		 * @param string $country_group_id defines the group id of country.
 		 *
 		 * @return string
 		 */
@@ -285,22 +300,24 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * price_filter_post_clauses_sort.
+		 * Price_filter_post_clauses_sort.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
-		 * @param $args
-		 * @param $wp_query
+		 * @param array  $args defines the arguments.
+		 * @param object $wp_query defines the wp query object.
 		 *
 		 * @return mixed
 		 */
-		function price_filter_post_clauses_sort( $args, $wp_query ) {
+		public function price_filter_post_clauses_sort( $args, $wp_query ) {
+			$group_id              = $this->get_customer_country_group_id();
+			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
 			if (
-			! $wp_query->is_main_query() ||
-			'price' !== $wp_query->get( 'orderby' ) ||
-			empty( $group_id = $this->get_customer_country_group_id() ) ||
-			1 == (float) ( $country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 ) )
+			! $wp_query->is_main_query()
+			|| 'price' !== $wp_query->get( 'orderby' )
+			|| empty( $group_id )
+			|| (float) 1 === (float) $country_exchange_rate
 			) {
 				return $args;
 			}
@@ -318,26 +335,24 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * price_filter_post_clauses.
+		 * Price_filter_post_clauses.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @see WC_Query::price_filter_post_clauses()
 		 *
-		 * @param $args
-		 * @param $wp_query
+		 * @param array  $args defines the arguments.
+		 * @param object $wp_query defines the wp query object.
 		 *
 		 * @return mixed
 		 */
-		function price_filter_post_clauses( $args, $wp_query ) {
+		public function price_filter_post_clauses( $args, $wp_query ) {
 			global $wpdb;
-			if (
-			! $wp_query->is_main_query() ||
-			( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ||
-			empty( $group_id = $this->get_customer_country_group_id() ) ||
-			1 == (float) ( $country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 ) )
-			) {
+			$wpnonce               = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) );
+			$group_id              = $this->get_customer_country_group_id();
+			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
+			if ( ! $wpnonce || ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) || empty( $group_id ) || (float) 1 === (float) $country_exchange_rate ) {
 				return $args;
 			}
 			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
@@ -363,10 +378,10 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		 *
 		 * @see price-slider.js->init_price_filter()
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 */
-		function add_compatibility_with_price_filter_widget() {
+		public function add_compatibility_with_price_filter_widget() {
 			if (
 			! is_active_widget( false, false, 'woocommerce_price_filter' )
 			|| 'no' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' )
@@ -377,7 +392,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 			<?php
 			$group_id      = $this->get_customer_country_group_id();
 			$exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-			if ( $exchange_rate == 1 ) {
+			if ( (string) 1 === $exchange_rate ) {
 				return;
 			}
 			?>
@@ -468,25 +483,27 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * woocommerce_price_filter_sql.
+		 * Woocommerce_price_filter_sql.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   5.1.0
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
 		 *
-		 * @param $sql
-		 * @param $meta_query_sql
-		 * @param $tax_query_sql
+		 * @param string $sql defines the sql query.
+		 * @param string $meta_query_sql defines the meta query sql.
+		 * @param string $tax_query_sql defines the tax query sql.
 		 *
 		 * @return string
 		 */
-		function woocommerce_price_filter_sql( $sql, $meta_query_sql, $tax_query_sql ) {
+		public function woocommerce_price_filter_sql( $sql, $meta_query_sql, $tax_query_sql ) {
+			$group_id              = $this->get_customer_country_group_id();
+			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
 			if (
 			is_admin()
 			|| 'no' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' )
-			|| empty( $group_id = $this->get_customer_country_group_id() )
-			|| 1 == (float) ( $country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 ) )
+			|| empty( $group_id )
+			|| (float) 1 === (float) $country_exchange_rate
 			) {
 				return $sql;
 			}
@@ -528,18 +545,18 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * format_price_after_including_excluding_tax.
+		 * Format_price_after_including_excluding_tax.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   4.4.0
 		 *
-		 * @param $return_price
-		 * @param $qty
-		 * @param $product
+		 * @param string $return_price defines the return price.
+		 * @param int    $qty defines the quantity.
+		 * @param object $product defines the product object.
 		 *
 		 * @return float|int
 		 */
-		function format_price_after_including_excluding_tax( $return_price, $qty, $product ) {
+		public function format_price_after_including_excluding_tax( $return_price, $qty, $product ) {
 			$precision    = get_option( 'woocommerce_price_num_decimals', 2 );
 			$return_price = wcj_price_by_country_rounding( $return_price, $precision );
 			if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $return_price >= 0.5 && $precision > 0 ) {
@@ -549,28 +566,31 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * enqueue_wselect_scripts.
+		 * Enqueue_wselect_scripts.
 		 *
-		 * @version 2.5.4
+		 * @version 5.6.2
 		 * @since   2.5.4
 		 */
-		function enqueue_wselect_scripts() {
-			wp_enqueue_style( 'wcj-wSelect-style', wcj_plugin_url() . '/includes/lib/wSelect/wSelect.css' );
-			wp_enqueue_script( 'wcj-wSelect', wcj_plugin_url() . '/includes/lib/wSelect/wSelect.min.js', array(), false, true );
-			wp_enqueue_script( 'wcj-wcj-wSelect', wcj_plugin_url() . '/includes/js/wcj-wSelect.js', array(), false, true );
+		public function enqueue_wselect_scripts() {
+			wp_enqueue_style( 'wcj-wSelect-style', wcj_plugin_url() . '/includes/lib/wSelect/wSelect.css', array(), w_c_j()->version );
+			wp_enqueue_script( 'wcj-wSelect', wcj_plugin_url() . '/includes/lib/wSelect/wSelect.min.js', array(), w_c_j()->version, true );
+			wp_enqueue_script( 'wcj-wcj-wSelect', wcj_plugin_url() . '/includes/js/wcj-wSelect.js', array(), w_c_j()->version, true );
 		}
 
 		/**
-		 * price_filter_meta_query.
+		 * Price_filter_meta_query.
 		 *
-		 * @version 2.5.3
+		 * @version 5.6.2
 		 * @since   2.5.3
+		 * @param string $meta_query defines the meta query.
+		 * @param string $_wc_query defines the wc query.
 		 */
-		function price_filter_meta_query( $meta_query, $_wc_query ) {
+		public function price_filter_meta_query( $meta_query, $_wc_query ) {
 			foreach ( $meta_query as $_key => $_query ) {
 				if ( isset( $_query['price_filter'] ) && true === $_query['price_filter'] && isset( $_query['key'] ) ) {
-					if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
-						$meta_query[ $_key ]['key'] = '_' . 'wcj_price_by_country_' . $group_id;
+					$group_id = $this->get_customer_country_group_id();
+					if ( null !== $group_id && '' !== $group_id ) {
+						$meta_query[ $_key ]['key'] = '_wcj_price_by_country_' . $group_id;
 					}
 				}
 			}
@@ -578,19 +598,22 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * change_price_grouped.
+		 * Change_price_grouped.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   2.5.0
+		 * @param string $price defines the product price.
+		 * @param string $qty defines the quantity of product.
+		 * @param object $_product defines the product object.
 		 */
-		function change_price_grouped( $price, $qty, $_product ) {
+		public function change_price_grouped( $price, $qty, $_product ) {
 			if ( $_product->is_type( 'grouped' ) ) {
 				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
 					foreach ( $_product->get_children() as $child_id ) {
 						$the_price   = get_post_meta( $child_id, '_price', true );
 						$the_product = wc_get_product( $child_id );
 						$the_price   = wcj_get_product_display_price( $the_product, $the_price, 1 );
-						if ( $the_price == $price ) {
+						if ( (string) $the_price === (string) $price ) {
 							return $this->change_price( $price, $child_id );
 						}
 					}
@@ -602,19 +625,19 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * get_customer_country_by_ip.
+		 * Get_customer_country_by_ip.
 		 *
-		 * @version 3.8.0
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 */
-		function get_customer_country_by_ip() {
+		public function get_customer_country_by_ip() {
 			if ( isset( $this->customer_country_by_ip ) ) {
 				return $this->customer_country_by_ip;
 			}
 			if ( class_exists( 'WC_Geolocation' ) ) {
-				// Get the country by IP
+				// Get the country by IP.
 				$location = WC_Geolocation::geolocate_ip( ( 'wc' === get_option( 'wcj_price_by_country_ip_detection_method', 'wc' ) ? '' : wcj_get_the_ip() ) );
-				// Base fallback
+				// Base fallback.
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
 				}
@@ -628,12 +651,16 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * change_price_shipping.
+		 * Change_price_shipping.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
+		 *
+		 * @param string $package_rates defines the rates of the package.
+		 * @param object $package defines the shipping package object.
 		 */
-		function change_price_shipping( $package_rates, $package ) {
-			if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
+		public function change_price_shipping( $package_rates, $package ) {
+			$group_id = $this->get_customer_country_group_id();
+			if ( null !== $group_id && '' !== $group_id ) {
 				$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
 				return wcj_change_price_shipping_package_rates( $package_rates, $country_exchange_rate );
 			} else {
@@ -642,43 +669,49 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * get_customer_country_group_id.
+		 * Get_customer_country_group_id.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 		 */
-		function get_customer_country_group_id() {
+		public function get_customer_country_group_id() {
 
 			if ( 'yes' === get_option( 'wcj_price_by_country_revert', 'no' ) && is_checkout() ) {
 				$this->customer_country_group_id = -1;
 				return null;
 			}
 
-			// We already know the group - nothing to calculate - return group
+			// We already know the group - nothing to calculate - return group.
 			if (
 			'yes' === get_option( 'wcj_price_by_country_save_country_group_id', 'yes' )
-			&& isset( $this->customer_country_group_id ) && null != $this->customer_country_group_id && $this->customer_country_group_id > 0
+			&& isset( $this->customer_country_group_id ) && null !== $this->customer_country_group_id && $this->customer_country_group_id > 0
 			) {
 				return $this->customer_country_group_id;
 			}
 
-			// Get the country
-			if ( isset( $_GET['country'] ) && '' != $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
-				$country = $_GET['country'];
-			} elseif ( 'no' != ( $override_option = get_option( 'wcj_price_by_country_override_on_checkout_with_billing_country', 'no' ) )
-			&& (
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+
+			// Get the country.
+			$override_option = get_option( 'wcj_price_by_country_override_on_checkout_with_billing_country', 'no' );
+			if ( $wpnonce && isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
+				$country = sanitize_text_field( wp_unslash( $_GET['country'] ) );
+			} elseif ( 'no' !== $override_option && (
 				( 'all' === get_option( 'wcj_price_by_country_override_scope', 'all' ) ) ||
 				( 'checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && is_checkout() )
 			)
 			&& isset( WC()->customer )
-			&& ( ( 'yes' === $override_option && '' != wcj_customer_get_country() ) || ( 'shipping_country' === $override_option && '' != WC()->customer->get_shipping_country() ) )
+			&& ( ( 'yes' === $override_option && '' !== wcj_customer_get_country() ) || ( 'shipping_country' === $override_option && '' !== WC()->customer->get_shipping_country() ) )
 			) {
 				$country = ( 'yes' === $override_option ) ? wcj_customer_get_country() : WC()->customer->get_shipping_country();
 			} else {
+				$session_value = wcj_session_get( 'wcj-country' );
 				if ( 'by_ip' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 					$country = $this->get_customer_country_by_ip();
 				} elseif ( 'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
-					$country = ( null !== ( $session_value = wcj_session_get( 'wcj-country' ) ) ? $session_value : $this->get_customer_country_by_ip() );
+					$country = null !== $session_value ? $session_value : $this->get_customer_country_by_ip();
 				} elseif ( 'by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 					$country = wcj_session_get( 'wcj-country' );
 				} elseif ( 'by_wpml' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
@@ -692,11 +725,11 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 			}
 
 			$this->customer_country_group_id = $this->get_country_group_id( $country );
-			if ( - 1 != $this->customer_country_group_id ) {
+			if ( - 1 >= $this->customer_country_group_id ) {
 				return $this->customer_country_group_id;
 			}
 
-			// No country group found
+			// No country group found.
 			$this->customer_country_group_id = -1;
 			return null;
 		}
@@ -704,15 +737,16 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		/**
 		 * Gets country group id.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   4.1.0
-		 * @param   $country
+		 * @param string $country country code from the group of country.
 		 *
 		 * @return int
 		 */
-		function get_country_group_id( $country ) {
-			// Get the country group id - go through all the groups, first found group is returned
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i ++ ) {
+		public function get_country_group_id( $country ) {
+			// Get the country group id - go through all the groups, first found group is returned.
+			$wcj_price_by_country_total_groups_number = apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
+			for ( $i = 1; $i <= $wcj_price_by_country_total_groups_number; $i ++ ) {
 				switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 					case 'comma_list':
 						$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
@@ -726,7 +760,7 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 						$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' );
 						break;
 				}
-				if ( is_array( $country_exchange_rate_group ) && in_array( $country, $country_exchange_rate_group ) ) {
+				if ( is_array( $country_exchange_rate_group ) && in_array( $country, $country_exchange_rate_group, true ) ) {
 					return $i;
 				}
 			}
@@ -734,39 +768,31 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * change_currency_code.
+		 * Change_currency_code.
+		 *
+		 * @param string $currency contains currency code.
 		 */
-		function change_currency_code( $currency ) {
-			if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
+		public function change_currency_code( $currency ) {
+			$group_id = $this->get_customer_country_group_id();
+			if ( null !== $group_id && '' !== $group_id ) {
 				$country_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $group_id );
-				if ( '' != $country_currency_code ) {
+				if ( null !== $country_currency_code && '' !== $country_currency_code ) {
 					return $country_currency_code;
 				}
 			}
 			return $currency;
 		}
-		/*
-		function change_currency_code( $currency ) {
-		if (
-			null == ( $group_id = $this->get_customer_country_group_id() )
-			|| ( 'no' === get_option( 'wcj_price_by_country_curr_code_admin', 'no' ) && is_admin() )
-		) {
-			return $currency;
-		}
-		$country_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $group_id );
-		if ( '' != $country_currency_code ) {
-			return $country_currency_code;
-		}
-		return $currency;
-		}*/
 
 		/**
-		 * get_variation_prices_hash.
+		 * Get_variation_prices_hash.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2
 		 * @since   2.4.3
+		 * @param array  $price_hash contains price related data.
+		 * @param object $_product object of the product.
+		 * @param bool   $display for_display true/false.
 		 */
-		function get_variation_prices_hash( $price_hash, $_product, $display ) {
+		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
 			$group_id = $this->get_customer_country_group_id();
 			$price_hash['wcj_price_by_country_group_id_data'] = array(
 				$group_id,
@@ -783,18 +809,22 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 		}
 
 		/**
-		 * change_price.
+		 * Change_price.
 		 *
-		 * @version 5.5.7
+		 * @version 5.6.2
+		 * @param string $price defines the price for conversion.
+		 * @param object $product Product Object.
 		 */
-		function change_price( $price, $product ) {
-			if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
+		public function change_price( $price, $product ) {
+			$group_id = $this->get_customer_country_group_id();
+			if ( null !== $group_id && '' !== $group_id ) {
+				$product_generated_cart_id = WC()->cart->generate_cart_id( wcj_get_product_id( $product ) );
 				if ( 'yes' === get_option( 'wcj_price_by_country_compatibility_woo_discount_rules', 'no' ) ) {
 					global $flycart_woo_discount_rules;
 					if (
 					! empty( $flycart_woo_discount_rules ) &&
 					! has_action( 'woocommerce_before_calculate_totals', array( $flycart_woo_discount_rules, 'applyDiscountRules' ) )
-					&& ( $product_cart_id = WC()->cart->generate_cart_id( wcj_get_product_id( $product ) ) ) &&
+					&& ( $product_cart_id = $product_generated_cart_id ) && //phpcs:ignore
 					WC()->cart->find_product_in_cart( $product_cart_id )
 					) {
 						return $price;
@@ -833,11 +863,11 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Core' ) ) :
 
 				return $new_price;
 			}
-			// No changes
+			// No changes.
 			return $price;
 		}
 	}
 
 endif;
 
-return new WCJ_Price_by_Country_Core();
+return new WCJ_Price_By_Country_Core();

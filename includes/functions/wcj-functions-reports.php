@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Reports
  *
- * @version 3.2.4
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,12 +16,12 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 	/**
 	 * Wcj_get_product_sales_daily_report_columns.
 	 *
-	 * @version 2.9.0
+	 * @version 5.6.2
 	 * @since   2.9.0
 	 */
 	function wcj_get_product_sales_daily_report_columns() {
 		return array(
-			'gmdate'                 => __( 'gmdate', 'woocommerce-jetpack' ),
+			'date'                   => __( 'date', 'woocommerce-jetpack' ),
 			'daily_total_sum'        => __( 'Daily Total Sum', 'woocommerce-jetpack' ),
 			'daily_total_quantity'   => __( 'Daily Total Quantity', 'woocommerce-jetpack' ),
 			'product_id'             => __( 'Product ID', 'woocommerce-jetpack' ),
@@ -29,7 +29,7 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 			'item_quantity'          => __( 'Quantity', 'woocommerce-jetpack' ),
 			'sum'                    => __( 'Sum', 'woocommerce-jetpack' ),
 			'profit'                 => __( 'Profit', 'woocommerce-jetpack' ),
-			'last_sale'              => __( 'Last Sale gmdate', 'woocommerce-jetpack' ),
+			'last_sale'              => __( 'Last Sale date', 'woocommerce-jetpack' ),
 			'last_sale_order_id'     => __( 'Last Sale Order ID', 'woocommerce-jetpack' ),
 			'last_sale_order_status' => __( 'Last Sale Order Status', 'woocommerce-jetpack' ),
 		);
@@ -40,11 +40,11 @@ if ( ! function_exists( 'wcj_get_reports_standard_ranges' ) ) {
 	/**
 	 * Wcj_get_reports_standard_ranges.
 	 *
-	 * @version 3.2.4
+	 * @version 5.6.2
 	 * @since   2.9.0
 	 */
 	function wcj_get_reports_standard_ranges() {
-		$current_time = (int) current_time( 'timestamp' );
+		$current_time = (int) gmdate( 'U' );
 		return array(
 			'year'        => array(
 				'title'      => __( 'Year', 'woocommerce' ),
@@ -74,12 +74,12 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 	/**
 	 * Wcj_get_reports_custom_ranges.
 	 *
-	 * @version 3.2.4
+	 * @version 5.6.2
 	 * @since   2.9.0
 	 * @todo    fix `-1 month` - sometimes it produces the wrong result (e.g. on current gmdate = "2018.03.30")
 	 */
 	function wcj_get_reports_custom_ranges() {
-		$current_time = (int) current_time( 'timestamp' );
+		$current_time = (int) gmdate( 'U' );
 		return array(
 			'last_14_days'         => array(
 				'title'      => __( 'Last 14 days', 'woocommerce-jetpack' ),

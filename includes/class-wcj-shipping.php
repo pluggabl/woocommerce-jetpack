@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Shipping
  *
- * @version 4.7.1
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -54,13 +54,13 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		 * @since   4.5.0
 		 */
 		public function init_template_class() {
-			require_once 'shipping/class-wc-shipping-wcj-custom.php';
+			require_once 'shipping/class-wc-shipping-wcj-custom-template.php';
 		}
 
 		/**
 		 * Init_shipping_zones_class
 		 *
-		 * @version 4.5.0
+		 * @version 5.6.2
 		 * @since   4.5.0
 		 */
 		public function init_shipping_zones_class() {

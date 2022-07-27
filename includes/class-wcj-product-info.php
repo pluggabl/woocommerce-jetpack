@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Info V1 (Deprecated)
  *
- * @version 2.8.0
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @deprecated
  * @package Booster_For_WooCommerce/includes
@@ -155,9 +155,9 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		public function add_product_info_filters( $single_or_archive ) {
 			// Product Info.
 			if ( ( 'yes' === wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_enabled' ) ) &&
-			( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive ) ) &&
-			( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ) ) &&
-			( '' != wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) ) ) {
+			( '' !== wcj_get_option( 'wcj_product_info_on_' . $single_or_archive ) ) &&
+			( '' !== wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ) ) &&
+			( '' !== wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) ) ) {
 				add_action( wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter' ), array( $this, 'product_info' ), wcj_get_option( 'wcj_product_info_on_' . $single_or_archive . '_filter_priority' ) );
 			}
 			// More product Info.
@@ -215,14 +215,14 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		/**
 		 * Apply_product_info_short_codes.
 		 *
-		 * @version 2.4.0
+		 * @version 5.6.2
 		 * @param string | array $the_product_info defines the the_product_info.
 		 * @param string         $remove_on_empty defines the remove_on_empty.
 		 */
 		public function apply_product_info_short_codes( $the_product_info, $remove_on_empty ) {
 
 			$product_ids_to_exclude = wcj_get_option( 'wcj_product_info_products_to_exclude', '' );
-			if ( '' != $product_ids_to_exclude ) {
+			if ( '' !== $product_ids_to_exclude ) {
 				$product_ids_to_exclude = str_replace( ' ', '', $product_ids_to_exclude );
 				$product_ids_to_exclude = explode( ',', $product_ids_to_exclude );
 				$product_id             = get_the_ID();
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 				}
 			}
 
-			if ( '' == $the_product_info ) {
+			if ( '' === $the_product_info ) {
 				return;
 			}
 
@@ -295,10 +295,11 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		 * @param array  $settings defines the settings.
 		 * @param string $single_or_archive defines the single_or_archive.
 		 *
-		 * @version 2.4.0
+		 * @version 5.6.2
 		 */
 		public function admin_add_product_info_fields( &$settings, $single_or_archive ) {
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
+			$wcj_more_product_info_on = apply_filters( 'booster_option', 4, wcj_get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) );
+			for ( $i = 1; $i <= $wcj_more_product_info_on; $i++ ) {
 				$field_id      = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i;
 				$default_value = '';
 				switch ( $i ) {

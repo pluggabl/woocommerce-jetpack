@@ -1,8 +1,10 @@
 /**
- * wcj-ajax-exchange-rates.js
+ * Wcj-ajax-exchange-rates.js
  *
- * @version 5.3.6
+ * @version 5.6.2
+ * @package Booster_For_WooCommerce/includes/JS
  */
+
 jQuery( document ).ready(
 	function() {
 		jQuery( ".exchage_rate_button" ).click(

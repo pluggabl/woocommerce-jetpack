@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Upsells
  *
- * @version 5.2.0
+ * @version 5.6.2
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -88,7 +88,7 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 		/**
 		 * Upsell_ids.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @param int   $ids Get ids.
 		 * @param Array $_product Get products.
@@ -98,7 +98,7 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 			if ( ! empty( $global_upsells ) ) {
 				$global_upsells = array_unique( $global_upsells );
 				$product_id     = wcj_get_product_id_or_variation_parent_id( $_product );
-				$key            = array_search( $product_id, $global_upsells );
+				$key            = array_search( $product_id, $global_upsells, true );
 				if ( false !== ( $key ) ) {
 					unset( $global_upsells[ $key ] );
 				}
@@ -122,27 +122,27 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 		/**
 		 * Upsells_columns.
 		 *
-		 * @version 3.5.3
+		 * @version 5.6.2
 		 * @since   3.5.3
 		 * @todo    (maybe) check for `isset( $args['columns'] )`
 		 * @param array $columns defines the columns.
 		 */
 		public function upsells_columns( $columns ) {
 			$_columns = wcj_get_option( 'wcj_upsells_columns', 0 );
-			return ( 0 != ( $_columns ) ? $_columns : $columns );
+			return ( 0 !== ( $_columns ) ? $_columns : $columns );
 		}
 
 		/**
 		 * Upsells_total.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.2
 		 * @since   3.5.3
 		 * @todo    (maybe) check for `isset( $args['posts_per_page'] )`
 		 * @param int $limit defines the limit.
 		 */
 		public function upsells_total( $limit ) {
 			$_limit = wcj_get_option( 'wcj_upsells_total', 0 );
-			return ( 0 != ( $_limit ) ? $_limit : $limit );
+			return ( 0 !== ( $_limit ) ? $_limit : $limit );
 		}
 
 	}

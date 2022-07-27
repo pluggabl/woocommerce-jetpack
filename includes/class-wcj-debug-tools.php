@@ -2,8 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Debug Tools
  *
- * @version 5.5.9
- * @version 4.1.0
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -46,11 +45,15 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 		/**
 		 * Create_debug_tools_tool.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2
 		 */
 		public function create_debug_tools_tool() {
 			// Delete log.
-			if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( $wpnonce && isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
 				update_option( 'wcj_log', '' );
 				if ( wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_log' ) ) ) ) {
 					exit;
@@ -84,7 +87,7 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 		/**
 		 * Get_system_info_table_array.
 		 *
-		 * @version 4.1.0
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @todo    [feature] (maybe) 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE'
 		 */
@@ -103,7 +106,11 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 			foreach ( $constants_array as $the_constant ) {
 				$system_info[] = array( $the_constant, ( defined( $the_constant ) ? constant( $the_constant ) : __( 'NOT DEFINED', 'woocommerce-jetpack' ) ) );
 			}
-			if ( isset( $_GET['wcj_debug'] ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( isset( $_GET['wcj_debug'] ) && $wpnonce ) {
 				foreach ( $_SERVER as $server_var_id => $server_var_value ) {
 					$system_info[] = array( $server_var_id, esc_html( $server_var_value ) );
 				}

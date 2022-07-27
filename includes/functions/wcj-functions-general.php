@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -124,7 +124,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 	/**
 	 * Wcj_send_file.
 	 *
-	 * @version 3.5.0
+	 * @version 5.6.2
 	 * @since   3.5.0
 	 * @todo    use where needed
 	 * @todo    add more cases for `$file_type`
@@ -137,7 +137,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 		switch ( $file_type ) {
 			default: // 'zip'
 				header( 'Content-Type: application/octet-stream' );
-				header( 'Content-Disposition: attachment; filename=' . urlencode( $file_name ) );
+				header( 'Content-Disposition: attachment; filename=' . rawurlencode( $file_name ) );
 				header( 'Content-Type: application/octet-stream' );
 				header( 'Content-Type: application/download' );
 				header( 'Content-Description: File Transfer' );
@@ -145,15 +145,15 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 				break;
 		}
 		flush(); // this doesn't really matter.
-		$fp = fopen( $file_path, 'r' );
+		$fp = fopen( $file_path, 'r' ); //phpcs:ignore
 		if ( false !== ( $fp ) ) {
 			while ( ! feof( $fp ) ) {
-				echo fread( $fp, 65536 );
+				echo fread( $fp, 65536 ); //phpcs:ignore
 				flush(); // this is essential for large downloads.
 			}
-			fclose( $fp );
+			fclose( $fp ); //phpcs:ignore
 			if ( $do_clean_up ) {
-				@unlink( $file_path );
+				@unlink( $file_path ); //phpcs:ignore
 			}
 			exit();
 		} else {
@@ -221,7 +221,7 @@ if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 	 * @param   string $params defines the params.
 	 */
 	function wcj_tcpdf_method( $method, $params ) {
-		return '<tcpdf method="' . $method . '" wcj_tcpdf_method_params_start' . serialize( $params ) . 'wcj_tcpdf_method_params_end />';
+		return '<tcpdf method="' . $method . '" wcj_tcpdf_method_params_start' . serialize( $params ) . 'wcj_tcpdf_method_params_end />'; //phpcs:ignore
 	}
 }
 
@@ -436,19 +436,23 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	/**
 	 * Wcj_maybe_add_date_query.
 	 *
-	 * @version 3.0.0
+	 * @version 5.6.2
 	 * @since   3.0.0
 	 * @param   array $args defines the args.
 	 */
 	function wcj_maybe_add_date_query( $args ) {
-		if ( ( isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
+		$wpnonce = true;
+		if ( function_exists( 'wp_verify_nonce' ) ) {
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+		}
+		if ( ( $wpnonce && isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
 			$date_query              = array();
 			$date_query['inclusive'] = true;
-			if ( $_GET['start_date'] && '' !== $_GET['start_date'] ) {
-				$date_query['after'] = $_GET['start_date'];
+			if ( isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) {
+				$date_query['after'] = sanitize_text_field( wp_unslash( $_GET['start_date'] ) );
 			}
-			if ( $_GET['end_date'] && '' !== $_GET['end_date'] ) {
-				$date_query['before'] = $_GET['end_date'];
+			if ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) {
+				$date_query['before'] = sanitize_text_field( wp_unslash( $_GET['end_date'] ) );
 			}
 			$args['date_query'] = array( $date_query );
 		}
@@ -496,12 +500,12 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	/**
 	 * Wcj_customer_get_country.
 	 *
-	 * @version 2.8.0
+	 * @version 5.6.2
 	 * @since   2.8.0
 	 * @todo    (maybe) move to `wcj-functions-users.php`
 	 */
 	function wcj_customer_get_country() {
-		return ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
+		return (string) ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
 	}
 }
 
@@ -522,11 +526,11 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 	/**
 	 * Wcj_is_bot.
 	 *
-	 * @version 3.9.0
+	 * @version 5.6.2
 	 * @since   2.5.6
 	 */
 	function wcj_is_bot() {
-		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) );
+		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) );
 	}
 }
 
@@ -560,7 +564,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
 	 * Wcj_variation_radio_button.
 	 *
-	 * @version 3.1.0
+	 * @version 5.6.2
 	 * @since   2.4.8
 	 * @todo    (maybe) check - maybe we can use `$variation['variation_description']` instead of `get_post_meta( $variation_id, '_variation_description', true )`
 	 * @param   array $_product defines the _product.
@@ -579,8 +583,8 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 				$attribute_name = substr( $attribute_full_name, strlen( $prefix ) );
 			}
 			// Checked.
-			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ?
-				wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
+			$checked = ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ? // phpcs:ignore WordPress.Security.NonceVerification
+				wc_clean( sanitize_text_field( wp_unslash( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ) : $_product->get_variation_default_attribute( $attribute_name ); // phpcs:ignore WordPress.Security.NonceVerification
 			if ( $checked !== $attribute_value ) {
 				$is_checked = false;
 			}
@@ -680,7 +684,7 @@ if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
 	 */
 	function wcj_maybe_unserialize_and_implode( $value, $glue = ' ' ) {
 		if ( is_serialized( $value ) ) {
-			$value = unserialize( $value );
+			$value = unserialize( $value ); //phpcs:ignore
 			if ( is_array( $value ) ) {
 				$value = implode( $glue, $value );
 			}
@@ -731,7 +735,7 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 	 * Used by admin settings page.
 	 *
 	 * @return array|null|object
-	 * @version 2.3.10
+	 * @version 5.6.2
 	 * @since   2.3.10
 	 * @param   string $tax_class defines the tax_class.
 	 */
@@ -739,8 +743,8 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 		global $wpdb;
 
 		// Get all the rates and locations. Snagging all at once should significantly cut down on the number of queries.
-		$rates     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;", sanitize_title( $tax_class ) ) );
-		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" );
+		$rates     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;", sanitize_title( $tax_class ) ) ); // WPCS: db call ok and cache ok.
+		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" ); // WPCS: db call ok and cache ok.
 
 		// Set the rates keys equal to their ids.
 		$rates = array_combine( wp_list_pluck( $rates, 'tax_rate_id' ), $rates );
@@ -790,15 +794,15 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	/**
 	 * Wcj_is_frontend()
 	 *
-	 * @since  4.0.0
+	 * @since  5.6.2
 	 * @return boolean
 	 */
 	function wcj_is_frontend() {
 		if ( ! is_admin() ) {
 			return true;
 		} elseif ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array(
-				$_REQUEST['action'],
+			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array( // phpcs:ignore WordPress.Security.NonceVerification
+				$_REQUEST['action'], // phpcs:ignore WordPress.Security.NonceVerification
 				array(
 					'woocommerce_load_variations',
 				),
@@ -1031,7 +1035,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 5.6.1
+	 * @version 5.6.2
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1039,33 +1043,34 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	function wcj_add_allowed_html( $allowed_html, $context ) {
 		$allowed_extra_html  = array(
 			'input'    => array(
-				'type'        => true,
-				'name'        => true,
-				'value'       => true,
-				'id'          => true,
-				'checked'     => true,
-				'class'       => true,
-				'style'       => true,
-				'placeholder' => true,
-				'dateformat'  => true,
-				'mindate'     => true,
-				'maxdate'     => true,
-				'firstday'    => true,
-				'display'     => true,
-				'required'    => true,
-				'min'         => true,
-				'max'         => true,
-				'disabled'    => true,
-				'onchange'    => true,
-				'step'		  => true,
-				'changeyear'  => true,
-				'yearrange'   => true,
-				'timeformat'  => true,
-				'interval'    => true,
-				'readonly'    => true,
+				'type'                      => true,
+				'name'                      => true,
+				'value'                     => true,
+				'id'                        => true,
+				'checked'                   => true,
+				'class'                     => true,
+				'style'                     => true,
+				'placeholder'               => true,
+				'dateformat'                => true,
+				'mindate'                   => true,
+				'maxdate'                   => true,
+				'firstday'                  => true,
+				'display'                   => true,
+				'required'                  => true,
+				'min'                       => true,
+				'max'                       => true,
+				'disabled'                  => true,
+				'onchange'                  => true,
+				'step'                      => true,
+				'changeyear'                => true,
+				'yearrange'                 => true,
+				'timeformat'                => true,
+				'interval'                  => true,
+				'readonly'                  => true,
 				'data-blocked_dates'        => true,
 				'currentday_time_limit'     => true,
 				'data-blocked_dates_format' => true,
+				'onclick'                   => true,
 			),
 			'textarea' => array(
 				'name'        => true,
@@ -1133,10 +1138,12 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'type' => true,
 			),
 			'a'        => array(
-				'onclick'  => true,
-				'onblur'   => true,
-				'onfocus'  => true,
-				'onchange' => true,
+				'onclick'       => true,
+				'onblur'        => true,
+				'onfocus'       => true,
+				'onchange'      => true,
+				'target'        => true,
+				'wcj-copy-data' => true,
 			),
 			'button'   => array(
 				'wcj_data' => true,

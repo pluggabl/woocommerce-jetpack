@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 5.5.9
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -223,14 +223,18 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter_shop_order_multiple_statuses_not_completed_link.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */
 		public function filter_shop_order_multiple_statuses_not_completed_link( $query ) {
-			if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) {
+			if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) {
 				if ( wcj_current_user_can( 'edit_others_pages' ) ) {
-					if ( isset( $_GET['post_status'] ) && false !== strpos( sanitize_text_field( wp_unslash( $_GET['post_status'] ) ), ',' ) ) {
+					$wpnonce = true;
+					if ( function_exists( 'wp_verify_nonce' ) ) {
+						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+					}
+					if ( $wpnonce && isset( $_GET['post_status'] ) && false !== strpos( sanitize_text_field( wp_unslash( $_GET['post_status'] ) ), ',' ) ) {
 						$post_statuses                    = explode( ',', sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) );
 						$query->query['post_status']      = $post_statuses;
 						$query->query_vars['post_status'] = $post_statuses;
@@ -242,12 +246,16 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Multiple_shop_order_statuses.
 		 *
-		 * @version 3.7.0
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param string $type defines the type.
 		 */
 		public function multiple_shop_order_statuses( $type ) {
-			$checked_post_statuses = isset( $_GET['wcj_admin_filter_statuses'] ) ? $_GET['wcj_admin_filter_statuses'] : array();
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			$checked_post_statuses = $wpnonce && isset( $_GET['wcj_admin_filter_statuses'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_GET['wcj_admin_filter_statuses'] ) ) : array();
 			$html                  = '';
 			$html                 .= ( 'checkboxes' === $type ) ?
 				'<span id="wcj_admin_filter_shop_order_statuses">' :
@@ -258,7 +266,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 				if ( $total_number > 0 ) {
 					$html .= ( 'checkboxes' === $type ) ?
 						'<input type="checkbox" name="wcj_admin_filter_statuses[]" style="width:16px;height:16px;" value="' . $status_id . '"' .
-						checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' :
+						checked( in_array( $status_id, $checked_post_statuses, true ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' :
 						'<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses, true ), true, false ) . '>' .
 						$status_title . ' (' . $total_number . ') </option>';
 				}
@@ -286,15 +294,19 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter_shop_order_multiple_statuses.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */
 		public function filter_shop_order_multiple_statuses( $query ) {
-			if ( isset( $_SERVER['REQUEST_URI'] ) && ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) {
+			if ( isset( $_SERVER['REQUEST_URI'] ) && ( false !== strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) {
 				if ( wcj_current_user_can( 'edit_others_pages' ) ) {
-					if ( isset( $_GET['wcj_admin_filter_statuses'] ) ) {
-						$post_statuses                    = $_GET['wcj_admin_filter_statuses'];
+					$wpnonce = true;
+					if ( function_exists( 'wp_verify_nonce' ) ) {
+						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+					}
+					if ( $wpnonce && isset( $_GET['wcj_admin_filter_statuses'] ) ) {
+						$post_statuses                    = array_map( 'sanitize_text_field', wp_unslash( $_GET['wcj_admin_filter_statuses'] ) );
 						$query->query['post_status']      = $post_statuses;
 						$query->query_vars['post_status'] = $post_statuses;
 					}
@@ -305,7 +317,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter the orders in admin based on options.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2
 		 * @access  public
 		 * @param   mixed $query defines the query.
 		 * @return  void
@@ -315,16 +327,20 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 			if ( 'shop_order' !== $typenow ) {
 				return;
 			}
-			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) && isset( $_GET['country'] ) && 'all' !== $_GET['country'] ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			if ( $wpnonce && 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) && isset( $_GET['country'] ) && 'all' !== $_GET['country'] ) {
 				$query->query_vars['meta_query'][] = array(
 					'key'   => '_billing_country',
-					'value' => $_GET['country'],
+					'value' => sanitize_text_field( wp_unslash( $_GET['country'] ) ),
 				);
 			}
-			if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) && isset( $_GET['currency'] ) && 'all' !== $_GET['currency'] ) {
+			if ( $wpnonce && 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) && isset( $_GET['currency'] ) && 'all' !== $_GET['currency'] ) {
 				$query->query_vars['meta_query'][] = array(
 					'key'   => '_order_currency',
-					'value' => $_GET['currency'],
+					'value' => sanitize_text_field( wp_unslash( $_GET['currency'] ) ),
 				);
 			}
 		}
@@ -332,12 +348,16 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filters for post types.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2
 		 */
 		public function restrict_manage_posts() {
 			global $typenow, $wp_query;
-			if ( in_array( $typenow, wc_get_order_types( 'order-meta-boxes' ) ) ) {
-				if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
+			if ( in_array( $typenow, wc_get_order_types( 'order-meta-boxes' ), true ) ) {
+				$wpnonce = true;
+				if ( function_exists( 'wp_verify_nonce' ) ) {
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+				}
+				if ( $wpnonce && 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 					$selected_coutry = isset( $_GET['country'] ) ? sanitize_text_field( wp_unslash( $_GET['country'] ) ) : 'all';
 					$countries       = array_merge( array( 'all' => __( 'All countries', 'woocommerce-jetpack' ) ), wcj_get_countries() );
 					echo '<select id="country" name="country">';
@@ -346,8 +366,8 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 					}
 					echo '</select>';
 				}
-				if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
-					$selected_currency = isset( $_GET['currency'] ) ? $_GET['currency'] : 'all';
+				if ( $wpnonce && 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+					$selected_currency = isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : 'all';
 					$currencies        = array_merge( array( 'all' => __( 'All currencies', 'woocommerce-jetpack' ) ), wcj_get_woocommerce_currencies_and_symbols() );
 					echo '<select id="currency" name="currency">';
 					foreach ( $currencies as $code => $name ) {

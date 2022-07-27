@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Custom Visibility
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2
 		 * @since   3.2.4
 		 */
 		public function __construct() {
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 			$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Custom Visibility" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . '<br>' .
 			sprintf(
 				/* translators: %s: translation added */
-				__( 'You can add selection drop box to frontend with "%s" widget (set "Product custom visibility" as "Selector Type") or %s shortcode.', 'woocommerce-jetpack' ),
+				__( 'You can add selection drop box to frontend with "%1$s" widget (set "Product custom visibility" as "Selector Type") or %2$s shortcode.', 'woocommerce-jetpack' ),
 				__( 'Booster - Selector', 'woocommerce-jetpack' ),
 				'<code>[wcj_selector selector_type="product_custom_visibility"]</code>'
 			);
@@ -78,12 +78,17 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		/**
 		 * Save_selection_in_session.
 		 *
-		 * @version 3.2.4
+		 * @version 5.6.2
 		 * @since   3.2.4
 		 */
 		public function save_selection_in_session() {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+
 			wcj_session_maybe_start();
-			if ( isset( $_REQUEST['wcj_product_custom_visibility_selector'] ) ) {
+			if ( isset( $_REQUEST['wcj_product_custom_visibility_selector'] ) && $wpnonce ) {
 				wcj_session_set( 'wcj_selected_product_custom_visibility', sanitize_text_field( wp_unslash( $_REQUEST['wcj_product_custom_visibility_selector'] ) ) );
 			}
 		}

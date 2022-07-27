@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Time
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		 */
 		public function parse_time( $value ) {
 			$value = explode( '~', $value );
-			if ( 2 != count( $value ) ) {
+			if ( 2 !== count( $value ) ) {
 				return false;
 			}
 			$time_from = strtotime( $value[0] );
@@ -99,7 +99,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2
 		 * @since   4.0.0
 		 * @param  string $options_id defines the options_id.
 		 * @param  array  $values defines the values.
@@ -111,10 +111,10 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 				case 'time':
 					$parsed_time = $this->parse_time( $values );
 					if ( $parsed_time ) {
-						$current_time = (int) current_time( 'timestamp' );
+						$current_time = (int) gmdate( 'U' );
 						return ( $current_time >= $parsed_time['time_from'] && $current_time <= $parsed_time['time_to'] );
 					}
-					return ( 'include' == $include_or_exclude ); // not parsable time input - leaving shipping method enabled.
+					return ( 'include' === $include_or_exclude ); // not parsable time input - leaving shipping method enabled.
 			}
 		}
 
@@ -145,8 +145,8 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 				$parsed_time = $this->parse_time( $values );
 				if ( $parsed_time ) {
 					return '. ' . sprintf(
-						/* translators: %s: translators Added */
-						__( 'According to current time, your time input will be parsed as: from %s to %s.', 'woocommerce-jetpack' ),
+						/* translators: %1$s,%2$s: translators Added */
+						__( 'According to current time, your time input will be parsed as: from %1$s to %2$s.', 'woocommerce-jetpack' ),
 						'<code>' . gmdate( 'Y-m-d H:i:s', $parsed_time['time_from'] ) . '</code>',
 						'<code>' . gmdate( 'Y-m-d H:i:s', $parsed_time['time_to'] ) . '</code>'
 					);

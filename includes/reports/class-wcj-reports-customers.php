@@ -37,7 +37,11 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		 * Get_report function.
 		 */
 		public function get_report() {
-			$report_type = isset( $_GET['country'] ) ? $_GET['country'] : 'all_countries';
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$report_type = $wpnonce && isset( $_GET['country'] ) ? sanitize_text_field( wp_unslash( $_GET['country'] ) ) : 'all_countries';
 
 			$html = '';
 

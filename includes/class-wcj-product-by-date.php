@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 5.2.0
+ * @version 5.6.2
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @todo    per category
 		 * @todo    per tag
@@ -36,8 +36,7 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 			$this->desc_pro   = __( 'Set product availability by date.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-product-availability-by-date';
 			parent::__construct();
-
-			$this->time_now = current_time( 'timestamp' );
+			$this->time_now = (int) gmdate( 'U' );
 
 			if ( $this->is_enabled() ) {
 				// Per product meta box.

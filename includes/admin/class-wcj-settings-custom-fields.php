@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_exchange_rate_settings_button.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2
 		 * @param  Array $value Get values.
 		 */
 		public function output_exchange_rate_settings_button( $value ) {
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			$description          = '';
 			$exchange_rate_server = wcj_get_currency_exchange_rate_server_name( $value['custom_attributes_button']['currency_from'], $value['custom_attributes_button']['currency_to'] );
 			/* translators: %s: translation added */
-			$value_title = sprintf( __( 'Grab raw %s rate from %s.', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server ) .
+			$value_title = sprintf( __( 'Grab raw %1$s rate from %2$s.', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server ) .
 			' ' . __( 'Doesn\'t apply rounding, offset etc.', 'woocommerce-jetpack' );
 			?>
 		<tr valign="top">
@@ -156,7 +156,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_wcj_number_plus_checkbox_start.
 		 *
-		 * @version 2.8.0
+		 * @version 5.6.2
 		 * @since   2.8.0
 		 * @param  Array $value Get values.
 		 */
@@ -170,7 +170,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			}
 			// Description handling.
 			$field_description = WC_Admin_Settings::get_field_description( $value );
-			extract( $field_description );
+			extract( $field_description ); //phpcs:ignore
 			// Option value.
 			$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
 			// Output.
@@ -212,7 +212,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			}
 			// Description handling.
 			$field_description = WC_Admin_Settings::get_field_description( $value );
-			extract( $field_description );
+			extract( $field_description ); //phpcs:ignore
 			// Option value.
 			$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
 			// Output.
@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_custom_textarea.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2
 		 * @since   2.2.6
 		 * @param  Array $value Get values.
 		 */
@@ -265,7 +265,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		<tr valign="top">
 			<th scope="row" class="titledesc">
 				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-				<?php echo $tooltip_html; ?>
+				<?php echo $tooltip_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> 
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php echo wp_kses_post( $description ); ?>
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_module_tools.
 		 *
-		 * @version 2.7.0
+		 * @version 5.6.2
 		 * @since   2.2.3
 		 * @param  Array $value Get values.
 		 */
@@ -299,7 +299,11 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php
-				if ( isset( $_GET['section'] ) ) {
+				$wpnonce = true;
+				if ( function_exists( 'wp_verify_nonce' ) ) {
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+				}
+				if ( $wpnonce && isset( $_GET['section'] ) ) {
 					do_action( 'wcj_module_tools_' . sanitize_text_field( wp_unslash( $_GET['section'] ) ) );}
 				?>
 			</td>

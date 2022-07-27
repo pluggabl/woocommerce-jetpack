@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.5.8
+ * @version 5.6.2
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -555,7 +555,7 @@ if ( ! function_exists( 'wc_get_variable_product_purchase_price' ) ) {
 	/**
 	 * Wc_get_product_purchase_price.
 	 *
-	 * @version 4.2.0
+	 * @version 5.6.2
 	 * @since   4.2.0
 	 * @param   int   $product_id defines the product_id.
 	 * @param   array $args defines the args.
@@ -581,7 +581,9 @@ if ( ! function_exists( 'wc_get_variable_product_purchase_price' ) ) {
 		$final_purchase_prices = array();
 		switch ( $args['search'] ) {
 			case 'min_variation':
-				$final_purchase_prices = array( min( $purchase_prices ) );
+				if ( ! empty( $purchase_prices ) ) {
+					$final_purchase_prices = array( min( $purchase_prices ) );
+				}
 				break;
 			case 'max_variation':
 				$final_purchase_prices = array( max( $purchase_prices ) );

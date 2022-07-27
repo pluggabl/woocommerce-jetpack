@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 5.3.6
+ * @version 5.6.2
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -35,8 +35,16 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Get_export_orders_row.
 		 *
-		 * @version 5.3.6
+		 * @version 5.6.2
 		 * @since   2.5.9
+		 * @param array  $fields_ids defines the order field ids.
+		 * @param int    $order_id defines the order id.
+		 * @param object $order defines the order object.
+		 * @param object $items defines the order items.
+		 * @param array  $items_product_input_fields defines the items product input fields.
+		 * @param object $item defines the order item.
+		 * @param int    $item_id defines the order item id.
+		 *
 		 * @todo    added precisions to the price fields.
 		 */
 		public function get_export_orders_row( $fields_ids, $order_id, $order, $items, $items_product_input_fields, $item, $item_id ) {
@@ -62,7 +70,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 						$row[] = wcj_get_product_input_fields( $item );
 						break;
 					case 'item-debug':
-						$row[] = '<pre>' . print_r( $item, true ) . '</pre>';
+						$row[] = '<pre>' . print_r( $item, true ) . '</pre>'; //phpcs:ignore
 						break;
 					case 'item-name':
 						$row[] = $item['name'];
@@ -210,12 +218,17 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2
 		 * @since   2.4.8
+		 * @param object $fields_helper defines the fields helper.
+		 *
 		 * @todo    (maybe) metainfo as separate column
 		 */
 		public function export_orders( $fields_helper ) {
-
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			// Standard Fields.
 			$all_fields = $fields_helper->get_order_export_fields();
 			$fields_ids = wcj_get_option( 'wcj_export_orders_fields', $fields_helper->get_order_export_default_fields_ids() );
@@ -257,7 +270,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 						continue;
 					}
 
-					if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
+					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
 						if ( $order->billing_country !== $_POST['wcj_filter_by_order_billing_country'] ) {
 							continue;
 						}
@@ -284,7 +297,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 							}
 						}
 						if ( ! $filter_by_product_title ) {
-							if ( false !== strpos( $item['name'], $_POST['wcj_filter_by_product_title'] ) ) {
+							if ( false !== strpos( $item['name'], sanitize_text_field( wp_unslash( $_POST['wcj_filter_by_product_title'] ) ) ) ) {
 								$filter_by_product_title = true;
 							}
 						}
@@ -304,12 +317,12 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 							$additional_field_value = wcj_get_option( 'wcj_export_orders_fields_additional_value_' . $i, '' );
 							if ( '' !== ( $additional_field_value ) ) {
 								if ( 'meta' === wcj_get_option( 'wcj_export_orders_fields_additional_type_' . $i, 'meta' ) ) {
-									$row[] = $this->safely_get_post_meta( $order_id, $additional_field_value );
+									$row[] = wp_strip_all_tags( html_entity_decode( $this->safely_get_post_meta( $order_id, $additional_field_value ) ) );
 								} else {
 									global $post;
 									$post_data = get_post( $order_id );
 									setup_postdata( $post_data );
-									$row[] = do_shortcode( $additional_field_value );
+									$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
 									wp_reset_postdata();
 								}
 							} else {
@@ -328,11 +341,15 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders_items.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2
 		 * @since   2.5.9
+		 * @param object $fields_helper defines the fields helper.
 		 */
 		public function export_orders_items( $fields_helper ) {
-
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			// Standard Fields.
 			$all_fields = $fields_helper->get_order_items_export_fields();
 			$fields_ids = apply_filters( 'wcj_export_orders_items_fields', wcj_get_option( 'wcj_export_orders_items_fields', $fields_helper->get_order_items_export_default_fields_ids() ) );
@@ -374,7 +391,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 						continue;
 					}
 
-					if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
+					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
 						if ( $order->billing_country !== $_POST['wcj_filter_by_order_billing_country'] ) {
 							continue;
 						}
@@ -409,7 +426,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 											global $post;
 											$post_data = get_post( $order_id );
 											setup_postdata( $post_data );
-											$row[] = do_shortcode( $additional_field_value );
+											$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
 											wp_reset_postdata();
 											break;
 										case 'shortcode_product':
@@ -438,9 +455,11 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Safely_get_post_meta.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2
 		 * @since   2.6.0
 		 * @todo    handle multidimensional arrays
+		 * @param int    $post_id defines the post id.
+		 * @param string $key defines the key of the post meta.
 		 */
 		public function safely_get_post_meta( $post_id, $key ) {
 			$meta = get_post_meta( $post_id, $key, true );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 5.5.9
+ * @version 5.6.2
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    create all files at once (manually and synchronize update)
@@ -111,18 +111,18 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.4.9
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 */
 		public function admin_notices() {
-			if ( isset( $_GET['wcj_create_products_xml_result'] ) ) {
-				if ( 0 == $_GET['wcj_create_products_xml_result'] ) {
+			if ( isset( $_GET['wcj_create_products_xml_result'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( 0 === (int) $_GET['wcj_create_products_xml_result'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 					$class   = 'notice notice-error';
 					$message = __( 'An error has occurred while creating products XML file.', 'woocommerce-jetpack' );
 				} else {
 					$class = 'notice notice-success is-dismissible';
 					/* translators: %s: translation added */
-					$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), sanitize_text_field( $_GET['wcj_create_products_xml_result'] ) );
+					$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), sanitize_text_field( wp_unslash( $_GET['wcj_create_products_xml_result'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				}
 				echo '<div class="' . wp_kses_post( $class ) . '"><p>' . wp_kses_post( $message ) . '</p></div>';
 			}
@@ -131,15 +131,15 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Wcj_create_products_xml.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 */
 		public function wcj_create_products_xml() {
-			if ( isset( $_GET['wcj_create_products_xml'] ) ) {
-				$file_num = $_GET['wcj_create_products_xml'];
+			if ( isset( $_GET['wcj_create_products_xml'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				$file_num = sanitize_text_field( wp_unslash( $_GET['wcj_create_products_xml'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				$result   = $this->create_products_xml( $file_num );
 				if ( false !== $result ) {
-					update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
+					update_option( 'wcj_products_time_file_created_' . $file_num, gmdate( 'U' ) );
 				}
 				wp_safe_redirect( add_query_arg( 'wcj_create_products_xml_result', ( false === $result ? 0 : $file_num ), remove_query_arg( 'wcj_create_products_xml' ) ) );
 				exit;
@@ -149,7 +149,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Create_products_xml_cron.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param  string $interval defines the interval.
 		 * @param  int    $file_num defines the file_num.
@@ -157,7 +157,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		public function create_products_xml_cron( $interval, $file_num ) {
 			$result = $this->create_products_xml( $file_num );
 			if ( false !== $result ) {
-				update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
+				update_option( 'wcj_products_time_file_created_' . $file_num, gmdate( 'U' ) );
 			}
 			die();
 		}
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Create_products_xml.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2
 		 * @since   2.5.7
 		 * @param  int $file_num defines the file_num.
 		 */
@@ -208,8 +208,8 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 					'order'          => $order,
 					'offset'         => $offset,
 				);
-				if ( 'all' != $products_scope ) {
-					$args['meta_query'] = WC()->query->get_meta_query();
+				if ( 'all' !== $products_scope ) {
+					$args['meta_query'] = WC()->query->get_meta_query(); //phpcs:ignore
 					switch ( $products_scope ) {
 						case 'sale_only':
 							$args['post__in'] = array_merge( array( 0 ), wc_get_product_ids_on_sale() );
@@ -233,7 +233,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				}
 				if ( ! empty( $products_cats_in_ids ) ) {
 					if ( ! isset( $args['tax_query'] ) ) {
-						$args['tax_query'] = array();
+						$args['tax_query'] = array(); //phpcs:ignore
 					}
 					$args['tax_query'][] = array(
 						'taxonomy' => 'product_cat',
@@ -244,7 +244,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				}
 				if ( ! empty( $products_cats_ex_ids ) ) {
 					if ( ! isset( $args['tax_query'] ) ) {
-						$args['tax_query'] = array();
+						$args['tax_query'] = array(); //phpcs:ignore
 					}
 					$args['tax_query'][] = array(
 						'taxonomy' => 'product_cat',
@@ -255,7 +255,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				}
 				if ( ! empty( $products_tags_in_ids ) ) {
 					if ( ! isset( $args['tax_query'] ) ) {
-						$args['tax_query'] = array();
+						$args['tax_query'] = array(); //phpcs:ignore
 					}
 					$args['tax_query'][] = array(
 						'taxonomy' => 'product_tag',
@@ -266,7 +266,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				}
 				if ( ! empty( $products_tags_ex_ids ) ) {
 					if ( ! isset( $args['tax_query'] ) ) {
-						$args['tax_query'] = array();
+						$args['tax_query'] = array(); //phpcs:ignore
 					}
 					$args['tax_query'][] = array(
 						'taxonomy' => 'product_tag',
@@ -280,7 +280,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 					break;
 				}
 				while ( $loop->have_posts() ) {
-					if ( -1 != $max && $counter >= $max ) {
+					if ( '-1' !== $max && $counter >= $max ) {
 						break;
 					}
 					$loop->the_post();
@@ -288,13 +288,13 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 					$counter++;
 				}
 				$offset += $block_size;
-				if ( -1 != $max && $counter >= $max ) {
+				if ( '-1' !== $max && $counter >= $max ) {
 					break;
 				}
 			}
 			wp_reset_postdata();
-			return file_put_contents(
-				ABSPATH . wcj_get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 == $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
+			return file_put_contents( //phpcs:ignore
+				ABSPATH . wcj_get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( '1' === $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
 				$this->process_shortcode( $xml_header_template ) . $xml_items . $this->process_shortcode( $xml_footer_template )
 			);
 		}

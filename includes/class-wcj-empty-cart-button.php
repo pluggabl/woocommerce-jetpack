@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Empty Cart Button
  *
- * @version 5.2.0
+ * @version 5.6.2
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -79,8 +79,12 @@ if ( ! class_exists( 'WCJ_Empty_Cart_Button' ) ) :
 		 * @version 2.8.0
 		 */
 		public function maybe_empty_cart() {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 
-			if ( isset( $_POST['wcj_empty_cart'] ) && isset( WC()->cart ) ) {
+			if ( isset( $_POST['wcj_empty_cart'] ) && isset( WC()->cart ) && $wpnonce ) {
 				WC()->cart->empty_cart();
 			}
 		}

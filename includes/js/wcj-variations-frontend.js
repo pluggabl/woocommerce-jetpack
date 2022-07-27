@@ -1,8 +1,9 @@
 /**
  * Booster for WooCommerce - Variations Radio Buttons
  *
- * @version 4.3.0
+ * @version 5.6.2
  * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 /**
@@ -41,7 +42,7 @@ function select_wc_dropdown_programmatically(variation_id) {
 }
 
 /**
- * process_variations.
+ * Process_variations.
  *
  * @version 4.3.0
  * @since   2.9.0
@@ -58,7 +59,7 @@ function process_variations(variation_id) {
 }
 
 /**
- * hide_all.
+ * Hide_all.
  *
  * @version 2.9.0
  * @since   2.9.0
@@ -71,7 +72,7 @@ function hide_all() {
 }
 
 /**
- * show_all.
+ * Show_all.
  *
  * @version 2.9.0
  * @since   2.9.0
@@ -84,7 +85,7 @@ function show_all() {
 }
 
 /**
- * fill_values.
+ * Fill_values.
  *
  * @version 2.9.0
  * @since   2.9.0
@@ -101,13 +102,13 @@ function fill_values(variation_id,radio_element) {
 }
 
 /**
- * document ready.
+ * Document ready.
  *
  * @version 2.9.0
  */
 jQuery( document ).ready(
 	function() {
-		// Initial display
+		// Initial display.
 		jQuery( "form.variations_form.cart" ).on(
 			'wc_variation_form',
 			function(){
@@ -122,7 +123,7 @@ jQuery( document ).ready(
 				}
 			}
 		);
-		// On change
+		// On change.
 		jQuery( "input:radio[name='wcj_variations']" ).change(
 			function(){
 				show_all();

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Template Editor
  *
- * @version 5.6.0
+ * @version 5.6.2
  * @since   3.9.0
  * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')
@@ -36,7 +36,8 @@ $settings = array(
 		'default'  => '/woocommerce/templates/',
 		'css'      => 'width:100%;',
 		'id'       => 'wcj_template_editor_paths',
-		'desc_tip' => __( 'One path per line relative to: ' . WP_PLUGIN_DIR . '', 'woocommerce-jetpack' ),
+		/* translators: %s: search term */
+		'desc_tip' => sprintf( __( 'One path per line relative to: %s', 'woocommerce-jetpack' ), WP_PLUGIN_DIR ),
 	),
 	array(
 		'type' => 'sectionend',

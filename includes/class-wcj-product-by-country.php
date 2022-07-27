@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -75,12 +75,12 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Get_check_option.
 		 *
-		 * @version 4.6.1
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 */
 		public function get_check_option() {
 			if ( 'manual' === apply_filters( 'booster_option', 'by_ip', wcj_get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
-				if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
+				if ( '' === wcj_session_get( 'wcj_selected_country' ) || null === wcj_session_get( 'wcj_selected_country' ) ) {
 					$country = wcj_get_country_by_ip();
 					wcj_session_set( 'wcj_selected_country', $country );
 					$check_option = $country;
@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 			}
 
 			if ( 'yes' === wcj_get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
-				$billing_country = isset( $_REQUEST['country'] ) && ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : '';
+				$billing_country = isset( $_REQUEST['country'] ) && ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
 				if ( ! empty( $billing_country ) ) {
 					$check_option = $billing_country;
 				}
@@ -115,16 +115,16 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Save_country_in_session.
 		 *
-		 * @version 4.9.0
+		 * @version 5.6.2
 		 * @since   3.1.0
 		 */
 		public function save_country_in_session() {
 			wcj_session_maybe_start();
-			if ( isset( $_REQUEST['wcj_country_selector'] ) ) {
-				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) ) );
+			if ( isset( $_REQUEST['wcj_country_selector'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 			}
-			if ( isset( $_REQUEST['wcj-country'] ) ) {
-				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) );
+			if ( isset( $_REQUEST['wcj-country'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 			}
 		}
 
@@ -136,7 +136,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		 * @param array $options defines the options.
 		 */
 		public function maybe_extra_options_process( $options ) {
-			if ( in_array( 'EU', $options ) ) {
+			if ( in_array( 'EU', $options, true ) ) {
 				$options = array_merge( $options, wcj_get_european_union_countries() );
 			}
 			return $options;
@@ -145,7 +145,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Maybe_add_extra_settings.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2
 		 * @since   3.6.0
 		 * @todo    (maybe) move "Country List" inside the "Admin Options" section
 		 */
@@ -161,7 +161,7 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 					'desc_tip'          => __( 'Possible values: "Automatically by IP" or "Manually".', 'woocommerce-jetpack' ),
 					'desc'              => sprintf(
 						/* translators: %s: translation added */
-						'<p>' . __( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%s" widget or %s shortcode.', 'woocommerce-jetpack' ),
+						'<p>' . __( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%1$s" widget or %2$s shortcode.', 'woocommerce-jetpack' ),
 						__( 'Booster - Selector', 'woocommerce-jetpack' ),
 						'<code>[wcj_selector selector_type="country"]</code>'
 					) .

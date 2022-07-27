@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -80,7 +80,7 @@ $wcj_module_files = array(
 	'class-wcj-shipping.php',
 	'class-wcj-shipping-options.php',
 	'class-wcj-shipping-icons.php',
-	'class-wcj-shipping-description.php',
+	'class-wcj-shipping-descriptions.php',
 	'class-wcj-shipping-time.php',
 	'class-wcj-left-to-free-shipping.php',
 	'class-wcj-shipping-calculator.php',
@@ -101,7 +101,7 @@ $wcj_module_files = array(
 	'class-wcj-emails.php',
 	'class-wcj-email-options.php',
 	'class-wcj-emails-verification.php',
-	'class-wcj-currency.php',
+	'class-wcj-currencies.php',
 	'class-wcj-multicurrency.php',
 	'class-wcj-multicurrency-product-base-price.php',
 	'class-wcj-currency-per-product.php',

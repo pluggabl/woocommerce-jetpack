@@ -1,8 +1,10 @@
 /**
- * wcj-shipping-calculator.
+ * Wcj-shipping-calculator.
  *
- * @version 2.5.7
+ * @version 5.6.2
  * @since   2.5.7
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( document ).ready( change_labels );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom PHP
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2
 		 * @since   4.0.0
 		 * @todo    [dev] maybe remove `wcj_disable_custom_php` from URL on settings save
 		 * @todo    [dev] allow tab in content (i.e. settings (textarea))
@@ -33,7 +33,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 			$this->desc       = __( 'Custom PHP tool.', 'woocommerce-jetpack' );
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %s attribute to the URL (you must be logged as shop manager or admin (for this reason custom PHP code is not executed on %s page)).', 'woocommerce-jetpack' ),
+				__( 'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %1$s attribute to the URL (you must be logged as shop manager or admin (for this reason custom PHP code is not executed on %2$s page)).', 'woocommerce-jetpack' ),
 				'<code>wcj_disable_custom_php</code>',
 				'<strong>wp-login.php</strong>'
 			) . ' ' .
@@ -49,7 +49,12 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 			add_action( 'woojetpack_after_settings_save', array( $this, 'create_php_file' ), PHP_INT_MAX, 2 );
 
 			if ( $this->is_enabled() ) {
-				if ( isset( $_GET['wcj_disable_custom_php'] ) ) {
+				$wpnonce = true;
+				if ( function_exists( 'wp_verify_nonce' ) ) {
+					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+				}
+
+				if ( isset( $_GET['wcj_disable_custom_php'] ) && $wpnonce ) {
 					if ( wcj_current_user_can( 'manage_woocommerce' ) ) {
 						// Stop custom PHP execution.
 						return;
@@ -74,7 +79,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		/**
 		 * Create_php_file.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.2
 		 * @since   4.0.0
 		 * @todo    [dev] `unlink` and `rmdir` on settings reset
 		 * @todo    [dev] on empty content - delete dir also (`rmdir`).
@@ -86,7 +91,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				$file_content = wcj_get_option( 'wcj_custom_php', '' );
 				if ( '' !== $file_content ) {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php' ) . DIRECTORY_SEPARATOR . 'booster.php';
-					file_put_contents( $file_path, '<?php' . PHP_EOL . $file_content );
+					file_put_contents( $file_path, '<?php' . PHP_EOL . $file_content ); // phpcs:ignore
 				} else {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
 					if ( file_exists( $file_path ) ) {

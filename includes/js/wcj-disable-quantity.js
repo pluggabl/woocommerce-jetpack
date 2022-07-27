@@ -1,9 +1,11 @@
 /**
- * wcj-disable-quantity.
+ * Wcj-disable-quantity.
  *
- * version 2.5.2
- * since   2.5.2
+ * @version 5.6.2
+ * @since   2.5.2
+ * @package Booster_For_WooCommerce/includes/JS
  */
+
 jQuery( document ).ready(
 	function() {
 		jQuery( "div.quantity input.qty" ).each(

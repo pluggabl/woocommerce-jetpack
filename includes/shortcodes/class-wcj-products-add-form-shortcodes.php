@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 5.5.9
+ * @version 5.6.2
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -269,18 +269,21 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_add_new.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @todo    `multipart` only if image
 		 * @param array $atts The user defined shortcode atts.
 		 */
 		public function wcj_product_add_new( $atts ) {
-
+			$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
 			$header_html       = '';
 			$notice_html       = '';
 			$input_fields_html = '';
 			$footer_html       = '';
 
+			if ( ! $wpnonce ) {
+				return;
+			}
 			$args = array(
 				'title'         => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) : '',
 				'desc'          => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_desc'] ) ) : '',
@@ -288,7 +291,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				'regular_price' => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_regular_price'] ) ) : '',
 				'sale_price'    => isset( $_REQUEST['wcj_add_new_product_sale_price'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_sale_price'] ) ) : '',
 				'external_url'  => isset( $_REQUEST['wcj_add_new_product_external_url'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_external_url'] ) ) : '',
-				'cats'          => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_cats'] ) ) : array(),
+				'cats'          => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['wcj_add_new_product_cats'] ) ) : array(),
 				'tags'          => isset( $_REQUEST['wcj_add_new_product_tags'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_tags'] ) ) : array(),
 				'image'         => isset( $_FILES['wcj_add_new_product_image'] ) ? sanitize_text_field( wp_unslash( $_FILES['wcj_add_new_product_image'] ) ) : '',
 			);

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Options
  *
- * @version 3.8.0
+ * @version 5.6.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @todo    (dev) move version updated stuff to another file
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( is_admin() ) {
 	foreach ( $this->modules as $module ) {
 		// Modules statuses.
-		if ( '' == $module->parent_id ) { // i.e. not submodule.
+		if ( '' === $module->parent_id ) { // i.e. not submodule.
 			$status_settings         = $module->add_enable_module_setting( array() );
 			$this->module_statuses[] = $status_settings[1];
 		}

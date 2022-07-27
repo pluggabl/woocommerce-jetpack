@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   3.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 		/**
 		 * Available_shipping_methods.
 		 *
-		 * @version 5.3.5
+		 * @version 5.6.2
 		 * @since   3.2.0
 		 * @todo    apply_filters( 'booster_option' )
 		 * @param  Array $rates Get shipping method rates.
@@ -70,8 +70,7 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 					get_option( 'wcj_shipping_' . $options_id . '_include_' . $rate->method_id, '' )
 					);
 					if ( ! empty( $include ) ) {
-						if ( $this->check( $options_id, $include, 'include', $package ) ) {
-						} else {
+						if ( ! $this->check( $options_id, $include, 'include', $package ) ) {
 							unset( $rates[ $rate_key ] );
 						}
 					}

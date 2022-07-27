@@ -1,10 +1,11 @@
 /**
- * wcj-product-addons.
+ * Wcj-product-addons.
  *
- * @version 5.5.6
+ * @version 5.6.2
  * @since   2.5.3
  * @todo    `text` type - update price not only on change, but on each pressed key
  * @todo    fix the issue with custom price labels module
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 var _ajax_object = ajax_object;
@@ -36,7 +37,7 @@ function change_price() {
 		jQuery( "input[name^='wcj_product_all_products_addons_'], input[name^='wcj_product_per_product_addons_']" ).each(
 			function () {
 				if (jQuery( this ).is( ':checked' )) {
-					  data[jQuery( this ).attr( 'name' )] = jQuery( this ).val();
+					data[jQuery( this ).attr( 'name' )] = jQuery( this ).val();
 				}
 				if ('text' == jQuery( this ).attr( 'type' ) && jQuery( this ).val() != '') {
 					data[jQuery( this ).attr( 'name' )] = jQuery( this ).val();
@@ -82,13 +83,15 @@ jQuery( document ).ready(
 			}
 		);
 
-		// Handle "Enable by Variation" option
+		// Handle "Enable by Variation" option.
 		function handle_enable_by_variation() {
 			sanitize_variation_addon_fields_array();
 			var addon_pattern = 'wcj_product_per_product_addons_';
 			function hide_variation_addon_fields() {
-				for (i = 0; i < _ajax_object.enable_by_variation.length; i++) {
-					if (Array.isArray( _ajax_object.enable_by_variation[i] )) {
+				var enable_by_variation        = _ajax_object.enable_by_variation;
+				var enable_by_variation_length = _ajax_object.enable_by_variation.length;
+				for (i = 0; i < enable_by_variation_length; i++) {
+					if (Array.isArray( enable_by_variation[i] )) {
 						var addons = jQuery( 'input[name="' + addon_pattern + (i + 1) + '"],label[for*="' + addon_pattern + (i + 1) + '"],*[class*="' + addon_pattern + (i + 1) + '"]' );
 						addons.each(
 							function () {
@@ -104,8 +107,10 @@ jQuery( document ).ready(
 			}
 			function show_addon_field_by_variation_id(variation_id) {
 				hide_variation_addon_fields();
-				for (i = 0; i < _ajax_object.enable_by_variation.length; i++) {
-					if (Array.isArray( _ajax_object.enable_by_variation[i] ) && _ajax_object.enable_by_variation[i].indexOf( parseInt( variation_id ) ) != -1) {
+				var enable_by_variation        = _ajax_object.enable_by_variation;
+				var enable_by_variation_length = _ajax_object.enable_by_variation.length;
+				for (i = 0; i < enable_by_variation_length; i++) {
+					if (Array.isArray( enable_by_variation[i] ) && enable_by_variation[i].indexOf( parseInt( variation_id ) ) != -1) {
 						var addons = jQuery( 'input[name="' + addon_pattern + (i + 1) + '"],label[for="' + addon_pattern + (i + 1) + '"],*[class*="' + addon_pattern + (i + 1) + '"]' );
 						addons.each(
 							function() {

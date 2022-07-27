@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   2.8.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -22,8 +22,8 @@ $settings     = array(
 	array(
 		'title'   => __( 'Formula', 'woocommerce-jetpack' ),
 		'desc'    => sprintf(
-			/* translators: %s: translators Added */
-			__( 'Use %s variable for product\'s base price. For example: %s.', 'woocommerce-jetpack' ),
+			/* translators: %1$s,%2$s: translators Added */
+			__( 'Use %1$s variable for product\'s base price. For example: %2$s.', 'woocommerce-jetpack' ),
 			'<code> x </code>',
 			'<code> x+p1*p2 </code>'
 		),

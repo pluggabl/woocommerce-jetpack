@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 5.4.3
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -105,15 +105,19 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		/**
 		 * Prevents outdated min/max Quantity options.
 		 *
-		 * @version 4.4.0
+		 * @version 5.6.2
 		 * @since   4.4.0
 		 * @param int $product_id defines the product_id.
 		 */
 		public function prevent_outdated_min_max( $product_id ) {
 			$product = wc_get_product( $product_id );
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			if (
 			! $product->is_type( 'variable' ) ||
-			isset( $_POST['_wcj_order_quantities_min'] )
+			isset( $_POST['_wcj_order_quantities_min'] ) && $wpnonce
 			) {
 				return;
 			}

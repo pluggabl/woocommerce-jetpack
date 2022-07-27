@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 4.9.0
+ * @version 5.6.2
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -81,14 +81,15 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 	/**
 	 * Wcj_check_date.
 	 *
-	 * @version 2.9.1
+	 * @version 5.6.2
 	 * @since   2.9.1
 	 * @param   string $_date defines the _date.
 	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_date( $_date, $args = array() ) {
+
 		if ( empty( $args ) ) {
-			$time_now        = current_time( 'timestamp' );
+			$time_now        = (int) gmdate( 'U' );
 			$args['day_now'] = intval( gmdate( 'j', $time_now ) );
 		}
 		$_date = explode( ',', $_date );
@@ -172,14 +173,14 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	/**
 	 * Wcj_check_time.
 	 *
-	 * @version 2.8.0
+	 * @version 5.6.2
 	 * @since   2.8.0
 	 * @param   string $_time defines the _time.
 	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_time( $_time, $args = array() ) {
 		if ( empty( $args ) ) {
-			$time_now            = current_time( 'timestamp' );
+			$time_now            = (int) gmdate( 'U' );
 			$args['hours_now']   = intval( gmdate( 'H', $time_now ) );
 			$args['minutes_now'] = intval( gmdate( 'i', $time_now ) );
 		}
@@ -300,7 +301,7 @@ if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
 	 *
 	 * @param string $utc_date get utc_Date.
 	 * @param null   $format get format.
-	 *
+	 * @throws InvalidArgumentException InvalidArgumentException.
 	 * @return string
 	 */
 	function wcj_pretty_utc_date( string $utc_date, $format = null ) {

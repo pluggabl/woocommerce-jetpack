@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 5.6.0
+ * @version 5.6.2
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    deprecate `wcj_sku_prefix` and `wcj_sku_suffix` (as user can now add it directly to "Template")
@@ -86,7 +86,7 @@ $settings = array(
 		'title'             => __( 'Attributes Separator', 'woocommerce-jetpack' ),
 		'desc_tip'          => sprintf(
 			/* translators: %s: translators Added */
-			__( 'Used in %s, %s, %s and %s.', 'woocommerce-jetpack' ),
+			__( 'Used in %1$s, %2$s, %3$s and %4$s.', 'woocommerce-jetpack' ),
 			'<em>{variation_attributes}</em>',
 			'<em>{variation_attribute=X}</em>',
 			'<em>{attribute=X}</em>',

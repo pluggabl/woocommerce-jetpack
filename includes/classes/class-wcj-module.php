@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -323,7 +323,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_validate_value.
 		 *
-		 * @version 2.9.1
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -341,8 +341,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_' . $this->meta_box_validate_value,
-					'meta_value'     => 'yes',
+					'meta_key'       => '_' . $this->meta_box_validate_value, //phpcs:ignore
+					'meta_value'     => 'yes', //phpcs:ignore
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -370,18 +370,18 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Validate_value_admin_notices.
 		 *
-		 * @version 2.9.1
+		 * @version 5.6.2
 		 * @since   2.9.1
 		 */
 		public function validate_value_admin_notices() {
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) {
+			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' .
 			sprintf(
-				/* translators: %1$s: translators Added */
-				__( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ),
-				$this->short_desc,
+				/* translators: %1$s,%2$s: translators Added */
+				wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ) ),
+				wp_kses_post( $this->short_desc ),
 				'https://booster.io/plus/'
 			) .
 			'</div></p></div>';
@@ -458,7 +458,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 2.5.3
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -476,8 +476,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 3,
-					'meta_key'       => '_' . $this->co,
-					'meta_value'     => 'yes',
+					'meta_key'       => '_' . $this->co, //phpcs:ignore
+					'meta_value'     => 'yes', //phpcs:ignore
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -505,11 +505,15 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 2.5.3
+		 * @version 5.6.2
 		 * @since   2.5.3
 		 */
 		public function admin_notices() {
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ) ) : true;
+			}
+			if ( ! $wpnonce || ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' . wp_kses_post( $this->get_the_notice() ) . '</div></p></div>';
@@ -518,12 +522,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Reset_settings.
 		 *
-		 * @version 3.7.0
+		 * @version 5.6.2
 		 * @since   2.4.0
 		 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 		 */
 		public function reset_settings() {
-			if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ), 'woocommerce-settings' ) : true;
+			if ( $wpnonce && isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
 				foreach ( $this->get_settings() as $settings ) {
 					if ( false !== strpos( $settings['id'], '[' ) ) {
 						$id = explode( '[', $settings['id'] );
@@ -613,29 +618,29 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
 		 * @param int   $post_id Get post id.
 		 * @param Array $__post Get post.
 		 */
-		function save_meta_box( $post_id, $__post ) {
+		public function save_meta_box( $post_id, $__post ) {
 			// Check that we are saving with current metabox displayed.
-			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
+			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}
-			// Setup post (just in case...)
+			// Setup post (just in case...).
 			global $post;
-			$post = get_post( $post_id );
-			setup_postdata( $post );
-			// Save options
+			$_post = get_post( $post_id );
+			setup_postdata( $_post );
+			// Save options.
 			foreach ( $this->get_meta_box_options() as $option ) {
-				if ( 'title' === $option['type'] ) {
+				if ( ! $option || '' === $option || 'title' === $option['type'] ) {
 					continue;
 				}
 				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 				if ( $is_enabled ) {
-					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : ( isset( $option['default'] ) ? $option['default'] : '' );
+					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $option['name'] ] ) ) : ( isset( $option['default'] ) ? $option['default'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification
 					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $post_id;
 					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
 					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
@@ -644,11 +649,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							continue;
 						}
 					}
-					delete_post_meta( $the_post_id, $the_meta_name ); // solves lowercase/uppercase issue
+					delete_post_meta( $the_post_id, $the_meta_name ); // solves lowercase/uppercase issue.
 					update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option['name'], $this->id ) );
 				}
 			}
-			// Reset post
+			// Reset post.
 			wp_reset_postdata();
 		}
 
@@ -803,7 +808,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Get_cat_by_section.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.2
 		 * @since   2.2.3
 		 * @param Array $section Get sections.
 		 */
@@ -812,7 +817,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			foreach ( $cats as $id => $label_info ) {
 				if ( ( ! empty( $label_info['all_cat_ids'] ) ) &&
 				( is_array( $label_info['all_cat_ids'] ) ) &&
-				( in_array( $section, $label_info['all_cat_ids'] ) )
+				( in_array( $section, $label_info['all_cat_ids'], true ) )
 				) {
 					return $id;
 				}

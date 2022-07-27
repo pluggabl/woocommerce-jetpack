@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Template Editor
  *
- * @version 4.7.1
+ * @version 5.6.2
  * @since   3.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,14 +47,14 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		/**
 		 * Create_templates.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.2
 		 * @since   3.9.0
 		 * @todo    [dev] also delete on "Reset settings"
 		 * @param string | array $sections defines the sections.
 		 * @param string | array $current_section defines the current_section.
 		 */
 		public function create_templates( $sections, $current_section ) {
-			if ( $this->id == $current_section ) {
+			if ( $this->id === $current_section ) {
 				$this->delete_dir( wcj_get_wcj_uploads_dir( 'templates' ) );
 				$templates_content = wcj_get_option( 'wcj_template_editor_templates_content', array() );
 				foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
@@ -63,7 +63,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 						$_template_file = $_template[ count( $_template ) - 1 ];
 						$_template_dirs = str_replace( $_template_file, '', $template );
 						$_template_path = wcj_get_wcj_uploads_dir( 'templates' . DIRECTORY_SEPARATOR . $_template_dirs ) . DIRECTORY_SEPARATOR . $_template_file;
-						file_put_contents( $_template_path, $templates_content[ $template ] );
+						file_put_contents( $_template_path, $templates_content[ $template ] ); //phpcs:ignore
 					}
 				}
 			}
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		 * @param string $default_path defines the default_path.
 		 */
 		public function replace_template( $located, $template_name, $args, $template_path, $default_path ) {
-			if ( in_array( $template_name, $this->templates_to_edit ) ) {
+			if ( in_array( $template_name, $this->templates_to_edit, true ) ) {
 				$modified_template = wcj_get_wcj_uploads_dir( 'templates', false ) . DIRECTORY_SEPARATOR . $template_name;
 				return ( file_exists( $modified_template ) ? $modified_template : $located );
 			}
@@ -101,7 +101,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		public function get_path_by_template( $template ) {
 			$templates_by_path = wcj_get_option( 'wcj_template_editor_templates_by_path', array() );
 			foreach ( $templates_by_path as $path => $templates ) {
-				if ( in_array( $template, $templates ) ) {
+				if ( in_array( $template, $templates, true ) ) {
 					return $path;
 				}
 			}

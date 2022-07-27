@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -18,9 +18,9 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 	class WCJ_Price_By_Country extends WCJ_Module {
 
 		/**
-		 * WCJ_Price_by_Country_Core
+		 * WCJ_Price_By_Country_Core
 		 *
-		 * @var WCJ_Price_by_Country_Core
+		 * @var WCJ_Price_By_Country_Core
 		 *
 		 * @since 4.1.0
 		 */
@@ -36,7 +36,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.2
 		 */
 		public function __construct() {
 
@@ -54,7 +54,8 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 
 				if ( wcj_is_frontend() ) {
 					$do_load_core = true;
-					if ( ! defined( 'DOING_AJAX' ) && '/wc-api/WC_Gateway_Paypal/' === $_SERVER['REQUEST_URI'] ) {
+					$request_uri  = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+					if ( ! defined( 'DOING_AJAX' ) && '/wc-api/WC_Gateway_Paypal/' === $request_uri ) {
 						// "Wrong currency in emails" bug fix.
 						$do_load_core = false;
 					}
@@ -152,11 +153,15 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		/**
 		 * Recalculate_price_filter_products_prices.
 		 *
-		 * @version 2.5.6
+		 * @version 5.6.2
 		 * @since   2.5.6
 		 */
 		public function recalculate_price_filter_products_prices() {
-			if ( isset( $_GET['recalculate_price_filter_products_prices'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) ) {
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			}
+			if ( $wpnonce && isset( $_GET['recalculate_price_filter_products_prices'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) ) {
 				wcj_update_products_price_by_country();
 				global $wcj_notice;
 				$wcj_notice = __( 'Price filter widget product prices recalculated.', 'woocommerce-jetpack' );

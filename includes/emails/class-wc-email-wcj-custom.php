@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 5.6.1
+ * @version 5.6.2
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * Proxy to parent's get_option and attempt to localize the result using gettext.
 		 *
-		 * @version 2.4.1
+		 * @version 5.6.2
 		 * @since   2.4.1
 		 * @param   string $key posted key.
 		 * @param   mixed  $empty_value get empty value.
@@ -106,7 +106,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		public function get_option( $key, $empty_value = null ) {
 			$grandparent = get_parent_class( 'WC_Email' );
 			$value       = $grandparent::get_option( $key, $empty_value );
-			return ( is_array( $value ) ) ? $value : apply_filters( 'woocommerce_email_get_option', __( $value ), $this, $value, $key, $empty_value );
+			return ( is_array( $value ) ) ? $value : apply_filters( 'woocommerce_email_get_option', __( $value ), $this, $value, $key, $empty_value ); // phpcs:ignore
 		}
 
 		/**
@@ -236,8 +236,8 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 				$status_triggers[ 'woocommerce_order_status_' . $slug . '_notification' ] = sprintf( __( 'Order status updated to %s', 'woocommerce-jetpack' ), $name );
 				foreach ( $order_statuses as $slug2 => $name2 ) {
 					if ( $slug !== $slug2 ) {
-						/* translators: %s: search term */
-						$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %s to %s', 'woocommerce-jetpack' ), $name, $name2 );
+						/* translators: %1$s,%2$s: search term */
+						$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %1$s to %2$s', 'woocommerce-jetpack' ), $name, $name2 );
 					}
 				}
 			}

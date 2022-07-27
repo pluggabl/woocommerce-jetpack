@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 5.5.9
+ * @version 5.6.2
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
+if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 	/**
 	 * WCJ_Max_products_Per_User.
 	 */
-	class WCJ_Max_products_Per_User extends WCJ_Module {
+	class WCJ_Max_Products_Per_User extends WCJ_Module {
 
 		/**
 		 * Constructor.
@@ -62,10 +62,23 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 					$status = substr( $status, 3 );
 					add_action( 'woocommerce_order_status_' . $status, array( $this, 'save_quantities' ), PHP_INT_MAX );
 				}
+				add_filter( 'woocommerce_duplicate_product_exclude_meta', array( $this, 'wcj_filter_woocommerce_duplicate_product_exclude_meta' ), 10, 1 );
 				add_action( 'add_meta_boxes', array( $this, 'add_report_meta_box' ) );
 				add_action( 'admin_init', array( $this, 'calculate_data' ) );
 				add_action( 'admin_notices', array( $this, 'calculate_data_notice' ) );
 			}
+		}
+
+		/**
+		 *
+		 * Wcj_filter_woocommerce_duplicate_product_exclude_meta.
+		 *
+		 * @version 5.6.2
+		 * @since  5.6.2
+		 * @param int $meta_data defines the meta data of the product.
+		 */
+		public function wcj_filter_woocommerce_duplicate_product_exclude_meta( $meta_data ) {
+			return array_merge( $meta_data, array( '_wcj_max_products_per_user_report' ) );
 		}
 
 		/**
@@ -136,15 +149,15 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		/**
 		 * Calculate_data_notice.
 		 *
-		 * @version 3.5.0
+		 * @version 5.6.2
 		 * @since   3.5.0
 		 */
 		public function calculate_data_notice() {
-			if ( isset( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) {
+			if ( isset( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$class   = 'notice notice-info';
 				$message = __( 'Data re-calculated.', 'woocommerce-jetpack' ) . ' ' .
 				/* translators: %s: translation added */
-				sprintf( __( '%s order(s) processed.', 'woocommerce-jetpack' ), $_GET['wcj_max_products_per_user_calculate_data_finished'] );
+				sprintf( __( '%s order(s) processed.', 'woocommerce-jetpack' ), sanitize_text_field( wp_unslash( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 			}
 		}
@@ -152,12 +165,12 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 		/**
 		 * Calculate_data.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2
 		 * @since   3.5.0
 		 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 		 */
 		public function calculate_data() {
-			if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) {
+			if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$offset       = 0;
 				$block_size   = 512;
 				$total_orders = 0;
@@ -185,7 +198,7 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 					add_query_arg(
 						'wcj_max_products_per_user_calculate_data_finished',
 						$total_orders,
-						esc_url( remove_query_arg( 'wcj_max_products_per_user_calculate_data' ) )
+						remove_query_arg( 'wcj_max_products_per_user_calculate_data' )
 					)
 				);
 				exit;
@@ -389,4 +402,4 @@ if ( ! class_exists( 'WCJ_Max_products_Per_User' ) ) :
 
 endif;
 
-return new WCJ_Max_products_Per_User();
+return new WCJ_Max_Products_Per_User();

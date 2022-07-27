@@ -1,8 +1,10 @@
 /**
- * wcj-checkout-fees.
+ * Wcj-checkout-fees.
  *
- * @version 3.8.0
+ * @version 5.6.2
  * @since   3.8.0
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( 'body' ).on(

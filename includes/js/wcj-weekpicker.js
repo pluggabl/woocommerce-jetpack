@@ -1,8 +1,10 @@
 /**
- * wcj-weekpicker.
+ * Wcj-weekpicker.
  *
- * version 5.3.6
+ * @version 5.6.2
+ * @package Booster_For_WooCommerce/includes/JS
  */
+
 jQuery( document ).ready(
 	function() {
 		jQuery( "input[display='week']" ).each(
@@ -20,7 +22,7 @@ jQuery( document ).ready(
 						changeMonth: true,
 						showWeek: true,
 						beforeShow: function(dateText, inst) {
-							// for week highighting
+							// for week highighting.
 							jQuery( ".ui-datepicker-calendar tbody" ).on(
 								"mousemove",
 								"tr",
@@ -46,7 +48,7 @@ jQuery( document ).ready(
 								var endDateFormatted = jQuery.datepicker.formatDate( dateFormat, endDate, inst.settings );
 								jQuery( this ).val( dateText + " - " + endDateFormatted );
 							}
-							// disable live listeners so they dont impact other instances
+							// disable live listeners so they dont impact other instances.
 							jQuery( '.ui-datepicker-calendar tbody tr' ).off( 'mousemove' );
 							jQuery( '.ui-datepicker-calendar tbody tr' ).off( 'mouseleave' );
 						}

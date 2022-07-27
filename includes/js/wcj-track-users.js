@@ -1,8 +1,9 @@
 /**
- * wcj-track-users.js
+ * Wcj-track-users.js
  *
- * @version 2.9.1
- * @version 2.9.1
+ * @version 5.6.2
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 jQuery( document ).ready(

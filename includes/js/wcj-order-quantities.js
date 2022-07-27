@@ -1,11 +1,14 @@
 /**
- * wcj-order-quantities.js
+ * Wcj-order-quantities.js
  *
- * @version 4.2.0
- * @since   3.2.2
- * @todo    [dev] maybe `jQuery('[name=quantity]').val('0')` on `jQuery.isEmptyObject(product_quantities[variation_id])` (instead of `return`)
+ * @version 5.6.2
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
+/**
+ * Check_qty
+ */
 function check_qty(){
 	var variation_id = jQuery( '[name=variation_id]' ).val();
 	if (0 == variation_id) {
@@ -27,7 +30,9 @@ function check_qty(){
 		jQuery( '[name=quantity]' ).val( product_quantities[variation_id]['max_qty'] );
 	}
 }
-
+/**
+ * Check_qty_no_reset
+ */
 function check_qty_no_reset(){
 	var variation_id = jQuery( '[name=variation_id]' ).val();
 	if (0 == variation_id) {

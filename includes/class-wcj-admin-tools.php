@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.5.6
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -212,7 +212,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Create_meta_meta_box.
 		 *
-		 * @version 3.2.1
+		 * @version 5.6.2
 		 * @since   2.5.8
 		 * @param string $post defines the post.
 		 */
@@ -223,7 +223,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			$meta       = get_post_meta( $post_id );
 			$table_data = array();
 			foreach ( $meta as $meta_key => $meta_values ) {
-				$table_data[] = array( $meta_key, wp_kses_post( maybe_unserialize( $meta_values[0] ), true ) );
+				$table_data[] = array( $meta_key, esc_html( print_r( maybe_unserialize( $meta_values[0] ), true ) ) ); // phpcs:ignore
 			}
 			$html .= wcj_get_table_html(
 				$table_data,
@@ -257,7 +257,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 				}
 			}
 			// Output.
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		/**
@@ -330,7 +330,11 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			}
 
 			$table_data = array();
-			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] ) {
+			$wpnonce    = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] && $wpnonce ) {
 				$table_data[] = array(
 					__( 'Product', 'woocommerce-jetpack' ),
 					__( 'Category', 'woocommerce-jetpack' ),

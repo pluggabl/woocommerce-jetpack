@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 5.5.9
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -32,11 +32,15 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		/**
 		 * Wcj_new_desing_dashboard_enqueue.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.2
 		 * @since   5.5.6
 		 */
 		public function wcj_new_desing_dashboard_enqueue() {
-			$page = ( isset( $_GET['page'] ) ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$page = ( $wpnonce && isset( $_GET['page'] ) ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 			if ( 'wcj-tools' === $page ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css', array(), time() );
 				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );
@@ -64,12 +68,12 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		/**
 		 * Create_tools_page.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.2
 		 */
 		public function create_tools_page() {
 
 			// Tabs.
-			$tabs       = apply_filters(
+			$tabs    = apply_filters(
 				'wcj_tools_tabs',
 				array(
 					array(
@@ -78,8 +82,12 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 					),
 				)
 			);
-			$html       = '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper wcj_tool_tab_part">';
-			$active_tab = ( isset( $_GET['tab'] ) ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'dashboard';
+			$html    = '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper wcj_tool_tab_part">';
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
+			$active_tab = ( $wpnonce && isset( $_GET['tab'] ) ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'dashboard';
 			foreach ( $tabs as $tab ) {
 				$is_active = ( $active_tab === $tab['id'] ) ? 'nav-tab-active' : '';
 				$html     .= '<a href="' . esc_url(

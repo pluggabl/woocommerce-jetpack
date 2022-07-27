@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_styling.
 		 *
-		 * @version 3.7.0
+		 * @version 5.6.2
 		 * @since   3.7.0
 		 */
 		public function add_styling() {
@@ -109,7 +109,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 					$styling_options[ $option ] = $default;
 				}
 			}
-			echo "<style type=\"text/css\">
+			$css = "<style type=\"text/css\">
 			.wcj-offer-price-modal-content {
 				width: {$styling_options['form_content_width']};
 			}
@@ -127,20 +127,22 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 			.wcj-offer-price-modal-footer h1, .wcj-offer-price-modal-footer h2, .wcj-offer-price-modal-footer h3, .wcj-offer-price-modal-footer h4, .wcj-offer-price-modal-footer h5, .wcj-offer-price-modal-footer h6 {
 				color: {$styling_options['form_footer_text_color']};
 			}
-		</style>";
+			</style>";
+			echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
 		 * Delete_offer_price_product_history.
 		 *
-		 * @version 2.9.0
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    (maybe) add successful deletion notice
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
 		 */
 		public function delete_offer_price_product_history( $post_id, $post ) {
-			if ( isset( $_POST['wcj_offer_price_delete_history'] ) ) {
+			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			if ( $wpnonce && isset( $_POST['wcj_offer_price_delete_history'] ) ) {
 				delete_post_meta( $post_id, '_wcj_price_offers' );
 				add_action( 'admin_notices', array( $this, 'notice_delete_offer_price_product_history' ) );
 			}
@@ -254,9 +256,10 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				echo wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) );
 				foreach ( $average_offers as $average_offer_currency_code => $average_offer_data ) {
 					echo '<p>' . sprintf(
-						__( 'Average offer: %s (from %s offer(s))', 'woocommerce-jetpack' ),
-						wc_price( ( $average_offer_data['offers_sum'] / $average_offer_data['total_offers'] ), array( 'currency' => $average_offer_currency_code ) ),
-						$average_offer_data['total_offers']
+						/* translators: %s: search term */
+						esc_html__( 'Average offer: %1$s (from %2$s offer(s))', 'woocommerce-jetpack' ),
+						wc_price( ( $average_offer_data['offers_sum'] / $average_offer_data['total_offers'] ), array( 'currency' => $average_offer_currency_code ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						$average_offer_data['total_offers'] // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					) . '</p>';
 				}
 				echo '<p>' .
@@ -366,7 +369,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_offer_price_form.
 		 *
-		 * @version 2.9.0
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    (maybe) fix when empty header
 		 * @todo    (maybe) style options for input fields (class, style)
@@ -435,6 +438,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				'<p>' . $offer_form_content_copy . '</p>' .
 				'<input type="hidden" id="wcj-offer-price-product-id" name="wcj-offer-price-product-id">' .
 				'<input type="hidden" name="wcj-offer-price-customer-id" value="' . $customer_id . '">' .
+				'<input type="hidden" name="wcj_offer_price_nonce" value="' . wp_create_nonce( 'wcj-offer-price-modal' ) . '">' .
 				'</form>' .
 			'</div>';
 			// Final form.
@@ -468,7 +472,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_offer_price_button.
 		 *
-		 * @version 4.4.0
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 */
 		public function add_offer_price_button() {
@@ -485,12 +489,12 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 			echo '<p>' .
 			'<button type="submit"' .
 				' name="wcj-offer-price-button"' .
-				' class="wcj-offer-price-button' . $additional_class . '"' .
-				' value="' . $product_id . '"' .
-				' style="' . wcj_get_option( 'wcj_offer_price_button_style', '' ) . '"' .
+				' class="wcj-offer-price-button' . $additional_class . '"' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				' value="' . esc_html( $product_id ) . '"' .
+				' style="' . wcj_get_option( 'wcj_offer_price_button_style', '' ) . '"' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				' wcj_data=\'' . wp_json_encode( $this->get_wcj_data_array( $product_id ) ) . '\'' .
 			'>' .
-				get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) .
+				get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'</button>' .
 			'</p>';
 		}
@@ -498,7 +502,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Offer_price.
 		 *
-		 * @version 5.1.0
+		 * @version 5.6.2
 		 * @since   2.9.0
 		 * @todo    (maybe) separate customer copy email template and subject
 		 * @todo    (maybe) redirect (no notice though)
@@ -509,7 +513,8 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 */
 		public function offer_price() {
 			if ( isset( $_POST['wcj-offer-price-submit'] ) ) {
-				$product_id = $_POST['wcj-offer-price-product-id'];
+				$wpnonce    = wp_verify_nonce( isset( $_REQUEST['wcj_offer_price_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_offer_price_nonce'] ) ) : '', 'wcj-offer-price-modal' );
+				$product_id = $wpnonce && isset( $_POST['wcj-offer-price-product-id'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-product-id'] ) ) : '';
 				$_product   = wc_get_product( $product_id );
 				if ( ! is_a( $_product, 'WC_Product' ) ) {
 					return;
@@ -535,18 +540,18 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				}
 				// Price offer array.
 				$price_offer = array(
-					'offer_timestamp'   => current_time( 'timestamp' ),
+					'offer_timestamp'   => gmdate( 'U' ),
 					'product_title'     => $_product->get_title(),
 					'product_edit_link' => get_edit_post_link( $_product->get_id() ),
-					'offered_price'     => $_POST['wcj-offer-price-price'],
+					'offered_price'     => isset( $_POST['wcj-offer-price-price'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-price'] ) ) : '',
 					'currency_code'     => get_woocommerce_currency(),
-					'customer_message'  => $_POST['wcj-offer-price-message'],
-					'customer_name'     => $_POST['wcj-offer-price-customer-name'],
-					'customer_email'    => $_POST['wcj-offer-price-customer-email'],
-					'customer_id'       => $_POST['wcj-offer-price-customer-id'],
-					'user_ip'           => $_SERVER['REMOTE_ADDR'],
-					'user_agent'        => $_SERVER['HTTP_USER_AGENT'],
-					'copy_to_customer'  => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? $_POST['wcj-offer-price-customer-copy'] : 'no' ),
+					'customer_message'  => isset( $_POST['wcj-offer-price-message'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-message'] ) ) : '',
+					'customer_name'     => isset( $_POST['wcj-offer-price-customer-name'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-customer-name'] ) ) : '',
+					'customer_email'    => isset( $_POST['wcj-offer-price-customer-email'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-customer-email'] ) ) : '',
+					'customer_id'       => isset( $_POST['wcj-offer-price-customer-id'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-customer-id'] ) ) : '',
+					'user_ip'           => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
+					'user_agent'        => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
+					'copy_to_customer'  => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-customer-copy'] ) ) : 'no' ),
 					'sent_to'           => $email_address,
 				);
 				// Email content.

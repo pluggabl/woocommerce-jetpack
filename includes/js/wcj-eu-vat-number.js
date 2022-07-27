@@ -1,7 +1,8 @@
 /**
- * eu-vat-number.
+ * Wu-vat-number.
  *
- * @version 5.3.7
+ * @version 5.6.2
+ * @package Booster_For_WooCommerce/includes/JS
  */
 
 var _ajax_object = ajax_object;
@@ -9,22 +10,22 @@ var _ajax_object = ajax_object;
 jQuery(
 	function ($) {
 
-		// Setup before functions
-		var inputTimer;               // timer identifier
-		var doneInputInterval = 1000; // time in ms
+		// Setup before functions.
+		var inputTimer;               // timer identifier.
+		var doneInputInterval = 1000; // time in ms.
 		var $vatInput         = $( 'input[name="billing_eu_vat_number"]' );
 		var $vatParagraph     = $( 'p[id="billing_eu_vat_number_field"]' );
 
-		// Add progress text
+		// Add progress text.
 		if ('yes' == _ajax_object.add_progress_text) {
 			$vatParagraph.append( '<div id="wcj_eu_vat_number_progress"></div>' );
 			var $progressText = $( 'div[id="wcj_eu_vat_number_progress"]' );
 		}
 
-		// Initial validate
+		// Initial validate.
 		validateVat();
 
-		// On input, start the countdown
+		// On input, start the countdown.
 		$vatInput.on(
 			'input',
 			function () {
@@ -33,7 +34,7 @@ jQuery(
 			}
 		);
 
-		// Validate VAT
+		// Validate VAT.
 		function validateVat() {
 			$vatParagraph.removeClass( 'woocommerce-invalid' );
 			$vatParagraph.removeClass( 'woocommerce-validated' );
@@ -42,7 +43,7 @@ jQuery(
 			}
 			var vatNumberToCheck = $vatInput.val();
 			if ('' != vatNumberToCheck) {
-				// Validating EU VAT Number through AJAX call
+				// Validating EU VAT Number through AJAX call.
 				if ('yes' == _ajax_object.add_progress_text) {
 					$progressText.text( _ajax_object.progress_text_validating );
 				}
@@ -77,22 +78,22 @@ jQuery(
 					}
 				);
 			} else {
-				// VAT input is empty
+				// VAT input is empty.
 				if ('yes' == _ajax_object.add_progress_text) {
 					$progressText.text( '' );
 				}
 				if ($vatParagraph.hasClass( 'validate-required' )) {
-					// Required
+					// Required.
 					$vatParagraph.addClass( 'woocommerce-invalid' );
 				} else {
-					// Not required
+					// Not required.
 					$vatParagraph.addClass( 'woocommerce-validated' );
 				}
 				$( 'body' ).trigger( 'update_checkout' );
 			}
 		};
 
-		// Show VAT Field for EU countries only
+		// Show VAT Field for EU countries only.
 		var vatFieldContainer = jQuery( '#billing_eu_vat_number_field' );
 		var vatFieldWrapper   = $vatInput.parent();
 		var vatField          = null;

@@ -1,0 +1,6 @@
+{
+    "0" : "= 5.6.2 27/07/2022 =",
+    "1" : "* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added a new shortcode Attribute to exclude tax in order to refund the Total. [wcj_order_shipping_price excl_tax=\"yes\" ]",
+    "2" : "* FIXED - SHIPPING & ORDERS - Maximum Products per User - Remove Max product per user meta from product while duplicating Product",
+    "3" : "* FIXED - EMAILS & MISC. - Export - Escape the html content from the \"Additional Export Orders Fields\" value. "
+}

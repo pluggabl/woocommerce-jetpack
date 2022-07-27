@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Amount
  *
- * @version 5.2.0
+ * @version 5.6.2
  * @since   3.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 		/**
 		 * Available_shipping_methods.
 		 *
-		 * @version 3.5.0
+		 * @version 5.6.2
 		 * @since   3.2.1
 		 * @todo    [dev] currency conversion
 		 * @todo    apply_filters( 'booster_option' )
@@ -55,6 +55,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 		 * @param string | array $package  Get packages.
 		 */
 		public function available_shipping_methods( $rates, $package ) {
+
 			if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
 				return $rates;
 			}
@@ -64,9 +65,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 				get_option( 'wcj_shipping_by_order_amount_min_instance_' . $rate->instance_id, 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_min_' . $rate->method_id, 0 ) );
 				$max = ( $this->use_shipping_instances ?
 					get_option( 'wcj_shipping_by_order_amount_max_instance_' . $rate->instance_id, 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_max_' . $rate->method_id, 0 ) );
-				if ( 0 != $min && $total_in_cart < $min ) {
+				if ( (string) 0 !== $min && $total_in_cart < $min ) {
 					unset( $rates[ $rate_key ] );
-				} elseif ( 0 != $max && $total_in_cart > $max ) {
+				} elseif ( (string) 0 !== $max && $total_in_cart > $max ) {
 					unset( $rates[ $rate_key ] );
 				}
 			}

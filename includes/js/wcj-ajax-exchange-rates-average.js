@@ -1,9 +1,12 @@
 /**
- * wcj-ajax-exchange-rates-average.js
+ * Wcj-ajax-exchange-rates-average.js
  *
- * @version 3.2.2
+ * @version 5.6.2
  * @since   3.2.2
+ *
+ * @package Booster_For_WooCommerce/includes/JS
  */
+
 jQuery( document ).ready(
 	function() {
 		jQuery( ".wcj_grab_average_currency_exchange_rate" ).click(

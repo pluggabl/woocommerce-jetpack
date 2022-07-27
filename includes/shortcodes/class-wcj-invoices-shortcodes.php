@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Invoices
  *
- * @version 5.5.0
+ * @version 5.6.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -57,12 +57,21 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
+		 * @version 5.6.2.
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function init_atts( $atts ) {
 			// Atts.
+			$wpnonce = true;
+			if ( function_exists( 'wp_verify_nonce' ) ) {
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			}
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID();
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) && $wpnonce ) ? sanitize_text_field(
+					wp_unslash(
+						$_GET['order_id']
+					)
+				) : get_the_ID();
 				if ( 0 === $atts['order_id'] ) {
 					return false;
 				}

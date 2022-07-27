@@ -84,7 +84,7 @@ for ( $i = 1; $i <= $xml_total_files; $i++ ) {
 			'<code>' . date_i18n( wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' ), wcj_get_option( 'wcj_products_time_file_created_' . $i, '' ) ) . '</code>'
 		);
 	}
-	$default_file_name = ( ( 1 == $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
+	$default_file_name = ( ( 1 === $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
 	$settings          = array_merge(
 		$settings,
 		array(

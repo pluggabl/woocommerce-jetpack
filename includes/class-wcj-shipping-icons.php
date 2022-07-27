@@ -60,9 +60,9 @@ if ( ! class_exists( 'WCJ_Shipping_Icons' ) ) :
 			$use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_icons_use_shipping_instance', 'no' ) );
 			$option_id              = 'wcj_shipping_icon_' . ( $use_shipping_instances ? 'instance_' . $method->instance_id : $method->method_id );
 			$icon_url               = wcj_get_option( $option_id, '' );
-			if ( '' != ( $icon_url ) ) {
+			if ( '' !== ( $icon_url ) ) {
 				$style      = wcj_get_option( 'wcj_shipping_icons_style', 'display:inline;' );
-				$style_html = ( '' != ( $style ) ) ? 'style="' . $style . '" ' : '';
+				$style_html = ( '' !== ( $style ) ) ? 'style="' . $style . '" ' : '';
 				$img        = '<img ' . $style_html . 'class="wcj_shipping_icon" id="' . $option_id . '" src="' . $icon_url . '">';
 				$label      = ( 'before' === wcj_get_option( 'wcj_shipping_icons_position', 'before' ) ) ? $img . ' ' . $label : $label . ' ' . $img;
 			}
