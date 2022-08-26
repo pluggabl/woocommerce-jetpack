@@ -433,7 +433,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-			return add_query_arg( array( 'wcj_product_price_by_formula_admin_notice' => true ), $location );
+			return esc_url_raw( add_query_arg( array( 'wcj_product_price_by_formula_admin_notice' => true ), $location ) );
 		}
 
 		/**

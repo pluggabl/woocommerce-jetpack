@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.6.2
+ * @version 5.6.3-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -248,7 +248,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 						$product_id     = ( isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
 						? $item['variation_id'] : $item['product_id'] );
 						$purchase_price = wc_get_product_purchase_price( $product_id );
-						if ( 0 !== ( $purchase_price ) && '0' !== ( $purchase_price ) ) {
+						if ( (float) 0 !== $purchase_price ) {
 							if ( 'profit' === $column ) {
 								$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->prices_include_tax : $the_order->get_prices_include_tax() );
 								$line_total                = ( $_order_prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
@@ -262,7 +262,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 						$total += $value;
 					}
 				}
-				if ( 0 > $total ) {
+				if ( 0 !== $total ) {
 					if ( ! $is_forecasted ) {
 						echo '<span style="color:green;">';
 					}
@@ -277,7 +277,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_meta_box.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.3-dev
 		 * @since   2.4.5
 		 * @todo    (maybe) min_profit
 		 */
@@ -300,10 +300,13 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			}
 			foreach ( $products as $product_id => $desc ) {
 				$purchase_price = wc_get_product_purchase_price( $product_id );
-				if ( 0 > $purchase_price ) {
+				if ( $purchase_price <= 0 ) {
+					$purchase_price = 0;
+				}
+				if ( 0 !== $purchase_price && '0' !== $purchase_price && '' !== $purchase_price ) {
 					$the_product = wc_get_product( $product_id );
 					$the_price   = $the_product->get_price();
-					if ( 0 > $the_price ) {
+					if ( 0 !== $the_price && '0' !== $the_price && '' !== $the_price ) {
 						$the_profit   = $the_price - $purchase_price;
 						$table_data   = array();
 						$table_data[] = array( __( 'Selling', 'woocommerce-jetpack' ), wc_price( $the_price ) );

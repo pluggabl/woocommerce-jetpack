@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 5.6.2
+ * @version 5.6.3-dev
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1035,7 +1035,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.3-dev
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1054,6 +1054,8 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'dateformat'                => true,
 				'mindate'                   => true,
 				'maxdate'                   => true,
+				'excludemonths'             => true,
+				'excludedays'               => true,
 				'firstday'                  => true,
 				'display'                   => true,
 				'required'                  => true,
@@ -1071,6 +1073,8 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'currentday_time_limit'     => true,
 				'data-blocked_dates_format' => true,
 				'onclick'                   => true,
+				'accept'                    => true,
+				'data-*'                    => true,
 			),
 			'textarea' => array(
 				'name'        => true,
@@ -1133,9 +1137,22 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'style'    => true,
 				'class'    => true,
 				'disabled' => true,
+				'onclick'  => true,
+				'wcj_data' => true,
 			),
 			'style'    => array(
 				'type' => true,
+			),
+			'script'   => array(
+				'type'           => true,
+				'async'          => true,
+				'crossorigin'    => true,
+				'defer'          => true,
+				'integrity'      => true,
+				'nomodule'       => true,
+				'referrerpolicy' => true,
+				'src'            => true,
+				'type'           => true,
 			),
 			'a'        => array(
 				'onclick'       => true,
@@ -1145,12 +1162,14 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'target'        => true,
 				'wcj-copy-data' => true,
 			),
-			'button'   => array(
-				'wcj_data' => true,
+			'details'  => array(
+				'open' => true,
 			),
+			'bdi'      => true,
+			'em'       => true,
 		);
 		$allowed_merged_html = array_merge_recursive( $allowed_html, $allowed_extra_html );
 		return $allowed_merged_html;
 	}
-	add_filter( 'wp_kses_allowed_html', 'wcj_add_allowed_html', 10, 2 );
+	add_filter( 'wp_kses_allowed_html', 'wcj_add_allowed_html', PHP_INT_MAX, 2 );
 }
