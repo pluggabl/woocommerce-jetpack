@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -463,7 +463,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * Using Javascript until WordPress core fixes: http://core.trac.wordpress.org/ticket/16031
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.2.7
 		 */
 		public function bulk_admin_footer() {

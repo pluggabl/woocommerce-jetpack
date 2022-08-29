@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Free Price
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -87,7 +87,7 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		/**
 		 * Maybe_modify_price
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.7.0
 		 * @param int            $price defines the price.
 		 * @param string | array $_product defines the _product.

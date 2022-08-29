@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 */
 		public function __construct() {
 
@@ -481,7 +481,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_total_refunded.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.5.3
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -493,7 +493,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_item_total_refunded.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.5.3
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -1512,6 +1512,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			} else {
 				$the_items          = $this->the_order->get_items();
 				$exclude_item_total = 0;
+				$exclude_item_subtotal = 0;
 
 				foreach ( $the_items as $item_id => $item ) {
 					$the_product = $item->get_product( $item );

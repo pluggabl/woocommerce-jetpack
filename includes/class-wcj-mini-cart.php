@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Mini Cart Custom Info
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Mini_Cart' ) ) :
 		/**
 		 * Add_mini_cart_custom_info.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 */
 		public function add_mini_cart_custom_info() {
 			$current_filter          = current_filter();

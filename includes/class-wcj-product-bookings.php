@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -511,7 +511,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.5.0
 		 * @param string $location defines the location.
 		 */

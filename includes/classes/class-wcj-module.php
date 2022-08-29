@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -358,7 +358,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Validate_value_add_notice_query_var.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.9.1
 		 * @param String $location Get location.
 		 */
@@ -493,7 +493,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.5.3
 		 *  @param String $location Get location.
 		 */

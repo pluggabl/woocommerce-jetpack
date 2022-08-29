@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 5.6.2
+ * @version 5.6.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -155,7 +155,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Save product input fields on Product Edit.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.3
 		 * @param int         $post_id Get post ID.
 		 * @param obj | Array $post Get post.
 		 */
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				foreach ( $options as $option ) {
 					$option_name = str_replace( 'wcj_product_input_fields_', '', $option['id'] . $i );
 					if ( isset( $_POST[ $option['id'] . $i ] ) ) {
-						$values[ $option_name ] = isset( $_POST[ $option['id'] . $i ] ) ? sanitize_text_field( wp_unslash( $_POST[ $option['id'] . $i ] ) ) : '';
+						$values[ $option_name ] = isset( $_POST[ $option['id'] . $i ] ) ? wp_kses_post( wp_unslash( $_POST[ $option['id'] . $i ] ) ) : '';
 					} elseif ( 'checkbox' === $option['type'] ) {
 						$values[ $option_name ] = 'off';
 					}

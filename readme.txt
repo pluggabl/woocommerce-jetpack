@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 6.0.1
 Requires PHP: 5.6
-Stable tag: 5.6.2
+Stable tag: 5.6.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,27 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.3 31/08/2022 =
+
+* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added a new shortcode for refund total with inc./ex. tax. [wcj_order_item_total_refunded excl_tax="yes" ]
+* FIXED - SHIPPING & ORDERS - Order Custom Statuses - Fixed custom status not displaying in order bulk action selection.
+* FIXED - PRODUCTS - Product Tabs - Fixed issue with HTML tags.
+* FIXED - PRODUCTS - Product Tabs - Fixed issue in some cases Jquery syntax was being shown.
+* FIXED - PRODUCTS - Product Visibility by User Role - Fixed allowed user role selection on the single product edit page.
+* FIXED - PRODUCTS - Product Visibility by Country - Fixed allowed country selection on the single product edit page.
+* FIXED - PRODUCTS - Cost of Goods - Fixed bugs related to reporting, profit, and other bugs.
+* FIXED - CART & CHECKOUT - Mini Cart Custom Info - Fixed Custom Info is not shown on the Wocommarce mini cart.
+* FIXED - BUTTON & PRICE LABELS - Free Price Labels - Fixed free price Label does not show when the product price is '0'.
+* FIXED - CART & CHECKOUT - Checkout Files Upload - Escaped the html content from the "File Upload Fields" value.
+* FIXED - EMAILS & MISC. - Modules By User Roles - Fixed Enable/disable modules by user roles.
+* FIXED - PRODUCTS - Product Addons - Fixed add-ons were not being saved with per product add-on.
+* FIXED - PRODUCTS - Product Input Fields - Fixed issue with input type radio for per product input field.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed Invoice report tool was showing an error while choosing the CSV option.
+* FIXED - EMAILS & MISC. - My Account - Added restriction for Cross browser scripting.
+* FIXED - PHP Warning: Undefined Variable "$exclude_item_subtotal" in /includes/shortcodes/class-wcj-shortcodes-orders.php ...
+* WooCommerce 6.8.2 tested
+* WordPress 6.0.1 Tested
 
 = 5.6.2 27/07/2022 =
 

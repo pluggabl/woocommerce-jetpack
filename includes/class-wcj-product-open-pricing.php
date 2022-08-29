@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -221,7 +221,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.4.8
 		 * @param string $location defines the location.
 		 */

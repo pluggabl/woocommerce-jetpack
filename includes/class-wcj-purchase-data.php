@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -277,7 +277,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_meta_box.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.4.5
 		 * @todo    (maybe) min_profit
 		 */

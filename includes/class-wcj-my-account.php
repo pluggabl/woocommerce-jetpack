@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -560,7 +560,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Process_woocommerce_mark_order_status.
 		 *
-		 * @version 5.6.3-dev
+		 * @version 5.6.3
 		 * @since   2.9.0
 		 */
 		public function process_woocommerce_mark_order_status() {

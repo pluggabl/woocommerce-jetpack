@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Mini plugin customizations
  *
- * @version 5.6.3-dev
+ * @version 5.6.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/mini-plugin
  */
