@@ -431,23 +431,17 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 							$order_cart_total_excl_tax += $item->get_total();
 						}
 						$order_shipping_total_excl_tax = $the_order->get_shipping_total();
-						if($order_cart_total_excl_tax == 0 || $order_cart_tax == 0)
-						{
-							$order_cart_tax_percent = 0;
-						}
-						else
-						{
-							$order_cart_tax_percent        = ( 0 === $order_cart_total_excl_tax ? 0 : $order_cart_tax / $order_cart_total_excl_tax );
-						}
-						
 
-						if($order_shipping_total_excl_tax == 0 || $order_shipping_tax == 0)
-						{
-							$order_shipping_tax_percent = 0;
+						if ( 0 === $order_cart_total_excl_tax || '0' === $order_cart_tax ) {
+							$order_cart_tax_percent = 0;
+						} else {
+							$order_cart_tax_percent = ( 0 === $order_cart_total_excl_tax ? 0 : $order_cart_tax / $order_cart_total_excl_tax );
 						}
-						else
-						{
-							$order_shipping_tax_percent    = ( 0 === $order_shipping_total_excl_tax ? 0 : $order_shipping_tax / $order_shipping_total_excl_tax );
+
+						if ( 0 === $order_shipping_total_excl_tax || '0' === $order_shipping_tax ) {
+							$order_shipping_tax_percent = 0;
+						} else {
+							$order_shipping_tax_percent = ( 0 === $order_shipping_total_excl_tax ? 0 : $order_shipping_tax / $order_shipping_total_excl_tax );
 						}
 
 						$row = array();

@@ -1510,8 +1510,8 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					$the_subtotal += $this->the_order->get_line_subtotal( $item, false, true );
 				}
 			} else {
-				$the_items          = $this->the_order->get_items();
-				$exclude_item_total = 0;
+				$the_items             = $this->the_order->get_items();
+				$exclude_item_total    = 0;
 				$exclude_item_subtotal = 0;
 
 				foreach ( $the_items as $item_id => $item ) {
