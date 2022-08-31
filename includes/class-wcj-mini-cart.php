@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Mini Cart Custom Info
  *
- * @version 5.2.0
+ * @version 5.6.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Mini_Cart' ) ) :
 		/**
 		 * Add_mini_cart_custom_info.
 		 *
-		 * @version 2.4.6
+		 * @version 5.6.3
 		 */
 		public function add_mini_cart_custom_info() {
 			$current_filter          = current_filter();
@@ -57,7 +57,7 @@ if ( ! class_exists( 'WCJ_Mini_Cart' ) ) :
 				if (
 				'' !== wcj_get_option( 'wcj_mini_cart_custom_info_content_' . $i ) &&
 				wcj_get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ) === $current_filter &&
-				wcj_get_option( 'wcj_mini_cart_custom_info_priority_' . $i, 10 ) === $current_filter_priority
+				wcj_get_option( 'wcj_mini_cart_custom_info_priority_' . $i, 10 ) === (string) $current_filter_priority
 				) {
 					echo do_shortcode( wcj_get_option( 'wcj_mini_cart_custom_info_content_' . $i ) );
 				}

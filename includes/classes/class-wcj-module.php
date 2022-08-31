@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.2
+ * @version 5.6.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -358,13 +358,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Validate_value_add_notice_query_var.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.3
 		 * @since   2.9.1
 		 * @param String $location Get location.
 		 */
 		public function validate_value_add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
-			return add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location );
+			return esc_url_raw( add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location ) );
 		}
 
 		/**
@@ -493,13 +493,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.3
 		 * @since   2.5.3
 		 *  @param String $location Get location.
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-			return esc_url( add_query_arg( array( 'wcj_' . $this->id . '_admin_notice' => true ), $location ) );
+			return esc_url_raw( add_query_arg( array( 'wcj_' . $this->id . '_admin_notice' => true ), $location ) );
 		}
 
 		/**
@@ -635,12 +635,18 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			setup_postdata( $_post );
 			// Save options.
 			foreach ( $this->get_meta_box_options() as $option ) {
-				if ( ! $option || '' === $option || 'title' === $option['type'] ) {
+				if ( 'title' === $option['type'] ) {
 					continue;
 				}
 				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 				if ( $is_enabled ) {
-					$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $option['name'] ] ) ) : ( isset( $option['default'] ) ? $option['default'] : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+					$option_value = '';
+					$wpnonce      = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+					if ( $wpnonce && isset( $_POST[ $option['name'] ] ) ) {
+						$option_value = is_array( $_POST[ $option['name'] ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $option['name'] ] ) ) : sanitize_text_field( wp_unslash( $_POST[ $option['name'] ] ) );
+					} elseif ( isset( $option['default'] ) ) {
+						$option_value = $option['default'];
+					}
 					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $post_id;
 					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
 					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {

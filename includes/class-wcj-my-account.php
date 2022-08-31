@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.6.2
+ * @version 5.6.3
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -560,13 +560,15 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Process_woocommerce_mark_order_status.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.3
 		 * @since   2.9.0
 		 */
 		public function process_woocommerce_mark_order_status() {
+			$statuses_to_allow = wcj_get_option( 'wcj_my_account_add_order_status_actions', '' );
 			if (
 				isset( $_GET['wcj_action'] ) && 'wcj_woocommerce_mark_order_status' === $_GET['wcj_action'] &&
 				isset( $_GET['status'] ) &&
+				in_array( $_GET['status'], $statuses_to_allow, true ) &&
 				isset( $_GET['order_id'] ) &&
 				isset( $_GET['_wpnonce'] )
 			) {

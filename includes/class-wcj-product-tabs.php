@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 5.6.2
+ * @version 5.6.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -567,7 +567,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Save_custom_tabs_meta_box.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.3
 		 * @todo    rewrite as standard `WCJ_Module` function
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
@@ -597,7 +597,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 				if ( $this->is_local_tab_visible( $i, $post_id ) ) {
 					foreach ( $option_names as $option_name ) {
 						$sanitized_option_name = $wpnonce && isset( $_POST[ $option_name . $i ] ) ? sanitize_text_field( wp_unslash( $_POST[ $option_name . $i ] ) ) : '';
-						update_post_meta( $post_id, '_' . $option_name . $i, sanitize_text_field( wp_unslash( $sanitized_option_name ) ) );
+						update_post_meta( $post_id, '_' . $option_name . $i, wp_kses_post( wp_unslash( $_POST[ $option_name . $i ] ) ) );
 					}
 				}
 			}

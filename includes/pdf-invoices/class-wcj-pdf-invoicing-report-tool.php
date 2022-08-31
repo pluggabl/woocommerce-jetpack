@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 5.6.2
+ * @version 5.6.3
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -353,7 +353,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Invoices Report Data function.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.3
 		 * @since   2.5.7
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -431,8 +431,18 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 							$order_cart_total_excl_tax += $item->get_total();
 						}
 						$order_shipping_total_excl_tax = $the_order->get_shipping_total();
-						$order_cart_tax_percent        = ( 0 === $order_cart_total_excl_tax ? 0 : $order_cart_tax / $order_cart_total_excl_tax );
-						$order_shipping_tax_percent    = ( 0 === $order_shipping_total_excl_tax ? 0 : $order_shipping_tax / $order_shipping_total_excl_tax );
+
+						if ( 0 === $order_cart_total_excl_tax || '0' === $order_cart_tax ) {
+							$order_cart_tax_percent = 0;
+						} else {
+							$order_cart_tax_percent = ( 0 === $order_cart_total_excl_tax ? 0 : $order_cart_tax / $order_cart_total_excl_tax );
+						}
+
+						if ( 0 === $order_shipping_total_excl_tax || '0' === $order_shipping_tax ) {
+							$order_shipping_tax_percent = 0;
+						} else {
+							$order_shipping_tax_percent = ( 0 === $order_shipping_total_excl_tax ? 0 : $order_shipping_tax / $order_shipping_total_excl_tax );
+						}
 
 						$row = array();
 						foreach ( $columns as $column ) {

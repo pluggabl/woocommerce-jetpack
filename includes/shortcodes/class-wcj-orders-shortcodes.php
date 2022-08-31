@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.6.2
+ * @version 5.6.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.0
+		 * @version 5.6.3
 		 */
 		public function __construct() {
 
@@ -93,6 +93,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				'wcj_order_total_length',
 				'wcj_order_total_shipping_refunded',
 				'wcj_order_total_refunded',
+				'wcj_order_item_total_refunded',
 				'wcj_order_total_tax',
 				'wcj_order_total_tax_after_refund',
 				'wcj_order_total_tax_without_html_custom',
@@ -480,13 +481,33 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_total_refunded.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.3
 		 * @since   2.5.3
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_total_refunded( $atts ) {
 			$refund_total = ( $atts['excl_tax'] ) ? $this->the_order->get_total_refunded() - $this->the_order->get_total_tax_refunded() : $this->the_order->get_total_refunded();
 			return $this->wcj_price_shortcode( $refund_total, $atts );
+		}
+
+		/**
+		 * Wcj_order_item_total_refunded.
+		 *
+		 * @version 5.6.3
+		 * @since   2.5.3
+		 * @param array $atts The user defined shortcode attributes.
+		 */
+		public function wcj_order_item_total_refunded( $atts ) {
+			$refund_item = $this->the_order->get_refunds();
+			foreach ( $refund_item as $_refund ) {
+
+				foreach ( $_refund->get_items() as $_item ) {
+					$refund_total     = $_item->get_total();
+					$refund_total_tax = $_item->get_total_tax();
+				}
+			}
+			$refund_result = ( $atts['excl_tax'] ) ? abs( $refund_total ) : abs( $refund_total ) + abs( $refund_total_tax );
+			return $this->wcj_price_shortcode( $refund_result, $atts );
 		}
 
 		/**
@@ -1489,8 +1510,9 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					$the_subtotal += $this->the_order->get_line_subtotal( $item, false, true );
 				}
 			} else {
-				$the_items          = $this->the_order->get_items();
-				$exclude_item_total = 0;
+				$the_items             = $this->the_order->get_items();
+				$exclude_item_total    = 0;
+				$exclude_item_subtotal = 0;
 
 				foreach ( $the_items as $item_id => $item ) {
 					$the_product = $item->get_product( $item );

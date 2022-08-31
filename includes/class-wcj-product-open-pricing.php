@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.6.2
+ * @version 5.6.3
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -221,13 +221,13 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.3
 		 * @since   2.4.8
 		 * @param string $location defines the location.
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-			return esc_url( add_query_arg( array( 'wcj_product_open_price_admin_notice' => true ), $location ) );
+			return esc_url_raw( add_query_arg( array( 'wcj_product_open_price_admin_notice' => true ), $location ) );
 		}
 
 		/**
