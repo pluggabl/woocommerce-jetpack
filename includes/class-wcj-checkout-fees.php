@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 5.6.2
+ * @version 5.6.4
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -70,7 +70,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Validate fee without considering overlapping.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.4
 		 * @since   4.5.0
 		 *
 		 * @param int                    $fee_id  defines the fee_id.
@@ -118,10 +118,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				if ( isset( $post_data ) || isset( $_REQUEST['post_data'] ) ) {
 					if ( ! isset( $post_data ) ) {
 						$post_data = array();
-						parse_str(
-							array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['post_data'] ) ),
-							$post_data
-						);
+						parse_str( sanitize_text_field( wp_unslash( $_REQUEST['post_data'] ) ), $post_data );
 
 					}
 					if ( empty( $post_data[ $this->checkout_fields[ $fee_id ] ] ) ) {
