@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Exchange Rates - Crons
  *
- * @version 5.3.7
+ * @version 5.6.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -87,7 +87,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 		/**
 		 * On the scheduled action hook, run a function.
 		 *
-		 * @version 3.4.5
+		 * @version 5.6.4
 		 * @todo    get currency pairs from "Currency Exchange Rates" module (see `get_all_currencies_exchange_rates_currencies()`)
 		 * @param int | string $interval Define rate interval.
 		 */
@@ -181,8 +181,8 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 				if ( 0 !== $rate_offset_percent ) {
 					$rate_offset_percent = 1 + ( $rate_offset_percent / 100 );
 				}
-				$the_rate = wcj_get_exchange_rate( $currency_from, $currency_to );
-				if ( 0 !== $the_rate ) {
+				$the_rate = (float) wcj_get_exchange_rate( $currency_from, $currency_to );
+				if ( (float) 0 !== $the_rate ) {
 					if ( 0 !== $rate_offset_percent ) {
 						$the_rate = round( $the_rate * $rate_offset_percent, 6 );
 					}

@@ -1,6 +1,6 @@
 {
-    "0" : "= 5.6.3 31/08/2022 =",
-    "1" : "* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added a new shortcode for refund total with inc./ex. tax. [wcj_order_item_total_refunded excl_tax=\"yes\" ]",
-    "2" : "* FIXED - SHIPPING & ORDERS - Order Custom Statuses - Fixed custom status not displaying in order bulk action selection.",
-    "3" : "* FIXED - PRODUCTS - Product Tabs - Fixed issue with HTML tags."
+    "0" : "= 5.6.4 05/09/2022 =",
+    "1" : "* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed critical error on this module.",
+    "2" : "* FIXED - CART & CHECKOUT - Checkout Fees - Fixed issue with fee applicable with checkout custom field in checkout page.",
+    "3" : "* FIXED - EMAILS & MISC. - Modules By User Roles - Fixed confict with SMTP Plugins."
 }

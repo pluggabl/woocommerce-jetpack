@@ -2,9 +2,9 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 6.0.1
-Requires PHP: 5.6
-Stable tag: 5.6.3
+Tested up to: 6.0.2
+Requires PHP: 7.2
+Stable tag: 5.6.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.4 05/09/2022 =
+
+* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed critical error on this module.
+* FIXED - CART & CHECKOUT - Checkout Fees - Fixed issue with fee applicable with checkout custom field in checkout page.
+* FIXED - EMAILS & MISC. - Modules By User Roles - Fixed confict with SMTP Plugins.
+* FIXED - EMAILS & MISC. - Modules By User Roles - Fixed critical error in network websites.
+* FIXED - PHP Warning: Undefined index "switcher_type" in /includes/includes/widgets/class-wcj-widget-multicurrency.php...
+* FIXED - PHP Fatal error : Uncaught TypeError: in /includes/exchange-rates/class-wcj-exchange-rates-crons.php...
+* WooCommerce 6.8.2 tested
+* WordPress 6.0.2 Tested
 
 = 5.6.3 31/08/2022 =
 
