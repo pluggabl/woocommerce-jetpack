@@ -417,7 +417,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 }
 
 if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
-	add_action( 'plugins_loaded', 'init_wc_gateway_wcj_custom_class' );
+	add_action( 'plugins_loaded', 'init_wc_gateway_wcj_custom_class', PHP_INT_MAX );
 } else {
 	init_wc_gateway_wcj_custom_class();
 }

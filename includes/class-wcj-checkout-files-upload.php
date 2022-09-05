@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 5.6.3
+ * @version 5.6.4
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -418,7 +418,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Process_checkout_files_upload.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.4
 		 * @since   2.4.5
 		 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 		 * @todo    `$this->additional_admin_emails_settings` - more customization options, e.g.: admin email, subject, content, from
@@ -431,7 +431,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				/* translators: %s: search term */
 				__( 'Order ID: %1$s; File name: %2$s', 'woocommerce-jetpack' ),
 				'%order_id%',
-				'%file_name%',
+				'%file_name%'
 			);
 			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 			// Remove file.

@@ -1554,7 +1554,7 @@ msgstr ""
 msgid "Add fees to WooCommerce cart & checkout."
 msgstr ""
 
-#: includes/class-wcj-checkout-fees.php:257
+#: includes/class-wcj-checkout-fees.php:254
 #: includes/settings/wcj-settings-checkout-fees.php:46
 #: includes/settings/wcj-settings-checkout-fees.php:67
 msgid "Fee"

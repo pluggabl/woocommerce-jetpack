@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.6.2
+ * @version 5.6.4
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -90,7 +90,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 				if ( 'init' === current_filter() ) {
 					$this->init_bkg_process_class();
 				} else {
-					add_action( 'plugins_loaded', array( $this, 'init_bkg_process_class' ) );
+					add_action( 'plugins_loaded', array( $this, 'init_bkg_process_class' ), PHP_INT_MAX );
 				}
 			}
 		}
