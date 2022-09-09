@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 6.0.2
 Requires PHP: 7.2
-Stable tag: 5.6.4
+Stable tag: 5.6.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,12 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.5 12/09/2022 =
+
+* FIXED - Fatal Error: Cannot redeclare _load_plugin_class()
+* FIXED - Fatal Error: Uncaught TypeError: implode(): Argument #1 ($pieces)....tracking/class-plugin-usage-tracker.php:413
+* FIXED - PHP Notice:  Undefined index: wcj-cat in includes/admin/class-wc-settings-jetpack.php on line 203
 
 = 5.6.4 05/09/2022 =
 

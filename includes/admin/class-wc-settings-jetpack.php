@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.6.2
+ * @version 5.6.5
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -192,15 +192,15 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output cats
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.5
 		 */
 		public function output_cats_submenu() {
 			global $current_section;
-			$wpnonce = true;
+			$wpnonce = false;
 			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : false;
 			}
-			$current_cat = $wpnonce && empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) );
+			$current_cat = $wpnonce && isset( $_REQUEST['wcj-cat'] ) && ! empty( $_REQUEST['wcj-cat'] ) ? sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) ) : 'dashboard';
 			if ( empty( $this->cats ) ) {
 				return;}
 			echo '<ul class="wcj-dashboard-header">';

@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
@@ -20899,7 +20899,7 @@ msgid ""
 "have not included the code snippet."
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:888
+#: tracking/class-plugin-usage-tracker.php:891
 #, php-format
 msgid ""
 "Thank you for installing our %1$s. We would like to track its usage on your "
@@ -20908,7 +20908,7 @@ msgid ""
 "improvements to the %1$s. Tracking is completely optional."
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:895
+#: tracking/class-plugin-usage-tracker.php:898
 #, php-format
 msgid ""
 "Thank you for installing our %1$s. We'd like your permission to track its "
@@ -20917,79 +20917,79 @@ msgid ""
 "help us make improvements to the %1$s. Tracking is completely optional."
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:906
+#: tracking/class-plugin-usage-tracker.php:909
 msgid "Allow"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:907
+#: tracking/class-plugin-usage-tracker.php:910
 msgid "Do Not Allow"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:953
+#: tracking/class-plugin-usage-tracker.php:956
 #, php-format
 msgid ""
 "Thank you for opting in to tracking. Would you like to receive occasional "
 "news about this %s, including details of new features and special offers?"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:963
+#: tracking/class-plugin-usage-tracker.php:966
 msgid "Yes Please"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:964
+#: tracking/class-plugin-usage-tracker.php:967
 msgid "No Thank You"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:998
+#: tracking/class-plugin-usage-tracker.php:1001
 msgid "Sorry to see you go"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:999
+#: tracking/class-plugin-usage-tracker.php:1002
 msgid ""
 "Before you deactivate the plugin, would you quickly give us your reason for "
 "doing so?"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1001
+#: tracking/class-plugin-usage-tracker.php:1004
 msgid "Set up is too difficult"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1002
+#: tracking/class-plugin-usage-tracker.php:1005
 msgid "Lack of documentation"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1003
+#: tracking/class-plugin-usage-tracker.php:1006
 msgid "Not the features I wanted"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1004
+#: tracking/class-plugin-usage-tracker.php:1007
 msgid "Found a better plugin"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1005
+#: tracking/class-plugin-usage-tracker.php:1008
 msgid "Installed by mistake"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1006
+#: tracking/class-plugin-usage-tracker.php:1009
 msgid "Only required temporarily"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1007
+#: tracking/class-plugin-usage-tracker.php:1010
 msgid "Didn't work"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1009
+#: tracking/class-plugin-usage-tracker.php:1012
 msgid "Details (optional)"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1050
+#: tracking/class-plugin-usage-tracker.php:1053
 msgid "Submitting form"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1110
+#: tracking/class-plugin-usage-tracker.php:1113
 msgid "Submit and Deactivate"
 msgstr ""
 
-#: tracking/class-plugin-usage-tracker.php:1110
+#: tracking/class-plugin-usage-tracker.php:1113
 msgid "Just Deactivate"
 msgstr ""
