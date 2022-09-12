@@ -1,6 +1,6 @@
 {
-    "0" : "= 5.6.4 05/09/2022 =",
-    "1" : "* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed critical error on this module.",
-    "2" : "* FIXED - CART & CHECKOUT - Checkout Fees - Fixed issue with fee applicable with checkout custom field in checkout page.",
-    "3" : "* FIXED - EMAILS & MISC. - Modules By User Roles - Fixed confict with SMTP Plugins."
+    "0" : "= 5.6.5 12/09/2022 =",
+    "1" : "* FIXED - Fatal Error: Cannot redeclare _load_plugin_class()",
+    "2" : "* FIXED - Fatal Error: Uncaught TypeError: implode(): Argument #1 ($pieces)....tracking/class-plugin-usage-tracker.php:413",
+    "3" : "* FIXED - PHP Notice:  Undefined index: wcj-cat in includes/admin/class-wc-settings-jetpack.php on line 203"
 }

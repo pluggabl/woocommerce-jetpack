@@ -3,7 +3,7 @@
  * This is the class that sends all the data back to the home site
  * It also handles opting in and deactivation
  *
- * @version 5.5.9
+ * @version 5.6.5
  * @package Booster_For_WooCommerce/tracking
  */
 
@@ -410,6 +410,9 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			global $wpdb;
 			global $tracked_module;
 
+			if ( ! isset( $tracked_module ) ) {
+				return $body;
+			}
 			$names = implode( '\', \'', $tracked_module );
 
 			$boosterActivePlugins = $wpdb->get_results( "SELECT `option_name` FROM $wpdb->options WHERE `autoload` = 'yes' AND `option_value` = 'yes' AND `option_name` IN ('.$names.')" );
