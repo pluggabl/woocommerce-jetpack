@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.6.2
+ * @version 5.6.6
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -203,7 +203,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_csv.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.6
 		 * @since   2.4.8
 		 */
 		public function export_csv() {
@@ -216,7 +216,10 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 				if ( is_array( $data ) ) {
 					$csv = '';
 					foreach ( $data as $row ) {
-						$row  = $this->smart_format_fields( $row );
+						$row = $this->smart_format_fields( $row );
+						$row = implode(',', $row);
+						$row = trim(preg_replace('/\s+/', ' ', $row));
+						$row = explode(',', $row);
 						$csv .= implode( wcj_get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 					}
 					if ( 'yes' === wcj_get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {

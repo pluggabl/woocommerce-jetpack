@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
@@ -2398,32 +2398,32 @@ msgstr ""
 msgid "Export Products."
 msgstr ""
 
-#: includes/class-wcj-export-import.php:252
-#: includes/class-wcj-export-import.php:258
+#: includes/class-wcj-export-import.php:255
+#: includes/class-wcj-export-import.php:261
 msgid "Filter by Billing Country"
 msgstr ""
 
-#: includes/class-wcj-export-import.php:253
+#: includes/class-wcj-export-import.php:256
 msgid "Filter by Product Title"
 msgstr ""
 
-#: includes/class-wcj-export-import.php:272
-#: includes/reports/class-wcj-reports-product-sales-daily.php:219
+#: includes/class-wcj-export-import.php:275
+#: includes/reports/class-wcj-reports-product-sales-daily.php:222
 #: includes/reports/wcj-class-reports-sales-gateways.php:166
 #: includes/settings/wcj-settings-orders.php:48
 msgid "Filter"
 msgstr ""
 
-#: includes/class-wcj-export-import.php:304
+#: includes/class-wcj-export-import.php:307
 #: includes/class-wcj-track-users.php:45
 msgid "All time"
 msgstr ""
 
-#: includes/class-wcj-export-import.php:323
+#: includes/class-wcj-export-import.php:326
 msgid "Custom:"
 msgstr ""
 
-#: includes/class-wcj-export-import.php:328
+#: includes/class-wcj-export-import.php:331
 msgid "Go"
 msgstr ""
 
@@ -8865,38 +8865,38 @@ msgstr ""
 msgid "Reports Settings"
 msgstr ""
 
-#: includes/reports/class-wcj-reports-product-sales-daily.php:211
+#: includes/reports/class-wcj-reports-product-sales-daily.php:214
 #: includes/reports/wcj-class-reports-sales-gateways.php:160
 msgid "From:"
 msgstr ""
 
-#: includes/reports/class-wcj-reports-product-sales-daily.php:214
+#: includes/reports/class-wcj-reports-product-sales-daily.php:217
 #: includes/reports/wcj-class-reports-sales-gateways.php:163
 msgid "To:"
 msgstr ""
 
-#: includes/reports/class-wcj-reports-product-sales-daily.php:217
+#: includes/reports/class-wcj-reports-product-sales-daily.php:220
 msgid "Product:"
 msgstr ""
 
-#: includes/reports/class-wcj-reports-product-sales-daily.php:307
+#: includes/reports/class-wcj-reports-product-sales-daily.php:310
 #, php-format
 msgid "Total: %d"
 msgstr ""
 
-#: includes/reports/class-wcj-reports-product-sales-daily.php:312
-#: includes/reports/class-wcj-reports-product-sales-daily.php:317
+#: includes/reports/class-wcj-reports-product-sales-daily.php:315
+#: includes/reports/class-wcj-reports-product-sales-daily.php:320
 #, php-format
 msgid "Total: %s"
 msgstr ""
 
-#: includes/reports/class-wcj-reports-product-sales-daily.php:336
+#: includes/reports/class-wcj-reports-product-sales-daily.php:339
 #: includes/reports/wcj-class-reports-sales-gateways.php:196
 #, php-format
 msgid "Total orders: %d"
 msgstr ""
 
-#: includes/reports/class-wcj-reports-product-sales-daily.php:337
+#: includes/reports/class-wcj-reports-product-sales-daily.php:340
 #: includes/reports/class-wcj-reports-sales.php:400
 #: includes/reports/wcj-class-reports-sales-gateways.php:198
 msgid "No sales data for current period."
