@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 5.6.2
+ * @version 5.6.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		/**
 		 * Save_custom_price_labels.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.6
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
 		 */
@@ -121,11 +121,11 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 					$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
 					if ( '_text' === $custom_tab_section_variation ) {
 						if ( isset( $_POST[ $option_name ] ) ) {
-							! empty( update_post_meta( $post_id, '_' . $option_name, sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) );
+							! empty( update_post_meta( $post_id, '_' . $option_name, wp_kses_post( wp_unslash( $_POST[ $option_name ] ) ) ) );
 						}
 					} else {
 						if ( isset( $_POST[ $option_name ] ) ) {
-							! empty( update_post_meta( $post_id, '_' . $option_name, sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) );
+							! empty( update_post_meta( $post_id, '_' . $option_name, wp_kses_post( wp_unslash( $_POST[ $option_name ] ) ) ) );
 						} else {
 							update_post_meta( $post_id, '_' . $option_name, 'off' );
 						}

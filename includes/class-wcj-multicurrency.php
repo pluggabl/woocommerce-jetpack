@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.6.4
+ * @version 5.6.6
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -952,7 +952,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Updates min and max prices.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.6
 		 * @since   4.5.0
 		 *
 		 * @param int          $post_id defines the post_id.
@@ -996,7 +996,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 						$sale_price = get_post_meta( $product_id, '_wcj_multicurrency_per_product_sale_price_' . $currency_code, true );
 					}
 					$prices = array_filter( array( $regular_price, $sale_price ) );
-					$price  = count( $prices ) > 0 ? min( $prices ) : $original_price * $exchange_rate;
+					$price  = count( $prices ) > 0 ? min( $prices ) : (float) $original_price * (float) $exchange_rate;
 					$per_product_prices[ $currency_code ][ $product_id ] = $price;
 				}
 			}
