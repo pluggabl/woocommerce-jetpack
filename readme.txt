@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 4.4
 Tested up to: 6.0.2
 Requires PHP: 7.2
-Stable tag: 5.6.5
+Stable tag: 5.6.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.6 28/09/2022 =
+
+* FIXED - CART & CHECKOUT - Checkout Core Fields - Fixed checkout form design issues.
+* FIXED - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Fixed showing all payment gateways notice on the checkout page.
+* FIXED - BUTTON & PRICE LABELS - Custom Price Labels- Escape the HTML content from the "per page product meta box" value.
+* FIXED - EMAILS & MISC. - Reports- Fixed date range filter on product sale report.
+* FIXED - EMAILS & MISC. - Export - Fixed export order line break issue in this module.
+FIXED - PHP Fatal error: Uncaught TypeError: Unsupported operand types: string in /includes/class-wcj-multicurrency.php...
+* WooCommerce 6.9.4 tested
+* WordPress 6.0.2 Tested
 
 = 5.6.5 12/09/2022 =
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 5.3.7
+ * @version 5.6.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -80,7 +80,7 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 		/**
 		 * Maybe_override_fields.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.6
 		 * @since   3.1.0
 		 * @todo    (maybe) add option to choose `$options_to_override`
 		 * @todo    (maybe) add to `$options_to_override`: enabled; class;
@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 					$option_id     = ( isset( $option_data['option_id'] ) ? $option_data['option_id'] : $option );
 					$option_id     = 'wcj_checkout_fields_' . $field . '_' . $option_id;
 					$value         = wcj_get_option( $option_id, $default_value );
-					if ( $default_value !== $value ) {
+					if ( (string) $default_value !== $value ) {
 						$value                           = ( isset( $option_data['values'][ $value ] ) ? $option_data['values'][ $value ] : $value );
 						$fields[ $field_key ][ $option ] = $value;
 					}
