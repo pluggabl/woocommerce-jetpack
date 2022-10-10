@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -277,7 +277,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Get_products_atts.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.7-dev
 		 * @since   2.3.9
 		 * @todo    [dev] rewrite; add module link;
 		 */
@@ -330,10 +330,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			}
 
 			$table_data = array();
-			$wpnonce    = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce    = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ) ) : false;
 			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] && $wpnonce ) {
 				$table_data[] = array(
 					__( 'Product', 'woocommerce-jetpack' ),

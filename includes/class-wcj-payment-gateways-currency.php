@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency Converter
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @since   2.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -68,14 +68,16 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Fix_chosen_payment_method.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   3.9.0
 		 * @param string | array $post_data defines the post_data.
 		 */
 		public function fix_chosen_payment_method( $post_data ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$wpnonce = false;
+			$args    = array();
+			if ( isset( $_POST['post_data'] ) ) {
+				parse_str( sanitize_text_field( wp_unslash( $_POST['post_data'] ) ), $args );
+				$wpnonce = isset( $args['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( $args['woocommerce-process-checkout-nonce'] ), 'woocommerce-process_checkout' ) : false;
 			}
 
 			$payment_gateway            = ( empty( $_POST['payment_method'] ) ? '' : sanitize_text_field( wp_unslash( $_POST['payment_method'] ) ) );
@@ -104,7 +106,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Change_shipping_price_by_gateway.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.7-dev
 		 * @since   2.4.8
 		 * @param int | array    $package_rates defines the package_rates.
 		 * @param string | array $package defines the package.
@@ -112,7 +114,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		public function change_shipping_price_by_gateway( $package_rates, $package ) {
 			if ( $this->is_cart_or_checkout() ) {
 				$current_gateway = $this->get_chosen_payment_method();
-				if ( '' !== $current_gateway ) {
+				if ( '' !== $current_gateway && null !== $current_gateway ) {
 					$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 					return wcj_change_price_shipping_package_rates( $package_rates, $gateway_currency_exchange_rate );
 				}
@@ -150,7 +152,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Change_price_by_gateway.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   2.3.0
 		 * @param string         $price defines the price.
 		 * @param string | array $product defines the product.
@@ -159,7 +161,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 			if ( $this->is_cart_or_checkout() ) {
 				$current_gateway = $this->get_chosen_payment_method();
 
-				if ( '' !== $current_gateway ) {
+				if ( '' !== $current_gateway && null !== $current_gateway ) {
 					$gateway_currency_exchange_rate = wcj_get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 					$gateway_currency_exchange_rate = str_replace( ',', '.', $gateway_currency_exchange_rate );
 					if ( is_numeric( $price ) ) {
@@ -173,14 +175,14 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Extend_paypal_supported_currencies.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.7-dev
 		 * @since   2.3.0
 		 * @param  array $supported_currencies defines the supported_currencies.
 		 */
 		public function extend_paypal_supported_currencies( $supported_currencies ) {
 			if ( $this->is_cart_or_checkout() ) {
 				$current_gateway = $this->get_chosen_payment_method();
-				if ( '' !== $current_gateway ) {
+				if ( '' !== $current_gateway && null !== $current_gateway ) {
 					$gateway_currency = wcj_get_option( 'wcj_gateways_currency_' . $current_gateway );
 					if ( 'no_changes' !== $gateway_currency ) {
 						$supported_currencies[] = $gateway_currency;
@@ -193,14 +195,14 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		/**
 		 * Change_currency_code.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.7-dev
 		 * @since   2.3.0
 		 * @param  string $currency defines the currency.
 		 */
 		public function change_currency_code( $currency ) {
 			if ( $this->is_cart_or_checkout() ) {
 				$current_gateway = $this->get_chosen_payment_method();
-				if ( '' !== $current_gateway ) {
+				if ( '' !== $current_gateway && null !== $current_gateway ) {
 					$gateway_currency = wcj_get_option( 'wcj_gateways_currency_' . $current_gateway );
 					if ( 'no_changes' !== $gateway_currency ) {
 						return $gateway_currency;

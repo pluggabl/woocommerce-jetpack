@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Tax Display
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -59,15 +59,12 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 		/**
 		 * Tax_display_toggle_param.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   3.2.4
 		 */
 		public function tax_display_toggle_param() {
 			wcj_session_maybe_start();
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj-button-toggle-tax-display-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-button-toggle-tax-display-nonce'] ), 'wcj_button_toggle_tax_display' ) : false;
 			if ( $wpnonce && isset( $_REQUEST['wcj_button_toggle_tax_display'] ) ) {
 				$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
 				$current_value = ( '' === $session_value ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );

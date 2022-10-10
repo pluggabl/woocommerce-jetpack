@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 5.6.3
+ * @version 5.6.7-dev
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -228,26 +228,27 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.6.3
+		 * @version 5.6.7-dev
 		 * @since   2.5.0
 		 * @param string $location defines the location.
 		 */
 		public function add_notice_query_var( $location ) {
+			$query_arg = array(
+				'wcj_product_price_by_user_role_admin_notice' => true,
+				'wcj_product_price_by_user_role_admin_notice-nonce' => wp_create_nonce( 'wcj_product_price_by_user_role_admin_notice' ),
+			);
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-			return esc_url_raw( add_query_arg( array( 'wcj_product_price_by_user_role_admin_notice' => true ), $location ) );
+			return esc_url_raw( add_query_arg( $query_arg, $location ) );
 		}
 
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_price_by_user_role_admin_notice-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_price_by_user_role_admin_notice-nonce'] ), 'wcj_product_price_by_user_role_admin_notice' ) : false;
 			if ( ! $wpnonce || ! isset( $_GET['wcj_product_price_by_user_role_admin_notice'] ) ) {
 				return;
 			}

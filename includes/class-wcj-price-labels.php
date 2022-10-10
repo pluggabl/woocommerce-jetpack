@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 5.6.6
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -107,13 +107,13 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		/**
 		 * Save_custom_price_labels.
 		 *
-		 * @version 5.6.6
+		 * @version 5.6.7-dev
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
 		 */
 		public function save_custom_price_labels( $post_id, $post ) {
-			$nonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
-			if ( ! isset( $_POST['woojetpack_price_labels_save_post'] ) && $nonce ) {
+			$wpnonce = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ), 'woocommerce_save_data' ) : false;
+			if ( ! isset( $_POST['woojetpack_price_labels_save_post'] ) || ! $wpnonce ) {
 				return;
 			}
 			foreach ( $this->custom_tab_sections as $custom_tab_section ) {

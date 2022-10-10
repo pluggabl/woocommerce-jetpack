@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
-				
+
 				if ( '0' !== (string) $max && $total_in_cart > $max ) {
 					$notices[] = str_replace( array( '%gateway_title%', '%max_amount%' ), array( $gateway->title, wc_price( $max ) ), $notices_template_max );
 					unset( $_available_gateways[ $key ] );

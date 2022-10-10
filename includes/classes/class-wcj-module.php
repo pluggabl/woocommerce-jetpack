@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.3
+ * @version 5.6.7-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -522,12 +522,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Reset_settings.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   2.4.0
 		 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 		 */
 		public function reset_settings() {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ), 'woocommerce-settings' ) : true;
+			$wpnonce = isset( $_REQUEST[ 'wcj_reset_settings-' . $this->id . '-nonce' ] ) ? wp_verify_nonce( sanitize_key( $_REQUEST[ 'wcj_reset_settings-' . $this->id . '-nonce' ] ), 'wcj_reset_settings' ) : false;
 			if ( $wpnonce && isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
 				foreach ( $this->get_settings() as $settings ) {
 					if ( false !== strpos( $settings['id'], '[' ) ) {
@@ -539,7 +539,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						update_option( $settings['id'], $default_value );
 					}
 				}
-				wp_safe_redirect( remove_query_arg( 'wcj_reset_settings' ) );
+				wp_safe_redirect( remove_query_arg( array( 'wcj_reset_settings', 'wcj_reset_settings-' . $this->id . '-nonce' ) ) );
 				exit();
 			}
 		}
@@ -979,7 +979,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_reset_settings_button.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.7-dev
 		 * @since   2.4.0
 		 * @param Array $settings Get settings.
 		 */
@@ -998,7 +998,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'id'    => 'wcj_' . $this->id . '_reset_settings',
 					'type'  => 'custom_link',
 					'link'  => '<a onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')" class="button-primary" style="' .
-						$reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+						$reset_button_style . '" href="' . add_query_arg(
+							array(
+								'wcj_reset_settings' => $this->id,
+								'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+							)
+						) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 				),
 				array(
 					'type' => 'sectionend',

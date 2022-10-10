@@ -216,10 +216,10 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 				if ( is_array( $data ) ) {
 					$csv = '';
 					foreach ( $data as $row ) {
-						$row = $this->smart_format_fields( $row );
-						$row = implode(',', $row);
-						$row = trim(preg_replace('/\s+/', ' ', $row));
-						$row = explode(',', $row);
+						$row  = $this->smart_format_fields( $row );
+						$row  = implode( ',', $row );
+						$row  = trim( preg_replace( '/\s+/', ' ', $row ) );
+						$row  = explode( ',', $row );
 						$csv .= implode( wcj_get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 					}
 					if ( 'yes' === wcj_get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {

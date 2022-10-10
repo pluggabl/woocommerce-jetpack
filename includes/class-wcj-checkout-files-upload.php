@@ -869,14 +869,14 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Maybe_get_image.
 		 *
-		 * @version 5.6.3
+		 * @version 5.6.7-dev
 		 * @since   3.7.0
 		 * @param string $link defines the link.
 		 * @param int    $i defines the value of i.
 		 * @param int    $order_id defines the order_id.
 		 */
 		public function maybe_get_image( $link, $i, $order_id = 0 ) {
-			$wpnonce = isset( $_REQUEST['wcj-checkout-files-upload-nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['wcj-checkout-files-upload-nonce'] ) ? $_REQUEST['wcj-checkout-files-upload-nonce'] : '' ), 'wcj-checkout-files-upload-nonce' ) : false;
+			$wpnonce = isset( $_REQUEST['wcj-checkout-files-upload-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-checkout-files-upload-nonce'] ), 'wcj-checkout-files-upload-nonce' ) : false;
 			if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_form_template_field_show_images', 'no' ) ) {
 				$order = wc_get_order( $order_id );
 				if ( $wpnonce && 0 !== $order_id && isset( $_GET['key'] ) && ( $order ) && $order->key_is_valid( sanitize_text_field( wp_unslash( $_GET['key'] ) ) ) ) {

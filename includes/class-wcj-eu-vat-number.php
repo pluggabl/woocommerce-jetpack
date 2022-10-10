@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -384,21 +384,18 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Start_session.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 */
 		public function start_session() {
 			if ( is_admin() ) {
 				return;
 			}
 			wcj_session_maybe_start();
-			$args    = array();
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			if ( $wpnonce && isset( $_POST['post_data'] ) ) {
-				parse_str( $_POST['post_data'], $args ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-				if ( isset( $args['billing_eu_vat_number'] ) && wcj_session_get( 'wcj_eu_vat_number_to_check' ) !== $args['billing_eu_vat_number'] ) {
+			$args = array();
+			if ( isset( $_REQUEST['post_data'] ) ) {
+				parse_str( sanitize_text_field( wp_unslash( $_REQUEST['post_data'] ) ), $args );
+				$wpnonce = isset( $args['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( $args['woocommerce-process-checkout-nonce'] ), 'woocommerce-process_checkout' ) : false;
+				if ( $wpnonce && isset( $args['billing_eu_vat_number'] ) && wcj_session_get( 'wcj_eu_vat_number_to_check' ) !== $args['billing_eu_vat_number'] ) {
 					wcj_session_set( 'wcj_is_eu_vat_number_valid', null );
 					wcj_session_set( 'wcj_eu_vat_number_to_check', null );
 				}

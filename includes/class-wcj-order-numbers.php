@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -192,7 +192,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Search_by_custom_number.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   2.6.0
 		 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
 		 * @param array | string $query defines the query.
@@ -232,7 +232,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			// Post Status.
 			$wpnonce = true;
 			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'woocommerce-settings' ) : true;
 			}
 			$post_status = ( $wpnonce && isset( $_GET['post_status'] ) ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : 'any';
 
@@ -342,16 +342,13 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Add Renumerate Orders tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @todo    restyle
 		 * @todo    add more result info (e.g. number of regenerated orders etc.)
 		 */
 		public function create_renumerate_orders_tool() {
 			$result_message = '';
-			$wpnonce        = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce        = isset( $_REQUEST['renumerate-orders-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['renumerate-orders-nonce'] ), 'renumerate_orders' ) : false;
 			if ( $wpnonce && isset( $_POST['renumerate_orders'] ) ) {
 				$this->renumerate_orders();
 				$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
@@ -381,6 +378,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			$html .= $result_message;
 			$html .= '<form method="post" action="">';
 			$html .= '<input class="button-primary" type="submit" name="renumerate_orders" value="' . __( 'Renumerate orders', 'woocommerce-jetpack' ) . '">';
+			$html .= wp_nonce_field( 'renumerate_orders', 'renumerate-orders-nonce' );
 			$html .= '</form>';
 			$html .= '</div>';
 			$html .= '</div>';

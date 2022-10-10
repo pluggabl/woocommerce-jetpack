@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @since   2.8.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -190,7 +190,15 @@ $settings = array(
 		'title'             => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
 		'desc'              => empty( $message ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc_tip'          => '<a href="' . esc_url( add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups' ) ) ) ) . '">' .
+		'desc_tip'          => '<a href="' . esc_url(
+			add_query_arg(
+				array(
+					'recalculate_price_filter_products_prices' => '1',
+					'recalculate_price_filter_products_prices-nonce' => wp_create_nonce( 'recalculate_price_filter_products_prices' ),
+				),
+				remove_query_arg( array( 'wcj_generate_country_groups' ) )
+			)
+		) . '">' .
 							__( 'Recalculate price filter widget and sorting by price product prices.', 'woocommerce-jetpack' ) . '</a>',
 		'id'                => 'wcj_price_by_country_price_filter_widget_support_enabled',
 		'default'           => 'no',

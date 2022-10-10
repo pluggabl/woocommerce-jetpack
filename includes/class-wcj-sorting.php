@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sorting
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -298,21 +298,21 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 		 * Add new sorting options to WooCommerce sorting.
 		 *
 		 * @param array $args Get args.
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 */
 		public function custom_woocommerce_get_catalog_ordering_args( $args ) {
 			// Get ordering from query string.
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$_get = array();
+			if ( ! isset( $_SERVER['QUERY_STRING'] ) ) {
+				return $args;
 			}
-
+			parse_str( sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ), $_get );
 			$orderby_value = ( WCJ_IS_WC_VERSION_BELOW_3 ) ?
-			( ( isset( $_GET['orderby'] ) && $wpnonce ) ? woocommerce_clean( sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ) : apply_filters(
+			( ( isset( $_get['orderby'] ) && $wpnonce ) ? woocommerce_clean( sanitize_text_field( wp_unslash( $_get['orderby'] ) ) ) : apply_filters(
 				'woocommerce_default_catalog_orderby',
 				get_option( 'woocommerce_default_catalog_orderby' )
 			) ) :
-			( isset( $_GET['orderby'] ) ? wc_clean( sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ) : apply_filters(
+			( isset( $_get['orderby'] ) ? wc_clean( sanitize_text_field( wp_unslash( $_get['orderby'] ) ) ) : apply_filters(
 				'woocommerce_default_catalog_orderby',
 				get_option( 'woocommerce_default_catalog_orderby' )
 			)

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Customers
  *
- * @version 5.5.9
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -35,12 +35,11 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 
 		/**
 		 * Get_report function.
+		 *
+		 * @version 5.6.7-dev
 		 */
 		public function get_report() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce     = isset( $_REQUEST['wcj_reports_customers_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_reports_customers_nonce'] ), 'wcj-reports-customers' ) : false;
 			$report_type = $wpnonce && isset( $_GET['country'] ) ? sanitize_text_field( wp_unslash( $_GET['country'] ) ) : 'all_countries';
 
 			$html = '';
@@ -136,7 +135,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		/**
 		 * Get_data function.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.7-dev
 		 * @param Array  $data Get data.
 		 * @param int    $total_customers Get total number of customers.
 		 * @param string $report_type Get all_countries.
@@ -159,12 +158,26 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 					$result                = $result['customer_counter'];
 					$html                 .= '<tr>';
 					$html                 .= '<td>' . ( ++$i ) . '</td>';
-					$country_code_link     = '<a href="' . esc_url( add_query_arg( array( 'country' => $country_code ) ) ) . '">' . $country_code . '</a>';
+					$country_code_link     = '<a href="' . esc_url(
+						add_query_arg(
+							array(
+								'country' => $country_code,
+								'wcj_reports_customers_nonce' => wp_create_nonce( 'wcj-reports-customers' ),
+							)
+						)
+					) . '">' . $country_code . '</a>';
 					$html                 .= ( 2 === strlen( $country_code ) ) ? '<td>' . $country_code_link . '</td>' : '<td>' . $country_code . '</td>';
 					$html                 .= '<td>' . $result . '</td>';
 					$html                 .= ( 0 !== $total_customers ) ? '<td>' . number_format( ( $result / $total_customers ) * 100, 2 ) . '% </td>' : '<td></td>';
 					$country_flag_img      = wcj_get_country_flag_by_code( $country_code );
-					$country_flag_img_link = '<a href="' . esc_url( add_query_arg( array( 'country' => $country_code ) ) ) . '">' .
+					$country_flag_img_link = '<a href="' . esc_url(
+						add_query_arg(
+							array(
+								'country' => $country_code,
+								'wcj_reports_customers_nonce' => wp_create_nonce( 'wcj-reports-customers' ),
+							)
+						)
+					) . '">' .
 					$country_flag_img . ' ' . wcj_get_country_name_by_code( $country_code ) . '</a>';
 					$html                 .= ( 2 === strlen( $country_code ) ) ? '<td>' . $country_flag_img_link . '</td>' : '<td></td>';
 					$html                 .= '</tr>';

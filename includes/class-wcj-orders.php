@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -106,12 +106,12 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Handle_orders_navigation.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   3.4.0
 		 */
 		public function handle_orders_navigation() {
 			if ( isset( $_GET['wcj_orders_navigation'] ) ) {
-				$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'wcj-order-meta-nonce' ) : true;
+				$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj-order-meta-nonce' ) : false;
 				$adjacent_order_id = $wpnonce && isset( $_GET['post'] ) && isset( $_GET['wcj_orders_navigation'] ) ? wcj_get_adjacent_order_id( sanitize_text_field( wp_unslash( $_GET['post'] ) ), sanitize_text_field( wp_unslash( $_GET['wcj_orders_navigation'] ) ) ) : false;
 				$url               = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id ) ?
 				remove_query_arg( 'wcj_orders_navigation' ) :
@@ -253,15 +253,12 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Admin_notice_regenerate_download_permissions.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   3.2.0
 		 */
 		public function admin_notice_regenerate_download_permissions() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			if ( ! empty( $_REQUEST['wcj_bulk_regenerated_download_permissions'] ) ) {
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'woocommerce-settings' ) : false;
+			if ( $wpnonce && ! empty( $_REQUEST['wcj_bulk_regenerated_download_permissions'] ) ) {
 				$orders_count = intval( $_REQUEST['wcj_bulk_regenerated_download_permissions'] );
 				$message      = sprintf(
 					/* translators: %s: translation added */

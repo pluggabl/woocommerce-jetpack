@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -129,7 +129,7 @@ if ( ! function_exists( 'wcj_change_price_shipping_package_rates' ) ) {
 	/**
 	 * Wcj_change_price_shipping_package_rates.
 	 *
-	 * @version 3.2.0
+	 * @version 5.6.7-dev
 	 * @since   3.2.0
 	 * @param   array $package_rates defines the package_rates.
 	 * @param   int   $multiplier defines the multiplier.
@@ -138,7 +138,7 @@ if ( ! function_exists( 'wcj_change_price_shipping_package_rates' ) ) {
 		$modified_package_rates = array();
 		foreach ( $package_rates as $id => $package_rate ) {
 			if ( 1 !== $multiplier && isset( $package_rate->cost ) ) {
-				$package_rate->cost = $package_rate->cost * $multiplier;
+				$package_rate->cost = (float) $package_rate->cost * (float) $multiplier;
 				if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
 					if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
 						$rate_taxes = $package_rate->taxes;

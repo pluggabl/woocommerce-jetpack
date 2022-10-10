@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -399,7 +399,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_button_toggle_tax_display.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @since   3.2.4
 		 * @todo    (dev) different style/class for different tax state
 		 * @todo    (maybe) `get` instead of `post`
@@ -410,7 +410,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$current_value = ( ( '' === $session_value || null === $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
 			$current_value = '' === $current_value ? 'excl' : $current_value;
 			$label         = $atts[ 'label_' . $current_value ];
-			return '<form method="post" action=""><input type="submit" name="wcj_button_toggle_tax_display"' .
+			return '<form method="post" action="">' . wp_nonce_field( 'wcj_button_toggle_tax_display', 'wcj-button-toggle-tax-display-nonce' ) . '<input type="submit" name="wcj_button_toggle_tax_display"' .
 			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';
 		}
 
