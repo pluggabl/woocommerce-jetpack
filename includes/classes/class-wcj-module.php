@@ -962,7 +962,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_tool_link.
 		 *
-		 * @version 2.3.10
+		 * @version 5.6.7-dev
 		 * @since   2.2.3
 		 */
 		public function add_tool_link() {
@@ -970,7 +970,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				$tool_title = $tool_data['title'];
 				echo '<p>';
 				echo ( $this->is_enabled() ) ?
-				'<a href="' . wp_kses_post( admin_url( 'admin.php?page=wcj-tools&tab=' . $tool_id ) ) . '"><code>' . wp_kses_post( $tool_title ) . '</code></a>' :
+				'<a href="' . esc_url_raw( admin_url( 'admin.php?page=wcj-tools&tab=' . $tool_id . '&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) ) ) . '"><code>' . wp_kses_post( $tool_title ) . '</code></a>' :
 				'<code>' . wp_kses_post( $tool_title ) . '</code>';
 				echo '</p>';
 			}

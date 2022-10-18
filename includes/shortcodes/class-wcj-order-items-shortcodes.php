@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 5.6.2
+ * @version 5.6.7-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -32,18 +32,14 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7-dev
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
 
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
 			$modified_atts = array_merge(
 				array(
-					'order_id'                            => ( isset( $_GET['order_id'] ) && $wpnonce ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(),
+					'order_id'                            => ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(), // phpcs:ignore WordPress.Security.NonceVerification
 					'hide_currency'                       => 'no',
 					'table_class'                         => '',
 					'shipping_as_item'                    => '', // e.g.: 'Shipping'.

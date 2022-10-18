@@ -282,6 +282,11 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		 * @todo    [dev] rewrite; add module link;
 		 */
 		public function get_products_atts() {
+			$wcj_tools_nonce = isset( $_GET['wcj_tools_nonce'] ) ? sanitize_key( wp_unslash( $_GET['wcj_tools_nonce'] ) ) : '';
+			if ( ! wp_verify_nonce( $wcj_tools_nonce, 'wcj_tools' ) ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=wcj-tools' ) );
+				exit;
+			}
 
 			$total_products = 0;
 
@@ -330,8 +335,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			}
 
 			$table_data = array();
-			$wpnonce    = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ) ) : false;
-			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] && $wpnonce ) {
+			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] ) {
 				$table_data[] = array(
 					__( 'Product', 'woocommerce-jetpack' ),
 					__( 'Category', 'woocommerce-jetpack' ),
