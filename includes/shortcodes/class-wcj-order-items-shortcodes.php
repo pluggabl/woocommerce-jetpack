@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -32,7 +32,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {

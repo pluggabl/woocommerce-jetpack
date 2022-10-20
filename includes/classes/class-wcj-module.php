@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -522,7 +522,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Reset_settings.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.4.0
 		 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 		 */
@@ -962,7 +962,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_tool_link.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.2.3
 		 */
 		public function add_tool_link() {
@@ -979,7 +979,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_reset_settings_button.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.4.0
 		 * @param Array $settings Get settings.
 		 */

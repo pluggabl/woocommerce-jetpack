@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -102,7 +102,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Change_user_role_meta.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @todo    [dev] (maybe) optionally via cookies
 		 */
@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Add_user_role_changer.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
@@ -197,7 +197,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Create_custom_roles_tool.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.3
 		 */
 		public function create_custom_roles_tool() {

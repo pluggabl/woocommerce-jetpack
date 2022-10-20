@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -106,7 +106,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Handle_orders_navigation.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.4.0
 		 */
 		public function handle_orders_navigation() {
@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Admin_notice_regenerate_download_permissions.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.2.0
 		 */
 		public function admin_notice_regenerate_download_permissions() {

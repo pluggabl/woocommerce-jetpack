@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -192,7 +192,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Search_by_custom_number.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.6.0
 		 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
 		 * @param array | string $query defines the query.
@@ -342,7 +342,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Add Renumerate Orders tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @todo    restyle
 		 * @todo    add more result info (e.g. number of regenerated orders etc.)
 		 */

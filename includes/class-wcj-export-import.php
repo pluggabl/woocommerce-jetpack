@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.6.6
+ * @version 5.6.7
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -203,7 +203,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_csv.
 		 *
-		 * @version 5.6.6
+		 * @version 5.6.7
 		 * @since   2.4.8
 		 */
 		public function export_csv() {

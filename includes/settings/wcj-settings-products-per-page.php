@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Products per Page
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

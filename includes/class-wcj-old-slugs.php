@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Old Slugs
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 		/**
 		 * Create_old_slugs_tool.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 */
 		public function create_old_slugs_tool() {
 
@@ -89,8 +89,8 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 
 				if ( ( isset( $_POST['remove_old_products_slugs'] ) && $remove_old_products_slugs_wpnonce ) || ( isset( $_POST['remove_old_non_products_slugs'] ) && $remove_old_non_products_slugs_wpnonce ) ) {
 					$post_ids_to_delete   = join( ',', ( isset( $_POST['remove_old_products_slugs'] ) ? $posts_ids['products'] : $posts_ids['non_products'] ) );
-					$delete_result        = $wpdb->get_results( "DELETE FROM  WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)" ); //phpcs:ignore
-					$recheck_result       = $wpdb->get_results( "SELECT * FROM  WHERE meta_key = '_wp_old_slug'" ); //phpcs:ignore
+					$delete_result        = $wpdb->get_results( "DELETE FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)" ); //phpcs:ignore
+					$recheck_result       = $wpdb->get_results( "SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug'" ); //phpcs:ignore
 					$recheck_result_count = count( $recheck_result );
 					$remove_result_html   = '<div class="updated"><p>' .
 					sprintf(
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 		/**
 		 * Output_old_slugs_tool.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.8.0
 		 * @param string | array $remove_result_html defines the remove_result_html.
 		 * @param array          $multi_table_data defines the multi_table_data.

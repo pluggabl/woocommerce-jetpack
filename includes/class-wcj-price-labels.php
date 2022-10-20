@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		/**
 		 * Save_custom_price_labels.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
 		 */

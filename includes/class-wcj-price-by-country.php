@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -153,7 +153,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		/**
 		 * Recalculate_price_filter_products_prices.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.6
 		 */
 		public function recalculate_price_filter_products_prices() {

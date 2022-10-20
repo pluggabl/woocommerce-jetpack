@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -447,7 +447,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Catch_args.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 */
 		public function catch_args() {
 			$create_invoice_for_order_id_wpnonce = isset( $_REQUEST['create_invoice_for_order_id-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['create_invoice_for_order_id-nonce'] ), 'create_invoice_for_order_id' ) : false;

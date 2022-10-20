@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Customers
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -36,7 +36,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		/**
 		 * Get_report function.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 */
 		public function get_report() {
 			$wpnonce     = isset( $_REQUEST['wcj_reports_customers_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_reports_customers_nonce'] ), 'wcj-reports-customers' ) : false;
@@ -135,7 +135,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		/**
 		 * Get_data function.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @param Array  $data Get data.
 		 * @param int    $total_customers Get total number of customers.
 		 * @param string $report_type Get all_countries.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Check_required_wcj_input_fields.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.0.1
 		 * @param array          $data defines the data.
 		 * @param string | array $errors defines the errors.
@@ -139,7 +139,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Update_custom_payment_gateways_fields_order_meta.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.2
 		 * @param int    $order_id defines the order_id.
 		 * @param string $posted defines the posted.

@@ -1,6 +1,6 @@
 {
-    "0" : "= 5.6.6 28/09/2022 =",
-    "1" : "* FIXED - CART & CHECKOUT - Checkout Core Fields - Fixed checkout form design issues.",
-    "2" : "* FIXED - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Fixed showing all payment gateways notice on the checkout page.",
-    "3" : "* FIXED - BUTTON & PRICE LABELS - Custom Price Labels- Escape the HTML content from the 'per page product meta box' value."
+    "0" : "= 5.6.7 27/10/2022 =",
+    "1" : "* FIXED - PAYMENT GATEWAYS - Gateways Currency Converter - Fixed the issue of currency on the cart page.",
+    "2" : "* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed Security vulnerability for ShopManager + Arbitrary File Download.",
+    "3" : "* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed Security vulnerability for Checkout Files Deletion."
 }

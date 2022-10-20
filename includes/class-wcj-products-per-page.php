@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -53,7 +53,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		/**
 		 * Add_products_per_page_form.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.3
 		 */
 		public function add_products_per_page_form() {
@@ -134,7 +134,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		/**
 		 * Get_current_products_per_page_number.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.8.0
 		 * @param string $do_save defines the do_save.
 		 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -200,7 +200,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Add_shop_order_multiple_statuses_not_completed_link.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param   string $views defines the views.
 		 */
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter_shop_order_multiple_statuses_not_completed_link.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */
@@ -254,7 +254,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Multiple_shop_order_statuses.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param string $type defines the type.
 		 */
@@ -300,7 +300,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter_shop_order_multiple_statuses.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */

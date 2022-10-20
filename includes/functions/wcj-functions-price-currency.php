@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -129,7 +129,7 @@ if ( ! function_exists( 'wcj_change_price_shipping_package_rates' ) ) {
 	/**
 	 * Wcj_change_price_shipping_package_rates.
 	 *
-	 * @version 5.6.7-dev
+	 * @version 5.6.7
 	 * @since   3.2.0
 	 * @param   array $package_rates defines the package_rates.
 	 * @param   int   $multiplier defines the multiplier.

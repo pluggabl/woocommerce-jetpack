@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -399,7 +399,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_button_toggle_tax_display.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.2.4
 		 * @todo    (dev) different style/class for different tax state
 		 * @todo    (maybe) `get` instead of `post`

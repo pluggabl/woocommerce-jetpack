@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_custom_statuses_table.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_table() {
@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_custom_statuses_add_edit_table.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_add_edit_table() {
@@ -313,7 +313,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Process_actions.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.2.2
 		 * @todo    (maybe) use `init` hook for processing actions
 		 */
@@ -343,7 +343,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_delete_all_custom_statuses_button.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.2.2
 		 */
 		public function get_delete_all_custom_statuses_button() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -122,7 +122,7 @@ if ( ! function_exists( 'wcj_empty_cart_button_html' ) ) {
 	/**
 	 * Wcj_empty_cart_button_html.
 	 *
-	 * @version 5.6.7-dev
+	 * @version 5.6.7
 	 * @since   2.8.0
 	 * @todo    optional function parameters instead of default `get_option()` calls
 	 */

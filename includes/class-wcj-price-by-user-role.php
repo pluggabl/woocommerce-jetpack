@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -228,7 +228,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.0
 		 * @param string $location defines the location.
 		 */
@@ -244,7 +244,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {

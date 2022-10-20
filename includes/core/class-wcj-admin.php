@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -84,7 +84,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Admin_footer_text
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @param   string $footer_text get admin footer texts.
 		 */
 		public function admin_footer_text( $footer_text ) {

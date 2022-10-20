@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -405,7 +405,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_woocommerce_admin_fields.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @todo    converting from before version 2.3.0: section?
 		 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 		 * @param string $fields defines the fields.

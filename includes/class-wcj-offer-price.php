@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -134,7 +134,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Delete_offer_price_product_history.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @todo    (maybe) add successful deletion notice
 		 * @param int            $post_id defines the post_id.
@@ -502,7 +502,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Offer_price.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @todo    (maybe) separate customer copy email template and subject
 		 * @todo    (maybe) redirect (no notice though)

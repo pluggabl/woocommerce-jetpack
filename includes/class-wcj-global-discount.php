@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Regenerate_wcj_sale_products_in_cache.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   4.8.0
 		 */
 		public function regenerate_wcj_sale_products_in_cache() {

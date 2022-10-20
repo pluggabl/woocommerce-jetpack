@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -384,7 +384,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Start_session.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 */
 		public function start_session() {
 			if ( is_admin() ) {

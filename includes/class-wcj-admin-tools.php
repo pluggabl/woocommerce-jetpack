@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -277,7 +277,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Get_products_atts.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.3.9
 		 * @todo    [dev] rewrite; add module link;
 		 */

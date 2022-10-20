@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * Get_report_args.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 */
 		public function get_report_args() {
@@ -171,7 +171,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * Output_report_header.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 */
 		public function output_report_header() {

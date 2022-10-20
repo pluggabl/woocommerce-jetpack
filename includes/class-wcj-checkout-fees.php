@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -23,7 +23,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   3.7.0
 		 * @todo    (maybe) rename module to "Cart & Checkout Fees"
 		 */
@@ -71,7 +71,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Validate fee without considering overlapping.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   4.5.0
 		 *
 		 * @param int                    $fee_id  defines the fee_id.
@@ -296,8 +296,8 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Wcj_add_nonce_checkout_fees.
 		 *
-		 * @version 5.6.7-dev
-		 * @since   5.6.7-dev
+		 * @version 5.6.7
+		 * @since   5.6.7
 		 */
 		public function wcj_add_nonce_checkout_fees() {
 			return wp_nonce_field( 'wcj-process_checkout', 'wcj-process-checkout-nonce' );

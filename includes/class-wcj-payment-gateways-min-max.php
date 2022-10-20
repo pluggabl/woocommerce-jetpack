@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 5.6.6
+ * @version 5.6.7
  * @since   2.4.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 		/**
 		 * Remove_payment_gateways.
 		 *
-		 * @version 5.6.6
+		 * @version 5.6.7
 		 * @since   4.7.0
 		 *
 		 * @param array $_available_gateways defines the _available_gateways.

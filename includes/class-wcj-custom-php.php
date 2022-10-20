@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom PHP
  *
- * @version 5.6.7-dev
+ * @version 5.6.7
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.7-dev
+		 * @version 5.6.7
 		 * @since   4.0.0
 		 * @todo    [dev] maybe remove `wcj_disable_custom_php` from URL on settings save
 		 * @todo    [dev] allow tab in content (i.e. settings (textarea))
