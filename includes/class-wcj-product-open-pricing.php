@@ -247,7 +247,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 			?><div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
+				. wp_kses_post( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Plus</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
 				. '</div>';
 			?>
 		</p></div>

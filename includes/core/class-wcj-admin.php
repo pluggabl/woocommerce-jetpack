@@ -141,7 +141,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				'<a href="' . esc_url( 'https://booster.io/' ) . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 			);
 			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
-				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
+				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/buy-booster/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
 			} else {
 				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/my-account/booster-contact/' ) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
 			}

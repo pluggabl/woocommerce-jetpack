@@ -382,7 +382,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				/* translators: %1$s,%2$s: translators Added */
 				wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ) ),
 				wp_kses_post( $this->short_desc ),
-				'https://booster.io/plus/'
+				'https://booster.io/buy-booster/'
 			) .
 			'</div></p></div>';
 		}
