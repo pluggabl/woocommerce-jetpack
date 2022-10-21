@@ -2,7 +2,7 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 4.4
-Tested up to: 6.0.2
+Tested up to: 6.0.3
 Requires PHP: 7.2
 Stable tag: 5.6.7
 License: GNU General Public License v3.0
@@ -290,7 +290,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed order item table issue while merging multiple invoice PDFs.
 * FIXED - PHP Warning:  A non-numeric value encountered in ...includes/functions/wcj-functions-price-currency.php on line 141
 * WooCommerce 7.0.0 tested
-* WordPress 6.0.2 Tested
+* WordPress 6.0.3 Tested
 
 = 5.6.6 28/09/2022 =
 
