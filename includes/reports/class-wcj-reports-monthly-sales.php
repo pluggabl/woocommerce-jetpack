@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   2.4.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -35,20 +35,18 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.4.7
 		 */
 		public function get_report() {
-			$html    = '';
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			if ( $wpnonce && isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
+			$html                   = '';
+			$save_currency_wpnonce  = isset( $_REQUEST['wcj-save-currency-rates-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-save-currency-rates-nonce'] ), 'wcj_save_currency_rates' ) : false;
+			$reset_currency_wpnonce = isset( $_REQUEST['wcj-reset-currency-rates-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-reset-currency-rates-nonce'] ), 'wcj_reset_currency_rates' ) : false;
+			if ( $save_currency_wpnonce && isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
 				// Save rates.
 				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), sanitize_text_field( wp_unslash( $_POST['wcj_save_currency_rates_array'] ) ) ) );
 				$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates saved.', 'woocommerce-jetpack' ) . '</strong></p></div>';
-			} elseif ( isset( $_POST['wcj_reset_currency_rates'] ) ) {
+			} elseif ( $reset_currency_wpnonce && isset( $_POST['wcj_reset_currency_rates'] ) ) {
 				// Delete rates.
 				delete_option( 'wcj_reports_currency_rates' );
 				$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates deleted.', 'woocommerce-jetpack' ) . '</strong></p></div>';
@@ -88,7 +86,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * Get_monthly_sales_report.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.7
 		 * @since   2.4.7
 		 * @todo    (maybe) visible rows selection by admin (as option)
 		 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
@@ -386,11 +384,13 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 				number_format( ( $execution_time_end - $execution_time_start ), 2, '.', ',' )
 			) . '</em></p>';
 			$html .= '<p><input name="wcj_save_currency_rates" type="submit" class="button button-primary" value="' .
-				__( 'Save Currency Rates', 'woocommerce-jetpack' ) . '"></p>';
+				__( 'Save Currency Rates', 'woocommerce-jetpack' ) . '"> ' .
+				wp_nonce_field( 'wcj_save_currency_rates', 'wcj-save-currency-rates-nonce' ) . '</p>';
 			$html .= '</form>';
 			$html .= '<form method="post" action="">' .
 				'<input name="wcj_reset_currency_rates" type="submit" class="button button-primary" value="' .
 				__( 'Reset Currency Rates', 'woocommerce-jetpack' ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' .
+				wp_nonce_field( 'wcj_reset_currency_rates', 'wcj-reset-currency-rates-nonce' ) .
 			'</form>';
 			return $html;
 		}

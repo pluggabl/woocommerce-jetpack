@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -102,16 +102,13 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Change_user_role_meta.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @todo    [dev] (maybe) optionally via cookies
 		 */
 		public function change_user_role_meta() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			if ( isset( $_GET['wcj_booster_user_role'] ) ) {
+			$wpnonce = isset( $_REQUEST['wcj_booster_user_role_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_booster_user_role_nonce'] ), 'wcj_booster_user_role' ) : false;
+			if ( $wpnonce && isset( $_GET['wcj_booster_user_role'] ) ) {
 				$current_user_id = get_current_user_id();
 				update_user_meta( $current_user_id, '_wcj_booster_user_role', sanitize_text_field( wp_unslash( $_GET['wcj_booster_user_role'] ) ) );
 			}
@@ -120,7 +117,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Add_user_role_changer.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
@@ -144,7 +141,14 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 					'parent' => 'booster-user-role-changer',
 					'id'     => 'booster-user-role-changer-role-' . $user_role_key,
 					'title'  => $user_role_name,
-					'href'   => esc_url( add_query_arg( 'wcj_booster_user_role', $user_role_key ) ),
+					'href'   => esc_url(
+						add_query_arg(
+							array(
+								'wcj_booster_user_role' => $user_role_key,
+								'wcj_booster_user_role_nonce' => wp_cerate_nonce( 'wcj_booster_user_role' ),
+							)
+						)
+					),
 				);
 				$wp_admin_bar->add_node( $args );
 			}
@@ -193,15 +197,17 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Create_custom_roles_tool.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.5.3
 		 */
 		public function create_custom_roles_tool() {
-			$wpnonce = true;
+			$add_role_wpnonce    = false;
+			$delete_role_wpnonce = false;
 			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+				$add_role_wpnonce    = isset( $_REQUEST['wcj_add_new_role_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_add_new_role_nonce'] ), 'wcj_add_new_role_nonce' ) : false;
+				$delete_role_wpnonce = isset( $_REQUEST['wcj_delete_role_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_delete_role_nonce'] ), 'wcj_delete_role_nonce' ) : false;
 			}
-			if ( $wpnonce && isset( $_POST['wcj_add_new_role'] ) ) {
+			if ( $add_role_wpnonce && isset( $_POST['wcj_add_new_role'] ) ) {
 				if ( empty( $_POST['wcj_custom_role_id'] ) || empty( $_POST['wcj_custom_role_name'] ) || empty( $_POST['wcj_custom_role_caps'] ) ) {
 					echo '<p style="color:red;font-weight:bold;">' . wp_kses_post( 'All fields are required!', 'woocommerce-jetpack' ) . '</p>';
 				} else {
@@ -227,7 +233,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 				}
 			}
 
-			if ( isset( $_GET['wcj_delete_role'] ) && '' !== $_GET['wcj_delete_role'] ) {
+			if ( $delete_role_wpnonce && isset( $_GET['wcj_delete_role'] ) && '' !== $_GET['wcj_delete_role'] ) {
 				remove_role( sanitize_text_field( wp_unslash( $_GET['wcj_delete_role'] ) ) );
 				$custom_roles = wcj_get_option( 'wcj_custom_roles', array() );
 				if ( isset( $custom_roles[ $_GET['wcj_delete_role'] ] ) ) {
@@ -248,7 +254,14 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 			foreach ( $existing_roles as $role_key => $role_data ) {
 				$delete_html  = ( in_array( $role_key, $default_wp_wc_roles, true ) )
 				? ''
-				: '<a href="' . esc_url( add_query_arg( 'wcj_delete_role', $role_key ) ) . '"' . wcj_get_js_confirmation() . '>' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
+				: '<a href="' . esc_url(
+					add_query_arg(
+						array(
+							'wcj_delete_role'       => $role_key,
+							'wcj_delete_role_nonce' => wp_create_nonce( 'wcj_delete_role_nonce' ),
+						)
+					)
+				) . '"' . wcj_get_js_confirmation() . '>' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
 				$caps         = ( ! empty( $custom_roles[ $role_key ]['caps_role'] ) ? $custom_roles[ $role_key ]['caps_role'] : $role_key );
 				$table_data[] = array( $role_key, $role_data['name'], $caps, $delete_html );
 			}
@@ -271,6 +284,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 					)
 				)
 			)
+			. wp_kses_post( wp_nonce_field( 'wcj_add_new_role_nonce', 'wcj_add_new_role_nonce' ) )
 			. '<p><input type="submit" name="wcj_add_new_role" class="button-primary" value="' . wp_kses_post( 'Add', 'woocommerce-jetpack' ) . '"></p>'
 			. '</form>';
 			echo '</div>';

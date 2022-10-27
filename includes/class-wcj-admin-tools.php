@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -277,11 +277,16 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Get_products_atts.
 		 *
-		 * @version 4.0.0
+		 * @version 5.6.7
 		 * @since   2.3.9
 		 * @todo    [dev] rewrite; add module link;
 		 */
 		public function get_products_atts() {
+			$wcj_tools_nonce = isset( $_GET['wcj_tools_nonce'] ) ? sanitize_key( wp_unslash( $_GET['wcj_tools_nonce'] ) ) : '';
+			if ( ! wp_verify_nonce( $wcj_tools_nonce, 'wcj_tools' ) ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=wcj-tools' ) );
+				exit;
+			}
 
 			$total_products = 0;
 
@@ -330,11 +335,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			}
 
 			$table_data = array();
-			$wpnonce    = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] && $wpnonce ) {
+			if ( isset( $_GET['wcj_attribute'] ) && '' !== $_GET['wcj_attribute'] ) {
 				$table_data[] = array(
 					__( 'Product', 'woocommerce-jetpack' ),
 					__( 'Category', 'woocommerce-jetpack' ),

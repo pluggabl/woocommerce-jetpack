@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.6.5
+ * @version 5.6.7
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -192,14 +192,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output cats
 		 *
-		 * @version 5.6.5
+		 * @version 5.6.7
 		 */
 		public function output_cats_submenu() {
 			global $current_section;
-			$wpnonce = false;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : false;
-			}
+			$wpnonce     = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 			$current_cat = $wpnonce && isset( $_REQUEST['wcj-cat'] ) && ! empty( $_REQUEST['wcj-cat'] ) ? sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) ) : 'dashboard';
 			if ( empty( $this->cats ) ) {
 				return;}
@@ -212,7 +209,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				}
 				echo wp_kses_post(
 					'<li class="wcj-header-item ' . ( $current_cat === $id ? 'active' : '' ) . '"><a
-                       href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . sanitize_title( $id ) . '' . $dashboard_section ) . '"
+                       href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . sanitize_title( $id ) . '' . $dashboard_section ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '"
                        class="' . ( $current_cat === $id ? 'current' : '' ) . '">' . $label_info['label'] . '</a> ' .
 					( end( $array_keys ) === $id ? '' : '' ) . ' </li>'
 				);
@@ -223,17 +220,14 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output sections (modules) sub menu.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @todo    (maybe) for case insensitive sorting: `array_multisort( array_map( 'strtolower', $menu ), $menu );` instead of `asort( $menu );` (see http://php.net/manual/en/function.asort.php)
 		 */
 		public function output_sections_submenu() {
 			global $current_section;
-			$sections = $this->get_sections();
-			$wpnonce  = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			$current_cat = $wpnonce && empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) );
+			$sections    = $this->get_sections();
+			$wpnonce     = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			$current_cat = ! $wpnonce || empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) );
 			if ( 'dashboard' === $current_cat ) {
 
 				// Counting modules.
@@ -289,7 +283,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			$menu_links = array();
 
 			foreach ( $menu as $id => $label ) {
-				$url          = admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . $current_cat . '&section=' . sanitize_title( $id ) );
+				$url          = admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . $current_cat . '&section=' . sanitize_title( $id ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) );
 				$menu_links[] = '<li class="wcj-sidebar-item ' . ( $current_section === $id ? 'active' : '' ) . '"><a href="' . $url . '" class="' . ( $current_section === $id ? 'current' : '' ) . '">' . $label . '</a></li>';
 			}
 			echo wp_kses_post( implode( ' ', $menu_links ) . '<br class="clear" />' );

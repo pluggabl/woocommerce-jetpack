@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 5.6.3
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -415,7 +415,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Output_custom_input_fields_in_admin_order.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.7
 		 * @param int   $item_id Get item id.
 		 * @param Array $item Get item.
 		 * @param Array $_product Get products.
@@ -435,7 +435,14 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 					$value = maybe_unserialize( $value );
 					if ( isset( $value['name'] ) ) {
 						if ( isset( $value['wcj_uniqid'] ) ) {
-							$value = '<a href="' . esc_url( add_query_arg( 'wcj_download_file', $_product_id . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) ) . '">' . $value['name'] . '</a>';
+							$value = '<a href="' . esc_url(
+								add_query_arg(
+									array(
+										'wcj_download_file' => $_product_id . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ),
+										'wcj_download_file_nonce' => wp_create_nonce( 'wcj_download_file_nonce' ),
+									)
+								)
+							) . '">' . $value['name'] . '</a>';
 						} else {
 							$value = '<a href="' . esc_url( add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) ) . '">' . $value['name'] . '</a>';
 						}

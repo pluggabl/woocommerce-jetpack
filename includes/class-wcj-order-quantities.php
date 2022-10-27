@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -105,19 +105,16 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		/**
 		 * Prevents outdated min/max Quantity options.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   4.4.0
 		 * @param int $product_id defines the product_id.
 		 */
 		public function prevent_outdated_min_max( $product_id ) {
 			$product = wc_get_product( $product_id );
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce_meta_nonce'] ), 'woocommerce_save_data' ) : false;
 			if (
 			! $product->is_type( 'variable' ) ||
-			isset( $_POST['_wcj_order_quantities_min'] ) && $wpnonce
+			isset( $_POST['_wcj_order_quantities_min'] ) || ! $wpnonce
 			) {
 				return;
 			}
@@ -632,7 +629,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		/**
 		 * Check_quantities.
 		 *
-		 * @version 4.2.0
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @param string        $min_or_max defines the min_or_max.
 		 * @param int           $cart_item_quantities defines the cart_item_quantities.
@@ -642,7 +639,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 */
 		public function check_quantities( $min_or_max, $cart_item_quantities, $cart_total_quantity, $_is_cart, $_return ) {
 			$min_or_max_cart_total_quantity = wcj_get_option( 'wcj_order_quantities_' . $min_or_max . '_cart_total_quantity', 0 );
-			if ( 0 !== ( $min_or_max_cart_total_quantity ) ) {
+			if ( (string) 0 !== ( $min_or_max_cart_total_quantity ) ) {
 				if (
 				( 'max' === $min_or_max && $cart_total_quantity > $min_or_max_cart_total_quantity ) ||
 				( 'min' === $min_or_max && $cart_total_quantity < $min_or_max_cart_total_quantity )
@@ -657,7 +654,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) ) {
 				foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 					$max_or_max_per_item_quantity = get_post_meta( $_product_id, '_wcj_order_quantities_' . $min_or_max, true );
-					if ( 0 !== ( $max_or_max_per_item_quantity ) ) {
+					if ( (string) 0 !== ( $max_or_max_per_item_quantity ) ) {
 						if (
 						( 'max' === $min_or_max && $cart_item_quantity > $max_or_max_per_item_quantity ) ||
 						( 'min' === $min_or_max && $cart_item_quantity < $max_or_max_per_item_quantity )
@@ -672,7 +669,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 				}
 			}
 			$max_or_max_per_item_quantity = apply_filters( 'booster_option', 0, wcj_get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) );
-			if ( 0 !== ( $max_or_max_per_item_quantity ) ) {
+			if ( (string) 0 !== ( $max_or_max_per_item_quantity ) ) {
 				foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 					if (
 					'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) &&

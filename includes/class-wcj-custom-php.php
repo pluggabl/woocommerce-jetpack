@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom PHP
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   4.0.0
 		 * @todo    [dev] maybe remove `wcj_disable_custom_php` from URL on settings save
 		 * @todo    [dev] allow tab in content (i.e. settings (textarea))
@@ -40,7 +40,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				sprintf(
 			/* translators: %s: translation added */
 					__( 'E.g.: %s', 'woocommerce-jetpack' ),
-					'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '">' .
+					'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
 					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '</a>'
 				);
 			$this->link_slug = 'woocommerce-booster-custom-php';
@@ -49,10 +49,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 			add_action( 'woojetpack_after_settings_save', array( $this, 'create_php_file' ), PHP_INT_MAX, 2 );
 
 			if ( $this->is_enabled() ) {
-				$wpnonce = true;
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-				}
+				$wpnonce = isset( $_REQUEST['wcj_disable_custom_php_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_disable_custom_php_nonce'] ), 'wcj-disable-custom-php' ) : false;
 
 				if ( isset( $_GET['wcj_disable_custom_php'] ) && $wpnonce ) {
 					if ( wcj_current_user_can( 'manage_woocommerce' ) ) {

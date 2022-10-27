@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		/**
 		 * Create_tools_page.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 */
 		public function create_tools_page() {
 
@@ -93,8 +93,9 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 				$html     .= '<a href="' . esc_url(
 					add_query_arg(
 						array(
-							'page' => 'wcj-tools',
-							'tab'  => $tab['id'],
+							'page'            => 'wcj-tools',
+							'tab'             => $tab['id'],
+							'wcj_tools_nonce' => wp_create_nonce( 'wcj_tools' ),
 						),
 						get_admin_url() . 'admin.php'
 					)

@@ -1,7 +1,7 @@
 /**
  * Wcj-admin.
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   5.4.2
  * @package Booster_For_WooCommerce/includes/JS
  */
@@ -24,12 +24,13 @@ jQuery( document ).ready(
 		jQuery( "#subscribe-email .subscribe-email-btn" ).click(
 			function() {
 				var email = jQuery( "#subscribe-email input[name=user_email]" );
+				var subscribe_email_nonce = jQuery( "#subscribe-email input[name=subscribe-email-nonce]" ).val();
 				if (IsValidEmail( email.val() ) == false) {
 					email.focus();
 					return false;
 				}
 
-				var redirectUrl = window.location.origin + window.location.pathname + "?page=jetpack-getting-started&wcj-redirect=1&msg=";
+				var redirectUrl = window.location.origin + window.location.pathname + "?page=jetpack-getting-started&subscribe-email-nonce=" + subscribe_email_nonce + " &wcj-redirect=1&msg=";
 				var msgId       = 3;
 				var settings    = {
 					"async": true,

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Welcome Screen Content
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -137,12 +137,10 @@
 					<form method="post" name="subscribe-email-form">
 						<input class="form-control user_email" type="email" required="true" name="user_email" placeholder="Enter your email">
 						<input class="subscribe-email-btn" type="button" name="submit_email_to_klaviyo" value="Submit">
+						<?php wp_nonce_field( 'subscribe-email-nonce', 'subscribe-email-nonce' ); ?>
 					</form>
 					<?php
-					$wpnonce = true;
-					if ( function_exists( 'wp_verify_nonce' ) ) {
-						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-					}
+					$wpnonce = isset( $_REQUEST['subscribe-email-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['subscribe-email-nonce'] ), 'subscribe-email-nonce' ) : false;
 					if ( $wpnonce && isset( $_REQUEST['msg'] ) ) {
 						$subscribe_message    = '';
 						$subscribe_message_id = sanitize_text_field( wp_unslash( $_REQUEST['msg'] ) );

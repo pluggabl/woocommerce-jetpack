@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.3
+ * @version 5.6.7
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -382,7 +382,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				/* translators: %1$s,%2$s: translators Added */
 				wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ) ),
 				wp_kses_post( $this->short_desc ),
-				'https://booster.io/plus/'
+				'https://booster.io/buy-booster/'
 			) .
 			'</div></p></div>';
 		}
@@ -522,12 +522,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Reset_settings.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.4.0
 		 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 		 */
 		public function reset_settings() {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ), 'woocommerce-settings' ) : true;
+			$wpnonce = isset( $_REQUEST[ 'wcj_reset_settings-' . $this->id . '-nonce' ] ) ? wp_verify_nonce( sanitize_key( $_REQUEST[ 'wcj_reset_settings-' . $this->id . '-nonce' ] ), 'wcj_reset_settings' ) : false;
 			if ( $wpnonce && isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
 				foreach ( $this->get_settings() as $settings ) {
 					if ( false !== strpos( $settings['id'], '[' ) ) {
@@ -539,7 +539,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						update_option( $settings['id'], $default_value );
 					}
 				}
-				wp_safe_redirect( remove_query_arg( 'wcj_reset_settings' ) );
+				wp_safe_redirect( remove_query_arg( array( 'wcj_reset_settings', 'wcj_reset_settings-' . $this->id . '-nonce' ) ) );
 				exit();
 			}
 		}
@@ -962,7 +962,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_tool_link.
 		 *
-		 * @version 2.3.10
+		 * @version 5.6.7
 		 * @since   2.2.3
 		 */
 		public function add_tool_link() {
@@ -970,7 +970,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				$tool_title = $tool_data['title'];
 				echo '<p>';
 				echo ( $this->is_enabled() ) ?
-				'<a href="' . wp_kses_post( admin_url( 'admin.php?page=wcj-tools&tab=' . $tool_id ) ) . '"><code>' . wp_kses_post( $tool_title ) . '</code></a>' :
+				'<a href="' . esc_url_raw( admin_url( 'admin.php?page=wcj-tools&tab=' . $tool_id . '&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) ) ) . '"><code>' . wp_kses_post( $tool_title ) . '</code></a>' :
 				'<code>' . wp_kses_post( $tool_title ) . '</code>';
 				echo '</p>';
 			}
@@ -979,7 +979,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Add_reset_settings_button.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.7
 		 * @since   2.4.0
 		 * @param Array $settings Get settings.
 		 */
@@ -998,7 +998,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'id'    => 'wcj_' . $this->id . '_reset_settings',
 					'type'  => 'custom_link',
 					'link'  => '<a onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')" class="button-primary" style="' .
-						$reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+						$reset_button_style . '" href="' . add_query_arg(
+							array(
+								'wcj_reset_settings' => $this->id,
+								'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+							)
+						) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 				),
 				array(
 					'type' => 'sectionend',

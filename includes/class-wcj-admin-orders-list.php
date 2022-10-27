@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -200,7 +200,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Add_shop_order_multiple_statuses_not_completed_link.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param   string $views defines the views.
 		 */
@@ -214,25 +214,33 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 			$all_not_completed_statuses          = array_keys( $all_not_completed_statuses );
 			$all_not_completed_statuses_param    = rawurlencode( implode( ',', $all_not_completed_statuses ) );
 			$class                               = ( isset( $wp_query->query['post_status'] ) && is_array( $wp_query->query['post_status'] ) && $all_not_completed_statuses === $wp_query->query['post_status'] ) ? 'current' : '';
-			$query_string                        = esc_url( remove_query_arg( array( 'post_status', 'wcj_admin_filter_statuses' ) ) );
-			$query_string                        = esc_url( add_query_arg( 'post_status', $all_not_completed_statuses_param, $query_string ) );
-			$views['wcj_statuses_not_completed'] = '<a href="' . esc_url( $query_string ) . '" class="' . esc_attr( $class ) . '">' . __( 'Not Completed', 'woocommerce-jetpack' ) . '</a>';
+			$query_string                        = esc_url_raw( remove_query_arg( array( 'post_status', 'wcj_admin_filter_statuses', 'multiple_statuses_not_completed_link_nonce' ) ) );
+			$query_string                        = esc_url_raw(
+				add_query_arg(
+					array(
+						'post_status' => $all_not_completed_statuses_param,
+						'multiple_statuses_not_completed_link_nonce' => wp_create_nonce( 'multiple_statuses_not_completed_link_nonce' ),
+					),
+					$query_string
+				)
+			);
+			$views['wcj_statuses_not_completed'] = '<a href="' . esc_url_raw( $query_string ) . '" class="' . esc_attr( $class ) . '">' . __( 'Not Completed', 'woocommerce-jetpack' ) . '</a>';
 			return $views;
 		}
 
 		/**
 		 * Filter_shop_order_multiple_statuses_not_completed_link.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */
 		public function filter_shop_order_multiple_statuses_not_completed_link( $query ) {
 			if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) {
 				if ( wcj_current_user_can( 'edit_others_pages' ) ) {
-					$wpnonce = true;
+					$wpnonce = false;
 					if ( function_exists( 'wp_verify_nonce' ) ) {
-						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+						$wpnonce = isset( $_REQUEST['multiple_statuses_not_completed_link_nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['multiple_statuses_not_completed_link_nonce'] ) ? $_REQUEST['multiple_statuses_not_completed_link_nonce'] : '' ), 'multiple_statuses_not_completed_link_nonce' ) : false;
 					}
 					if ( $wpnonce && isset( $_GET['post_status'] ) && false !== strpos( sanitize_text_field( wp_unslash( $_GET['post_status'] ) ), ',' ) ) {
 						$post_statuses                    = explode( ',', sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) );
@@ -246,15 +254,12 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Multiple_shop_order_statuses.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param string $type defines the type.
 		 */
 		public function multiple_shop_order_statuses( $type ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce               = isset( $_REQUEST['wcj_admin_filter_statuses_nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['wcj_admin_filter_statuses_nonce'] ) ? $_REQUEST['wcj_admin_filter_statuses_nonce'] : '' ), 'wcj_admin_filter_statuses_nonce' ) : false;
 			$checked_post_statuses = $wpnonce && isset( $_GET['wcj_admin_filter_statuses'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_GET['wcj_admin_filter_statuses'] ) ) : array();
 			$html                  = '';
 			$html                 .= ( 'checkboxes' === $type ) ?
@@ -274,6 +279,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 			$html .= ( 'checkboxes' === $type ) ?
 				'</span>' :
 				'</select>';
+			$html .= wp_kses_post( wp_nonce_field( 'wcj_admin_filter_statuses_nonce', 'wcj_admin_filter_statuses_nonce' ) );
 			return $html;
 		}
 
@@ -294,21 +300,20 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Filter_shop_order_multiple_statuses.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.5.7
 		 * @param string $query defines the query.
 		 */
 		public function filter_shop_order_multiple_statuses( $query ) {
 			if ( isset( $_SERVER['REQUEST_URI'] ) && ( false !== strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) {
 				if ( wcj_current_user_can( 'edit_others_pages' ) ) {
-					$wpnonce = true;
-					if ( function_exists( 'wp_verify_nonce' ) ) {
-						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-					}
-					if ( $wpnonce && isset( $_GET['wcj_admin_filter_statuses'] ) ) {
-						$post_statuses                    = array_map( 'sanitize_text_field', wp_unslash( $_GET['wcj_admin_filter_statuses'] ) );
-						$query->query['post_status']      = $post_statuses;
-						$query->query_vars['post_status'] = $post_statuses;
+					if ( isset( $_GET['wcj_admin_filter_statuses'] ) ) {
+						$wpnonce = isset( $_REQUEST['wcj_admin_filter_statuses_nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['wcj_admin_filter_statuses_nonce'] ) ? $_REQUEST['wcj_admin_filter_statuses_nonce'] : '' ), 'wcj_admin_filter_statuses_nonce' ) : false;
+						if ( $wpnonce ) {
+							$post_statuses                    = array_map( 'sanitize_text_field', wp_unslash( $_GET['wcj_admin_filter_statuses'] ) );
+							$query->query['post_status']      = $post_statuses;
+							$query->query_vars['post_status'] = $post_statuses;
+						}
 					}
 				}
 			}

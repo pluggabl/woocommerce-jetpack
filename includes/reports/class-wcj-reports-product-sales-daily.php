@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 5.5.9
+ * @version 5.6.7
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,15 +47,12 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * Get_report_args.
 		 *
-		 * @version 3.2.4
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 */
 		public function get_report_args() {
-			$current_time = (int) gmdate( 'U' );
-			$wpnonce      = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$current_time        = (int) gmdate( 'U' );
+			$wpnonce             = isset( $_REQUEST['booster_products_sales_daily_filter-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['booster_products_sales_daily_filter-nonce'] ), 'booster_products_sales_daily_filter' ) : false;
 			$this->start_date    = $wpnonce && isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
 			$this->end_date      = isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : gmdate( 'Y-m-d', $current_time );
 			$this->product_title = isset( $_GET['product_title'] ) ? sanitize_text_field( wp_unslash( $_GET['product_title'] ) ) : '';
@@ -174,7 +171,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * Output_report_header.
 		 *
-		 * @version 5.6.6
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 */
 		public function output_report_header() {
@@ -199,10 +196,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 			// Product and date filter form.
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce      = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ) ) : true;
 			$pages        = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 			$tabs         = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 			$reports      = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
@@ -219,6 +213,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 			$filter_form .= ' ';
 			$filter_form .= '<label style="font-style:italic;" for="product_title">' . __( 'Product:', 'woocommerce-jetpack' ) . '</label> ' .
 			'<input type="text" name="product_title" id="product_title" title="" value="' . $this->product_title . '" />';
+			$filter_form .= wp_nonce_field( 'booster_products_sales_daily_filter', 'booster_products_sales_daily_filter-nonce' );
 			$filter_form .= '<input type="submit" value="' . __( 'Filter', 'woocommerce-jetpack' ) . '" />';
 			$filter_form .= '</form>';
 			// Final result.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Debug Tools
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -45,17 +45,14 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 		/**
 		 * Create_debug_tools_tool.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 */
 		public function create_debug_tools_tool() {
 			// Delete log.
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_delete_log_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_delete_log_nonce'] ), 'wcj-delete-log' ) : false;
 			if ( $wpnonce && isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
 				update_option( 'wcj_log', '' );
-				if ( wp_safe_redirect( esc_url( remove_query_arg( 'wcj_delete_log' ) ) ) ) {
+				if ( wp_safe_redirect( esc_url_raw( remove_query_arg( array( 'wcj_delete_log', 'wcj_delete_log_nonce' ) ) ) ) ) {
 					exit;
 				}
 			}
@@ -63,7 +60,14 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 			$the_tools  = '';
 			$the_tools .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			$the_tools .= $this->get_tool_header_html( 'debug_tools' );
-			$the_tools .= '<p><a href="' . esc_url( add_query_arg( 'wcj_delete_log', '1' ) ) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a></p>';
+			$the_tools .= '<p><a href="' . esc_url_raw(
+				add_query_arg(
+					array(
+						'wcj_delete_log'       => '1',
+						'wcj_delete_log_nonce' => wp_create_nonce( 'wcj-delete-log' ),
+					)
+				)
+			) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a></p>';
 			// Log.
 			$the_log = '';
 			/* translators: %s: translation added */

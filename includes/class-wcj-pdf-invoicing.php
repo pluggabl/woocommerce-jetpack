@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -447,22 +447,21 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Catch_args.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 */
 		public function catch_args() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			$this->order_id        = ( $wpnonce && isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : 0;
-			$this->invoice_type_id = ( $wpnonce && isset( $_GET['invoice_type_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['invoice_type_id'] ) ) : '';
-			$this->save_as_pdf     = ( $wpnonce && isset( $_GET['save_pdf_invoice'] ) && '1' === $_GET['save_pdf_invoice'] );
-			$this->get_invoice     = ( $wpnonce && isset( $_GET['get_invoice'] ) && '1' === $_GET['get_invoice'] );
+			$create_invoice_for_order_id_wpnonce = isset( $_REQUEST['create_invoice_for_order_id-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['create_invoice_for_order_id-nonce'] ), 'create_invoice_for_order_id' ) : false;
+			$delete_invoice_for_order_id_wpnonce = isset( $_REQUEST['delete_invoice_for_order_id-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['delete_invoice_for_order_id-nonce'] ), 'delete_invoice_for_order_id' ) : false;
 
-			if ( $wpnonce && isset( $_GET['create_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
+			$this->order_id        = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : 0;
+			$this->invoice_type_id = ( isset( $_GET['invoice_type_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['invoice_type_id'] ) ) : '';
+			$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' === $_GET['save_pdf_invoice'] );
+			$this->get_invoice     = ( isset( $_GET['get_invoice'] ) && '1' === $_GET['get_invoice'] );
+
+			if ( $create_invoice_for_order_id_wpnonce && isset( $_GET['create_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
 				$this->create_document( sanitize_text_field( wp_unslash( $_GET['create_invoice_for_order_id'] ) ), $this->invoice_type_id );
 			}
-			if ( $wpnonce && isset( $_GET['delete_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
+			if ( $delete_invoice_for_order_id_wpnonce && isset( $_GET['delete_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
 				$this->delete_document( sanitize_text_field( wp_unslash( $_GET['delete_invoice_for_order_id'] ) ), $this->invoice_type_id );
 			}
 		}

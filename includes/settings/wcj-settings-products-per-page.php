@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Products per Page
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -64,7 +64,7 @@ return array(
 		'title'   => __( 'Template - Form', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_products_per_page_text',
 		/* translators: %s: translators Added */
-		'default' => __( 'Products <strong>%1$from% - %to%</strong> from <strong>%total%</strong>. Products on page %2$select_form%', 'woocommerce-jetpack' ),
+		'default' => sprintf( __( 'Products <strong>%1$s - %2$s</strong> from <strong>%3$s</strong>. Products on page %4$s', 'woocommerce-jetpack' ), '%from%', '%to%', '%total%', '%select_form%' ) . '<br>',
 		'type'    => 'custom_textarea',
 		'css'     => 'width:100%',
 	),

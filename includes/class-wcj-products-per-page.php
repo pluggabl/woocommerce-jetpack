@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   2.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -53,7 +53,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		/**
 		 * Add_products_per_page_form.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.5.3
 		 */
 		public function add_products_per_page_form() {
@@ -98,6 +98,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 				__( 'Products <strong>%1$from% - %to%</strong> from <strong>%total%</strong>. Products on page %2$select_form%', 'woocommerce-jetpack' )
 			);
 			$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $_text );
+			$html .= wp_nonce_field( 'wcj_products_per_page', 'wcj_products_per_page-nonce' );
 			$html .= '</form>';
 			$html .= wcj_get_option( 'wcj_products_per_page_text_after', '</div>' );
 
@@ -133,15 +134,12 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		/**
 		 * Get_current_products_per_page_number.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   3.8.0
 		 * @param string $do_save defines the do_save.
 		 */
 		public function get_current_products_per_page_number( $do_save ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce           = isset( $_REQUEST['wcj_products_per_page-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_products_per_page-nonce'] ), 'wcj_products_per_page' ) : false;
 			$products_per_page = $this->get_saved_products_per_page_number();
 
 			if ( isset( $_REQUEST['wcj_products_per_page'] ) && ! empty( $_REQUEST['wcj_products_per_page'] ) && $wpnonce ) {

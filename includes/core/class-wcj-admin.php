@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 5.6.1
+ * @version 5.6.7
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -84,14 +84,11 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Admin_footer_text
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.7
 		 * @param   string $footer_text get admin footer texts.
 		 */
 		public function admin_footer_text( $footer_text ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ) ) : true;
 			if ( isset( $_GET['page'] ) && $wpnonce ) {
 				if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
 					?>
@@ -144,7 +141,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				'<a href="' . esc_url( 'https://booster.io/' ) . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 			);
 			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
-				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
+				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/buy-booster/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
 			} else {
 				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/my-account/booster-contact/' ) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
 			}

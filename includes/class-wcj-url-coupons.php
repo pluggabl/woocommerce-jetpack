@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - URL Coupons
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -95,19 +95,20 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 		/**
 		 * Maybe_apply_url_coupon.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.7.0
 		 * @todo    (maybe) options to add products to cart with query arg
 		 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}
 		 */
 		public function maybe_apply_url_coupon() {
 			$arg_key = wcj_get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' );
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$_get    = array();
+			if ( ! isset( $_SERVER['QUERY_STRING'] ) ) {
+				return;
 			}
-			if ( isset( $_GET[ $arg_key ] ) && '' !== $_GET[ $arg_key ] && $wpnonce ) {
-				$coupon_code = sanitize_text_field( ( wp_unslash( $_GET[ $arg_key ] ) ) );
+			parse_str( sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ), $_get );
+			if ( isset( $_get[ $arg_key ] ) && '' !== $_get[ $arg_key ] ) {
+				$coupon_code = sanitize_text_field( ( wp_unslash( $_get[ $arg_key ] ) ) );
 				$this->maybe_add_products_to_cart( $coupon_code );
 				WC()->cart->add_discount( $coupon_code );
 				wp_safe_redirect( $this->get_redirect_url( $arg_key ) );

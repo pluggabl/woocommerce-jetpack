@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -81,16 +81,12 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Regenerate_wcj_sale_products_in_cache.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   4.8.0
 		 */
 		public function regenerate_wcj_sale_products_in_cache() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ) ) : true;
-			}
-			if (
-			! $wpnonce ||
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'woocommerce-settings' ) : false;
+			if ( ! $wpnonce ||
 			'yes' !== wcj_get_option( 'wcj_global_discount_products_shortcode_compatibility', 'no' ) ||
 			! isset( $_REQUEST['page'] ) || 'wc-settings' !== $_REQUEST['page'] ||
 			! isset( $_REQUEST['tab'] ) || 'jetpack' !== $_REQUEST['tab'] ||

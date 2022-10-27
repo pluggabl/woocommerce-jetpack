@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -152,22 +152,32 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		/**
 		 * Handle_downloads.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.2.2
 		 */
 		public function handle_downloads() {
-			if ( isset( $_GET['wcj_download_file'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				$file_name  = sanitize_text_field( wp_unslash( $_GET['wcj_download_file'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			if ( isset( $_GET['wcj_download_file'] ) ) {
+				$wcj_download_file_nonce = isset( $_GET['wcj_download_file_nonce'] ) ? sanitize_key( wp_unslash( $_GET['wcj_download_file_nonce'] ) ) : '';
+				$wpnonce                 = wp_verify_nonce( $wcj_download_file_nonce, 'wcj_download_file_nonce' );
+				if ( ! $wpnonce ) {
+					wp_safe_redirect( admin_url() );
+					return;
+				}
+
+				$file_name  = sanitize_file_name( wp_unslash( $_GET['wcj_download_file'] ) );
 				$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
 				$file_path  = $upload_dir . '/' . $file_name;
+
 				if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
-					header( 'Expires: 0' );
-					header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
-					header( 'Cache-Control: private', false );
-					header( 'Content-disposition: attachment; filename=' . $file_name );
-					header( 'Content-Transfer-Encoding: binary' );
-					header( 'Content-Length: ' . filesize( $file_path ) );
-					readfile( $file_path ); //phpcs:ignore
+					$real_file_path = realpath( $file_path );
+					$real_base_path = realpath( $upload_dir ) . DIRECTORY_SEPARATOR;
+
+					if ( false === $real_file_path || 0 !== strpos( $real_file_path, $real_base_path ) ) {
+						wp_safe_redirect( admin_url() );
+						return; // Traversal attempt.
+					}
+
+					WC_Download_Handler::download_file_force( $file_path, $file_name );
 					exit();
 				}
 			}

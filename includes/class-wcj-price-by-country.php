@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 5.6.4
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -153,14 +153,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		/**
 		 * Recalculate_price_filter_products_prices.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.5.6
 		 */
 		public function recalculate_price_filter_products_prices() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['recalculate_price_filter_products_prices-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['recalculate_price_filter_products_prices-nonce'] ), 'recalculate_price_filter_products_prices' ) : false;
 			if ( $wpnonce && isset( $_GET['recalculate_price_filter_products_prices'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) ) {
 				wcj_update_products_price_by_country();
 				global $wcj_notice;

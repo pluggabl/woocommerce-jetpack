@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 5.6.1
+ * @version 5.6.7
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -134,14 +134,14 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Delete_offer_price_product_history.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @todo    (maybe) add successful deletion notice
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
 		 */
 		public function delete_offer_price_product_history( $post_id, $post ) {
-			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			$wpnonce = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( wp_unslash( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) ), 'woocommerce_save_data' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_offer_price_delete_history'] ) ) {
 				delete_post_meta( $post_id, '_wcj_price_offers' );
 				add_action( 'admin_notices', array( $this, 'notice_delete_offer_price_product_history' ) );
@@ -502,7 +502,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Offer_price.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.9.0
 		 * @todo    (maybe) separate customer copy email template and subject
 		 * @todo    (maybe) redirect (no notice though)
@@ -513,7 +513,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		 */
 		public function offer_price() {
 			if ( isset( $_POST['wcj-offer-price-submit'] ) ) {
-				$wpnonce    = wp_verify_nonce( isset( $_REQUEST['wcj_offer_price_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_offer_price_nonce'] ) ) : '', 'wcj-offer-price-modal' );
+				$wpnonce    = isset( $_REQUEST['wcj_offer_price_nonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wcj_offer_price_nonce'] ) ), 'wcj-offer-price-modal' ) : false;
 				$product_id = $wpnonce && isset( $_POST['wcj-offer-price-product-id'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-product-id'] ) ) : '';
 				$_product   = wc_get_product( $product_id );
 				if ( ! is_a( $_product, 'WC_Product' ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 5.6.6
+ * @version 5.6.7
  * @since   2.4.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 		/**
 		 * Remove_payment_gateways.
 		 *
-		 * @version 5.6.6
+		 * @version 5.6.7
 		 * @since   4.7.0
 		 *
 		 * @param array $_available_gateways defines the _available_gateways.
@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
-				
+
 				if ( '0' !== (string) $max && $total_in_cart > $max ) {
 					$notices[] = str_replace( array( '%gateway_title%', '%max_amount%' ), array( $gateway->title, wc_price( $max ) ), $notices_template_max );
 					unset( $_available_gateways[ $key ] );

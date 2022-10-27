@@ -725,7 +725,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 			}
 
 			$this->customer_country_group_id = $this->get_country_group_id( $country );
-			if ( - 1 >= $this->customer_country_group_id ) {
+			if ( - 1 !== $this->customer_country_group_id ) {
 				return $this->customer_country_group_id;
 			}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Check_required_wcj_input_fields.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   3.0.1
 		 * @param array          $data defines the data.
 		 * @param string | array $errors defines the errors.
@@ -66,7 +66,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		public function check_required_wcj_input_fields( $data, $errors ) {
 			$payment_method = $data['payment_method'];
 			if ( 'jetpack_custom_gateway' === substr( $payment_method, 0, 22 ) ) {
-				$wpnonce = isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? $_REQUEST['woocommerce-process-checkout-nonce'] : '' ), 'woocommerce-process_checkout' ) : false;
+				$wpnonce = isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce-process-checkout-nonce'] ), 'woocommerce-process_checkout' ) : false;
 				foreach ( $_POST as $key => $value ) {
 					if ( 'wcj_input_field_' === substr( $key, 0, 16 ) ) {
 						if ( $wpnonce && isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
@@ -139,7 +139,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Update_custom_payment_gateways_fields_order_meta.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @since   2.5.2
 		 * @param int    $order_id defines the order_id.
 		 * @param string $posted defines the posted.
@@ -148,7 +148,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 			$payment_method = get_post_meta( $order_id, '_payment_method', true );
 			if ( 'jetpack_custom_gateway' === substr( $payment_method, 0, 22 ) ) {
 				$input_fields = array();
-				$wpnonce      = isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? $_REQUEST['woocommerce-process-checkout-nonce'] : '' ), 'woocommerce-process_checkout' ) : false;
+				$wpnonce      = isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce-process-checkout-nonce'] ), 'woocommerce-process_checkout' ) : false;
 				foreach ( $_POST as $key => $value ) {
 					if ( 'wcj_input_field_' === substr( $key, 0, 16 ) ) {
 						if ( ! is_array( $value ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.6.2
+ * @version 5.6.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -405,17 +405,14 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_woocommerce_admin_fields.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.7
 		 * @todo    converting from before version 2.3.0: section?
 		 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 		 * @param string $fields defines the fields.
 		 * @param string $section defines the section.
 		 */
 		public function add_woocommerce_admin_fields( $fields, $section ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), '' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), '' ) : false;
 			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 					$the_section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
