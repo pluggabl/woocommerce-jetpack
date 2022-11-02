@@ -39,10 +39,7 @@ if ( ! class_exists( 'WCJ_EU_Countries_VAT_Rates_Tool' ) ) :
 		 * @since   2.3.10
 		 */
 		public function add_eu_countries_vat_rates() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['add_eu_countries_vat_rates-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['add_eu_countries_vat_rates-nonce'] ), 'add_eu_countries_vat_rates' ) : false;
 			if ( ! $wpnonce || ! isset( $_POST['add_eu_countries_vat_rates'] ) ) {
 				return;
 			}
@@ -77,31 +74,37 @@ if ( ! class_exists( 'WCJ_EU_Countries_VAT_Rates_Tool' ) ) :
 		 * @param string $header_html Get html data.
 		 */
 		public function create_eu_countries_vat_rates_tool( $header_html ) {
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
+			if ( ! $wpnonce ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=wcj-tools' ) );
+				exit;
+			}
 
 			$the_tool_html  = '';
 			$the_tool_html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			$the_tool_html .= $header_html;
 
-			$data    = array();
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			$the_name       = ( $wpnonce && isset( $_POST['wcj_tax_name'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_tax_name'] ) ) : __( 'VAT', 'woocommerce' );
+			$data           = array();
+			$the_name       = isset( $_POST['wcj_tax_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_tax_name'] ) ) : __( 'VAT', 'woocommerce' );
 			$data[]         = array(
 				__( 'Name', 'woocommerce-jetpack' ),
 				'<input class="input-text" type="text" name="wcj_tax_name" value="' . $the_name . '">',
+				'',
 			);
 			$data[]         = array(
 				'',
-				'<input class="button-primary" type="submit" name="add_eu_countries_vat_rates" value="' . __( 'Add EU Countries VAT Rates', 'woocommerce-jetpack' ) . '">' . __( 'Note: will add duplicates.', 'woocommerce-jetpack' ),
+				'<input class="button-primary" type="submit" name="add_eu_countries_vat_rates" value="' . __( 'Add EU Countries VAT Rates', 'woocommerce-jetpack' ) . '">' . wp_nonce_field( 'add_eu_countries_vat_rates', 'add_eu_countries_vat_rates-nonce' ),
+				__( 'Note: will add duplicates.', 'woocommerce-jetpack' ),
 			);
-			$the_tool_html .= '<p>';
 			$the_tool_html .= '<form method="post" action="">';
-			$the_tool_html .= wcj_get_table_html( $data, array( 'table_heading_type' => 'vertical' ) );
+			$the_tool_html .= wcj_get_table_html(
+				$data,
+				array(
+					'table_class'        => 'widefat striped',
+					'table_heading_type' => 'vertical',
+				)
+			);
 			$the_tool_html .= '</form>';
-			$the_tool_html .= '</p>';
-
 			$the_tool_html .= '<h4>' . __( 'List of EU VAT rates to be added', 'woocommerce-jetpack' ) . '</h4>';
 			$eu_vat_rates   = wcj_get_european_union_countries_with_vat();
 			$data           = array();

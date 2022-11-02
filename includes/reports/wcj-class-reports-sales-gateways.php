@@ -51,10 +51,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Gateways' ) ) :
 		 * @since   3.6.0
 		 */
 		public function get_report_args() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce          = isset( $_REQUEST['wcj-reports-sales-gateways-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-reports-sales-gateways-nonce'] ), 'wcj-reports-sales-gateways' ) : false;
 			$current_time     = (int) gmdate( 'U' );
 			$this->start_date = $wpnonce && isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
 			$this->end_date   = $wpnonce && isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : gmdate( 'Y-m-d', $current_time );
@@ -124,7 +121,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Gateways' ) ) :
 		 */
 		public function output_report_header() {
 			// Settings link and dates menu.
-			$settings_link = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=reports' ) . '">' .
+			$settings_link = '<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=reports' ) . '">' .
 			'<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
 			$menu          = '';
 			$menu         .= '<ul class="subsubsub">';
@@ -141,15 +138,13 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Gateways' ) ) :
 				'class="' . ( ( $this->start_date === $custom_range['start_date'] && $this->end_date === $custom_range['end_date'] ) ? 'current' : '' ) . '"' .
 				'>' . $custom_range['title'] . '</a> | </li>';
 			}
-			$menu   .= '</ul>';
-			$menu   .= '<br class="clear">';
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			$page   = $wpnonce && isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-			$tab    = $wpnonce && isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
-			$report = $wpnonce && isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			$menu .= '</ul>';
+			$menu .= '<br class="clear">';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$page   = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$tab    = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			$report = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			// Date filter form.
 			$filter_form  = '';
@@ -163,6 +158,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Gateways' ) ) :
 			$filter_form .= '<label style="font-style:italic;" for="end_date">' . __( 'To:', 'woocommerce-jetpack' ) . '</label>' .
 			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js( 'Y-m-d' ) . '" name="end_date" title="" value="' . $this->end_date . '" />';
 			$filter_form .= ' ';
+			$filter_form .= '<input type="hidden" name="wcj-reports-sales-gateways-nonce" value="' . wp_create_nonce( 'wcj-reports-sales-gateways' ) . '" />';
 			$filter_form .= '<input type="submit" value="' . __( 'Filter', 'woocommerce-jetpack' ) . '" />';
 			$filter_form .= '</form>';
 			// Final result.

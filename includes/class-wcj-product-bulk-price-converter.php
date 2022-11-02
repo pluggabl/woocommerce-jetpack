@@ -55,10 +55,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview, $parent_product_id, $min_price = 0, $max_price = 0 ) {
 			$the_price          = get_post_meta( $product_id, '_' . $price_type, true );
 			$the_modified_price = $the_price;
-			$wpnonce            = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce            = isset( $_REQUEST['bulk_change_prices-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['bulk_change_prices-nonce'] ), 'bulk_change_prices' ) : false;
 			if ( '' !== $the_price && 0 !== $the_price ) {
 				$precision          = wcj_get_option( 'woocommerce_price_num_decimals', 2 );
 				$the_modified_price = round( $the_price * $multiply_price_by, $precision );
@@ -107,10 +104,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		 * @param int           $parent_product_id defines the parent_product_id.
 		 */
 		public function change_price_all_types( $product_id, $multiply_price_by, $is_preview, $parent_product_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce               = isset( $_REQUEST['bulk_change_prices-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['bulk_change_prices-nonce'] ), 'bulk_change_prices' ) : false;
 			$what_prices_to_modify = ( $wpnonce && isset( $_POST['wcj_price_types'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_price_types'] ) ) : 'wcj_both';
 			if ( 'wcj_both' === $what_prices_to_modify ) {
 				$this->change_price_by_type( $product_id, $multiply_price_by, 'price', $is_preview, $parent_product_id );
@@ -200,10 +194,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 				return;
 			}
 
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['bulk_change_prices-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['bulk_change_prices-nonce'] ), 'bulk_change_prices' ) : false;
 
 			ob_start();
 
@@ -259,11 +250,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		 * @version 5.6.2
 		 */
 		public function create_bulk_price_converter_tool() {
-			$result_message = '';
-			$wpnonce        = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$result_message     = '';
+			$wpnonce            = isset( $_REQUEST['bulk_change_prices-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['bulk_change_prices-nonce'] ), 'bulk_change_prices' ) : false;
 			$multiply_prices_by = $wpnonce && isset( $_POST['multiply_prices_by'] ) ? sanitize_text_field( wp_unslash( $_POST['multiply_prices_by'] ) ) : 1;
 			$is_preview         = isset( $_POST['bulk_change_prices_preview'] );
 
@@ -356,6 +344,11 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 						'',
 					);
 				}
+				$data_table[] = array(
+					wp_nonce_field( 'bulk_change_prices', 'bulk_change_prices-nonce' ),
+					'',
+					'',
+				);
 				echo (
 					wcj_get_table_html( // phpcs:ignore WordPress.Security.EscapeOutput
 						$data_table,
@@ -385,10 +378,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 			if ( 0 === $price ) {
 				return $price;
 			}
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce            = isset( $_REQUEST['bulk_change_prices-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['bulk_change_prices-nonce'] ), 'bulk_change_prices' ) : false;
 			$the_modified_price = round( $price );
 			if ( $wpnonce && isset( $_POST['make_pretty_prices_threshold'] ) && $price < $_POST['make_pretty_prices_threshold'] ) {
 				$the_modified_price -= 0.01; // E.g. 49.49 -> 48.99 and 49.50 -> 49.99.

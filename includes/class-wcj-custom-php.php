@@ -40,8 +40,8 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				sprintf(
 			/* translators: %s: translation added */
 					__( 'E.g.: %s', 'woocommerce-jetpack' ),
-					'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '</a>'
+					'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
+					admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '</a>'
 				);
 			$this->link_slug = 'woocommerce-booster-custom-php';
 			parent::__construct();

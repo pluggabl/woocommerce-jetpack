@@ -64,10 +64,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$result = $this->perform_actions();
 			// Preparing products data.
 			$_products = wcj_get_products( array(), 'any', 512, ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_bulk_meta_editor_add_variations', 'no' ) ) ) );
-			$wpnonce   = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+
+			$wpnonce           = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			$selected_products = $wpnonce && isset( $_POST['wcj_product_bulk_meta_editor_products'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['wcj_product_bulk_meta_editor_products'] ) ) : array();
 			// Output.
 			echo $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -84,11 +82,13 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$meta_name      = '';
 			$set_meta       = '';
 			$result_message = '';
-			$wpnonce        = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			if ( $wpnonce &&
+
+			$show_wpnonce            = isset( $_REQUEST['wcj_product_bulk_meta_editor_show-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bulk_meta_editor_show-nonce'] ), 'wcj_product_bulk_meta_editor_show' ) : false;
+			$set_wpnonce             = isset( $_REQUEST['wcj_product_bulk_meta_editor_set-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bulk_meta_editor_set-nonce'] ), 'wcj_product_bulk_meta_editor_set' ) : false;
+			$save_delete_all_wpnonce = isset( $_REQUEST['wcj_product_bulk_meta_editor_save_delete_all-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bulk_meta_editor_save_delete_all-nonce'] ), 'wcj_product_bulk_meta_editor_save_delete_all' ) : false;
+			$save_delete_wpnonce     = isset( $_REQUEST['wcj_product_bulk_meta_editor_save_delete_single-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bulk_meta_editor_save_delete_single-nonce'] ), 'wcj_product_bulk_meta_editor_save_delete_single' ) : false;
+
+			if ( $save_delete_wpnonce &&
 			isset( $_POST['wcj_product_bulk_meta_editor_save_single'] ) && null !== $_POST['wcj_product_bulk_meta_editor_save_single'] && 0 !== $_POST['wcj_product_bulk_meta_editor_save_single'] &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
@@ -104,6 +104,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
+			$save_delete_wpnonce &&
 			isset( $_POST['wcj_product_bulk_meta_editor_delete_single'] ) && 0 > $_POST['wcj_product_bulk_meta_editor_delete_single'] &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
@@ -118,6 +119,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
+			$save_delete_all_wpnonce &&
 			isset( $_POST['wcj_product_bulk_meta_editor_save_all'] ) &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
@@ -137,6 +139,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
+			$save_delete_all_wpnonce &&
 			isset( $_POST['wcj_product_bulk_meta_editor_delete_all'] ) &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
@@ -156,6 +159,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
+			$set_wpnonce &&
 			isset( $_POST['wcj_product_bulk_meta_editor_set'] ) &&
 			isset( $_POST['wcj_product_bulk_meta_editor_set_meta'] ) &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
@@ -176,7 +180,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 					}
 				}
 				$result_message = $this->get_result_message( $success, $fail );
-			} elseif ( isset( $_POST['wcj_product_bulk_meta_editor_show'] ) ) {
+			} elseif ( $show_wpnonce && isset( $_POST['wcj_product_bulk_meta_editor_show'] ) ) {
 				if ( isset( $_POST['wcj_product_bulk_meta_editor_show_meta'] ) && '' === $_POST['wcj_product_bulk_meta_editor_show_meta'] ) {
 					$result_message = '<p><div class="error"><p>' . __( 'Please enter meta key.', 'woocommerce-jetpack' ) . '</p></div></p>';
 				}
@@ -258,6 +262,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$meta_html   .= '<input required class="widefat" type="text" id="wcj_product_bulk_meta_editor_show_meta" name="wcj_product_bulk_meta_editor_show_meta" value="' . $meta_name . '">';
 			$meta_html   .= '</p>';
 			$meta_html   .= '<p>';
+			$meta_html   .= wp_nonce_field( 'wcj_product_bulk_meta_editor_show', 'wcj_product_bulk_meta_editor_show-nonce' );
 			$meta_html   .= '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="show">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>';
 			$meta_html   .= '</p>';
 			$table_data   = array();
@@ -333,6 +338,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			'<input type="text" class="widefat" id="wcj_product_bulk_meta_editor_set_meta" name="wcj_product_bulk_meta_editor_set_meta" value="' . $set_meta . '">' .
 			'</p>' .
 			'<p>' .
+			wp_nonce_field( 'wcj_product_bulk_meta_editor_set', 'wcj_product_bulk_meta_editor_set-nonce' ) .
 			'<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_set" value="set"' . $js_confirmation . '>' .
 				__( 'Set', 'woocommerce-jetpack' ) . '</button>' .
 			'</p>';
@@ -357,6 +363,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		public function get_html_meta_table_buttons( $meta_name, $js_confirmation ) {
 			$html  = '';
 			$html .= '<p>';
+			$html .= wp_nonce_field( 'wcj_product_bulk_meta_editor_save_delete_all', 'wcj_product_bulk_meta_editor_save_delete_all-nonce' );
 			$html .= '<input class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_save_all" value="' . __( 'Save all', 'woocommerce-jetpack' ) . '"' .
 			$js_confirmation . '>';
 			$html .= ' ';
@@ -418,6 +425,12 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				$row          = $this->maybe_add_additional_columns_content( $row, $additional_columns, $product_id );
 				$table_data[] = $row;
 			}
+			$table_data[] = array(
+				wp_nonce_field( 'wcj_product_bulk_meta_editor_save_delete_single', 'wcj_product_bulk_meta_editor_save_delete_single-nonce' ),
+				'',
+				'',
+			);
+
 			return '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
 		}
 

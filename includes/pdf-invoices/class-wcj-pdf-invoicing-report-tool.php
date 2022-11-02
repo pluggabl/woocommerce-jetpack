@@ -79,13 +79,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @since   2.3.10
 		 */
 		public function generate_report_zip() {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			if ( $wpnonce && isset( $_POST['get_invoices_report_zip'] ) ) {
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 					$this->notice = '<div class="error"><p><strong>' . sprintf(
 						/* translators: %s: search term */
 						__( 'This option is disabled with "Disable Saving PDFs in PHP directory for temporary files" checkbox in <a href="%s" target="_blank">WooCommerce > Settings > Booster > PDF Invoicing & Packing Slips > Advanced</a>.', 'woocommerce-jetpack' ),
-						admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' )
+						admin_url( wcj_admin_tab_url() . '&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' )
 					) .
 					'</strong></p></div>';
 				} else {
@@ -114,7 +114,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @version 5.6.2
 		 */
 		public function create_invoices_report_tool() {
-			$wpnonce          = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$wpnonce          = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			$result_message   = '';
 			$result_message  .= $this->notice;
 			$the_year         = ( $wpnonce && ! empty( $_POST['report_year'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_year'] ) ) : gmdate( 'Y' );
@@ -303,7 +303,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		 * @since   2.5.7
 		 */
 		public function export_csv() {
-			$wpnonce       = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$wpnonce       = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			$_year         = ( $wpnonce && ! empty( $_POST['report_year'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_year'] ) ) : gmdate( 'Y' );
 			$_month        = ( $wpnonce && ! empty( $_POST['report_month'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_month'] ) ) : gmdate( 'm' );
 			$_invoice_type = ( $wpnonce && ! empty( $_POST['invoice_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['invoice_type'] ) ) : 'invoice';

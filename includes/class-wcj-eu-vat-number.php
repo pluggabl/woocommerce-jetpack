@@ -123,10 +123,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 * @since   3.3.0
 		 */
 		public function admin_validate_vat_and_maybe_remove_taxes() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['validate_vat_and_maybe_remove_taxes-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['validate_vat_and_maybe_remove_taxes-nonce'] ), 'validate_vat_and_maybe_remove_taxes' ) : false;
 			if ( $wpnonce && isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
 				$order_id = sanitize_text_field( wp_unslash( $_GET['validate_vat_and_maybe_remove_taxes'] ) );
 				$order    = wc_get_order( $order_id );
@@ -145,7 +142,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 						}
 					}
 				}
-				wp_safe_redirect( esc_url( remove_query_arg( 'validate_vat_and_maybe_remove_taxes' ) ) );
+				wp_safe_redirect( esc_url_raw( remove_query_arg( array( 'validate_vat_and_maybe_remove_taxes', 'validate_vat_and_maybe_remove_taxes-nonce' ) ) ) );
 				exit;
 			}
 		}
@@ -253,7 +250,14 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 					)
 				)
 			);
-			echo '<p><a href="' . esc_url( add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id ) ) . '">' .
+			echo '<p><a href="' . esc_url(
+				add_query_arg(
+					array(
+						'validate_vat_and_maybe_remove_taxes' => $order_id,
+						'validate_vat_and_maybe_remove_taxes-nonce' => wp_create_nonce( 'validate_vat_and_maybe_remove_taxes' ),
+					)
+				)
+			) . '">' .
 			wp_kses_post( 'Validate VAT and remove taxes', 'woocommerce-jetpack' ) . '</a></p>';
 		}
 

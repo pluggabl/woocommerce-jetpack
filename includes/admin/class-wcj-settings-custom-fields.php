@@ -299,10 +299,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php
-				$wpnonce = true;
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-				}
+				$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 				if ( $wpnonce && isset( $_GET['section'] ) ) {
 					do_action( 'wcj_module_tools_' . sanitize_text_field( wp_unslash( $_GET['section'] ) ) );}
 				?>

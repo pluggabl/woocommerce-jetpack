@@ -18,7 +18,7 @@ $settings = array(
 		'desc'  => sprintf(
 			/* translators: %s: translators Added */
 			__( 'Additionally you can hide standard coupon field on cart page in Booster\'s <a href="%s">Cart Customization</a> module.', 'woocommerce-jetpack' ),
-			admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_and_checkout&section=cart_customization' )
+			admin_url( wcj_admin_tab_url() . '&wcj-cat=cart_and_checkout&section=cart_customization' )
 		),
 		'type'  => 'title',
 		'id'    => 'wcj_url_coupons_options',

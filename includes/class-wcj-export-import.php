@@ -102,10 +102,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					$data     = $exporter->export_products( $this->fields_helper );
 					break;
 			}
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_export_filter_all_columns'] ) && '' !== $_POST['wcj_export_filter_all_columns'] ) {
 				foreach ( $data as $row_id => $row ) {
 					if ( 0 === $row_id ) {
@@ -135,10 +132,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @todo    [dev] `strip_tags`
 		 */
 		public function export_xml() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_export_xml'] ) ) {
 				$data = $this->export( sanitize_text_field( wp_unslash( $_POST['wcj_export_xml'] ) ) );
 				if ( is_array( $data ) ) {
@@ -207,10 +201,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @since   2.4.8
 		 */
 		public function export_csv() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_export'] ) ) {
 				$data = $this->export( sanitize_text_field( wp_unslash( $_POST['wcj_export'] ) ) );
 				if ( is_array( $data ) ) {
@@ -245,10 +236,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 */
 		public function export_filter_fields( $tool_id ) {
 			$fields  = array();
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			switch ( $tool_id ) {
 				case 'orders':
 					$fields = array(
@@ -296,10 +284,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @param int $tool_id defines the tool_id.
 		 */
 		public function export_date_fields( $tool_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce             = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			$current_start_date  = ( $wpnonce && isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '' );
 			$current_end_date    = ( $wpnonce && isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '' );
 			$predefined_ranges   = array();
@@ -328,6 +313,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			'<strong> - </strong>' .
 			'<input name="end_date" id="end_date" type="text" display="date"' . $dateformat . ' value="' . $current_end_date . '">' .
 			' ' .
+			'<input name="wcj_tools_nonce" id="wcj_tools_nonce" type="hidden" value="' . wp_create_nonce( 'wcj_tools' ) . '">' .
 			'<button class="button-primary" name="range" id="range" type="submit" value="custom">' . __( 'Go', 'woocommerce-jetpack' ) . '</button>' .
 			'</form>';
 			return $predefined_ranges . '<br>' . $date_input_fields;
@@ -341,14 +327,15 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		 * @param int $tool_id defines the tool_id.
 		 */
 		public function create_export_tool( $tool_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
+			if ( ! $wpnonce ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=wcj-tools' ) );
+				exit;
 			}
 			echo '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
 			echo wp_kses_post( $this->get_tool_header_html( 'export_' . $tool_id ) );
 			echo '<p>' . wp_kses_post( $this->export_date_fields( $tool_id ) ) . '</p>';
-			if ( $wpnonce && ! isset( $_GET['range'] ) ) {
+			if ( ! isset( $_GET['range'] ) ) {
 				echo '</div>';
 				return;
 			}

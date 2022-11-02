@@ -441,10 +441,7 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	 * @param   array $args defines the args.
 	 */
 	function wcj_maybe_add_date_query( $args ) {
-		$wpnonce = true;
-		if ( function_exists( 'wp_verify_nonce' ) ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-		}
+		$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 		if ( ( $wpnonce && isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
 			$date_query              = array();
 			$date_query['inclusive'] = true;
@@ -1172,4 +1169,16 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 		return $allowed_merged_html;
 	}
 	add_filter( 'wp_kses_allowed_html', 'wcj_add_allowed_html', PHP_INT_MAX, 2 );
+}
+
+if ( ! function_exists( 'wcj_admin_tab_url' ) ) {
+	/**
+	 * Wcj_admin_tab_url.
+	 *
+	 * @version 5.6.8
+	 * @since   5.6.8
+	 */
+	function wcj_admin_tab_url() {
+		return 'admin.php?page=wc-settings&tab=jetpack&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
+	}
 }

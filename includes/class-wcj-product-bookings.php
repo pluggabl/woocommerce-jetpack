@@ -115,9 +115,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 * @param string | array $param defines the param.
 		 */
 		public function price_change_ajax( $param ) {
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj_product_bookings' ) : false;
 			if ( $wpnonce && isset( $_POST['date_from'] ) && '' !== $_POST['date_from'] && isset( $_POST['date_to'] ) && '' !== $_POST['date_to'] && isset( $_POST['product_id'] ) && '' !== $_POST['product_id'] ) {
 				$date_to       = strtotime( sanitize_text_field( wp_unslash( $_POST['date_to'] ) ) );
 				$date_from     = strtotime( sanitize_text_field( wp_unslash( $_POST['date_from'] ) ) );
@@ -127,6 +125,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 				$price_per_day = wcj_get_product_display_price( $the_product );
 				$the_price     = $days_diff * $price_per_day;
 				echo wp_kses_post( wc_price( $the_price ) );
+			} else {
+				echo esc_html__( 'Sorry, but something went wrong...', 'woocommerce-jetpack' );
 			}
 			die();
 		}
@@ -272,9 +272,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		public function validate_bookings_on_add_to_cart( $passed, $product_id ) {
 			$the_product = wc_get_product( $product_id );
 			if ( $this->is_bookings_product( $the_product ) ) {
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-				}
+				$wpnonce = isset( $_REQUEST['wcj_product_bookings-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bookings-nonce'] ), 'wcj_product_bookings' ) : false;
 				if ( $wpnonce && ( ! isset( $_POST['wcj_product_bookings_date_from'] ) || '' === $_POST['wcj_product_bookings_date_from'] ) ) {
 					wc_add_notice( wcj_get_option( 'wcj_product_bookings_message_no_date_from', __( '"Date from" must be set', 'woocommerce-jetpack' ) ), 'error' );
 					return false;
@@ -319,9 +317,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 * @param int   $variation_id defines the variation_id.
 		 */
 		public function add_bookings_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_bookings-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bookings-nonce'] ), 'wcj_product_bookings' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_product_bookings_date_to'] ) && isset( $_POST['wcj_product_bookings_date_from'] ) ) {
 				$the_product = wc_get_product( $product_id );
 				if ( $this->is_bookings_product( $the_product ) ) {
@@ -408,9 +404,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 			}
 			if ( $this->is_bookings_product( wc_get_product() ) ) {
 				$this->create_custom_style();
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-				}
+				$wpnonce                  = isset( $_REQUEST['wcj_product_bookings'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bookings'] ), 'wcj_product_bookings' ) : false;
 				$data_table               = array();
 				$date_from_value          = ( $wpnonce && isset( $_POST['wcj_product_bookings_date_from'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_product_bookings_date_from'] ) ) : '';
 				$date_to_value            = ( $wpnonce && isset( $_POST['wcj_product_bookings_date_to'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_product_bookings_date_to'] ) ) : '';
@@ -433,6 +427,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 				echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<div class="wcj-bookings-price-wrapper"><div class="wcj-value"></div><div class="wcj-loader"></div></div>';
 				echo '<div style="display:none !important;" name="wcj_bookings_message"><p style="color:red;"></p></div>';
+				wp_nonce_field( 'wcj_product_bookings', 'wcj_product_bookings-nonce' );
 				$this->are_bookings_input_fields_displayed = true;
 			}
 		}

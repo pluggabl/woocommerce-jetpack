@@ -82,10 +82,7 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		 * @since   3.2.4
 		 */
 		public function save_selection_in_session() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_custom_visibility_selector-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_custom_visibility_selector-nonce'] ), 'wcj_product_custom_visibility_selector' ) : false;
 
 			wcj_session_maybe_start();
 			if ( isset( $_REQUEST['wcj_product_custom_visibility_selector'] ) && $wpnonce ) {

@@ -36,11 +36,9 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		 * @since   5.5.6
 		 */
 		public function wcj_new_desing_dashboard_enqueue() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			$page = ( $wpnonce && isset( $_GET['page'] ) ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$_get = array();
+			parse_str( isset( $_SERVER['QUERY_STRING'] ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '', $_get );
+			$page = isset( $_get['page'] ) ? sanitize_text_field( wp_unslash( $_get['page'] ) ) : '';
 			if ( 'wcj-tools' === $page ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css', array(), time() );
 				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );

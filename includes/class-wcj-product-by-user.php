@@ -225,11 +225,9 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 			if ( 0 === $user_ID ) {
 				return;
 			}
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			if ( $wpnonce && isset( $_GET['wcj_delete_product'] ) ) {
+			$edit_wpnonce   = isset( $_REQUEST['wcj_edit_product-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_edit_product-nonce'] ), 'wcj_edit_product' ) : false;
+			$delete_wpnonce = isset( $_REQUEST['wcj_delete_product-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_delete_product-nonce'] ), 'wcj_delete_product' ) : false;
+			if ( $delete_wpnonce && isset( $_GET['wcj_delete_product'] ) ) {
 				$product_id     = sanitize_text_field( wp_unslash( $_GET['wcj_delete_product'] ) );
 				$post_author_id = get_post_field( 'post_author', $product_id );
 				if ( (string) $user_ID !== $post_author_id ) {
@@ -238,7 +236,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 					wp_delete_post( $product_id, true );
 				}
 			}
-			if ( $wpnonce && isset( $_GET['wcj_edit_product'] ) ) {
+			if ( $edit_wpnonce && isset( $_GET['wcj_edit_product'] ) ) {
 				$product_id     = sanitize_text_field( wp_unslash( $_GET['wcj_edit_product'] ) );
 				$post_author_id = get_post_field( 'post_author', $product_id );
 				if ( (string) $user_ID !== $post_author_id ) {
@@ -283,8 +281,24 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 						/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
 						'<code>' . $_product_data['status'] . '</code>',
 						$_product_data['title'],
-						'<a class="button" href="' . esc_url( add_query_arg( 'wcj_edit_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>
-						<a class="button" href="' . esc_url( add_query_arg( 'wcj_delete_product', $_product_id, remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product' ) ) ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
+						'<a class="button" href="' . esc_url(
+							add_query_arg(
+								array(
+									'wcj_edit_product' => $_product_id,
+									'wcj_edit_product-nonce' => wp_create_nonce( 'wcj_edit_product' ),
+								),
+								remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product', 'wcj_delete_product-nonce' ) )
+							)
+						) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>
+						<a class="button" href="' . esc_url(
+							add_query_arg(
+								array(
+									'wcj_delete_product' => $_product_id,
+									'wcj_delete_product-nonce' => wp_create_nonce( 'wcj_delete_product' ),
+								),
+								remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_edit_product', 'wcj_edit_product-nonce' ) )
+							)
+						) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
 					);
 				}
 				echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ); //phpcs:ignore

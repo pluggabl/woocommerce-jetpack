@@ -57,7 +57,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 
 			$result_message     = '';
 			$renumerate_result  = '';
-			$wpnonce            = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ) ) : true;
+			$wpnonce            = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			$the_invoice_type   = ( ! empty( $_POST['invoice_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['invoice_type'] ) ) : 'invoice';
 			$the_start_number   = ( ! empty( $_POST['start_number'] ) ) ? sanitize_text_field( wp_unslash( $_POST['start_number'] ) ) : 0;
 			$the_start_date     = ( ! empty( $_POST['start_date'] ) ) ? sanitize_text_field( wp_unslash( $_POST['start_date'] ) ) : '';
@@ -65,7 +65,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 			$the_order_statuses = ( ! empty( $_POST['order_statuses'] ) ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['order_statuses'] ) ) : array();
 			$the_delete_all     = ( isset( $_POST['delete_all'] ) );
 
-			if ( $wpnonce && isset( $_POST['renumerate_invoices'] ) ) {
+			if ( ! $wpnonce ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=wcj-tools' ) );
+				exit;
+			}
+			if ( isset( $_POST['renumerate_invoices'] ) ) {
 				if ( ! empty( $the_order_statuses ) ) {
 					$renumerate_result = $this->renumerate_invoices( $the_invoice_type, $the_start_number, $the_start_date, $the_end_date, $the_order_statuses, $the_delete_all );
 					$result_message    = '<div class="updated"><p><strong>' . __( 'Invoices successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div>';

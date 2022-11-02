@@ -510,13 +510,12 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @param string | int $currency defines the currency.
 		 */
 		public function change_currency_symbol_on_product_edit( $currency_symbol, $currency ) {
-			$nonce = wp_create_nonce();
 			if ( is_admin() ) {
 				global $pagenow;
+				// phpcs:disable WordPress.Security.NonceVerification
 				if (
 					( 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] ) || // admin product edit page.
 					( ! $this->do_convert_in_back_end && 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) // admin products list.
-					&& wp_verify_nonce( $nonce )
 				) {
 					$multicurrency_base_price_currency = get_post_meta( get_the_ID(), '_wcj_multicurrency_base_price_currency', true );
 					if ( '' !== $multicurrency_base_price_currency ) {
@@ -526,6 +525,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 						return $return;
 					}
 				}
+				// phpcs:enable WordPress.Security.NonceVerification
 			}
 			return $currency_symbol;
 		}

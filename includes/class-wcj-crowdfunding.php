@@ -43,21 +43,21 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 				sprintf(
 					/* translators: %s: translation added */
 					__( 'Shortcodes could be used for example in <a href="%s">Product Info module</a>.', 'woocommerce-jetpack' ),
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_custom_info' )
+					admin_url( wcj_admin_tab_url() . '&wcj-cat=products&section=product_custom_info' )
 				) .
 				'</li>' .
 				'<li>' .
 				sprintf(
 					/* translators: %s: translation added */
 					__( 'To change add to cart button labels use <a href="%s">Add to Cart Labels module</a>.', 'woocommerce-jetpack' ),
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=labels&section=add_to_cart' )
+					admin_url( wcj_admin_tab_url() . '&wcj-cat=labels&section=add_to_cart' )
 				) .
 				'</li>' .
 				'<li>' .
 				sprintf(
 					/* translators: %s: translation added */
 					__( 'If you want to allow customers to choose dynamic price, Use <a href="%s">Product Open Pricing (Name Your Price) module</a>.', 'woocommerce-jetpack' ),
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=product_open_pricing' )
+					admin_url( wcj_admin_tab_url() . '&wcj-cat=prices_and_currencies&section=product_open_pricing' )
 				) .
 				'</li>' .
 			'</ol>';

@@ -22,10 +22,7 @@ if ( ! class_exists( 'WCJ_Welcome' ) ) :
 		public function __construct() {
 			if ( is_admin() ) {
 
-				$wpnonce = true;
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-				}
+				$wpnonce = isset( $_REQUEST['wcj-redirect-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-redirect-nonce'] ), 'wcj-redirect' ) : false;
 				if ( $wpnonce && isset( $_GET['page'] ) && 'jetpack-getting-started' === $_GET['page'] ) {
 					add_action(
 						'in_admin_header',
@@ -76,17 +73,14 @@ if ( ! class_exists( 'WCJ_Welcome' ) ) :
 		 * @version 5.6.2
 		 */
 		public function wcj_redirect_to_getting_started() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			if ( ! get_transient( '_wcj_activation_redirect' ) || isset( $_GET['wcj-redirect'] ) || ! $wpnonce ) {
+			$wpnonce = isset( $_REQUEST['wcj-redirect-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-redirect-nonce'] ), 'wcj-redirect' ) : false;
+			if ( ! get_transient( '_wcj_activation_redirect' ) || isset( $_GET['wcj-redirect'] ) || $wpnonce ) {
 				return;
 			}
 
 			delete_transient( '_wcj_activation_redirect' );
 
-			$redirect = admin_url( 'index.php?page=jetpack-getting-started&wcj-redirect=1' );
+			$redirect = admin_url( 'index.php?page=jetpack-getting-started&wcj-redirect=1&wcj-redirect-nonce=' . wp_create_nonce( 'wcj-redirect' ) );
 			wp_safe_redirect( $redirect );
 			exit;
 		}

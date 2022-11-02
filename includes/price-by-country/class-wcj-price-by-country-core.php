@@ -56,10 +56,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce     = isset( $_REQUEST['wcj-country-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-country-nonce'] ), 'wcj-country' ) : false;
 			$country     = isset( $_REQUEST['wcj-country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) : '';
 			$req_country = null;
 			if ( $wpnonce && ! empty( $country ) ) {
@@ -349,14 +346,15 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 */
 		public function price_filter_post_clauses( $args, $wp_query ) {
 			global $wpdb;
-			$wpnonce               = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) );
+			// phpcs:disable WordPress.Security.NonceVerification
 			$group_id              = $this->get_customer_country_group_id();
 			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-			if ( ! $wpnonce || ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) || empty( $group_id ) || (float) 1 === (float) $country_exchange_rate ) {
+			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) || empty( $group_id ) || (float) 1 === (float) $country_exchange_rate ) {
 				return $args;
 			}
 			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
 			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( wc_tax_enabled() && 'incl' === get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
 				$tax_class = apply_filters( 'woocommerce_price_filter_widget_tax_class', '' );
 				$tax_rates = WC_Tax::get_rates( $tax_class );

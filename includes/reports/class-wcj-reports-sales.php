@@ -363,7 +363,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 				);
 			}
 
-			$settings_link = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=reports' ) . '">' .
+			$settings_link = '<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=reports' ) . '">' .
 			'<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
 
 			$menu  = '';

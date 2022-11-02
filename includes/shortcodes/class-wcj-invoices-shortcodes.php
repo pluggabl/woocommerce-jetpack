@@ -62,12 +62,9 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 		 */
 		public function init_atts( $atts ) {
 			// Atts.
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			// phpcs:disable WordPress.Security.NonceVerification
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) && $wpnonce ) ? sanitize_text_field(
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field(
 					wp_unslash(
 						$_GET['order_id']
 					)
@@ -79,6 +76,7 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 			if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) {
 				return false;
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			return $atts;
 		}

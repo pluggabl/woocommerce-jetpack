@@ -86,10 +86,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		 * @since   4.7.0
 		 */
 		public function generate_default_hashids_salt() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] &&
 			isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] &&
 			isset( $_GET['wcj-cat'] ) && 'products' === $_GET['wcj-cat'] &&

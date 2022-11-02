@@ -144,7 +144,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 			foreach ( $cats as $id => $label_info ) {
 				$nodes[ $id ] = array(
 					'title' => $label_info['label'],
-					'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id ),
+					'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=' . $id ),
 					'meta'  => array( 'title' => wp_strip_all_tags( $label_info['desc'] ) ),
 				);
 				if ( 'dashboard' === $id ) {
@@ -153,19 +153,19 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 						array(
 							'alphabetically' => array(
 								'title' => __( 'Alphabetically', 'woocommerce-jetpack' ),
-								'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=alphabetically' ),
+								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=alphabetically' ),
 							),
 							'by_category'    => array(
 								'title' => __( 'By Category', 'woocommerce-jetpack' ),
-								'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=by_category' ),
+								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=by_category' ),
 							),
 							'active'         => array(
 								'title' => __( 'Active', 'woocommerce-jetpack' ),
-								'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=active' ),
+								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=active' ),
 							),
 							'manager'        => array(
 								'title' => __( 'Manage Settings', 'woocommerce-jetpack' ),
-								'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=manager' ),
+								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=manager' ),
 							),
 						)
 					);
@@ -177,12 +177,12 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 						}
 						$cat_nodes[ $link_id ] = array(
 							'title' => w_c_j()->modules[ $link_id ]->short_desc,
-							'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
+							'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=' . $id . '&section=' . $link_id ),
 							'meta'  => array( 'title' => w_c_j()->modules[ $link_id ]->desc ),
 							'nodes' => array(
 								'settings' => array(
 									'title' => __( 'Settings', 'woocommerce-jetpack' ),
-									'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
+									'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=' . $id . '&section=' . $link_id ),
 								),
 								'docs'     => array(
 									'title' => __( 'Documentation', 'woocommerce-jetpack' ),
@@ -273,7 +273,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 			$nodes = array(
 				'booster-active' => array(
 					'title' => '<span class="ab-icon"></span>' . __( 'Booster: Active', 'woocommerce-jetpack' ),
-					'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=active' ),
+					'href'  => admin_url( wcj_admin_tab_url() . 'wcj-cat=dashboard&section=active' ),
 					'meta'  => array(
 						'title' => __( 'Booster - Active', 'woocommerce-jetpack' ),
 					),
@@ -297,14 +297,14 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 			$nodes = array(
 				'booster' => array(
 					'title' => '<span class="ab-icon"></span>' . __( 'Booster', 'woocommerce-jetpack' ),
-					'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack' ),
+					'href'  => admin_url( wcj_admin_tab_url() ),
 					'meta'  => array(
 						'title' => __( 'Booster - Settings', 'woocommerce-jetpack' ),
 					),
 					'nodes' => array(
 						'modules' => array(
 							'title' => __( 'Modules', 'woocommerce-jetpack' ),
-							'href'  => admin_url( 'admin.php?page=wc-settings&tab=jetpack' ),
+							'href'  => admin_url( wcj_admin_tab_url() ),
 							'nodes' => $this->get_nodes_booster_modules(),
 						),
 						'tools'   => array(

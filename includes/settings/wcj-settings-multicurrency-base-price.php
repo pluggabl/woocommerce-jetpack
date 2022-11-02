@@ -32,7 +32,7 @@ $settings       = array(
 			'auto'   => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
 		),
 		'desc'              => ( '' === apply_filters( 'booster_message', '', 'desc' ) ) ?
-			__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
+			__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
 			:
 			apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),

@@ -98,15 +98,12 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		 * @todo    add success/error message
 		 */
 		public function manually_download_fonts() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_download_fonts-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_download_fonts-nonce'] ), 'wcj_download_fonts' ) : false;
 			if ( isset( $_GET['wcj_download_fonts'] ) && $wpnonce ) {
 				delete_option( 'wcj_invoicing_fonts_version' );
 				delete_option( 'wcj_invoicing_fonts_version_timestamp' );
 				wcj_check_and_maybe_download_tcpdf_fonts();
-				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_download_fonts' ) ) );
+				wp_safe_redirect( esc_url_raw( remove_query_arg( array( 'wcj_download_fonts', 'wcj_download_fonts-nonce' ) ) ) );
 				exit;
 			}
 		}

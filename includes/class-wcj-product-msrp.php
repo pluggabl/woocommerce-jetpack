@@ -180,8 +180,8 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		 * @param string | array $__post defines the __post.
 		 */
 		public function save_msrp_input( $post_id, $__post ) {
-			$nonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
-			if ( isset( $_POST['_wcj_msrp'] ) && $nonce ) {
+			$wpnonce = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( wp_unslash( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) ), 'woocommerce_save_data' ) : false;
+			if ( isset( $_POST['_wcj_msrp'] ) && $wpnonce ) {
 				update_post_meta( $post_id, '_wcj_msrp', sanitize_text_field( wp_unslash( $_POST['_wcj_msrp'] ) ) );
 			}
 		}

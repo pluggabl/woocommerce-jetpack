@@ -591,7 +591,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 			$default_total_custom_tabs       = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 			$total_custom_tabs_before_saving = get_post_meta( $post_id, '_wcj_custom_product_tabs_local_total_number', true );
 			$total_custom_tabs_before_saving = ( '' !== $total_custom_tabs_before_saving && null !== $total_custom_tabs_before_saving && '' !== $total_custom_tabs_before_saving ) ? $total_custom_tabs_before_saving : $default_total_custom_tabs;
-			$wpnonce                         = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			$wpnonce                         = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( wp_unslash( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) ), 'woocommerce_save_data' ) : false;
 
 			for ( $i = 1; $i <= $total_custom_tabs_before_saving; $i++ ) {
 				if ( $this->is_local_tab_visible( $i, $post_id ) ) {

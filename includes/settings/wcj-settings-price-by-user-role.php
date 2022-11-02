@@ -156,7 +156,7 @@ $settings = array(
 		'desc'  => sprintf(
 		/* translators: %s: translators Added */
 			__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
-			admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' )
+			admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 		),
 		'id'    => 'wcj_price_by_user_role_multipliers_options',
 	),

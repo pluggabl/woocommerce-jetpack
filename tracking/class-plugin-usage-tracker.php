@@ -13,37 +13,91 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
-		/**
-		 * Plugin_Usage_Tracker
-		 *
-		 * @since 1.0.0
-		 */
+	/**
+	 * Plugin_Usage_Tracker
+	 *
+	 * @since 1.0.0
+	 */
 	class Plugin_Usage_Tracker {
-
-		private $wisdom_version        = '1.2.4';
-		private $home_url              = '';
-		private $plugin_file           = '';
-		private $plugin_name           = '';
-		private $options               = array();
-		private $require_optin         = true;
-		private $include_goodbye_form  = true;
-		private $marketing             = false;
-		private $collect_email         = false;
-		private $what_am_i             = 'plugin';
+		/**
+		 * Wisdom version.
+		 *
+		 * @var   string
+		 */
+		private $wisdom_version = '1.2.4';
+		/**
+		 * Home url.
+		 *
+		 * @var   string
+		 */
+		private $home_url = '';
+		/**
+		 * Plugin file.
+		 *
+		 * @var   string
+		 */
+		private $plugin_file = '';
+		/**
+		 * Plugin name.
+		 *
+		 * @var   string
+		 */
+		private $plugin_name = '';
+		/**
+		 * Options.
+		 *
+		 * @var   array
+		 */
+		private $options = array();
+		/**
+		 * Require optin.
+		 *
+		 * @var   string
+		 */
+		private $require_optin = true;
+		/**
+		 * Include goodbye form.
+		 *
+		 * @var   string
+		 */
+		private $include_goodbye_form = true;
+		/**
+		 * Marketing.
+		 *
+		 * @var   string
+		 */
+		private $marketing = false;
+		/**
+		 * Collect email.
+		 *
+		 * @var   string
+		 */
+		private $collect_email = false;
+		/**
+		 * What am i.
+		 *
+		 * @var   string
+		 */
+		private $what_am_i = 'plugin';
+		/**
+		 * Theme allows tracking.
+		 *
+		 * @var   int
+		 */
 		private $theme_allows_tracking = 0;
 
 		/**
 		 * Class constructor.
 		 *
-		 * @param $_home_url                The URL to the site we're sending data to
-		 * @param $_plugin_file             The file path for this plugin
-		 * @param $_options                 Plugin options to track
-		 * @param $_require_optin           Whether user opt-in is required (always required on WordPress.org)
-		 * @param $_include_goodbye_form    Whether to include a form when the user deactivates
-		 * @param $_marketing               Marketing method:
-		 *                                  0: Don't collect email addresses
-		 *                                  1: Request permission same time as tracking opt-in
-		 *                                  2: Request permission after opt-in
+		 * @param string $_plugin_file             The file path for this plugin.
+		 * @param string $_home_url                The URL to the site we're sending data to.
+		 * @param string $_options                 Plugin options to track.
+		 * @param string $_require_optin           Whether user opt-in is required (always required on WordPress.org).
+		 * @param string $_include_goodbye_form    Whether to include a form when the user deactivates.
+		 * @param string $_marketing               Marketing method:.
+		 *                                         0: Don't collect email addresses.
+		 *                                         1: Request permission same time as tracking opt-in.
+		 *                                         2: Request permission after opt-in.
 		 */
 		public function __construct(
 			$_plugin_file,
@@ -150,6 +204,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * Create weekly schedule.
 		 *
 		 * @since 1.2.3
+		 * @param string $schedules defines the cron schedules.
 		 */
 		public function schedule_weekly_event( $schedules ) {
 			$schedules['weekly']  = array(
@@ -181,7 +236,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * Then send it back
 		 *
 		 * @since 1.0.0
-		 * @param $force    Force tracking if it's not time
+		 * @param bool $force Force tracking if it's not time.
 		 */
 		public function do_tracking( $force = false ) {
 
@@ -223,6 +278,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * Send the data to the home site.
 		 *
 		 * @since 1.0.0
+		 * @param array $body body data of the request.
 		 */
 		public function send_data( $body ) {
 
@@ -252,6 +308,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 *
 		 * @version 1.0.0
 		 * @since 3.2.4
+		 * @param array $modules_array array of the modules.
 		 */
 		public function add_tracking_module( $modules_array ) {
 
@@ -308,7 +365,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			}
 			$body['marketing_method'] = $this->marketing;
 
-			$body['server'] = isset( $_SERVER['SERVER_SOFTWARE'] ) ? $_SERVER['SERVER_SOFTWARE'] : '';
+			$body['server'] = getenv( 'SERVER_SOFTWARE' );
 
 			// Extra PHP fields.
 			$body['memory_limit']        = ini_get( 'memory_limit' );
@@ -327,7 +384,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			$active_plugins = get_option( 'active_plugins', array() );
 
 			foreach ( $plugins as $key => $plugin ) {
-				if ( in_array( $plugin, $active_plugins ) ) {
+				if ( in_array( $plugin, $active_plugins, true ) ) {
 					// Remove active plugins from list so we can show active and inactive separately.
 					unset( $plugins[ $key ] );
 				}
@@ -415,14 +472,14 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			}
 			$names = implode( '\', \'', $tracked_module );
 
-			$boosterActivePlugins = $wpdb->get_results( "SELECT `option_name` FROM $wpdb->options WHERE `autoload` = 'yes' AND `option_value` = 'yes' AND `option_name` IN ('.$names.')" );
+			$booster_active_plugins = $wpdb->get_results( "SELECT `option_name` FROM $wpdb->options WHERE `autoload` = 'yes' AND `option_value` = 'yes' AND `option_name` IN ('.$names.')" );
 
 			$booster_active_plugin = array();
-			foreach ( $boosterActivePlugins as $boosterPlugin ) {
-				$boosterPlugin           = str_replace( 'wcj_', '', $boosterPlugin->option_name );
-				$boosterPluginTitle      = str_replace( '_enabled', '', $boosterPlugin );
-				$pluginTitle             = str_replace( '_', ' ', $boosterPluginTitle );
-				$booster_active_plugin[] = ucwords( $pluginTitle );
+			foreach ( $booster_active_plugins as $booster_plugin ) {
+				$booster_plugin          = str_replace( 'wcj_', '', $booster_plugin->option_name );
+				$booster_plugin_title    = str_replace( '_enabled', '', $booster_plugin );
+				$plugin_title            = str_replace( '_', ' ', $booster_plugin_title );
+				$booster_active_plugin[] = ucwords( $plugin_title );
 			}
 
 			$booster_active_plugin = implode( ',', $booster_active_plugin );
@@ -530,7 +587,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * More than one plugin may be using the tracker
 		 *
 		 * @since 1.0.0
-		 * @param $is_allowed   Boolean     true if tracking is allowed, false if not.
+		 * @param bool   $is_allowed true if tracking is allowed, false if not.
+		 * @param string $plugin plugin name.
 		 */
 		public function set_is_tracking_allowed( $is_allowed, $plugin = null ) {
 
@@ -694,6 +752,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * Option is an array of all plugins that have received a response from the user.
 		 *
 		 * @since 1.0.0
+		 * @param string $plugin plugin name.
 		 */
 		public function update_block_notice( $plugin = null ) {
 			if ( empty( $plugin ) ) {
@@ -731,7 +790,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * More than one plugin may be using the tracker.
 		 *
 		 * @since 1.0.0
-		 * @param $can_collect  Boolean     true if collection is allowed, false if not.
+		 * @param boolean $can_collect true if collection is allowed, false if not.
+		 * @param string  $plugin plugin name.
 		 */
 		public function set_can_collect_email( $can_collect, $plugin = null ) {
 			if ( empty( $plugin ) ) {
@@ -777,8 +837,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * There might be more than one admin on the site
 		 * So we only use the first admin's email address
 		 *
-		 * @param $email    Email address to set
-		 * @param $plugin   Plugin name to set email address for
+		 * @param string $email Email address to set.
+		 * @param string $plugin Plugin name to set email address for.
 		 * @since 1.1.2
 		 */
 		public function set_admin_email( $email = null, $plugin = null ) {
@@ -813,8 +873,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		public function optin_notice() {
 			// Check for plugin args.
 			if ( isset( $_GET['plugin'] ) && isset( $_GET['plugin_action'] ) ) {
-				$plugin = sanitize_text_field( $_GET['plugin'] );
-				$action = sanitize_text_field( $_GET['plugin_action'] );
+				$plugin = sanitize_text_field( wp_unslash( $_GET['plugin'] ) );
+				$action = sanitize_text_field( wp_unslash( $_GET['plugin_action'] ) );
 				if ( 'yes' === $action ) {
 					$this->set_is_tracking_allowed( true, $plugin );
 					// Run this straightaway.
@@ -906,8 +966,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 					<p><?php echo '<strong>' . esc_html( $plugin_name ) . '</strong>'; ?></p>
 					<p><?php echo esc_html( $notice_text ); ?></p>
 					<p>
-						<a href="<?php echo esc_url( $url_yes ); ?>" class="button-secondary"><?php _e( 'Allow', 'singularity' ); ?></a>
-						<a href="<?php echo esc_url( $url_no ); ?>" class="button-secondary"><?php _e( 'Do Not Allow', 'singularity' ); ?></a>
+						<a href="<?php echo esc_url( $url_yes ); ?>" class="button-secondary"><?php esc_html_e( 'Allow', 'singularity' ); ?></a>
+						<a href="<?php echo esc_url( $url_no ); ?>" class="button-secondary"><?php esc_html_e( 'Do Not Allow', 'singularity' ); ?></a>
 					</p>
 				</div>
 				<?php
@@ -922,10 +982,11 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * @since 1.0.0
 		 */
 		public function marketing_notice() {
+			$wpnonce = isset( $_REQUEST['marketing_optin-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['marketing_optin-nonce'] ), 'marketing_optin' ) : false;
 			// Check if user has opted in to marketing.
-			if ( isset( $_GET['marketing_optin'] ) ) {
+			if ( $wpnonce && isset( $_GET['marketing_optin'] ) ) {
 				// Set marketing optin.
-				$this->set_can_collect_email( sanitize_text_field( $_GET['marketing_optin'] ), $this->plugin_name );
+				$this->set_can_collect_email( sanitize_text_field( wp_unslash( $_GET['marketing_optin'] ) ), $this->plugin_name );
 				// Do tracking.
 				$this->do_tracking( true );
 			} elseif ( isset( $_GET['marketing'] ) && 'yes' === $_GET['marketing'] ) {
@@ -937,16 +998,18 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 				$url_yes = esc_url(
 					add_query_arg(
 						array(
-							'plugin'          => $this->plugin_name,
-							'marketing_optin' => 'yes',
+							'plugin'                => $this->plugin_name,
+							'marketing_optin'       => 'yes',
+							'marketing_optin-nonce' => wp_create_nonce( 'marketing_optin' ),
 						)
 					)
 				);
 				$url_no  = esc_url(
 					add_query_arg(
 						array(
-							'plugin'          => $this->plugin_name,
-							'marketing_optin' => 'no',
+							'plugin'                => $this->plugin_name,
+							'marketing_optin'       => 'no',
+							'marketing_optin-nonce' => wp_create_nonce( 'marketing_optin' ),
 						)
 					)
 				);
@@ -963,8 +1026,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 					<p><?php echo '<strong>' . esc_html( $plugin_name ) . '</strong>'; ?></p>
 					<p><?php echo esc_html( $marketing_text ); ?></p>
 					<p>
-						<a href="<?php echo esc_url( $url_yes ); ?>" data-putnotice="yes" class="button-secondary"><?php _e( 'Yes Please', 'singularity' ); ?></a>
-						<a href="<?php echo esc_url( $url_no ); ?>" data-putnotice="no" class="button-secondary"><?php _e( 'No Thank You', 'singularity' ); ?></a>
+						<a href="<?php echo esc_url( $url_yes ); ?>" data-putnotice="yes" class="button-secondary"><?php esc_html_e( 'Yes Please', 'singularity' ); ?></a>
+						<a href="<?php echo esc_url( $url_no ); ?>" data-putnotice="no" class="button-secondary"><?php esc_html_e( 'No Thank You', 'singularity' ); ?></a>
 					</p>
 				</div>
 				<?php
@@ -975,6 +1038,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * Filter the deactivation link to allow us to present a form when the user deactivates the plugin.
 		 *
 		 * @since 1.0.0
+		 * @param string $links links to set.
 		 */
 		public function filter_action_links( $links ) {
 			// Check to see if the user has opted in to tracking.
@@ -1110,7 +1174,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 						var url = document.getElementById("put-goodbye-link-<?php echo esc_attr( $this->plugin_name ); ?>");
 						$('body').toggleClass('put-form-active');
 						$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?>").fadeIn();
-						$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?>").html( '<?php echo $html; ?>' + '<div class="put-goodbye-form-footer"><p><a id="put-submit-form" class="button primary" href="#"><?php _e( 'Submit and Deactivate', 'singularity' ); ?></a>&nbsp;<a class="secondary button" href="'+url+'"><?php _e( 'Just Deactivate', 'singularity' ); ?></a></p></div>');
+						$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?>").html( '<?php echo $html; ?>' + '<div class="put-goodbye-form-footer"><p><a id="put-submit-form" class="button primary" href="#"><?php esc_html_e( 'Submit and Deactivate', 'singularity' ); ?></a>&nbsp;<a class="secondary button" href="'+url+'"><?php esc_html_e( 'Just Deactivate', 'singularity' ); ?></a></p></div>');
 						$('#put-submit-form').on('click', function(e){
 							// As soon as we click, the body of the form should disappear.
 							$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?> .put-goodbye-form-body").fadeOut();
@@ -1127,7 +1191,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 								'action': 'goodbye_form',
 								'values': values,
 								'details': details,
-								'security': "<?php echo wp_create_nonce( 'wisdom_goodbye_form' ); ?>",
+								'security': "<?php echo wp_kses_post( wp_create_nonce( 'wisdom_goodbye_form' ) ); ?>",
 								'dataType': "json"
 							}
 							$.post(
@@ -1158,11 +1222,11 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		public function goodbye_form_callback() {
 			check_ajax_referer( 'wisdom_goodbye_form', 'security' );
 			if ( isset( $_POST['values'] ) ) {
-				$values = json_encode( wp_unslash( $_POST['values'] ) );
+				$values = wp_json_encode( array_map( 'sanitize_text_field', wp_unslash( $_POST['values'] ) ) );
 				update_option( 'wisdom_deactivation_reason_' . $this->plugin_name, $values );
 			}
 			if ( isset( $_POST['details'] ) ) {
-				$details = sanitize_text_field( $_POST['details'] );
+				$details = sanitize_text_field( wp_unslash( $_POST['details'] ) );
 				update_option( 'wisdom_deactivation_details_' . $this->plugin_name, $details );
 			}
 			$this->do_tracking(); // Run this straightaway.

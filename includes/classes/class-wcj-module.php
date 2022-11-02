@@ -509,11 +509,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   2.5.3
 		 */
 		public function admin_notices() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : 'woocommerce-settings' ) ) : true;
-			}
-			if ( ! $wpnonce || ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
+			$_get = array();
+			parse_str( isset( $_SERVER['QUERY_STRING'] ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '', $_get );
+			if ( ! $wpnonce || ! isset( $_get[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' . wp_kses_post( $this->get_the_notice() ) . '</div></p></div>';
@@ -839,7 +837,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 */
 		public function get_back_to_settings_link_html() {
 			$cat_id   = $this->get_cat_by_section( $this->id );
-			$the_link = admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $cat_id . '&section=' . $this->id );
+			$the_link = admin_url( wcj_admin_tab_url() . '&wcj-cat=' . $cat_id . '&section=' . $this->id );
 			return '<a href="' . $the_link . '"><< ' . __( 'Back to Module Settings', 'woocommerce-jetpack' ) . '</a>';
 		}
 

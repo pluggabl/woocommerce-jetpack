@@ -494,10 +494,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param int  $product_id Get product id.
 		 */
 		public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
 			if ( ! $wpnonce ) {
 				return $passed;
 			}
@@ -620,13 +617,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			if ( ! $product ) {
 				return;
 			}
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			if ( ! $wpnonce ) {
-				return;
-			}
+
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
 			$this->maybe_update_local_input_fields( $_product_id );
 			$fields       = array();
@@ -675,7 +666,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 				if ( $this->is_enabled( $i, $_product_id ) ) {
 
-					$set_value = ( isset( $_POST[ $field_name ] ) ?
+					$wpnonce   = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
+					$set_value = ( $wpnonce && isset( $_POST[ $field_name ] ) ?
 					$this->maybe_stripslashes( sanitize_text_field( wp_unslash( $_POST[ $field_name ] ) ) ) :
 					( 'checkbox' === $type ?
 						( 'yes' === $this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $_product_id, 'no' ) ? 'on' : 'off' ) :
@@ -823,7 +815,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			ksort( $fields );
 			if ( ! empty( $fields ) ) {
-				echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode( $fields ) ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode( $fields ) ) . wp_nonce_field( 'wcj_product_input_fields', 'wcj_product_input_fields-nonce' ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$this->are_product_input_fields_displayed = true;
 			}
 		}
@@ -839,10 +831,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param int   $variation_id Get variation id.
 		 */
 		public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
 			if ( ! $wpnonce ) {
 				return $cart_item_data;
 			}

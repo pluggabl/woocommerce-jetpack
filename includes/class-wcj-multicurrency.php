@@ -564,10 +564,11 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			if ( function_exists( 'wp_verify_nonce' ) ) {
 				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
 			}
+			// phpcs:disable WordPress.Security.NonceVerification
 			$current_currency_code = $this->get_current_currency_code();
 			$exchange_rate         = $this->get_currency_exchange_rate( $current_currency_code );
-			$min_price             = ( $wpnonce && isset( $_GET['min_price'] ) ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
-			$max_price             = ( $wpnonce && isset( $_GET['max_price'] ) ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
+			$min_price             = ( isset( $_GET['min_price'] ) ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
+			$max_price             = ( isset( $_GET['max_price'] ) ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
 			$min_max_join          = "LEFT JOIN {$wpdb->postmeta} AS pm on pm.post_id = {$wpdb->posts}.ID AND (pm.meta_key IN ('_wcj_multicurrency_per_product_min_price_{$current_currency_code}','_wcj_multicurrency_per_product_max_price_{$current_currency_code}') and pm.meta_value!='')";
 			if ( false === strpos( $args['join'], $min_max_join ) ) {
 				$args['join'] .= " {$min_max_join} ";
@@ -576,6 +577,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			$args['fields']  .= ", (IFNULL(MAX((pm.meta_value +0))/{$exchange_rate},max_price) +0) AS wcj_max_price ";
 			$args['where']    = preg_replace( '/and wc_product_meta_lookup.min_price >= \d.* and wc_product_meta_lookup.max_price <= \d.*\s/i', '', $args['where'] );
 			$args['groupby'] .= " having wcj_min_price >= $min_price AND wcj_min_price <= $max_price ";
+			// phpcs:enable WordPress.Security.NonceVerification
 			return $args;
 		}
 
@@ -959,7 +961,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @param int | string $currency_code_param defines the currency_code_param.
 		 */
 		public function save_min_max_prices_per_product( $post_id, $currency_code_param = '' ) {
-			$wpnonce  = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			$wpnonce  = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ), 'woocommerce_save_data' ) : false;
 			$product  = wc_get_product( $post_id );
 			$products = array();
 			if ( $product->is_type( 'variable' ) ) {
@@ -1036,10 +1038,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce       = isset( $_REQUEST['wcj-currency-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-currency-nonce'] ), 'wcj-currency' ) : false;
 			$session_value = wcj_session_get( 'wcj-currency' );
 			if ( null === ( $session_value ) ) {
 				$currency = $this->get_default_currency();
@@ -1050,7 +1049,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_default_currency_force', 'no' ) ) {
 				$currency = $this->get_default_currency();
 			}
-			if ( $wpnonce && isset( $currency ) ) {
+			if ( isset( $currency ) ) {
 				wcj_session_set( 'wcj-currency', $currency );
 			}
 		}

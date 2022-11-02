@@ -230,11 +230,9 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				}
 			}
 			// Post Status.
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'woocommerce-settings' ) : true;
-			}
-			$post_status = ( $wpnonce && isset( $_GET['post_status'] ) ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : 'any';
+			$get_data = array();
+			parse_str( isset( $_SERVER['QUERY_STRING'] ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '', $get_data );
+			$post_status = isset( $get_data['post_status'] ) ? sanitize_text_field( wp_unslash( $get_data['post_status'] ) ) : 'any';
 
 			// Try to search post by '_wcj_order_number' meta key.
 			$meta_query_args = array(
@@ -372,7 +370,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					'Press the button below to renumerate all existing orders starting from order counter settings in <a href="%s">Order Numbers</a> module.',
 					'woocommerce-jetpack'
 				),
-				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=shipping_and_orders&section=order_numbers' )
+				admin_url( wcj_admin_tab_url() . '&wcj-cat=shipping_and_orders&section=order_numbers' )
 			);
 			$html .= '</p>';
 			$html .= $result_message;

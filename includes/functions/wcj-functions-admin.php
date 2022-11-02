@@ -22,7 +22,7 @@ if ( ! function_exists( 'wcj_get_module_settings_admin_url' ) ) {
 	 * @param   int $module_id defines the module_id.
 	 */
 	function wcj_get_module_settings_admin_url( $module_id ) {
-		return admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . wcj_get_module_category( $module_id ) . '&section=' . $module_id );
+		return admin_url( wcj_admin_tab_url() . '&wcj-cat=' . wcj_get_module_category( $module_id ) . '&section=' . $module_id );
 	}
 }
 
@@ -98,17 +98,15 @@ if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
 	 */
 	function wcj_is_admin_product_edit_page() {
 		global $pagenow;
-			$wpnonce = true;
-		if ( function_exists( 'wp_verify_nonce' ) ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-		}
-		if ( $wpnonce && is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() ) {
+		// phpcs:disable WordPress.Security.NonceVerification
+		if ( is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() ) {
 			return true;
 		} elseif ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && 'woocommerce_load_variations' === $_REQUEST['action'] ) {
 			return true;
 		} else {
 			return false;
 		}
+		// phpcs:enable WordPress.Security.NonceVerification
 	}
 }
 
