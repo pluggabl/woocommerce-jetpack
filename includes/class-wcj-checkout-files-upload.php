@@ -653,9 +653,9 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						$real_base_path = realpath( wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) ) . DIRECTORY_SEPARATOR;
 
 						if ( false === $real_file_path || 0 !== strpos( $real_file_path, $real_base_path ) ) {
-						  continue;
+							continue;
 						} else {
-						  unlink( $tmp_file_name );
+							unlink( $tmp_file_name );
 						}
 					}
 					delete_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i );

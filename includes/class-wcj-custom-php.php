@@ -38,10 +38,10 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				'<strong>wp-login.php</strong>'
 			) . ' ' .
 				sprintf(
-			/* translators: %s: translation added */
+					/* translators: %s: translation added */
 					__( 'E.g.: %s', 'woocommerce-jetpack' ),
 					'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
-					admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '</a>'
+					admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '</a>'
 				);
 			$this->link_slug = 'woocommerce-booster-custom-php';
 			parent::__construct();
@@ -84,11 +84,15 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		 * @param string | array $current_section defines the current_section.
 		 */
 		public function create_php_file( $sections, $current_section ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			global $wp_filesystem;
+
 			if ( $this->id === $current_section ) {
 				$file_content = wcj_get_option( 'wcj_custom_php', '' );
 				if ( '' !== $file_content ) {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php' ) . DIRECTORY_SEPARATOR . 'booster.php';
-					file_put_contents( $file_path, '<?php' . PHP_EOL . $file_content ); // phpcs:ignore
+					WP_Filesystem();
+					$wp_filesystem->put_contents( $file_path, '<?php' . PHP_EOL . $file_content, FS_CHMOD_FILE );
 				} else {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
 					if ( file_exists( $file_path ) ) {

@@ -116,8 +116,9 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			} else {
 				$this->what_am_i = 'theme';
 				$theme           = wp_get_theme();
-				if ( $theme->Name ) {
-					$this->plugin_name = sanitize_text_field( $theme->Name );
+				$t_name          = 'Name';
+				if ( $theme->$t_name ) {
+					$this->plugin_name = sanitize_text_field( $theme->$t_name );
 				}
 			}
 
@@ -453,15 +454,18 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			$theme = wp_get_theme();
-			if ( $theme->Name ) {
-				$body['theme'] = sanitize_text_field( $theme->Name );
+			$theme      = wp_get_theme();
+			$t_name     = 'Name';
+			$t_version  = 'Version';
+			$t_template = 'Template';
+			if ( $theme->$t_name ) {
+				$body['theme'] = sanitize_text_field( $theme->$t_name );
 			}
-			if ( $theme->Version ) {
-				$body['theme_version'] = sanitize_text_field( $theme->Version );
+			if ( $theme->$t_version ) {
+				$body['theme_version'] = sanitize_text_field( $theme->$t_version );
 			}
-			if ( $theme->Template ) {
-				$body['theme_parent'] = sanitize_text_field( $theme->Template );
+			if ( $theme->$t_template ) {
+				$body['theme_parent'] = sanitize_text_field( $theme->$t_template );
 			}
 
 			global $wpdb;
@@ -872,7 +876,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 */
 		public function optin_notice() {
 			// Check for plugin args.
-			if ( isset( $_GET['plugin'] ) && isset( $_GET['plugin_action'] ) ) {
+			$wpnonce = isset( $_REQUEST['plugin_action-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['plugin_action-nonce'] ), 'plugin_action' ) : false;
+			if ( $wpnonce && isset( $_GET['plugin'] ) && isset( $_GET['plugin_action'] ) ) {
 				$plugin = sanitize_text_field( wp_unslash( $_GET['plugin'] ) );
 				$action = sanitize_text_field( wp_unslash( $_GET['plugin_action'] ) );
 				if ( 'yes' === $action ) {
@@ -921,8 +926,9 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 
 				// Args to add to query if user opts in to tracking.
 				$yes_args = array(
-					'plugin'        => $this->plugin_name,
-					'plugin_action' => 'yes',
+					'plugin'              => $this->plugin_name,
+					'plugin_action'       => 'yes',
+					'plugin_action-nonce' => wp_create_nonce( 'plugin_action' ),
 				);
 
 				// Decide how to request permission to collect email addresses.
@@ -937,8 +943,9 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 				$url_no  = esc_url(
 					add_query_arg(
 						array(
-							'plugin'        => $this->plugin_name,
-							'plugin_action' => 'no',
+							'plugin'              => $this->plugin_name,
+							'plugin_action'       => 'no',
+							'plugin_action-nonce' => wp_create_nonce( 'plugin_action' ),
 						)
 					)
 				);
@@ -1174,7 +1181,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 						var url = document.getElementById("put-goodbye-link-<?php echo esc_attr( $this->plugin_name ); ?>");
 						$('body').toggleClass('put-form-active');
 						$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?>").fadeIn();
-						$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?>").html( '<?php echo $html; ?>' + '<div class="put-goodbye-form-footer"><p><a id="put-submit-form" class="button primary" href="#"><?php esc_html_e( 'Submit and Deactivate', 'singularity' ); ?></a>&nbsp;<a class="secondary button" href="'+url+'"><?php esc_html_e( 'Just Deactivate', 'singularity' ); ?></a></p></div>');
+						$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?>").html( '<?php echo wp_kses_post( $html ); ?>' + '<div class="put-goodbye-form-footer"><p><a id="put-submit-form" class="button primary" href="#"><?php esc_html_e( 'Submit and Deactivate', 'singularity' ); ?></a>&nbsp;<a class="secondary button" href="'+url+'"><?php esc_html_e( 'Just Deactivate', 'singularity' ); ?></a></p></div>');
 						$('#put-submit-form').on('click', function(e){
 							// As soon as we click, the body of the form should disappear.
 							$("#put-goodbye-form-<?php echo esc_attr( $this->plugin_name ); ?> .put-goodbye-form-body").fadeOut();

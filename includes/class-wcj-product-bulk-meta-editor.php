@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			$wpnonce           = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			$selected_products = $wpnonce && isset( $_POST['wcj_product_bulk_meta_editor_products'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['wcj_product_bulk_meta_editor_products'] ) ) : array();
 			// Output.
-			echo $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] ) );
 		}
 
 		/**
@@ -405,7 +405,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				} else {
 					$_post_meta = get_post_meta( $product_id, $meta_name, true );
 					if ( is_array( $_post_meta ) || is_object( $_post_meta ) ) {
-						$_post_meta = print_r( $_post_meta, true ); // phpcs:ignore
+						$_post_meta = wp_json_encode( $_post_meta );
 					} else {
 						$placeholder = ( ! metadata_exists( 'post', $product_id, $meta_name ) ? ' placeholder="N/A"' : '' );
 						$_post_meta  = '<input' . $placeholder . ' style="width:100%;" type="text" name="wcj_product_bulk_meta_editor_id_' . $product_id . '" value="' .
@@ -425,13 +425,9 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				$row          = $this->maybe_add_additional_columns_content( $row, $additional_columns, $product_id );
 				$table_data[] = $row;
 			}
-			$table_data[] = array(
-				wp_nonce_field( 'wcj_product_bulk_meta_editor_save_delete_single', 'wcj_product_bulk_meta_editor_save_delete_single-nonce' ),
-				'',
-				'',
-			);
 
-			return '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
+			return '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) .
+			wp_nonce_field( 'wcj_product_bulk_meta_editor_save_delete_single', 'wcj_product_bulk_meta_editor_save_delete_single-nonce' ) . '</p>';
 		}
 
 		/**

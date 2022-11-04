@@ -113,11 +113,8 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 
 			$order_currencies_array        = array();
 			$order_currencies_array_totals = array();
-			$wpnonce                       = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			$report_currency  = ( $wpnonce && isset( $_GET['currency'] ) && 'merge' !== isset( $_GET['currency'] ) ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency();
+
+			$report_currency  = ( isset( $_GET['currency'] ) && 'merge' !== isset( $_GET['currency'] ) ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(); // phpcs:ignore WordPress.Security.NonceVerification
 			$block_size       = 256;
 			$table_data       = array();
 			$do_forecast      = ( 'yes' === wcj_get_option( 'wcj_reports_orders_monthly_sales_forecast', 'no' ) );

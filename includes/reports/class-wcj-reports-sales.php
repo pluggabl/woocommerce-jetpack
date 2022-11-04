@@ -38,13 +38,11 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		 * @since   2.3.0
 		 */
 		public function get_report() {
-			$html    = '';
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			$this->year          = $wpnonce && isset( $_GET['year'] ) ? sanitize_text_field( wp_unslash( $_GET['year'] ) ) : gmdate( 'Y' );
-			$this->product_title = $wpnonce && isset( $_GET['product_title'] ) ? sanitize_text_field( wp_unslash( $_GET['product_title'] ) ) : '';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$html                = '';
+			$this->year          = isset( $_GET['year'] ) ? sanitize_text_field( wp_unslash( $_GET['year'] ) ) : gmdate( 'Y' );
+			$this->product_title = isset( $_GET['product_title'] ) ? sanitize_text_field( wp_unslash( $_GET['product_title'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			$html .= $this->get_products_sales();
 
@@ -377,19 +375,17 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			$page   = $wpnonce && isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-			$tab    = $wpnonce && isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
-			$report = $wpnonce && isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$page   = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$tab    = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			$report = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $page . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $tab . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $report . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . esc_attr( $page ) . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . esc_attr( $report ) . '" />';
 			$filter_form .= '<input type="hidden" name="year" value="' . $this->year . '" />';
 			$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
 			'<input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';

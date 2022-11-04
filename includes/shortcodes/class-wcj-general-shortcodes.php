@@ -498,7 +498,6 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					break;
 				default: // 'all'.
 					$countries = wcj_get_countries();
-					asort( $options );
 					break;
 			}
 

@@ -1,4 +1,4 @@
-<?php //phpcs:ignore
+<?php
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
+if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 	/**
 	 * WCJ_Currencies.
 	 */
-	class WCJ_Email_Verification extends WCJ_Module {
+	class WCJ_Emails_Verification extends WCJ_Module {
 
 		/**
 		 * Constructor.
@@ -202,7 +202,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 			$url           = wp_nonce_url(
 				add_query_arg(
 					'wcj_verify_email',
-					base64_encode( // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+					base64_encode(
 						wp_json_encode(
 							array(
 								'id'   => $user_id,
@@ -252,9 +252,9 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 		 * @since   2.8.0
 		 */
 		public function process_email_verification() {
-			if ( isset( $_GET['wcj_verified_email'] ) ) { // phpcs:ignore
+			if ( isset( $_GET['wcj_verified_email'] ) ) {
 				if ( function_exists( 'wc_add_notice' ) ) {
-					$data = json_decode( base64_decode( $_GET['wcj_verified_email'] ), true ); // phpcs:ignore
+					$data = json_decode( base64_decode( sanitize_email( wp_unslash( $_GET['wcj_verified_email'] ) ) ), true );
 					if ( ! empty( $data['id'] ) && ! empty( $data['code'] ) && get_user_meta( $data['id'], 'wcj_activation_code', true ) === $data['code'] ) {
 						wc_add_notice(
 							do_shortcode(
@@ -266,8 +266,8 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 						);
 					}
 				}
-			} elseif ( isset( $_GET['wcj_verify_email'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				$data = json_decode( base64_decode( sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ) ), true ); // phpcs:ignore
+			} elseif ( isset( $_GET['wcj_verify_email'] ) ) {
+				$data = json_decode( base64_decode( sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ) ), true );
 				if ( ! empty( $data['id'] ) && ! empty( $data['code'] ) && get_user_meta( $data['id'], 'wcj_activation_code', true ) === $data['code'] ) {
 					update_user_meta( $data['id'], 'wcj_is_activated', '1' );
 					if ( 'yes' === wcj_get_option( 'wcj_emails_verification_redirect_on_success', 'yes' ) ) {
@@ -276,7 +276,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 					}
 					$custom_url = wcj_get_option( 'wcj_emails_verification_redirect_on_success_custom_url', '' );
 					$url        = ( '' !== ( $custom_url ) ? $custom_url : wc_get_page_permalink( 'myaccount' ) );
-					wp_safe_redirect( add_query_arg( 'wcj_verified_email', sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ), $url ) ); // phpcs:ignore
+					wp_safe_redirect( add_query_arg( 'wcj_verified_email', sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ), $url ) );
 					exit;
 				} elseif ( ! empty( $data['id'] ) ) {
 					$_notice = do_shortcode(
@@ -294,7 +294,7 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 					);
 					wc_add_notice( $_notice, 'error' );
 				}
-			} elseif ( isset( $_GET['wcj_activate_account_message'] ) ) {// phpcs:ignore WordPress.Security.NonceVerification
+			} elseif ( isset( $_GET['wcj_activate_account_message'] ) ) {
 				wc_add_notice(
 					do_shortcode(
 						wcj_get_option(
@@ -303,8 +303,8 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 						)
 					)
 				);
-			} elseif ( isset( $_GET['wcj_user_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				$this->reset_and_mail_activation_link( sanitize_text_field( wp_unslash( $_GET['wcj_user_id'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			} elseif ( isset( $_GET['wcj_user_id'] ) ) {
+				$this->reset_and_mail_activation_link( sanitize_text_field( wp_unslash( $_GET['wcj_user_id'] ) ) );
 				wc_add_notice(
 					do_shortcode(
 						wcj_get_option(
@@ -320,4 +320,4 @@ if ( ! class_exists( 'WCJ_Email_Verification' ) ) :
 
 endif;
 
-return new WCJ_Email_Verification();
+return new WCJ_Emails_Verification();

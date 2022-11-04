@@ -19,6 +19,7 @@ function change_price() {
 	}
 	if ( is_variation_ok ) {
 		var product_id = jQuery( "input[type='hidden'][name='variation_id']" ).val();
+		var wpnonce = jQuery( "input[type='hidden'][name='wcj_product_addons-nonce']" ).val();
 		var is_variable;
 		if ( ! product_id ) {
 			is_variable = false;
@@ -33,6 +34,7 @@ function change_price() {
 		var data = {
 			'action': 'product_addons_price_change',
 			'product_id': product_id,
+			'wpnonce': wpnonce,
 		};
 		jQuery( "input[name^='wcj_product_all_products_addons_'], input[name^='wcj_product_per_product_addons_']" ).each(
 			function () {

@@ -1,4 +1,4 @@
-<?php //phpcs:ignore
+<?php
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
+if ( ! class_exists( 'WCJ_Multicurrency_Product_Base_Price' ) ) :
 	/**
-	 * WCJ_Multicurrency_Base_Price.
+	 * WCJ_Multicurrency_Product_Base_Price.
 	 */
-	class WCJ_Multicurrency_Base_Price extends WCJ_Module {
+	class WCJ_Multicurrency_Product_Base_Price extends WCJ_Module {
 
 		/**
 		 * Constructor.
@@ -118,13 +118,15 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @return mixed
 		 */
 		public function modify_default_price_filter_hook( $query ) {
+			// phpcs:disable WordPress.Security.NonceVerification
 			if (
 				'no' === wcj_get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
-				! isset( $_GET['min_price'] ) || // phpcs:ignore WordPress.Security.NonceVerification
-				! isset( $_GET['max_price'] ) // phpcs:ignore WordPress.Security.NonceVerification
+				! isset( $_GET['min_price'] ) ||
+				! isset( $_GET['max_price'] )
 			) {
 				return $query;
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			// Remove Price Filter Meta Query.
 			$meta_query = $query->get( 'meta_query' );
@@ -165,11 +167,13 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		public function price_filter_post_clauses( $args, $wp_query ) {
 			global $wpdb;
-			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ) {
 				return $args;
 			}
-			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
-			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX; // phpcs:ignore WordPress.Security.NonceVerification
+			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
+			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( wc_tax_enabled() && 'incl' === wcj_get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
 				$tax_class = apply_filters( 'woocommerce_price_filter_widget_tax_class', '' ); // Uses standard tax class.
 				$tax_rates = WC_Tax::get_rates( $tax_class );
@@ -534,4 +538,4 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 
 endif;
 
-return new WCJ_Multicurrency_Base_Price();
+return new WCJ_Multicurrency_Product_Base_Price();

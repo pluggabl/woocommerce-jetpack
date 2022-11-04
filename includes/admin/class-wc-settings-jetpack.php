@@ -84,6 +84,9 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 */
 		public function wcj_new_desing_dashboard() {
 			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			if ( ! $wpnonce && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=wc-settings' ) );
+			}
 			if ( $wpnonce && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css', array(), w_c_j()->version );
 				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );

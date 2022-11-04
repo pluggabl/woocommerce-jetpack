@@ -560,10 +560,6 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			}
 
 			global $wpdb;
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
 			// phpcs:disable WordPress.Security.NonceVerification
 			$current_currency_code = $this->get_current_currency_code();
 			$exchange_rate         = $this->get_currency_exchange_rate( $current_currency_code );

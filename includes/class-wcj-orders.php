@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					if ( 'disabled' !== apply_filters( 'booster_option', 'disabled', wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
 						add_action( 'init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
 						add_action( 'admin_init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
-						add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' ); //phpcs:ignore
+						add_filter( 'cron_schedules', array( $this, 'wcj_crons_add_custom_intervals' ) );
 						add_action( 'wcj_bulk_regenerate_download_permissions_all_orders_cron', array( $this, 'bulk_regenerate_download_permissions_all_orders' ) );
 					}
 				}
@@ -352,6 +352,36 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 			$order->update_status( 'completed' );
 		}
 
+		/**
+		 * Wcj_crons_add_custom_intervals.
+		 *
+		 * @version 3.2.4
+		 * @since   3.2.4
+		 * @param   array $schedules defines the schedules.
+		 */
+		public function wcj_crons_add_custom_intervals( $schedules ) {
+			$schedules['weekly']    = array(
+				'interval' => 604800,
+				'display'  => __( 'Once weekly', 'woocommerce-jetpack' ),
+			);
+			$schedules['minute_30'] = array(
+				'interval' => 1800,
+				'display'  => __( 'Once every 30 minutes', 'woocommerce-jetpack' ),
+			);
+			$schedules['minute_15'] = array(
+				'interval' => 900,
+				'display'  => __( 'Once every 15 minutes', 'woocommerce-jetpack' ),
+			);
+			$schedules['minute_5']  = array(
+				'interval' => 300,
+				'display'  => __( 'Once every 5 minutes', 'woocommerce-jetpack' ),
+			);
+			$schedules['minutely']  = array(
+				'interval' => 60,
+				'display'  => __( 'Once a minute', 'woocommerce-jetpack' ),
+			);
+			return $schedules;
+		}
 	}
 
 endif;

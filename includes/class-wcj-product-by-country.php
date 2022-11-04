@@ -120,11 +120,13 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		 */
 		public function save_country_in_session() {
 			wcj_session_maybe_start();
-			if ( isset( $_REQUEST['wcj_country_selector'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			$country_selector_wpnonce = isset( $_REQUEST['wcj_country_selector-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_country_selector-nonce'] ), 'wcj_country_selector' ) : false;
+			$country_wpnonce          = isset( $_REQUEST['wcj-country-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-country-nonce'] ), 'wcj-country' ) : false;
+			if ( $country_selector_wpnonce && isset( $_REQUEST['wcj_country_selector'] ) ) {
+				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj_country_selector'] ) ) );
 			}
-			if ( isset( $_REQUEST['wcj-country'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			if ( $country_wpnonce && isset( $_REQUEST['wcj-country'] ) ) {
+				wcj_session_set( 'wcj_selected_country', sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) );
 			}
 		}
 

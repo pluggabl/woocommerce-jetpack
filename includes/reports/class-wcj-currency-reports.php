@@ -33,10 +33,9 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * @param int | string $wp_admin_bar Difine admin_bar.
 		 */
 		public function add_reports_currency_to_admin_bar( $wp_admin_bar ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 
-				$the_current_code = isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency();
+				$the_current_code = isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(); // phpcs:ignore WordPress.Security.NonceVerification
 				$parent           = 'reports_currency_select';
 				$args             = array(
 					'parent' => false,
@@ -98,8 +97,8 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * @param string $currency Get currency.
 		 */
 		public function change_currency_symbol_reports( $currency_symbol, $currency ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 				if ( isset( $_GET['currency'] ) ) {
 					if ( 'merge' === $_GET['currency'] ) {
 						return '';
@@ -111,6 +110,7 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 					}
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 			return $currency_symbol;
 		}
 
@@ -121,8 +121,8 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * @param Array $args Get args.
 		 */
 		public function filter_reports( $args ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 				if ( isset( $_GET['currency'] ) && 'merge' === $_GET['currency'] ) {
 					return $args;
 				}
@@ -134,6 +134,7 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 					),
 				);
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 			return $args;
 		}
 	}

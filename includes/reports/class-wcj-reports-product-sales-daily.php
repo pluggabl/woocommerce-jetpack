@@ -196,15 +196,16 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 			// Product and date filter form.
-			$wpnonce      = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ) ) : true;
-			$pages        = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-			$tabs         = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
-			$reports      = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$pages   = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$tabs    = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			$reports = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $pages . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $tabs . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $reports . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . esc_attr( $pages ) . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . esc_attr( $tabs ) . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . esc_attr( $reports ) . '" />';
 			$filter_form .= '<label style="font-style:italic;" for="start_date">' . __( 'From:', 'woocommerce-jetpack' ) . '</label> ' .
 			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js( 'Y-m-d' ) . '" name="start_date" title="" value="' . $this->start_date . '" />';
 			$filter_form .= ' ';

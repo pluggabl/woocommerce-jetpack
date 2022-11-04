@@ -687,14 +687,10 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 				return $this->customer_country_group_id;
 			}
 
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-
 			// Get the country.
+			// phpcs:disable WordPress.Security.NonceVerification
 			$override_option = get_option( 'wcj_price_by_country_override_on_checkout_with_billing_country', 'no' );
-			if ( $wpnonce && isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
+			if ( isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
 				$country = sanitize_text_field( wp_unslash( $_GET['country'] ) );
 			} elseif ( 'no' !== $override_option && (
 				( 'all' === get_option( 'wcj_price_by_country_override_scope', 'all' ) ) ||
@@ -716,6 +712,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 					$country = ( defined( 'ICL_LANGUAGE_CODE' ) ? ICL_LANGUAGE_CODE : null );
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			if ( null === $country ) {
 				$this->customer_country_group_id = -1;

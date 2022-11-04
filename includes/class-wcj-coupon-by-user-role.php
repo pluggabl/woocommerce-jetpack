@@ -96,7 +96,6 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 					),
 					10000
 				);
-				return false; // phpcs:ignore
 			}
 			return $valid;
 		}

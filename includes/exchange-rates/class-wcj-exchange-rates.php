@@ -77,6 +77,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 					'ajax_object',
 					array(
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'wpnonce'  => wp_create_nonce( 'ajax-nonce' ),
 					)
 				);
 			}

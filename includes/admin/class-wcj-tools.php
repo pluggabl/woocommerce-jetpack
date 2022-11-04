@@ -71,7 +71,7 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		public function create_tools_page() {
 
 			// Tabs.
-			$tabs    = apply_filters(
+			$tabs = apply_filters(
 				'wcj_tools_tabs',
 				array(
 					array(
@@ -80,12 +80,11 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 					),
 				)
 			);
-			$html    = '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper wcj_tool_tab_part">';
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			$active_tab = ( $wpnonce && isset( $_GET['tab'] ) ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'dashboard';
+			$html = '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper wcj_tool_tab_part">';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$active_tab = ( isset( $_GET['tab'] ) ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'dashboard';
+			// phpcs:enable WordPress.Security.NonceVerification
+
 			foreach ( $tabs as $tab ) {
 				$is_active = ( $active_tab === $tab['id'] ) ? 'nav-tab-active' : '';
 				$html     .= '<a href="' . esc_url(

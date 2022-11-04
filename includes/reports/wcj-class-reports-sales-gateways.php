@@ -149,9 +149,9 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Gateways' ) ) :
 			// Date filter form.
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $page . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $tab . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $report . '" />';
+			$filter_form .= '<input type="text" name="page" value="' . esc_attr( $page ) . '" />';
+			$filter_form .= '<input type="text" name="tab" value="' . esc_attr( $tab ) . '" />';
+			$filter_form .= '<input type="text" name="report" value="' . esc_attr( $report ) . '" />';
 			$filter_form .= '<label style="font-style:italic;" for="start_date">' . __( 'From:', 'woocommerce-jetpack' ) . '</label> ' .
 			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js( 'Y-m-d' ) . '" name="start_date" title="" value="' . $this->start_date . '" />';
 			$filter_form .= ' ';

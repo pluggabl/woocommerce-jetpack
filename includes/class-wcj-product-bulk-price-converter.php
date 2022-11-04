@@ -220,7 +220,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 					'fields'         => 'ids',
 				);
 				if ( $wpnonce && isset( $_POST['wcj_product_cat'] ) && 'wcj_any' !== $_POST['wcj_product_cat'] && 'any' !== apply_filters( 'booster_option', 'any', '' ) ) {
-					$args['tax_query'] = array(// phpcs:ignore
+					$args['tax_query'] = array( // phpcs:ignore
 						array(
 							'taxonomy' => 'product_cat',
 							'field'    => 'slug',
@@ -350,12 +350,14 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 					'',
 				);
 				echo (
-					wcj_get_table_html( // phpcs:ignore WordPress.Security.EscapeOutput
-						$data_table,
-						array(
-							'table_heading_type' => 'none',
-							'table_class'        => 'widefat striped',
-							'table_style'        => 'width:50%;min-width:300px;',
+					wp_kses_post(
+						wcj_get_table_html(
+							$data_table,
+							array(
+								'table_heading_type' => 'none',
+								'table_class'        => 'widefat striped',
+								'table_style'        => 'width:50%;min-width:300px;',
+							)
 						)
 					)
 				);

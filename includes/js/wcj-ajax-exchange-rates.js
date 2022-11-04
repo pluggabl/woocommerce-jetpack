@@ -13,7 +13,8 @@ jQuery( document ).ready(
 				var data     = {
 					'action': 'wcj_ajax_get_exchange_rates',
 					'wcj_currency_from': this.getAttribute( 'currency_from' ),
-					'wcj_currency_to': this.getAttribute( 'currency_to' )
+					'wcj_currency_to': this.getAttribute( 'currency_to' ),
+					'wpnonce': ajax_object.wpnonce,
 				};
 				jQuery.ajax(
 					{

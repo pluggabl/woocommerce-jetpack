@@ -81,9 +81,10 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_custom_order_reports_ranges_by_month_to_admin_bar( $wp_admin_bar ) {
+			// phpcs:disable WordPress.Security.NonceVerification
 			$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
 			$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
-			$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( $is_reports && $is_orders_reports ) {
 
 				$parent = 'reports_orders_more_ranges_months';
@@ -132,9 +133,10 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
-			$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			$is_reports        = ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
-			$is_orders_reports = ( $wpnonce && isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
+			// phpcs:disable WordPress.Security.NonceVerification
+			$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
+			$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( $is_reports && $is_orders_reports ) {
 
 				$parent = 'reports_orders_more_ranges';
@@ -174,10 +176,11 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 * Catch_arguments.
 		 */
 		public function catch_arguments() {
-			$wpnonce               = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			$this->report_id       = ( $wpnonce && isset( $_GET['report'] ) ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : 'on_stock';
-			$this->range_days      = $wpnonce && isset( $_GET['period'] ) ? sanitize_text_field( wp_unslash( $_GET['period'] ) ) : 30;
+			// phpcs:disable WordPress.Security.NonceVerification
+			$this->report_id       = ( isset( $_GET['report'] ) ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : 'on_stock';
+			$this->range_days      = isset( $_GET['period'] ) ? sanitize_text_field( wp_unslash( $_GET['period'] ) ) : 30;
 			$this->group_countries = ( 'customers_by_country_sets' === $this->report_id ) ? 'yes' : 'no';
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 
 		/**

@@ -223,7 +223,9 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			$meta       = get_post_meta( $post_id );
 			$table_data = array();
 			foreach ( $meta as $meta_key => $meta_values ) {
-				$table_data[] = array( $meta_key, esc_html( print_r( maybe_unserialize( $meta_values[0] ), true ) ) ); // phpcs:ignore
+				$meta_value   = maybe_unserialize( $meta_values[0] );
+				$meta_value   = is_array( $meta_value ) ? wp_json_encode( $meta_value ) : $meta_value;
+				$table_data[] = array( $meta_key, esc_html( $meta_value ) );
 			}
 			$html .= wcj_get_table_html(
 				$table_data,
