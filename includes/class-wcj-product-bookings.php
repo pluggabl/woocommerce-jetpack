@@ -489,8 +489,8 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_product_bookings_enabled', //phpcs:ignore
-					'meta_value'     => 'yes', //phpcs:ignore
+					'meta_key'       => '_wcj_product_bookings_enabled', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'yes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );

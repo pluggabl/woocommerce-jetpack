@@ -50,6 +50,7 @@ jQuery(
 				var data = {
 					'action': 'wcj_validate_eu_vat_number',
 					'wcj_eu_vat_number_to_check': vatNumberToCheck,
+					'_wpnonce': _ajax_object._wpnonce,
 				};
 				$.ajax(
 					{

@@ -94,10 +94,10 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		 * @param String $methods Get methods.
 		 */
 		public function add_wc_shipping_wcj_custom_w_zones_class( $methods ) {
-			if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) {
+			if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) {
 				$this->init_shipping_zones_class();
 			}
-			$methods['booster_custom_shipping_w_zones'] = 'WC_Shipping_WCJ_Custom_W_Zones';
+			$methods['booster_custom_shipping_w_zones'] = 'WC_Shipping_WCJ_Custom_With_Shipping_Zones';
 			return $methods;
 		}
 

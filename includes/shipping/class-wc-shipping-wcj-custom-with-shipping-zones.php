@@ -1,4 +1,4 @@
-<?php //phpcs:ignore
+<?php
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
@@ -12,13 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
+if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 	/**
-	 * WC_Shipping_WCJ_Custom_W_Zones
+	 * WC_Shipping_WCJ_Custom_With_Shipping_Zones
 	 *
 	 * @version 2.5.6
 	 */
-	class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
+	class WC_Shipping_WCJ_Custom_With_Shipping_Zones extends WC_Shipping_Method {
 		/**
 		 * Form_field_ids
 		 *

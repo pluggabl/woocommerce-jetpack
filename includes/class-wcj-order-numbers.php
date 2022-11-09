@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					'update_post_term_cache' => false,
 					'post_status'            => $post_status,
 					'post_type'              => 'shop_order',
-					'meta_query'             => $meta_query_args, //phpcs:ignore
+					'meta_query'             => $meta_query_args, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				)
 			);
 

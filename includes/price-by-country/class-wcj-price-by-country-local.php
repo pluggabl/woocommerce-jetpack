@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 			}
 
 			// Output.
-			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $html );
 		}
 
 		/**

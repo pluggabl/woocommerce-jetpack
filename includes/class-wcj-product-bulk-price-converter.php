@@ -220,7 +220,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 					'fields'         => 'ids',
 				);
 				if ( $wpnonce && isset( $_POST['wcj_product_cat'] ) && 'wcj_any' !== $_POST['wcj_product_cat'] && 'any' !== apply_filters( 'booster_option', 'any', '' ) ) {
-					$args['tax_query'] = array( // phpcs:ignore
+					$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 						array(
 							'taxonomy' => 'product_cat',
 							'field'    => 'slug',
@@ -326,8 +326,8 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 						__( 'Otherwise - all prices below "threshold" will end with 0,99 and all prices above or equal to "threshold" will end with 9,00.', 'woocommerce-jetpack' ) . ' ' .
 						__( 'E.g.: if you set "threshold" to 100, then all prices below 100 will be like 45,99 and all other prices will be like 109,00.', 'woocommerce-jetpack' )
 					),
-					'<input style="width:100%;" class="" type="number" step="0.000001" min="0" name="make_pretty_prices_threshold" id="make_pretty_prices_threshold" value="' .
-						$make_pretty_prices_threshold . '"' . apply_filters( 'booster_option', 'disabled', '' ) . '>',
+					'<input style="width:100%;" class="" type="number" step="0.000001" min="0" name="make_pretty_prices_threshold" id="make_pretty_prices_threshold" ' . apply_filters( 'booster_option', 'disabled', '' ) . ' value="' .
+						$make_pretty_prices_threshold . '">',
 					'<em>' . apply_filters( 'booster_message', '', 'desc' ) . '</em>',
 				);
 				$data_table[]                 = array(

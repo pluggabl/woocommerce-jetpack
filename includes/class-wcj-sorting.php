@@ -325,34 +325,34 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 				case 'title_asc':
 					$args['orderby']  = 'title';
 					$args['order']    = 'asc';
-					$args['meta_key'] = ''; //phpcs:ignore
+					$args['meta_key'] = ''; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'title_desc':
 					$args['orderby']  = 'title';
 					$args['order']    = 'desc';
-					$args['meta_key'] = ''; //phpcs:ignore
+					$args['meta_key'] = ''; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'sku_asc':
 					$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 					$args['order']    = 'asc';
-					$args['meta_key'] = '_sku'; //phpcs:ignore
+					$args['meta_key'] = '_sku'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'sku_desc':
 					$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 					$args['order']    = 'desc';
-					$args['meta_key'] = '_sku'; //phpcs:ignore
+					$args['meta_key'] = '_sku'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'stock_quantity_asc':
 					$args['orderby']  = 'meta_value_num';
 					$args['order']    = 'asc';
-					$args['meta_key'] = '_stock'; //phpcs:ignore
+					$args['meta_key'] = '_stock'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'stock_quantity_desc':
 					$args['orderby']  = 'meta_value_num';
 					$args['order']    = 'desc';
-					$args['meta_key'] = '_stock'; //phpcs:ignore
+					$args['meta_key'] = '_stock'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 			endswitch;
 

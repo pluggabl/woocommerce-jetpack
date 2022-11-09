@@ -179,8 +179,8 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				if ( is_admin() && is_numeric( $term ) ) {
 					$search_ids[] = $term;
 				}
-				$sku_to_parent_id = $wpdb->get_col( $wpdb->prepare( 'SELECT p.post_parent as post_id FROM {$wpdb->posts} as p join {$wpdb->postmeta} pm on p.ID = pm.post_id and pm.meta_key="_sku" and pm.meta_value LIKE %s where p.post_parent <> 0 group by p.post_parent', $wpdb->esc_like( wc_clean( '%' . $term . '%' ) ) ) ); // WPCS: db call ok and cache ok.
-				$sku_to_id        = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_sku' AND meta_value LIKE %s;", $wpdb->esc_like( '%' . wc_clean( $term ) . '%' ) ) ); // WPCS: db call ok and cache ok.
+				$sku_to_parent_id = $wpdb->get_col( $wpdb->prepare( 'SELECT p.post_parent as post_id FROM {$wpdb->posts} as p join {$wpdb->postmeta} pm on p.ID = pm.post_id and pm.meta_key="_sku" and pm.meta_value LIKE %s where p.post_parent <> 0 group by p.post_parent', $wpdb->esc_like( wc_clean( '%' . $term . '%' ) ) ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$sku_to_id        = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_sku' AND meta_value LIKE %s;", $wpdb->esc_like( '%' . wc_clean( $term ) . '%' ) ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$search_ids       = array_merge( $search_ids, $sku_to_id, $sku_to_parent_id );
 			}
 			$search_ids = array_filter( array_map( 'absint', $search_ids ) );

@@ -108,7 +108,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 						foreach ( $statuses[ $i ] as $x => $status ) {
 							$order_count += wc_orders_count( substr( $status, 3 ) );
 						}
-						$orders_count_html = ' <span class="awaiting-mod update-plugins count-' . esc_attr( $order_count ) . ' wcj-order-count-wrapper"><span class="wcj-order-count">' . number_format_i18n( $order_count ) . '</span></span>'; // WPCS: override ok.
+						$orders_count_html = ' <span class="awaiting-mod update-plugins count-' . esc_attr( $order_count ) . ' wcj-order-count-wrapper"><span class="wcj-order-count">' . number_format_i18n( $order_count ) . '</span></span>';
 					}
 					add_submenu_page( 'woocommerce', $titles[ $i ], $titles[ $i ] . $orders_count_html, 'edit_shop_orders', $menu_slug );
 				}

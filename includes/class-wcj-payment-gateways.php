@@ -32,7 +32,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
-				include_once 'gateways/class-wc-gateway-wcj-custom.php';
+				include_once 'gateways/class-wc-gateway-wcj-custom-template.php';
 				add_action( 'woocommerce_after_checkout_validation', array( $this, 'check_required_wcj_input_fields' ), PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_custom_payment_gateways_fields_order_meta' ), PHP_INT_MAX, 2 );
 				add_action( 'add_meta_boxes', array( $this, 'add_custom_payment_gateways_fields_admin_order_meta_box' ) );

@@ -147,8 +147,9 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		 * @param int $i defines the i.
 		 */
 		public function save_msrp_input_variable( $variation_id, $i ) {
-			if ( isset( $_POST['variable_wcj_msrp'][ $i ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				update_post_meta( $variation_id, '_wcj_msrp', wc_clean( sanitize_text_field( wp_unslash( $_POST['variable_wcj_msrp'][ $i ] ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['security'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['security'] ), 'save-variations' ) : false;
+			if ( $wpnonce && isset( $_POST['variable_wcj_msrp'][ $i ] ) ) {
+				update_post_meta( $variation_id, '_wcj_msrp', wc_clean( sanitize_text_field( wp_unslash( $_POST['variable_wcj_msrp'][ $i ] ) ) ) );
 			}
 		}
 

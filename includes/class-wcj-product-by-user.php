@@ -301,7 +301,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 						) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
 					);
 				}
-				echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ); //phpcs:ignore
+				echo wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ) );
 			}
 		}
 

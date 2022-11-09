@@ -780,7 +780,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 								$field = '<select name="' . $field_name . '" id="' . $field_name . '" class="country_to_state country_select wcj_product_input_fields' . $class . '">' .
 								'<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
 								foreach ( $countries as $ckey => $cvalue ) {
-									$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . __( $cvalue, 'woocommerce' ) . '</option>'; //phpcs:ignore
+									$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
 								}
 								$field .= '</select>';
 								$html   = $field;
@@ -815,7 +815,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			ksort( $fields );
 			if ( ! empty( $fields ) ) {
-				echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode( $fields ) ) . wp_nonce_field( 'wcj_product_input_fields', 'wcj_product_input_fields-nonce' ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . implode( $fields ) . wp_nonce_field( 'wcj_product_input_fields', 'wcj_product_input_fields-nonce' ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' ) );
 				$this->are_product_input_fields_displayed = true;
 			}
 		}
@@ -1034,6 +1034,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @throws Exception Exception.
 		 */
 		public function add_input_fields_to_order_item_meta( $item, $item_id, $values, $cart_item_key ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			global $wp_filesystem;
+			WP_Filesystem();
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
 			for ( $i = 1; $i <= $total_number; $i ++ ) {
 				if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) ) {
@@ -1049,8 +1052,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							mkdir( $upload_dir, 0755, true );
 						}
 						$upload_dir_and_name = $upload_dir . '/' . $name;
-						$file_data           = file_get_contents( $tmp_name ); //phpcs:ignore
-						file_put_contents( $upload_dir_and_name, $file_data ); //phpcs:ignore
+						$file_data           = $wp_filesystem->get_contents( $tmp_name );
+						$wp_filesystem->put_contents( $upload_dir_and_name, $file_data, FS_CHMOD_FILE );
 						unlink( $tmp_name );
 						$input_field_value['tmp_name']   = addslashes( $upload_dir_and_name );
 						$input_field_value['wcj_type']   = 'file';

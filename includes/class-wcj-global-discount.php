@@ -178,7 +178,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 
 					// Tax Query.
 					if ( ! empty( $cats ) || ! empty( $tags ) ) {
-						$args['tax_query'] = array(// phpcs:ignore
+						$args['tax_query'] = array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 							'relation' => 'AND',
 						);
 						if ( ! empty( $cats ) ) {

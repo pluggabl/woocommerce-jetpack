@@ -42,7 +42,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Templates' ) ) :
 		public function get_default_template( $invoice_type_id ) {
 			if ( ! isset( $this->default_template[ $invoice_type_id ] ) ) {
 				$default_template_filename = ( false === strpos( $invoice_type_id, 'custom_doc_' ) ? $invoice_type_id : 'custom_doc' );
-				$default_template_filename = wcj_free_plugin_path() . '/includes/settings/pdf-invoicing/wcj-content-template-' . $default_template_filename . '.php';
+				$default_template_filename = wcj_free_plugin_path() . '/includes/settings/pdf-invoicing/wcj-content-template-' . $default_template_filename . '.html';
 				if ( file_exists( $default_template_filename ) ) {
 					ob_start();
 					include $default_template_filename;

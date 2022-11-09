@@ -204,8 +204,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_product_open_price_enabled', //phpcs:ignore
-					'meta_value'     => 'yes', //phpcs:ignore
+					'meta_key'       => '_wcj_product_open_price_enabled', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'yes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );

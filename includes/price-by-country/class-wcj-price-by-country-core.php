@@ -199,9 +199,10 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 * @return array|null|string
 		 */
 		public function set_default_checkout_country( $default_country ) {
+			$country = null !== wcj_session_get( 'wcj-country' ) ? wcj_session_get( 'wcj-country' ) : $this->get_customer_country_by_ip();
 			if (
 			'yes' !== get_option( 'wcj_price_by_country_set_dft_checkout_billing_country', 'no' ) ||
-			empty( $country = null !== ( $country = wcj_session_get( 'wcj-country' ) ) ? $country : ( $country = $this->get_customer_country_by_ip() ) ) //phpcs:ignore
+			empty( $country )
 			) {
 				return $default_country;
 			}
@@ -813,14 +814,12 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		public function change_price( $price, $product ) {
 			$group_id = $this->get_customer_country_group_id();
 			if ( null !== $group_id && '' !== $group_id ) {
-				$product_generated_cart_id = WC()->cart->generate_cart_id( wcj_get_product_id( $product ) );
 				if ( 'yes' === get_option( 'wcj_price_by_country_compatibility_woo_discount_rules', 'no' ) ) {
 					global $flycart_woo_discount_rules;
 					if (
 					! empty( $flycart_woo_discount_rules ) &&
-					! has_action( 'woocommerce_before_calculate_totals', array( $flycart_woo_discount_rules, 'applyDiscountRules' ) )
-					&& ( $product_cart_id = $product_generated_cart_id ) && //phpcs:ignore
-					WC()->cart->find_product_in_cart( $product_cart_id )
+					! has_action( 'woocommerce_before_calculate_totals', array( $flycart_woo_discount_rules, 'applyDiscountRules' ) ) &&
+					WC()->cart->find_product_in_cart( WC()->cart->generate_cart_id( wcj_get_product_id( $product ) ) )
 					) {
 						return $price;
 					}

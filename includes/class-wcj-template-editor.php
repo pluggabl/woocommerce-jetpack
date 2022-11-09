@@ -55,6 +55,9 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		 */
 		public function create_templates( $sections, $current_section ) {
 			if ( $this->id === $current_section ) {
+				require_once ABSPATH . '/wp-admin/includes/file.php';
+				global $wp_filesystem;
+				WP_Filesystem();
 				$this->delete_dir( wcj_get_wcj_uploads_dir( 'templates' ) );
 				$templates_content = wcj_get_option( 'wcj_template_editor_templates_content', array() );
 				foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
@@ -63,7 +66,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 						$_template_file = $_template[ count( $_template ) - 1 ];
 						$_template_dirs = str_replace( $_template_file, '', $template );
 						$_template_path = wcj_get_wcj_uploads_dir( 'templates' . DIRECTORY_SEPARATOR . $_template_dirs ) . DIRECTORY_SEPARATOR . $_template_file;
-						file_put_contents( $_template_path, $templates_content[ $template ] ); //phpcs:ignore
+						$wp_filesystem->put_contents( $_template_path, $templates_content[ $template ], FS_CHMOD_FILE );
 					}
 				}
 			}

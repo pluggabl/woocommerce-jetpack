@@ -412,7 +412,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Product_Base_Price' ) ) :
 				'update_post_meta_cache' => false,
 				'update_post_term_cache' => false,
 				'fields'                 => 'ids',
-				'meta_query'             => array( //phpcs:ignore
+				'meta_query'             => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
 						'key'     => '_wcj_multicurrency_base_price_currency',
 						'value'   => $currency,

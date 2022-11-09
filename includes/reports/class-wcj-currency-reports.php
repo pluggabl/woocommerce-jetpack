@@ -33,9 +33,10 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * @param int | string $wp_admin_bar Difine admin_bar.
 		 */
 		public function add_reports_currency_to_admin_bar( $wp_admin_bar ) {
-			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 
-				$the_current_code = isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(); // phpcs:ignore WordPress.Security.NonceVerification
+				$the_current_code = isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency();
 				$parent           = 'reports_currency_select';
 				$args             = array(
 					'parent' => false,
@@ -87,6 +88,7 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 					$wp_admin_bar->add_node( $args );
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 
 		/**
@@ -128,8 +130,8 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 				}
 				$args['where_meta'] = array(
 					array(
-						'meta_key'   => '_order_currency', //phpcs:ignore
-						'meta_value' => isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(), //phpcs:ignore
+						'meta_key'   => '_order_currency', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+						'meta_value' => isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 						'operator'   => '=',
 					),
 				);

@@ -453,6 +453,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 					'progress_text_valid'               => do_shortcode( wcj_get_option( 'wcj_eu_vat_number_progress_text_valid', __( 'VAT is valid.', 'woocommerce-jetpack' ) ) ),
 					'progress_text_not_valid'           => do_shortcode( wcj_get_option( 'wcj_eu_vat_number_progress_text_not_valid', __( 'VAT is not valid.', 'woocommerce-jetpack' ) ) ),
 					'progress_text_validation_failed'   => do_shortcode( wcj_get_option( 'wcj_eu_vat_number_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ) ) ),
+					'_wpnonce'                          => wp_create_nonce( 'wcj_eu_vat_number_to_check' ),
 				)
 			);
 		}
@@ -471,8 +472,9 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 					'echo'                       => true,
 				)
 			);
+			$wpnonce       = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj_eu_vat_number_to_check' ) : false;
 			$eu_vat_number = isset( $param['wcj_eu_vat_number_to_check'] ) && '' !== $param['wcj_eu_vat_number_to_check'] && null !== $param['wcj_eu_vat_number_to_check'] ? sanitize_text_field( wp_unslash( $param['wcj_eu_vat_number_to_check'] ) ) : '';
-			$eu_vat_number = empty( $eu_vat_number ) && isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' !== $_POST['wcj_eu_vat_number_to_check'] && null !== $_POST['wcj_eu_vat_number_to_check'] ? sanitize_text_field( wp_unslash( $_POST['wcj_eu_vat_number_to_check'] ) ) : $eu_vat_number; // phpcs:ignore WordPress.Security.NonceVerification
+			$eu_vat_number = $wpnonce && empty( $eu_vat_number ) && isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' !== $_POST['wcj_eu_vat_number_to_check'] && null !== $_POST['wcj_eu_vat_number_to_check'] ? sanitize_text_field( wp_unslash( $_POST['wcj_eu_vat_number_to_check'] ) ) : $eu_vat_number;
 			if ( ! empty( $eu_vat_number ) ) {
 				$eu_vat_number_to_check         = substr( $eu_vat_number, 2 );
 				$eu_vat_number_country_to_check = substr( $eu_vat_number, 0, 2 );
@@ -528,7 +530,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			'yes' === wcj_get_option( 'wcj_eu_vat_number_disable_for_valid', 'yes' ) &&
 			(
 				( true === wcj_session_get( 'wcj_is_eu_vat_number_valid' ) && null !== ( $eu_vat_number ) ) ||
-				( 'yes' === wcj_get_option( 'wcj_eu_vat_number_disable_for_valid_by_user_vat', 'no' ) && is_user_logged_in() && ! empty( $eu_vat_number = get_user_meta( get_current_user_id(), 'billing_eu_vat_number', true ) ) && '1' === $this->wcj_validate_eu_vat_number(// phpcs:ignore
+				( 'yes' === wcj_get_option( 'wcj_eu_vat_number_disable_for_valid_by_user_vat', 'no' ) && is_user_logged_in() && ! empty( $eu_vat_number = get_user_meta( get_current_user_id(), 'billing_eu_vat_number', true ) ) && '1' === $this->wcj_validate_eu_vat_number( // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found
 					array(
 						'wcj_eu_vat_number_to_check' => $eu_vat_number,
 						'echo'                       => false,

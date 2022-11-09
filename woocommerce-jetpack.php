@@ -1,4 +1,4 @@
-<?php //phpcs:ignore
+<?php // phpcs:ignore WordPress.Files.FileName
 /**
  * Plugin Name: Booster for WooCommerce
  * Plugin URI: https://booster.io

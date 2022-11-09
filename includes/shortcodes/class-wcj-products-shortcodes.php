@@ -128,7 +128,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				'width'                 => 0,
 				'height'                => 0,
 				'color'                 => 'black',
-				'meta_key'              => '', //phpcs:ignore
+				'meta_key'              => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			);
 
 			parent::__construct();

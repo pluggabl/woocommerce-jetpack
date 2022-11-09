@@ -63,7 +63,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 					include_once 'reports/class-wcj-reports-customers.php';
 					include_once 'reports/class-wcj-reports-stock.php';
 					include_once 'reports/class-wcj-reports-product-sales-daily.php';
-					include_once 'reports/wcj-class-reports-sales-gateways.php';
+					include_once 'reports/class-wcj-reports-sales-gateways.php';
 					include_once 'reports/class-wcj-reports-sales.php';
 					include_once 'reports/class-wcj-reports-monthly-sales.php';
 
@@ -188,7 +188,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_sales() {
 			$report = new WCJ_Reports_Sales();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
@@ -199,7 +199,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_products_sales_daily() {
 			$report = new WCJ_Reports_Product_Sales_Daily();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
@@ -210,7 +210,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_monthly_sales() {
 			$report = new WCJ_Reports_Monthly_Sales();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
@@ -220,8 +220,8 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 * @since   3.6.0
 		 */
 		public function get_report_orders_gateways() {
-			$report = new WCJ_Reports_Product_Sales_Gateways();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$report = new WCJ_Reports_Sales_Gateways();
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
@@ -234,7 +234,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 					'range_days' => $this->range_days,
 				)
 			);
-			echo $report->get_report_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report_html() );
 		}
 
 		/**
@@ -242,7 +242,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_customers() {
 			$report = new WCJ_Reports_Customers( array( 'group_countries' => $this->group_countries ) );
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**

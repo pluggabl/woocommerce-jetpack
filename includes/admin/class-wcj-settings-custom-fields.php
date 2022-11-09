@@ -258,14 +258,14 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			$custom_attributes = ( isset( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) ?
 			$value['custom_attributes'] : array();
 			$description       = ' <p class="description">' . $value['desc'] . '</p>';
-			$tooltip_html      = ( isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
+			$tooltip_html      = ( $value['desc_tip'] && isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 			// Output.
 			?>
 		<tr valign="top">
-			<th scope="row" class="titledesc">
+			<th scope="row" class="titlededsdsdsc">
 				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-				<?php echo $tooltip_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> 
+				<?php echo wp_kses_post( $tooltip_html ); ?>
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php echo wp_kses_post( $description ); ?>
@@ -316,7 +316,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		 * @param  Array $value Get values.
 		 */
 		public function output_custom_link( $value ) {
-			$tooltip_html = ( isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
+			$tooltip_html = ( $value['desc_tip'] && isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 			?>
 		<tr valign="top">
@@ -339,7 +339,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		public function output_custom_number( $value ) {
 			$type         = 'number';
 			$option_value = get_option( $value['id'], $value['default'] );
-			$tooltip_html = ( isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
+			$tooltip_html = ( $value['desc_tip'] && isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 			$description  = ' <span class="description">' . $value['desc'] . '</span>';
 			$save_button  = apply_filters(

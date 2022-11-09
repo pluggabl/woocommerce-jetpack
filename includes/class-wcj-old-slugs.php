@@ -89,8 +89,8 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 
 				if ( ( isset( $_POST['remove_old_products_slugs'] ) && $remove_old_products_slugs_wpnonce ) || ( isset( $_POST['remove_old_non_products_slugs'] ) && $remove_old_non_products_slugs_wpnonce ) ) {
 					$post_ids_to_delete   = join( ',', ( isset( $_POST['remove_old_products_slugs'] ) ? $posts_ids['products'] : $posts_ids['non_products'] ) );
-					$delete_result        = $wpdb->get_results( "DELETE FROM {$wpdb->prefix}postmeta WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)" ); // phpcs:ignore
-					$recheck_result       = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_wp_old_slug'" ); // WPCS: db call ok and cache ok.
+					$delete_result        = $wpdb->get_results( "DELETE FROM {$wpdb->prefix}postmeta WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$recheck_result       = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_wp_old_slug'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					$recheck_result_count = count( $recheck_result );
 					$remove_result_html   = '<div class="updated"><p>' .
 					sprintf(

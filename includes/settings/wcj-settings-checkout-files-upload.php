@@ -331,7 +331,7 @@ $settings = array_merge(
 		array(
 			'title'    => __( 'Label', 'woocommerce-jetpack' ),
 			/* translators: %s: translators Added */
-			'desc_tip' => __( 'Replaced values: %field_id%, %field_label%, %required_html%.', 'woocommerce-jetpack' ), // phpcs:ignore
+			'desc_tip' => sprintf( __( 'Replaced values: %1$s, %2$s, %3$s.', 'woocommerce-jetpack' ), '%field_id%', '%field_label%', '%required_html%' ),
 			'id'       => 'wcj_checkout_files_upload_form_template_label',
 			/* translators: %s: translators Added */
 			'default'  => '<tr><td colspan="2"><label for="%field_id%">%field_label%</label>%required_html%</td></tr>',
@@ -341,7 +341,7 @@ $settings = array_merge(
 		array(
 			'title'    => __( 'Field', 'woocommerce-jetpack' ),
 			/* translators: %s: translators Added */
-			'desc_tip' => __( 'Replaced values: %field_html%, %button_html%.', 'woocommerce-jetpack' ), // phpcs:ignore
+			'desc_tip' => sprintf( __( 'Replaced values: %1$s, %2$s.', 'woocommerce-jetpack' ), '%field_html%', '%button_html%' ),
 			'id'       => 'wcj_checkout_files_upload_form_template_field',
 			/* translators: %s: translators Added */
 			'default'  => '<tr><td style="width:50%;max-width:50vw;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>',
