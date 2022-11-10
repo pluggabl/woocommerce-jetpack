@@ -52,7 +52,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 		 */
 		public function get_report_args() {
 			$wpnonce          = isset( $_REQUEST['wcj-reports-sales-gateways-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-reports-sales-gateways-nonce'] ), 'wcj-reports-sales-gateways' ) : false;
-			$current_time     = (int) gmdate( 'U' );
+			$current_time     = wcj_get_timestamp_date_from_gmt();
 			$this->start_date = $wpnonce && isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
 			$this->end_date   = $wpnonce && isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : gmdate( 'Y-m-d', $current_time );
 		}

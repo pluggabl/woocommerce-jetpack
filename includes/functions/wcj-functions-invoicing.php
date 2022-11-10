@@ -223,11 +223,11 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 			if ( wcj_check_tcpdf_fonts_version( true ) ) {
 				return true;
 			}
-			if ( ( (int) gmdate( 'U' ) - wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
+			if ( ( wcj_get_timestamp_date_from_gmt() - wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
 				return false;
 			}
 		}
-		update_option( 'wcj_invoicing_fonts_version_timestamp', (int) gmdate( 'U' ) );
+		update_option( 'wcj_invoicing_fonts_version_timestamp', wcj_get_timestamp_date_from_gmt() );
 		$tcpdf_fonts_dir = wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/';
 		if ( ! file_exists( $tcpdf_fonts_dir ) ) {
 			mkdir( $tcpdf_fonts_dir );
@@ -259,7 +259,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 		}
 		if (
 			update_option( 'wcj_invoicing_fonts_version', wcj_get_tcpdf_fonts_version() ) &&
-			update_option( 'wcj_invoicing_fonts_version_timestamp', (int) gmdate( 'U' ) )
+			update_option( 'wcj_invoicing_fonts_version_timestamp', wcj_get_timestamp_date_from_gmt() )
 		) {
 			return true;
 		}

@@ -88,10 +88,10 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 				$end_date_str   = get_post_meta( $_product_id, '_wcj_crowdfunding_deadline', true );
 				$start_date     = ( '' !== $start_date_str ) ? strtotime( $start_date_str ) : 0;
 				$end_date       = ( '' !== $end_date_str ) ? strtotime( $end_date_str ) : 0;
-				if ( $start_date > 0 && ( $start_date - (int) gmdate( 'U' ) ) > 0 ) {
+				if ( $start_date > 0 && ( $start_date - wcj_get_timestamp_date_from_gmt() ) > 0 ) {
 					$purchasable = false;
 				}
-				if ( $end_date > 0 && ( $end_date - (int) gmdate( 'U' ) ) < 0 ) {
+				if ( $end_date > 0 && ( $end_date - wcj_get_timestamp_date_from_gmt() ) < 0 ) {
 					$purchasable = false;
 				}
 			}

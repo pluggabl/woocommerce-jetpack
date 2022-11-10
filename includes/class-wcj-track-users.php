@@ -299,7 +299,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 					$results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}wcj_track_users" );
 					break;
 				default:
-					$time_expired = gmdate( 'Y-m-d H:i:s', ( gmdate( 'U' ) - $scope * 24 * 60 * 60 ) );
+					$time_expired = gmdate( 'Y-m-d H:i:s', ( wcj_get_timestamp_date_from_gmt() - $scope * 24 * 60 * 60 ) );
 					$results      = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE time > %s", $time_expired ) );
 					break;
 			}
@@ -441,7 +441,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 				dbDelta( $sql );
 			} else {
 				// Check if already tracked recently.
-				$time_expired = gmdate( 'Y-m-d H:i:s', strtotime( '-1 day', gmdate( 'U' ) ) );
+				$time_expired = gmdate( 'Y-m-d H:i:s', strtotime( '-1 day', wcj_get_timestamp_date_from_gmt() ) );
 				$result       = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s AND time > %s", $user_ip, $time_expired ) );
 				if ( $result ) {
 					return;

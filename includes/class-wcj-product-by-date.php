@@ -36,7 +36,7 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 			$this->desc_pro   = __( 'Set product availability by date.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-product-availability-by-date';
 			parent::__construct();
-			$this->time_now = (int) gmdate( 'U' );
+			$this->time_now = wcj_get_timestamp_date_from_gmt();
 
 			if ( $this->is_enabled() ) {
 				// Per product meta box.

@@ -312,7 +312,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 				( ( 'overstocked' === $report_info['id'] ) &&
 				( $product_info['stock'] > 0 ) &&
 
-				( ( (int) gmdate( 'U' ) - strtotime( $product_info['date_added'] ) ) > $this->range_days * 24 * 60 * 60 ) &&
+				( ( wcj_get_timestamp_date_from_gmt() - strtotime( $product_info['date_added'] ) ) > $this->range_days * 24 * 60 * 60 ) &&
 				( 0 === $product_info['sales_in_period'][ $this->range_days ] ) ) ||
 
 				( ( 'understocked' === $report_info['id'] ) &&

@@ -160,7 +160,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 			echo '<table style="width:100%;">';
 			echo '<tr>';
 			foreach ( $this->custom_tab_sections as $custom_tab_section ) {
-				echo '<td style="width:25%;"><h4>' . wp_kses_post( $this->custom_tab_sections_titles[ $custom_tab_section ] ) . '</h4></td>';
+				echo '<td style="width:25%;"><h4>' . esc_html( $this->custom_tab_sections_titles[ $custom_tab_section ] ) . '</h4></td>';
 			}
 			echo '</tr>';
 			echo '<tr>';
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 						}
 						$label_text = get_post_meta( $current_post_id, '_' . $option_name, true );
 						$label_text = str_replace( '"', '&quot;', $label_text );
-						echo '<li>' . wp_kses_post( $this->custom_tab_section_variations_titles[ $custom_tab_section_variation ] ) . '<textarea style="width:95%;min-width:100px;height:100px;" ' . wp_kses_post( $disabled_if_no_plus ) . ' name="' . wp_kses_post( $option_name ) . '">' . wp_kses_post( $label_text ) . '</textarea></li>';
+						echo '<li>' . wp_kses_post( $this->custom_tab_section_variations_titles[ $custom_tab_section_variation ] ) . '<textarea style="width:95%;min-width:100px;height:100px;" ' . esc_html( $disabled_if_no_plus ) . ' name="' . esc_html( $option_name ) . '">' . esc_html( $label_text ) . '</textarea></li>';
 					} else {
 						if ( '_home' === $custom_tab_section_variation ) {
 							echo '<li><h5>Hide by page type</h5></li>';
@@ -190,8 +190,8 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 						} else {
 							$disabled_if_no_plus = '';
 						}
-						echo '<li><input class="checkbox" type="checkbox" ' . wp_kses_post( $disabled_if_no_plus ) . ' name="' . wp_kses_post( $option_name ) . '" id="' . wp_kses_post( $option_name ) . '" ' .
-						checked( get_post_meta( $current_post_id, '_' . $option_name, true ), 'on', false ) . ' /> ' . wp_kses_post( $this->custom_tab_section_variations_titles[ $custom_tab_section_variation ] ) . '</li>';
+						echo '<li><input class="checkbox" type="checkbox" ' . esc_html( $disabled_if_no_plus ) . ' name="' . esc_html( $option_name ) . '" id="' . esc_html( $option_name ) . '" ' .
+						checked( get_post_meta( $current_post_id, '_' . $option_name, true ), 'on', false ) . ' /> ' . esc_html( $this->custom_tab_section_variations_titles[ $custom_tab_section_variation ] ) . '</li>';
 					}
 				}
 				echo '</ul>';

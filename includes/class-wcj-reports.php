@@ -98,7 +98,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 				$wp_admin_bar->add_node( $args );
 
 				$custom_range_nonce = wp_create_nonce( 'custom_range' );
-				$current_time       = (int) gmdate( 'U' );
+				$current_time       = wcj_get_timestamp_date_from_gmt();
 				for ( $i = 1; $i <= 12; $i++ ) {
 					$month_start_date = strtotime( gmdate( 'Y-m-01', $current_time ) . " -$i months" );
 					$month_num        = gmdate( 'm', $month_start_date );

@@ -532,7 +532,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				}
 				// Price offer array.
 				$price_offer = array(
-					'offer_timestamp'   => gmdate( 'U' ),
+					'offer_timestamp'   => wcj_get_timestamp_date_from_gmt(),
 					'product_title'     => $_product->get_title(),
 					'product_edit_link' => get_edit_post_link( $_product->get_id() ),
 					'offered_price'     => isset( $_POST['wcj-offer-price-price'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-price'] ) ) : '',

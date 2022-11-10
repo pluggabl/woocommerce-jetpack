@@ -263,7 +263,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			// Output.
 			?>
 		<tr valign="top">
-			<th scope="row" class="titlededsdsdsc">
+			<th scope="row" class="titledesc">
 				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
 				<?php echo wp_kses_post( $tooltip_html ); ?>
 			</th>

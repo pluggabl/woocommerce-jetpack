@@ -44,7 +44,7 @@ if ( ! function_exists( 'wcj_get_reports_standard_ranges' ) ) {
 	 * @since   2.9.0
 	 */
 	function wcj_get_reports_standard_ranges() {
-		$current_time = (int) gmdate( 'U' );
+		$current_time = wcj_get_timestamp_date_from_gmt();
 		return array(
 			'year'        => array(
 				'title'      => __( 'Year', 'woocommerce' ),
@@ -79,7 +79,7 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 	 * @todo    fix `-1 month` - sometimes it produces the wrong result (e.g. on current gmdate = "2018.03.30")
 	 */
 	function wcj_get_reports_custom_ranges() {
-		$current_time = (int) gmdate( 'U' );
+		$current_time = wcj_get_timestamp_date_from_gmt();
 		return array(
 			'last_14_days'         => array(
 				'title'      => __( 'Last 14 days', 'woocommerce-jetpack' ),

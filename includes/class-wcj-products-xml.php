@@ -141,7 +141,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				$file_num = sanitize_text_field( wp_unslash( $_GET['wcj_create_products_xml'] ) );
 				$result   = $this->create_products_xml( $file_num );
 				if ( false !== $result ) {
-					update_option( 'wcj_products_time_file_created_' . $file_num, gmdate( 'U' ) );
+					update_option( 'wcj_products_time_file_created_' . $file_num, wcj_get_timestamp_date_from_gmt() );
 				}
 				wp_safe_redirect( add_query_arg( 'wcj_create_products_xml_result', ( false === $result ? 0 : $file_num ), remove_query_arg( 'wcj_create_products_xml' ) ) );
 				exit;
@@ -159,7 +159,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		public function create_products_xml_cron( $interval, $file_num ) {
 			$result = $this->create_products_xml( $file_num );
 			if ( false !== $result ) {
-				update_option( 'wcj_products_time_file_created_' . $file_num, gmdate( 'U' ) );
+				update_option( 'wcj_products_time_file_created_' . $file_num, wcj_get_timestamp_date_from_gmt() );
 			}
 			die();
 		}

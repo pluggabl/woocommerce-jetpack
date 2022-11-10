@@ -346,7 +346,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 						if ( $item['product_id'] === $atts['product_id'] ) {
 							// Found sale!
 							/* translators: %s: search term */
-							return sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U', $order_id ), (int) gmdate( 'U' ) ) );
+							return sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U', $order_id ), wcj_get_timestamp_date_from_gmt() ) );
 						}
 					}
 				}

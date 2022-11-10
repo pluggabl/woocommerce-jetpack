@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 			} else {
 				$the_invoice_number = $order_id;
 			}
-			$the_date = ( '' === $date ) ? (string) gmdate( 'U' ) : $date;
+			$the_date = ( '' === $date ) ? (string) wcj_get_timestamp_date_from_gmt() : $date;
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
 		}

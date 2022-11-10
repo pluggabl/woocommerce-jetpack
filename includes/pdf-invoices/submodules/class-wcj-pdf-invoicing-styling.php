@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		 * @param int $interval Get time interval.
 		 */
 		public function download_fonts( $interval ) {
-			update_option( 'wcj_download_tcpdf_fonts_hook_timestamp', (int) gmdate( 'U' ) );
+			update_option( 'wcj_download_tcpdf_fonts_hook_timestamp', wcj_get_timestamp_date_from_gmt() );
 			wcj_check_and_maybe_download_tcpdf_fonts( true );
 		}
 

@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_product_crowdfunding_time_remaining( $atts ) {
-			$seconds_remaining = strtotime( $this->wcj_product_crowdfunding_deadline( $atts ) ) - gmdate( 'U' );
+			$seconds_remaining = strtotime( $this->wcj_product_crowdfunding_deadline( $atts ) ) - wcj_get_timestamp_date_from_gmt();
 			$days_remaining    = floor( $seconds_remaining / ( 24 * 60 * 60 ) );
 			$hours_remaining   = floor( $seconds_remaining / ( 60 * 60 ) );
 			$minutes_remaining = floor( $seconds_remaining / 60 );
@@ -252,7 +252,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 			$deadline_seconds  = strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_wcj_crowdfunding_deadline', true ) );
 			$startdate_seconds = strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_wcj_crowdfunding_startdate', true ) );
 
-			$seconds_remaining = $deadline_seconds - gmdate( 'U' );
+			$seconds_remaining = $deadline_seconds - wcj_get_timestamp_date_from_gmt();
 			$seconds_total     = $deadline_seconds - $startdate_seconds;
 
 			$current_value = $seconds_remaining;

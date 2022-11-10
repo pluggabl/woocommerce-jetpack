@@ -89,7 +89,7 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 	function wcj_check_date( $_date, $args = array() ) {
 
 		if ( empty( $args ) ) {
-			$time_now        = (int) gmdate( 'U' );
+			$time_now        = wcj_get_timestamp_date_from_gmt();
 			$args['day_now'] = intval( gmdate( 'j', $time_now ) );
 		}
 		$_date = explode( ',', $_date );
@@ -180,7 +180,7 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	 */
 	function wcj_check_time( $_time, $args = array() ) {
 		if ( empty( $args ) ) {
-			$time_now            = (int) gmdate( 'U' );
+			$time_now            = wcj_get_timestamp_date_from_gmt();
 			$args['hours_now']   = intval( gmdate( 'H', $time_now ) );
 			$args['minutes_now'] = intval( gmdate( 'i', $time_now ) );
 		}
@@ -316,5 +316,37 @@ if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
 			$format = wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' );
 		}
 		return date_i18n( $format, $seconds_since_local_1_jan_1970 );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_date_from_gmt' ) ) {
+	/**
+	 * Get date from gmt time.
+	 *
+	 * @version 5.6.7
+	 * @since   5.6.7
+	 *
+	 * @param string $format get date from gmt.
+	 * @return string
+	 */
+	function wcj_get_date_from_gmt( $format = 'Y-m-d H:i:s' ) {
+		return get_date_from_gmt( gmdate( $format ), $format );
+	}
+}
+
+
+
+if ( ! function_exists( 'wcj_get_timestamp_date_from_gmt' ) ) {
+	/**
+	 * Get date from gmt time.
+	 *
+	 * @version 5.6.7
+	 * @since   5.6.7
+	 *
+	 * @param string $format get date from gmt.
+	 * @return string
+	 */
+	function wcj_get_timestamp_date_from_gmt( $format = 'Y-m-d H:i:s' ) {
+		return strtotime( wcj_get_date_from_gmt() );
 	}
 }
