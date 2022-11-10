@@ -225,7 +225,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			global $wpdb;
 			$table_name   = $wpdb->prefix . 'wcj_track_users';
 			$http_referer = 'N/A';
-			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ) {
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ) {// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$user_ip = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() );
 				$result  = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s ORDER BY time DESC", $user_ip ) ); // WPCS: db call ok and cache ok.
 				if ( $result ) {
@@ -246,7 +246,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj_delete_track_users_stats' ) : false;
 			if ( $wpnonce && isset( $_GET['wcj_delete_track_users_stats'] ) ) {
 				global $wpdb;
-				$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wcj_track_users" );
+				$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wcj_track_users" );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 				delete_option( 'wcj_track_users_stats_by_country' );
 				delete_option( 'wcj_track_users_cron_time_last_run' );
 				wp_safe_redirect( remove_query_arg( array( 'wcj_delete_track_users_stats', '_wpnonce' ) ) );
@@ -296,15 +296,15 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			$table_name = $wpdb->prefix . 'wcj_track_users';
 			switch ( $scope ) {
 				case 'all_time':
-					$results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}wcj_track_users" );
+					$results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}wcj_track_users" );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					break;
 				default:
 					$time_expired = gmdate( 'Y-m-d H:i:s', ( wcj_get_timestamp_date_from_gmt() - $scope * 24 * 60 * 60 ) );
-					$results      = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE time > %s", $time_expired ) );
+					$results      = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE time > %s", $time_expired ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					break;
 			}
 			$totals = array();
-			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name && ( $results ) ) {
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name && ( $results ) ) {// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				foreach ( $results as $result ) {
 					if ( ! isset( $totals[ $result->country ] ) ) {
 						$totals[ $result->country ] = 1;
@@ -425,7 +425,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			$user_ip = sanitize_text_field( wp_unslash( $_POST['wcj_user_ip'] ) );
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'wcj_track_users';
-			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) !== $table_name ) {
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) !== $table_name ) {// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				// Create DB table.
 				$charset_collate = $wpdb->get_charset_collate();
 				$sql             = "CREATE TABLE $table_name (
@@ -442,7 +442,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			} else {
 				// Check if already tracked recently.
 				$time_expired = gmdate( 'Y-m-d H:i:s', strtotime( '-1 day', wcj_get_timestamp_date_from_gmt() ) );
-				$result       = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s AND time > %s", $user_ip, $time_expired ) );
+				$result       = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s AND time > %s", $user_ip, $time_expired ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				if ( $result ) {
 					return;
 				}
