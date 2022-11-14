@@ -240,7 +240,9 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 				$table_data = array();
 				foreach ( $_order->get_items() as $item_key => $item ) {
 					foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
-						$table_data[] = array( $item_key, $item_meta_key, wp_kses_post( maybe_unserialize( $item_meta_value ), true ) );
+						$item_meta_value = maybe_unserialize( $item_meta_value );
+						$item_meta_value = is_array( $item_meta_value ) ? wp_json_encode( $item_meta_value ) : $item_meta_value;
+						$table_data[]    = array( $item_key, $item_meta_key, $item_meta_value );
 					}
 				}
 				if ( ! empty( $table_data ) ) {

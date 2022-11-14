@@ -369,9 +369,9 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', gmdate( 'Y' ) ) ) . '" class="' .
 			( ( gmdate( 'Y' ) === $this->year ) ? 'current' : '' ) . '">' . gmdate( 'Y' ) . '</a> | </li>';
 			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 1 ) ) ) . '" class="' .
-			( ( ( gmdate( 'Y' ) - 1 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a> | </li>';
+			( ( (string) ( gmdate( 'Y' ) - 1 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a> | </li>';
 			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 2 ) ) ) . '" class="' .
-			( ( ( gmdate( 'Y' ) - 2 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a></li>';
+			( ( (string) ( gmdate( 'Y' ) - 2 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a></li>';
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 
