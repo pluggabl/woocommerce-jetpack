@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -118,14 +118,15 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users_update_county_stats.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.1
 		 * @todo    (maybe) `wp_nonce`
 		 */
 		public function track_users_update_county_stats() {
-			if ( isset( $_GET['wcj_track_users_update_county_stats'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj_track_users_update_county_stats' ) : false;
+			if ( $wpnonce && isset( $_GET['wcj_track_users_update_county_stats'] ) ) {
 				$this->track_users_generate_stats_cron( 'manual' );
-				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_track_users_update_county_stats' ) ) );
+				wp_safe_redirect( esc_url( remove_query_arg( array( 'wcj_track_users_update_county_stats', '_wpnonce' ) ) ) );
 				exit;
 			}
 		}
@@ -215,7 +216,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Add_http_referer_to_order.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.1
 		 * @todo    add "all orders by referer type" stats
 		 * @param int $order_id defines the order_id.
@@ -224,7 +225,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			global $wpdb;
 			$table_name   = $wpdb->prefix . 'wcj_track_users';
 			$http_referer = 'N/A';
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name ) {// phpcs:ignore
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ) {// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$user_ip = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() );
 				$result  = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s ORDER BY time DESC", $user_ip ) ); // WPCS: db call ok and cache ok.
 				if ( $result ) {
@@ -237,18 +238,18 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Maybe_delete_track_users_stats.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.1
 		 * @todo    (maybe) wp_nonce
 		 */
 		public function maybe_delete_track_users_stats() {
-			if ( isset( $_GET['wcj_delete_track_users_stats'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj_delete_track_users_stats' ) : false;
+			if ( $wpnonce && isset( $_GET['wcj_delete_track_users_stats'] ) ) {
 				global $wpdb;
-				$table_name = $wpdb->prefix . 'wcj_track_users';
-				$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wcj_track_users" ); //phpcs:ignore.
+				$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wcj_track_users" );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 				delete_option( 'wcj_track_users_stats_by_country' );
 				delete_option( 'wcj_track_users_cron_time_last_run' );
-				wp_safe_redirect( remove_query_arg( 'wcj_delete_track_users_stats' ) );
+				wp_safe_redirect( remove_query_arg( array( 'wcj_delete_track_users_stats', '_wpnonce' ) ) );
 				exit;
 			}
 		}
@@ -286,7 +287,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Generate_track_users_stats_by_country.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.1
 		 * @param string | int $scope defines the scope.
 		 */
@@ -295,16 +296,15 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			$table_name = $wpdb->prefix . 'wcj_track_users';
 			switch ( $scope ) {
 				case 'all_time':
-					$select_query = "SELECT * FROM $table_name";
+					$results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}wcj_track_users" );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					break;
 				default:
-					$time_expired = gmdate( 'Y-m-d H:i:s', ( gmdate( 'U' ) - $scope * 24 * 60 * 60 ) );
-					$select_query = "SELECT * FROM $table_name WHERE time > '" . $time_expired . "'";
+					$time_expired = gmdate( 'Y-m-d H:i:s', ( wcj_get_timestamp_date_from_gmt() - $scope * 24 * 60 * 60 ) );
+					$results      = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE time > %s", $time_expired ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					break;
 			}
-			$totals  = array();
-			$results = $wpdb->get_results( $select_query ); // phpcs:ignore
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name && ( $results ) ) { // phpcs:ignore
+			$totals = array();
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name && ( $results ) ) {// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				foreach ( $results as $result ) {
 					if ( ! isset( $totals[ $result->country ] ) ) {
 						$totals[ $result->country ] = 1;
@@ -320,7 +320,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users_by_country_dashboard_widget.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.1
 		 * @todo    (maybe) display all info (IP, referer etc.) on country click
 		 * @todo    (maybe) display stats by day and/or month
@@ -360,7 +360,14 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 				}
 			}
 			echo '<p>' .
-			'<a class="button-primary" href="' . esc_url( add_query_arg( 'wcj_delete_track_users_stats', '1' ) ) . '" ' .
+			'<a class="button-primary" href="' . esc_url(
+				add_query_arg(
+					array(
+						'wcj_delete_track_users_stats' => '1',
+						'_wpnonce'                     => wp_create_nonce( 'wcj_delete_track_users_stats' ),
+					)
+				)
+			) . '" ' .
 				'onclick="return confirm(\'' . wp_kses_post( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"' .
 			'>' . wp_kses_post( 'Delete all tracking data', 'woocommerce-jetpack' ) . '</a>' .
 			'</p>';
@@ -371,14 +378,21 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			echo '<p>' .
 			/* translators: %1$s, %2$s translators Added */
 			sprintf( esc_html__( 'Stats generated at %1$s. Next update is scheduled at %2$s.', 'woocommerce-jetpack' ), esc_html( $cron_last_run ), esc_html( $cron_next_schedule ) ) . ' ' .
-			'<a href="' . esc_url( add_query_arg( 'wcj_track_users_update_county_stats', '1' ) ) . '">' . esc_html__( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
+			'<a href="' . esc_url(
+				add_query_arg(
+					array(
+						'wcj_track_users_update_county_stats' => '1',
+						'_wpnonce' => wp_create_nonce( 'wcj_track_users_update_county_stats' ),
+					)
+				)
+			) . '">' . esc_html__( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
 			'</p>';
 		}
 
 		/**
 		 * Enqueue_track_users_script.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.1
 		 */
 		public function enqueue_track_users_script() {
@@ -389,6 +403,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 				array(
 					'ajax_url'     => admin_url( 'admin-ajax.php' ),
 					'http_referer' => ( isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : 'N/A' ),
+					'wpnonce'      => wp_create_nonce( 'wcj-track-users' ),
 					'user_ip'      => ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() ),
 				)
 			);
@@ -397,19 +412,20 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.1
 		 * @todo    (maybe) customizable `$time_expired`
 		 * @todo    (maybe) optionally do not track selected user roles (e.g. admin)
 		 */
 		public function track_users() {
-			if ( ! isset( $_POST['wcj_user_ip'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wpnonce'] ), 'wcj-track-users' ) : false;
+			if ( ! $wpnonce || ! isset( $_POST['wcj_user_ip'] ) ) {
 				die();
 			}
-			$user_ip = sanitize_text_field( wp_unslash( $_POST['wcj_user_ip'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			$user_ip = sanitize_text_field( wp_unslash( $_POST['wcj_user_ip'] ) );
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'wcj_track_users';
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) !== $table_name ) { //phpcs:ignore
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) !== $table_name ) {// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				// Create DB table.
 				$charset_collate = $wpdb->get_charset_collate();
 				$sql             = "CREATE TABLE $table_name (
@@ -425,8 +441,8 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 				dbDelta( $sql );
 			} else {
 				// Check if already tracked recently.
-				$time_expired = gmdate( 'Y-m-d H:i:s', strtotime( '-1 day', gmdate( 'U' ) ) );
-				$result       = $wpdb->get_row( "SELECT * FROM $table_name WHERE ip = '$user_ip' AND time > '$time_expired'" ); //phpcs:ignore
+				$time_expired = gmdate( 'Y-m-d H:i:s', strtotime( '-1 day', wcj_get_timestamp_date_from_gmt() ) );
+				$result       = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s AND time > %s", $user_ip, $time_expired ) );// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				if ( $result ) {
 					return;
 				}
@@ -437,7 +453,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 				'state'   => '',
 			) );
 			// HTTP referrer.
-			$http_referer = ( isset( $_POST['wcj_http_referer'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_http_referer'] ) ) : 'N/A' ); // phpcs:ignore WordPress.Security.NonceVerification
+			$http_referer = ( isset( $_POST['wcj_http_referer'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_http_referer'] ) ) : 'N/A' );
 			// Add row to DB table.
 			$wpdb->insert(
 				$table_name,

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 5.6.3
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -544,30 +544,30 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Create_new_custom_product_tab_local.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param string $key defines the key.
 		 * @param string $tab defines the tab.
 		 */
 		public function create_new_custom_product_tab_local( $key, $tab ) {
-			echo $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) ) );
 		}
 
 		/**
 		 * Create_new_custom_product_tab_global.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param string $key defines the key.
 		 * @param string $tab defines the tab.
 		 */
 		public function create_new_custom_product_tab_global( $key, $tab ) {
-			echo $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $this->get_tab_output( wcj_get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) ) );
 		}
 
 
 		/**
 		 * Save_custom_tabs_meta_box.
 		 *
-		 * @version 5.6.3
+		 * @version 5.6.8
 		 * @todo    rewrite as standard `WCJ_Module` function
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $post defines the post.
@@ -591,7 +591,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 			$default_total_custom_tabs       = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 			$total_custom_tabs_before_saving = get_post_meta( $post_id, '_wcj_custom_product_tabs_local_total_number', true );
 			$total_custom_tabs_before_saving = ( '' !== $total_custom_tabs_before_saving && null !== $total_custom_tabs_before_saving && '' !== $total_custom_tabs_before_saving ) ? $total_custom_tabs_before_saving : $default_total_custom_tabs;
-			$wpnonce                         = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			$wpnonce                         = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( wp_unslash( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) ), 'woocommerce_save_data' ) : false;
 
 			for ( $i = 1; $i <= $total_custom_tabs_before_saving; $i++ ) {
 				if ( $this->is_local_tab_visible( $i, $post_id ) ) {
@@ -627,7 +627,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Create_custom_tabs_meta_box.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 */
 		public function create_custom_tabs_meta_box() {
 			$current_post_id   = wcj_maybe_get_product_id_wpml( get_the_ID() );
@@ -740,7 +740,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 								break;
 						}
 						if ( '' !== $the_field ) {
-							if ( isset( $option['desc_tip'] ) && '' !== $option['desc_tip'] && null !== $option['desc_tip'] ) {
+							if ( isset( $option['desc_tip'] ) && $option['desc_tip'] && '' !== $option['desc_tip'] && null !== $option['desc_tip'] ) {
 								$option['title'] .= '<span class="woocommerce-help-tip" data-tip="' . $option['desc_tip'] . '"></span>';
 							}
 							$data[] = array( $option['title'], $the_field );
@@ -756,7 +756,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 						)
 					);
 				}
-				echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( $html );
 			}
 			$html = '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
 			echo wp_kses_post( $html );

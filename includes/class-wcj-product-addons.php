@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -273,14 +273,15 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Validate_on_add_to_cart.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.5
 		 * @param array | string $passed defines the passed.
 		 * @param int            $product_id defines the product_id.
 		 * @param int            $quantity defines the quantity.
 		 */
 		public function validate_on_add_to_cart( $passed, $product_id, $quantity ) {
-			$args = func_get_args();
+			$wpnonce = isset( $_POST['wcj_product_addons-nonce'] ) ? wp_verify_nonce( sanitize_key( $_POST['wcj_product_addons-nonce'] ), 'wcj_product_addons' ) : false;
+			$args    = func_get_args();
 			if ( 4 === count( $args ) ) {
 				$variation_id = $args[3];
 			}
@@ -295,11 +296,15 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					continue;
 				}
 				if ( 'yes' === $addon['is_required'] ) {
-					if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) && empty( $addon['default'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+					if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) && empty( $addon['default'] ) ) {
 						wc_add_notice( __( 'Some of the required addons are not selected!', 'woocommerce-jetpack' ), 'error' );
 						return false;
 					}
 				}
+			}
+			if ( ! $wpnonce ) {
+				wc_add_notice( __( 'Invalid security nonce', 'woocommerce-jetpack' ), 'error' );
+				return false;
 			}
 			return $passed;
 		}
@@ -360,30 +365,31 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Price_change_ajax.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.3
 		 * @param array | string $param defines the param.
 		 */
 		public function price_change_ajax( $param ) {
-			if ( ! isset( $_POST['product_id'] ) || 0 === $_POST['product_id'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_POST['wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_POST['wpnonce'] ), 'wcj_product_addons' ) : false;
+			if ( ! $wpnonce || ! isset( $_POST['product_id'] ) || 0 === $_POST['product_id'] ) {
 				die();
 			}
-			$product_id        = sanitize_text_field( wp_unslash( $_POST['product_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			$product_id        = sanitize_text_field( wp_unslash( $_POST['product_id'] ) );
 			$the_product       = wc_get_product( $product_id );
 			$parent_product_id = ( $the_product->is_type( 'variation' ) ) ? wp_get_post_parent_id( $product_id ) : $product_id;
 			$addons            = $this->get_product_addons( $parent_product_id );
-			$the_addons_price  = 0;
+			$the_addons_price  = (float) 0;
 			foreach ( $addons as $addon ) {
 				$price_value = $this->replace_price_template_vars( $addon['price_value'], $product_id );
-				if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-					if ( ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) || ( 'text' === $addon['type'] && '' !== $_POST[ $addon['checkbox_key'] ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
+					if ( ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) || ( 'text' === $addon['type'] && '' !== $_POST[ $addon['checkbox_key'] ] ) ) {
 						$the_addons_price += (float) $price_value;
 					} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 						$labels = $this->clean_and_explode( PHP_EOL, $addon['label_value'] );
 						$prices = $this->clean_and_explode( PHP_EOL, $price_value );
 						if ( count( $labels ) === count( $prices ) ) {
 							foreach ( $labels as $i => $label ) {
-								if ( sanitize_title( $label ) === $_POST[ $addon['checkbox_key'] ] ) { // phpcs:ignore WordPress.Security.NonceVerification
+								if ( sanitize_title( $label ) === $_POST[ $addon['checkbox_key'] ] ) {
 									$the_addons_price += (float) $prices[ $i ];
 									break;
 								}
@@ -392,7 +398,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					}
 				}
 			}
-			if ( 0 > $the_addons_price ) {
+			if ( (float) 0 !== $the_addons_price ) {
 				$the_price         = $the_product->get_price();
 				$the_display_price = wcj_get_product_display_price( $the_product, ( $the_price + $this->maybe_convert_currency( $the_addons_price, $the_product ) ) );
 				echo wp_kses_post( wc_price( $the_display_price ) );
@@ -701,13 +707,17 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Add_addons_price_to_cart_item_data.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.3
 		 * @param array $cart_item_data defines the cart_item_data.
 		 * @param int   $product_id defines the product_id.
 		 * @param int   $variation_id defines the variation_id.
 		 */
 		public function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
+			$wpnonce = isset( $_POST['wcj_product_addons-nonce'] ) ? wp_verify_nonce( sanitize_key( $_POST['wcj_product_addons-nonce'] ), 'wcj_product_addons' ) : false;
+			if ( ! $wpnonce ) {
+				return $cart_item_data;
+			}
 			$addons = $this->get_product_addons( $product_id );
 			foreach ( $addons as $addon ) {
 				// Prevents adding addons to cart if not in "enable by variation" option.
@@ -720,10 +730,10 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				}
 				$price_value = $this->replace_price_template_vars( $addon['price_value'], $variation_id ? $variation_id : $product_id );
 				if (
-				isset( $_POST[ $addon['checkbox_key'] ] ) || // phpcs:ignore WordPress.Security.NonceVerification
+				isset( $_POST[ $addon['checkbox_key'] ] ) ||
 				! empty( $addon['default'] )
 				) {
-					$checkbox_key = isset( $_POST[ $addon['checkbox_key'] ] ) ? sanitize_text_field( wp_unslash( $_POST[ $addon['checkbox_key'] ] ) ) : ( ! empty( $addon['default'] ) ? sanitize_text_field( wp_unslash( $addon['default'] ) ) : null ); // phpcs:ignore WordPress.Security.NonceVerification
+					$checkbox_key = isset( $_POST[ $addon['checkbox_key'] ] ) ? sanitize_text_field( wp_unslash( $_POST[ $addon['checkbox_key'] ] ) ) : ( ! empty( $addon['default'] ) ? sanitize_text_field( wp_unslash( $addon['default'] ) ) : null );
 					if ( ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) || ( 'text' === $addon['type'] && '' !== $checkbox_key ) ) {
 						$cart_item_data[ $addon['price_key'] ] = $price_value;
 						$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
@@ -751,13 +761,14 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Add_addons_to_frontend.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.3
 		 */
 		public function add_addons_to_frontend() {
 			if ( isset( $this->are_addons_displayed ) && 'yes' === wcj_get_option( 'wcj_product_addons_check_for_outputted_data', 'yes' ) ) {
 				return;
 			}
+			$wpnonce  = isset( $_POST['wcj_product_addons-nonce'] ) ? wp_verify_nonce( sanitize_key( $_POST['wcj_product_addons-nonce'] ), 'wcj_product_addons' ) : false;
 			$html     = '';
 			$addons   = $this->get_product_addons( get_the_ID() );
 			$_product = wc_get_product( get_the_ID() );
@@ -774,7 +785,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				$is_required = ( 'yes' === $addon['is_required'] ) ? ' required' : '';
 				if ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) {
 					$is_checked = '';
-					if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+					if ( $wpnonce && isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 						$is_checked = ' checked';
 					} elseif ( 'checked' === $addon['default'] ) {
 						$is_checked = ' checked';
@@ -796,7 +807,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 						)
 					);
 				} elseif ( 'text' === $addon['type'] ) {
-					$default_value = ( isset( $_POST[ $addon['checkbox_key'] ] ) ? sanitize_text_field( wp_unslash( $_POST[ $addon['checkbox_key'] ] ) ) : $addon['default'] ); // phpcs:ignore WordPress.Security.NonceVerification
+					$default_value = ( $wpnonce && isset( $_POST[ $addon['checkbox_key'] ] ) ? sanitize_text_field( wp_unslash( $_POST[ $addon['checkbox_key'] ] ) ) : $addon['default'] );
 					$maybe_tooltip = ( '' !== $addon['tooltip'] ) ?
 					' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png" title="' . $addon['tooltip'] . '">' :
 					'';
@@ -827,8 +838,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 							$label               = sanitize_title( $label );
 							$is_checked          = '';
 							$checked_or_selected = ( 'radio' === $addon['type'] ? ' checked' : ' selected' );
-							if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-								$is_checked = ( $label === $_POST[ $addon['checkbox_key'] ] ) ? $checked_or_selected : ''; // phpcs:ignore WordPress.Security.NonceVerification
+							if ( $wpnonce && isset( $_POST[ $addon['checkbox_key'] ] ) ) {
+								$is_checked = ( $label === $_POST[ $addon['checkbox_key'] ] ) ? $checked_or_selected : '';
 							} elseif ( '' !== $addon['default'] ) {
 								$is_checked = ( sanitize_title( $addon['default'] ) === $label ) ? $checked_or_selected : '';
 							}
@@ -878,6 +889,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					}
 				}
 			}
+			$html .= '<input type="hidden" name="wcj_product_addons-nonce" value="' . wp_create_nonce( 'wcj_product_addons' ) . '" />';
 			// Output.
 			if ( ! empty( $html ) ) {
 				$html = wcj_handle_replacements(

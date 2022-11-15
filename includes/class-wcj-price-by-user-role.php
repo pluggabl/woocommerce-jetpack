@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -194,7 +194,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 2.5.0
+		 * @version 5.6.8
 		 * @since   2.5.0
 		 * @param string $option_value defines the option_value.
 		 * @param string $option_name defines the option_name.
@@ -212,8 +212,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_price_by_user_role_per_product_settings_enabled', // phpcs:ignore
-					'meta_value'     => 'yes', // phpcs:ignore
+					'meta_key'       => '_wcj_price_by_user_role_per_product_settings_enabled', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'yes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );

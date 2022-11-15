@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -49,7 +49,7 @@ if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
 	/**
 	 * Wcj_get_invoicing_default_images_directory.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.8
 	 * @since   3.4.2
 	 */
 	function wcj_get_invoicing_default_images_directory() {
@@ -57,7 +57,7 @@ if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
 			case 'empty':
 				return '';
 			case 'document_root':
-				return $_SERVER['DOCUMENT_ROOT']; //phpcs:ignore
+				return getenv( 'DOCUMENT_ROOT' );
 			case 'abspath':
 				return ABSPATH;
 			default: // tcpdf_default.
@@ -206,13 +206,16 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 	/**
 	 * Wcj_check_and_maybe_download_tcpdf_fonts.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.8
 	 * @since   2.9.0
 	 * @todo    (maybe) check file size > 0 or even for exact size (not only if file exists in directory)
 	 * @todo    (maybe) use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)
 	 * @param   bool $force_download defines the force_download.
 	 */
 	function wcj_check_and_maybe_download_tcpdf_fonts( $force_download = false ) {
+		require_once ABSPATH . '/wp-admin/includes/file.php';
+		global $wp_filesystem;
+		WP_Filesystem();
 		if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
 			return false;
 		}
@@ -220,11 +223,11 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 			if ( wcj_check_tcpdf_fonts_version( true ) ) {
 				return true;
 			}
-			if ( ( (int) gmdate( 'U' ) - wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
+			if ( ( wcj_get_timestamp_date_from_gmt() - wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
 				return false;
 			}
 		}
-		update_option( 'wcj_invoicing_fonts_version_timestamp', (int) gmdate( 'U' ) );
+		update_option( 'wcj_invoicing_fonts_version_timestamp', wcj_get_timestamp_date_from_gmt() );
 		$tcpdf_fonts_dir = wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/';
 		if ( ! file_exists( $tcpdf_fonts_dir ) ) {
 			mkdir( $tcpdf_fonts_dir );
@@ -240,9 +243,9 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 				}
 				$response_file_name = download_url( $url );
 				if ( ! is_wp_error( $response_file_name ) ) {
-					$response = file_get_contents( $response_file_name ); //phpcs:ignore
+					$response = $wp_filesystem->get_contents( $response_file_name );
 					if ( $response ) {
-						if ( ! file_put_contents( $tcpdf_fonts_dir . $tcpdf_fonts_file, $response ) ) { //phpcs:ignore
+						if ( ! $wp_filesystem->put_contents( $tcpdf_fonts_dir . $tcpdf_fonts_file, $response, FS_CHMOD_FILE ) ) {
 							return false;
 						}
 					} else {
@@ -256,7 +259,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 		}
 		if (
 			update_option( 'wcj_invoicing_fonts_version', wcj_get_tcpdf_fonts_version() ) &&
-			update_option( 'wcj_invoicing_fonts_version_timestamp', (int) gmdate( 'U' ) )
+			update_option( 'wcj_invoicing_fonts_version_timestamp', wcj_get_timestamp_date_from_gmt() )
 		) {
 			return true;
 		}

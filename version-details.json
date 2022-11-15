@@ -1,6 +1,8 @@
 {
-    "0" : "= 5.6.7 27/10/2022 =",
-    "1" : "* FIXED - PAYMENT GATEWAYS - Gateways Currency Converter - Fixed the issue of currency on the cart page.",
-    "2" : "* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed Security vulnerability for ShopManager + Arbitrary File Download.",
-    "3" : "* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed Security vulnerability for Checkout Files Deletion."
+    "0" : "= 5.6.8 16/11/2022 =",
+    "1" : "* FIXED - CART & CHECKOUT - EU VAT Number - Replace endpoint to validate EU VAT number for without soap method",
+    "2" : "* FIXED - EMAILS & MISC. - Admin Tools - Fixed admin order page issue when order item value is array.",
+    "3" : "* FIXED - Added Security vulnerability fixes",
+    "4" : "* WooCommerce 7.1.0 tested",
+    "5" : "* WordPress 6.1 Tested"
 }

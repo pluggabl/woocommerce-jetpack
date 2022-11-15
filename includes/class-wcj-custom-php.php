@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom PHP
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   4.0.0
 		 * @todo    [dev] maybe remove `wcj_disable_custom_php` from URL on settings save
 		 * @todo    [dev] allow tab in content (i.e. settings (textarea))
@@ -38,10 +38,10 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				'<strong>wp-login.php</strong>'
 			) . ' ' .
 				sprintf(
-			/* translators: %s: translation added */
+					/* translators: %s: translation added */
 					__( 'E.g.: %s', 'woocommerce-jetpack' ),
-					'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '</a>'
+					'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
+					admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '</a>'
 				);
 			$this->link_slug = 'woocommerce-booster-custom-php';
 			parent::__construct();
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		/**
 		 * Create_php_file.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   4.0.0
 		 * @todo    [dev] `unlink` and `rmdir` on settings reset
 		 * @todo    [dev] on empty content - delete dir also (`rmdir`).
@@ -84,11 +84,15 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		 * @param string | array $current_section defines the current_section.
 		 */
 		public function create_php_file( $sections, $current_section ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			global $wp_filesystem;
+
 			if ( $this->id === $current_section ) {
 				$file_content = wcj_get_option( 'wcj_custom_php', '' );
 				if ( '' !== $file_content ) {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php' ) . DIRECTORY_SEPARATOR . 'booster.php';
-					file_put_contents( $file_path, '<?php' . PHP_EOL . $file_content ); // phpcs:ignore
+					WP_Filesystem();
+					$wp_filesystem->put_contents( $file_path, '<?php' . PHP_EOL . $file_content, FS_CHMOD_FILE );
 				} else {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
 					if ( file_exists( $file_path ) ) {

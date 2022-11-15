@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.6.3
+ * @version 5.6.8
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -186,7 +186,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.8
 		 * @param string $option_value defines the option_value.
 		 * @param string $option_name defines the option_name.
@@ -204,8 +204,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_product_open_price_enabled', //phpcs:ignore
-					'meta_value'     => 'yes', //phpcs:ignore
+					'meta_key'       => '_wcj_product_open_price_enabled', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'yes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -221,13 +221,21 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.6.3
+		 * @version 5.6.8
 		 * @since   2.4.8
 		 * @param string $location defines the location.
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-			return esc_url_raw( add_query_arg( array( 'wcj_product_open_price_admin_notice' => true ), $location ) );
+			return esc_url_raw(
+				add_query_arg(
+					array(
+						'wcj_product_open_price_admin_notice' => true,
+						'wcj_product_open_price_admin_notice-nonce' => wp_create_nonce( 'wcj_product_open_price_admin_notice' ),
+					),
+					$location
+				)
+			);
 		}
 
 		/**
@@ -237,10 +245,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		 * @since   2.4.8
 		 */
 		public function admin_notices() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_open_price_admin_notice-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_open_price_admin_notice-nonce'] ), 'wcj_product_open_price_admin_notice' ) : false;
 			if ( ! $wpnonce || ! isset( $_GET['wcj_product_open_price_admin_notice'] ) ) {
 				return;
 			}
@@ -363,16 +368,13 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Validate_open_price_on_add_to_cart.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.8
 		 * @param string $passed defines the passed.
 		 * @param int    $product_id defines the product_id.
 		 */
 		public function validate_open_price_on_add_to_cart( $passed, $product_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce     = isset( $_REQUEST['wcj_open_price-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_open_price-nonce'] ), 'wcj_open_price' ) : false;
 			$the_product = wc_get_product( $product_id );
 			if ( $this->is_open_price_product( $the_product ) ) {
 				// Empty price.
@@ -433,7 +435,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_to_cart_item_data.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.8
 		 * @todo    [dev] (maybe) better conversion for Currency Switcher module (i.e. include rounding)
 		 * @param array $cart_item_data defines the cart_item_data.
@@ -441,10 +443,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		 * @param int   $variation_id defines the variation_id.
 		 */
 		public function add_open_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_open_price-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_open_price-nonce'] ), 'wcj_open_price' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_open_price'] ) ) {
 				$cart_item_data['wcj_open_price'] = sanitize_text_field( wp_unslash( $_POST['wcj_open_price'] ) );
 				$product_bundles_divide           = wcj_get_option( 'wcj_product_open_price_woosb_product_bundles_divide', 'no' );
@@ -506,7 +505,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_input_field_to_frontend.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.8
 		 */
 		public function add_open_price_input_field_to_frontend() {
@@ -515,10 +514,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 			}
 			$the_product = wc_get_product();
 			if ( $this->is_open_price_product( $the_product ) ) {
-				$wpnonce = true;
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-				}
+				$wpnonce = isset( $_REQUEST['wcj_open_price-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_open_price-nonce'] ), 'wcj_open_price' ) : false;
 				// Title.
 				$title = wcj_get_option( 'wcj_product_open_price_label_frontend', __( 'Name Your Price', 'woocommerce-jetpack' ) );
 				// Prices.
@@ -565,6 +561,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 						get_option( 'wcj_product_open_price_frontend_template', '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%' )
 					)
 				);
+				wp_nonce_field( 'wcj_open_price', 'wcj_open_price-nonce' );
 				$this->is_open_price_input_field_displayed = true;
 			}
 		}

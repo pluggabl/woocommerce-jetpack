@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Welcome Screen Content
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -18,7 +18,7 @@
 			<div class="wcj-welcome-content-inner">
 				<h3> <?php esc_html_e( 'Welcome to booster.', 'woocommerce-jetpack' ); ?> </h3>
 				<p> <?php esc_html_e( 'Thank you for choosing Booster - Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules. All in one WooCommerce plugin.', 'woocommerce-jetpack' ); ?> </p>
-				<a href="<?php echo wp_kses_post( admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) ); ?>" class="wcj-buy-puls-btn"> <?php esc_html_e( 'Launch Booster Settings', 'woocommerce-jetpack' ); ?> </a>
+				<a href="<?php echo wp_kses_post( admin_url( wcj_admin_tab_url() ) ); ?>" class="wcj-buy-puls-btn"> <?php esc_html_e( 'Launch Booster Settings', 'woocommerce-jetpack' ); ?> </a>
 			</div>
 		</div>
 		<div class="wcj-welcome-content-main wcj-welcome-padding-top-0">

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -270,7 +270,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		/**
 		 * Get_report_html.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 */
 		public function get_report_html() {
 			$products_info = $this->data_products;
@@ -312,7 +312,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 				( ( 'overstocked' === $report_info['id'] ) &&
 				( $product_info['stock'] > 0 ) &&
 
-				( ( (int) gmdate( 'U' ) - strtotime( $product_info['date_added'] ) ) > $this->range_days * 24 * 60 * 60 ) &&
+				( ( wcj_get_timestamp_date_from_gmt() - strtotime( $product_info['date_added'] ) ) > $this->range_days * 24 * 60 * 60 ) &&
 				( 0 === $product_info['sales_in_period'][ $this->range_days ] ) ) ||
 
 				( ( 'understocked' === $report_info['id'] ) &&

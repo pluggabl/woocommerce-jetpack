@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price By Country - Group Generator
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -36,10 +36,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 		 * @since   3.9.0
 		 */
 		public function create_all_countries_groups_notices() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_generate_country_groups-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_generate_country_groups-nonce'] ), 'wcj_generate_country_groups' ) : false;
 			if ( $wpnonce && isset( $_GET['wcj_generate_country_groups_finished'] ) ) {
 				echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Country groups successfully generated.', 'woocommerce-jetpack' ) . '</p></div>';
 			}
@@ -76,19 +73,19 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 		/**
 		 * Create_all_countries_groups.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @todo    add nonce verification
 		 */
 		public function create_all_countries_groups() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_GET['wcj_generate_country_groups-nonce'] ) ? wp_verify_nonce( sanitize_key( $_GET['wcj_generate_country_groups-nonce'] ), 'wcj_generate_country_groups' ) : false;
 			// Verification.
-			if ( ! $wpnonce || ! isset( $_GET['wcj_generate_country_groups'] ) ) {
+			if ( ! isset( $_GET['wcj_generate_country_groups'] ) ) {
 				return;
 			}
-			if ( $wpnonce && isset( $_POST['save'] ) ) {
+			if ( isset( $_POST['save'] ) ) {
+				return;
+			}
+			if ( ! $wpnonce ) {
 				return;
 			}
 			if ( ! wcj_is_user_role( 'administrator' ) || 1 === apply_filters( 'booster_option', 1, '' ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -15,7 +15,7 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 	/**
 	 * Wcj_get_table_html.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.8
 	 * @param array $data defines the data.
 	 * @param array $args defines the args.
 	 */
@@ -29,7 +29,14 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 			'columns_styles'     => array(),
 		);
 		$args     = array_merge( $defaults, $args );
-		extract( $args ); // phpcs:ignore
+
+		$table_class        = $args['table_class'];
+		$table_style        = $args['table_style'];
+		$row_styles         = $args['row_styles'];
+		$table_heading_type = $args['table_heading_type'];
+		$columns_classes    = $args['columns_classes'];
+		$columns_styles     = $args['columns_styles'];
+
 		$table_class = ( '' === $table_class ) ? '' : ' class="' . $table_class . '"';
 		$table_style = ( '' === $table_style ) ? '' : ' style="' . $table_style . '"';
 		$row_styles  = ( '' === $row_styles ) ? '' : ' style="' . $row_styles . '"';

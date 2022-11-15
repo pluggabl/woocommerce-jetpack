@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.6.3
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.3
+		 * @version 5.6.8
 		 */
 		public function __construct() {
 
@@ -110,7 +110,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
@@ -136,7 +136,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					'item_number'                => 'all',
 					'field'                      => 'name',
 					'order_user_roles'           => '',
-					'meta_key'                   => '', // phpcs:ignore
+					'meta_key'                   => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					'tax_class'                  => '',
 					'fallback_billing_address'   => 'no',
 					'tax_display'                => '',
@@ -199,14 +199,16 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		public function init_atts( $atts ) {
 
 			// Atts.
+			// phpcs:disable WordPress.Security.NonceVerification
 			$atts['excl_tax'] = ( 'yes' === $atts['excl_tax'] );
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(); // phpcs:ignore WordPress.Security.NonceVerification
+				$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID();
 			}
 			if ( 0 === $atts['order_id'] ) {
-				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? sanitize_text_field( wp_unslash( $_GET['pdf_invoice'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+				$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? sanitize_text_field( wp_unslash( $_GET['pdf_invoice'] ) ) : 0;
 				// PDF Invoices V1 compatibility.
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( 0 === $atts['order_id'] ) {
 				return false;
 			}

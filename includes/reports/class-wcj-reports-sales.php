@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Sales
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -34,17 +34,15 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.3.0
 		 */
 		public function get_report() {
-			$html    = '';
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			$this->year          = $wpnonce && isset( $_GET['year'] ) ? sanitize_text_field( wp_unslash( $_GET['year'] ) ) : gmdate( 'Y' );
-			$this->product_title = $wpnonce && isset( $_GET['product_title'] ) ? sanitize_text_field( wp_unslash( $_GET['product_title'] ) ) : '';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$html                = '';
+			$this->year          = isset( $_GET['year'] ) ? sanitize_text_field( wp_unslash( $_GET['year'] ) ) : gmdate( 'Y' );
+			$this->product_title = isset( $_GET['product_title'] ) ? sanitize_text_field( wp_unslash( $_GET['product_title'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			$html .= $this->get_products_sales();
 
@@ -82,7 +80,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		/**
 		 * Get_products_sales.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.3.0
 		 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
 		 * @todo    display more info for "Parent product deleted" and "Product deleted"
@@ -363,7 +361,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 				);
 			}
 
-			$settings_link = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=reports' ) . '">' .
+			$settings_link = '<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=reports' ) . '">' .
 			'<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
 
 			$menu  = '';
@@ -371,25 +369,23 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', gmdate( 'Y' ) ) ) . '" class="' .
 			( ( gmdate( 'Y' ) === $this->year ) ? 'current' : '' ) . '">' . gmdate( 'Y' ) . '</a> | </li>';
 			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 1 ) ) ) . '" class="' .
-			( ( ( gmdate( 'Y' ) - 1 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a> | </li>';
+			( ( (string) ( gmdate( 'Y' ) - 1 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a> | </li>';
 			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 2 ) ) ) . '" class="' .
-			( ( ( gmdate( 'Y' ) - 2 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a></li>';
+			( ( (string) ( gmdate( 'Y' ) - 2 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a></li>';
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			$page   = $wpnonce && isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-			$tab    = $wpnonce && isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
-			$report = $wpnonce && isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$page   = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$tab    = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			$report = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $page . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $tab . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $report . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . esc_attr( $page ) . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . esc_attr( $report ) . '" />';
 			$filter_form .= '<input type="hidden" name="year" value="' . $this->year . '" />';
 			$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
 			'<input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';

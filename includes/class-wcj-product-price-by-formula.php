@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.5.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.1
 		 * @todo    use WC math library instead of `PHPMathParser`
 		 */
@@ -39,10 +39,12 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 
 				add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+				$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 				if (
+				$wpnonce &&
 				( wcj_is_frontend() && 'yes' === wcj_get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) ) ||
 				( 'no' === wcj_get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) && ( wcj_is_frontend() || is_admin() ) ) ||
-				isset( $_GET['wcj_create_products_xml'] ) // phpcs:ignore WordPress.Security.NonceVerification
+				isset( $_GET['wcj_create_products_xml'] )
 				) {
 					wcj_add_change_price_hooks( $this, wcj_get_module_price_hooks_priority( 'product_price_by_formula' ), false );
 				}
@@ -184,15 +186,17 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Reset_settings.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   5.3.0
 		 */
 		public function reset_settings() {
+			$wpnonce = isset( $_GET['wcj_reset_settings-product_price_by_formula-nonce'] ) ? wp_verify_nonce( sanitize_key( $_GET['wcj_reset_settings-product_price_by_formula-nonce'] ), 'wcj_reset_settings' ) : false;
 			if (
-			isset( $_GET['wcj_reset_settings'] )  // phpcs:ignore WordPress.Security.NonceVerification
-			&& $this->id === $_GET['wcj_reset_settings']  // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce
+			&& isset( $_GET['wcj_reset_settings'] )
+			&& $this->id === $_GET['wcj_reset_settings']
 			&& wcj_is_user_role( 'administrator' )
-			&& ! isset( $_POST['save'] ) // phpcs:ignore WordPress.Security.NonceVerification
+			&& ! isset( $_POST['save'] )
 			&& 'yes' === wcj_get_option( 'wcj_product_price_by_formula_reset_products', 'no' )
 			) {
 				global $wpdb;
@@ -392,7 +396,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.0
 		 * @param string $option_value defines the option_value.
 		 * @param string $option_name defines the option_name.
@@ -410,8 +414,8 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_wcj_product_price_by_formula_enabled', //phpcs:ignore
-					'meta_value'     => 'yes', //phpcs:ignore
+					'meta_key'       => '_wcj_product_price_by_formula_enabled', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'yes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -427,23 +431,28 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Add_notice_query_var.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.8
 		 * @since   2.5.0
 		 * @param string $location defines the location.
 		 */
 		public function add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-			return esc_url_raw( add_query_arg( array( 'wcj_product_price_by_formula_admin_notice' => true ), $location ) );
+			$query_arg = array(
+				'wcj_product_price_by_formula_admin_notice' => true,
+				'wcj_product_price_by_formula_admin_notice-nonce' => wp_create_nonce( 'wcj_product_price_by_formula_admin_notice' ),
+			);
+			return esc_url_raw( add_query_arg( $query_arg, $location ) );
 		}
 
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
-			if ( ! isset( $_GET['wcj_product_price_by_formula_admin_notice'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['wcj_product_price_by_formula_admin_notice-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_price_by_formula_admin_notice-nonce'] ), 'wcj_product_price_by_formula_admin_notice' ) : false;
+			if ( ! $wpnonce || ! isset( $_GET['wcj_product_price_by_formula_admin_notice'] ) ) {
 				return;
 			}
 			?><div class="error"><p>

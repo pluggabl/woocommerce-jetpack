@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 5.6.0
+ * @version 5.6.8
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -165,7 +165,14 @@ return array(
 	array(
 		'title' => __( 'Actions', 'woocommerce-jetpack' ),
 		'type'  => 'custom_link',
-		'link'  => '<a class="button" href="' . esc_url( add_query_arg( 'wcj_download_fonts', '1' ) ) . '">' .
+		'link'  => '<a class="button" href="' . esc_url_raw(
+			add_query_arg(
+				array(
+					'wcj_download_fonts'       => '1',
+					'wcj_download_fonts-nonce' => wp_create_nonce( 'wcj_download_fonts' ),
+				)
+			)
+		) . '">' .
 			( $is_full_fonts ? __( 'Re-download', 'woocommerce-jetpack' ) : __( 'Download', 'woocommerce-jetpack' ) )
 			. '</a>',
 		'id'    => 'wcj_invoicing_fonts_manager_styling_option',

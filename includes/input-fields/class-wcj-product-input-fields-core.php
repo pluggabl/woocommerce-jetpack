@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -489,15 +489,12 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Validate_product_input_fields_on_add_to_cart.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param bool $passed define passed value.
 		 * @param int  $product_id Get product id.
 		 */
 		public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
 			if ( ! $wpnonce ) {
 				return $passed;
 			}
@@ -607,7 +604,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_product_input_fields_to_frontend.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @todo    `$set_value` - add "default" option for all other types except checkbox
 		 * @todo    `$set_value` - 'file' type
 		 * @todo    add `required` attributes
@@ -620,13 +617,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			if ( ! $product ) {
 				return;
 			}
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			if ( ! $wpnonce ) {
-				return;
-			}
+
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
 			$this->maybe_update_local_input_fields( $_product_id );
 			$fields       = array();
@@ -675,7 +666,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 				if ( $this->is_enabled( $i, $_product_id ) ) {
 
-					$set_value = ( isset( $_POST[ $field_name ] ) ?
+					$wpnonce   = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
+					$set_value = ( $wpnonce && isset( $_POST[ $field_name ] ) ?
 					$this->maybe_stripslashes( sanitize_text_field( wp_unslash( $_POST[ $field_name ] ) ) ) :
 					( 'checkbox' === $type ?
 						( 'yes' === $this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $_product_id, 'no' ) ? 'on' : 'off' ) :
@@ -788,7 +780,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 								$field = '<select name="' . $field_name . '" id="' . $field_name . '" class="country_to_state country_select wcj_product_input_fields' . $class . '">' .
 								'<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
 								foreach ( $countries as $ckey => $cvalue ) {
-									$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . __( $cvalue, 'woocommerce' ) . '</option>'; //phpcs:ignore
+									$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
 								}
 								$field .= '</select>';
 								$html   = $field;
@@ -823,7 +815,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 			}
 			ksort( $fields );
 			if ( ! empty( $fields ) ) {
-				echo wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . wp_kses_post( implode( $fields ) ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( wcj_get_option( 'wcj_product_input_fields_start_template', '' ) . implode( $fields ) . wp_nonce_field( 'wcj_product_input_fields', 'wcj_product_input_fields-nonce' ) . wcj_get_option( 'wcj_product_input_fields_end_template', '' ) );
 				$this->are_product_input_fields_displayed = true;
 			}
 		}
@@ -833,16 +825,13 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * From `$_POST` to `$cart_item_data`
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param Array $cart_item_data Get cart items.
 		 * @param int   $product_id Get product id.
 		 * @param int   $variation_id Get variation id.
 		 */
 		public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
 			if ( ! $wpnonce ) {
 				return $cart_item_data;
 			}
@@ -1035,7 +1024,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_input_fields_to_order_item_meta.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.4.0
 		 * @param Array  $item Get items.
 		 * @param int    $item_id Get item id.
@@ -1045,6 +1034,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @throws Exception Exception.
 		 */
 		public function add_input_fields_to_order_item_meta( $item, $item_id, $values, $cart_item_key ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			global $wp_filesystem;
+			WP_Filesystem();
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
 			for ( $i = 1; $i <= $total_number; $i ++ ) {
 				if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) ) {
@@ -1060,8 +1052,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							mkdir( $upload_dir, 0755, true );
 						}
 						$upload_dir_and_name = $upload_dir . '/' . $name;
-						$file_data           = file_get_contents( $tmp_name ); //phpcs:ignore
-						file_put_contents( $upload_dir_and_name, $file_data ); //phpcs:ignore
+						$file_data           = $wp_filesystem->get_contents( $tmp_name );
+						$wp_filesystem->put_contents( $upload_dir_and_name, $file_data, FS_CHMOD_FILE );
 						unlink( $tmp_name );
 						$input_field_value['tmp_name']   = addslashes( $upload_dir_and_name );
 						$input_field_value['wcj_type']   = 'file';

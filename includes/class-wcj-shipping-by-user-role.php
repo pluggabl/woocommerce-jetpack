@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   5.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 5.6.8
 		 * @since   2.8.0
 		 */
 		public function __construct() {
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 					'desc'  => sprintf(
 						/* translators: %s: translators Added */
 						__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
-						admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' )
+						admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 					),
 				),
 				'user_id'         => array(

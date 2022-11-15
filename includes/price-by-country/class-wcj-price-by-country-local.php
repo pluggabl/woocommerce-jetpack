@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Local
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === wcj_get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  * @package Booster_For_WooCommerce/includes/Price_By_Country
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 			}
 
 			// Output.
-			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $html );
 		}
 
 		/**

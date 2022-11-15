@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -81,7 +81,7 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 	/**
 	 * Wcj_check_date.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.8
 	 * @since   2.9.1
 	 * @param   string $_date defines the _date.
 	 * @param   array  $args defines the args.
@@ -89,7 +89,7 @@ if ( ! function_exists( 'wcj_check_date' ) ) {
 	function wcj_check_date( $_date, $args = array() ) {
 
 		if ( empty( $args ) ) {
-			$time_now        = (int) gmdate( 'U' );
+			$time_now        = wcj_get_timestamp_date_from_gmt();
 			$args['day_now'] = intval( gmdate( 'j', $time_now ) );
 		}
 		$_date = explode( ',', $_date );
@@ -173,14 +173,14 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	/**
 	 * Wcj_check_time.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.8
 	 * @since   2.8.0
 	 * @param   string $_time defines the _time.
 	 * @param   array  $args defines the args.
 	 */
 	function wcj_check_time( $_time, $args = array() ) {
 		if ( empty( $args ) ) {
-			$time_now            = (int) gmdate( 'U' );
+			$time_now            = wcj_get_timestamp_date_from_gmt();
 			$args['hours_now']   = intval( gmdate( 'H', $time_now ) );
 			$args['minutes_now'] = intval( gmdate( 'i', $time_now ) );
 		}
@@ -316,5 +316,37 @@ if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
 			$format = wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' );
 		}
 		return date_i18n( $format, $seconds_since_local_1_jan_1970 );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_date_from_gmt' ) ) {
+	/**
+	 * Get date from gmt time.
+	 *
+	 * @version 5.6.8
+	 * @since   5.6.8
+	 *
+	 * @param string $format get date from gmt.
+	 * @return string
+	 */
+	function wcj_get_date_from_gmt( $format = 'Y-m-d H:i:s' ) {
+		return get_date_from_gmt( gmdate( $format ), $format );
+	}
+}
+
+
+
+if ( ! function_exists( 'wcj_get_timestamp_date_from_gmt' ) ) {
+	/**
+	 * Get timestamp date from gmt time.
+	 *
+	 * @version 5.6.8
+	 * @since   5.6.8
+	 *
+	 * @param string $format get date from gmt.
+	 * @return string
+	 */
+	function wcj_get_timestamp_date_from_gmt( $format = 'Y-m-d H:i:s' ) {
+		return strtotime( wcj_get_date_from_gmt() );
 	}
 }

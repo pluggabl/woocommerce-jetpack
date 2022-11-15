@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon Code Generator
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   3.2.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,20 +47,17 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		/**
 		 * Enqueue_generate_coupon_code_script.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.1.3
 		 */
 		public function enqueue_generate_coupon_code_script() {
 			global $pagenow;
-
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-			if ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_coupon' === $_GET['post_type'] && $wpnonce ) {
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( ! empty( $_GET ) && 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_coupon' === $_GET['post_type'] ) {
 				wp_enqueue_script( 'wcj-coupons-code-generator', wcj_plugin_url() . '/includes/js/wcj-coupons-code-generator.js', array( 'jquery' ), w_c_j()->version, true );
 				wp_localize_script( 'wcj-coupons-code-generator', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 
 		/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @todo    [dev] maybe expand `$this->desc` (e.g.: Custom roles tool, shortcodes in WordPress text widgets etc.)
 		 */
 		public function __construct() {
@@ -49,7 +49,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 				$php_time_limit   = wcj_get_option( 'wcj_admin_tools_php_time_limit', '0' );
 				// PHP Memory Limit.
 				if ( '0' !== ( $php_memory_limit ) ) {
-					ini_set( 'memory_limit', $php_memory_limit . 'M' ); //phpcs:ignore
+					ini_set( 'memory_limit', $php_memory_limit . 'M' ); // phpcs:ignore WordPress.PHP.IniSet
 				}
 				/* translators: %s: translation added */
 				$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );

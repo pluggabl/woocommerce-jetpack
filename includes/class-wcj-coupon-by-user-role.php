@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon by User Role
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 		/**
 		 * Coupon_valid.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.8
 		 * @since   3.6.0
 		 * @todo    (maybe) check if `$coupon->get_id()` is working in WC below v3.0.0
 		 * @param string | bool  $valid defines the valid.
@@ -96,7 +96,6 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 					),
 					10000
 				);
-				return false; // phpcs:ignore
 			}
 			return $valid;
 		}

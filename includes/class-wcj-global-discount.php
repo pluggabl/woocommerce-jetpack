@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -103,7 +103,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		/**
 		 * Get_wcj_sale_products.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   4.8.0
 		 *
 		 * @return array|mixed
@@ -178,7 +178,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 
 					// Tax Query.
 					if ( ! empty( $cats ) || ! empty( $tags ) ) {
-						$args['tax_query'] = array(// phpcs:ignore
+						$args['tax_query'] = array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 							'relation' => 'AND',
 						);
 						if ( ! empty( $cats ) ) {

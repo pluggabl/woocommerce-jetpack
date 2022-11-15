@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -424,7 +424,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Process_checkout_files_upload.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   2.4.5
 		 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 		 * @todo    `$this->additional_admin_emails_settings` - more customization options, e.g.: admin email, subject, content, from
@@ -653,9 +653,9 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						$real_base_path = realpath( wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) ) . DIRECTORY_SEPARATOR;
 
 						if ( false === $real_file_path || 0 !== strpos( $real_file_path, $real_base_path ) ) {
-						  continue;
+							continue;
 						} else {
-						  unlink( $tmp_file_name );
+							unlink( $tmp_file_name );
 						}
 					}
 					delete_post_meta( $order_id, '_wcj_checkout_files_upload_' . $i );

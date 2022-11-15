@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -51,15 +51,12 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Init.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.0
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce     = isset( $_REQUEST['wcj-country-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-country-nonce'] ), 'wcj-country' ) : false;
 			$country     = isset( $_REQUEST['wcj-country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) : '';
 			$req_country = null;
 			if ( $wpnonce && ! empty( $country ) ) {
@@ -194,7 +191,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Set_default_checkout_country.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   5.3.0
 		 *
 		 * @param string $default_country defins the default country.
@@ -202,9 +199,10 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 * @return array|null|string
 		 */
 		public function set_default_checkout_country( $default_country ) {
+			$country = null !== wcj_session_get( 'wcj-country' ) ? wcj_session_get( 'wcj-country' ) : $this->get_customer_country_by_ip();
 			if (
 			'yes' !== get_option( 'wcj_price_by_country_set_dft_checkout_billing_country', 'no' ) ||
-			empty( $country = null !== ( $country = wcj_session_get( 'wcj-country' ) ) ? $country : ( $country = $this->get_customer_country_by_ip() ) ) //phpcs:ignore
+			empty( $country )
 			) {
 				return $default_country;
 			}
@@ -337,7 +335,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Price_filter_post_clauses.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   5.1.0
 		 *
 		 * @see WC_Query::price_filter_post_clauses()
@@ -349,14 +347,15 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 */
 		public function price_filter_post_clauses( $args, $wp_query ) {
 			global $wpdb;
-			$wpnonce               = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) );
+			// phpcs:disable WordPress.Security.NonceVerification
 			$group_id              = $this->get_customer_country_group_id();
 			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-			if ( ! $wpnonce || ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) || empty( $group_id ) || (float) 1 === (float) $country_exchange_rate ) {
+			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) || empty( $group_id ) || (float) 1 === (float) $country_exchange_rate ) {
 				return $args;
 			}
 			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
 			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( wc_tax_enabled() && 'incl' === get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
 				$tax_class = apply_filters( 'woocommerce_price_filter_widget_tax_class', '' );
 				$tax_rates = WC_Tax::get_rates( $tax_class );
@@ -671,7 +670,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Get_customer_country_group_id.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 		 */
 		public function get_customer_country_group_id() {
@@ -689,14 +688,10 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 				return $this->customer_country_group_id;
 			}
 
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-
 			// Get the country.
+			// phpcs:disable WordPress.Security.NonceVerification
 			$override_option = get_option( 'wcj_price_by_country_override_on_checkout_with_billing_country', 'no' );
-			if ( $wpnonce && isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
+			if ( isset( $_GET['country'] ) && '' !== $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
 				$country = sanitize_text_field( wp_unslash( $_GET['country'] ) );
 			} elseif ( 'no' !== $override_option && (
 				( 'all' === get_option( 'wcj_price_by_country_override_scope', 'all' ) ) ||
@@ -718,6 +713,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 					$country = ( defined( 'ICL_LANGUAGE_CODE' ) ? ICL_LANGUAGE_CODE : null );
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			if ( null === $country ) {
 				$this->customer_country_group_id = -1;
@@ -811,21 +807,19 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param string $price defines the price for conversion.
 		 * @param object $product Product Object.
 		 */
 		public function change_price( $price, $product ) {
 			$group_id = $this->get_customer_country_group_id();
 			if ( null !== $group_id && '' !== $group_id ) {
-				$product_generated_cart_id = WC()->cart->generate_cart_id( wcj_get_product_id( $product ) );
 				if ( 'yes' === get_option( 'wcj_price_by_country_compatibility_woo_discount_rules', 'no' ) ) {
 					global $flycart_woo_discount_rules;
 					if (
 					! empty( $flycart_woo_discount_rules ) &&
-					! has_action( 'woocommerce_before_calculate_totals', array( $flycart_woo_discount_rules, 'applyDiscountRules' ) )
-					&& ( $product_cart_id = $product_generated_cart_id ) && //phpcs:ignore
-					WC()->cart->find_product_in_cart( $product_cart_id )
+					! has_action( 'woocommerce_before_calculate_totals', array( $flycart_woo_discount_rules, 'applyDiscountRules' ) ) &&
+					WC()->cart->find_product_in_cart( WC()->cart->generate_cart_id( wcj_get_product_id( $product ) ) )
 					) {
 						return $price;
 					}

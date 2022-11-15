@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.3.1
+		 * @version 5.6.8
 		 */
 		public function __construct() {
 
@@ -52,8 +52,28 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			add_action( 'woocommerce_after_settings_' . $this->id, array( $this, 'create_pro_version_footer_review_notice' ) );
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
-
+			add_action( 'admin_footer', array( $this, 'update_booster_tab_link' ), PHP_INT_MAX );
 			require_once 'class-wcj-settings-custom-fields.php';
+		}
+
+		/**
+		 * Update_booster_tab_link.
+		 *
+		 * @version 5.6.7
+		 */
+		public function update_booster_tab_link() {
+			?>
+			<script type="text/javascript">
+				jQuery(function ($) {
+					var selector = $('.woocommerce #mainform .woo-nav-tab-wrapper a');
+					$( selector ).each(function( index ) {
+						if( this.text == 'Booster' && this.href.split("&").pop() == 'tab=jetpack' ){
+							this.href = this.href + '&wcj-cat-nonce=' + "<?php echo esc_html( wp_create_nonce( 'wcj-cat-nonce' ) ); ?>";
+						}
+					})
+				});
+			</script>
+			<?php
 		}
 
 		/**
@@ -63,9 +83,9 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		 * @since   5.5.6
 		 */
 		public function wcj_new_desing_dashboard() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			if ( ! $wpnonce && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=wc-settings' ) );
 			}
 			if ( $wpnonce && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) {
 				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css', array(), w_c_j()->version );
@@ -337,7 +357,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output the settings.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @todo    (maybe) admin_notices
 		 */
 		public function output() {
@@ -360,7 +380,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 							/* translators: %s: search term */
 							__( 'Please note that current <em>%1$s</em> module is deprecated and will be removed in future updates. Please use <em>%2$s</em> module instead.', 'woocommerce-jetpack' ),
 							w_c_j()->modules[ $current_section ]->short_desc,
-							'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $replacement_module['cat'] . '&section=' . $replacement_module['module'] ) . '">' .
+							'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=' . $replacement_module['cat'] . '&section=' . $replacement_module['module'] ) . '">' .
 							$replacement_module['title'] . '</a>'
 						)
 					);
@@ -399,10 +419,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 							break;
 						}
 					}
-					$wpnonce = true;
-					if ( function_exists( 'wp_verify_nonce' ) ) {
-						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-					}
+					$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 					if ( $wpnonce && $is_dashboard && isset( $_GET['wcj-cat'] ) && 'dashboard' !== $_GET['wcj-cat'] ) {
 						$breadcrumbs_html .= $this->cats[ sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) ]['label'];
 					}
@@ -429,7 +446,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output_dashboard.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param array $current_section defines the current section.
 		 */
 		public function output_dashboard( $current_section ) {
@@ -456,11 +473,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					if ( 'dashboard' === $cat_id ) {
 						continue;
 					}
-					$wpnonce = true;
-					if ( function_exists( 'wp_verify_nonce' ) ) {
-						$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
+					$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+					if ( ! $wpnonce ) {
+						continue;
 					}
-					if ( $wpnonce && isset( $_GET['wcj-cat'] ) && 'dashboard' !== $_GET['wcj-cat'] ) {
+					if ( isset( $_GET['wcj-cat'] ) && 'dashboard' !== $_GET['wcj-cat'] ) {
 						if ( $cat_id !== $_GET['wcj-cat'] ) {
 							continue;
 						}
@@ -562,7 +579,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Output_dashboard_modules.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param array  $settings this defines title.
 		 * @param string $cat_id this defines title.
 		 */
@@ -620,7 +637,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					$html .= '</th>';
 					$html .= '<td class="plugin-title"><strong>' . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
-					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
+					$html .= '<span class="0"><a href="' . admin_url() . wcj_admin_tab_url() . '&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
 					if ( isset( $the_feature['wcj_link'] ) && '' !== $the_feature['wcj_link'] ) {
 						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
 					}
@@ -662,7 +679,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Disable_autoload_options.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   5.3.3
 		 *
 		 * @param array $settings defines the settings.
@@ -676,7 +693,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			global $wpdb;
 
 			if ( count( $field_ids ) > 0 ) {
-				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET autoload = 'no' WHERE option_name IN (" . implode( ', ', array_fill( 0, count( $field_ids ), '%s' ) ) . ") AND autoload != 'no'", $field_ids ) ); // WPCS: db call ok and cache ok.
+				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET autoload = 'no' WHERE option_name IN (" . implode( ', ', array_fill( 0, count( $field_ids ), '%s' ) ) . ") AND autoload != 'no'", $field_ids ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			}
 		}
 
@@ -775,7 +792,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Get settings array
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param array $current_section defines the current section array.
 		 * @return array $current_section defines the current section.
 		 */
@@ -787,10 +804,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			} elseif ( isset( $this->custom_dashboard_modules[ $current_section ] ) ) {
 				return $this->custom_dashboard_modules[ $current_section ]['settings'];
 			} else {
-				$wpnonce = true;
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-				}
+				$wpnonce    = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 				$cat_id     = $wpnonce && ( isset( $_GET['wcj-cat'] ) && '' !== $_GET['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) : 'dashboard';
 				$settings[] = array(
 					'title' => __( 'Booster for WooCommerce', 'woocommerce-jetpack' ) . ' - ' . $this->cats[ $cat_id ]['label'],
@@ -857,18 +871,15 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Dasboard_menu.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 */
 		public function dasboard_menu() {
 			global $current_section;
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-			}
-			$_section = $wpnonce && isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '';
-			$_wcj_cat = $wpnonce && isset( $_GET['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) : '';
-			$_wcj_tab = $wpnonce && isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
-			if ( 'jetpack' === $_wcj_tab && ( '' === $_section || 'by_category' === $_section ) && ( '' === $_wcj_cat || 'dashboard' === $_wcj_cat ) ) {
+			$wpnonce  = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			$_section = isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '';
+			$_wcj_cat = isset( $_GET['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) : '';
+			$_wcj_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			if ( $wpnonce && 'jetpack' === $_wcj_tab && ( '' === $_section || 'by_category' === $_section ) && ( '' === $_wcj_cat || 'dashboard' === $_wcj_cat ) ) {
 				?>
 			<style>
 			button.button-primary.woocommerce-save-button {

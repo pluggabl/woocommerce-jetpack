@@ -1,7 +1,7 @@
 /**
  * wcj-admin.
  *
- * @version 5.6.1
+ * @version 5.6.8
  * @since   2.5.3
  */
 
@@ -317,4 +317,8 @@ img.wcj-rocket-icon:hover {
 
 #order_data .order_data_column p {
   word-break: break-word;
+}
+
+.wcj-row td {
+  line-break: anywhere;
 }

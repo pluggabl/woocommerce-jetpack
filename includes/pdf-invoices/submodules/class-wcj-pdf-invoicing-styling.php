@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Styling
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -81,32 +81,29 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		/**
 		 * Download_fonts.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @version 2.9.0
 		 * @param int $interval Get time interval.
 		 */
 		public function download_fonts( $interval ) {
-			update_option( 'wcj_download_tcpdf_fonts_hook_timestamp', (int) gmdate( 'U' ) );
+			update_option( 'wcj_download_tcpdf_fonts_hook_timestamp', wcj_get_timestamp_date_from_gmt() );
 			wcj_check_and_maybe_download_tcpdf_fonts( true );
 		}
 
 		/**
 		 * Manually_download_fonts.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @version 2.9.0
 		 * @todo    add success/error message
 		 */
 		public function manually_download_fonts() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_download_fonts-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_download_fonts-nonce'] ), 'wcj_download_fonts' ) : false;
 			if ( isset( $_GET['wcj_download_fonts'] ) && $wpnonce ) {
 				delete_option( 'wcj_invoicing_fonts_version' );
 				delete_option( 'wcj_invoicing_fonts_version_timestamp' );
 				wcj_check_and_maybe_download_tcpdf_fonts();
-				wp_safe_redirect( esc_url( remove_query_arg( 'wcj_download_fonts' ) ) );
+				wp_safe_redirect( esc_url_raw( remove_query_arg( array( 'wcj_download_fonts', 'wcj_download_fonts-nonce' ) ) ) );
 				exit;
 			}
 		}

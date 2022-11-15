@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - EU VAT
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	/**
 	 * Wcj_validate_vat_no_soap.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.8
 	 * @since   2.5.7
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 * @param   string $country_code defines the country_code.
@@ -25,20 +25,22 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	 */
 	function wcj_validate_vat_no_soap( $country_code, $vat_number, $method ) {
 		$country_code = strtoupper( $country_code );
-		$api_url      = esc_url(
+		$api_url      = esc_url_raw(
 			add_query_arg(
 				array(
-					'ms'     => $country_code,
-					'vat'    => $vat_number,
-					'locale' => 'en',
+					'requesterMemberStateCode' => $country_code,
+					'requesterNumber'          => $vat_number,
 				),
-				'http://ec.europa.eu/taxation_customs/vies/viesquer.do'
+				'https://ec.europa.eu/taxation_customs/vies/rest-api/ms/' . $country_code . '/vat/' . $vat_number
 			)
 		);
 		switch ( $method ) {
 			case 'file_get_contents':
 				if ( ini_get( 'allow_url_fopen' ) ) {
-					$response = file_get_contents( $api_url ); //phpcs:ignore
+					require_once ABSPATH . '/wp-admin/includes/file.php';
+					global $wp_filesystem;
+					WP_Filesystem();
+					$response = $wp_filesystem->get_contents( $api_url );
 				} else {
 					return null;
 				}
@@ -55,7 +57,13 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 		if ( false === $response ) {
 			return null;
 		}
-		return ( false !== strpos( $response, '="validStyle"' ) );
+		$response = json_decode( $response );
+		$is_valid = 'isValid';
+		if ( $response->$is_valid ) {
+			return true;
+		} else {
+			return null;
+		}
 	}
 }
 

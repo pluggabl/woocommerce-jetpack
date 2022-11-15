@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Header
  *
- * @version 5.6.0
+ * @version 5.6.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add info on `<img>` in "Header Image" description
@@ -45,7 +45,7 @@ foreach ( $invoice_types as $invoice_type ) {
 					sprintf(
 				/* translators: %s: translators Added */
 						__( 'If you are experiencing issues with displaying header image, please try setting different values for the "Advanced: Default Images Directory" option in %s.', 'woocommerce-jetpack' ),
-						'<a target="_blank" href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' ) . '">' .
+						'<a target="_blank" href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' ) . '">' .
 							__( 'PDF Invoicing & Packing Slips > Advanced', 'woocommerce-jetpack' ) .
 						'</a>'
 					),

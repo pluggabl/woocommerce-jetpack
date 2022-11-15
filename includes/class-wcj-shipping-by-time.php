@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Time
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -99,7 +99,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   4.0.0
 		 * @param  string $options_id defines the options_id.
 		 * @param  array  $values defines the values.
@@ -111,7 +111,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 				case 'time':
 					$parsed_time = $this->parse_time( $values );
 					if ( $parsed_time ) {
-						$current_time = (int) gmdate( 'U' );
+						$current_time = wcj_get_timestamp_date_from_gmt();
 						return ( $current_time >= $parsed_time['time_from'] && $current_time <= $parsed_time['time_to'] );
 					}
 					return ( 'include' === $include_or_exclude ); // not parsable time input - leaving shipping method enabled.
