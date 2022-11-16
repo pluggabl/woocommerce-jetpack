@@ -296,16 +296,13 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					continue;
 				}
 				if ( 'yes' === $addon['is_required'] ) {
-					if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) && empty( $addon['default'] ) ) {
+					if ( ! $wpnonce && ! isset( $_POST[ $addon['checkbox_key'] ] ) && empty( $addon['default'] ) ) {
 						wc_add_notice( __( 'Some of the required addons are not selected!', 'woocommerce-jetpack' ), 'error' );
 						return false;
 					}
 				}
 			}
-			if ( ! $wpnonce ) {
-				wc_add_notice( __( 'Invalid security nonce', 'woocommerce-jetpack' ), 'error' );
-				return false;
-			}
+
 			return $passed;
 		}
 
