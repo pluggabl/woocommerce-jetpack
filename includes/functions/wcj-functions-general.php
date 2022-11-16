@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 5.6.3
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -436,15 +436,12 @@ if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	/**
 	 * Wcj_maybe_add_date_query.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.8
 	 * @since   3.0.0
 	 * @param   array $args defines the args.
 	 */
 	function wcj_maybe_add_date_query( $args ) {
-		$wpnonce = true;
-		if ( function_exists( 'wp_verify_nonce' ) ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-		}
+		$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 		if ( ( $wpnonce && isset( $_GET['start_date'] ) && '' !== $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' !== $_GET['end_date'] ) ) {
 			$date_query              = array();
 			$date_query['inclusive'] = true;
@@ -1035,7 +1032,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 5.6.3
+	 * @version 5.6.8
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1077,15 +1074,16 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'data-*'                    => true,
 			),
 			'textarea' => array(
-				'name'        => true,
-				'value'       => true,
-				'id'          => true,
-				'class'       => true,
-				'style'       => true,
-				'placeholder' => true,
-				'required'    => true,
-				'disabled'    => true,
-				'onchange'    => true,
+				'name'         => true,
+				'value'        => true,
+				'id'           => true,
+				'class'        => true,
+				'style'        => true,
+				'placeholder'  => true,
+				'required'     => true,
+				'disabled'     => true,
+				'onchange'     => true,
+				'autocomplete' => true,
 			),
 			'select'   => array(
 				'multiple' => true,
@@ -1096,6 +1094,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'size'     => true,
 				'disabled' => true,
 				'onchange' => true,
+				'type'     => true,
 			),
 			'option'   => array(
 				'value'    => true,
@@ -1161,6 +1160,12 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'onchange'      => true,
 				'target'        => true,
 				'wcj-copy-data' => true,
+				'currency_from' => true,
+				'currency_to'   => true,
+				'start_date'    => true,
+				'end_date'      => true,
+				'input_id'      => true,
+				'start_date'    => true,
 			),
 			'details'  => array(
 				'open' => true,
@@ -1172,4 +1177,16 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 		return $allowed_merged_html;
 	}
 	add_filter( 'wp_kses_allowed_html', 'wcj_add_allowed_html', PHP_INT_MAX, 2 );
+}
+
+if ( ! function_exists( 'wcj_admin_tab_url' ) ) {
+	/**
+	 * Wcj_admin_tab_url.
+	 *
+	 * @version 5.6.8
+	 * @since   5.6.8
+	 */
+	function wcj_admin_tab_url() {
+		return 'admin.php?page=wc-settings&tab=jetpack&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
+	}
 }

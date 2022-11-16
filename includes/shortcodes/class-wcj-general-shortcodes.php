@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -476,7 +476,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_selector.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.1.0
 		 * @todo    add `default` attribute
 		 * @todo    (maybe) add more selector types (e.g.: currency)
@@ -498,7 +498,6 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					break;
 				default: // 'all'.
 					$countries = wcj_get_countries();
-					asort( $options );
 					break;
 			}
 
@@ -518,6 +517,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			'<select name="wcj_' . $atts['selector_type'] . '_selector" class="wcj_' . $atts['selector_type'] . '_selector" onchange="this.form.submit()">' .
 				$html .
 			'</select>' .
+			wp_nonce_field( 'wcj_' . $atts['selector_type'] . '_selector', 'wcj_' . $atts['selector_type'] . '_selector-nonce' ) .
 			'</form>';
 		}
 
@@ -604,34 +604,34 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_current_time.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_time( $atts ) {
-			return date_i18n( $atts['time_format'], gmdate( 'U' ) );
+			return date_i18n( $atts['time_format'], wcj_get_timestamp_date_from_gmt() );
 		}
 
 		/**
 		 * Wcj_current_datetime.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_datetime( $atts ) {
-			return date_i18n( $atts['datetime_format'], gmdate( 'U' ) );
+			return date_i18n( $atts['datetime_format'], wcj_get_timestamp_date_from_gmt() );
 		}
 
 		/**
 		 * Wcj_current_timestamp.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.6.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_timestamp( $atts ) {
-			return gmdate( 'U' );
+			return wcj_get_timestamp_date_from_gmt();
 		}
 
 		/**
@@ -838,7 +838,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_currency_select_link_list.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.8
 		 * @since   2.4.5
 		 * @param array          $atts The user defined shortcode attributes.
 		 * @param array | string $content The user defined shortcode content.
@@ -875,7 +875,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 						'%currency_symbol%' => get_woocommerce_currency_symbol( $currency_code ),
 					);
 					$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
-					$the_link                 = '<a href="' . esc_url( add_query_arg( 'wcj-currency', $currency_code ) ) . '">' . $currency_switcher_output . '</a>';
+					$the_link                 = '<a href="' . esc_url( wp_nonce_url( add_query_arg( 'wcj-currency', $currency_code ), 'wcj-currency', 'wcj-currency-nonce' ) ) . '">' . $currency_switcher_output . '</a>';
 					if ( $currency_code !== $selected_currency ) {
 						$links[] = $the_link;
 					} else {
@@ -917,7 +917,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Get_currency_selector.
 		 *
-		 * @version 3.9.0
+		 * @version 5.6.8
 		 * @since   2.4.5
 		 * @param array          $atts The user defined shortcode attributes.
 		 * @param array | string $content The user defined shortcode content.
@@ -976,6 +976,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			if ( 'select' === $type ) {
 				$html .= '</select>';
 			}
+			$html .= wp_nonce_field( 'wcj-currency', 'wcj-currency-nonce' );
 			$html .= '</form>';
 			return $html;
 		}
@@ -1007,7 +1008,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_country_select_drop_down_list.
 		 *
-		 * @version 4.3.0
+		 * @version 5.6.8
 		 * @param array          $atts The user defined shortcode attributes.
 		 * @param array | string $content The user defined shortcode content.
 		 */
@@ -1046,6 +1047,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					}
 				}
 			}
+			$html .= wp_nonce_field( 'wcj-country', 'wcj-country-nonce' );
 			$html .= '</select>';
 			$html .= '</form>';
 			return $html;
@@ -1087,11 +1089,11 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_current_date.
 		 *
-		 * @version 2.6.0
+		 * @version 5.6.8
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_date( $atts ) {
-			return date_i18n( $atts['date_format'], gmdate( 'U' ) );
+			return date_i18n( $atts['date_format'], wcj_get_timestamp_date_from_gmt() );
 		}
 
 		/**

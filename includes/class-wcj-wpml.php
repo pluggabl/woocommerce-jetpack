@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -191,14 +191,15 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		/**
 		 * Create_wpml_xml_file.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.1
 		 */
 		public function create_wpml_xml_file_tool() {
-			if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			if ( ! $wpnonce || ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) {
 				return;
 			}
-			if ( ! isset( $_GET['section'] ) || 'wpml' !== $_GET['section'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+			if ( ! isset( $_GET['section'] ) || 'wpml' !== $_GET['section'] ) {
 				return;
 			}
 			$this->create_wpml_xml_file();

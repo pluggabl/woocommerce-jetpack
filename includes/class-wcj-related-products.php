@@ -1,8 +1,8 @@
-<?php //phpcs:ignore
+<?php
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -11,35 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'WCJ_Dummy_Term' ) ) {
-	/**
-	 * WCJ_Dummy_Term class.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	class WCJ_Dummy_Term {
-		/**
-		 * Term_id class.
-		 *
-		 * @var term_id.
-		 */
-
-		public $term_id;
-		/**
-		 * Constructor.
-		 */
-		public function __construct() {
-			$this->term_id = 0;
-		}
-	}
-}
+require_once 'classes/class-wcj-dummy-term.php';
 
 if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 	/**
 	 * WCJ_Related_Products.
 	 */
-	class WCJ_Related_Products extends WCJ_Module { //phpcs:ignore
+	class WCJ_Related_Products extends WCJ_Module {
 
 
 		/**
@@ -194,7 +172,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Get_related_products_ids_wc3.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.8.0
 		 * @param int $product_id defines the product_id.
 		 */
@@ -222,7 +200,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				if ( 'global' === wcj_get_option( 'wcj_product_info_related_products_by_attribute_attribute_type', 'global' ) ) {
 					// Relate by Global Attributes.
 					// http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/.
-					$args['tax_query'] = array( //phpcs:ignore
+					$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 						array(
 							'taxonomy' => 'pa_' . $attribute_name,
 							'field'    => 'name',
@@ -232,9 +210,9 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				} else {
 					// Relate by Local Product Attributes.
 					// http://snippet.fm/snippets/query-woocommerce-products-product-specific-custom-attribute/.
-					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ); //phpcs:ignore
+					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 					// extended version: $serialized_value = serialize( $attribute_name ) . 'a:6:{' . serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ) . serialize( 'position' );.
-					$args['meta_query'] = array( //phpcs:ignore
+					$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
 							'key'     => '_product_attributes',
 							'value'   => $serialized_value,
@@ -385,11 +363,12 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Maybe_delete_product_transients.
 		 *
-		 * @since   5.6.2
+		 * @since   5.6.8
 		 * @version 2.6.0
 		 */
 		public function maybe_delete_product_transients() {
-			if ( isset( $_GET['wcj_clear_all_products_transients'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			if ( $wpnonce && isset( $_GET['wcj_clear_all_products_transients'] ) ) {
 				$offset     = 0;
 				$block_size = 256;
 				while ( true ) {
@@ -419,7 +398,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Related_products_args.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @todo    save custom results as product transient (for < WC3)
 		 * @param array $args defines the args.
 		 */
@@ -434,7 +413,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 			$orderby         = wcj_get_option( 'wcj_product_info_related_products_orderby', 'rand' );
 			$args['orderby'] = $orderby;
 			if ( 'meta_value' === $orderby || 'meta_value_num' === $orderby ) {
-				$args['meta_key'] = wcj_get_option( 'wcj_product_info_related_products_orderby_meta_value_meta_key', '' ); //phpcs:ignore
+				$args['meta_key'] = wcj_get_option( 'wcj_product_info_related_products_orderby_meta_value_meta_key', '' ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			}
 			// Order.
 			if ( 'rand' !== $orderby ) {
@@ -459,7 +438,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				if ( 'global' === wcj_get_option( 'wcj_product_info_related_products_by_attribute_attribute_type', 'global' ) ) {
 					// Relate by Global Attributes.
 					// http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/.
-					$args['tax_query'] = array( //phpcs:ignore
+					$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 						array(
 							'taxonomy' => 'pa_' . $attribute_name,
 							'field'    => 'name',
@@ -469,9 +448,9 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				} else {
 					// Relate by Local Product Attributes.
 					// http://snippet.fm/snippets/query-woocommerce-products-product-specific-custom-attribute/.
-					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ); //phpcs:ignore
+					$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 					// extended version: $serialized_value = serialize( $attribute_name ) . 'a:6:{' . serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ) . serialize( 'position' );.
-					$args['meta_query'] = array( //phpcs:ignore
+					$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
 							'key'     => '_product_attributes',
 							'value'   => $serialized_value,

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_styling.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.7.0
 		 */
 		public function add_styling() {
@@ -110,25 +110,13 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				}
 			}
 			$css = "<style type=\"text/css\">
-			.wcj-offer-price-modal-content {
-				width: {$styling_options['form_content_width']};
-			}
-			.wcj-offer-modal-header {
-				background-color: {$styling_options['form_header_back_color']};
-				color: {$styling_options['form_header_text_color']};
-			}
-			.wcj-offer-modal-header h1, .wcj-offer-modal-header h2, .wcj-offer-modal-header h3, .wcj-offer-modal-header h4, .wcj-offer-modal-header h5, .wcj-offer-modal-header h6 {
-				color: {$styling_options['form_header_text_color']};
-			}
-			.wcj-offer-price-modal-footer {
-				background-color: {$styling_options['form_footer_back_color']};
-				color: {$styling_options['form_footer_text_color']};
-			}
-			.wcj-offer-price-modal-footer h1, .wcj-offer-price-modal-footer h2, .wcj-offer-price-modal-footer h3, .wcj-offer-price-modal-footer h4, .wcj-offer-price-modal-footer h5, .wcj-offer-price-modal-footer h6 {
-				color: {$styling_options['form_footer_text_color']};
-			}
+			.wcj-offer-price-modal-content {width: {$styling_options['form_content_width']};}
+			.wcj-offer-modal-header {background-color: {$styling_options['form_header_back_color']};color: {$styling_options['form_header_text_color']};}
+			.wcj-offer-modal-header h1, .wcj-offer-modal-header h2, .wcj-offer-modal-header h3, .wcj-offer-modal-header h4, .wcj-offer-modal-header h5, .wcj-offer-modal-header h6 {color: {$styling_options['form_header_text_color']};}
+			.wcj-offer-price-modal-footer {background-color: {$styling_options['form_footer_back_color']};color: {$styling_options['form_footer_text_color']};}
+			.wcj-offer-price-modal-footer h1, .wcj-offer-price-modal-footer h2, .wcj-offer-price-modal-footer h3, .wcj-offer-price-modal-footer h4, .wcj-offer-price-modal-footer h5, .wcj-offer-price-modal-footer h6 {color: {$styling_options['form_footer_text_color']};}
 			</style>";
-			echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $css );
 		}
 
 		/**
@@ -188,7 +176,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Create_offer_price_history_meta_box.
 		 *
-		 * @version 5.6.1
+		 * @version 5.6.8
 		 * @since   2.9.0
 		 */
 		public function create_offer_price_history_meta_box() {
@@ -255,12 +243,14 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				}
 				echo wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) );
 				foreach ( $average_offers as $average_offer_currency_code => $average_offer_data ) {
-					echo '<p>' . sprintf(
-						/* translators: %s: search term */
-						esc_html__( 'Average offer: %1$s (from %2$s offer(s))', 'woocommerce-jetpack' ),
-						wc_price( ( $average_offer_data['offers_sum'] / $average_offer_data['total_offers'] ), array( 'currency' => $average_offer_currency_code ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						$average_offer_data['total_offers'] // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					) . '</p>';
+					echo wp_kses_post(
+						'<p>' . sprintf(
+							/* translators: %s: search term */
+							esc_html__( 'Average offer: %1$s (from %2$s offer(s))', 'woocommerce-jetpack' ),
+							wc_price( ( $average_offer_data['offers_sum'] / $average_offer_data['total_offers'] ), array( 'currency' => $average_offer_currency_code ) ),
+							$average_offer_data['total_offers']
+						) . '</p>'
+					);
 				}
 				echo '<p>' .
 				'<input type="checkbox" id="wcj_offer_price_delete_history" name="wcj_offer_price_delete_history">' .
@@ -472,7 +462,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Add_offer_price_button.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.0
 		 */
 		public function add_offer_price_button() {
@@ -486,17 +476,19 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 			if ( '' !== $additional_class ) {
 				$additional_class = ' ' . $additional_class;
 			}
-			echo '<p>' .
-			'<button type="submit"' .
-				' name="wcj-offer-price-button"' .
-				' class="wcj-offer-price-button' . $additional_class . '"' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				' value="' . esc_html( $product_id ) . '"' .
-				' style="' . wcj_get_option( 'wcj_offer_price_button_style', '' ) . '"' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				' wcj_data=\'' . wp_json_encode( $this->get_wcj_data_array( $product_id ) ) . '\'' .
-			'>' .
-				get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			'</button>' .
-			'</p>';
+			echo wp_kses_post(
+				'<p>' .
+				'<button type="submit"' .
+					' name="wcj-offer-price-button"' .
+					' class="wcj-offer-price-button' . $additional_class . '"' .
+					' value="' . esc_html( $product_id ) . '"' .
+					' style="' . wcj_get_option( 'wcj_offer_price_button_style', '' ) . '"' .
+					' wcj_data=\'' . wp_json_encode( $this->get_wcj_data_array( $product_id ) ) . '\'' .
+				'>' .
+					get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) .
+				'</button>' .
+				'</p>'
+			);
 		}
 
 		/**
@@ -540,7 +532,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				}
 				// Price offer array.
 				$price_offer = array(
-					'offer_timestamp'   => gmdate( 'U' ),
+					'offer_timestamp'   => wcj_get_timestamp_date_from_gmt(),
 					'product_title'     => $_product->get_title(),
 					'product_edit_link' => get_edit_post_link( $_product->get_id() ),
 					'offered_price'     => isset( $_POST['wcj-offer-price-price'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj-offer-price-price'] ) ) : '',

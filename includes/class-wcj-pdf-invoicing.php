@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -114,13 +114,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Bulk_actions_pdfs_notices.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.7
 		 */
 		public function bulk_actions_pdfs_notices() {
 			global $post_type, $pagenow;
 			if ( 'edit.php' === $pagenow && 'shop_order' === $post_type ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+				$wpnonce = isset( $_REQUEST['pdf-generated-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['pdf-generated-nonce'] ), 'pdf-generated' ) : false;
 				if ( $wpnonce && isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
 					/* translators: %s: translation added */
 					$message = sprintf( wp_kses_post( 'Document generated.', '%s documents generated.', sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ), number_format_i18n( sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ) );
@@ -167,7 +167,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Processes the PDF bulk actions.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.7
 		 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 		 *
@@ -206,14 +206,15 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 							}
 						}
 						// Build the redirect url.
-						$redirect_to = esc_url(
+						$redirect_to = esc_url_raw(
 							add_query_arg(
 								array(
-									'generated'      => $generated,
-									'generated_type' => $the_type,
+									'generated'           => $generated,
+									'generated_type'      => $the_type,
 									'generated_' . $the_type => 1,
-									'ids'            => join( ',', $invoice_num ),
-									'post_status'    => isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : '',
+									'ids'                 => join( ',', $invoice_num ),
+									'post_status'         => isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : '',
+									'pdf-generated-nonce' => wp_create_nonce( 'pdf-generated' ),
 								),
 								$redirect_to
 							)
@@ -226,7 +227,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 						}
 					}
 					// Build the redirect url.
-					$redirect_to = esc_url(
+					$redirect_to = esc_url_raw(
 						add_query_arg(
 							array(
 								'generated'              => $generated,
@@ -234,6 +235,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 								'generated_' . $the_type => 1,
 								'ids'                    => join( ',', $post_ids ),
 								'post_status'            => isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : '',
+								'pdf-generated-nonce'    => wp_create_nonce( 'pdf-generated' ),
 							),
 							$redirect_to
 						)

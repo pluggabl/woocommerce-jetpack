@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Currency
  *
- * @version  5.6.2
+ * @version  5.6.8
  * @author   Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -29,12 +29,12 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		/**
 		 * Add_reports_currency_to_admin_bar.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param int | string $wp_admin_bar Difine admin_bar.
 		 */
 		public function add_reports_currency_to_admin_bar( $wp_admin_bar ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 
 				$the_current_code = isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency();
 				$parent           = 'reports_currency_select';
@@ -88,18 +88,19 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 					$wp_admin_bar->add_node( $args );
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 
 		/**
 		 * Change_currency_symbol_reports.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param string $currency_symbol Get currency symbol.
 		 * @param string $currency Get currency.
 		 */
 		public function change_currency_symbol_reports( $currency_symbol, $currency ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 				if ( isset( $_GET['currency'] ) ) {
 					if ( 'merge' === $_GET['currency'] ) {
 						return '';
@@ -111,29 +112,31 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 					}
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 			return $currency_symbol;
 		}
 
 		/**
 		 * Filter_reports.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param Array $args Get args.
 		 */
 		public function filter_reports( $args ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 				if ( isset( $_GET['currency'] ) && 'merge' === $_GET['currency'] ) {
 					return $args;
 				}
 				$args['where_meta'] = array(
 					array(
-						'meta_key'   => '_order_currency', //phpcs:ignore
-						'meta_value' => isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(), //phpcs:ignore
+						'meta_key'   => '_order_currency', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+						'meta_value' => isset( $_GET['currency'] ) ? sanitize_text_field( wp_unslash( $_GET['currency'] ) ) : get_woocommerce_currency(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 						'operator'   => '=',
 					),
 				);
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 			return $args;
 		}
 	}

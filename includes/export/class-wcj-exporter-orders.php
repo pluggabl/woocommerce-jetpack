@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -218,17 +218,14 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.8
 		 * @param object $fields_helper defines the fields helper.
 		 *
 		 * @todo    (maybe) metainfo as separate column
 		 */
 		public function export_orders( $fields_helper ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			// Standard Fields.
 			$all_fields = $fields_helper->get_order_export_fields();
 			$fields_ids = wcj_get_option( 'wcj_export_orders_fields', $fields_helper->get_order_export_default_fields_ids() );
@@ -341,15 +338,12 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders_items.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.9
 		 * @param object $fields_helper defines the fields helper.
 		 */
 		public function export_orders_items( $fields_helper ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			// Standard Fields.
 			$all_fields = $fields_helper->get_order_items_export_fields();
 			$fields_ids = apply_filters( 'wcj_export_orders_items_fields', wcj_get_option( 'wcj_export_orders_items_fields', $fields_helper->get_order_items_export_default_fields_ids() ) );

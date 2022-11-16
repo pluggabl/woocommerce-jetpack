@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Related Products
  *
- * @version 5.6.0
+ * @version 5.6.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -36,7 +36,7 @@ $orderby_options = array(
 	'title' => __( 'Title', 'woocommerce-jetpack' ),
 );
 if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
-	$orderby_options['meta_value']     = __( 'Meta Value', 'woocommerce-jetpack' ); // phpcs:ignore
+	$orderby_options['meta_value']     = __( 'Meta Value', 'woocommerce-jetpack' ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 	$orderby_options['meta_value_num'] = __( 'Meta Value (Numeric)', 'woocommerce-jetpack' );
 } else {
 	$orderby_options['id']         = __( 'ID', 'woocommerce-jetpack' );

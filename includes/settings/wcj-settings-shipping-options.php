@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Options
  *
- * @version 5.6.0
+ * @version 5.6.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -60,7 +60,7 @@ $settings             = array_merge(
 				sprintf(
 					/* translators: %s: translators Added */
 					__( 'Similar results can be achieved with %s module.', 'woocommerce-jetpack' ),
-					'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=shipping_and_orders&section=shipping_by_products' ) . '">' .
+					'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=shipping_and_orders&section=shipping_by_products' ) . '">' .
 					__( 'Shipping Methods by Products', 'woocommerce-jetpack' ) . '</a>'
 				),
 			'type'  => 'title',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.6.3
+ * @version 5.6.8
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -93,15 +93,12 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_import_from_wc_cog_tool.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.0
 		 */
 		public function create_import_from_wc_cog_tool() {
 			// Action and Products list.
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce        = isset( $_REQUEST['wcj_import_from_wc_cog-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_import_from_wc_cog-nonce'] ), 'wcj_import_from_wc_cog' ) : false;
 			$perform_import = ( $wpnonce && isset( $_POST['wcj_import_from_wc_cog'] ) );
 			$table_data     = array();
 			$table_data[]   = array(
@@ -123,6 +120,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			$button_form .= '<form method="post" action="">';
 			$button_form .= '<input type="submit" name="wcj_import_from_wc_cog" class="button-primary" value="' . __( 'Import', 'woocommerce-jetpack' ) . '"' .
 			' onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">';
+			$button_form .= wp_nonce_field( 'wcj_import_from_wc_cog', 'wcj_import_from_wc_cog-nonce' );
 			$button_form .= '</form>';
 			// Output.
 			$html  = '';

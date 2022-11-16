@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sorting
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -298,7 +298,7 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 		 * Add new sorting options to WooCommerce sorting.
 		 *
 		 * @param array $args Get args.
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 */
 		public function custom_woocommerce_get_catalog_ordering_args( $args ) {
 			// Get ordering from query string.
@@ -325,34 +325,34 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 				case 'title_asc':
 					$args['orderby']  = 'title';
 					$args['order']    = 'asc';
-					$args['meta_key'] = ''; //phpcs:ignore
+					$args['meta_key'] = ''; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'title_desc':
 					$args['orderby']  = 'title';
 					$args['order']    = 'desc';
-					$args['meta_key'] = ''; //phpcs:ignore
+					$args['meta_key'] = ''; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'sku_asc':
 					$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 					$args['order']    = 'asc';
-					$args['meta_key'] = '_sku'; //phpcs:ignore
+					$args['meta_key'] = '_sku'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'sku_desc':
 					$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 					$args['order']    = 'desc';
-					$args['meta_key'] = '_sku'; //phpcs:ignore
+					$args['meta_key'] = '_sku'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'stock_quantity_asc':
 					$args['orderby']  = 'meta_value_num';
 					$args['order']    = 'asc';
-					$args['meta_key'] = '_stock'; //phpcs:ignore
+					$args['meta_key'] = '_stock'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 				case 'stock_quantity_desc':
 					$args['orderby']  = 'meta_value_num';
 					$args['order']    = 'desc';
-					$args['meta_key'] = '_stock'; //phpcs:ignore
+					$args['meta_key'] = '_stock'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					break;
 			endswitch;
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -212,7 +212,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Create_meta_meta_box.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.8
 		 * @param string $post defines the post.
 		 */
@@ -223,7 +223,9 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			$meta       = get_post_meta( $post_id );
 			$table_data = array();
 			foreach ( $meta as $meta_key => $meta_values ) {
-				$table_data[] = array( $meta_key, esc_html( print_r( maybe_unserialize( $meta_values[0] ), true ) ) ); // phpcs:ignore
+				$meta_value   = maybe_unserialize( $meta_values[0] );
+				$meta_value   = is_array( $meta_value ) ? wp_json_encode( $meta_value ) : $meta_value;
+				$table_data[] = array( $meta_key, esc_html( $meta_value ) );
 			}
 			$html .= wcj_get_table_html(
 				$table_data,
@@ -238,7 +240,9 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 				$table_data = array();
 				foreach ( $_order->get_items() as $item_key => $item ) {
 					foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
-						$table_data[] = array( $item_key, $item_meta_key, wp_kses_post( maybe_unserialize( $item_meta_value ), true ) );
+						$item_meta_value = maybe_unserialize( $item_meta_value );
+						$item_meta_value = is_array( $item_meta_value ) ? wp_json_encode( $item_meta_value ) : $item_meta_value;
+						$table_data[]    = array( $item_key, $item_meta_key, $item_meta_value );
 					}
 				}
 				if ( ! empty( $table_data ) ) {

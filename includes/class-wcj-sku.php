@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -82,14 +82,11 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Generate_default_hashids_salt.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   4.7.0
 		 */
 		public function generate_default_hashids_salt() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
+			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 			if ( $wpnonce && isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] &&
 			isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] &&
 			isset( $_GET['wcj-cat'] ) && 'products' === $_GET['wcj-cat'] &&
@@ -160,7 +157,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Add_search_by_sku_to_frontend_posts_search.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.4.0
 		 * @see     https://plugins.svn.wordpress.org/search-by-sku-for-woocommerce/
 		 * @param string $where defines the where.
@@ -182,8 +179,8 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				if ( is_admin() && is_numeric( $term ) ) {
 					$search_ids[] = $term;
 				}
-				$sku_to_parent_id = $wpdb->get_col( $wpdb->prepare( 'SELECT p.post_parent as post_id FROM {$wpdb->posts} as p join {$wpdb->postmeta} pm on p.ID = pm.post_id and pm.meta_key="_sku" and pm.meta_value LIKE %s where p.post_parent <> 0 group by p.post_parent', $wpdb->esc_like( wc_clean( '%' . $term . '%' ) ) ) ); // WPCS: db call ok and cache ok.
-				$sku_to_id        = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_sku' AND meta_value LIKE %s;", $wpdb->esc_like( '%' . wc_clean( $term ) . '%' ) ) ); // WPCS: db call ok and cache ok.
+				$sku_to_parent_id = $wpdb->get_col( $wpdb->prepare( 'SELECT p.post_parent as post_id FROM {$wpdb->posts} as p join {$wpdb->postmeta} pm on p.ID = pm.post_id and pm.meta_key="_sku" and pm.meta_value LIKE %s where p.post_parent <> 0 group by p.post_parent', $wpdb->esc_like( wc_clean( '%' . $term . '%' ) ) ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$sku_to_id        = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_sku' AND meta_value LIKE %s;", $wpdb->esc_like( '%' . wc_clean( $term ) . '%' ) ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$search_ids       = array_merge( $search_ids, $sku_to_id, $sku_to_parent_id );
 			}
 			$search_ids = array_filter( array_map( 'absint', $search_ids ) );

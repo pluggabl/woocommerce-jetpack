@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -141,14 +141,15 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Save_msrp_input_variable.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.6.0
 		 * @param int $variation_id defines the variation_id.
 		 * @param int $i defines the i.
 		 */
 		public function save_msrp_input_variable( $variation_id, $i ) {
-			if ( isset( $_POST['variable_wcj_msrp'][ $i ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				update_post_meta( $variation_id, '_wcj_msrp', wc_clean( sanitize_text_field( wp_unslash( $_POST['variable_wcj_msrp'][ $i ] ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST['security'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['security'] ), 'save-variations' ) : false;
+			if ( $wpnonce && isset( $_POST['variable_wcj_msrp'][ $i ] ) ) {
+				update_post_meta( $variation_id, '_wcj_msrp', wc_clean( sanitize_text_field( wp_unslash( $_POST['variable_wcj_msrp'][ $i ] ) ) ) );
 			}
 		}
 
@@ -174,14 +175,14 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		/**
 		 * Save_msrp_input.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.6.0
 		 * @param int            $post_id defines the post_id.
 		 * @param string | array $__post defines the __post.
 		 */
 		public function save_msrp_input( $post_id, $__post ) {
-			$nonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
-			if ( isset( $_POST['_wcj_msrp'] ) && $nonce ) {
+			$wpnonce = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( wp_unslash( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) ), 'woocommerce_save_data' ) : false;
+			if ( isset( $_POST['_wcj_msrp'] ) && $wpnonce ) {
 				update_post_meta( $post_id, '_wcj_msrp', sanitize_text_field( wp_unslash( $_POST['_wcj_msrp'] ) ) );
 			}
 		}

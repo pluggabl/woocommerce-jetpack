@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -68,7 +68,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		/**
 		 * Create.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 		 * @todo    used get_option instead wcj_get_option to get current numbering_counter.
 		 * @param number $date get date.
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 			} else {
 				$the_invoice_number = $order_id;
 			}
-			$the_date = ( '' === $date ) ? (string) gmdate( 'U' ) : $date;
+			$the_date = ( '' === $date ) ? (string) wcj_get_timestamp_date_from_gmt() : $date;
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
 		}

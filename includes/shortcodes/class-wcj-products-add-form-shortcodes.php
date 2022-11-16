@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -269,21 +269,18 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_add_new.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.0
 		 * @todo    `multipart` only if image
 		 * @param array $atts The user defined shortcode atts.
 		 */
 		public function wcj_product_add_new( $atts ) {
-			$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			$wpnonce           = isset( $_REQUEST['wcj_add_new_product-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_add_new_product-nonce'] ), 'wcj_add_new_product' ) : false;
 			$header_html       = '';
 			$notice_html       = '';
 			$input_fields_html = '';
 			$footer_html       = '';
 
-			if ( ! $wpnonce ) {
-				return;
-			}
 			$args = array(
 				'title'         => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) : '',
 				'desc'          => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_desc'] ) ) : '',
@@ -300,7 +297,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				$args[ 'custom_taxonomy_' . $i ] = isset( $_REQUEST[ $param_id ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ $param_id ] ) ) : array();
 			}
 
-			if ( isset( $_REQUEST['wcj_add_new_product'] ) ) {
+			if ( $wpnonce && isset( $_REQUEST['wcj_add_new_product'] ) ) {
 				$validate_args = $this->validate_args( $args, $atts );
 				if ( true === ( $validate_args ) ) {
 					$result = $this->wc_add_new_product( $args, $atts );
@@ -471,6 +468,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 
 			$footer_html .= '<input type="submit" class="button" name="wcj_add_new_product" value="' . ( ( 0 === $atts['product_id'] ) ?
 			__( 'Add', 'woocommerce-jetpack' ) : __( 'Edit', 'woocommerce-jetpack' ) ) . '">';
+			$footer_html .= wp_nonce_field( 'wcj_add_new_product', 'wcj_add_new_product-nonce' );
 			$footer_html .= '</form>';
 
 			return $notice_html . $header_html . $input_fields_html . $footer_html;

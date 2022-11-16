@@ -1,10 +1,10 @@
 === Booster for WooCommerce ===
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
-Requires at least: 4.4
-Tested up to: 6.0.3
-Requires PHP: 7.2
-Stable tag: 5.6.7
+Requires at least: 5.8
+Tested up to: 6.1
+Requires PHP: 8.0
+Stable tag: 5.6.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,21 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 5.6.8 16/11/2022 =
+
+* FIXED - CART & CHECKOUT - EU VAT Number - Replace endpoint to validate EU VAT number for without soap method.
+* FIXED - CART & CHECKOUT - EU VAT Number - Fixed tools UI.
+* FIXED - EMAILS & MISC. - Admin Tools - Fixed admin order page issue when order item value is array.
+* FIXED - EMAILS & MISC. - Reports - Fixed Product Sales (Monthly) report not highlight selected year.
+* FIXED - BUTTON & PRICE LABELS - Custom Price Labels- Escape the HTML content from the "per page product meta box" value.
+* FIXED - SHIPPING & ORDERS- Order Quantities - Fixed Maximum allowed quantity issue.
+* FIXED - Added Security vulnerability fixes - Multiple CSRF.
+* FIXED - Added Security vulnerability fixes.
+* FIXED - Current timestamp issue - Created new function wcj_get_timestamp_date_from_gmt() and replace with gmdate( 'U' ).
+* FIXED - PHP Warning:  asort() expects parameter 1 to be array, string given in .../includes/shortcodes/class-wcj-general-shortcodes.php on line 501
+* WooCommerce 7.1.0 tested
+* WordPress 6.1 Tested
 
 = 5.6.7 27/10/2022 =
 

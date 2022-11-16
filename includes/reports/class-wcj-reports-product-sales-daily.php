@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,11 +47,11 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * Get_report_args.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   2.9.0
 		 */
 		public function get_report_args() {
-			$current_time        = (int) gmdate( 'U' );
+			$current_time        = wcj_get_timestamp_date_from_gmt();
 			$wpnonce             = isset( $_REQUEST['booster_products_sales_daily_filter-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['booster_products_sales_daily_filter-nonce'] ), 'booster_products_sales_daily_filter' ) : false;
 			$this->start_date    = $wpnonce && isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : gmdate( 'Y-m-d', strtotime( '-7 days', $current_time ) );
 			$this->end_date      = isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : gmdate( 'Y-m-d', $current_time );
@@ -171,12 +171,12 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * Output_report_header.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   2.9.0
 		 */
 		public function output_report_header() {
 			// Settings link and dates menu.
-			$settings_link = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=reports' ) . '">' .
+			$settings_link = '<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=reports' ) . '">' .
 			'<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
 			$menu          = '';
 			$menu         .= '<ul class="subsubsub">';
@@ -196,15 +196,16 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 			$menu .= '</ul>';
 			$menu .= '<br class="clear">';
 			// Product and date filter form.
-			$wpnonce      = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ) ) : true;
-			$pages        = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-			$tabs         = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
-			$reports      = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:disable WordPress.Security.NonceVerification
+			$pages   = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$tabs    = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			$reports = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification
 			$filter_form  = '';
 			$filter_form .= '<form method="get" action="">';
-			$filter_form .= '<input type="hidden" name="page" value="' . $pages . '" />';
-			$filter_form .= '<input type="hidden" name="tab" value="' . $tabs . '" />';
-			$filter_form .= '<input type="hidden" name="report" value="' . $reports . '" />';
+			$filter_form .= '<input type="hidden" name="page" value="' . esc_attr( $pages ) . '" />';
+			$filter_form .= '<input type="hidden" name="tab" value="' . esc_attr( $tabs ) . '" />';
+			$filter_form .= '<input type="hidden" name="report" value="' . esc_attr( $reports ) . '" />';
 			$filter_form .= '<label style="font-style:italic;" for="start_date">' . __( 'From:', 'woocommerce-jetpack' ) . '</label> ' .
 			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js( 'Y-m-d' ) . '" name="start_date" title="" value="' . $this->start_date . '" />';
 			$filter_form .= ' ';

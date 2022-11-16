@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.4.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -39,12 +39,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		/**
 		 * Get_location.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.4.0
 		 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
 		 * @param string $type defines the type.
 		 */
 		public function get_location( $type ) {
+			// phpcs:disable WordPress.Security.NonceVerification
 			switch ( $type ) {
 				case 'country':
 					$country_type = wcj_get_option( 'wcj_gateways_by_location_country_type', 'billing' );
@@ -53,27 +54,28 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 						case 'by_ip':
 							return wcj_get_country_by_ip();
 						case 'shipping':
-							return ( ( ! empty( $_REQUEST['s_country'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_country'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+							return ( ( ! empty( $_REQUEST['s_country'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_country'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) );
 						default: // 'billing'
-							return ( ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+							return ( ! empty( $_REQUEST['country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['country'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country() : '' ) );
 					}
 				case 'state':
 					$state_type = wcj_get_option( 'wcj_gateways_by_location_state_type', 'billing' );
 					switch ( $state_type ) {
 						case 'shipping':
-							return ( ! empty( $_REQUEST['s_state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_state'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+							return ( ! empty( $_REQUEST['s_state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_state'] ) ) : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state() : '' ) );
 						default: // 'billing'
-							return ( ! empty( $_REQUEST['state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['state'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country_state() : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+							return ( ! empty( $_REQUEST['state'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['state'] ) ) : ( isset( WC()->customer ) ? wcj_customer_get_country_state() : '' ) );
 					}
 				case 'postcode':
 					$postcodes_type = wcj_get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' );
 					switch ( $postcodes_type ) {
 						case 'shipping':
-							return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['s_postcode'] ) ) ) : ( ! empty( $_REQUEST['shipping_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['shipping_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+							return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['s_postcode'] ) ) ) : ( ! empty( $_REQUEST['shipping_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['shipping_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
 						default: // 'billing'
-							return ( ! empty( $_REQUEST['postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['postcode'] ) ) ) : ( ! empty( $_REQUEST['billing_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['billing_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+							return ( ! empty( $_REQUEST['postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['postcode'] ) ) ) : ( ! empty( $_REQUEST['billing_postcode'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['billing_postcode'] ) ) ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
 					}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 
 		/**

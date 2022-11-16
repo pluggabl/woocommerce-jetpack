@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.6.0
+		 * @version 5.6.8
 		 * @todo    "orders report by meta" abstract class (see `WCJ_Reports_Product_Sales_Gateways`): by referer (`_wcj_track_users_http_referer`); by shipping (stored as item); by country (`_billing_country` or `_shipping_country`) etc.
 		 */
 		public function __construct() {
@@ -63,7 +63,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 					include_once 'reports/class-wcj-reports-customers.php';
 					include_once 'reports/class-wcj-reports-stock.php';
 					include_once 'reports/class-wcj-reports-product-sales-daily.php';
-					include_once 'reports/wcj-class-reports-sales-gateways.php';
+					include_once 'reports/class-wcj-reports-sales-gateways.php';
 					include_once 'reports/class-wcj-reports-sales.php';
 					include_once 'reports/class-wcj-reports-monthly-sales.php';
 
@@ -76,14 +76,15 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Add_custom_order_reports_ranges_by_month_to_admin_bar.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.2.4
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_custom_order_reports_ranges_by_month_to_admin_bar( $wp_admin_bar ) {
+			// phpcs:disable WordPress.Security.NonceVerification
 			$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
 			$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
-			$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( $is_reports && $is_orders_reports ) {
 
 				$parent = 'reports_orders_more_ranges_months';
@@ -97,7 +98,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 				$wp_admin_bar->add_node( $args );
 
 				$custom_range_nonce = wp_create_nonce( 'custom_range' );
-				$current_time       = (int) gmdate( 'U' );
+				$current_time       = wcj_get_timestamp_date_from_gmt();
 				for ( $i = 1; $i <= 12; $i++ ) {
 					$month_start_date = strtotime( gmdate( 'Y-m-01', $current_time ) . " -$i months" );
 					$month_num        = gmdate( 'm', $month_start_date );
@@ -128,13 +129,14 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		/**
 		 * Add_custom_order_reports_ranges_to_admin_bar.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
-			$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			$is_reports        = ( $wpnonce && isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
-			$is_orders_reports = ( $wpnonce && isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
+			// phpcs:disable WordPress.Security.NonceVerification
+			$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
+			$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( $is_reports && $is_orders_reports ) {
 
 				$parent = 'reports_orders_more_ranges';
@@ -174,10 +176,11 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 * Catch_arguments.
 		 */
 		public function catch_arguments() {
-			$wpnonce               = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			$this->report_id       = ( $wpnonce && isset( $_GET['report'] ) ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : 'on_stock';
-			$this->range_days      = $wpnonce && isset( $_GET['period'] ) ? sanitize_text_field( wp_unslash( $_GET['period'] ) ) : 30;
+			// phpcs:disable WordPress.Security.NonceVerification
+			$this->report_id       = ( isset( $_GET['report'] ) ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : 'on_stock';
+			$this->range_days      = isset( $_GET['period'] ) ? sanitize_text_field( wp_unslash( $_GET['period'] ) ) : 30;
 			$this->group_countries = ( 'customers_by_country_sets' === $this->report_id ) ? 'yes' : 'no';
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 
 		/**
@@ -185,40 +188,40 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_sales() {
 			$report = new WCJ_Reports_Sales();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
 		 * Get_report_products_sales_daily.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.9.0
 		 */
 		public function get_report_products_sales_daily() {
 			$report = new WCJ_Reports_Product_Sales_Daily();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
 		 * Get_report_monthly_sales.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.7
 		 */
 		public function get_report_monthly_sales() {
 			$report = new WCJ_Reports_Monthly_Sales();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
 		 * Get_report_orders_gateways.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.6.0
 		 */
 		public function get_report_orders_gateways() {
-			$report = new WCJ_Reports_Product_Sales_Gateways();
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$report = new WCJ_Reports_Sales_Gateways();
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**
@@ -231,7 +234,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 					'range_days' => $this->range_days,
 				)
 			);
-			echo $report->get_report_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report_html() );
 		}
 
 		/**
@@ -239,7 +242,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		 */
 		public function get_report_customers() {
 			$report = new WCJ_Reports_Customers( array( 'group_countries' => $this->group_countries ) );
-			echo $report->get_report(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $report->get_report() );
 		}
 
 		/**

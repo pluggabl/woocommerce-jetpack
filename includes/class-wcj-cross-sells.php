@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 				/* translators: %s: translation added */
 				__( 'You can also use %1$s shortcode to display cross-sells anywhere on your site, for example on checkout page with %2$s module.', 'woocommerce-jetpack' ),
 				'<code>[wcj_cross_sell_display]</code>',
-				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_and_checkout&section=checkout_custom_info' ) . '">' .
+				'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=cart_and_checkout&section=checkout_custom_info' ) . '">' .
 				__( 'Checkout Custom Info', 'woocommerce-jetpack' ) . '</a>'
 			);
 			$this->desc      = __( 'Customize cross-sells products display. Global Cross-sells (Plus); Exclude "Not in Stock" Products (Plus); Replace Cart Products with Cross-sells (Plus).', 'woocommerce-jetpack' );
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		/**
 		 * Replace_with_cross_sells_to_url.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.9.0
 		 * @todo    [dev] re-check variable products
 		 * @param string         $url defines the url.
@@ -94,7 +94,15 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 					}
 				}
 				if ( ! empty( $product_ids_to_remove ) ) {
-					$url = esc_url( add_query_arg( array( 'wcj-remove-from-cart' => implode( ',', array_unique( $product_ids_to_remove ) ) ), $url ) );
+					$url = esc_url_raw(
+						add_query_arg(
+							array(
+								'wcj-remove-from-cart' => implode( ',', array_unique( $product_ids_to_remove ) ),
+								'wcj-remove-from-cart-nonce' => wp_create_nonce( 'wcj-remove-from-cart' ),
+							),
+							$url
+						)
+					);
 				}
 			}
 			return $url;
@@ -103,17 +111,13 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		/**
 		 * Remove_from_cart_by_product_id.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   3.9.0
 		 * @todo    [dev] AJAX
 		 */
 		public function remove_from_cart_by_product_id() {
 			$_cart   = WC()->cart;
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-
+			$wpnonce = isset( $_GET['wcj-remove-from-cart-nonce'] ) ? wp_verify_nonce( sanitize_key( $_GET['wcj-remove-from-cart-nonce'] ), 'wcj-remove-from-cart' ) : false;
 			if ( isset( $_GET['wcj-remove-from-cart'] ) && $wpnonce ) {
 				if ( isset( $_cart ) ) {
 					$product_ids_to_remove = explode( ',', sanitize_text_field( wp_unslash( $_GET['wcj-remove-from-cart'] ) ) );
@@ -123,7 +127,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 						}
 					}
 				}
-				wp_safe_redirect( remove_query_arg( 'wcj-remove-from-cart' ) );
+				wp_safe_redirect( remove_query_arg( array( 'wcj-remove-from-cart', 'wcj-remove-from-cart-nonce' ) ) );
 				exit;
 			}
 		}

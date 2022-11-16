@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Product by User
  *
- * @version 5.6.0
+ * @version 5.6.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -85,7 +85,7 @@ $settings                = array_merge(
 			'desc'    => sprintf(
 				/* translators: %s: translators Added */
 				__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
-				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' )
+				admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 			),
 			'id'      => 'wcj_product_by_user_user_visibility',
 			'default' => array(),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -84,13 +84,13 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Admin_footer_text
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @param   string $footer_text get admin footer texts.
 		 */
 		public function admin_footer_text( $footer_text ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ) ) : true;
-			if ( isset( $_GET['page'] ) && $wpnonce ) {
-				if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
+			if ( isset( $_GET['page'] ) ) {
+				$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+				if ( 'wcj-tools' === $_GET['page'] || ( $wpnonce && 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
 					?>
 				<div class="wclj_tl_foot">
 				<div class="wcj-footer">
@@ -116,7 +116,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Add menu item
 		 *
-		 * @version 3.5.3
+		 * @version 5.6.8
 		 */
 		public function booster_menu() {
 			add_submenu_page(
@@ -124,7 +124,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				__( 'Booster for WooCommerce', 'woocommerce-jetpack' ),
 				__( 'Booster Settings', 'woocommerce-jetpack' ),
 				( 'yes' === wcj_get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
-				'admin.php?page=wc-settings&tab=jetpack'
+				wcj_admin_tab_url()
 			);
 		}
 
@@ -137,7 +137,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 */
 		public function action_links( $links ) {
 			$custom_links = array(
-				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
+				'<a href="' . admin_url( wcj_admin_tab_url() ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
 				'<a href="' . esc_url( 'https://booster.io/' ) . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 			);
 			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -377,17 +377,13 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Maybe_redirect_to_url.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @param string     $url defines the url.
 		 * @param bool | int $product_id defines the product_id.
 		 */
 		public function maybe_redirect_to_url( $url, $product_id = false ) {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
-
-			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) && $wpnonce ) {
+			// phpcs:disable WordPress.Security.NonceVerification
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) ) {
 				if ( ! $product_id ) {
 					$product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
 				}
@@ -399,6 +395,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 					return $redirect_url;
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 			if ( 'yes' === wcj_get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ) {
 				$redirect_url = wcj_get_option( 'wcj_add_to_cart_redirect_url', '' );
 				if ( '' === $redirect_url ) {

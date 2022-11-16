@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -52,7 +52,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 		/**
 		 * Register_script.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 */
 		public function register_script() {
 			if (
@@ -77,6 +77,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 					'ajax_object',
 					array(
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'wpnonce'  => wp_create_nonce( 'ajax-nonce' ),
 					)
 				);
 			}

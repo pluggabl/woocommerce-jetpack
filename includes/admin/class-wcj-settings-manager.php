@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -32,13 +32,21 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.2
 		 */
 		public function manage_options() {
 			if ( is_admin() ) {
 				if ( ! function_exists( 'current_user_can' ) || ! current_user_can( 'manage_options' ) ) {
 					return;
+				}
+				require_once ABSPATH . '/wp-admin/includes/file.php';
+				global $wp_filesystem;
+				WP_Filesystem();
+				$file_name = 'booster_settings.txt';
+				$file_path = wcj_get_wcj_uploads_dir() . DIRECTORY_SEPARATOR . $file_name;
+				if ( $wp_filesystem->exists( $file_path ) ) {
+					$wp_filesystem->delete( $file_path, true );
 				}
 				$wpnonce = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' );
 				if ( $wpnonce && isset( $_POST['booster_import_settings'] ) ) {
@@ -59,7 +67,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_import.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.2
 		 */
 		public function manage_options_import() {
@@ -72,8 +80,11 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 					unset( $_POST['booster_import_settings'] );
 				}
 			} else {
+				require_once ABSPATH . '/wp-admin/includes/file.php';
+				global $wp_filesystem;
+				WP_Filesystem();
 				$import_counter  = 0;
-				$import_settings = file_get_contents( sanitize_text_field( wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] ) ) ); //phpcs:ignore
+				$import_settings = $wp_filesystem->get_contents( sanitize_text_field( wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] ) ) );
 				$bom             = pack( 'H*', 'EFBBBF' );
 				$import_settings = preg_replace( "/^$bom/", '', $import_settings );
 				$import_settings = explode( PHP_EOL, preg_replace( '~(*BSR_ANYCRLF)\R~', PHP_EOL, $import_settings ) );
@@ -102,11 +113,14 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_export.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.5.2
 		 * @see     http://php.net/manual/en/function.header.php
 		 */
 		public function manage_options_export() {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			global $wp_filesystem;
+			WP_Filesystem();
 			$export_settings = array();
 			$export_counter  = array();
 			$wpnonce         = wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' );
@@ -126,9 +140,10 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 			}
 			$export_settings = wp_json_encode( $export_settings );
 			$export_settings = 'Booster for WooCommerce v' . wcj_get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
-			header( 'Content-Type: application/download' );
-			header( 'Content-Disposition: attachment; filename=booster_settings.txt' );
-			echo $export_settings; //phpcs:ignore
+			$file_name       = 'booster_settings.txt';
+			$file_path       = wcj_get_wcj_uploads_dir() . DIRECTORY_SEPARATOR . $file_name;
+			$wp_filesystem->put_contents( $file_path, $export_settings, FS_CHMOD_FILE );
+			WC_Download_Handler::download_file_force( $file_path, $file_name );
 			die();
 		}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.4.8
+		 * @version 5.6.8
 		 * @todo    (maybe) add `[wcj_product_stock_price]`
 		 */
 		public function __construct() {
@@ -128,7 +128,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				'width'                 => 0,
 				'height'                => 0,
 				'color'                 => 'black',
-				'meta_key'              => '', //phpcs:ignore
+				'meta_key'              => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			);
 
 			parent::__construct();
@@ -313,7 +313,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_time_since_last_sale.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.4.0
 		 * @param   array $atts Shortcode atts.
 		 */
@@ -346,7 +346,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 						if ( $item['product_id'] === $atts['product_id'] ) {
 							// Found sale!
 							/* translators: %s: search term */
-							return sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U', $order_id ), (int) gmdate( 'U' ) ) );
+							return sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U', $order_id ), wcj_get_timestamp_date_from_gmt() ) );
 						}
 					}
 				}

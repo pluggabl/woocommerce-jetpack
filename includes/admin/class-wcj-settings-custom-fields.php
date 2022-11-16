@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_custom_textarea.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.2.6
 		 * @param  Array $value Get values.
 		 */
@@ -258,14 +258,14 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			$custom_attributes = ( isset( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) ?
 			$value['custom_attributes'] : array();
 			$description       = ' <p class="description">' . $value['desc'] . '</p>';
-			$tooltip_html      = ( isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
+			$tooltip_html      = ( $value['desc_tip'] && isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 			// Output.
 			?>
 		<tr valign="top">
 			<th scope="row" class="titledesc">
 				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
-				<?php echo $tooltip_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> 
+				<?php echo wp_kses_post( $tooltip_html ); ?>
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php echo wp_kses_post( $description ); ?>
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_module_tools.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.2.3
 		 * @param  Array $value Get values.
 		 */
@@ -299,10 +299,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			</th>
 			<td class="forminp forminp-<?php echo wp_kses_post( $value['type'] ); ?>">
 				<?php
-				$wpnonce = true;
-				if ( function_exists( 'wp_verify_nonce' ) ) {
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ), 'woocommerce-settings' ) : true;
-				}
+				$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 				if ( $wpnonce && isset( $_GET['section'] ) ) {
 					do_action( 'wcj_module_tools_' . sanitize_text_field( wp_unslash( $_GET['section'] ) ) );}
 				?>
@@ -314,12 +311,12 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_custom_link.
 		 *
-		 * @version 2.7.0
+		 * @version 5.6.8
 		 * @since   2.2.8
 		 * @param  Array $value Get values.
 		 */
 		public function output_custom_link( $value ) {
-			$tooltip_html = ( isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
+			$tooltip_html = ( $value['desc_tip'] && isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 			?>
 		<tr valign="top">
@@ -336,13 +333,13 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_custom_number.
 		 *
-		 * @version 5.5.6
+		 * @version 5.6.8
 		 * @param  Array $value Get values.
 		 */
 		public function output_custom_number( $value ) {
 			$type         = 'number';
 			$option_value = get_option( $value['id'], $value['default'] );
-			$tooltip_html = ( isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
+			$tooltip_html = ( $value['desc_tip'] && isset( $value['desc_tip'] ) && '' !== $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 			$description  = ' <span class="description">' . $value['desc'] . '</span>';
 			$save_button  = apply_filters(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.6.7
+ * @version 5.6.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -169,14 +169,14 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Set_custom_page_title.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   4.3.0
 		 * @param string $title defines the title.
 		 */
 		public function set_custom_page_title( $title ) {
-			$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'woocommerce-settings' ) : true;
+			$wpnonce = isset( $_REQUEST['wcj_section_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_section_nonce'] ), 'wcj_section' ) : false;
 			if (
-				$wpnonce && (
+				! $wpnonce || (
 				! isset( $_GET['section'] ) ||
 				is_admin() ||
 				! in_the_loop() ||
@@ -228,7 +228,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Set_custom_page_url.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.8
 		 * @since   4.3.0
 		 * @todo    [dev] (maybe) customizable `section` (e.g. `wcj-section`)
 		 * @param string $url defines the url.
@@ -241,7 +241,11 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			if ( ! isset( $this->custom_pages ) ) {
 				$this->get_custom_pages();
 			}
-			return ( isset( $this->custom_pages[ $endpoint ] ) && empty( $this->custom_pages[ $endpoint ]['endpoint'] ) && ( $myaccount_page_id ) ? esc_url( add_query_arg( 'section', $endpoint, get_permalink( $myaccount_page_id ) ) ) : esc_url( $url ) );
+			$section_link_arg = array(
+				'section'           => $endpoint,
+				'wcj_section_nonce' => wp_create_nonce( 'wcj_section' ),
+			);
+			return ( isset( $this->custom_pages[ $endpoint ] ) && empty( $this->custom_pages[ $endpoint ]['endpoint'] ) && ( $myaccount_page_id ) ? esc_url( add_query_arg( $section_link_arg, get_permalink( $myaccount_page_id ) ) ) : esc_url( $url ) );
 		}
 
 		/**
@@ -283,7 +287,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Customize_dashboard.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   3.8.0
 		 * @see     woocommerce/templates/myaccount/dashboard.php
 		 * @param string | array $value defines the value.
@@ -299,7 +303,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					if ( false !== $endpoint ) {
 						$endpoint_tab = wp_list_filter( $this->custom_pages, array( 'endpoint' => $endpoint ) );
 					}
-					$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'woocommerce-settings' ) : true;
+					$wpnonce = isset( $_REQUEST['wcj_section_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_section_nonce'] ), 'wcj_section' ) : false;
 					$page_id = $wpnonce && sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) ? sanitize_text_field( wp_unslash( ( $_GET['section'] ) ) ) : ( false !== $endpoint ? array_keys( wp_list_pluck( $endpoint_tab, 'endpoint' ) )[0] : '' );
 					if ( isset( $this->custom_pages[ $page_id ] ) ) {
 						echo do_shortcode( $this->custom_pages[ $page_id ]['content'] );
@@ -431,7 +435,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Add_registration_extra_fields.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   3.6.0
 		 * @todo    (maybe) more fields to choose from (i.e. not only "user role" field)
 		 * @todo    (maybe) customizable position (check for other hooks or at least customizable priority on `woocommerce_register_form`)
@@ -439,7 +443,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 */
 		public function add_registration_extra_fields() {
 			$user_roles_options_html = '';
-			$wpnonce                 = isset( $_REQUEST['woocommerce-register-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce-register-nonce'] ), 'woocommerce-register' ) : true;
+			$wpnonce                 = isset( $_REQUEST['woocommerce-register-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce-register-nonce'] ), 'woocommerce-register' ) : false;
 			$current_user_role_input = ( $wpnonce && ! empty( $_POST['wcj_user_role'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_user_role'] ) ) :
 				get_option( 'wcj_my_account_registration_extra_fields_user_role_default', 'customer' );
 			$user_roles_options      = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
@@ -458,7 +462,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Process_registration_extra_fields.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.8
 		 * @since   3.6.0
 		 * @todo    (maybe) optional admin confirmation for some user roles (probably will need to create additional `...-pending` user roles)
 		 * @param id             $customer_id defines the customer_id.
@@ -466,7 +470,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		 * @param string         $password_generated defines the password_generated.
 		 */
 		public function process_registration_extra_fields( $customer_id, $new_customer_data, $password_generated ) {
-			$wpnonce = isset( $_REQUEST['woocommerce-register-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce-register-nonce'] ), 'woocommerce-register' ) : true;
+			$wpnonce = isset( $_REQUEST['woocommerce-register-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce-register-nonce'] ), 'woocommerce-register' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_user_role'] ) && '' !== $_POST['wcj_user_role'] ) {
 				$user_roles_options = wcj_get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
 				if ( ! empty( $user_roles_options ) && in_array( $_POST['wcj_user_role'], $user_roles_options, true ) ) {

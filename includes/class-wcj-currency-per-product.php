@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -424,20 +424,17 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		/**
 		 * Get_current_product_id_and_currency.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.8
 		 * @since   2.7.0
 		 */
 		public function get_current_product_id_and_currency() {
-			$wpnonce = true;
-			if ( function_exists( 'wp_verify_nonce' ) ) {
-				$wpnonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : '' ) ) : true;
-			}
 			// Get ID.
 			$the_id = false;
 			global $product;
-			if ( $product && $wpnonce ) {
+			if ( $product ) {
 				$the_id = wcj_get_product_id_or_variation_parent_id( $product );
 			}
+			// phpcs:disable WordPress.Security.NonceVerification
 			if ( ! $the_id && isset( $_REQUEST['product_id'] ) ) {
 				$the_id = isset( $_REQUEST['product_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['product_id'] ) ) : '';
 			}
@@ -447,6 +444,7 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 				parse_str( $post_form, $posted );
 				$the_id = isset( $posted['add-to-cart'] ) ? $posted['add-to-cart'] : 0;
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 			$eventon_wc_product_id = get_post_meta( get_the_ID(), 'tx_woocommerce_product_id', true );
 			if ( ! $the_id && '' !== ( $eventon_wc_product_id ) ) { // EventON plugin.
 				$the_id = $eventon_wc_product_id;

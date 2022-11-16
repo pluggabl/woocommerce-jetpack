@@ -1,7 +1,7 @@
 /**
  * Wcj-bookings.
  *
- * @version 5.6.2
+ * @version 5.6.8
  * @since   2.5.0
  *
  * @package Booster_For_WooCommerce/includes/JS
@@ -20,6 +20,7 @@ function wcj_show_loader(){
 function change_price() {
 	var date_from       = jQuery( "input[name='wcj_product_bookings_date_from']" ).val();
 	var date_to         = jQuery( "input[name='wcj_product_bookings_date_to']" ).val();
+	var wpnonce         = jQuery( "input[name='wcj_product_bookings-nonce']" ).val();
 	var is_variation_ok = true;
 	if ( jQuery( ".variations select" ).length ) {
 		if ( jQuery( ".variations select" ).find( ":selected" ).val() == '' ) {
@@ -40,7 +41,8 @@ function change_price() {
 				'action': 'price_change',
 				'product_id': product_id,
 				'date_from': date_from,
-				'date_to': date_to
+				'date_to': date_to,
+				'_wpnonce': wpnonce
 			};
 			wcj_show_loader();
 			jQuery( '.wcj-bookings-price-wrapper .wcj-value' ).html( '' );
