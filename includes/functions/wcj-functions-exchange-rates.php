@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 5.6.2
+ * @version 5.6.9-dev
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -187,7 +187,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	/**
 	 * Wcj_get_currency_exchange_rates_url_response.
 	 *
-	 * @version 35.6.2
+	 * @version 5.6.9-dev
 	 * @since   3.2.4
 	 * @todo    use where needed
 	 * @param   string $url defines the url.
@@ -195,12 +195,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	 */
 	function wcj_get_currency_exchange_rates_url_response( $url, $do_json_decode = true ) {
 		$response = '';
-		if ( 'no' === wcj_get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
-			$response = file_get_contents( $url ); //phpcs:ignore
-		} elseif ( function_exists( 'curl_version' ) ) {
-			$response = wp_remote_get( $url );
-			$response = $response['body'];
-		}
+		$response = wp_remote_get( $url );
+		$response = $response['body'];
 		return ( '' !== $response ? ( $do_json_decode ? json_decode( $response ) : $response ) : false );
 	}
 }

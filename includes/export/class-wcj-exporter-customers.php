@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Customers
  *
- * @version 5.6.2
+ * @version 5.6.9-dev
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 		/**
 		 * Export_customers.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.4.8
 		 * @param array $fields_helper defines the fields.
 		 */
@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 							$row[] = $customer->last_name;
 							break;
 						case 'customer-debug':
-							$row[] = '<pre>' . print_r( $customer, true ) . '</pre>'; // phpcs:ignore
+							$row[] = wp_json_encode( $customer );
 							break;
 					}
 				}

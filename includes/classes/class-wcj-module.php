@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.8
+ * @version 5.6.9-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -323,7 +323,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_validate_value.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.9.1
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -341,8 +341,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 1,
-					'meta_key'       => '_' . $this->meta_box_validate_value, //phpcs:ignore
-					'meta_value'     => 'yes', //phpcs:ignore
+					'meta_key'       => '_' . $this->meta_box_validate_value, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'yes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -358,23 +358,32 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Validate_value_add_notice_query_var.
 		 *
-		 * @version 5.6.3
+		 * @version 5.6.9-dev
 		 * @since   2.9.1
 		 * @param String $location Get location.
 		 */
 		public function validate_value_add_notice_query_var( $location ) {
 			remove_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
-			return esc_url_raw( add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location ) );
+			return esc_url_raw(
+				add_query_arg(
+					array(
+						'wcj_' . $this->id . '_meta_box_admin_notice' => true,
+						'wcj_' . $this->id . '_meta_box_admin_notice_nonce' => wp_create_nonce( 'wcj_' . $this->id . '_meta_box_admin_notice' ),
+					),
+					$location
+				)
+			);
 		}
 
 		/**
 		 * Validate_value_admin_notices.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.9.1
 		 */
 		public function validate_value_admin_notices() {
-			if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce = isset( $_REQUEST[ 'wcj_' . $this->id . '_meta_box_admin_notice_nonce' ] ) ? wp_verify_nonce( sanitize_key( $_REQUEST[ 'wcj_' . $this->id . '_meta_box_admin_notice_nonce' ] ), 'wcj_' . $this->id . '_meta_box_admin_notice' ) : false;
+			if ( ! $wpnonce || ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) {
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' .
@@ -458,7 +467,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.5.3
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -476,8 +485,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'post_type'      => 'product',
 					'post_status'    => 'any',
 					'posts_per_page' => 3,
-					'meta_key'       => '_' . $this->co, //phpcs:ignore
-					'meta_value'     => 'yes', //phpcs:ignore
+					'meta_key'       => '_' . $this->co, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'yes', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'post__not_in'   => array( get_the_ID() ),
 				);
 				$loop = new WP_Query( $args );
@@ -616,7 +625,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
 		 * @param int   $post_id Get post id.
@@ -624,7 +633,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 */
 		public function save_meta_box( $post_id, $__post ) {
 			// Check that we are saving with current metabox displayed.
-			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
 				return;
 			}
 			// Setup post (just in case...).

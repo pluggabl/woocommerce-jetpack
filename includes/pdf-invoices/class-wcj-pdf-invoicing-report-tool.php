@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 5.6.8
+ * @version 5.6.9-dev
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -111,12 +111,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Add Invoices Report tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.6.8
+		 * @version 5.6.9-dev
 		 */
 		public function create_invoices_report_tool() {
 			$wpnonce          = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			$result_message   = '';
-			$result_message  .= $this->notice;
 			$the_year         = ( $wpnonce && ! empty( $_POST['report_year'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_year'] ) ) : gmdate( 'Y' );
 			$the_month        = ( $wpnonce && ! empty( $_POST['report_month'] ) ) ? sanitize_text_field( wp_unslash( $_POST['report_month'] ) ) : gmdate( 'n' );
 			$the_invoice_type = ( $wpnonce && ! empty( $_POST['invoice_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['invoice_type'] ) ) : 'invoice';
@@ -131,6 +130,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			$html .= '<div class="wcj-setting-jetpack-body">';
 			$html .= '<div class="wrap">';
 			$html .= w_c_j()->modules['pdf_invoicing']->get_tool_header_html( 'invoices_report' );
+			$html .= $this->notice;
 			$html .= '<p><form method="post" action="">';
 			// Type.
 			$invoice_type_select_html = '<select name="invoice_type" class="widefat">';
@@ -192,13 +192,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Get_invoices_report_zip.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.3.10
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
 		 * @param int          $invoice_type_id Get invoice type id.
 		 */
 		public function get_invoices_report_zip( $year, $month, $invoice_type_id ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			global $wp_filesystem;
+			WP_Filesystem();
 			if ( ! class_exists( 'ZipArchive' ) ) {
 				return sprintf(
 					/* translators: %s: search term */
@@ -229,9 +232,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 					'post_status'    => 'any',
 					'posts_per_page' => $block_size,
 					'orderby'        => 'meta_value_num',
-					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', //phpcs:ignore
+					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					'order'          => 'ASC',
-					'meta_query'     => array( //phpcs:ignore
+					'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
 							'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
 							'value'   => array( $first_minute, $last_minute ),
@@ -262,22 +265,10 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			if ( $archive_is_empty ) {
 				return $this->get_no_documents_found_message( $year, $month, $invoice_type_id );
 			}
-
-			header( 'Content-Disposition: attachment; filename=' . rawurlencode( $zip_file_name ) );
-			header( 'Content-Type: application/download' );
-			header( 'Content-Description: File Transfer' );
-			header( 'Content-Length: ' . filesize( $zip_file_path ) );
-			flush(); // this doesn't really matter.
-			$fp = fopen( $zip_file_path, 'r' ); //phpcs:ignore
-			if ( false !== ( $fp ) ) {
-				while ( ! feof( $fp ) ) {
-					echo fread( $fp, 65536 ); //phpcs:ignore
-					flush(); // this is essential for large downloads.
-				}
-				fclose( $fp ); //phpcs:ignore
-				exit();
+			if ( $wp_filesystem->exists( $zip_file_path ) ) {
+				WC_Download_Handler::download_file_force( $zip_file_path, $zip_file_name );
 			} else {
-				die( esc_html__( 'Unexpected error', 'woocommerce-jetpack' ) );
+				return false;
 			}
 			return true;
 		}
@@ -353,7 +344,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Invoices Report Data function.
 		 *
-		 * @version 5.6.3
+		 * @version 5.6.9-dev
 		 * @since   2.5.7
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -384,9 +375,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 					'post_status'    => 'any',
 					'posts_per_page' => $block_size,
 					'orderby'        => 'meta_value_num',
-					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', //phpcs:ignore
+					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 					'order'          => 'ASC',
-					'meta_query'     => array( //phpcs:ignore
+					'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
 							'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
 							'value'   => array( $first_minute, $last_minute ),

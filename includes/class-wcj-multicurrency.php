@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.6.8
+ * @version 5.6.9-dev
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -1053,12 +1053,22 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Get_default_currency.
 		 *
-		 * @version 5.3.4
+		 * @version 5.6.9-dev
 		 * @since   5.3.4
 		 *
 		 * @return bool
 		 */
 		public function get_default_currency() {
+			$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+			if ( ! empty( $module_roles ) ) {
+				$current_user_role = wcj_get_current_user_first_role();
+				if ( in_array( $current_user_role, $module_roles, true ) ) {
+					$currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
+					if ( '' !== $currency && null !== $currency ) {
+						return $currency;
+					}
+				}
+			}
 			$default_currency_number = wcj_get_option( 'wcj_multicurrency_default_currency', 1 );
 			$currency                = wcj_get_option( 'wcj_multicurrency_currency_' . $default_currency_number, apply_filters( 'woocommerce_currency', get_option( 'woocommerce_currency' ) ) );
 			return $currency;

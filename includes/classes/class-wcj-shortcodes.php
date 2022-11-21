@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 5.6.2
+ * @version 5.6.9-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -91,7 +91,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_shortcode.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 		 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 		 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -259,11 +259,12 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 			}
 
 			// Check if billing country by arg is ok.
+			// phpcs:disable WordPress.Security.NonceVerification
 			if ( '' !== $atts['billing_country'] ) {
-				if ( ! isset( $_GET['order_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( ! isset( $_GET['order_id'] ) ) {
 					return '';
 				}
-				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) );
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
 				if ( ! isset( $billing_contry ) ) {
@@ -277,10 +278,10 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 			}
 			// Check if billing country by arg is ok (not in...).
 			if ( '' !== $atts['not_billing_country'] ) {
-				if ( ! isset( $_GET['order_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( ! isset( $_GET['order_id'] ) ) {
 					return '';
 				}
-				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+				$order_id       = sanitize_text_field( wp_unslash( $_GET['order_id'] ) );
 				$orders         = new WC_Order( $order_id );
 				$billing_contry = $orders->get_billing_country();
 				if ( isset( $billing_contry ) ) {
@@ -293,21 +294,22 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 
 			// Check if payment method by arg is ok.
 			if ( '' !== $atts['payment_method'] ) {
-				if ( ! isset( $_GET['payment_method'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( ! isset( $_GET['payment_method'] ) ) {
 					return '';
 				}
-				if ( ! in_array( $_GET['payment_method'], $this->custom_explode( $atts['payment_method'] ), true ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( ! in_array( $_GET['payment_method'], $this->custom_explode( $atts['payment_method'] ), true ) ) {
 					return '';
 				}
 			}
 			// Check if payment method by arg is ok (not in...).
 			if ( '' !== $atts['not_payment_method'] ) {
-				if ( isset( $_GET['payment_method'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-					if ( in_array( $_GET['payment_method'], $this->custom_explode( $atts['not_payment_method'] ), true ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( isset( $_GET['payment_method'] ) ) {
+					if ( in_array( $_GET['payment_method'], $this->custom_explode( $atts['not_payment_method'] ), true ) ) {
 						return '';
 					}
 				}
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 
 			// Additional (child class specific) checks.
 			if ( ! $this->extra_check( $atts ) ) {

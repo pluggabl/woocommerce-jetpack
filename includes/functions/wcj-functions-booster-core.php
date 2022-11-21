@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Booster Core
  *
- * @version 5.6.2
+ * @version 5.6.9-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -54,7 +54,7 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 	/**
 	 * Checks if the current request is a WP REST API request.
 	 *
-	 * @version 5.6.2
+	 * @version 5.6.9-dev
 	 * @since   4.3.0
 	 *
 	 * @author  matzeeable
@@ -65,7 +65,7 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 		$prefix = rest_get_url_prefix();
 		if (
 			defined( 'REST_REQUEST' ) && REST_REQUEST || // After WP_REST_Request initialisation.
-			isset( $_GET['rest_route'] ) && 0 === strpos( trim( $_GET['rest_route'], '\\/' ), $prefix, 0 ) // phpcs:ignore
+			isset( $_GET['rest_route'] ) && 0 === strpos( trim( wp_unslash( $_GET['rest_route'] ), '\\/' ), $prefix, 0 ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 			// Support "plain" permalink settings.
 		) {
 			return true;

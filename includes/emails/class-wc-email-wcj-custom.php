@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 5.6.2
+ * @version 5.6.9-dev
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * Proxy to parent's get_option and attempt to localize the result using gettext.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.4.1
 		 * @param   string $key posted key.
 		 * @param   mixed  $empty_value get empty value.
@@ -106,7 +106,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		public function get_option( $key, $empty_value = null ) {
 			$grandparent = get_parent_class( 'WC_Email' );
 			$value       = $grandparent::get_option( $key, $empty_value );
-			return ( is_array( $value ) ) ? $value : apply_filters( 'woocommerce_email_get_option', __( $value ), $this, $value, $key, $empty_value ); // phpcs:ignore
+			return ( is_array( $value ) ) ? $value : apply_filters( 'woocommerce_email_get_option', $value, $this, $value, $key, $empty_value );
 		}
 
 		/**

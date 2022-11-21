@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 5.6.8
+ * @version 5.6.9-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -329,7 +329,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Get_invoices_zip.
 		 *
-		 * @version 3.5.0
+		 * @version 5.6.9-dev
 		 * @since   2.5.7
 		 * @todo    (maybe) add timestamp to filename
 		 * @todo    add `ZipArchive` fallback
@@ -362,7 +362,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			}
 			$zip->close();
 			// Sending Zip.
-			wcj_send_file( $zip_file_name, $zip_file_path, 'zip', true );
+			WC_Download_Handler::download_file_force( $zip_file_path, $zip_file_name );
 			return '';
 		}
 
@@ -505,7 +505,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Generate_pdf_on_init.
 		 *
-		 * @version 4.3.1
+		 * @version 5.6.9-dev
 		 */
 		public function generate_pdf_on_init() {
 			// Check if all is OK.
@@ -514,7 +514,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			}
 			// Get PDF.
 			$the_invoice = wcj_get_pdf_invoice( $this->order_id, $this->invoice_type_id );
-			$dest        = ( true === $this->save_as_pdf ? 'D' : 'I' );
+			$dest        = ( '1' === $this->save_as_pdf ? 'D' : 'I' );
 			if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_output_buffer', 'no' ) ) {
 				ob_clean();
 				ob_flush();

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 5.6.2
+ * @version 5.6.9-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -29,7 +29,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		 * @param int    $order_id Get order id.
 		 * @param string $invoice_type Get invoice type.
 		 */
-		public function __construct( $order_id, $invoice_type ) { //phpcs:ignore
+		public function __construct( $order_id, $invoice_type ) {
+			$this->wcj_invoice_type = $invoice_type;
 			parent::__construct( $order_id, $invoice_type );
 		}
 
@@ -183,7 +184,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Maybe_replace_tcpdf_method_params.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   3.6.0
 		 * @param mixed $html Get pdf html.
 		 * @param mixed $pdf Get pdfs.
@@ -197,7 +198,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			while ( false !== $start ) {
 				$params_start  = $start + $start_str_length;
 				$params_length = strpos( $html, $end_str ) - $params_start;
-				$params        = $pdf->serializeTCPDFtagParameters( unserialize( substr( $html, $params_start, $params_length ) ) ); //phpcs:ignore
+				$params        = $pdf->serializeTCPDFtagParameters( json_decode( substr( $html, $params_start, $params_length ) ) );
 				$html          = substr_replace( $html, 'params="' . $params . '"', $start, $start_str_length + $params_length + $end_str_length );
 			}
 			return $html;
@@ -248,11 +249,14 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Get_pdf.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @todo    [dev] (maybe) `die()` on success
 		 * @param string $dest define dest.
 		 */
 		public function get_pdf( $dest ) {
+			global $wp_filesystem;
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
 			$pdf     = $this->prepare_pdf();
 			$html    = $this->get_html( $this->order_id, $pdf );
 			$styling = '<style>' . wcj_get_option(
@@ -264,7 +268,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$file_name  = $this->get_file_name();
 			if ( 'F' === $dest ) {
 				$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
-				if ( ! file_put_contents( $file_path, $result_pdf ) ) { //phpcs:ignore
+				if ( ! $wp_filesystem->put_contents( $file_path, $result_pdf, FS_CHMOD_FILE ) ) {
 					return null;
 				}
 				return $file_path;
@@ -281,26 +285,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				}
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 					header( 'Content-Length: ' . strlen( $result_pdf ) );
-					echo $result_pdf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo $result_pdf;
 				} else {
 					$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
-					if ( ! file_put_contents( $file_path, $result_pdf ) ) { //phpcs:ignore
+					if ( ! $wp_filesystem->put_contents( $file_path, $result_pdf, FS_CHMOD_FILE ) ) {
 						return null;
 					}
 					if ( apply_filters( 'wcj_invoicing_header_content_length', true ) ) {
 						header( 'Content-Length: ' . filesize( $file_path ) );
 					}
-					flush(); // this doesn't really matter.
-					$fp = fopen( $file_path, 'r' ); //phpcs:ignore
-					if ( false !== ( $fp ) ) {
-						while ( ! feof( $fp ) ) {
-							echo fread( $fp, 65536 ); //phpcs:ignore
-							flush(); // this is essential for large downloads.
-						}
-						fclose( $fp ); //phpcs:ignore
-					} else {
-						die( esc_html__( 'Unexpected error', 'woocommerce-jetpack' ) );
-					}
+					echo $wp_filesystem->get_contents( $file_path );
 				}
 			}
 			return null;

@@ -1,4 +1,13 @@
-<?php //phpcs:ignore ?>
+<?php
+/**
+ * Booster for WooCommerce - Custom Email Plain Template
+ *
+ * @version 5.6.9-dev
+ * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes/email
+ */
+
+?>
 Order Date: [wcj_order_date]
 Order Nr.: [wcj_order_number]
 Buyer: [wcj_order_billing_address]
