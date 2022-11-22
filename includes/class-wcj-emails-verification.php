@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 5.6.8
+ * @version 5.6.9-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -147,13 +147,13 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		/**
 		 * Prevent_user_login_automatically_after_register.
 		 *
-		 * @version 5.5.9
+		 * @version 5.6.9-dev
 		 * @since   2.8.0
 		 * @param string $redirect_to defines the redirect_to.
 		 */
 		public function prevent_user_login_automatically_after_register( $redirect_to ) {
 			wp_logout();
-			return esc_url( add_query_arg( 'wcj_activate_account_message', '', $redirect_to ) );
+			return esc_url_raw( add_query_arg( 'wcj_activate_account_message', '', $redirect_to ) );
 		}
 
 		/**
@@ -191,7 +191,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		/**
 		 * Reset_and_mail_activation_link.
 		 *
-		 * @version 5.6.8
+		 * @version 5.6.9-dev
 		 * @since   2.8.0
 		 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 		 * @param int $user_id defines the user_id.
@@ -202,7 +202,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 			$url           = wp_nonce_url(
 				add_query_arg(
 					'wcj_verify_email',
-					base64_encode(
+					base64_encode( // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 						wp_json_encode(
 							array(
 								'id'   => $user_id,
@@ -211,7 +211,8 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 						)
 					),
 					wc_get_page_permalink( 'myaccount' )
-				)
+				),
+				'wcj_verify_email'
 			);
 			$email_content = do_shortcode(
 				apply_filters(
@@ -248,13 +249,14 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		/**
 		 * Process_email_verification.
 		 *
-		 * @version 5.6.8
+		 * @version 5.6.9-dev
 		 * @since   2.8.0
 		 */
 		public function process_email_verification() {
+			$wcj_verify_email_wpnonce = isset( $_GET['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'wcj_verify_email' ) : false;
 			if ( isset( $_GET['wcj_verified_email'] ) ) {
 				if ( function_exists( 'wc_add_notice' ) ) {
-					$data = json_decode( base64_decode( sanitize_email( wp_unslash( $_GET['wcj_verified_email'] ) ) ), true );
+					$data = json_decode( base64_decode( sanitize_text_field( wp_unslash( $_GET['wcj_verified_email'] ) ) ), true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 					if ( ! empty( $data['id'] ) && ! empty( $data['code'] ) && get_user_meta( $data['id'], 'wcj_activation_code', true ) === $data['code'] ) {
 						wc_add_notice(
 							do_shortcode(
@@ -266,8 +268,8 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 						);
 					}
 				}
-			} elseif ( isset( $_GET['wcj_verify_email'] ) ) {
-				$data = json_decode( base64_decode( sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ) ), true );
+			} elseif ( $wcj_verify_email_wpnonce && isset( $_GET['wcj_verify_email'] ) ) {
+				$data = json_decode( base64_decode( sanitize_text_field( wp_unslash( $_GET['wcj_verify_email'] ) ) ), true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 				if ( ! empty( $data['id'] ) && ! empty( $data['code'] ) && get_user_meta( $data['id'], 'wcj_activation_code', true ) === $data['code'] ) {
 					update_user_meta( $data['id'], 'wcj_is_activated', '1' );
 					if ( 'yes' === wcj_get_option( 'wcj_emails_verification_redirect_on_success', 'yes' ) ) {

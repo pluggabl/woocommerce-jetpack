@@ -414,32 +414,33 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	/**
 	 * Wcj_ecb_get_exchange_rate.
 	 *
-	 * @version 4.3.0
+	 * @version 5.6.9-dev
 	 * @since   2.6.0
 	 * @param   string | int $currency_from defines the currency_from.
 	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_ecb_get_exchange_rate( $currency_from, $currency_to ) {
 		$final_rate = false;
+		$cube       = 'Cube';
 		if ( function_exists( 'simplexml_load_file' ) ) {
 			if ( WP_DEBUG === true ) {
 				$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
 			} else {
 				$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
 			}
-			if ( isset( $xml->cube->cube->cube ) ) {
+			if ( isset( $xml->$cube->$cube->$cube ) ) {
 				if ( 'EUR' === $currency_from ) {
 					$eur_currency_from_rate = 1;
 				}
 				if ( 'EUR' === $currency_to ) {
 					$eur_currency_to_rate = 1;
 				}
-				foreach ( $xml->cube->cube->cube as $currency_rate ) {
+				foreach ( $xml->$cube->$cube->$cube as $currency_rate ) {
 					$currency_rate = $currency_rate->attributes();
-					if ( ! isset( $eur_currency_from_rate ) && $currency_from === $currency_rate->currency ) {
+					if ( ! isset( $eur_currency_from_rate ) && $currency_from === (string) $currency_rate->currency ) {
 						$eur_currency_from_rate = (float) $currency_rate->rate;
 					}
-					if ( ! isset( $eur_currency_to_rate ) && $currency_to === $currency_rate->currency ) {
+					if ( ! isset( $eur_currency_to_rate ) && $currency_to === (string) $currency_rate->currency ) {
 						$eur_currency_to_rate = (float) $currency_rate->rate;
 					}
 				}

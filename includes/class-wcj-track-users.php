@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 5.6.8
+ * @version 5.6.9-dev
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -216,7 +216,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Add_http_referer_to_order.
 		 *
-		 * @version 5.6.8
+		 * @version 5.6.9-dev
 		 * @since   2.9.1
 		 * @todo    add "all orders by referer type" stats
 		 * @param int $order_id defines the order_id.
@@ -225,13 +225,15 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			global $wpdb;
 			$table_name   = $wpdb->prefix . 'wcj_track_users';
 			$http_referer = 'N/A';
-			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ) {// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ) {
 				$user_ip = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() );
-				$result  = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s ORDER BY time DESC", $user_ip ) ); // WPCS: db call ok and cache ok.
+				$result  = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wcj_track_users WHERE ip = %s ORDER BY time DESC", $user_ip ) );
 				if ( $result ) {
 					$http_referer = $result->referer;
 				}
 			}
+			// phpcs:enable
 			update_post_meta( $order_id, '_wcj_track_users_http_referer', $http_referer );
 		}
 
@@ -412,7 +414,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users.
 		 *
-		 * @version 5.6.8
+		 * @version 5.6.9-dev
 		 * @since   2.9.1
 		 * @todo    (maybe) customizable `$time_expired`
 		 * @todo    (maybe) optionally do not track selected user roles (e.g. admin)
@@ -455,7 +457,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			// HTTP referrer.
 			$http_referer = ( isset( $_POST['wcj_http_referer'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_http_referer'] ) ) : 'N/A' );
 			// Add row to DB table.
-			$wpdb->insert(
+			$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 				$table_name,
 				array(
 					'time'    => current_time( 'mysql' ),
@@ -464,7 +466,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 					'ip'      => $user_ip,
 					'referer' => $http_referer,
 				)
-			);// WPCS: db call ok.
+			);
 			die();
 		}
 

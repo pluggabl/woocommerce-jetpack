@@ -917,7 +917,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Gets all products, or products with variations containing meta '_wcj_multicurrency_per_product_regular_price_{currency}' or '_wcj_multicurrency_per_product_sale_price_{currency}'.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   4.5.0
 		 *
 		 * @param int | string $currency defines the currency.
@@ -930,7 +930,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			}
 
 			global $wpdb;
-			$product_ids = $wpdb->get_col(
+			$product_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare(
 					"SELECT p.ID
 					FROM {$wpdb->posts} AS p
@@ -942,7 +942,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 					'_wcj_multicurrency_per_product_regular_price_' . esc_html( $currency ),
 					'_wcj_multicurrency_per_product_sale_price_' . esc_html( $currency )
 				)
-			); // WPCS: db call ok and cache ok.
+			);
 
 			return $product_ids;
 		}

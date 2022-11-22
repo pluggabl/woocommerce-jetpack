@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
- * @version 5.6.8
+ * @version 5.6.9-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -150,7 +150,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_reset_meta.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   3.4.0
 		 * @todo    order items meta
 		 * @todo    `... LIKE 'wcj_%'`
@@ -158,7 +158,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		public function manage_options_reset_meta() {
 			global $wpdb, $wcj_notice;
 			$delete_counter_meta = 0;
-			$plugin_meta         = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // WPCS: db call ok and cache ok.
+			$plugin_meta         = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			foreach ( $plugin_meta as $meta ) {
 				delete_post_meta( $meta->post_id, $meta->meta_key );
 				$delete_counter_meta++;
@@ -170,13 +170,13 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_reset.
 		 *
-		 * @version 5.6.2
+		 * @version 5.6.9-dev
 		 * @since   2.5.2
 		 */
 		public function manage_options_reset() {
 			global $wpdb, $wcj_notice;
 			$delete_counter_options = 0;
-			$plugin_options         = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%'" ); // WPCS: db call ok and cache ok.
+			$plugin_options         = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			foreach ( $plugin_options as $option ) {
 				delete_option( $option->option_name );
 				delete_site_option( $option->option_name );
