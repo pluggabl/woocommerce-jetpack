@@ -285,7 +285,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				}
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 					header( 'Content-Length: ' . strlen( $result_pdf ) );
-					echo $result_pdf;
+					echo $result_pdf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				} else {
 					$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
 					if ( ! $wp_filesystem->put_contents( $file_path, $result_pdf, FS_CHMOD_FILE ) ) {
@@ -294,7 +294,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 					if ( apply_filters( 'wcj_invoicing_header_content_length', true ) ) {
 						header( 'Content-Length: ' . filesize( $file_path ) );
 					}
-					echo $wp_filesystem->get_contents( $file_path );
+					echo $wp_filesystem->get_contents( $file_path ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 			return null;
