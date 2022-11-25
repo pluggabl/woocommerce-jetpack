@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Customers
  *
- * @version 5.6.7
+ * @version 5.6.9-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -135,7 +135,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		/**
 		 * Get_data function.
 		 *
-		 * @version 5.6.7
+		 * @version 5.6.9-dev
 		 * @param Array  $data Get data.
 		 * @param int    $total_customers Get total number of customers.
 		 * @param string $report_type Get all_countries.
@@ -144,8 +144,9 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 			$html = '';
 			if ( 'all_countries' === $report_type ) {
 				$html .= '<h5>' . __( 'Total customers', 'woocommerce-jetpack' ) . ': ' . $total_customers . '</h5>';
-				$html .= '<table class="widefat" style="width:100% !important;"><tbody>';
-				$html .= '<tr>';
+				$html .= '<div id="poststuff" class="wcj-reports-wide oocommerce-reports-wide"><div class="inside">';
+				$html .= '<table class="widefat striped" style="width:100% !important;"><tbody>';
+				$html .= '<tr class="wcj-row wcj-row0 wcj-row-even">';
 				$html .= '<th></th>';
 				$html .= '<th>' . __( 'Country Code', 'woocommerce-jetpack' ) . '</th>';
 				$html .= '<th>' . __( 'Customers Count', 'woocommerce-jetpack' ) . '</th>';
@@ -182,7 +183,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 					$html                 .= ( 2 === strlen( $country_code ) ) ? '<td>' . $country_flag_img_link . '</td>' : '<td></td>';
 					$html                 .= '</tr>';
 				}
-				$html .= '</tbody></table>';
+				$html .= '</tbody></table></div></div>';
 			} else { // single country.
 				$country_code = $report_type;
 				$html        .= '<h5>' . __( 'Report for:', 'woocommerce-jetpack' ) . ' ' . wcj_get_country_name_by_code( $country_code ) . ' [' . $country_code . '] </h5>';
