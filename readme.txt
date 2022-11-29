@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.1
 Requires PHP: 7.2
-Stable tag: 6.0.0-dev
+Stable tag: 6.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -275,7 +275,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
-= 6.0.0-dev 30/11/2022 =
+= 6.0.0 30/11/2022 =
 
 * FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed error PHP Deprecated: Function WC_Order_Item_Product::offsetSet is deprecated since version...
 * FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed calculation issue in wcj_order_item_total_refunded shortcode.

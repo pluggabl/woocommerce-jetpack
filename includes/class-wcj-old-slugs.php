@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Old Slugs
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 		/**
 		 * Create_old_slugs_tool.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 */
 		public function create_old_slugs_tool() {
 

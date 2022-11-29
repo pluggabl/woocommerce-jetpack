@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Email HTML Template
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/email
  */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -147,7 +147,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		/**
 		 * Prevent_user_login_automatically_after_register.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.8.0
 		 * @param string $redirect_to defines the redirect_to.
 		 */
@@ -191,7 +191,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		/**
 		 * Reset_and_mail_activation_link.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.8.0
 		 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 		 * @param int $user_id defines the user_id.
@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		/**
 		 * Process_email_verification.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.8.0
 		 */
 		public function process_email_verification() {

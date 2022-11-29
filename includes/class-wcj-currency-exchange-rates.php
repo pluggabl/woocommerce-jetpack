@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency Exchange Rates
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 */
 		public function __construct() {
 

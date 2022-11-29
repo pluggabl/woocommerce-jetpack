@@ -2,7 +2,7 @@
 /**
  * Variable product add to cart - radio inputs
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package WooCommerce/Templates

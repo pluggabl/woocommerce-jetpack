@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Get_export_orders_row.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.5.9
 		 * @param array  $fields_ids defines the order field ids.
 		 * @param int    $order_id defines the order id.

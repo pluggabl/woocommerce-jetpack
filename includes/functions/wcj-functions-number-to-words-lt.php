@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Numbers to Words
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -12,7 +12,7 @@ if ( ! function_exists( 'convert_number_to_words_lt' ) ) {
 	/**
 	 * Convert_number_to_words_lt.
 	 *
-	 * @version 6.0.0-dev
+	 * @version 6.0.0
 	 * @since   2.5.9
 	 * @return  string
 	 * @param int $number Get Number.

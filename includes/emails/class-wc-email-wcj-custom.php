@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * Proxy to parent's get_option and attempt to localize the result using gettext.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.4.1
 		 * @param   string $key posted key.
 		 * @param   mixed  $empty_value get empty value.

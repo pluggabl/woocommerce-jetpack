@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -150,7 +150,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_reset_meta.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   3.4.0
 		 * @todo    order items meta
 		 * @todo    `... LIKE 'wcj_%'`
@@ -170,7 +170,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_reset.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.5.2
 		 */
 		public function manage_options_reset() {

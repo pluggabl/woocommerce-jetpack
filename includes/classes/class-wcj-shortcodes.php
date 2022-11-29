@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -91,7 +91,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_shortcode.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 		 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 		 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result

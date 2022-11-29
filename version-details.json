@@ -1,5 +1,5 @@
 {
-    "0" : "= 6.0.0-dev 30/11/2022 =",
+    "0" : "= 6.0.0 30/11/2022 =",
     "1" : "* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed error PHP Deprecated: Function WC_Order_Item_Product::offsetSet is deprecated since version...",
     "2" : "* FIXED - PRICES & CURRENCIES - Currency Exchange Rates - Fixed exchange rate issue for European Central Bank (ECB) exchange rate server response.",
     "3" : "* FIXED - Added Security vulnerability fixes",

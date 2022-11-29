@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -329,7 +329,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Get_invoices_zip.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.5.7
 		 * @todo    (maybe) add timestamp to filename
 		 * @todo    add `ZipArchive` fallback
@@ -505,7 +505,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Generate_pdf_on_init.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 */
 		public function generate_pdf_on_init() {
 			// Check if all is OK.

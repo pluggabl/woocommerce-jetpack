@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.4.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * Get_monthly_sales_report.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.4.7
 		 * @todo    (maybe) visible rows selection by admin (as option)
 		 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Reports
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 	/**
 	 * Wcj_get_product_sales_daily_report_columns.
 	 *
-	 * @version 6.0.0-dev
+	 * @version 6.0.0
 	 * @since   2.9.0
 	 */
 	function wcj_get_product_sales_daily_report_columns() {

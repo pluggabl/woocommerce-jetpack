@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -184,7 +184,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Maybe_replace_tcpdf_method_params.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   3.6.0
 		 * @param mixed $html Get pdf html.
 		 * @param mixed $pdf Get pdfs.
@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Get_pdf.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @todo    [dev] (maybe) `die()` on success
 		 * @param string $dest define dest.
 		 */

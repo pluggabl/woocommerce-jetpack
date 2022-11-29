@@ -495,7 +495,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_item_total_refunded.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.5.3
 		 * @param array $atts The user defined shortcode attributes.
 		 */

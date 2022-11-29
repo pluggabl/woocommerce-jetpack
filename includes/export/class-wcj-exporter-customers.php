@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Customers
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 		/**
 		 * Export_customers.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 * @since   2.4.8
 		 * @param array $fields_helper defines the fields.
 		 */

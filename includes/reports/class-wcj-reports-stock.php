@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 6.0.0-dev
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -78,7 +78,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		/**
 		 * Get_submenu_html.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 */
 		public function get_submenu_html() {
 			$html  = '';
@@ -270,7 +270,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		/**
 		 * Get_report_html.
 		 *
-		 * @version 6.0.0-dev
+		 * @version 6.0.0
 		 */
 		public function get_report_html() {
 			$products_info = $this->data_products;
