@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales - Gateways
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 		/**
 		 * Get_report_args.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   3.6.0
 		 */
 		public function get_report_args() {
@@ -120,7 +120,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 		/**
 		 * Output_report_header.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   3.6.0
 		 */
 		public function output_report_header() {
@@ -169,7 +169,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 		/**
 		 * Output_report_results.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   3.6.0
 		 */
 		public function output_report_results() {

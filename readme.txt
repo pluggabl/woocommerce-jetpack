@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.1
 Requires PHP: 7.2
-Stable tag: 5.6.9-dev
+Stable tag: 6.0.0-dev
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,20 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 6.0.0-dev 30/11/2022 =
+
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed error PHP Deprecated: Function WC_Order_Item_Product::offsetSet is deprecated since version...
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed calculation issue in wcj_order_item_total_refunded shortcode.
+* FIXED - PRICES & CURRENCIES - Currency Exchange Rates - Fixed exchange rate issue for European Central Bank (ECB) exchange rate server response.
+* FIXED - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option removed.
+* FIXED - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Fixed Default Currency and Role Defaults conflict.
+* FIXED - PRICES & CURRENCIES - Product Price by Formula - Fixed verify nonce issue.
+* FIXED - EMAILS & MISC. - General - Added missing images for jquery-ui.css
+* FIXED - Added Security vulnerability fixes - Multiple CSRF.
+* FIXED - Added Security vulnerability fixes.
+* WooCommerce 7.1.0 tested
+* WordPress 6.1 tested
 
 = 5.6.8 16/11/2022 =
 

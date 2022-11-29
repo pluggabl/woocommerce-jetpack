@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -187,7 +187,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	/**
 	 * Wcj_get_currency_exchange_rates_url_response.
 	 *
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @since   3.2.4
 	 * @todo    use where needed
 	 * @param   string $url defines the url.
@@ -414,7 +414,7 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	/**
 	 * Wcj_ecb_get_exchange_rate.
 	 *
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @since   2.6.0
 	 * @param   string | int $currency_from defines the currency_from.
 	 * @param   string | int $currency_to defines the currency_to.

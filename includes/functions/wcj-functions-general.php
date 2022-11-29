@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -173,7 +173,7 @@ if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 	/**
 	 * Wcj_tcpdf_method.
 	 *
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @since   3.4.0
 	 * @param   string $method defines the method.
 	 * @param   string $params defines the params.
@@ -519,7 +519,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
 	 * Wcj_variation_radio_button.
 	 *
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @since   2.4.8
 	 * @todo    (maybe) check - maybe we can use `$variation['variation_description']` instead of `get_post_meta( $variation_id, '_variation_description', true )`
 	 * @param   array $_product defines the _product.
@@ -632,7 +632,7 @@ if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
 	/**
 	 * Wcj_maybe_unserialize_and_implode.
 	 *
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @since   2.8.0
 	 * @return  string
 	 * @todo    `if ( ! is_array() )`
@@ -692,7 +692,7 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 	 * Used by admin settings page.
 	 *
 	 * @return array|null|object
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @since   2.3.10
 	 * @param   string $tax_class defines the tax_class.
 	 */
@@ -996,7 +996,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Debug
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -15,7 +15,7 @@ if ( ! function_exists( 'wcj_log' ) ) {
 	/**
 	 * Wcj_log.
 	 *
-	 * @version 5.6.9-dev
+	 * @version 6.0.0-dev
 	 * @param   null | string $message defines the message.
 	 * @param   bool          $do_var_dump defines the do_var_dump.
 	 */

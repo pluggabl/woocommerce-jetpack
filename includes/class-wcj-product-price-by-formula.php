@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   2.5.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0-dev
 		 * @since   2.5.1
 		 * @todo    use WC math library instead of `PHPMathParser`
 		 */
@@ -185,7 +185,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Reset_settings.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   5.3.0
 		 */
 		public function reset_settings() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Customers
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -135,7 +135,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 		/**
 		 * Get_data function.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @param Array  $data Get data.
 		 * @param int    $total_customers Get total number of customers.
 		 * @param string $report_type Get all_countries.

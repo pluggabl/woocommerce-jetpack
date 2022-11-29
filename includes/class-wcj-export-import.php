@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -126,7 +126,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_xml.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.5.9
 		 * @todo    [dev] templates for xml_start, xml_end, xml_item.
 		 * @todo    [dev] `strip_tags`
@@ -325,7 +325,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Create_export_tool.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.4.8
 		 * @param int $tool_id defines the tool_id.
 		 */

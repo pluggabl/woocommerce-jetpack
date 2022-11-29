@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -156,7 +156,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_wcj_number_plus_checkbox_start.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.8.0
 		 * @param  Array $value Get values.
 		 */
@@ -199,7 +199,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_wcj_number_plus_checkbox_end.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.8.0
 		 * @param  Array $value Get values.
 		 */

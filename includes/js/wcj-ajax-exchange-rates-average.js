@@ -1,7 +1,7 @@
 /**
  * Wcj-ajax-exchange-rates-average.js
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   3.2.2
  *
  * @package Booster_For_WooCommerce/includes/JS

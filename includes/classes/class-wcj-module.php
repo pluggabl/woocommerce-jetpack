@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -323,7 +323,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_validate_value.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.9.1
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -358,7 +358,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Validate_value_add_notice_query_var.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.9.1
 		 * @param String $location Get location.
 		 */
@@ -378,7 +378,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Validate_value_admin_notices.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.9.1
 		 */
 		public function validate_value_admin_notices() {
@@ -467,7 +467,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box_value.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.5.3
 		 * @param string $option_value Get option value.
 		 * @param string $option_name Get option name.
@@ -514,13 +514,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0-dev
 		 * @since   2.5.3
 		 */
 		public function admin_notices() {
 			$_get = array();
 			parse_str( isset( $_SERVER['QUERY_STRING'] ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '', $_get );
-			if ( ! $wpnonce || ! isset( $_get[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
+			if ( ! isset( $_get[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
 				return;
 			}
 			echo '<div class="error"><p><div class="message">' . wp_kses_post( $this->get_the_notice() ) . '</div></p></div>';
@@ -625,7 +625,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
 		 * @param int   $post_id Get post id.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -290,7 +290,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_items_table.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @todo    `sort_by_column` - fix `item_number`
 		 * @todo    `$item['is_custom']` may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 		 * @todo    `if ( '' !== $column_cell_data )` - this may be optional?

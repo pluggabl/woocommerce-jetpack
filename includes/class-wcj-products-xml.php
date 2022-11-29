@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    create all files at once (manually and synchronize update)
@@ -179,7 +179,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Create_products_xml.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.5.7
 		 * @param  int $file_num defines the file_num.
 		 */

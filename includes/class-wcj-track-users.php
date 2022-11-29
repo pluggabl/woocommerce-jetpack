@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 5.6.9-dev
+ * @version 6.0.0-dev
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -216,7 +216,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Add_http_referer_to_order.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.9.1
 		 * @todo    add "all orders by referer type" stats
 		 * @param int $order_id defines the order_id.
@@ -414,7 +414,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users.
 		 *
-		 * @version 5.6.9-dev
+		 * @version 6.0.0-dev
 		 * @since   2.9.1
 		 * @todo    (maybe) customizable `$time_expired`
 		 * @todo    (maybe) optionally do not track selected user roles (e.g. admin)
