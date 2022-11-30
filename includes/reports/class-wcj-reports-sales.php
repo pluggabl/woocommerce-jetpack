@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Sales
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -80,7 +80,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		/**
 		 * Get_products_sales.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 * @since   2.3.0
 		 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
 		 * @todo    display more info for "Parent product deleted" and "Product deleted"
@@ -365,15 +365,11 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			'<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
 
 			$menu  = '';
-			$menu .= '<ul class="subsubsub">';
-			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', gmdate( 'Y' ) ) ) . '" class="' .
-			( ( gmdate( 'Y' ) === $this->year ) ? 'current' : '' ) . '">' . gmdate( 'Y' ) . '</a> | </li>';
-			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 1 ) ) ) . '" class="' .
-			( ( (string) ( gmdate( 'Y' ) - 1 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a> | </li>';
-			$menu .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 2 ) ) ) . '" class="' .
-			( ( (string) ( gmdate( 'Y' ) - 2 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a></li>';
-			$menu .= '</ul>';
-			$menu .= '<br class="clear">';
+			$menu .= '<div id="poststuff" class="wcj-reports-wide woocommerce-reports-wide"><div class="postbox"><div class="stats_range"><ul class="">';
+
+			$menu .= '<li class="' . ( ( gmdate( 'Y' ) === $this->year ) ? 'active' : '' ) . '"><a href="' . esc_url( add_query_arg( 'year', gmdate( 'Y' ) ) ) . '" >' . gmdate( 'Y' ) . '</a></li>';
+			$menu .= '<li class="' . ( ( (string) ( gmdate( 'Y' ) - 1 ) ) === ( $this->year ) ? 'active' : '' ) . '"><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 1 ) ) ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a></li>';
+			$menu .= '<li class="' . ( ( (string) ( gmdate( 'Y' ) - 2 ) ) === ( $this->year ) ? 'active' : '' ) . '"><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 2 ) ) ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a></li>';
 
 			// phpcs:disable WordPress.Security.NonceVerification
 			$page   = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
@@ -381,21 +377,22 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 			$report = isset( $_GET['report'] ) ? sanitize_text_field( wp_unslash( $_GET['report'] ) ) : '';
 			// phpcs:enable WordPress.Security.NonceVerification
 
-			$filter_form  = '';
+			$filter_form  = '<li class="custom">';
 			$filter_form .= '<form method="get" action="">';
 			$filter_form .= '<input type="hidden" name="page" value="' . esc_attr( $page ) . '" />';
 			$filter_form .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />';
 			$filter_form .= '<input type="hidden" name="report" value="' . esc_attr( $report ) . '" />';
 			$filter_form .= '<input type="hidden" name="year" value="' . $this->year . '" />';
-			$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
-			'<input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';
+			$filter_form .= '<input class="search_product" placeholder="Search product..." size="14" type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
+			'<input class="button" type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';
 			$filter_form .= '</form>';
+			$filter_form .= '</li></ul><br class="clear">';
 
 			$the_results = ( ! empty( $products_data ) ) ?
 			wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) :
 			'<p><em>' . __( 'No sales data for current period.' ) . '</em></p>';
 
-			return '<p>' . $settings_link . '</p> <p>' . $menu . '</p> <p>' . $filter_form . '</p>' . $the_results;
+			return '<p>' . $settings_link . '</p> ' . $menu . $filter_form . '<div class="inside">' . $the_results . '</div></div></div></div>';
 		}
 	}
 

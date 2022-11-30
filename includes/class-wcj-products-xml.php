@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @since   2.5.7
  * @author  Pluggabl LLC.
  * @todo    create all files at once (manually and synchronize update)
@@ -179,11 +179,14 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		/**
 		 * Create_products_xml.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.0
 		 * @since   2.5.7
 		 * @param  int $file_num defines the file_num.
 		 */
 		public function create_products_xml( $file_num ) {
+			global $wp_filesystem;
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
 			$xml_items            = '';
 			$xml_header_template  = wcj_get_option( 'wcj_products_xml_header_' . $file_num, '' );
 			$xml_footer_template  = wcj_get_option( 'wcj_products_xml_footer_' . $file_num, '' );
@@ -295,9 +298,10 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				}
 			}
 			wp_reset_postdata();
-			return file_put_contents(
+			return $wp_filesystem->put_contents(
 				ABSPATH . wcj_get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( '1' === $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
-				$this->process_shortcode( $xml_header_template ) . $xml_items . $this->process_shortcode( $xml_footer_template )
+				$this->process_shortcode( $xml_header_template ) . $xml_items . $this->process_shortcode( $xml_footer_template ),
+				FS_CHMOD_FILE
 			);
 		}
 

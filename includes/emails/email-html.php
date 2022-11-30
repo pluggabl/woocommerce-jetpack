@@ -1,4 +1,13 @@
-<?php //phpcs:ignore ?>
+<?php
+/**
+ * Booster for WooCommerce - Custom Email HTML Template
+ *
+ * @version 6.0.0
+ * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes/email
+ */
+
+?>
 <h1>Email</h1>
 <p>
 <table>

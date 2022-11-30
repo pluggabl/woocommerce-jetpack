@@ -2,7 +2,7 @@
 /**
  * Variable product add to cart - radio inputs
  *
- * @version 4.6.0
+ * @version 6.0.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package WooCommerce/Templates
@@ -21,8 +21,8 @@ $attribute_keys = array_keys( $attributes );
 		<tr>
 			<th colspan="2">
 				<?php $attribute_labels = array_map( 'wc_attribute_label', array_keys( $attributes ) ); ?>
-				<?php echo implode( ' X ', wp_kses_post( $attribute_labels ) ); ?>
-				<?php echo wp_kses_post( apply_filters( 'woocommerce_reset_variations_link', '<a style="float:right" class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>' ) ); ?>
+				<?php echo esc_html( implode( ' X ', $attribute_labels ) ); ?>
+				<?php echo '<a style="float:right" class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>'; ?>
 			</th>
 		</tr>
 		<?php foreach ( $available_variations as $variation ) : ?>
@@ -34,7 +34,7 @@ $attribute_keys = array_keys( $attributes );
 	</table>
 	<?php
 	foreach ( $product->get_attributes() as $attribute_name => $options ) {
-		echo '<input type="hidden" name="attribute_' . wp_kses_post( $attribute_name ) . '" value="">';
+		echo wp_kses_post( '<input type="hidden" name="attribute_' . $attribute_name . '" value="" />' );
 	}
 	?>
 <?php endif; ?>

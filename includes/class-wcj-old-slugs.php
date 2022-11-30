@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Old Slugs
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -43,13 +43,13 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 		/**
 		 * Create_old_slugs_tool.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 */
 		public function create_old_slugs_tool() {
 
 			global $wpdb;
 			$wp_postmeta_table  = $wpdb->prefix . 'postmeta';
-			$all_old_slugs      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_wp_old_slug' ORDER BY post_id" ); // WPCS: db call ok and cache ok.
+			$all_old_slugs      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_wp_old_slug' ORDER BY post_id" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$num_old_slugs      = count( $all_old_slugs );
 			$remove_result_html = '';
 			$headings           = array(

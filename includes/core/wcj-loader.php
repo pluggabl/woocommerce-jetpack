@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 5.6.2
+ * @version 6.0.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Debug Mode.
 if ( 'yes' === wcj_get_option( 'wcj_debug_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_debuging_enabled', 'no' ) ) {
-	error_reporting( E_ALL ); //phpcs:ignore
+	error_reporting( E_ALL ); // phpcs:ignore WordPress.PHP
 }
 
 if ( ! defined( 'WCJ_FREE_PLUGIN_PATH' ) ) {

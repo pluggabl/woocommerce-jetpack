@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -121,7 +121,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_post_meta_sum.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.0
 		 * @since   4.1.0
 		 * @param array $atts defined shortcode attributes.
 		 */
@@ -130,7 +130,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				return '';
 			}
 			global $wpdb;
-			$sum = $wpdb->get_var( $wpdb->prepare( "SELECT sum(meta_value) FROM $wpdb->postmeta WHERE meta_key = %s", $atts['key'] ) ); // WPCS: db call ok and cache ok.
+			$sum = $wpdb->get_var( $wpdb->prepare( "SELECT sum(meta_value) FROM $wpdb->postmeta WHERE meta_key = %s", $atts['key'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			return ( ! empty( $atts['offset'] ) ? $sum + $atts['offset'] : $sum );
 		}
 
@@ -476,7 +476,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_selector.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 * @since   3.1.0
 		 * @todo    add `default` attribute
 		 * @todo    (maybe) add more selector types (e.g.: currency)
@@ -487,8 +487,9 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$html           = '';
 			$options        = '';
 			$countries      = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
-			$selected_value = ( ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) ? // phpcs:ignore WordPress.Security.NonceVerification
-			sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) : // phpcs:ignore WordPress.Security.NonceVerification
+			$wpnonce        = isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector-nonce' ] ) ? wp_verify_nonce( sanitize_key( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector-nonce' ] ), 'wcj_' . $atts['selector_type'] . '_selector' ) : false;
+			$selected_value = ( ( $wpnonce && isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) ?
+			sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) :
 			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 			);
 

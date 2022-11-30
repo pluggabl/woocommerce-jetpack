@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Renumerate Tool
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 		/**
 		 * Add Renumerate Invoices tool to WooCommerce menu (the content).
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 */
 		public function create_renumerate_invoices_tool() {
 
@@ -141,11 +141,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 				);
 
 				// Print all.
-				echo wcj_get_table_html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					$data,
-					array(
-						'table_class'        => 'widefat striped',
-						'table_heading_type' => 'vertical',
+				echo wp_kses_post(
+					wcj_get_table_html(
+						$data,
+						array(
+							'table_class'        => 'widefat striped',
+							'table_heading_type' => 'vertical',
+						)
 					)
 				);
 
@@ -153,7 +155,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 			</form></p>
 				<?php
 				if ( '' !== $renumerate_result ) {
-					echo '<h3>' . wp_kses_post( 'Results', 'woocommerce-jetpack' ) . '</h3>';
+					echo '<h3>' . esc_html__( 'Results', 'woocommerce-jetpack' ) . '</h3>';
 					echo '<p>' . wp_kses_post( $renumerate_result ) . '</p>';
 				}
 				?>

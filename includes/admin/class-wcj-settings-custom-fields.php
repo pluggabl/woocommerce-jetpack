@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -156,7 +156,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_wcj_number_plus_checkbox_start.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.0
 		 * @since   2.8.0
 		 * @param  Array $value Get values.
 		 */
@@ -170,7 +170,8 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			}
 			// Description handling.
 			$field_description = WC_Admin_Settings::get_field_description( $value );
-			extract( $field_description ); //phpcs:ignore
+			$description       = $field_description['description'];
+			$tooltip_html      = $field_description['tooltip_html'];
 			// Option value.
 			$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
 			// Output.
@@ -198,7 +199,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_wcj_number_plus_checkbox_end.
 		 *
-		 * @version 2.8.0
+		 * @version 6.0.0
 		 * @since   2.8.0
 		 * @param  Array $value Get values.
 		 */
@@ -212,7 +213,8 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 			}
 			// Description handling.
 			$field_description = WC_Admin_Settings::get_field_description( $value );
-			extract( $field_description ); //phpcs:ignore
+			$description       = $field_description['description'];
+			$tooltip_html      = $field_description['tooltip_html'];
 			// Option value.
 			$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
 			// Output.

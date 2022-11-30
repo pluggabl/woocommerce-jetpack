@@ -322,3 +322,32 @@ img.wcj-rocket-icon:hover {
 .wcj-row td {
   line-break: anywhere;
 }
+
+/* Booster : Reports - Start */
+.wcj-reports-wide .postbox .stats_range ul li.custom h4 {
+  margin: 0;
+}
+.wcj-reports-wide .postbox .stats_range ul li.custom form input.search_product {
+  margin: 0 10px 0 0;
+  background: 0 0 !important;
+  border: 0 !important;
+  color: #777;
+  box-shadow: none;
+}
+.wcj-reports-wide .postbox .chart-with-sidebar .chart-sidebar{
+  padding-bottom: 12px;
+}
+.wcj-reports-wide .widefat .wcj-row th, .woocommerce-reports-wrap .widefat .wcj-row th{
+  border-bottom: 1px solid #c3c4c7;
+  background: #fff;
+  font-weight: bold;
+}
+.wcj-reports-wide .widefat .wcj-row th span.woocommerce-Price-amount.amount{
+  line-height: 1.2em;
+  color: #464646;
+  font-weight: 400;
+  font-family: HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",sans-serif;
+  font-size: 1.618em;
+}
+
+/* Booster : Reports - End */

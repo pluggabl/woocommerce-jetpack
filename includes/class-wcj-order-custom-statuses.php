@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 5.6.3
+ * @version 6.0.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -358,7 +358,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Register_custom_post_statuses.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.0
 		 */
 		public function register_custom_post_statuses() {
 			$custom_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
@@ -372,7 +372,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 						'show_in_admin_all_list'    => true,
 						'show_in_admin_status_list' => true,
 						/* translators: %s: translation added */
-						'label_count'               => _n_noop( $label . ' <span class="count">(%s)</span>', $label . ' <span class="count">(%s)</span>' ), //phpcs:ignore
+						'label_count'               => _n_noop( $label . ' <span class="count">(%s)</span>', $label . ' <span class="count">(%s)</span>' ), // phpcs:ignore WordPress.WP.I18n
 					)
 				);
 			}

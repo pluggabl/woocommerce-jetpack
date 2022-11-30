@@ -495,7 +495,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_item_total_refunded.
 		 *
-		 * @version 5.6.3
+		 * @version 6.0.0
 		 * @since   2.5.3
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -504,8 +504,8 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			foreach ( $refund_item as $_refund ) {
 
 				foreach ( $_refund->get_items() as $_item ) {
-					$refund_total     = $_item->get_total();
-					$refund_total_tax = $_item->get_total_tax();
+					$refund_total     += $_item->get_total();
+					$refund_total_tax += $_item->get_total_tax();
 				}
 			}
 			$refund_result = ( $atts['excl_tax'] ) ? abs( $refund_total ) : abs( $refund_total ) + abs( $refund_total_tax );

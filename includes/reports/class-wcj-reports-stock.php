@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -77,20 +77,20 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 
 		/**
 		 * Get_submenu_html.
+		 *
+		 * @version 6.0.0
 		 */
 		public function get_submenu_html() {
 			$html  = '';
-			$html .= '<ul class="subsubsub">';
+			$html .= '<div id="poststuff" class="wcj-reports-wide woocommerce-reports-wide"><div class="postbox"><div class="stats_range"><ul class="">';
 			foreach ( $this->ranges_in_days as $the_period ) {
-				$html .= '<li>';
-				$html .= ( $the_period === $this->range_days ) ? '<strong>' : '';
+				$is_active = (string) $the_period === $this->range_days ? 'active' : '';
+
+				$html .= '<li class="' . $is_active . '">';
 				$html .= '<a href="' . get_admin_url() . 'admin.php?page=wc-reports&tab=stock&report=' . $this->report_id . '&period=' . $the_period . '" class="">' . $the_period . ' days</a>';
-				$html .= ( $the_period === $this->range_days ) ? '</strong>' : '';
-				$html .= ' | ';
 				$html .= '</li>';
 			}
 			$html .= '</ul>';
-			$html .= '<br class="clear">';
 			return $html;
 		}
 
@@ -270,7 +270,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		/**
 		 * Get_report_html.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 */
 		public function get_report_html() {
 			$products_info = $this->data_products;
@@ -280,11 +280,11 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 			// Style.
 			$html .= '<style>';
 			$html .= '.wcj_report_table_sales_columns { background-color: #F6F6F6; }';
-			$html .= '.widefat { width: 90%; }';
+			$html .= '.widefat { width: 100%; }';
 			$html .= '</style>';
 			// Products table - header.
-			$html .= '<table class="widefat"><tbody>';
-			$html .= '<tr>';
+			$html .= '<div class="main"><table class="widefat striped" style="clear:inherit"><tbody>';
+			$html .= '<tr class="wcj-row">';
 			$html .= '<th>#</th>';
 			$html .= '<th>' . __( 'Product', 'woocommerce-jetpack' ) . '</th>';
 			$html .= '<th>' . __( 'Category', 'woocommerce-jetpack' ) . '</th>';
@@ -356,19 +356,23 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 					$html .= '</tr>';
 				}
 			}
-			$html        .= '</tbody></table>';
-			$html_header  = '<h4>' . $report_info['title'] . ': ' . $report_info['desc'] . '</h4>';
-			$html_header .= '<table class="widefat" style="width:30% !important;"><tbody>';
-			$html_header .= '<tr> <th>' . __( 'Total current stock value', 'woocommerce-jetpack' ) . '</th> <td>' . wc_price( $total_current_stock_price ) . '</td> </tr>';
-			$html_header .= '<tr> <th>' . __( 'Total stock value', 'woocommerce-jetpack' ) . '</th> <td>' . wc_price( $info['total_stock_price'] ) . '</td> </tr>';
-			$html_header .= '<tr> <th>' . __( 'Product stock value average', 'woocommerce-jetpack' ) . '</th> <td>' . wc_price( $info['stock_price_average'] ) . '</td> </tr>';
-			$html_header .= '<tr> <th>' . __( 'Product stock average', 'woocommerce-jetpack' ) . '</th> <td>' . number_format( $info['stock_average'], 2, '.', '' ) . '</td> </tr>';
+			if ( $product_counter <= 0 ) {
+				$html .= '<tr class="wcj-row"> <td colspan="10"> ' . __( 'Product not available', 'woocommerce-jetpack' ) . '</td> </tr>';
+			}
+			$html        .= '</tbody></table></div>';
+			$html_header  = '<div class="inside"><h4>' . $report_info['title'] . ': ' . $report_info['desc'] . '</h4></div>';
+			$html_header .= '<div class="inside chart-with-sidebar"><div class="chart-sidebar"><table class="widefat striped" style="clear:inherit"><tbody>';
+			$html_header .= '<tr class="wcj-row"> <th>' . wc_price( $total_current_stock_price ) . '<br class="clear"><span style="font-weight: 400;">' . __( 'Total current stock value', 'woocommerce-jetpack' ) . '</span></th> </tr>';
+			$html_header .= '<tr class="wcj-row"> <th>' . wc_price( $info['total_stock_price'] ) . '<br class="clear"><span style="font-weight: 400;">' . __( 'Total stock value', 'woocommerce-jetpack' ) . '</span></th> </tr>';
+			$html_header .= '<tr class="wcj-row"> <th>' . wc_price( $info['stock_price_average'] ) . '<br class="clear"><span style="font-weight: 400;">' . __( 'Product stock value average', 'woocommerce-jetpack' ) . '</span></th> </tr>';
+			$html_header .= '<tr class="wcj-row"> <th><span class="woocommerce-Price-amount amount" >' . number_format( $info['stock_average'], 2, '.', '' ) . '</span><br class="clear"><span style="font-weight: 400;">' . __( 'Product stock average', 'woocommerce-jetpack' ) . '</span></th> </tr>';
 			if ( 0 !== $total_current_stock_purchase_price ) {
-				$html_header .= '<tr> <th>' . __( 'Total current stock purchase price', 'woocommerce-jetpack' ) . '</th> <td>' . wc_price( $total_current_stock_purchase_price ) . '</td> </tr>';
+				$html_header .= '<tr class="wcj-row"> <th>' . wc_price( $total_current_stock_purchase_price ) . '<br class="clear"><span style="font-weight: 400;">' . __( 'Total current stock purchase price', 'woocommerce-jetpack' ) . '</span></th> </tr>';
 			}
 			$html_header      .= '</tbody></table>';
-			$html_header      .= '<br class="clear">';
+			$html_header      .= '</div>';
 			$time_elapsed_html = '<p><em>' . __( 'Report was generated in: ', 'woocommerce-jetpack' ) . intval( microtime( true ) - $this->start_time ) . ' s </em></p>';
+			$time_elapsed_html = '</div>';
 			return $this->get_submenu_html() . $html_header . $html . $time_elapsed_html;
 		}
 	}

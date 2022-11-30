@@ -1,7 +1,7 @@
 /**
  * Wcj-ajax-exchange-rates-average.js
  *
- * @version 5.6.2
+ * @version 6.0.0
  * @since   3.2.2
  *
  * @package Booster_For_WooCommerce/includes/JS
@@ -18,6 +18,7 @@ jQuery( document ).ready(
 					'wcj_currency_to': this.getAttribute( 'currency_to' ),
 					'wcj_start_date': this.getAttribute( 'start_date' ),
 					'wcj_end_date': this.getAttribute( 'end_date' ),
+					'wpnonce': ajax_object.wpnonce,
 				};
 				jQuery( input_id ).prop( 'readonly', true );
 				jQuery.ajax(

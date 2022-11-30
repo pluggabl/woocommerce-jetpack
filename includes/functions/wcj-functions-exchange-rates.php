@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 5.6.2
+ * @version 6.0.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -187,7 +187,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	/**
 	 * Wcj_get_currency_exchange_rates_url_response.
 	 *
-	 * @version 35.6.2
+	 * @version 6.0.0
 	 * @since   3.2.4
 	 * @todo    use where needed
 	 * @param   string $url defines the url.
@@ -195,12 +195,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	 */
 	function wcj_get_currency_exchange_rates_url_response( $url, $do_json_decode = true ) {
 		$response = '';
-		if ( 'no' === wcj_get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
-			$response = file_get_contents( $url ); //phpcs:ignore
-		} elseif ( function_exists( 'curl_version' ) ) {
-			$response = wp_remote_get( $url );
-			$response = $response['body'];
-		}
+		$response = wp_remote_get( $url );
+		$response = $response['body'];
 		return ( '' !== $response ? ( $do_json_decode ? json_decode( $response ) : $response ) : false );
 	}
 }
@@ -418,32 +414,33 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	/**
 	 * Wcj_ecb_get_exchange_rate.
 	 *
-	 * @version 4.3.0
+	 * @version 6.0.0
 	 * @since   2.6.0
 	 * @param   string | int $currency_from defines the currency_from.
 	 * @param   string | int $currency_to defines the currency_to.
 	 */
 	function wcj_ecb_get_exchange_rate( $currency_from, $currency_to ) {
 		$final_rate = false;
+		$cube       = 'Cube';
 		if ( function_exists( 'simplexml_load_file' ) ) {
 			if ( WP_DEBUG === true ) {
 				$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
 			} else {
 				$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
 			}
-			if ( isset( $xml->cube->cube->cube ) ) {
+			if ( isset( $xml->$cube->$cube->$cube ) ) {
 				if ( 'EUR' === $currency_from ) {
 					$eur_currency_from_rate = 1;
 				}
 				if ( 'EUR' === $currency_to ) {
 					$eur_currency_to_rate = 1;
 				}
-				foreach ( $xml->cube->cube->cube as $currency_rate ) {
+				foreach ( $xml->$cube->$cube->$cube as $currency_rate ) {
 					$currency_rate = $currency_rate->attributes();
-					if ( ! isset( $eur_currency_from_rate ) && $currency_from === $currency_rate->currency ) {
+					if ( ! isset( $eur_currency_from_rate ) && $currency_from === (string) $currency_rate->currency ) {
 						$eur_currency_from_rate = (float) $currency_rate->rate;
 					}
-					if ( ! isset( $eur_currency_to_rate ) && $currency_to === $currency_rate->currency ) {
+					if ( ! isset( $eur_currency_to_rate ) && $currency_to === (string) $currency_rate->currency ) {
 						$eur_currency_to_rate = (float) $currency_rate->rate;
 					}
 				}

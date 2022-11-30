@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Reports
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,12 +16,12 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 	/**
 	 * Wcj_get_product_sales_daily_report_columns.
 	 *
-	 * @version 5.6.2
+	 * @version 6.0.0
 	 * @since   2.9.0
 	 */
 	function wcj_get_product_sales_daily_report_columns() {
 		return array(
-			'date'                   => __( 'date', 'woocommerce-jetpack' ),
+			'date'                   => __( 'Date', 'woocommerce-jetpack' ),
 			'daily_total_sum'        => __( 'Daily Total Sum', 'woocommerce-jetpack' ),
 			'daily_total_quantity'   => __( 'Daily Total Quantity', 'woocommerce-jetpack' ),
 			'product_id'             => __( 'Product ID', 'woocommerce-jetpack' ),

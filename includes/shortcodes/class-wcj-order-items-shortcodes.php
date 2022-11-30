@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 5.6.7
+ * @version 6.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -39,7 +39,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 			$modified_atts = array_merge(
 				array(
-					'order_id'                            => ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(), // phpcs:ignore WordPress.Security.NonceVerification
+					'order_id'                            => ( isset( $_GET['order_id'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order_id'] ) ) : get_the_ID(), //phpcs:ignore WordPress.Security.NonceVerification
 					'hide_currency'                       => 'no',
 					'table_class'                         => '',
 					'shipping_as_item'                    => '', // e.g.: 'Shipping'.
@@ -145,7 +145,14 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 			if ( empty( $new_item_args ) ) {
 				return $items;
 			}
-			extract( $new_item_args ); // phpcs:ignore
+			$name              = $new_item_args['name'];
+			$qty               = $new_item_args['qty'];
+			$line_subtotal     = $new_item_args['line_subtotal'];
+			$line_total        = $new_item_args['line_total'];
+			$line_tax          = $new_item_args['line_tax'];
+			$line_subtotal_tax = $new_item_args['line_subtotal_tax'];
+			$type              = $new_item_args['type'];
+
 			// Create item.
 			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 				$item = array(
@@ -264,14 +271,16 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					}
 
 					// Get attribute data.
+					// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
 						$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-						$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ); // phpcs:ignore
-						$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value']; // phpcs:ignore
+						$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+						$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
 					} else {
-						$meta['meta_key'] = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key']; // phpcs:ignore
+						$meta['meta_key'] = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
 					}
 					$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
+					// phpcs:enable
 				}
 				$meta_info = implode( ', ', $meta_info );
 			}
@@ -281,7 +290,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_items_table.
 		 *
-		 * @version 5.3.1
+		 * @version 6.0.0
 		 * @todo    `sort_by_column` - fix `item_number`
 		 * @todo    `$item['is_custom']` may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 		 * @todo    `if ( '' !== $column_cell_data )` - this may be optional?
@@ -357,8 +366,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 			$data         = array();
 			$item_counter = 0;
 			foreach ( $the_items as $item_id => $item ) {
-				$item['is_custom'] = $item['is_custom'];
-				$the_product       = ( true === $item['is_custom'] ) ? null : ( method_exists( $item, 'get_product' ) ? $item->get_product( $item ) : null );
+				$is_custom   = ( isset( $item['is_custom'] ) );
+				$the_product = ( true === $is_custom ) ? null : ( method_exists( $item, 'get_product' ) ? $item->get_product( $item ) : null );
 				// Check if it's not excluded by category.
 				if ( '' !== $atts['exclude_by_categories'] && $the_product ) {
 					if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
@@ -536,7 +545,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 				case 'item_debug':
 				case 'debug':
-					return print_r( $item, true ); // phpcs:ignore
+					return $item;
 
 				case 'item_regular_price':
 				case 'product_regular_price':
@@ -556,7 +565,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 				case 'product_categories':
 					return ( is_object( $the_product ) ) ?
-					strip_tags( ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $item['product_id'] ) ) ) : // phpcs:ignore
+					wp_strip_all_tags( ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $item['product_id'] ) ) ) :
 					'';
 
 				case 'item_tax_class':

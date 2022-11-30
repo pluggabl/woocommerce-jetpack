@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -126,12 +126,15 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export_xml.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 * @since   2.5.9
 		 * @todo    [dev] templates for xml_start, xml_end, xml_item.
 		 * @todo    [dev] `strip_tags`
 		 */
 		public function export_xml() {
+			global $wp_filesystem;
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
 			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
 			if ( $wpnonce && isset( $_POST['wcj_export_xml'] ) ) {
 				$data = $this->export( sanitize_text_field( wp_unslash( $_POST['wcj_export_xml'] ) ) );
@@ -152,11 +155,11 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 						$xml .= '</item>' . PHP_EOL;
 					}
 					$xml .= '</root>';
-					header( 'Content-Disposition: attachment; filename=' . sanitize_text_field( wp_unslash( $_POST['wcj_export_xml'] ) ) . '.xml' );
-					header( 'Content-Type: Content-Type: text/html; charset=utf-8' );
-					header( 'Content-Description: File Transfer' );
-					header( 'Content-Length: ' . strlen( $xml ) );
-					echo $xml; // phpcs:ignore WordPress.Security.EscapeOutput
+
+					$file_name = sanitize_text_field( wp_unslash( $_POST['wcj_export_xml'] ) ) . '.xml';
+					$file_path = wp_tempnam();
+					$wp_filesystem->put_contents( $file_path, $xml, FS_CHMOD_FILE );
+					WC_Download_Handler::download_file_force( $file_path, $file_name );
 					die();
 				}
 			}
@@ -322,7 +325,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Create_export_tool.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 * @since   2.4.8
 		 * @param int $tool_id defines the tool_id.
 		 */
@@ -353,7 +356,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 			echo '</p>';
 			echo '</form>';
 			$data = $this->export( $tool_id );
-			echo is_array( $data ) ? wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) ) : ( $data ); // phpcs:ignore WordPress.Security.EscapeOutput
+			echo is_array( $data ) ? wp_kses_post( wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) ) ) : wp_kses_post( $data );
 			echo '</div>';
 		}
 

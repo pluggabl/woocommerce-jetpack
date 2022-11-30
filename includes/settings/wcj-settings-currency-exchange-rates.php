@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 5.6.0
+ * @version 6.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)
@@ -92,14 +92,6 @@ $settings = array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'If your currency pair have very small exchange rate, you may want to invert currencies before calculating the rate.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_exchange_rates_calculate_by_invert',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Always Use cURL', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'If for some reason currency exchange rates are not updating, try enabling this option.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_currency_exchange_rates_always_curl',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

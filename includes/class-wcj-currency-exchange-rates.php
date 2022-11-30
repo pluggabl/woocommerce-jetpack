@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency Exchange Rates
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @since   2.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 6.0.0
 		 */
 		public function __construct() {
 
@@ -39,6 +39,10 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 				include_once 'exchange-rates/class-wcj-exchange-rates-crons.php';
 				add_action( 'admin_init', array( $this, 'maybe_update_all_rates' ) );
 				add_filter( 'wcj_currency_exchange_rate', array( $this, 'force_dot_as_exchange_rate_decimal_separator' ) );
+				$deprecated_option = wcj_get_option( 'wcj_currency_exchange_rates_always_curl' );
+				if ( $deprecated_option && '' !== $deprecated_option ) {
+					delete_option( 'wcj_currency_exchange_rates_always_curl' );
+				}
 			}
 			include_once 'exchange-rates/class-wcj-exchange-rates.php';
 		}

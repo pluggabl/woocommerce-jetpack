@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 5.6.8
+ * @version 6.0.0
  * @since   2.4.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * Get_monthly_sales_report.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.0
 		 * @since   2.4.7
 		 * @todo    (maybe) visible rows selection by admin (as option)
 		 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
@@ -343,26 +343,22 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 			$execution_time_end = microtime( true );
 
 			// HTML.
-			$html          = '';
-			$menu          = '';
-			$menu         .= '<p>';
-			$menu         .= '<ul class="subsubsub">';
-			$menu         .= '<li><a href="' . esc_url( add_query_arg( 'year', gmdate( 'Y' ) ) ) . '" class="' .
-				( ( gmdate( 'Y' ) === $this->year ) ? 'current' : '' ) . '">' . gmdate( 'Y' ) . '</a> | </li>';
-			$menu         .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 1 ) ) ) . '" class="' .
-				( ( ( gmdate( 'Y' ) - 1 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a> | </li>';
-			$menu         .= '<li><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 2 ) ) ) . '" class="' .
-				( ( ( gmdate( 'Y' ) - 2 ) === $this->year ) ? 'current' : '' ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a> | </li>';
-			$menu         .= '</ul>';
-			$menu         .= '</p>';
-			$menu         .= '<br class="clear">';
+			$html  = '';
+			$menu  = '';
+			$menu .= '<div id="poststuff" class="wcj-reports-wide woocommerce-reports-wide"><div class="postbox"><div class="stats_range"><ul class="">';
+			$menu .= '<li class="' . ( ( gmdate( 'Y' ) === $this->year ) ? 'active' : '' ) . '"><a href="' . esc_url( add_query_arg( 'year', gmdate( 'Y' ) ) ) . '" >' . gmdate( 'Y' ) . '</a></li>';
+			$menu .= '<li class="' . ( ( (string) ( gmdate( 'Y' ) - 1 ) ) === ( $this->year ) ? 'active' : '' ) . '"><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 1 ) ) ) . '">' . ( gmdate( 'Y' ) - 1 ) . '</a></li>';
+			$menu .= '<li class="' . ( ( (string) ( gmdate( 'Y' ) - 2 ) ) === ( $this->year ) ? 'active' : '' ) . '"><a href="' . esc_url( add_query_arg( 'year', ( gmdate( 'Y' ) - 2 ) ) ) . '">' . ( gmdate( 'Y' ) - 2 ) . '</a></li>';
+
 			$html         .= $menu;
+			$html         .= '<li class="custom">';
 			$html         .= '<h4>' . __( 'Report currency', 'woocommerce-jetpack' ) . ': ' . $report_currency . '</h4>';
+			$html         .= '</li></ul><br class="clear">';
 			$months_styles = array();
 			for ( $i = 1; $i <= 12; $i++ ) {
 				$months_styles[] = ( gmdate( 'm' ) === $i && gmdate( 'Y' ) === $this->year ? 'width:8%;' : 'width:6%;' );
 			}
-			$html .= '<form method="post" action="">';
+			$html .= '<div class="inside"><form method="post" action="">';
 			$html .= wcj_get_table_html(
 				$table_data,
 				array(
@@ -388,7 +384,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 				'<input name="wcj_reset_currency_rates" type="submit" class="button button-primary" value="' .
 				__( 'Reset Currency Rates', 'woocommerce-jetpack' ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' .
 				wp_nonce_field( 'wcj_reset_currency_rates', 'wcj-reset-currency-rates-nonce' ) .
-			'</form>';
+			'</form></div></div></div></div>';
 			return $html;
 		}
 	}
