@@ -272,7 +272,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 					}
 
 					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
-						if ( $order->billing_country !== $_POST['wcj_filter_by_order_billing_country'] ) {
+						if ( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() ) !== $_POST['wcj_filter_by_order_billing_country'] ) {
 							continue;
 						}
 					}
@@ -390,7 +390,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 					}
 
 					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
-						if ( $order->billing_country !== $_POST['wcj_filter_by_order_billing_country'] ) {
+						if ( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() ) !== $_POST['wcj_filter_by_order_billing_country'] ) {
 							continue;
 						}
 					}

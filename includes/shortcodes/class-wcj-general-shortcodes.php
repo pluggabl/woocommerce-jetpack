@@ -569,7 +569,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_currency_exchange_rates_table( $atts ) {
-			$all_currencies = w_c_j()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
+			$all_currencies = w_c_j()->all_modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
 			$table_data     = array();
 			foreach ( $all_currencies as $currency ) {
 				$table_data[] = array( $currency['title'], wcj_get_option( $currency['id'] ) );

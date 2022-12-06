@@ -1272,7 +1272,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @param string $filter defines the filter.
 		 */
 		public function save_price( $price, $product_id, $filter ) {
-			w_c_j()->modules['multicurrency']->calculated_products_prices[ $product_id ][ $filter ] = $price;
+			w_c_j()->all_modules['multicurrency']->calculated_products_prices[ $product_id ][ $filter ] = $price;
 		}
 
 		/**
@@ -1315,8 +1315,8 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			if ( '' === $_current_filter || null === $_current_filter ) {
 				$_current_filter = 'wcj_filter__none';
 			}
-			if ( $do_save && isset( w_c_j()->modules['multicurrency']->calculated_products_prices[ $_product_id ][ $_current_filter ] ) ) {
-				return w_c_j()->modules['multicurrency']->calculated_products_prices[ $_product_id ][ $_current_filter ];
+			if ( $do_save && isset( w_c_j()->all_modules['multicurrency']->calculated_products_prices[ $_product_id ][ $_current_filter ] ) ) {
+				return w_c_j()->all_modules['multicurrency']->calculated_products_prices[ $_product_id ][ $_current_filter ];
 			}
 
 			// Per product.

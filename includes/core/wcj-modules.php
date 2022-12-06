@@ -146,4 +146,5 @@ foreach ( $wcj_module_files as $wcj_module_file ) {
 	$module                       = include_once $wcj_modules_dir . $wcj_module_file;
 	$this->modules[ $module->id ] = $module;
 }
-$this->modules = apply_filters( 'wcj_modules_loaded', $this->modules );
+$this->all_modules = apply_filters( 'wcj_all_modules', $this->modules );
+$this->modules     = apply_filters( 'wcj_modules_loaded', $this->modules );

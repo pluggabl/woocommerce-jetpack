@@ -116,8 +116,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		public function maybe_convert_price_currency( $price, $product = null ) {
 			if ( 'switched_currency' === wcj_get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 				// Multicurrency (Currency Switcher) module.
-				if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
-					$price = w_c_j()->modules['multicurrency']->change_price( $price, $product );
+				if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+					$price = w_c_j()->all_modules['multicurrency']->change_price( $price, $product );
 				}
 			}
 			return $price;
@@ -356,8 +356,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 				}
 				$price = $_product->wcj_open_price;
 				// Multicurrency (Currency Switcher) module.
-				if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
-					$price = w_c_j()->modules['multicurrency']->change_price( $price, null );
+				if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+					$price = w_c_j()->all_modules['multicurrency']->change_price( $price, null );
 				}
 				return $price;
 			} else {
@@ -473,10 +473,10 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 				}
 				if ( 'switched_currency' === wcj_get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 					// Multicurrency (Currency Switcher) module.
-					if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
-						$current_currency = w_c_j()->modules['multicurrency']->get_current_currency_code();
+					if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+						$current_currency = w_c_j()->all_modules['multicurrency']->get_current_currency_code();
 						if ( ( $current_currency ) !== $this->shop_currency ) {
-							$rate = w_c_j()->modules['multicurrency']->get_currency_exchange_rate( $current_currency );
+							$rate = w_c_j()->all_modules['multicurrency']->get_currency_exchange_rate( $current_currency );
 							if ( 0 !== ( $rate ) ) {
 								$cart_item_data['wcj_open_price'] = $cart_item_data['wcj_open_price'] / $rate;
 							}

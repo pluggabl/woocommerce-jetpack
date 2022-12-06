@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $user_roles = wcj_get_user_roles_options();
 $modules    = array();
-foreach ( w_c_j()->modules as $module_id => $module_obj ) {
+foreach ( w_c_j()->all_modules as $module_id => $module_obj ) {
 	$modules[ $module_id ] = $module_obj->short_desc;
 }
 unset( $modules['modules_by_user_roles'] );

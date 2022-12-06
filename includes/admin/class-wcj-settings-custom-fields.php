@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 				}
 			} else {
 				if (
-				! w_c_j()->modules['currency_exchange_rates']->is_enabled()
+				! w_c_j()->all_modules['currency_exchange_rates']->is_enabled()
 				|| 'yes' !== wcj_get_option( 'wcj_currency_exchange_rates_point_decimal_separator', 'no' )
 				) {
 					$custom_attributes = array( 'step="' . sprintf( '%.12f', 1 / pow( 10, 12 ) ) . '"', 'min="0"' );

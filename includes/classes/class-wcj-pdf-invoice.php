@@ -237,7 +237,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$html = do_shortcode(
 				wcj_get_option(
 					'wcj_invoicing_' . $this->invoice_type . '_template',
-					w_c_j()->modules['pdf_invoicing_templates']->get_default_template( $this->invoice_type )
+					w_c_j()->all_modules['pdf_invoicing_templates']->get_default_template( $this->invoice_type )
 				)
 			);
 			$html = $this->maybe_replace_tcpdf_method_params( $html, $pdf );
@@ -261,7 +261,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$html    = $this->get_html( $this->order_id, $pdf );
 			$styling = '<style>' . wcj_get_option(
 				'wcj_invoicing_' . $this->invoice_type . '_css',
-				w_c_j()->modules['pdf_invoicing_styling']->get_default_css_template( $this->invoice_type )
+				w_c_j()->all_modules['pdf_invoicing_styling']->get_default_css_template( $this->invoice_type )
 			) . '</style>';
 			$pdf->writeHTMLCell( 0, 0, '', '', $styling . $html, 0, 1, 0, true, '', true );
 			$result_pdf = $pdf->Output( '', 'S' );

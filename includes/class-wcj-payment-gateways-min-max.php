@@ -107,8 +107,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 				// Compatibility with other modules.
 				if ( 'yes' === wcj_get_option( 'wcj_payment_gateways_min_max_comp_mc', 'no' ) ) {
 					if ( wcj_is_module_enabled( 'multicurrency' ) ) {
-						$min = w_c_j()->modules['multicurrency']->change_price( $min, null );
-						$max = w_c_j()->modules['multicurrency']->change_price( $max, null );
+						$min = w_c_j()->all_modules['multicurrency']->change_price( $min, null );
+						$max = w_c_j()->all_modules['multicurrency']->change_price( $max, null );
 					}
 				}
 

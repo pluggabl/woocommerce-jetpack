@@ -218,7 +218,13 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 							'edit'                       => $status,
 							'edit-custom-statuses-nonce' => wp_create_nonce( 'edit-custom-statuses' ),
 						),
-						remove_query_arg( 'delete', 'edit-custom-statuses-nonce', 'delete_all_custom_status-nonce' )
+						remove_query_arg(
+							array(
+								'delete',
+								'edit-custom-statuses-nonce',
+								'delete_all_custom_status-nonce',
+							)
+						)
 					) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
 					$row             = array_merge(
 						$row,

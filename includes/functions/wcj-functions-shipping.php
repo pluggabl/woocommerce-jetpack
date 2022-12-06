@@ -230,7 +230,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 			foreach ( $packages as $i => $package ) {
 				$available_shipping_methods = $package['rates'];
 				if ( wcj_is_module_enabled( 'shipping_by_user_role' ) ) {
-					$available_shipping_methods = w_c_j()->modules['shipping_by_user_role']->available_shipping_methods( $available_shipping_methods, false );
+					$available_shipping_methods = w_c_j()->all_modules['shipping_by_user_role']->available_shipping_methods( $available_shipping_methods, false );
 				}
 				if ( is_array( $available_shipping_methods ) ) {
 					foreach ( $available_shipping_methods as $available_shipping_method ) {
@@ -265,7 +265,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 						if ( $packages ) {
 							$shipping_methods = $wc_shipping->load_shipping_methods( $packages[0] );
 							if ( wcj_is_module_enabled( 'shipping_by_user_role' ) ) {
-								$shipping_methods = w_c_j()->modules['shipping_by_user_role']->available_shipping_methods( $shipping_methods, false );
+								$shipping_methods = w_c_j()->all_modules['shipping_by_user_role']->available_shipping_methods( $shipping_methods, false );
 							}
 							foreach ( $shipping_methods as $shipping_method ) {
 								if ( 'yes' === $shipping_method->enabled && 0 !== $shipping_method->instance_id ) {

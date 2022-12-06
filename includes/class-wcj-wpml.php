@@ -116,7 +116,7 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		public function switch_currency_using_multicurrency( $currency ) {
 			if (
 			'no' === wcj_get_option( 'wcj_wpml_switch_booster_currency', 'no' ) ||
-			! w_c_j()->modules['multicurrency']->is_enabled()
+			! w_c_j()->all_modules['multicurrency']->is_enabled()
 			) {
 				return;
 			}

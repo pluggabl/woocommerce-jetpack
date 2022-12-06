@@ -198,8 +198,8 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 				$_current_filter = 'wcj_filter__none';
 			}
 		}
-		if ( $do_save && isset( w_c_j()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] ) ) {
-			return w_c_j()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ];
+		if ( $do_save && isset( w_c_j()->all_modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] ) ) {
+			return w_c_j()->all_modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ];
 		}
 		$multicurrency_base_price_currency = get_post_meta( $product_id, '_wcj_multicurrency_base_price_currency', true );
 		if ( '' !== $multicurrency_base_price_currency ) {
@@ -210,7 +210,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 					$_price = round( $_price, wcj_get_option( 'wcj_multicurrency_base_price_round_precision', wcj_get_option( 'woocommerce_price_num_decimals' ) ) );
 				}
 				if ( $do_save ) {
-					w_c_j()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] = $_price;
+					w_c_j()->all_modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] = $_price;
 				}
 				return $_price;
 			}
@@ -437,7 +437,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 	function wcj_update_products_price_by_country() {
 		$offset      = 0;
 		$block_size  = 512;
-		$bkg_process = w_c_j()->modules['price_by_country']->bkg_process_price_updater;
+		$bkg_process = w_c_j()->all_modules['price_by_country']->bkg_process_price_updater;
 		if ( empty( $bkg_process ) ) {
 			return;
 		}

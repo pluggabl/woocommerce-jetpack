@@ -269,7 +269,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 			if ( '' === $filter ) {
 				$filter = 'wcj_filter__none';
 			}
-			w_c_j()->modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ] = $price;
+			w_c_j()->all_modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ] = $price;
 		}
 
 		/**
@@ -290,8 +290,8 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 			if ( '' === $filter ) {
 				$filter = 'wcj_filter__none';
 			}
-			if ( isset( w_c_j()->modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ] ) ) {
-				return w_c_j()->modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ];
+			if ( isset( w_c_j()->all_modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ] ) ) {
+				return w_c_j()->all_modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ];
 			}
 			return false;
 		}

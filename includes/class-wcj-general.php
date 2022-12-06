@@ -145,7 +145,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 						add_query_arg(
 							array(
 								'wcj_booster_user_role' => $user_role_key,
-								'wcj_booster_user_role_nonce' => wp_cerate_nonce( 'wcj_booster_user_role' ),
+								'wcj_booster_user_role_nonce' => wp_create_nonce( 'wcj_booster_user_role' ),
 							)
 						)
 					),

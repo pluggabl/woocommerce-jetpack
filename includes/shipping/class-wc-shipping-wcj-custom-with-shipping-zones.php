@@ -186,9 +186,9 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 			$available = parent::is_available( $package );
 			if ( $available ) {
 				$total_weight = WC()->cart->get_cart_contents_weight();
-				if ( 0 !== $this->min_weight && $total_weight < $this->min_weight ) {
+				if ( $this->min_weight && 0 !== $this->min_weight && $total_weight < $this->min_weight ) {
 					$available = false;
-				} elseif ( 0 !== $this->max_weight && $total_weight > $this->max_weight ) {
+				} elseif ( $this->max_weight && 0 !== $this->max_weight && $total_weight > $this->max_weight ) {
 					$available = false;
 				}
 			}

@@ -497,7 +497,7 @@ if ( ! function_exists( 'wcj_add_files_upload_form_to_checkout_frontend' ) ) {
 	 * @since   2.5.2
 	 */
 	function wcj_add_files_upload_form_to_checkout_frontend() {
-		w_c_j()->modules['checkout_files_upload']->add_files_upload_form_to_checkout_frontend_all( true );
+		w_c_j()->all_modules['checkout_files_upload']->add_files_upload_form_to_checkout_frontend_all( true );
 	}
 }
 

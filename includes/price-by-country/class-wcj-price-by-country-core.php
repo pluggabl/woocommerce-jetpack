@@ -230,8 +230,8 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 			}
 			list( $points, $monetary_value ) = explode( ':', $value );
 			$new_monetary_value              = $this->change_price( $monetary_value, null );
-			if ( w_c_j()->modules['currency_exchange_rates']->is_enabled() ) {
-				$new_monetary_value = w_c_j()->modules['currency_exchange_rates']->force_dot_as_exchange_rate_decimal_separator( $new_monetary_value );
+			if ( w_c_j()->all_modules['currency_exchange_rates']->is_enabled() ) {
+				$new_monetary_value = w_c_j()->all_modules['currency_exchange_rates']->force_dot_as_exchange_rate_decimal_separator( $new_monetary_value );
 			}
 			$value = $points . ':' . $new_monetary_value;
 			return $value;
@@ -829,11 +829,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 				if ( empty( $_current_filter ) ) {
 					$_current_filter = 'wcj_filter__none';
 				}
-				if ( $do_save && isset( w_c_j()->modules['price_by_country']->calculated_products_prices[ wcj_get_product_id( $product ) ][ $_current_filter ] ) ) {
-					return w_c_j()->modules['price_by_country']->calculated_products_prices[ wcj_get_product_id( $product ) ][ $_current_filter ];
+				if ( $do_save && isset( w_c_j()->all_modules['price_by_country']->calculated_products_prices[ wcj_get_product_id( $product ) ][ $_current_filter ] ) ) {
+					return w_c_j()->all_modules['price_by_country']->calculated_products_prices[ wcj_get_product_id( $product ) ][ $_current_filter ];
 				}
 				$new_price = wcj_price_by_country( $price, $product, $group_id );
-				w_c_j()->modules['price_by_country']->calculated_products_prices[ wcj_get_product_id( $product ) ][ $_current_filter ] = $new_price;
+				w_c_j()->all_modules['price_by_country']->calculated_products_prices[ wcj_get_product_id( $product ) ][ $_current_filter ] = $new_price;
 
 				if ( wcj_is_plugin_activated( 'b2b', 'b2bking.php' ) ) {
 

@@ -477,7 +477,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @param  bool $allow_order_owner defines the allow_order_owner.
 		 */
 		public function check_user_roles( $allow_order_owner = true ) {
-			if ( $allow_order_owner && get_current_user_id() === intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {
+			if ( is_user_logged_in() && $allow_order_owner && get_current_user_id() === intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {
 				return true;
 			}
 			$allowed_user_roles = wcj_get_option( 'wcj_invoicing_' . $this->invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
@@ -509,7 +509,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 */
 		public function generate_pdf_on_init() {
 			// Check if all is OK.
-			if ( true !== $this->get_invoice || 0 === $this->order_id || ! is_user_logged_in() || ! $this->check_user_roles() ) {
+			if ( true !== $this->get_invoice || 0 === $this->order_id || ! $this->check_user_roles() ) {
 				return;
 			}
 			// Get PDF.

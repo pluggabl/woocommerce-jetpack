@@ -110,12 +110,12 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 				}
 			}
 			// Multicurrency (Currency Switcher) module.
-			if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
-				$minimum = w_c_j()->modules['multicurrency']->change_price( $minimum, null );
+			if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+				$minimum = w_c_j()->all_modules['multicurrency']->change_price( $minimum, null );
 			}
 			// Price by country module.
-			if ( w_c_j()->modules['price_by_country']->is_enabled() ) {
-				$minimum = w_c_j()->modules['price_by_country']->core->change_price( $minimum, null );
+			if ( w_c_j()->all_modules['price_by_country']->is_enabled() ) {
+				$minimum = w_c_j()->all_modules['price_by_country']->core->change_price( $minimum, null );
 			}
 			// WooCommerce Multilingual.
 			if ( 'yes' === wcj_get_option( 'wcj_order_minimum_compatibility_wpml_multilingual', 'no' ) ) {
