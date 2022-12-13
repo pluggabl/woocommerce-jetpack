@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 5.6.8
+ * @version 6.0.1-dev
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -319,7 +319,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Maybe_convert_currency.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1-dev
 		 * @since   2.8.0
 		 * @param int          $price defines the price.
 		 * @param null | array $product defines the product.

@@ -94,7 +94,7 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 		/**
 		 * Get_order_minimum_amount_with_user_roles.
 		 *
-		 * @version 5.1.0
+		 * @version 6.0.1-dev
 		 * @since   2.5.3
 		 */
 		public function get_order_minimum_amount_with_user_roles() {

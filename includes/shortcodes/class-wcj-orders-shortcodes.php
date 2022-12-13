@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.6.8
+ * @version 6.0.1-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -170,7 +170,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_vat_func.
 		 *
-		 * @version 5.5.7
+		 * @version 6.0.1-dev
 		 * @since   5.5.6
 		 * @param array $attr The user defined shortcode attributes.
 		 */
@@ -182,7 +182,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				foreach ( $order->get_items() as $item_id => $item ) {
 					$tax = $item->get_subtotal_tax();
 
-					if ( 0 === $tax ) {
+					if ( (string) 0 === $tax ) {
 						return $vat_exempt_text;
 					}
 				}

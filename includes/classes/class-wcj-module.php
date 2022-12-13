@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 6.0.0
+ * @version 6.0.1-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -625,7 +625,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 6.0.0
+		 * @version 6.0.1-dev
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
 		 * @param int   $post_id Get post id.
@@ -650,7 +650,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$option_value = '';
 					$wpnonce      = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
 					if ( $wpnonce && isset( $_POST[ $option['name'] ] ) ) {
-						$option_value = is_array( $_POST[ $option['name'] ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $option['name'] ] ) ) : sanitize_text_field( wp_unslash( $_POST[ $option['name'] ] ) );
+						$option_value = is_array( $_POST[ $option['name'] ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $option['name'] ] ) ) : wp_kses_post( wp_unslash( $_POST[ $option['name'] ] ) );
 					} elseif ( isset( $option['default'] ) ) {
 						$option_value = $option['default'];
 					}

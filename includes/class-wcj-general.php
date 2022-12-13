@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 5.6.8
+ * @version 6.0.1-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -117,7 +117,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Add_user_role_changer.
 		 *
-		 * @version 5.6.7
+		 * @version 6.0.1-dev
 		 * @since   2.9.0
 		 * @param string | array $wp_admin_bar defines the wp_admin_bar.
 		 */

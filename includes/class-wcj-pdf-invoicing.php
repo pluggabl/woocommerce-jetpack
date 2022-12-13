@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 6.0.0
+ * @version 6.0.1-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -471,7 +471,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Check_user_roles.
 		 *
-		 * @version 3.4.0
+		 * @version 6.0.1-dev
 		 * @since   2.9.0
 		 * @todo    check if `current_user_can( 'administrator' )` is the same as checking role directly
 		 * @param  bool $allow_order_owner defines the allow_order_owner.
@@ -505,7 +505,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Generate_pdf_on_init.
 		 *
-		 * @version 6.0.0
+		 * @version 6.0.1-dev
 		 */
 		public function generate_pdf_on_init() {
 			// Check if all is OK.
