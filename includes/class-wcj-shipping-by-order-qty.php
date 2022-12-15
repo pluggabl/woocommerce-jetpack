@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Quantity
  *
- * @version 5.6.2
+ * @version 6.0.1-dev
  * @since   4.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -72,7 +72,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Qty' ) ) :
 		/**
 		 * Available_shipping_methods.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1-dev
 		 * @since   4.3.0
 		 * @todo    apply_filters( 'booster_option' )
 		 * @param array          $rates defines the rates.
@@ -86,9 +86,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Qty' ) ) :
 			foreach ( $rates as $rate_key => $rate ) {
 				$min = $this->get_min_max_qty( $rate, 'min' );
 				$max = $this->get_min_max_qty( $rate, 'max' );
-				if ( '0' !== $min && $total_qty < $min ) {
+				if ( 0 !== $min && '0' !== $min && $total_qty < $min ) {
 					unset( $rates[ $rate_key ] );
-				} elseif ( '0' !== $max && $total_qty > $max ) {
+				} elseif ( 0 !== $max && '0' !== $max && $total_qty > $max ) {
 					unset( $rates[ $rate_key ] );
 				}
 			}

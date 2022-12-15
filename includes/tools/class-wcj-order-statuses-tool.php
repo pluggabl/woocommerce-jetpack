@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 5.6.7
+ * @version 6.0.1-dev
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_custom_statuses_table.
 		 *
-		 * @version 5.6.7
+		 * @version 6.0.1-dev
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_table() {

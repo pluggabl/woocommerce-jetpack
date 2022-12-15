@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 5.6.8
+ * @version 6.0.1-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -153,7 +153,7 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	/**
 	 * Wcj_get_ajax_settings
 	 *
-	 * @version 5.3.3
+	 * @version 6.0.1-dev
 	 * @since   4.3.0
 	 *
 	 * @param array  $values get values.
@@ -163,7 +163,7 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	 * @return array
 	 */
 	function wcj_get_ajax_settings( $values, $allow_multiple_values = false, $search_type = 'woocommerce_json_search_products' ) {
-		$options_raw = wcj_get_option( $values['id'], isset( $values['default'] ) ? $values['default'] : '' );
+		$options_raw = get_option( $values['id'], isset( $values['default'] ) ? $values['default'] : '' );
 		$options_raw = empty( $options_raw ) ? array() : $options_raw;
 		$options     = array();
 		$class       = '';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 6.0.1-dev
+ * @version 5.6.8
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -665,7 +665,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Save settings.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 5.3.8
 		 */
 		public function save() {
 			global $current_section;
@@ -674,7 +674,6 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			$this->disable_autoload_options_from_section( $settings );
 			add_action( 'admin_notices', array( $this, 'booster_message_global' ) );
 			do_action( 'woojetpack_after_settings_save', $this->get_sections(), $current_section );
-			wp_safe_redirect( getenv( 'HTTP_REFERER' ) );
 		}
 
 		/**

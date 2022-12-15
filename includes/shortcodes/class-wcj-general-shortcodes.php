@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 6.0.0
+ * @version 6.0.1-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -563,7 +563,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_currency_exchange_rates_table.
 		 *
-		 * @version 2.9.0
+		 * @version 6.0.1-dev
 		 * @since   2.9.0
 		 * @todo    (maybe) add similar function
 		 * @param array $atts The user defined shortcode attributes.
