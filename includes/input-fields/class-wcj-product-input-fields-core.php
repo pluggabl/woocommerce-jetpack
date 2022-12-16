@@ -495,15 +495,16 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 */
 		public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
 			$wpnonce = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
-			if ( ! $wpnonce ) {
-				$passed = false;
-				wc_add_notice( $this->get_value( 'wcj_product_input_fields_required_message_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
-			}
+
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $product_id, 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 
 				if ( ! $this->is_enabled( $i, $product_id ) ) {
 					continue;
+				}
+				if ( ! $wpnonce ) {
+					$passed = false;
+					wc_add_notice( __( 'Invalid Nonce verification, Please try again later.', 'woocommerce-jetpack' ), 'error' );
 				}
 
 				$type       = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );

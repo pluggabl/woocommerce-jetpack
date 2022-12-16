@@ -642,20 +642,21 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			setup_postdata( $_post );
 			// Save options.
 			foreach ( $this->get_meta_box_options() as $option ) {
-				if ( 'title' === $option['type'] ) {
+				if ( isset( $option['type'] ) && 'title' === $option['type'] ) {
 					continue;
 				}
 				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 				if ( $is_enabled ) {
 					$option_value = '';
 					$wpnonce      = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
-					if ( $wpnonce && isset( $_POST[ $option['name'] ] ) ) {
-						$option_value = is_array( $_POST[ $option['name'] ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $option['name'] ] ) ) : wp_kses_post( wp_unslash( $_POST[ $option['name'] ] ) );
+					$option_name  = isset( $option['name'] ) ? $option['name'] : '';
+					if ( $wpnonce && isset( $_POST[ $option_name ] ) ) {
+						$option_value = is_array( $_POST[ $option_name ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $option_name ] ) ) : wp_kses_post( wp_unslash( $_POST[ $option_name ] ) );
 					} elseif ( isset( $option['default'] ) ) {
 						$option_value = $option['default'];
 					}
 					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $post_id;
-					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
+					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option_name;
 					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
 						$option_value = strtotime( $option_value );
 						if ( empty( $option_value ) ) {
@@ -663,7 +664,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						}
 					}
 					delete_post_meta( $the_post_id, $the_meta_name ); // solves lowercase/uppercase issue.
-					update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option['name'], $this->id ) );
+					update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option_name, $this->id ) );
 				}
 			}
 			// Reset post.
