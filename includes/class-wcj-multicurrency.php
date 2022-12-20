@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -1264,7 +1264,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Saves price so it won't be necessary to calculate it multiple times.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   4.6.0
 		 *
 		 * @param int    $price defines the price.
@@ -1278,7 +1278,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @param int   $price defines the price.
 		 * @param array $_product defines the _product.
 		 * @param null  $args defines the args.

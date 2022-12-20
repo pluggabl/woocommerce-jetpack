@@ -1423,7 +1423,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_visibility_by_country.
 		 *
-		 * @version 5.4.8
+		 * @version 6.0.1
 		 * @since   5.4.8
 		 * @param array $atts The user defined shortcode attributes.
 		 */

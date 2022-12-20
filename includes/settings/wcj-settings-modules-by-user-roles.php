@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Modules By User Roles
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
 	/**
 	 * Wcj_get_saved_exchange_rate.
 	 *
-	 * @version 3.3.0
+	 * @version 6.0.1
 	 * @since   3.2.4
 	 * @todo    (maybe) need to check if `currency_exchange_rates` module `is_enabled()`
 	 * @param   string | int $from defines the from.

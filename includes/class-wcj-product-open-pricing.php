@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -108,7 +108,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Maybe_convert_price_currency.
 		 *
-		 * @version 4.6.0
+		 * @version 6.0.1
 		 * @since   4.2.0
 		 * @param int            $price defines the price.
 		 * @param string | array $product defines the product.
@@ -337,7 +337,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Get_open_price.
 		 *
-		 * @version 4.6.0
+		 * @version 6.0.1
 		 * @since   2.4.8
 		 * @param int   $price defines the price.
 		 * @param array $_product defines the _product.
@@ -435,7 +435,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_to_cart_item_data.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.1
 		 * @since   2.4.8
 		 * @todo    [dev] (maybe) better conversion for Currency Switcher module (i.e. include rounding)
 		 * @param array $cart_item_data defines the cart_item_data.

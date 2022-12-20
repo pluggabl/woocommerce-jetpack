@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.6.7
+ * @version 6.0.1
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -182,7 +182,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	/**
 	 * Wcj_price_by_product_base_currency.
 	 *
-	 * @version 3.3.0
+	 * @version 6.0.1
 	 * @since   2.5.6
 	 * @param   int $price defines the price.
 	 * @param   int $product_id defines the product_id.
@@ -431,7 +431,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 	/**
 	 * Wcj_update_products_price_by_country - all products.
 	 *
-	 * @version 5.2.0
+	 * @version 6.0.1
 	 * @since   2.5.3
 	 */
 	function wcj_update_products_price_by_country() {

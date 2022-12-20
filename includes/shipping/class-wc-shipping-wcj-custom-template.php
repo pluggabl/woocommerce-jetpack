@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -71,7 +71,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		/**
 		 * Is this method available?
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   2.8.0
 		 * @param   array $package Get pakage array.
 		 * @return  bool

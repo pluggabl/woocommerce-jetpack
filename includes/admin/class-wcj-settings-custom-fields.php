@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_exchange_rate_settings_button.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @param  Array $value Get values.
 		 */
 		public function output_exchange_rate_settings_button( $value ) {

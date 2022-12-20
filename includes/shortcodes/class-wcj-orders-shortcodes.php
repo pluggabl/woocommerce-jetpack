@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -170,7 +170,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_vat_func.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   5.5.6
 		 * @param array $attr The user defined shortcode attributes.
 		 */

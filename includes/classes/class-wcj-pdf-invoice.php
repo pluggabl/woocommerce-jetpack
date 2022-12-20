@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -209,7 +209,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		 *
 		 * Gets invoice content HTML.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1
 		 * @since   3.5.0
 		 * @todo    [dev] pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 		 * @todo    [fix] `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Get_pdf.
 		 *
-		 * @version 6.0.0
+		 * @version 6.0.1
 		 * @todo    [dev] (maybe) `die()` on success
 		 * @param string $dest define dest.
 		 */

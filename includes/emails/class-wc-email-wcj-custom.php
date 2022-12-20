@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -112,7 +112,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * Trigger.
 		 *
-		 * @version 5.3.4
+		 * @version 6.0.1
 		 *  @param   int $object_id get object id.
 		 */
 		public function trigger( $object_id ) {
@@ -129,8 +129,8 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 					// Check status.
 					$is_status_found = false;
 					$trigger_hooks   = $this->get_option( 'trigger' );
-					$pos             = strpos( $trigger_hook, 'woocommerce_new_order_notification' );
 					foreach ( $trigger_hooks as $trigger_hook ) {
+						$pos = strpos( $trigger_hook, 'woocommerce_new_order_notification' );
 						if ( false !== ( $pos ) ) {
 							$the_status = 'wc-' . substr( $trigger_hook, 35 );
 							if ( 'wc-wcj_any_status' === $the_status || wcj_get_order_status( $this->object ) === $the_status ) {

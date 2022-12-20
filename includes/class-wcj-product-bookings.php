@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -394,7 +394,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Add_input_fields_to_frontend.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   2.5.0
 		 * @todo    more options: exclude days (1-31), exact availability dates, mindate, maxdate, firstday, dateformat etc.
 		 */

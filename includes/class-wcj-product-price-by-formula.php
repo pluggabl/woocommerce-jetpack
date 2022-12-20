@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @since   2.5.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Save_price.
 		 *
-		 * @version 5.1.1
+		 * @version 6.0.1
 		 * @since   5.1.1
 		 *
 		 * @param int $product_id defines the product_id.
@@ -275,7 +275,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Get_saved_price
 		 *
-		 * @version 5.1.1
+		 * @version 6.0.1
 		 * @since   5.1.1
 		 *
 		 * @param int $product_id defines the product_id.

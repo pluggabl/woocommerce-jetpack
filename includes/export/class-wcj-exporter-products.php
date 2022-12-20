@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Products
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -67,7 +67,7 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 		/**
 		 * Export_products.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   2.5.3
 		 * @todo    product attributes
 		 * @param Array $fields_helper Get fields info.

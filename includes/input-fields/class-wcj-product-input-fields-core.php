@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -489,7 +489,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Validate_product_input_fields_on_add_to_cart.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @param bool $passed define passed value.
 		 * @param int  $product_id Get product id.
 		 */

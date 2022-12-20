@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -213,7 +213,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Handle_wc_points_rewards_settings.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1
 		 * @since   5.2.0
 		 *
 		 * @param string $value defines the value for points reward.
@@ -807,7 +807,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.1
 		 * @param string $price defines the price for conversion.
 		 * @param object $product Product Object.
 		 */

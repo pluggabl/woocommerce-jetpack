@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -629,7 +629,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		/**
 		 * Check_quantities.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   2.9.0
 		 * @param string        $min_or_max defines the min_or_max.
 		 * @param int           $cart_item_quantities defines the cart_item_quantities.

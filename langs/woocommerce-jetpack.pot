@@ -42,8 +42,8 @@ msgstr ""
 #: includes/class-wcj-orders.php:133 includes/class-wcj-orders.php:170
 #: includes/class-wcj-payment-gateways.php:103
 #: includes/class-wcj-track-users.php:175 includes/class-wcj-track-users.php:268
-#: includes/classes/class-wcj-module.php:685
-#: includes/classes/class-wcj-module.php:894
+#: includes/classes/class-wcj-module.php:686
+#: includes/classes/class-wcj-module.php:895
 #: includes/settings/wcj-settings-price-by-country.php:275
 msgid "Booster"
 msgstr ""
@@ -206,7 +206,7 @@ msgstr ""
 #: includes/admin/class-wc-settings-jetpack.php:642
 #: includes/admin/class-wc-settings-jetpack.php:1089
 #: includes/class-wcj-admin-bar.php:188
-#: includes/classes/class-wcj-module.php:1047
+#: includes/classes/class-wcj-module.php:1048
 msgid "Documentation"
 msgstr ""
 
@@ -444,7 +444,7 @@ msgstr ""
 #: includes/class-wcj-general.php:250 includes/class-wcj-product-by-user.php:276
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:166
 #: includes/tools/class-wcj-order-statuses-tool.php:191
-#: includes/tools/class-wcj-order-statuses-tool.php:285
+#: includes/tools/class-wcj-order-statuses-tool.php:291
 msgid "Actions"
 msgstr ""
 
@@ -993,7 +993,7 @@ msgstr ""
 
 #: includes/class-wcj-admin-bar.php:267 includes/class-wcj-admin-bar.php:311
 #: includes/class-wcj-admin-bar.php:659
-#: includes/classes/class-wcj-module.php:865
+#: includes/classes/class-wcj-module.php:866
 #: includes/settings/wcj-settings-wpml.php:97
 msgid "Tools"
 msgstr ""
@@ -2597,6 +2597,7 @@ msgstr ""
 #: includes/class-wcj-max-products-per-user.php:240
 #: includes/functions/wcj-functions-users.php:179
 #: includes/functions/wcj-functions-users.php:215
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:565
 msgid "Guest"
 msgstr ""
 
@@ -4013,14 +4014,14 @@ msgstr ""
 #: includes/class-wcj-product-bulk-meta-editor.php:320
 #: includes/class-wcj-product-by-user.php:301
 #: includes/class-wcj-purchase-data.php:122
-#: includes/classes/class-wcj-module.php:1007
+#: includes/classes/class-wcj-module.php:1008
 #: includes/functions/wcj-functions-general.php:166
 #: includes/functions/wcj-functions-html.php:138
 #: includes/reports/class-wcj-reports-monthly-sales.php:385
 #: includes/settings/wcj-settings-empty-cart.php:88
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:391
 #: includes/tools/class-wcj-order-statuses-tool.php:213
-#: includes/tools/class-wcj-order-statuses-tool.php:363
+#: includes/tools/class-wcj-order-statuses-tool.php:369
 msgid "Are you sure?"
 msgstr ""
 
@@ -4433,8 +4434,8 @@ msgstr ""
 
 #: includes/class-wcj-product-by-user.php:292
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:470
-#: includes/tools/class-wcj-order-statuses-tool.php:222
-#: includes/tools/class-wcj-order-statuses-tool.php:300
+#: includes/tools/class-wcj-order-statuses-tool.php:228
+#: includes/tools/class-wcj-order-statuses-tool.php:306
 msgid "Edit"
 msgstr ""
 
@@ -5358,7 +5359,7 @@ msgstr ""
 #: includes/settings/wcj-settings-sku.php:314
 #: includes/settings/wcj-settings-sku.php:341
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:470
-#: includes/tools/class-wcj-order-statuses-tool.php:300
+#: includes/tools/class-wcj-order-statuses-tool.php:306
 msgid "Add"
 msgstr ""
 
@@ -5862,30 +5863,30 @@ msgid ""
 "\" products."
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:779
+#: includes/classes/class-wcj-module.php:780
 #, php-format
 msgid "Selected: %s."
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:850
+#: includes/classes/class-wcj-module.php:851
 msgid "Back to Module Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:871
+#: includes/classes/class-wcj-module.php:872
 #: includes/settings/wcj-settings-wpml.php:102
 msgid "Module Tools"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:949
+#: includes/classes/class-wcj-module.php:950
 #: includes/settings/wcj-settings-checkout-core-fields.php:82
 msgid "enabled"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:950
+#: includes/classes/class-wcj-module.php:951
 msgid "disabled"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:958
+#: includes/classes/class-wcj-module.php:959
 #: includes/settings/wcj-settings-product-tabs.php:181
 #: includes/settings/wcj-settings-product-tabs.php:196
 #: includes/settings/wcj-settings-product-tabs.php:211
@@ -5893,27 +5894,27 @@ msgstr ""
 msgid "Deprecated"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:997
+#: includes/classes/class-wcj-module.php:998
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:1003
+#: includes/classes/class-wcj-module.php:1004
 msgid "Reset Module to Default Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:1004
+#: includes/classes/class-wcj-module.php:1005
 msgid "Reset Submodule to Default Settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:1013
+#: includes/classes/class-wcj-module.php:1014
 msgid "Reset settings"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:1051
+#: includes/classes/class-wcj-module.php:1052
 msgid "Module Options"
 msgstr ""
 
-#: includes/classes/class-wcj-module.php:1058
+#: includes/classes/class-wcj-module.php:1059
 msgid "Enable Module"
 msgstr ""
 
@@ -8107,15 +8108,19 @@ msgstr ""
 msgid "Product Input Field"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-core.php:540
+#: includes/input-fields/class-wcj-product-input-fields-core.php:507
+msgid "Invalid Nonce verification, Please try again later."
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-core.php:542
 msgid "Wrong file type!"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-core.php:549
+#: includes/input-fields/class-wcj-product-input-fields-core.php:551
 msgid "File is too big!"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-core.php:781
+#: includes/input-fields/class-wcj-product-input-fields-core.php:783
 msgid "Select a country&hellip;"
 msgstr ""
 
@@ -10015,7 +10020,7 @@ msgstr ""
 #: includes/settings/wcj-settings-offer-price.php:221
 #: includes/settings/wcj-settings-offer-price.php:229
 #: includes/tools/class-wcj-order-statuses-tool.php:187
-#: includes/tools/class-wcj-order-statuses-tool.php:281
+#: includes/tools/class-wcj-order-statuses-tool.php:287
 msgid "Label"
 msgstr ""
 
@@ -10112,7 +10117,7 @@ msgid "Preset"
 msgstr ""
 
 #: includes/settings/wcj-settings-admin-orders-list.php:194
-#: includes/tools/class-wcj-order-statuses-tool.php:240
+#: includes/tools/class-wcj-order-statuses-tool.php:246
 msgid "Statuses"
 msgstr ""
 
@@ -10681,7 +10686,7 @@ msgstr ""
 #: includes/settings/wcj-settings-checkout-custom-fields.php:219
 #: includes/settings/wcj-settings-eu-vat-number.php:51
 #: includes/templates/wcj-radio-for-variations.php:25
-#: includes/tools/class-wcj-order-statuses-tool.php:276
+#: includes/tools/class-wcj-order-statuses-tool.php:282
 msgid "Clear"
 msgstr ""
 
@@ -20735,17 +20740,17 @@ msgid "%s status delete failed!"
 msgstr ""
 
 #: includes/tools/class-wcj-order-statuses-tool.php:188
-#: includes/tools/class-wcj-order-statuses-tool.php:282
+#: includes/tools/class-wcj-order-statuses-tool.php:288
 msgid "Icon Code"
 msgstr ""
 
 #: includes/tools/class-wcj-order-statuses-tool.php:189
-#: includes/tools/class-wcj-order-statuses-tool.php:283
+#: includes/tools/class-wcj-order-statuses-tool.php:289
 msgid "Color"
 msgstr ""
 
 #: includes/tools/class-wcj-order-statuses-tool.php:190
-#: includes/tools/class-wcj-order-statuses-tool.php:284
+#: includes/tools/class-wcj-order-statuses-tool.php:290
 msgid "Text Color"
 msgstr ""
 
@@ -20753,19 +20758,19 @@ msgstr ""
 msgid "Get Booster Plus to enable."
 msgstr ""
 
-#: includes/tools/class-wcj-order-statuses-tool.php:274
+#: includes/tools/class-wcj-order-statuses-tool.php:280
 msgid "Edit custom status"
 msgstr ""
 
-#: includes/tools/class-wcj-order-statuses-tool.php:274
+#: includes/tools/class-wcj-order-statuses-tool.php:280
 msgid "Add new custom status"
 msgstr ""
 
-#: includes/tools/class-wcj-order-statuses-tool.php:280
+#: includes/tools/class-wcj-order-statuses-tool.php:286
 msgid "Slug (without <code>wc-</code> prefix)"
 msgstr ""
 
-#: includes/tools/class-wcj-order-statuses-tool.php:363
+#: includes/tools/class-wcj-order-statuses-tool.php:369
 msgid "Delete All Custom Statuses"
 msgstr ""
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -153,7 +153,7 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	/**
 	 * Wcj_get_ajax_settings
 	 *
-	 * @version 6.0.1-dev
+	 * @version 6.0.1
 	 * @since   4.3.0
 	 *
 	 * @param array  $values get values.

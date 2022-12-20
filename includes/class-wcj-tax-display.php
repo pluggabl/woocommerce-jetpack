@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Tax Display
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -59,7 +59,7 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 		/**
 		 * Tax_display_toggle_param.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   3.2.4
 		 */
 		public function tax_display_toggle_param() {

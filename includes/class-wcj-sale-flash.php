@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sale Flash
  *
- * @version 5.6.1-dev
+ * @version 6.0.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -78,7 +78,7 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 		/**
 		 * Get_taxonomy_sale_flash.
 		 *
-		 * @version 5.6.1-dev
+		 * @version 6.0.1
 		 * @param int    $product_id defines the product_id.
 		 * @param string $taxonomy defines the taxonomy.
 		 */

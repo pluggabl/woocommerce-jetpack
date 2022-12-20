@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 6.0.1-dev
+ * @version 6.0.1
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   2.4.8
 		 * @param object $fields_helper defines the fields helper.
 		 *
@@ -342,7 +342,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders_items.
 		 *
-		 * @version 6.0.1-dev
+		 * @version 6.0.1
 		 * @since   2.5.9
 		 * @param object $fields_helper defines the fields helper.
 		 */

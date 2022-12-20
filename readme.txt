@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.1
 Requires PHP: 7.2
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,29 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 6.0.1 21/12/2022 =
+
+* FIXED - PRODUCTS - Product Addons - Fixed issue for Product Meta box - Label & Price textarea new line issue for "Select Box" type.
+* FIXED - PRODUCTS - Price based on User Role - Fixed issue of Products Tags & Products Categories option.
+* FIXED - PRODUCTS - Product Input Fields - Fixed issue of validation for Product Input Fields.
+* FIXED - PRODUCTS - Tax Display - Fixed the issue of Tax incl & excl.
+* FIXED - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Quantity - Fixed the issue of order Min/Max for 0 value.
+* FIXED - SHIPPING & ORDERS - Custom Shipping - Fixed the min & max weight conflict of custom shipping.
+* FIXED - SHIPPING & ORDERS - Order Quantities - Minimum Quantity & Maximum Quantity	Cart Total Quantity conflict with 0 Quantity.
+* FIXED - PRICES & CURRENCIES - Wholesale Price - Fixed previously saved value disappear from "Products to Include" & Products to Exclude" after adding new value.
+* FIXED - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Currency conversion issue fixed.
+* FIXED - EMAILS & MISC. - Custom Emails - Fixed the issue of customer email.
+* FIXED - EMAILS & MISC. - Modules By User Roles - Fixed modules conflicts.
+* FIXED - EMAILS & MISC. - Export - Fixed shortcode not working in Additional Fields.
+* FIXED - EMAILS & MISC. - General - Fixed CSRF issue for Booster User Roles Changer.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed "invoice not showing to Guest users on Thank you page".
+* FIXED - Notice: Function billing_country was called incorrectly.
+* FIXED - Added Security vulnerability fixes.
+* FIXED - Shortcodes - Orders - `[wcj_order_customer_user_roles]` Fixed issue for Guest user role.
+* DEV - Allow iframe for all textarea input.
+* WooCommerce 7.2.0 tested
+* WordPress 6.1.1 tested
 
 = 6.0.0 30/11/2022 =
 
