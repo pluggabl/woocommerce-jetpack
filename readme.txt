@@ -2,7 +2,7 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.1
+Tested up to: 6.1.1
 Requires PHP: 7.2
 Stable tag: 6.0.1
 License: GNU General Public License v3.0
