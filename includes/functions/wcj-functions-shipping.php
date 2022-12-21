@@ -33,7 +33,7 @@ if ( ! function_exists( 'wcj_get_shipping_time_table' ) ) {
 		$matching_zone_id = wcj_get_customer_shipping_matching_zone_id();
 		$table_data       = array();
 		foreach ( $shipping_methods as $method ) {
-			if ( $do_use_shipping_instances && $method['zone_id'] !== $matching_zone_id ) {
+			if ( $do_use_shipping_instances && $method['zone_id'] !== (int) $matching_zone_id ) {
 				continue;
 			}
 			$option_id_shipping_method = ( $do_use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
@@ -53,7 +53,7 @@ if ( ! function_exists( 'wcj_get_customer_shipping_matching_zone_id' ) ) {
 	/**
 	 * Wcj_get_customer_shipping_matching_zone_id.
 	 *
-	 * @version 3.5.0
+	 * @version 6.0.1
 	 * @since   3.5.0
 	 * @todo    (maybe) move to `wcj-functions-users.php`
 	 * @todo    (maybe) add `wcj_get_customer_shipping_destination()` function
@@ -64,12 +64,14 @@ if ( ! function_exists( 'wcj_get_customer_shipping_matching_zone_id' ) ) {
 			$current_user = wp_get_current_user();
 			$meta         = get_user_meta( $current_user->ID, 'shipping_country', true );
 			if ( '' !== ( $meta ) ) {
+				$package                            = array();
 				$package['destination']['country']  = $meta;
 				$package['destination']['state']    = get_user_meta( $current_user->ID, 'shipping_state', true );
 				$package['destination']['postcode'] = '';
 			}
 		}
 		if ( false === $package ) {
+			$package                            = array();
 			$package['destination']             = wc_get_customer_default_location();
 			$package['destination']['postcode'] = '';
 		}
