@@ -175,7 +175,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		/**
 		 * Cross_sells_ids.
 		 *
-		 * @version 3.6.0
+		 * @version 6.0.1
 		 * @since   3.6.0
 		 * @todo    [dev] (maybe) ids instead of list
 		 * @todo    [dev] (maybe) on cart update (i.e. product removed) cross-sells are not updated (so it may be needed to reload page manually to see new cross-sells)
@@ -185,10 +185,10 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 */
 		public function cross_sells_ids( $ids, $_product ) {
 			$global_cross_sells = wcj_get_option( 'wcj_cross_sells_global_ids', '' );
-			$key                = array_search( $product_id, $global_cross_sells, true );
 			if ( ! empty( $global_cross_sells ) ) {
 				$global_cross_sells = array_unique( $global_cross_sells );
 				$product_id         = wcj_get_product_id_or_variation_parent_id( $_product );
+				$key                = array_search( $product_id, $global_cross_sells, true );
 				if ( false !== $key ) {
 					unset( $global_cross_sells[ $key ] );
 				}
