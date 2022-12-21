@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -497,7 +497,7 @@ if ( ! function_exists( 'wcj_add_files_upload_form_to_checkout_frontend' ) ) {
 	 * @since   2.5.2
 	 */
 	function wcj_add_files_upload_form_to_checkout_frontend() {
-		w_c_j()->modules['checkout_files_upload']->add_files_upload_form_to_checkout_frontend_all( true );
+		w_c_j()->all_modules['checkout_files_upload']->add_files_upload_form_to_checkout_frontend_all( true );
 	}
 }
 
@@ -996,7 +996,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 6.0.0
+	 * @version 6.0.1
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1100,11 +1100,19 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'style' => true,
 			),
 			'button'   => array(
-				'style'    => true,
-				'class'    => true,
-				'disabled' => true,
-				'onclick'  => true,
-				'wcj_data' => true,
+				'style'                 => true,
+				'class'                 => true,
+				'disabled'              => true,
+				'onclick'               => true,
+				'wcj_data'              => true,
+				'fdi'                   => true,
+				'var_id'                => true,
+				'customeremail'         => true,
+				'customername'          => true,
+				'offerprice'            => true,
+				'wcj_bestprice_arr_key' => true,
+				'is_variable'           => true,
+				'image_url'             => true,
 			),
 			'style'    => array(
 				'type' => true,
@@ -1133,12 +1141,24 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'end_date'      => true,
 				'input_id'      => true,
 				'start_date'    => true,
+				'is_variable'   => true,
+				'image_url'     => true,
+				'style'         => true,
+				'wcj_data'      => true,
 			),
 			'details'  => array(
 				'open' => true,
 			),
 			'bdi'      => true,
 			'em'       => true,
+			'iframe'   => array(
+				'width'           => true,
+				'height'          => true,
+				'src'             => true,
+				'frameborder'     => true,
+				'allow'           => true,
+				'allowfullscreen' => true,
+			),
 		);
 		$allowed_merged_html = array_merge_recursive( $allowed_html, $allowed_extra_html );
 		return $allowed_merged_html;

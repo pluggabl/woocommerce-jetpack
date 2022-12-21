@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -170,7 +170,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_vat_func.
 		 *
-		 * @version 5.5.7
+		 * @version 6.0.1
 		 * @since   5.5.6
 		 * @param array $attr The user defined shortcode attributes.
 		 */
@@ -182,7 +182,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				foreach ( $order->get_items() as $item_id => $item ) {
 					$tax = $item->get_subtotal_tax();
 
-					if ( 0 === $tax ) {
+					if ( (string) 0 === $tax ) {
 						return $vat_exempt_text;
 					}
 				}
@@ -557,8 +557,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_customer_user_roles( $atts ) {
-			$user_info = get_userdata( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) );
-			return implode( ', ', $user_info->roles );
+			$_customer_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() );
+			if ( $_customer_id > 0 ) {
+				$user_info = get_userdata( $_customer_id );
+				return ( is_array( $user_info->roles ) ) ? implode( ', ', $user_info->roles ) : $user_info->roles;
+			} else {
+				return __( 'Guest', 'woocommerce-jetpack' );
+			}
 		}
 
 		/**

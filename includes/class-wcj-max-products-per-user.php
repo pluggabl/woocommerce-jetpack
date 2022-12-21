@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -84,7 +84,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Validate_on_add_to_cart.
 		 *
-		 * @version 4.2.0
+		 * @version 6.0.1
 		 * @since   4.2.0
 		 * @todo    [dev] code refactoring (this function is very similar to `$this->check_quantities()`)
 		 * @todo    [dev] (maybe) recheck `wc_add_notice()` or `wc_print_notice()`
@@ -132,7 +132,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 					'%max_qty%'            => $max_qty,
 					'%product_title%'      => $product->get_title(),
 					'%qty_already_bought%' => $user_already_bought,
-					'%remaining_qty%'      => max( ( $max_qty - $user_already_bought ), 0 ),
+					'%remaining_qty%'      => max( ( (int) $max_qty - $user_already_bought ), 0 ),
 				);
 				$message         = wcj_get_option(
 					'wcj_max_products_per_user_message',
@@ -343,7 +343,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Check_quantities.
 		 *
-		 * @version 3.5.0
+		 * @version 6.0.1
 		 * @since   3.5.0
 		 * @todo    [dev] recheck `$cart_item_quantity` (maybe should be calculated same as `$currently_in_cart` in `$this->validate_on_add_to_cart()`)
 		 * @param bool $add_notices defines the add_notices.
@@ -380,7 +380,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 							'%max_qty%'            => $max_qty,
 							'%product_title%'      => $product->get_title(),
 							'%qty_already_bought%' => $user_already_bought,
-							'%remaining_qty%'      => max( ( $max_qty - $user_already_bought ), 0 ),
+							'%remaining_qty%'      => max( ( (int) $max_qty - $user_already_bought ), 0 ),
 						);
 						$message         = wcj_get_option(
 							'wcj_max_products_per_user_message',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -319,7 +319,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Maybe_convert_currency.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1
 		 * @since   2.8.0
 		 * @param int          $price defines the price.
 		 * @param null | array $product defines the product.
@@ -329,16 +329,16 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 			if ( 'by_module' === $apply_price_filters ) {
 				$modules_to_apply = wcj_get_option( 'wcj_product_addons_apply_price_filters_by_module', array() );
 				// Multicurrency Product Base Price module.
-				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency_base_price', $modules_to_apply, true ) ) && w_c_j()->modules['multicurrency_base_price']->is_enabled() ) {
-					$price = w_c_j()->modules['multicurrency_base_price']->change_price( $price, $product );
+				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency_base_price', $modules_to_apply, true ) ) && w_c_j()->all_modules['multicurrency_base_price']->is_enabled() ) {
+					$price = w_c_j()->all_modules['multicurrency_base_price']->change_price( $price, $product );
 				}
 				// Multicurrency (Currency Switcher) module.
-				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency', $modules_to_apply, true ) ) && w_c_j()->modules['multicurrency']->is_enabled() ) {
-					$price = w_c_j()->modules['multicurrency']->change_price( $price, $product, array( 'do_save' => false ) );
+				if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency', $modules_to_apply, true ) ) && w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+					$price = w_c_j()->all_modules['multicurrency']->change_price( $price, $product, array( 'do_save' => false ) );
 				}
 				// Global Discount module.
-				if ( ( empty( $modules_to_apply ) || in_array( 'global_discount', $modules_to_apply, true ) ) && w_c_j()->modules['global_discount']->is_enabled() ) {
-					$price = w_c_j()->modules['global_discount']->add_global_discount( $price, $product, 'price' );
+				if ( ( empty( $modules_to_apply ) || in_array( 'global_discount', $modules_to_apply, true ) ) && w_c_j()->all_modules['global_discount']->is_enabled() ) {
+					$price = w_c_j()->all_modules['global_discount']->add_global_discount( $price, $product, 'price' );
 				}
 			} elseif ( 'yes' === $apply_price_filters ) {
 				$price = apply_filters( WCJ_PRODUCT_GET_PRICE_FILTER, $price, $product );

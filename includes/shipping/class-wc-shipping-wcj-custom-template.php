@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping
  *
- * @version 5.5.0
+ * @version 6.0.1
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -71,7 +71,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		/**
 		 * Is this method available?
 		 *
-		 * @version 2.8.0
+		 * @version 6.0.1
 		 * @since   2.8.0
 		 * @param   array $package Get pakage array.
 		 * @return  bool
@@ -80,9 +80,9 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 			$available = parent::is_available( $package );
 			if ( $available ) {
 				$total_weight = WC()->cart->get_cart_contents_weight();
-				if ( 0 !== $this->min_weight && $total_weight < $this->min_weight ) {
+				if ( $this->min_weight && 0 !== $this->min_weight && $total_weight < $this->min_weight ) {
 					$available = false;
-				} elseif ( 0 !== $this->max_weight && $total_weight > $this->max_weight ) {
+				} elseif ( $this->max_weight && 0 !== $this->max_weight && $total_weight > $this->max_weight ) {
 					$available = false;
 				}
 			}

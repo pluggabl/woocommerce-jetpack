@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
 	/**
 	 * Wcj_get_saved_exchange_rate.
 	 *
-	 * @version 3.3.0
+	 * @version 6.0.1
 	 * @since   3.2.4
 	 * @todo    (maybe) need to check if `currency_exchange_rates` module `is_enabled()`
 	 * @param   string | int $from defines the from.
@@ -27,15 +27,15 @@ if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
 			return 1;
 		}
 		// Preparing `active_currencies` array.
-		if ( ! isset( w_c_j()->modules['currency_exchange_rates']->active_currencies ) ) {
-			$active_currencies_settings = w_c_j()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
+		if ( ! isset( w_c_j()->all_modules['currency_exchange_rates']->active_currencies ) ) {
+			$active_currencies_settings = w_c_j()->all_modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
 			$active_currencies          = array();
 			foreach ( $active_currencies_settings as $currency ) {
 				$active_currencies[ str_replace( 'wcj_currency_exchange_rates_', '', $currency['id'] ) ] = wcj_get_option( $currency['id'] );
 			}
-			w_c_j()->modules['currency_exchange_rates']->active_currencies = $active_currencies;
+			w_c_j()->all_modules['currency_exchange_rates']->active_currencies = $active_currencies;
 		} else {
-			$active_currencies = w_c_j()->modules['currency_exchange_rates']->active_currencies;
+			$active_currencies = w_c_j()->all_modules['currency_exchange_rates']->active_currencies;
 		}
 		if ( empty( $active_currencies ) ) {
 			return 0;
@@ -366,7 +366,7 @@ if ( ! function_exists( 'wcj_coinmarketcap_get_exchange_rate' ) ) {
 	 * @version 3.2.4
 	 * @since   3.2.4
 	 * @see     https://coinmarketcap.com/api/
-	 * @todo    `w_c_j()->modules['currency_exchange_rates']->coinmarketcap_response`
+	 * @todo    `w_c_j()->all_modules['currency_exchange_rates']->coinmarketcap_response`
 	 * @todo    `wcj_coinmarketcap_get_exchange_rate_specific()`
 	 * @todo    (maybe) `limit=0`
 	 * @param   string | int $currency_from defines the currency_from.

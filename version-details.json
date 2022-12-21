@@ -1,8 +1,8 @@
 {
-    "0" : "= 6.0.0 30/11/2022 =",
-    "1" : "* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed error PHP Deprecated: Function WC_Order_Item_Product::offsetSet is deprecated since version...",
-    "2" : "* FIXED - PRICES & CURRENCIES - Currency Exchange Rates - Fixed exchange rate issue for European Central Bank (ECB) exchange rate server response.",
-    "3" : "* FIXED - Added Security vulnerability fixes",
-    "4" : "* WooCommerce 7.1.0 tested",
-    "5" : "* WordPress 6.1 Tested"
+    "0" : "= 6.0.1 21/12/2022 =",
+    "1" : "* FIXED - PRODUCTS - Product Addons - Fixed issue for Product Meta box - Label & Price textarea new line issue for 'Select Box' type.",
+    "2" : "* FIXED - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Quantity - Fixed the issue of order Min/Max for 0 value.",
+    "3" : "* FIXED - SHIPPING & ORDERS - Custom Shipping - Fixed the min & max weight conflict of custom shipping.",
+    "4" : "* WooCommerce 7.2.0 tested",
+    "5" : "* WordPress 6.1.1 Tested"
 }

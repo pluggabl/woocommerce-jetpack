@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Products
  *
- * @version 3.0.0
+ * @version 6.0.1
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -67,7 +67,7 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 		/**
 		 * Export_products.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1
 		 * @since   2.5.3
 		 * @todo    product attributes
 		 * @param Array $fields_helper Get fields info.
@@ -283,8 +283,8 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 										}
 									} else {
 										global $post;
-										$post_data = get_post( $product_id );
-										setup_postdata( $post_data );
+										$post = get_post( $product_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+										setup_postdata( $post );
 										$row[] = do_shortcode( $additional_field_value );
 										wp_reset_postdata();
 									}

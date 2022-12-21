@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -108,7 +108,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Maybe_convert_price_currency.
 		 *
-		 * @version 4.6.0
+		 * @version 6.0.1
 		 * @since   4.2.0
 		 * @param int            $price defines the price.
 		 * @param string | array $product defines the product.
@@ -116,8 +116,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		public function maybe_convert_price_currency( $price, $product = null ) {
 			if ( 'switched_currency' === wcj_get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 				// Multicurrency (Currency Switcher) module.
-				if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
-					$price = w_c_j()->modules['multicurrency']->change_price( $price, $product );
+				if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+					$price = w_c_j()->all_modules['multicurrency']->change_price( $price, $product );
 				}
 			}
 			return $price;
@@ -337,7 +337,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Get_open_price.
 		 *
-		 * @version 4.6.0
+		 * @version 6.0.1
 		 * @since   2.4.8
 		 * @param int   $price defines the price.
 		 * @param array $_product defines the _product.
@@ -356,8 +356,8 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 				}
 				$price = $_product->wcj_open_price;
 				// Multicurrency (Currency Switcher) module.
-				if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
-					$price = w_c_j()->modules['multicurrency']->change_price( $price, null );
+				if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+					$price = w_c_j()->all_modules['multicurrency']->change_price( $price, null );
 				}
 				return $price;
 			} else {
@@ -435,7 +435,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Add_open_price_to_cart_item_data.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.1
 		 * @since   2.4.8
 		 * @todo    [dev] (maybe) better conversion for Currency Switcher module (i.e. include rounding)
 		 * @param array $cart_item_data defines the cart_item_data.
@@ -473,10 +473,10 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 				}
 				if ( 'switched_currency' === wcj_get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 					// Multicurrency (Currency Switcher) module.
-					if ( w_c_j()->modules['multicurrency']->is_enabled() ) {
-						$current_currency = w_c_j()->modules['multicurrency']->get_current_currency_code();
+					if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
+						$current_currency = w_c_j()->all_modules['multicurrency']->get_current_currency_code();
 						if ( ( $current_currency ) !== $this->shop_currency ) {
-							$rate = w_c_j()->modules['multicurrency']->get_currency_exchange_rate( $current_currency );
+							$rate = w_c_j()->all_modules['multicurrency']->get_currency_exchange_rate( $current_currency );
 							if ( 0 !== ( $rate ) ) {
 								$cart_item_data['wcj_open_price'] = $cart_item_data['wcj_open_price'] / $rate;
 							}

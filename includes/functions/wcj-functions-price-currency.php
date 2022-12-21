@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 5.6.7
+ * @version 6.0.1
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -182,7 +182,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	/**
 	 * Wcj_price_by_product_base_currency.
 	 *
-	 * @version 3.3.0
+	 * @version 6.0.1
 	 * @since   2.5.6
 	 * @param   int $price defines the price.
 	 * @param   int $product_id defines the product_id.
@@ -198,8 +198,8 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 				$_current_filter = 'wcj_filter__none';
 			}
 		}
-		if ( $do_save && isset( w_c_j()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] ) ) {
-			return w_c_j()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ];
+		if ( $do_save && isset( w_c_j()->all_modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] ) ) {
+			return w_c_j()->all_modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ];
 		}
 		$multicurrency_base_price_currency = get_post_meta( $product_id, '_wcj_multicurrency_base_price_currency', true );
 		if ( '' !== $multicurrency_base_price_currency ) {
@@ -210,7 +210,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 					$_price = round( $_price, wcj_get_option( 'wcj_multicurrency_base_price_round_precision', wcj_get_option( 'woocommerce_price_num_decimals' ) ) );
 				}
 				if ( $do_save ) {
-					w_c_j()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] = $_price;
+					w_c_j()->all_modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] = $_price;
 				}
 				return $_price;
 			}
@@ -431,13 +431,13 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 	/**
 	 * Wcj_update_products_price_by_country - all products.
 	 *
-	 * @version 5.2.0
+	 * @version 6.0.1
 	 * @since   2.5.3
 	 */
 	function wcj_update_products_price_by_country() {
 		$offset      = 0;
 		$block_size  = 512;
-		$bkg_process = w_c_j()->modules['price_by_country']->bkg_process_price_updater;
+		$bkg_process = w_c_j()->all_modules['price_by_country']->bkg_process_price_updater;
 		if ( empty( $bkg_process ) ) {
 			return;
 		}

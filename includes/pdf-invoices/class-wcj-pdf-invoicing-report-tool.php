@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -111,7 +111,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Add Invoices Report tool to WooCommerce menu (the content).
 		 *
-		 * @version 6.0.0
+		 * @version 6.0.1
 		 */
 		public function create_invoices_report_tool() {
 			$wpnonce          = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
@@ -129,7 +129,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			$html  = '';
 			$html .= '<div class="wcj-setting-jetpack-body">';
 			$html .= '<div class="wrap">';
-			$html .= w_c_j()->modules['pdf_invoicing']->get_tool_header_html( 'invoices_report' );
+			$html .= w_c_j()->all_modules['pdf_invoicing']->get_tool_header_html( 'invoices_report' );
 			$html .= $this->notice;
 			$html .= '<p><form method="post" action="">';
 			// Type.
@@ -344,7 +344,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Invoices Report Data function.
 		 *
-		 * @version 6.0.0
+		 * @version 6.0.1
 		 * @since   2.5.7
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -354,7 +354,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 
 			$columns = wcj_get_option( 'wcj_pdf_invoicing_report_tool_columns', '' );
 			if ( empty( $columns ) ) {
-				$columns = array_keys( w_c_j()->modules['pdf_invoicing_advanced']->get_report_columns() );
+				$columns = array_keys( w_c_j()->all_modules['pdf_invoicing_advanced']->get_report_columns() );
 			}
 
 			$total_sum          = 0;
@@ -508,13 +508,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Get_data_headers.
 		 *
-		 * @version 3.6.0
+		 * @version 6.0.1
 		 * @since   3.3.0
 		 * @param Array $columns Get columns.
 		 */
 		public function get_data_headers( $columns ) {
 			$headers     = array();
-			$all_headers = w_c_j()->modules['pdf_invoicing_advanced']->get_report_columns();
+			$all_headers = w_c_j()->all_modules['pdf_invoicing_advanced']->get_report_columns();
 			foreach ( $columns as $column ) {
 				$headers[] = $all_headers[ $column ];
 			}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		/**
 		 * Output_exchange_rate_settings_button.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1
 		 * @param  Array $value Get values.
 		 */
 		public function output_exchange_rate_settings_button( $value ) {
@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 				}
 			} else {
 				if (
-				! w_c_j()->modules['currency_exchange_rates']->is_enabled()
+				! w_c_j()->all_modules['currency_exchange_rates']->is_enabled()
 				|| 'yes' !== wcj_get_option( 'wcj_currency_exchange_rates_point_decimal_separator', 'no' )
 				) {
 					$custom_attributes = array( 'step="' . sprintf( '%.12f', 1 / pow( 10, 12 ) ) . '"', 'min="0"' );

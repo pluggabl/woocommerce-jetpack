@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 5.6.7
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -211,7 +211,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Output custom columns for products
 		 *
-		 * @version 5.6.7
+		 * @version 6.0.1
 		 * @param  string $column Get order columns.
 		 */
 		public function render_order_columns( $column ) {
@@ -235,7 +235,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ) {
 					$query_args['save_pdf_invoice'] = '1';
 				}
-				$html .= '<a href="' . esc_url( add_query_arg( $query_args, esc_url( remove_query_arg( array( 'create_invoice_for_order_id', 'create_invoice_for_order_id-nonce', 'delete_invoice_for_order_id', 'delete_invoice_for_order_id-nonce' ) ) ) ) ) . '">' .
+				$html .= '<a href="' . esc_url_raw( add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'create_invoice_for_order_id-nonce', 'delete_invoice_for_order_id', 'delete_invoice_for_order_id-nonce' ) ) ) ) . '">' .
 				$the_number . '</a>';
 			}
 			echo wp_kses_post( $html );

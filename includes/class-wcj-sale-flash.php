@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sale Flash
  *
- * @version 5.6.2
+ * @version 6.0.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -78,7 +78,7 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 		/**
 		 * Get_taxonomy_sale_flash.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1
 		 * @param int    $product_id defines the product_id.
 		 * @param string $taxonomy defines the taxonomy.
 		 */
@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 			$product_terms = get_the_terms( $product_id, $taxonomy );
 			if ( ! empty( $product_terms ) && isset( $product_terms[0]->term_id ) ) {
 				$term_id = $product_terms[0]->term_id;
-				if ( in_array( $term_id, $this->sale_flash_per_taxonomy[ $taxonomy ]['terms'], true ) ) {
+				if ( in_array( (string) $term_id, $this->sale_flash_per_taxonomy[ $taxonomy ]['terms'], true ) ) {
 					return ( isset( $this->sale_flash_per_taxonomy[ $taxonomy ]['html'][ $term_id ] ) ?
 					do_shortcode( $this->sale_flash_per_taxonomy[ $taxonomy ]['html'][ $term_id ] ) :
 					'<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>'

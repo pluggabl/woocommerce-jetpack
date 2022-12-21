@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.1
 		 * @since   2.4.8
 		 * @param object $fields_helper defines the fields helper.
 		 *
@@ -272,7 +272,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 					}
 
 					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
-						if ( $order->billing_country !== $_POST['wcj_filter_by_order_billing_country'] ) {
+						if ( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() ) !== $_POST['wcj_filter_by_order_billing_country'] ) {
 							continue;
 						}
 					}
@@ -321,8 +321,8 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 									$row[] = wp_strip_all_tags( html_entity_decode( $this->safely_get_post_meta( $order_id, $additional_field_value ) ) );
 								} else {
 									global $post;
-									$post_data = get_post( $order_id );
-									setup_postdata( $post_data );
+									$post = get_post( $order_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+									setup_postdata( $post );
 									$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
 									wp_reset_postdata();
 								}
@@ -342,7 +342,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		/**
 		 * Export_orders_items.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.1
 		 * @since   2.5.9
 		 * @param object $fields_helper defines the fields helper.
 		 */
@@ -390,7 +390,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 					}
 
 					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
-						if ( $order->billing_country !== $_POST['wcj_filter_by_order_billing_country'] ) {
+						if ( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() ) !== $_POST['wcj_filter_by_order_billing_country'] ) {
 							continue;
 						}
 					}
@@ -422,16 +422,16 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 											break;
 										case 'shortcode':
 											global $post;
-											$post_data = get_post( $order_id );
-											setup_postdata( $post_data );
+											$post = get_post( $order_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+											setup_postdata( $post );
 											$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
 											wp_reset_postdata();
 											break;
 										case 'shortcode_product':
 											global $post;
 											$product_id = ( 0 !== $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
-											$post_data  = get_post( $product_id );
-											setup_postdata( $post_data );
+											$post       = get_post( $product_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+											setup_postdata( $post );
 											$row[] = do_shortcode( $additional_field_value );
 											wp_reset_postdata();
 											break;

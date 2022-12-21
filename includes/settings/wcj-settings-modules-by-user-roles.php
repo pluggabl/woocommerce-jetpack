@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Modules By User Roles
  *
- * @version 5.6.0
+ * @version 6.0.1
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $user_roles = wcj_get_user_roles_options();
 $modules    = array();
-foreach ( w_c_j()->modules as $module_id => $module_obj ) {
+foreach ( w_c_j()->all_modules as $module_id => $module_obj ) {
 	$modules[ $module_id ] = $module_obj->short_desc;
 }
 unset( $modules['modules_by_user_roles'] );

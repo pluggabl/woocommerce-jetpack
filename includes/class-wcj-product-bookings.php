@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -394,7 +394,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Add_input_fields_to_frontend.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.1
 		 * @since   2.5.0
 		 * @todo    more options: exclude days (1-31), exact availability dates, mindate, maxdate, firstday, dateformat etc.
 		 */
@@ -404,7 +404,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 			}
 			if ( $this->is_bookings_product( wc_get_product() ) ) {
 				$this->create_custom_style();
-				$wpnonce                  = isset( $_REQUEST['wcj_product_bookings'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bookings'] ), 'wcj_product_bookings' ) : false;
+				$wpnonce                  = isset( $_REQUEST['wcj_product_bookings-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_bookings-nonce'] ), 'wcj_product_bookings' ) : false;
 				$data_table               = array();
 				$date_from_value          = ( $wpnonce && isset( $_POST['wcj_product_bookings_date_from'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_product_bookings_date_from'] ) ) : '';
 				$date_to_value            = ( $wpnonce && isset( $_POST['wcj_product_bookings_date_to'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_product_bookings_date_to'] ) ) : '';

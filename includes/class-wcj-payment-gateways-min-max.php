@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 5.6.7
+ * @version 6.0.1
  * @since   2.4.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 		/**
 		 * Remove_payment_gateways.
 		 *
-		 * @version 5.6.7
+		 * @version 6.0.1
 		 * @since   4.7.0
 		 *
 		 * @param array $_available_gateways defines the _available_gateways.
@@ -107,8 +107,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 				// Compatibility with other modules.
 				if ( 'yes' === wcj_get_option( 'wcj_payment_gateways_min_max_comp_mc', 'no' ) ) {
 					if ( wcj_is_module_enabled( 'multicurrency' ) ) {
-						$min = w_c_j()->modules['multicurrency']->change_price( $min, null );
-						$max = w_c_j()->modules['multicurrency']->change_price( $max, null );
+						$min = w_c_j()->all_modules['multicurrency']->change_price( $min, null );
+						$max = w_c_j()->all_modules['multicurrency']->change_price( $max, null );
 					}
 				}
 

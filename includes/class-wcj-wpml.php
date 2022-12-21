@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -108,7 +108,7 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		/**
 		 * Set Booster currency based on WPML currency
 		 *
-		 * @version 5.1.0
+		 * @version 6.0.1
 		 * @since   4.5.0
 		 *
 		 * @param string $currency Get currency.
@@ -116,7 +116,7 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		public function switch_currency_using_multicurrency( $currency ) {
 			if (
 			'no' === wcj_get_option( 'wcj_wpml_switch_booster_currency', 'no' ) ||
-			! w_c_j()->modules['multicurrency']->is_enabled()
+			! w_c_j()->all_modules['multicurrency']->is_enabled()
 			) {
 				return;
 			}

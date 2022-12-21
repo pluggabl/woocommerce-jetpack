@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 5.6.7
+ * @version 6.0.1
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_custom_statuses_table.
 		 *
-		 * @version 5.6.7
+		 * @version 6.0.1
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_table() {
@@ -218,7 +218,13 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 							'edit'                       => $status,
 							'edit-custom-statuses-nonce' => wp_create_nonce( 'edit-custom-statuses' ),
 						),
-						remove_query_arg( 'delete', 'edit-custom-statuses-nonce', 'delete_all_custom_status-nonce' )
+						remove_query_arg(
+							array(
+								'delete',
+								'edit-custom-statuses-nonce',
+								'delete_all_custom_status-nonce',
+							)
+						)
 					) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
 					$row             = array_merge(
 						$row,

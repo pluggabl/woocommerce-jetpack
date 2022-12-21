@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   2.5.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -186,9 +186,9 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 			$available = parent::is_available( $package );
 			if ( $available ) {
 				$total_weight = WC()->cart->get_cart_contents_weight();
-				if ( 0 !== $this->min_weight && $total_weight < $this->min_weight ) {
+				if ( $this->min_weight && 0 !== $this->min_weight && $total_weight < $this->min_weight ) {
 					$available = false;
-				} elseif ( 0 !== $this->max_weight && $total_weight > $this->max_weight ) {
+				} elseif ( $this->max_weight && 0 !== $this->max_weight && $total_weight > $this->max_weight ) {
 					$available = false;
 				}
 			}
@@ -198,7 +198,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 		/**
 		 * Initialise Settings Form Fields.
 		 *
-		 * @version 4.6.0
+		 * @version 6.0.1
 		 * @since   2.5.6
 		 */
 		public function init_instance_form_fields() {
@@ -231,7 +231,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 					'title'       => __( 'Type', 'woocommerce' ),
 					'type'        => 'select',
 					'description' => __( 'Cost calculation type.', 'woocommerce-jetpack' ) . ' ' .
-									apply_filters( 'booster_message', '', 'desc_advanced_no_link', array( 'option' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ) ) ),
+					apply_filters( 'booster_message', '', 'desc_advanced_no_link', array( 'option' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ) ) ),
 					'default'     => 'flat_rate',
 					'desc_tip'    => true,
 					'options'     => $type_options,
@@ -292,7 +292,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 						'<em>2.5+weight</em>',
 						'<em>[wcj_shipping_costs_table prop="weight" table="25-12.25|50-14.50|9999-29.148"]</em>'
 					) . '<br>' .
-									apply_filters( 'booster_message', '', 'desc_no_link' ),
+					apply_filters( 'booster_message', '', 'desc_no_link' ),
 					'desc_tip'          => true,
 					'type'              => 'checkbox',
 					'default'           => 'no',

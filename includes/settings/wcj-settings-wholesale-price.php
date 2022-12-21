@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 5.6.0
+ * @version 6.0.1
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -227,7 +227,7 @@ $settings = array(
 		'css'     => 'width:100px;',
 	),
 );
-$wholesale_price_levels_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number', 1 ) );
+$wholesale_price_levels_number = apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) );
 for ( $i = 1; $i <= $wholesale_price_levels_number; $i++ ) {
 	$settings = array_merge(
 		$settings,
@@ -301,7 +301,7 @@ if ( ! empty( $user_roles ) ) {
 				),
 			)
 		);
-		$wholesale_price_num = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_wholesale_price_levels_number_' . $user_role_key, 1 ) );
+		$wholesale_price_num = apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number_' . $user_role_key, 1 ) );
 		for ( $i = 1; $i <= $wholesale_price_num; $i++ ) {
 			$settings = array_merge(
 				$settings,

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 5.6.8
+ * @version 6.0.1
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -309,7 +309,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.1
 		 * @since   2.5.0
 		 * @todo    (maybe) add "enable compound multipliers" option
 		 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
@@ -438,7 +438,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 					foreach ( $product_categories as $product_category ) {
 						foreach ( $categories as $category ) {
 							if (
-							$product_category->term_id === $category ||
+							(string) $product_category->term_id === $category ||
 							(
 								'yes' === wcj_get_option( 'wcj_price_by_user_role_check_child_categories', 'no' ) &&
 								term_is_ancestor_of( $category, $product_category->term_id, 'product_cat' )
@@ -448,7 +448,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 									return '';
 								}
 								$koef_category = wcj_get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, -1 );
-								if ( ( $koef_category ) >= 0 ) {
+								if ( $koef_category >= 0 ) {
 									return ( '' === $price ) ? $price : $price * (float) $koef_category;
 								}
 							}
@@ -464,7 +464,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				if ( ! empty( $product_tags ) ) {
 					foreach ( $product_tags as $product_tag ) {
 						foreach ( $tags as $tag ) {
-							if ( $product_tag->term_id === $tag ) {
+							if ( (string) $product_tag->term_id === $tag ) {
 								if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $current_user_role, 'no' ) ) {
 									return '';
 								}

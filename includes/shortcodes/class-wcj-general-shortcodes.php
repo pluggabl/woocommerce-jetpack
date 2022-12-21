@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 6.0.0
+ * @version 6.0.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -563,13 +563,13 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_currency_exchange_rates_table.
 		 *
-		 * @version 2.9.0
+		 * @version 6.0.1
 		 * @since   2.9.0
 		 * @todo    (maybe) add similar function
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_currency_exchange_rates_table( $atts ) {
-			$all_currencies = w_c_j()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
+			$all_currencies = w_c_j()->all_modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
 			$table_data     = array();
 			foreach ( $all_currencies as $currency ) {
 				$table_data[] = array( $currency['title'], wcj_get_option( $currency['id'] ) );

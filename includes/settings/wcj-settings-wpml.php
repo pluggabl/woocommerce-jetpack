@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - WPML
  *
- * @version 5.6.0
+ * @version 6.0.1
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $all_modules = array();
-if ( function_exists( 'WCJ' ) && ! empty( w_c_j()->modules ) ) {
+if ( function_exists( 'w_c_j' ) && ! empty( w_c_j()->modules ) ) {
 	foreach ( w_c_j()->modules as $module_key => $module ) {
 		$desc_prefix                = ( false !== strpos( $module_key, 'pdf_invoicing_' ) ? __( 'PDF Invoicing', 'woocommerce-jetpack' ) . ': ' : '' );
 		$all_modules[ $module_key ] = $desc_prefix . $module->short_desc;

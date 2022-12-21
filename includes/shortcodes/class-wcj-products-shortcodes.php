@@ -1423,11 +1423,11 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_visibility_by_country.
 		 *
-		 * @version 5.4.8
+		 * @version 6.0.1
 		 * @since   5.4.8
 		 * @param array $atts The user defined shortcode attributes.
 		 */
-		public function wcj_product_visibility_by_contry( $atts ) {
+		public function wcj_product_visibility_by_country( $atts ) {
 			$value = $this->the_product->get_meta( '_wcj_product_by_country_visible' );
 			if ( is_array( $value ) ) {
 				$visibility_country = implode( ',', $value );
