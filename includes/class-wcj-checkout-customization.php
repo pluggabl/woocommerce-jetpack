@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 5.6.2
+ * @version 6.0.2-dev
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -217,7 +217,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Customize_order_received_message.
 		 *
-		 * @version 3.1.0
+		 * @version 6.0.2-dev
 		 * @since   3.1.0
 		 * @param string       $message defines the message.
 		 * @param int | string $_order defines the _order.
@@ -225,8 +225,8 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		public function customize_order_received_message( $message, $_order ) {
 			if ( null !== $_order ) {
 				global $post;
-				$posts = get_post( wcj_get_order_id( $_order ) );
-				setup_postdata( $posts );
+				$post = get_post( wcj_get_order_id( $_order ) ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				setup_postdata( $post );
 			}
 			$message = do_shortcode( wcj_get_option( 'wcj_checkout_customization_order_received_message', __( 'Thank you. Your order has been received.', 'woocommerce' ) ) );
 			if ( null !== $_order ) {

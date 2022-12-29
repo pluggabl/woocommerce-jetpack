@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Selector
  *
- * @version 3.2.4
+ * @version 6.0.2-dev
  * @since   3.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,11 +43,14 @@ if ( ! class_exists( 'WCJ_Widget_Selector' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 3.1.0
+		 * @version 6.0.2-dev
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */
 		public function get_content( $instance ) {
+			if ( ! isset( $instance['selector_type'] ) ) {
+				$instance['selector_type'] = 'country';
+			}
 			return do_shortcode( '[wcj_selector selector_type="' . $instance['selector_type'] . '"]' );
 		}
 

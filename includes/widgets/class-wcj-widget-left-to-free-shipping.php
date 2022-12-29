@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Left to Free Shipping
  *
- * @version 3.1.0
+ * @version 6.0.2-dev
  * @since   2.4.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,11 +43,14 @@ if ( ! class_exists( 'WCJ_Widget_Left_to_Free_Shipping' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 3.1.0
+		 * @version 6.0.2-dev
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */
 		public function get_content( $instance ) {
+			if ( ! isset( $instance['content'] ) ) {
+				$instance['content'] = '';
+			}
 			return wcj_get_left_to_free_shipping( $instance['content'] );
 		}
 

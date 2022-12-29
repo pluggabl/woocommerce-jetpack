@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Country Switcher
  *
- * @version 5.1.0
+ * @version 6.0.2-dev
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Widget_Country_Switcher' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 5.1.0
+		 * @version 6.0.2-dev
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */
@@ -55,6 +55,9 @@ if ( ! class_exists( 'WCJ_Widget_Country_Switcher' ) ) :
 			} else {
 				if ( ! isset( $instance['replace_with_currency'] ) ) {
 					$instance['replace_with_currency'] = 'no';
+				}
+				if ( ! isset( $instance['countries'] ) ) {
+					$instance['countries'] = '';
 				}
 				return do_shortcode(
 					'[wcj_country_select_drop_down_list' .

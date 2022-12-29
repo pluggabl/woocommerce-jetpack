@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 6.0.1
+ * @version 6.0.2-dev
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -319,7 +319,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Process_actions.
 		 *
-		 * @version 5.6.7
+		 * @version 6.0.2-dev
 		 * @since   3.2.2
 		 * @todo    (maybe) use `init` hook for processing actions
 		 */
@@ -329,7 +329,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$delete_custom_status_wpnonce     = isset( $_REQUEST['delete_custom_status-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['delete_custom_status-nonce'] ), 'delete_custom_status' ) : false;
 			$delete_all_custom_status_wpnonce = isset( $_REQUEST['delete_all_custom_status-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['delete_all_custom_status-nonce'] ), 'delete_all_custom_status' ) : false;
 
-			$new_status              = isset( $_POST['new_status'] ) ? sanitize_text_field( wp_unslash( $_POST['new_status'] ) ) : '';
+			$new_status              = isset( $_POST['new_status'] ) ? sanitize_text_field( wp_unslash( sanitize_key( $_POST['new_status'] ) ) ) : '';
 			$new_status_label        = isset( $_POST['new_status_label'] ) ? sanitize_text_field( wp_unslash( $_POST['new_status_label'] ) ) : '';
 			$new_status_icon_content = isset( $_POST['new_status_icon_content'] ) ? sanitize_text_field( wp_unslash( $_POST['new_status_icon_content'] ) ) : '';
 			$new_status_icon_color   = isset( $_POST['new_status_icon_color'] ) ? sanitize_text_field( wp_unslash( $_POST['new_status_icon_color'] ) ) : '';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 5.6.8
+ * @version 6.0.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -715,15 +715,16 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_total_sales.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.2-dev
 		 * @since   2.2.6
 		 * @param   array $atts Shortcode atts.
 		 */
 		public function wcj_product_total_sales( $atts ) {
+			$offset                = isset( $atts['offset'] ) && '' !== $atts['offset'] ? $atts['offset'] : 0;
 			$product_custom_fields = get_post_custom( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
-			$total_sales           = ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
-			if ( '0' !== $atts['offset'] && ! is_numeric( $total_sales ) ) {
-				$total_sales += $atts['offset'];
+			$total_sales           = ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : 0;
+			if ( '0' !== $offset && ! is_numeric( $total_sales ) ) {
+				$total_sales += $offset;
 			}
 			return ( '0' === $total_sales && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_sales;
 		}

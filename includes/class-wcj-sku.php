@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 5.6.8
+ * @version 6.0.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -453,8 +453,8 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 			);
 
 			global $post;
-			$posts = get_post( $product_id );
-			setup_postdata( $posts );
+			$post = get_post( $product_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			setup_postdata( $post );
 			$format_template = do_shortcode( $format_template );
 			wp_reset_postdata();
 

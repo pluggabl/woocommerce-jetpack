@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 6.0.1
+ * @version 6.0.2-dev
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -161,8 +161,8 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 					$this->replace['order-number'] = $this->object->get_order_number();
 
 					global $post;
-					$post_data = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->object->post : get_post( $object_id ) );
-					setup_postdata( $post_data );
+					$post = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->object->post : get_post( $object_id ) ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					setup_postdata( $post );
 					$_GET['order_id'] = $object_id;
 				}
 			}
