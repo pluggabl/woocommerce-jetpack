@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 6.0.1
+ * @version 6.0.2-dev
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -996,7 +996,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 6.0.1
+	 * @version 6.0.2-dev
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1039,6 +1039,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'attribute_*'               => true,
 				'variation_id'              => true,
 				'size'                      => true,
+				'maxlength' 				=> true,
 			),
 			'textarea' => array(
 				'name'         => true,
@@ -1051,6 +1052,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'disabled'     => true,
 				'onchange'     => true,
 				'autocomplete' => true,
+				'maxlength'    => true,
 			),
 			'select'   => array(
 				'multiple' => true,
