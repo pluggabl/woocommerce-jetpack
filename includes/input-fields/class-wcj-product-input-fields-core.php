@@ -630,7 +630,10 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				$is_required = $this->get_value( 'wcj_product_input_fields_required_' . $this->scope . '_' . $i, $_product_id, 'no' );
 				$title       = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product_id, '' );
 				$placeholder = $this->get_value( 'wcj_product_input_fields_placeholder_' . $this->scope . '_' . $i, $_product_id, '' );
-				$maxlength   = $this->get_value( 'wcj_product_input_fields_maxlength_' . $this->scope . '_' . $i, $_product_id, '' );
+				$maxlength   = '';
+				if ( ( 'text' === $type || 'textarea' === $type ) && '0' < $this->get_value( 'wcj_product_input_fields_maxlength_' . $this->scope . '_' . $i, $_product_id, '' ) ) {
+					$maxlength = ' maxlength="' . $this->get_value( 'wcj_product_input_fields_maxlength_' . $this->scope . '_' . $i, $_product_id, '' ) . '"';
+				}
 
 				$datepicker_format = $this->get_value( 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_' . $i, $_product_id, '' );
 				if ( '' === $datepicker_format ) {
@@ -693,15 +696,9 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						case 'password':
 						case 'email':
 						case 'tel':
-							if ( 'text' === $type && '0' < $maxlength ) {
-								$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
-								$field_name . '" maxlength="' . $maxlength . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+							$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
+							$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . $maxlength . '>';
 
-							} else {
-								$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
-								$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
-
-							}
 							break;
 
 						case 'checkbox':
@@ -736,14 +733,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							break;
 
 						case 'textarea':
-							if ( '0' < $maxlength ) {
-								$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" maxlength="' . $maxlength . '" placeholder="' . $placeholder . '">' .
-								$set_value . '</textarea>';
-							} else {
-								$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
-								$set_value . '</textarea>';
-							}
-
+							$html = '<textarea' . $maxlength . ' class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
+							$set_value . '</textarea>';
 							break;
 
 						case 'select':

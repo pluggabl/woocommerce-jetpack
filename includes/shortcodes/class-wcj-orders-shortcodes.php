@@ -161,6 +161,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					'exclude_by_tags'            => '',
 					'exclude_by_attribute__name' => '',
 					'show_label'                 => true,
+					'tax_label_spaces'           => 0,
 				),
 				$atts
 			);
@@ -1377,9 +1378,14 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		public function wcj_order_taxes_html( $atts ) {
 			$order_taxes = $this->the_order->get_taxes();
 			$taxes_html  = '';
+			$label_style = '';
+			for ( $i = 1; $i <= $atts['tax_label_spaces']; $i++ ) {
+				$label_style .= '&nbsp;';
+			}
 			foreach ( $order_taxes as $order_tax ) {
 				if ( true === filter_var( $atts['show_label'], FILTER_VALIDATE_BOOLEAN ) ) {
-					$taxes_html .= ( isset( $order_tax['label'] ) ) ? $order_tax['label'] . ': ' : '';
+					$taxes_html .= ( isset( $order_tax['label'] ) ) ? $order_tax['label'] . ': ' . $label_style : '';
+
 				}
 				$amount      = 0;
 				$amount     += ( isset( $order_tax['tax_amount'] ) ) ? $order_tax['tax_amount'] : 0;
