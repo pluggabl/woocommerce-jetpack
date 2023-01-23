@@ -693,16 +693,15 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						case 'password':
 						case 'email':
 						case 'tel':
-							if("text" === $type  && '0' < $maxlength)
-						   {
-						   	$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
-							$field_name . '" maxlength="' . $maxlength . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
-						   	
-						   }else{
-							$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
-							$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+							if ( 'text' === $type && '0' < $maxlength ) {
+								$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
+								$field_name . '" maxlength="' . $maxlength . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
 
-						   }
+							} else {
+								$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
+								$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+
+							}
 							break;
 
 						case 'checkbox':
@@ -737,13 +736,13 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							break;
 
 						case 'textarea':
-						if('0' < $maxlength){
-							$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name .'" maxlength="' . $maxlength .'" placeholder="' . $placeholder . '">' .
-							$set_value . '</textarea>';
-						}else{
-							$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name .'" placeholder="' . $placeholder . '">' .
-							$set_value . '</textarea>';
-						}
+							if ( '0' < $maxlength ) {
+								$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" maxlength="' . $maxlength . '" placeholder="' . $placeholder . '">' .
+								$set_value . '</textarea>';
+							} else {
+								$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
+								$set_value . '</textarea>';
+							}
 
 							break;
 

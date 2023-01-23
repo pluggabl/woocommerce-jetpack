@@ -1039,7 +1039,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'attribute_*'               => true,
 				'variation_id'              => true,
 				'size'                      => true,
-				'maxlength' 				=> true,
+				'maxlength'                 => true,
 			),
 			'textarea' => array(
 				'name'         => true,

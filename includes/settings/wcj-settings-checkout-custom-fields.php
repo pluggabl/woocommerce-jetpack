@@ -164,12 +164,12 @@ for ( $i = 1; $i <= $checkout_fields_num; $i++ ) {
 				'type'    => 'checkbox',
 			),
 			array(
-				'title'   => __( 'Clear Data', 'woocommerce-jetpack' ),
-				'desc'    => __( 'If you have issue with time limit in datepicker field. so must need to Enable this option to Fix.', 'woocommerce-jetpack' ),
-				'desc_tip'=> __( 'Clear autoselected data on checkout page.', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_clear_data' . $i,
-				'default' => 'no',
-				'type'    => 'checkbox',
+				'title'    => __( 'Clear Data', 'woocommerce-jetpack' ),
+				'desc'     => __( 'If you have issue with time limit in datepicker field. so must need to Enable this option to Fix.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Clear autoselected data on checkout page.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_clear_data' . $i,
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'   => __( 'Label', 'woocommerce-jetpack' ),

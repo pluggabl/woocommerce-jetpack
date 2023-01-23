@@ -73,12 +73,12 @@ return array(
 		'default' => '',
 	),
 	array(
-		'title'   => __( 'Text/Textarea: Maxlength', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Apply Character limit to custom Text and Textarea Field. Keep 0 to disbled the option', 'woocommerce-jetpack' ),
-		'id'      => 'wcj_product_input_fields_maxlength_' . $this->scope . '_',
-		'default' => '0',
-		'type'    => 'number',
-		'css'     => 'min-width:300px;',
+		'title'             => __( 'Text/Textarea: Maxlength', 'woocommerce-jetpack' ),
+		'desc_tip'          => __( 'Apply Character limit to custom Text and Textarea Field. Keep 0 to disbled the option', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_product_input_fields_maxlength_' . $this->scope . '_',
+		'default'           => '0',
+		'type'              => 'number',
+		'css'               => 'min-width:300px;',
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(

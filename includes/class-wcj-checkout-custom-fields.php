@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
-				add_filter( 'woocommerce_checkout_get_value', array( $this, 'clear_checkout_fields' ), PHP_INT_MAX,2 );
+				add_filter( 'woocommerce_checkout_get_value', array( $this, 'clear_checkout_fields' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_checkout_fields', array( $this, 'add_custom_checkout_fields' ), PHP_INT_MAX );
 				add_filter( 'woocommerce_admin_billing_fields', array( $this, 'add_custom_billing_fields_to_admin_order_display' ), PHP_INT_MAX );
 				add_filter( 'woocommerce_admin_shipping_fields', array( $this, 'add_custom_shipping_fields_to_admin_order_display' ), PHP_INT_MAX );
@@ -746,28 +746,26 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $value defines the value.
 		 * @param string $input defines the input.
 		 */
+		public function clear_checkout_fields( $value, $input ) {
 
-		public function clear_checkout_fields( $value, $input ){
-
-                for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
+			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
 
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
-				
-					 $the_section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
-					 $the_key     = 'wcj_checkout_field_' . $i;
 
-						if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_clear_data' . $i ) ) {
-							$the_field['clear_data'] = true;
-						    $clear_data_input = $the_section . '_' . $the_key;
-							if( $input ===  $clear_data_input)
-							{
-				          		$value = '';
-							}
-				        }
+					$the_section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
+					$the_key     = 'wcj_checkout_field_' . $i;
+
+					if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_clear_data' . $i ) ) {
+						$the_field['clear_data'] = true;
+						$clear_data_input        = $the_section . '_' . $the_key;
+						if ( $input === $clear_data_input ) {
+							$value = '';
+						}
 					}
 				}
+			}
 				return $value;
-           }
+		}
 
 	}
 
