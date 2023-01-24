@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 5.6.8
+ * @version 
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -58,6 +58,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
+				add_filter( 'woocommerce_checkout_get_value', array( $this, 'clear_checkout_fields' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_checkout_fields', array( $this, 'add_custom_checkout_fields' ), PHP_INT_MAX );
 				add_filter( 'woocommerce_admin_billing_fields', array( $this, 'add_custom_billing_fields_to_admin_order_display' ), PHP_INT_MAX );
 				add_filter( 'woocommerce_admin_shipping_fields', array( $this, 'add_custom_shipping_fields_to_admin_order_display' ), PHP_INT_MAX );
@@ -633,7 +634,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_custom_checkout_fields.
 		 *
-		 * @version 5.5.0
+		 * @version 
 		 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 		 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 		 * @param array $fields defines the fields.
@@ -657,7 +658,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 							$datepicker_format               = wcj_date_format_php_to_js( $datepicker_format );
 							$custom_attributes['dateformat'] = $datepicker_format;
 							$custom_attributes['mindate']    = wcj_get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
-							if ( 0 === $custom_attributes['mindate'] ) {
+							if ( '0' === $custom_attributes['mindate'] ) {
 								$custom_attributes['mindate']               = 'zero';
 								$custom_attributes['currentday_time_limit'] = wcj_get_option( 'wcj_checkout_custom_field_datepicker_current_day_time_limit_' . $i, 0 );
 								$current_datetime                           = current_datetime();
@@ -734,6 +735,36 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 				}
 			}
 			return $fields;
+		}
+
+		/**
+		 * Clear_checkout_fields.
+		 *
+		 * @version 
+		 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
+		 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
+		 * @param string $value defines the value.
+		 * @param string $input defines the input.
+		 */
+		public function clear_checkout_fields( $value, $input ) {
+
+			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
+
+				if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
+
+					$the_section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
+					$the_key     = 'wcj_checkout_field_' . $i;
+
+					if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_clear_data' . $i ) ) {
+						$the_field['clear_data'] = true;
+						$clear_data_input        = $the_section . '_' . $the_key;
+						if ( $input === $clear_data_input ) {
+							$value = '';
+						}
+					}
+				}
+			}
+				return $value;
 		}
 
 	}

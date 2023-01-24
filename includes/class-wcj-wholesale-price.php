@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 5.6.2
+ * @version 
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    per variation
@@ -119,7 +119,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		/**
 		 * Add_discount_info_to_cart_page.
 		 *
-		 * @version 5.0.0
+		 * @version 
 		 * @param  int    $price_html defines the price_html.
 		 * @param  array  $cart_item defines the cart_item.
 		 * @param  string $cart_item_key defines the cart_item_key.
@@ -129,7 +129,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 			if ( isset( $cart_item['wcj_wholesale_price'] ) ) {
 				$the_quantity = $this->get_quantity( WC()->cart, $cart_item );
 				$discount     = $this->get_discount_by_quantity( $the_quantity, $cart_item['product_id'] );
-				if ( '0' !== $discount ) {
+				if ( '0' !== $discount && 0 !== $discount ) {
 					$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $cart_item['product_id'] ) )
 					? get_post_meta( $cart_item['product_id'], '_wcj_wholesale_price_discount_type', true )
 					: wcj_get_option( 'wcj_wholesale_price_discount_type', 'percent' );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 5.6.0
+ * @version 
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -162,6 +162,14 @@ for ( $i = 1; $i <= $checkout_fields_num; $i++ ) {
 				'id'      => 'wcj_checkout_custom_field_required_' . $i,
 				'default' => 'no',
 				'type'    => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Clear Data', 'woocommerce-jetpack' ),
+				'desc'     => __( 'If you have issue with time limit in datepicker field. so must need to Enable this option to Fix.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Clear autoselected data on checkout page.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_clear_data' . $i,
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'   => __( 'Label', 'woocommerce-jetpack' ),

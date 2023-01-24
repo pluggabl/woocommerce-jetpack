@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 6.0.0
+ * @version 
  * @since   2.4.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version 5.6.7
+		 * @version 
 		 * @since   2.4.7
 		 */
 		public function get_report() {
@@ -44,7 +44,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 			$reset_currency_wpnonce = isset( $_REQUEST['wcj-reset-currency-rates-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-reset-currency-rates-nonce'] ), 'wcj_reset_currency_rates' ) : false;
 			if ( $save_currency_wpnonce && isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
 				// Save rates.
-				update_option( 'wcj_reports_currency_rates', array_replace_recursive( wcj_get_option( 'wcj_reports_currency_rates', array() ), sanitize_text_field( wp_unslash( $_POST['wcj_save_currency_rates_array'] ) ) ) );
+				update_option( 'wcj_reports_currency_rates', array_replace_recursive( get_option( 'wcj_reports_currency_rates', array() ), wp_unslash( $_POST['wcj_save_currency_rates_array'] ) ) ); //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates saved.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			} elseif ( $reset_currency_wpnonce && isset( $_POST['wcj_reset_currency_rates'] ) ) {
 				// Delete rates.

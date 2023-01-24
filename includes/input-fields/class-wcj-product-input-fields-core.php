@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 6.0.1
+ * @version 6.0.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -489,7 +489,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Validate_product_input_fields_on_add_to_cart.
 		 *
-		 * @version 6.0.1
+		 * @version 6.0.2
 		 * @param bool $passed define passed value.
 		 * @param int  $product_id Get product id.
 		 */
@@ -501,10 +501,6 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 				if ( ! $this->is_enabled( $i, $product_id ) ) {
 					continue;
-				}
-				if ( ! $wpnonce ) {
-					$passed = false;
-					wc_add_notice( __( 'Invalid Nonce verification, Please try again later.', 'woocommerce-jetpack' ), 'error' );
 				}
 
 				$type       = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );
@@ -524,7 +520,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							$field_value = '';
 						}
 					}
-					if ( '' === $field_value ) {
+					if ( '' === $field_value || ! $wpnonce ) {
 						$passed = false;
 						wc_add_notice( $this->get_value( 'wcj_product_input_fields_required_message_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
 					}
@@ -606,7 +602,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_product_input_fields_to_frontend.
 		 *
-		 * @version 5.6.8
+		 * @version 
 		 * @todo    `$set_value` - add "default" option for all other types except checkbox
 		 * @todo    `$set_value` - 'file' type
 		 * @todo    add `required` attributes
@@ -630,6 +626,10 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				$is_required = $this->get_value( 'wcj_product_input_fields_required_' . $this->scope . '_' . $i, $_product_id, 'no' );
 				$title       = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product_id, '' );
 				$placeholder = $this->get_value( 'wcj_product_input_fields_placeholder_' . $this->scope . '_' . $i, $_product_id, '' );
+				$maxlength   = '';
+				if ( ( 'text' === $type || 'textarea' === $type ) && '0' < $this->get_value( 'wcj_product_input_fields_maxlength_' . $this->scope . '_' . $i, $_product_id, '' ) ) {
+					$maxlength = ' maxlength="' . $this->get_value( 'wcj_product_input_fields_maxlength_' . $this->scope . '_' . $i, $_product_id, '' ) . '"';
+				}
 
 				$datepicker_format = $this->get_value( 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_' . $i, $_product_id, '' );
 				if ( '' === $datepicker_format ) {
@@ -693,7 +693,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						case 'email':
 						case 'tel':
 							$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
-							$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+							$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . $maxlength . '>';
+
 							break;
 
 						case 'checkbox':
@@ -728,7 +729,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 							break;
 
 						case 'textarea':
-							$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
+							$html = '<textarea' . $maxlength . ' class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
 							$set_value . '</textarea>';
 							break;
 

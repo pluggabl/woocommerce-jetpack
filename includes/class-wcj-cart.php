@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Custom Info
  *
- * @version 5.2.0
+ * @version 
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes.
  */
@@ -52,7 +52,7 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 		/**
 		 * Add_custom_info_to_cart_item_name.
 		 *
-		 * @version 3.7.0
+		 * @version 
 		 * @since   2.3.9
 		 * @todo    (maybe) `wc_setup_product_data( $post );`
 		 * @param string $product_title defines the product_title.
@@ -64,8 +64,8 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 			if ( '' !== $custom_content ) {
 				global $post;
 				$product_id = ( ! empty( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : $cart_item['product_id'] );
-				$posts      = get_post( $product_id );
-				setup_postdata( $posts );
+				$post       = get_post( $product_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				setup_postdata( $post );
 				$product_title .= do_shortcode( $custom_content );
 				wp_reset_postdata();
 			}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Template Editor
  *
- * @version 5.6.2
+ * @version 
  * @since   3.9.0
  * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')
@@ -59,6 +59,9 @@ $settings = array(
 	),
 );
 foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as $template ) {
+	require_once ABSPATH . '/wp-admin/includes/file.php';
+	global $wp_filesystem;
+	WP_Filesystem();
 	$default_template_path  = wc_locate_template( $template, '', $this->get_path_by_template( $template ) );
 	$replaced_template_path = wcj_get_wcj_uploads_dir( 'templates', false ) . DIRECTORY_SEPARATOR . $template;
 	$style                  = 'style="color:' . ( file_exists( $replaced_template_path ) ? 'green' : 'red' ) . ';"';
@@ -84,7 +87,7 @@ foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as 
 				'</details>',
 				'id'      => "wcj_template_editor_templates_content[{$template}]",
 				'type'    => 'textarea',
-				'default' => wp_remote_get( $default_template_path ),
+				'default' => $wp_filesystem->get_contents( $default_template_path, FS_CHMOD_FILE ),
 				'css'     => 'width:100%;height:500px;font-family:monospace;',
 				'wcj_raw' => true,
 			),

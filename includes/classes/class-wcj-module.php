@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 6.0.1
+ * @version 
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -625,7 +625,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 6.0.1
+		 * @version 
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
 		 * @param int   $post_id Get post id.
@@ -638,8 +638,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			}
 			// Setup post (just in case...).
 			global $post;
-			$_post = get_post( $post_id );
-			setup_postdata( $_post );
+			$post = get_post( $post_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			setup_postdata( $post );
 			// Save options.
 			foreach ( $this->get_meta_box_options() as $option ) {
 				if ( isset( $option['type'] ) && 'title' === $option['type'] ) {

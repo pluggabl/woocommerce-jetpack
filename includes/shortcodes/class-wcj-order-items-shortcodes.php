@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 6.0.0
+ * @version 
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -524,7 +524,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Get_cell.
 		 *
-		 * @version 5.3.0
+		 * @version 
 		 * @since   3.2.0
 		 * @todo    do we need `pa_` replacement?
 		 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
@@ -663,8 +663,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 						return '';
 					} else {
 						global $post;
-						$posts = get_post( $item['product_id'] );
-						setup_postdata( $posts );
+						$post = get_post( $item['product_id'] ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+						setup_postdata( $post );
 						$the_excerpt = get_the_excerpt();
 						wp_reset_postdata();
 						return $the_excerpt;
