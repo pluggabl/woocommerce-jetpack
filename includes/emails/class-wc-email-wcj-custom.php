@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 6.0.2-dev
+ * @version 
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email

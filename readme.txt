@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.1.1
 Requires PHP: 7.2
-Stable tag: 6.0.1
+Stable tag: 6.0.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,23 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 6.0.2 24/01/2023 =
+
+* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Added a new shortcode Attribute for Tax Html Label Spaces [wcj_order_taxes_html tax_label_spaces="10" ]
+* NEW FEATURE - Cart & Checkout - Checkout Custom Fields - Added new option to Clear autoselected data on the checkout page.
+* NEW FEATURE - PRODUCTS - Product Input Fields  - Added a new feature to limit characters for the text and textarea field.
+* FIXED - EMAILS & MISC. - Template Editor - Fixed fatal Error while changing any Template of wocommarce.
+* FIXED - EMAILS & MISC. - Reports - Fatal error: Uncaught TypeError: array_replace_recursive(): Argument #2 must be of type array, string given in /includes/reports/class-wcj-reports-monthly-sales.php ..
+* FIXED - SHIPPING & ORDERS - Order Custom Statuses - Fixed the case-sensitive issue for creating custom shortcodes.
+* FIXED - SHIPPING & ORDERS - Admin Orders List - Fixed Shorting issue on Custom Column.
+* FIXED - CART & CHECKOUT - Cart Custom Info - Fixed the shortcode issue for the "Add to Each Item Name" option.
+* FIXED - PRICES & CURRENCIES - Wholesale Price - Fixed Cart message appearing on 0 discount.
+* FIXED - Shortcodes - Products - `warning in `[wcj_product_total_sales]`
+* FIXED - Shortcodes - Fixed post object data issue for all shortcodes.
+* FIXED - Widget - Fixed Issue "Error while adding Widget to site with theme customization option"
+* WooCommerce 7.3.0 tested
+* WordPress 6.1.1 tested
 
 = 6.0.1 21/12/2022 =
 

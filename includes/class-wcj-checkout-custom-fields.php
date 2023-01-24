@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 6.0.2-dev
+ * @version 
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -634,7 +634,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_custom_checkout_fields.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 		 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 		 * @param array $fields defines the fields.
@@ -740,7 +740,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Clear_checkout_fields.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 		 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 		 * @param string $value defines the value.

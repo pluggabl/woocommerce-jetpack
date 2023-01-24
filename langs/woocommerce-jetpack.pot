@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
@@ -195,7 +195,7 @@ msgstr ""
 #: includes/admin/class-wc-settings-jetpack.php:605
 #: includes/export/class-wcj-export-fields-helper.php:297
 #: includes/gateways/class-wc-gateway-wcj-custom-template.php:67
-#: includes/settings/wcj-settings-checkout-custom-fields.php:181
+#: includes/settings/wcj-settings-checkout-custom-fields.php:189
 #: includes/settings/wcj-settings-eu-vat-number.php:37
 #: includes/settings/wcj-settings-product-by-user.php:16
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:190
@@ -1188,7 +1188,7 @@ msgid "Standard rates"
 msgstr ""
 
 #: includes/class-wcj-admin-bar.php:579
-#: includes/settings/wcj-settings-checkout-custom-fields.php:202
+#: includes/settings/wcj-settings-checkout-custom-fields.php:210
 #: includes/settings/wcj-settings-checkout-custom-info.php:62
 #: includes/settings/wcj-settings-left-to-free-shipping.php:124
 #: includes/settings/wcj-settings-price-by-user-role.php:49
@@ -1232,7 +1232,7 @@ msgid "PayPal"
 msgstr ""
 
 #: includes/class-wcj-admin-bar.php:623
-#: includes/settings/wcj-settings-checkout-custom-fields.php:204
+#: includes/settings/wcj-settings-checkout-custom-fields.php:212
 msgid "Account"
 msgstr ""
 
@@ -2531,11 +2531,11 @@ msgstr ""
 #: includes/class-wcj-left-to-free-shipping.php:67
 #: includes/class-wcj-left-to-free-shipping.php:77
 #: includes/class-wcj-left-to-free-shipping.php:87
-#: includes/functions/wcj-functions-shipping.php:307
+#: includes/functions/wcj-functions-shipping.php:309
 #: includes/settings/wcj-settings-left-to-free-shipping.php:46
 #: includes/settings/wcj-settings-left-to-free-shipping.php:77
 #: includes/settings/wcj-settings-left-to-free-shipping.php:111
-#: includes/widgets/class-wcj-widget-left-to-free-shipping.php:72
+#: includes/widgets/class-wcj-widget-left-to-free-shipping.php:75
 #, php-format
 msgid "%left_to_free% left to free shipping"
 msgstr ""
@@ -2597,7 +2597,7 @@ msgstr ""
 #: includes/class-wcj-max-products-per-user.php:240
 #: includes/functions/wcj-functions-users.php:179
 #: includes/functions/wcj-functions-users.php:215
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:565
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:566
 msgid "Guest"
 msgstr ""
 
@@ -3505,7 +3505,7 @@ msgstr ""
 #: includes/settings/wcj-settings-cart-customization.php:60
 #: includes/settings/wcj-settings-checkout-core-fields.php:47
 #: includes/settings/wcj-settings-checkout-custom-fields.php:131
-#: includes/settings/wcj-settings-checkout-custom-fields.php:241
+#: includes/settings/wcj-settings-checkout-custom-fields.php:249
 #: includes/settings/wcj-settings-checkout-customization.php:23
 #: includes/settings/wcj-settings-checkout-customization.php:30
 #: includes/settings/wcj-settings-checkout-customization.php:44
@@ -4183,8 +4183,8 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-product-by-country.php:36
-#: includes/widgets/class-wcj-widget-country-switcher.php:84
-#: includes/widgets/class-wcj-widget-selector.php:75
+#: includes/widgets/class-wcj-widget-country-switcher.php:87
+#: includes/widgets/class-wcj-widget-selector.php:78
 msgid "Countries"
 msgstr ""
 
@@ -4425,10 +4425,10 @@ msgstr ""
 #: includes/shipping/class-wc-shipping-wcj-custom-template.php:122
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:223
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:361
-#: includes/widgets/class-wcj-widget-country-switcher.php:77
-#: includes/widgets/class-wcj-widget-left-to-free-shipping.php:63
+#: includes/widgets/class-wcj-widget-country-switcher.php:80
+#: includes/widgets/class-wcj-widget-left-to-free-shipping.php:66
 #: includes/widgets/class-wcj-widget-multicurrency.php:85
-#: includes/widgets/class-wcj-widget-selector.php:63
+#: includes/widgets/class-wcj-widget-selector.php:66
 msgid "Title"
 msgstr ""
 
@@ -4608,7 +4608,7 @@ msgid "Position"
 msgstr ""
 
 #: includes/class-wcj-product-info.php:273
-#: includes/settings/wcj-settings-checkout-custom-fields.php:189
+#: includes/settings/wcj-settings-checkout-custom-fields.php:197
 #: includes/settings/wcj-settings-product-info.php:70
 #: includes/settings/wcj-settings-product-info.php:103
 #: includes/settings/wcj-settings-product-tabs.php:92
@@ -4832,7 +4832,7 @@ msgstr ""
 #: includes/settings/wcj-settings-my-account.php:295
 #: includes/settings/wcj-settings-product-custom-info.php:127
 #: includes/settings/wcj-settings-product-tabs.php:99
-#: includes/widgets/class-wcj-widget-left-to-free-shipping.php:70
+#: includes/widgets/class-wcj-widget-left-to-free-shipping.php:73
 msgid "Content"
 msgstr ""
 
@@ -4855,7 +4855,7 @@ msgid "Link - Open in New Window"
 msgstr ""
 
 #: includes/class-wcj-product-tabs.php:692
-#: includes/input-fields/wcj-product-input-fields-options.php:93
+#: includes/input-fields/wcj-product-input-fields-options.php:102
 #: includes/settings/meta-box/wcj-settings-meta-box-custom-css.php:23
 #: includes/settings/meta-box/wcj-settings-meta-box-multicurrency.php:66
 #: includes/settings/meta-box/wcj-settings-meta-box-offer-price.php:23
@@ -4877,15 +4877,15 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-sale-flash.php:23
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:35
 #: includes/settings/wcj-settings-admin-orders-list.php:92
-#: includes/settings/wcj-settings-checkout-custom-fields.php:274
+#: includes/settings/wcj-settings-checkout-custom-fields.php:282
 #: includes/settings/wcj-settings-product-addons.php:263
 #: includes/settings/wcj-settings-related-products.php:193
-#: includes/widgets/class-wcj-widget-country-switcher.php:97
+#: includes/widgets/class-wcj-widget-country-switcher.php:100
 msgid "No"
 msgstr ""
 
 #: includes/class-wcj-product-tabs.php:693
-#: includes/input-fields/wcj-product-input-fields-options.php:86
+#: includes/input-fields/wcj-product-input-fields-options.php:95
 #: includes/settings/meta-box/wcj-settings-meta-box-custom-css.php:22
 #: includes/settings/meta-box/wcj-settings-meta-box-multicurrency.php:67
 #: includes/settings/meta-box/wcj-settings-meta-box-offer-price.php:22
@@ -4906,7 +4906,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-related-products.php:29
 #: includes/settings/meta-box/wcj-settings-meta-box-sale-flash.php:22
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:34
-#: includes/settings/wcj-settings-checkout-custom-fields.php:268
+#: includes/settings/wcj-settings-checkout-custom-fields.php:276
 #: includes/settings/wcj-settings-eu-vat-number.php:45
 #: includes/settings/wcj-settings-eu-vat-number.php:52
 #: includes/settings/wcj-settings-eu-vat-number.php:70
@@ -4918,7 +4918,7 @@ msgstr ""
 #: includes/settings/wcj-settings-eu-vat-number.php:143
 #: includes/settings/wcj-settings-product-addons.php:262
 #: includes/settings/wcj-settings-related-products.php:192
-#: includes/widgets/class-wcj-widget-country-switcher.php:98
+#: includes/widgets/class-wcj-widget-country-switcher.php:101
 msgid "Yes"
 msgstr ""
 
@@ -5279,7 +5279,7 @@ msgid "Product Shipping Classes"
 msgstr ""
 
 #: includes/class-wcj-shipping-by-products.php:186
-#: includes/functions/wcj-functions-shipping.php:118
+#: includes/functions/wcj-functions-shipping.php:120
 msgid "No shipping class"
 msgstr ""
 
@@ -5334,7 +5334,7 @@ msgstr ""
 #: includes/settings/wcj-settings-checkout-custom-fields.php:25
 #: includes/settings/wcj-settings-checkout-custom-fields.php:32
 #: includes/settings/wcj-settings-checkout-custom-fields.php:58
-#: includes/settings/wcj-settings-checkout-custom-fields.php:226
+#: includes/settings/wcj-settings-checkout-custom-fields.php:234
 #: includes/settings/wcj-settings-email-options.php:23
 #: includes/settings/wcj-settings-eu-vat-number.php:161
 #: includes/settings/wcj-settings-eu-vat-number.php:197
@@ -6329,7 +6329,7 @@ msgstr ""
 
 #: includes/export/class-wcj-export-fields-helper.php:127
 #: includes/export/class-wcj-export-fields-helper.php:210
-#: includes/settings/wcj-settings-checkout-custom-fields.php:203
+#: includes/settings/wcj-settings-checkout-custom-fields.php:211
 msgid "Order Notes"
 msgstr ""
 
@@ -7952,8 +7952,8 @@ msgstr ""
 msgid "%s day(s)"
 msgstr ""
 
-#: includes/functions/wcj-functions-shipping.php:239
-#: includes/functions/wcj-functions-shipping.php:299
+#: includes/functions/wcj-functions-shipping.php:241
+#: includes/functions/wcj-functions-shipping.php:301
 #: includes/settings/wcj-settings-left-to-free-shipping.php:147
 msgid "You have Free delivery"
 msgstr ""
@@ -8108,19 +8108,15 @@ msgstr ""
 msgid "Product Input Field"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-core.php:507
-msgid "Invalid Nonce verification, Please try again later."
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-core.php:542
+#: includes/input-fields/class-wcj-product-input-fields-core.php:538
 msgid "Wrong file type!"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-core.php:551
+#: includes/input-fields/class-wcj-product-input-fields-core.php:547
 msgid "File is too big!"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-core.php:783
+#: includes/input-fields/class-wcj-product-input-fields-core.php:784
 msgid "Select a country&hellip;"
 msgstr ""
 
@@ -8218,7 +8214,7 @@ msgstr ""
 
 #: includes/input-fields/wcj-product-input-fields-options.php:59
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:143
-#: includes/settings/wcj-settings-checkout-custom-fields.php:174
+#: includes/settings/wcj-settings-checkout-custom-fields.php:182
 #: includes/settings/wcj-settings-eu-vat-number.php:30
 #: includes/settings/wcj-settings-product-addons.php:145
 msgid "Placeholder"
@@ -8237,219 +8233,229 @@ msgstr ""
 msgid "Message on required"
 msgstr ""
 
+#: includes/input-fields/wcj-product-input-fields-options.php:76
+msgid "Text/Textarea: Maxlength"
+msgstr ""
+
 #: includes/input-fields/wcj-product-input-fields-options.php:77
+msgid ""
+"Apply Character limit to custom Text and Textarea Field. Keep 0 to disbled "
+"the option"
+msgstr ""
+
+#: includes/input-fields/wcj-product-input-fields-options.php:86
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:151
 #: includes/settings/wcj-settings-product-addons.php:152
 msgid "HTML Class"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:83
+#: includes/input-fields/wcj-product-input-fields-options.php:92
 msgid "If checkbox is selected, set value for ON here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:84
+#: includes/input-fields/wcj-product-input-fields-options.php:93
 msgid "Checkbox: ON"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:90
+#: includes/input-fields/wcj-product-input-fields-options.php:99
 msgid "If checkbox is selected, set value for OFF here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:91
+#: includes/input-fields/wcj-product-input-fields-options.php:100
 msgid "Checkbox: OFF"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:97
+#: includes/input-fields/wcj-product-input-fields-options.php:106
 msgid "If checkbox is selected, set default value here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:98
+#: includes/input-fields/wcj-product-input-fields-options.php:107
 msgid "Checkbox: Default"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:102
-#: includes/settings/wcj-settings-checkout-custom-fields.php:282
+#: includes/input-fields/wcj-product-input-fields-options.php:111
+#: includes/settings/wcj-settings-checkout-custom-fields.php:290
 msgid "Not Checked"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:103
-#: includes/settings/wcj-settings-checkout-custom-fields.php:283
+#: includes/input-fields/wcj-product-input-fields-options.php:112
+#: includes/settings/wcj-settings-checkout-custom-fields.php:291
 #: includes/settings/wcj-settings-checkout-customization.php:98
 msgid "Checked"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:108
+#: includes/input-fields/wcj-product-input-fields-options.php:117
 msgid ""
 "If file is selected, set accepted file types here. E.g.: \".jpg,.jpeg,.png\". "
 "Leave blank to accept all files"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:109
+#: includes/input-fields/wcj-product-input-fields-options.php:118
 msgid ""
 "Visit <a href=\"https://www.w3schools.com/tags/att_input_accept.asp\" target="
 "\"_blank\">documentation on input accept attribute</a> for valid option "
 "formats"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:110
+#: includes/input-fields/wcj-product-input-fields-options.php:119
 msgid "File: Accepted types"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:112
+#: includes/input-fields/wcj-product-input-fields-options.php:121
 msgid ".jpg,.jpeg,.png"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:116
+#: includes/input-fields/wcj-product-input-fields-options.php:125
 msgid ""
 "If file is selected, set max file size here. Set to zero to accept all files"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:117
+#: includes/input-fields/wcj-product-input-fields-options.php:126
 msgid "File: Max size"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:123
+#: includes/input-fields/wcj-product-input-fields-options.php:132
 msgid ""
 "If datepicker/weekpicker is selected, set date format here. Visit <a href="
 "\"https://codex.wordpress.org/Formatting_Date_and_Time\" target=\"_blank"
 "\">documentation on date and time formatting</a> for valid date formats"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:124
-#: includes/settings/wcj-settings-checkout-custom-fields.php:289
+#: includes/input-fields/wcj-product-input-fields-options.php:133
+#: includes/settings/wcj-settings-checkout-custom-fields.php:297
 msgid "Leave blank to use your current WordPress format"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:125
+#: includes/input-fields/wcj-product-input-fields-options.php:134
 msgid "Datepicker/Weekpicker: Date format"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:131
+#: includes/input-fields/wcj-product-input-fields-options.php:140
 msgid "If datepicker/weekpicker is selected, set min date (in days) here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:132
+#: includes/input-fields/wcj-product-input-fields-options.php:141
 msgid "Datepicker/Weekpicker: Min date"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:138
+#: includes/input-fields/wcj-product-input-fields-options.php:147
 msgid "If datepicker/weekpicker is selected, set max date (in days) here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:139
+#: includes/input-fields/wcj-product-input-fields-options.php:148
 msgid "Datepicker/Weekpicker: Max date"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:145
+#: includes/input-fields/wcj-product-input-fields-options.php:154
 msgid ""
 "If datepicker/weekpicker is selected, set if you want to add year selector"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:146
+#: includes/input-fields/wcj-product-input-fields-options.php:155
 msgid "Datepicker/Weekpicker: Change year"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:152
+#: includes/input-fields/wcj-product-input-fields-options.php:161
 msgid ""
 "If datepicker/weekpicker is selected, and year selector is enabled, set year "
 "range here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:153
+#: includes/input-fields/wcj-product-input-fields-options.php:162
 msgid "Datepicker/Weekpicker: Year range"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:159
+#: includes/input-fields/wcj-product-input-fields-options.php:168
 msgid "If datepicker/weekpicker is selected, set first week day here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:160
+#: includes/input-fields/wcj-product-input-fields-options.php:169
 msgid "Datepicker/Weekpicker: First week day"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:164
-#: includes/settings/wcj-settings-checkout-custom-fields.php:335
+#: includes/input-fields/wcj-product-input-fields-options.php:173
+#: includes/settings/wcj-settings-checkout-custom-fields.php:343
 msgid "Sunday"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:165
-#: includes/settings/wcj-settings-checkout-custom-fields.php:336
+#: includes/input-fields/wcj-product-input-fields-options.php:174
+#: includes/settings/wcj-settings-checkout-custom-fields.php:344
 msgid "Monday"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:166
-#: includes/settings/wcj-settings-checkout-custom-fields.php:337
+#: includes/input-fields/wcj-product-input-fields-options.php:175
+#: includes/settings/wcj-settings-checkout-custom-fields.php:345
 msgid "Tuesday"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:167
-#: includes/settings/wcj-settings-checkout-custom-fields.php:338
+#: includes/input-fields/wcj-product-input-fields-options.php:176
+#: includes/settings/wcj-settings-checkout-custom-fields.php:346
 msgid "Wednesday"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:168
-#: includes/settings/wcj-settings-checkout-custom-fields.php:339
+#: includes/input-fields/wcj-product-input-fields-options.php:177
+#: includes/settings/wcj-settings-checkout-custom-fields.php:347
 msgid "Thursday"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:169
-#: includes/settings/wcj-settings-checkout-custom-fields.php:340
+#: includes/input-fields/wcj-product-input-fields-options.php:178
+#: includes/settings/wcj-settings-checkout-custom-fields.php:348
 msgid "Friday"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:170
-#: includes/settings/wcj-settings-checkout-custom-fields.php:341
+#: includes/input-fields/wcj-product-input-fields-options.php:179
+#: includes/settings/wcj-settings-checkout-custom-fields.php:349
 msgid "Saturday"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:175
+#: includes/input-fields/wcj-product-input-fields-options.php:184
 msgid ""
 "If timepicker is selected, set time format here. Visit <a href=\"http://"
 "timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
 "valid time formats"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:176
+#: includes/input-fields/wcj-product-input-fields-options.php:185
 msgid "Timepicker: Time format"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:182
+#: includes/input-fields/wcj-product-input-fields-options.php:191
 msgid ""
 "If timepicker is selected, set min time here. Visit <a href=\"http://"
 "timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
 "valid option formats"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:183
+#: includes/input-fields/wcj-product-input-fields-options.php:192
 msgid "Timepicker: Min Time"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:189
+#: includes/input-fields/wcj-product-input-fields-options.php:198
 msgid ""
 "If timepicker is selected, set max time here. Visit <a href=\"http://"
 "timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
 "valid option formats"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:190
+#: includes/input-fields/wcj-product-input-fields-options.php:199
 msgid "Timepicker: Max Time"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:196
+#: includes/input-fields/wcj-product-input-fields-options.php:205
 msgid "If timepicker is selected, set interval (in minutes) here"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:197
-#: includes/settings/wcj-settings-checkout-custom-fields.php:374
+#: includes/input-fields/wcj-product-input-fields-options.php:206
+#: includes/settings/wcj-settings-checkout-custom-fields.php:382
 msgid "Timepicker: Interval"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:203
+#: includes/input-fields/wcj-product-input-fields-options.php:212
 msgid "If select/radio is selected, set options here. One option per line"
 msgstr ""
 
-#: includes/input-fields/wcj-product-input-fields-options.php:204
-#: includes/settings/wcj-settings-checkout-custom-fields.php:232
+#: includes/input-fields/wcj-product-input-fields-options.php:213
+#: includes/settings/wcj-settings-checkout-custom-fields.php:240
 msgid "Select/Radio: Options"
 msgstr ""
 
@@ -10010,7 +10016,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-admin-orders-list.php:72
 #: includes/settings/wcj-settings-admin-products-list.php:58
-#: includes/settings/wcj-settings-checkout-custom-fields.php:167
+#: includes/settings/wcj-settings-checkout-custom-fields.php:175
 #: includes/settings/wcj-settings-checkout-files-upload.php:89
 #: includes/settings/wcj-settings-checkout-files-upload.php:332
 #: includes/settings/wcj-settings-offer-price.php:69
@@ -10244,8 +10250,8 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-admin-tools.php:118
-#: includes/settings/wcj-settings-checkout-custom-fields.php:249
-#: includes/settings/wcj-settings-checkout-custom-fields.php:258
+#: includes/settings/wcj-settings-checkout-custom-fields.php:257
+#: includes/settings/wcj-settings-checkout-custom-fields.php:266
 #: includes/settings/wcj-settings-order-quantities.php:242
 msgid "Ignored if set to zero."
 msgstr ""
@@ -10647,136 +10653,150 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:182
+#: includes/settings/wcj-settings-checkout-custom-fields.php:167
+msgid "Clear Data"
+msgstr ""
+
+#: includes/settings/wcj-settings-checkout-custom-fields.php:168
+msgid ""
+"If you have issue with time limit in datepicker field. so must need to Enable "
+"this option to Fix."
+msgstr ""
+
+#: includes/settings/wcj-settings-checkout-custom-fields.php:169
+msgid "Clear autoselected data on checkout page."
+msgstr ""
+
+#: includes/settings/wcj-settings-checkout-custom-fields.php:190
 #: includes/settings/wcj-settings-checkout-customization.php:159
 msgid "You can use HTML here."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:196
+#: includes/settings/wcj-settings-checkout-custom-fields.php:204
 msgid "Section"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:201
+#: includes/settings/wcj-settings-checkout-custom-fields.php:209
 #: includes/settings/wcj-settings-checkout-custom-info.php:61
 #: includes/settings/wcj-settings-left-to-free-shipping.php:123
 msgid "Billing"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:208
+#: includes/settings/wcj-settings-checkout-custom-fields.php:216
 #: includes/settings/wcj-settings-eu-vat-number.php:58
 #: includes/widgets/class-wcj-widget-multicurrency.php:116
 msgid "Class"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:213
+#: includes/settings/wcj-settings-checkout-custom-fields.php:221
 #: includes/settings/wcj-settings-eu-vat-number.php:63
 msgid "Wide"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:214
+#: includes/settings/wcj-settings-checkout-custom-fields.php:222
 #: includes/settings/wcj-settings-eu-vat-number.php:64
 msgid "First"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:215
+#: includes/settings/wcj-settings-checkout-custom-fields.php:223
 #: includes/settings/wcj-settings-eu-vat-number.php:65
 msgid "Last"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:219
+#: includes/settings/wcj-settings-checkout-custom-fields.php:227
 #: includes/settings/wcj-settings-eu-vat-number.php:51
 #: includes/templates/wcj-radio-for-variations.php:25
 #: includes/tools/class-wcj-order-statuses-tool.php:282
 msgid "Clear"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:225
+#: includes/settings/wcj-settings-checkout-custom-fields.php:233
 msgid "Customer Meta Fields"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:233
+#: includes/settings/wcj-settings-checkout-custom-fields.php:241
 msgid "One option per line"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:240
+#: includes/settings/wcj-settings-checkout-custom-fields.php:248
 msgid "Select: Use select2 Library"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:247
+#: includes/settings/wcj-settings-checkout-custom-fields.php:255
 msgid "select2: min input length"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:248
+#: includes/settings/wcj-settings-checkout-custom-fields.php:256
 msgid "select2: Number of characters necessary to start a search."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:256
+#: includes/settings/wcj-settings-checkout-custom-fields.php:264
 msgid "select2: max input length"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:257
+#: includes/settings/wcj-settings-checkout-custom-fields.php:265
 msgid "select2: Maximum number of characters that can be entered for an input."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:266
+#: includes/settings/wcj-settings-checkout-custom-fields.php:274
 msgid "Checkbox: Value for ON"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:272
+#: includes/settings/wcj-settings-checkout-custom-fields.php:280
 msgid "Checkbox: Value for OFF"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:278
+#: includes/settings/wcj-settings-checkout-custom-fields.php:286
 msgid "Checkbox: Default Value"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:287
+#: includes/settings/wcj-settings-checkout-custom-fields.php:295
 msgid "Datepicker/Weekpicker: Date Format"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:288
+#: includes/settings/wcj-settings-checkout-custom-fields.php:296
 msgid ""
 "Visit <a href=\"https://codex.wordpress.org/Formatting_Date_and_Time\" target="
 "\"_blank\">documentation on date and time formatting</a> for valid date "
 "formats"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:289
+#: includes/settings/wcj-settings-checkout-custom-fields.php:297
 msgid "Use Y-m-d format if you want to use this field for sorting"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:295
+#: includes/settings/wcj-settings-checkout-custom-fields.php:303
 msgid "Datepicker/Weekpicker: Min Date"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:296
-#: includes/settings/wcj-settings-checkout-custom-fields.php:311
+#: includes/settings/wcj-settings-checkout-custom-fields.php:304
+#: includes/settings/wcj-settings-checkout-custom-fields.php:319
 msgid "days"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:302
+#: includes/settings/wcj-settings-checkout-custom-fields.php:310
 msgid "Datepicker/Weekpicker: Current day time limit"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:303
+#: includes/settings/wcj-settings-checkout-custom-fields.php:311
 msgid ""
 "If the Min Date is 0, Today's date will be no longer available after selected "
 "time limit."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:310
+#: includes/settings/wcj-settings-checkout-custom-fields.php:318
 msgid "Datepicker/Weekpicker: Max Date"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:317
+#: includes/settings/wcj-settings-checkout-custom-fields.php:325
 msgid "Datepicker/Weekpicker: Add Year Selector"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:323
+#: includes/settings/wcj-settings-checkout-custom-fields.php:331
 msgid "Datepicker/Weekpicker: Year Selector: Year Range"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:324
+#: includes/settings/wcj-settings-checkout-custom-fields.php:332
 msgid ""
 "The range of years displayed in the year drop-down: either relative to "
 "today's year (\"-nn:+nn\"), relative to the currently selected year (\"c-nn:c"
@@ -10785,66 +10805,66 @@ msgid ""
 "restrict which dates may be selected use the minDate and/or maxDate options."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:330
+#: includes/settings/wcj-settings-checkout-custom-fields.php:338
 msgid "Datepicker/Weekpicker: First Week Day"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:347
+#: includes/settings/wcj-settings-checkout-custom-fields.php:355
 msgid "Datepicker/Weekpicker: Block Dates Format"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:350
+#: includes/settings/wcj-settings-checkout-custom-fields.php:358
 msgid "Date format used to block dates."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:350
+#: includes/settings/wcj-settings-checkout-custom-fields.php:358
 msgid "Use yy-mm-dd if you want to include the year."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:356
+#: includes/settings/wcj-settings-checkout-custom-fields.php:364
 msgid "Datepicker/Weekpicker: Block Dates"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:359
+#: includes/settings/wcj-settings-checkout-custom-fields.php:367
 msgid "Use one date per line."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:359
+#: includes/settings/wcj-settings-checkout-custom-fields.php:367
 msgid "E.g 12-25 for Christmas, if block dates format is mm-dd"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:367
+#: includes/settings/wcj-settings-checkout-custom-fields.php:375
 msgid "Timepicker: Time Format"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:368
+#: includes/settings/wcj-settings-checkout-custom-fields.php:376
 msgid ""
 "Visit <a href=\"http://timepicker.co/options/\" target=\"_blank\">timepicker "
 "options page</a> for valid time formats"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:375
+#: includes/settings/wcj-settings-checkout-custom-fields.php:383
 msgid "minutes"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:381
+#: includes/settings/wcj-settings-checkout-custom-fields.php:389
 #: includes/settings/wcj-settings-product-listings.php:51
 msgid "Exclude Categories"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:382
+#: includes/settings/wcj-settings-checkout-custom-fields.php:390
 msgid "Hide this field if there is a product of selected category in cart."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:390
+#: includes/settings/wcj-settings-checkout-custom-fields.php:398
 msgid "Include Categories"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:391
+#: includes/settings/wcj-settings-checkout-custom-fields.php:399
 msgid "Show this field only if there is a product of selected category in cart."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:399
+#: includes/settings/wcj-settings-checkout-custom-fields.php:407
 #: includes/settings/wcj-settings-global-discount.php:190
 #: includes/settings/wcj-settings-payment-gateways-fees.php:177
 #: includes/settings/wcj-settings-product-addons.php:164
@@ -10852,35 +10872,35 @@ msgstr ""
 msgid "Exclude Products"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:400
+#: includes/settings/wcj-settings-checkout-custom-fields.php:408
 msgid "Hide this field if there is a selected product in cart."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:408
+#: includes/settings/wcj-settings-checkout-custom-fields.php:416
 #: includes/settings/wcj-settings-global-discount.php:179
 #: includes/settings/wcj-settings-related-products.php:250
 msgid "Include Products"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:409
+#: includes/settings/wcj-settings-checkout-custom-fields.php:417
 msgid "Show this field only if there is a selected product in cart."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:417
+#: includes/settings/wcj-settings-checkout-custom-fields.php:425
 msgid "Min Cart Amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:418
+#: includes/settings/wcj-settings-checkout-custom-fields.php:426
 msgid ""
 "Show this field only if cart total is at least this amount. Set zero to "
 "disable."
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:428
+#: includes/settings/wcj-settings-checkout-custom-fields.php:436
 msgid "Max Cart Amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-custom-fields.php:429
+#: includes/settings/wcj-settings-checkout-custom-fields.php:437
 msgid ""
 "Show this field only if cart total is not more than this amount. Set zero to "
 "disable."
@@ -12248,7 +12268,7 @@ msgid "Add Product Info to Item Name"
 msgstr ""
 
 #: includes/settings/wcj-settings-email-options.php:29
-#: includes/settings/wcj-settings-template-editor.php:72
+#: includes/settings/wcj-settings-template-editor.php:75
 #: includes/settings/wcj-settings-track-users.php:29
 msgid "Info"
 msgstr ""
@@ -18532,7 +18552,7 @@ msgid "Template - After Form"
 msgstr ""
 
 #: includes/settings/wcj-settings-products-per-page.php:79
-#: includes/widgets/class-wcj-widget-country-switcher.php:102
+#: includes/widgets/class-wcj-widget-country-switcher.php:105
 #: includes/widgets/class-wcj-widget-multicurrency.php:104
 msgid "Form Method"
 msgstr ""
@@ -20073,11 +20093,11 @@ msgstr ""
 msgid "Save changes after you set this option to see new options fields."
 msgstr ""
 
-#: includes/settings/wcj-settings-template-editor.php:75
+#: includes/settings/wcj-settings-template-editor.php:78
 msgid "Default template path"
 msgstr ""
 
-#: includes/settings/wcj-settings-template-editor.php:76
+#: includes/settings/wcj-settings-template-editor.php:79
 msgid "Replaced template path"
 msgstr ""
 
@@ -20597,7 +20617,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:397
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:398
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""
@@ -20653,7 +20673,7 @@ msgstr ""
 msgid "In stock"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-shortcodes.php:1135
+#: includes/shortcodes/class-wcj-products-shortcodes.php:1136
 msgid "from %level_min_qty% pcs."
 msgstr ""
 
@@ -20790,21 +20810,21 @@ msgstr ""
 msgid "Customer Country Detection Method must include \"by user selection\"!"
 msgstr ""
 
-#: includes/widgets/class-wcj-widget-country-switcher.php:91
+#: includes/widgets/class-wcj-widget-country-switcher.php:94
 msgid "Replace with currency"
 msgstr ""
 
-#: includes/widgets/class-wcj-widget-country-switcher.php:103
+#: includes/widgets/class-wcj-widget-country-switcher.php:106
 #: includes/widgets/class-wcj-widget-multicurrency.php:105
 msgid "HTML form method for \"Drop down\" and \"Radio list\" types."
 msgstr ""
 
-#: includes/widgets/class-wcj-widget-country-switcher.php:108
+#: includes/widgets/class-wcj-widget-country-switcher.php:111
 #: includes/widgets/class-wcj-widget-multicurrency.php:110
 msgid "Post"
 msgstr ""
 
-#: includes/widgets/class-wcj-widget-country-switcher.php:109
+#: includes/widgets/class-wcj-widget-country-switcher.php:112
 #: includes/widgets/class-wcj-widget-multicurrency.php:111
 msgid "Get"
 msgstr ""
@@ -20857,11 +20877,11 @@ msgstr ""
 msgid "currently for \"Product Visibility by Country\" module only"
 msgstr ""
 
-#: includes/widgets/class-wcj-widget-selector.php:70
+#: includes/widgets/class-wcj-widget-selector.php:73
 msgid "Selector Type"
 msgstr ""
 
-#: includes/widgets/class-wcj-widget-selector.php:76
+#: includes/widgets/class-wcj-widget-selector.php:79
 msgid "Product custom visibility"
 msgstr ""
 

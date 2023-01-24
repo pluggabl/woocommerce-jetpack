@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 6.0.2-dev
+ * @version 
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -715,7 +715,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_total_sales.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @since   2.2.6
 		 * @param   array $atts Shortcode atts.
 		 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 6.0.2-dev
+ * @version 
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -217,7 +217,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Customize_order_received_message.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @since   3.1.0
 		 * @param string       $message defines the message.
 		 * @param int | string $_order defines the _order.

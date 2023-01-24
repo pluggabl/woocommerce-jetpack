@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 6.0.2-dev
+ * @version 
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -120,7 +120,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Ahop_order_pre_get_posts_order_by_column.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @since   2.9.0
 		 * @todo    add sortable to "Billing Country" and "Currency Code"
 		 * @todo    move custom columns section (probably with reordering and multiple status sections) to new module (e.g. (Admin) Order(s) List) - same with products custom columns

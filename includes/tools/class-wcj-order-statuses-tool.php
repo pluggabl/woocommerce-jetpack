@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 6.0.2-dev
+ * @version 
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -319,7 +319,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Process_actions.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @since   3.2.2
 		 * @todo    (maybe) use `init` hook for processing actions
 		 */

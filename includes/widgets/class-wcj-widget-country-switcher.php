@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Country Switcher
  *
- * @version 6.0.2-dev
+ * @version 
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Widget_Country_Switcher' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */

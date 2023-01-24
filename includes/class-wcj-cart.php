@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Custom Info
  *
- * @version 6.0.2-dev
+ * @version 
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes.
  */
@@ -52,7 +52,7 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 		/**
 		 * Add_custom_info_to_cart_item_name.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @since   2.3.9
 		 * @todo    (maybe) `wc_setup_product_data( $post );`
 		 * @param string $product_title defines the product_title.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 6.0.2-dev
+ * @version 
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */

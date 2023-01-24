@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Options
  *
- * @version 6.0.2-dev
+ * @version 
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -53,7 +53,7 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		/**
 		 * Add_product_info_to_email_order_item_name.
 		 *
-		 * @version 6.0.2-dev
+		 * @version 
 		 * @since   2.7.0
 		 * @param string $item_name defines the item_name.
 		 * @param  array  $item defines the item.
