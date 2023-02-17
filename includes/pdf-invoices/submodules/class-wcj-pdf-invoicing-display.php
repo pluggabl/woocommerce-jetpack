@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 6.0.1
+ * @version 6.0.3-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -55,7 +55,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Shop_order_pre_get_posts_order_by_column.
 		 *
-		 * @version 2.9.0
+		 * @version 6.0.3-dev
 		 * @since   2.5.8
 		 * @param Mixed $query get query.
 		 */
@@ -65,7 +65,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 			$query->is_main_query() &&
 			( $orderby ) &&
 			isset( $query->query['post_type'] ) && 'shop_order' === $query->query['post_type'] &&
-			isset( $query->is_admin ) && 1 === $query->is_admin
+			isset( $query->is_admin ) && '1' === (string) $query->is_admin
 			) {
 				if ( 'wcj_invoicing_' === substr( $orderby, 0, 14 ) ) {
 					$query->set( 'meta_key', '_' . $orderby );

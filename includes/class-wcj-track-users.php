@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 6.0.0
+ * @version 6.0.3-dev
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -322,7 +322,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Track_users_by_country_dashboard_widget.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.3-dev
 		 * @since   2.9.1
 		 * @todo    (maybe) display all info (IP, referer etc.) on country click
 		 * @todo    (maybe) display stats by day and/or month
@@ -333,7 +333,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		public function track_users_by_country_dashboard_widget( $post, $args ) {
 			$top_count = wcj_get_option( 'wcj_track_users_by_country_widget_top_count', 10 );
 			foreach ( $this->track_users_scopes as $scope => $scope_title ) {
-				if ( ! in_array( $scope, wcj_get_option( 'wcj_track_users_by_country_widget_scopes', array( '1', '28' ) ), true ) ) {
+				if ( ! in_array( (string) $scope, wcj_get_option( 'wcj_track_users_by_country_widget_scopes', array( '1', '28' ) ), true ) ) {
 					continue;
 				}
 				$totals = $this->get_saved_track_users_stats_by_country( $scope );
