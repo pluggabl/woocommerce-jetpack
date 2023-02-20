@@ -129,35 +129,8 @@ if ( ! function_exists( 'w_c_j' ) ) {
 	}
 }
 
-/**
- * Wcj_delete_plugin_database_option
- *
- * @version 6.0.3-dev
- * @since   6.0.3
- */
-function wcj_delete_plugin_database_option() {
-	global $wpdb;
-	$delete_counter_options = 0;
-	$delete_counter_meta    = 0;
+	require_once 'includes/core/wcj-uninstall-plugin.php';
 
-	$plugin_options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	foreach ( $plugin_options as $option ) {
-		delete_option( $option->option_name );
-		delete_site_option( $option->option_name );
-		$delete_counter_options++;
-	}
-
-		$plugin_meta = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	foreach ( $plugin_meta as $meta ) {
-		delete_post_meta( $meta->post_id, $meta->meta_key );
-		$delete_counter_meta++;
-	}
-
-	$wcj_remove_options = array( 'widget_wcj_widget_country_switcher', 'widget_wcj_widget_left_to_free_shipping', 'widget_wcj_widget_selector', 'widget_wcj_widget_multicurrency' );
-	delete_option( $wcj_remove_options );
-}
-
-register_uninstall_hook( __FILE__, 'wcj_delete_plugin_database_option' );
 
 	/**
 	 * Booster Pro
