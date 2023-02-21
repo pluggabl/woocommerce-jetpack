@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 6.0.3-dev
+ * @version 6.0.3
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core

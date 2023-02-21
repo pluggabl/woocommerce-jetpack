@@ -3,13 +3,13 @@
  * Plugin Name: Booster for WooCommerce
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules.All in one WooCommerce plugin.
- * Version: 6.0.2
+ * Version: 6.0.3
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
  * Copyright: © 2020 Pluggabl LLC.
- * WC tested up to: 7.3.0
+ * WC tested up to: 7.4.0
  * License: GNU General Public License v3.0
  * php version 7.2
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -65,7 +65,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '6.0.2';
+		public $version = '6.0.3';
 
 		/**
 		 * The single instance of the class
@@ -129,7 +129,28 @@ if ( ! function_exists( 'w_c_j' ) ) {
 	}
 }
 
-	require_once 'includes/core/wcj-uninstall-plugin.php';
+	/**
+	 * Wcj_delete_plugin_database_option
+	 *
+	 * @version 6.0.3
+	 * @since   6.0.3
+	 */
+	function wcj_delete_free_plugin_database_option() {
+		global $wpdb;
+
+		$plugin_options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%' OR option_name LIKE '_transient_timeout_wcj%' OR option_name LIKE '_transient_wcj%' OR option_name LIKE 'woocommerce_wcj_%' OR option_name LIKE 'widget_wcj_widget_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		foreach ( $plugin_options as $option ) {
+			delete_option( $option->option_name );
+			delete_site_option( $option->option_name );
+		}
+
+		$plugin_meta = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		foreach ( $plugin_meta as $meta ) {
+			delete_post_meta( $meta->post_id, $meta->meta_key );
+		}
+	}
+
+	register_uninstall_hook( __FILE__, 'wcj_delete_free_plugin_database_option' );
 
 
 	/**

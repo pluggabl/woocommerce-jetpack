@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 6.0.3-dev
+ * @version 6.0.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -55,7 +55,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Shop_order_pre_get_posts_order_by_column.
 		 *
-		 * @version 6.0.3-dev
+		 * @version 6.0.3
 		 * @since   2.5.8
 		 * @param Mixed $query get query.
 		 */

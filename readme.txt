@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.1.1
 Requires PHP: 7.2
-Stable tag: 6.0.2
+Stable tag: 6.0.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,20 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 6.0.3 22/02/2023 =
+
+* NEW FEATURE - Reset All options and meta after deleting the plugin.
+* FIXED - EMAILS & MISC. - User Tracking - Fixed tracker not tracking countries issue.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed shorting by invoices issue.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed multiple pages background image issue.
+* FIXED - PRODUCTS - Product Input Fields - Fixed required attribute issue on select box field.
+* FIXED - PRICES & CURRENCIES - Wholesale Price - Fixed price level issue for per product option.
+* FIXED - PRICES & CURRENCIES - Wholesale Price - Fixed the Wholesale discount table not showing data while the level is '0' issue.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - PHP Fatal error: Uncaught Error: Call to a member function get_default_template() on null in /includes/classes/class-wcj-pdf-invoice.php...
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - PHP Fatal error: Uncaught DivisionByZeroError: Division by zero in /includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php...
+* WooCommerce 7.4.0 tested
+* WordPress 6.1.1 tested
 
 = 6.0.2 24/01/2023 =
 

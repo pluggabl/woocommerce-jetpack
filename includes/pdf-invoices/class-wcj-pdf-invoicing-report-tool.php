@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 6.0.3-dev
+ * @version 6.0.3
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -344,7 +344,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Invoices Report Data function.
 		 *
-		 * @version 6.0.3-dev
+		 * @version 6.0.3
 		 * @since   2.5.7
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.

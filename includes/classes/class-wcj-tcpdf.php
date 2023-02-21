@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - TCPDF
  *
- * @version 6.0.3-dev
+ * @version 6.0.3
  * @author  Pluggabl LLC.
  * @todo    (maybe) `Header()`
  * @package Booster_For_WooCommerce/classes
@@ -63,7 +63,7 @@ if ( ! class_exists( 'WCJ_TCPDF' ) ) :
 		/**
 		 * Page Header.
 		 *
-		 * @version 6.0.3-dev
+		 * @version 6.0.3
 		 * @todo    (maybe) e.g. "Set font" - `$this->SetFont( 'helvetica', 'I', 8 );`
 		 */
 		public function Header() {
