@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 6.0.1
+ * @version 6.0.3
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -344,7 +344,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * Invoices Report Data function.
 		 *
-		 * @version 6.0.1
+		 * @version 6.0.3
 		 * @since   2.5.7
 		 * @param int | string $year Get year.
 		 * @param int | string $month Get month.
@@ -409,6 +409,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 						$order_tax                   = apply_filters( 'wcj_order_total_tax', $the_order->get_total_tax(), $the_order );
 						$order_total_exlc_tax        = $order_total - $order_tax;
 						$order_total_tax_not_rounded = $the_order->get_cart_tax() + $the_order->get_shipping_tax();
+						$order_total_exlc_tax        = (float) 0 === $order_total_exlc_tax ? 0 : $order_total_exlc_tax;
 						$order_tax_percent           = ( 0 === $order_total_exlc_tax ? 0 : $order_total_tax_not_rounded / $order_total_exlc_tax );
 
 						$total_sum          += $order_total;

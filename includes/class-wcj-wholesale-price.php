@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 
+ * @version 6.0.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    per variation
@@ -171,7 +171,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		/**
 		 * Get_discount_by_quantity.
 		 *
-		 * @version 5.4.5
+		 * @version 6.0.3
 		 * @param  int $quantity defines the quantity.
 		 * @param  int $product_id defines the product_id.
 		 */
@@ -191,12 +191,12 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 			}
 
 			// Get discount.
-			$max_qty_level = wcj_get_option( 'wcj_wholesale_price_max_qty_level', 1 );
+			$max_qty_level = (int) wcj_get_option( 'wcj_wholesale_price_max_qty_level', 1 );
 			$discount      = 0;
 			if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
 				$wholesale_price_levels_num = apply_filters( 'booster_option', 1, get_post_meta( $product_id, '_wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) );
 				for ( $i = 1; $i <= $wholesale_price_levels_num; $i++ ) {
-					$level_qty = get_post_meta( $product_id, '_wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
+					$level_qty = (int) get_post_meta( $product_id, '_wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
 					if ( $quantity >= $level_qty && $level_qty >= $max_qty_level ) {
 						$max_qty_level = $level_qty;
 						if ( 'yes' === wcj_get_option( 'wcj_wholesale_price_apply_only_if_price_country_currency_price_directly' ) ) {
@@ -228,7 +228,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		/**
 		 * Get_wholesale_price.
 		 *
-		 * @version 2.5.7
+		 * @version 6.0.3
 		 * @param  int $price defines the price.
 		 * @param  int $quantity defines the quantity.
 		 * @param  int $product_id defines the product_id.
@@ -239,6 +239,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 			? get_post_meta( $product_id, '_wcj_wholesale_price_discount_type', true )
 			: wcj_get_option( 'wcj_wholesale_price_discount_type', 'percent' );
 			if ( 'price_directly' === $discount_type ) {
+				$discount = 0 === $discount ? '0' : $discount;
 				return ( '0' !== $discount ) ? apply_filters( 'wcj_get_wholesale_price', $discount, $product_id ) : $price;
 			} elseif ( 'percent' === $discount_type ) {
 				return $price * ( 1.0 - ( $discount / 100.0 ) );

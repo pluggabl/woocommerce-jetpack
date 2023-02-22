@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 6.0.0
+ * @version 6.0.3
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -97,7 +97,7 @@ if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 	do_action( 'wcj_loaded' );
 } else {
 	add_action(
-		'init',
+		'plugins_loaded',
 		function () {
 			require_once 'wcj-modules.php';
 
@@ -113,6 +113,6 @@ if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 			// Loaded action.
 			do_action( 'wcj_loaded' );
 		},
-		10
+		20
 	);
 }

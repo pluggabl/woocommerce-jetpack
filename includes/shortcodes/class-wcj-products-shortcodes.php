@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 
+ * @version 6.0.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -1011,7 +1011,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_wholesale_price_table.
 		 *
-		 * @version 5.0.0
+		 * @version 6.0.3
 		 * @todo    (maybe) `if ( 'yes' === $atts['add_percent_row'] )` for 'fixed' or 'price_directly'; `if ( 'yes' === $atts['add_discount_row'] )` for 'percent' or 'price_directly'
 		 * @param   array $atts Shortcode atts.
 		 */
@@ -1076,7 +1076,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 			$i              = -1;
 			foreach ( $wholesale_price_levels as $wholesale_price_level ) {
 				$i++;
-				if ( 0 === $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
+				if ( '0' === $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
 					continue;
 				}
 
