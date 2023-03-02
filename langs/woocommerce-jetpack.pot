@@ -5918,7 +5918,7 @@ msgstr ""
 msgid "Enable Module"
 msgstr ""
 
-#: includes/classes/class-wcj-pdf-invoice.php:104
+#: includes/classes/class-wcj-pdf-invoice.php:111
 #: includes/settings/wcj-settings-pdf-invoicing-header.php:71
 msgid "Company Name"
 msgstr ""
@@ -5930,6 +5930,7 @@ msgid "\"%s\" module is not enabled!"
 msgstr ""
 
 #: includes/classes/class-wcj-tcpdf.php:49
+#: includes/classes/class-wcj-tcpdfbg.php:49
 #: includes/settings/wcj-settings-pdf-invoicing-footer.php:36
 msgid "Page %page_number% / %total_pages%"
 msgstr ""
