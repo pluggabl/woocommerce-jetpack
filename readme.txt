@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.1.1
 Requires PHP: 7.2
-Stable tag: 6.0.3
+Stable tag: 6.0.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,12 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 6.0.4 02/03/2023 =
+
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed PDF Header and Footer issue.
+* WooCommerce 7.4.0 Tested
+* WordPress 6.1.1 Tested
 
 = 6.0.3 22/02/2023 =
 

@@ -1,7 +1,6 @@
 {
-    "0" : "= 6.0.3 22/02/2023 =",
-    "1" : "* NEW FEATURE - Reset All options and meta after deleting the plugin.",
-    "2" : "* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed multiple pages background image issue.",
-    "3" : "* WooCommerce 7.4.0 tested",
-    "4" : "* WordPress 6.1.1 Tested"
+    "0" : "= 6.0.4 02/03/2023 =",
+    "1" : "* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed PDF Header and Footer issue.",
+    "2" : "* WooCommerce 7.4.0 Tested",
+    "3" : "* WordPress 6.1.1 Tested"
 }

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 
+ * @version 6.0.3
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -625,7 +625,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 
+		 * @version 6.0.3
 		 * @since   2.5.0
 		 * @todo    (maybe) also order_id in `$the_post_id = ...`
 		 * @param int   $post_id Get post id.
