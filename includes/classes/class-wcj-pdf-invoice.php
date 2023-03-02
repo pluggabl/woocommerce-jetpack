@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 6.0.3
+ * @version 6.0.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -37,9 +37,9 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Prepare_pdf.
 		 *
-		 * @version 6.0.3
+		 * @version 6.0.4
 		 * @todo    [dev] check `addTTFfont()`
-		 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster for WooCommerce' )`
+		 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster Elite for WooCommerce' )`
 		 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`
 		 * @todo    [feature] (maybe) option to set different font in footer (and maybe also header)
 		 */
@@ -58,7 +58,14 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			}
 
 			// Create new PDF document.
-			require_once wcj_free_plugin_path() . '/includes/classes/class-wcj-tcpdf.php';
+			$background_image = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) );
+			if ( '' !== $background_image ) {
+
+				require_once wcj_free_plugin_path() . '/includes/classes/class-wcj-tcpdfbg.php';
+			} else {
+				require_once wcj_free_plugin_path() . '/includes/classes/class-wcj-tcpdf.php';
+
+			}
 			$pdf = new WCJ_TCPDF(
 				get_option( 'wcj_invoicing_' . $invoice_type . '_page_orientation', 'P' ),
 				PDF_UNIT,
@@ -178,7 +185,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				$pdf->SetAutoPageBreak( true, wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_margin_bottom', 10 ) );
 				$pdf->setPageMark();
 			}
-
 			return $pdf;
 		}
 
@@ -186,7 +192,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		 * Maybe_replace_tcpdf_method_params.
 		 *
 		 * @version 6.0.0
-		 * @since   3.6.0
+		 * @since  1.0.0
 		 * @param mixed $html Get pdf html.
 		 * @param mixed $pdf Get pdfs.
 		 */
@@ -211,7 +217,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		 * Gets invoice content HTML.
 		 *
 		 * @version 6.0.1
-		 * @since   3.5.0
+		 * @since  1.0.0
 		 * @todo    [dev] pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 		 * @todo    [fix] `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
 		 * @param int   $order_id get order id.
@@ -265,6 +271,29 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 				w_c_j()->all_modules['pdf_invoicing_styling']->get_default_css_template( $this->invoice_type )
 			) . '</style>';
 			$pdf->writeHTMLCell( 0, 0, '', '', $styling . $html, 0, 1, 0, true, '', true );
+			// Invoice Paid Stamp.
+			if ( 'invoice' === $this->invoice_type && 'yes' === wcj_get_option( 'wcj_invoicing_invoice_paid_stamp_enabled', 'yes' ) ) {
+				$paid_stamp_image = '';
+				if ( wcj_get_option( 'wcj_invoicing_invoice_custom_paid_stamp', 'yes' ) !== '' ) {
+					$paid_stamp_image = wcj_get_option( 'wcj_invoicing_invoice_custom_paid_stamp', 'yes' );
+				} else {
+					$paid_stamp_image = wcj_plugin_url() . '/assets/images/paid_stamp_1.png';
+				}
+
+				$included_gateways = wcj_get_option( 'wcj_invoicing_invoice_paid_stamp_payment_gateways', array() );
+				$the_order         = wc_get_order( $this->order_id );
+				$payment_method    = wcj_order_get_payment_method( $the_order );
+
+				if ( empty( $included_gateways ) ) {
+					$included_gateway = true;
+				} else {
+					$included_gateway = in_array( $payment_method, $included_gateways, true );
+				}
+				if ( true === $included_gateway ) {
+					$pdf->Image( $paid_stamp_image, 90, 180, 40, 40 );
+				}
+			}
+
 			$result_pdf = $pdf->Output( '', 'S' );
 			$file_name  = $this->get_file_name();
 			if ( 'F' === $dest ) {
