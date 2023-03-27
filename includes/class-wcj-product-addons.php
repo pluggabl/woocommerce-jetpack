@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 6.0.1
+ * @version 6.0.5
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -386,9 +386,9 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 						$prices = $this->clean_and_explode( PHP_EOL, $price_value );
 						if ( count( $labels ) === count( $prices ) ) {
 							foreach ( $labels as $i => $label ) {
-								if ( sanitize_title( $label ) === $_POST[ $addon['checkbox_key'] ] ) {
-									$the_addons_price += (float) $prices[ $i ];
-									break;
+								if (  wp_kses_post(str_replace(' ', '-', $label) ) === $_POST[ $addon['checkbox_key'] ] ) {
+								$the_addons_price += (float) $prices[ $i ];
+								break;
 								}
 							}
 						}
@@ -704,7 +704,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Add_addons_price_to_cart_item_data.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.5
 		 * @since   2.5.3
 		 * @param array $cart_item_data defines the cart_item_data.
 		 * @param int   $product_id defines the product_id.
@@ -742,7 +742,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 						$labels = $this->clean_and_explode( PHP_EOL, $addon['label_value'] );
 						if ( count( $labels ) === count( $prices ) ) {
 							foreach ( $labels as $i => $label ) {
-								if ( sanitize_title( $label ) === $checkbox_key ) {
+								if ( wp_kses_post(str_replace(' ', '-', $label) ) === $checkbox_key ) {
 									$cart_item_data[ $addon['price_key'] ] = $prices[ $i ];
 									$cart_item_data[ $addon['label_key'] ] = $labels[ $i ];
 									break;
@@ -758,7 +758,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Add_addons_to_frontend.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.5
 		 * @since   2.5.3
 		 */
 		public function add_addons_to_frontend() {
@@ -832,7 +832,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 							$select_options = '';
 						}
 						foreach ( $labels as $i => $label ) {
-							$label               = sanitize_title( $label );
+							$label               =  wp_kses_post(str_replace(' ', '-', $label) );
 							$is_checked          = '';
 							$checked_or_selected = ( 'radio' === $addon['type'] ? ' checked' : ' selected' );
 							if ( $wpnonce && isset( $_POST[ $addon['checkbox_key'] ] ) ) {

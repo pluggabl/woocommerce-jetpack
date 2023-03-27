@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 5.6.2
+ * @version 6.0.5
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -74,12 +74,16 @@ if ( ! function_exists( 'wcj_get_order_date' ) ) {
 	/**
 	 * Wcj_get_order_date.
 	 *
-	 * @version 3.1.0
-	 * @since   3.1.0
+	 * @version 6.0.5
+	 * @since  1.0.0
 	 * @param   array $_order defines the _order.
 	 */
 	function wcj_get_order_date( $_order ) {
-		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->order_date : $_order->get_date_created() );
+		if(!empty($_order)){    
+			return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->order_date : $_order->get_date_created() );
+		}else{
+			return '' ;
+		}
 	}
 }
 

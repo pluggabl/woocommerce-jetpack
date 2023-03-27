@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 6.0.1
+ * @version 6.0.5
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -69,6 +69,7 @@ $wcj_module_files = array(
 	'class-wcj-checkout-fees.php',
 	'class-wcj-payment-gateways.php',
 	'class-wcj-payment-gateways-icons.php',
+	'class-wcj-payment-gateways-pdf-notes.php',
 	'class-wcj-payment-gateways-fees.php',
 	'class-wcj-payment-gateways-per-category.php',
 	'class-wcj-payment-gateways-currency.php',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 6.0.1
+ * @version 6.0.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.5
 		 */
 		public function __construct() {
 
@@ -102,6 +102,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				'wcj_order_total_weight',
 				'wcj_order_total_width',
 				'wcj_order_vat_func',
+				'wcj_order_payment_method_notes',
 			);
 
 			parent::__construct();
@@ -1758,6 +1759,18 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 						$decimal
 					);
 			}
+		}
+
+		/**
+		 * Wcj_order_payment_method_notes
+		 *
+		 * @version 6.0.5
+		 * @param array $atts The user defined shortcode attributes.
+		 */
+		public function wcj_order_payment_method_notes( $atts ) {
+
+			$get_payment_notes = 'wcj_gateways_' . get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method', true ) . '_pdf_notes';
+			return do_shortcode( get_option( $get_payment_notes ) );
 		}
 	}
 

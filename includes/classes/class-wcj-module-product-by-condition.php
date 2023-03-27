@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 6.0.0
- * @since   3.6.0
+ * @version 6.0.5
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -17,15 +17,15 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		 * WCJ_Module_Product_By_Condition.
 		 *
 		 * @version 4.7.1
-		 * @since   3.6.0
+		 * @since   1.0.0
 		 */
 	abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 
 		/**
 		 * Constructor.
 		 *
-		 * @version 4.7.1
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @param varchar $type Module is main module or sub-module.
 		 */
 		public function __construct( $type = 'module' ) {
@@ -84,7 +84,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		 * Get_invisible_products_ids.
 		 *
 		 * @version 6.0.0
-		 * @since   4.7.1
+		 * @since   1.0.0
 		 *
 		 * @param null $params Get params.
 		 *
@@ -119,7 +119,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		 * Get_invisible_products_query_args.
 		 *
 		 * @version 6.0.0
-		 * @since   4.7.1
+		 * @since   1.0.0
 		 *
 		 * @return array
 		 */
@@ -155,7 +155,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		 * Delete_invisible_products_transient.
 		 *
 		 * @version 6.0.0
-		 * @since   4.7.1
+		 * @since   1.0.0
 		 *
 		 * @param null $params Get params.
 		 */
@@ -182,8 +182,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Regenerate_invisible_products_transient.
 		 *
-		 * @version 4.7.1
-		 * @since   4.7.1
+		 * @version 6.0.0
+		 * @since   1.0.0
 		 */
 		public function regenerate_invisible_products_transient() {
 			$this->delete_invisible_products_transient();
@@ -193,8 +193,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Save_meta_box.
 		 *
-		 * @version 4.7.1
-		 * @since   4.7.1
+		 * @version 6.0.0
+		 * @since   1.0.0
 		 *
 		 * @param int       $post_id get post id.
 		 * @param obj|Array $__post get post.
@@ -207,8 +207,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Disables pre_get_posts query when exporting products.
 		 *
-		 * @version 5.6.2
-		 * @since   4.7.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @param bool $validation get validations.
 		 */
 		public function disable_pre_get_posts_on_export( $validation ) {
@@ -225,8 +225,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Add_product_columns.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @param Array $columns Get product columns.
 		 */
 		public function add_product_columns( $columns ) {
@@ -237,8 +237,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Render_product_column.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @param Array $column Get product columns.
 		 */
 		public function render_product_column( $column ) {
@@ -270,8 +270,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Add_bulk_and_quick_edit_fields.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 */
 		public function add_bulk_and_quick_edit_fields() {
 			$all_options  = '';
@@ -305,12 +305,13 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Save_bulk_and_quick_edit_fields.
 		 *
-		 * @version 6.0.0
-		 * @since   3.6.0
+		 * @version 6.0.5
+		 * @since  1.0.0
 		 * @param int       $post_id get post id.
 		 * @param obj|Array $post get post.
 		 */
 		public function save_bulk_and_quick_edit_fields( $post_id, $post ) {
+
 			// If this is an autosave, our form has not been submitted, so we don't want to do anything.
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 				return $post_id;
@@ -320,6 +321,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 				return $post_id;
 			}
 			// Check nonce.
+
 			if ( ! isset( $_REQUEST['woocommerce_quick_edit_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['woocommerce_quick_edit_nonce'] ) ), 'woocommerce_quick_edit_nonce' ) ) {
 				return $post_id;
 			}
@@ -338,14 +340,14 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 				if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) {
 					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', array() );
 				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_visible' ], true ) ) {
-					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) );
+					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', array_map( 'sanitize_text_field', wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) );
 				}
 			}
 			if ( 'visible' !== apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 				if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) {
 					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', array() );
 				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_invisible' ], true ) ) {
-					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) );
+					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', array_map( 'sanitize_text_field', wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) );
 				}
 			}
 			do_action( 'save_bulk_and_quick_edit_fields_' . $this->id, $post_id, $post );
@@ -355,8 +357,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Products_widget_query.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @todo    (maybe) check if pagination needs to be fixed (as in `$this->pre_get_posts()`)
 		 * @param string $query_args Query object to process.
 		 */
@@ -381,9 +383,9 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Pre_get_posts.
 		 *
-		 * @version 4.7.1
-		 * @since   3.6.0
-		 * @todo    [dev] maybe move `if ( ! function_exists( 'is_user_logged_in' ) ) {
+		 * @version 6.0.0
+		 * @since  1.0.0
+		 * @todo    [dev] maybe move `if ( ! function_exists( 'is_user_logged_in' ) ) {`
 		 * @param string $query Get Querys.
 		 */
 		public function pre_get_posts( $query ) {
@@ -407,8 +409,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Is_purchasable.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @param bool  $purchasable check purchasable or not.
 		 * @param Array $_product Get product.
 		 */
@@ -419,8 +421,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Is_visible.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @param bool $visible is visible or not.
 		 * @param int  $product_id Get product id.
 		 */
@@ -431,8 +433,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Is_product_visible.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @todo    (maybe) replace with `abstract is_product_visible()`
 		 * @param int  $product_id Get product id.
 		 * @param bool $option_to_check check option.
@@ -474,30 +476,30 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Add_settings_from_file.
 		 *
-		 * @version 5.6.1
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @param mixed $settings get settings.
 		 */
 		public function add_settings_from_file( $settings ) {
-			return $this->maybe_fix_settings( require wcj_free_plugin_path() . '/includes/settings/wcj-settings-product-by-condition.php' );
+			return $this->maybe_fix_settings( require wcj_plugin_path() . '/includes/settings/wcj-settings-product-by-condition.php' );
 		}
 
 		/**
-		 * Met_meta_box_options.
+		 * Get_meta_box_options.
 		 *
-		 * @version 5.6.1
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 */
 		public function get_meta_box_options() {
-			$filename = wcj_free_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php';
+			$filename = wcj_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php';
 			return ( file_exists( $filename ) ? require $filename : array() );
 		}
 
 		/**
 		 * Maybe_add_extra_frontend_filters.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @todo    (maybe) replace with action
 		 */
 		public function maybe_add_extra_frontend_filters() {
@@ -507,8 +509,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Maybe_extra_options_process.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @todo    (maybe) replace with filter (or remove completely - i.e. `abstract is_product_visible()`)
 		 * @param Array $options get options.
 		 */
@@ -519,8 +521,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Maybe_add_extra_settings.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 * @todo    (maybe) replace with filter
 		 */
 		public function maybe_add_extra_settings() {
@@ -530,16 +532,16 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Get_options_list.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 */
 		abstract public function get_options_list();
 
 		/**
 		 * Get_check_option.
 		 *
-		 * @version 3.6.0
-		 * @since   3.6.0
+		 * @version 6.0.0
+		 * @since  1.0.0
 		 */
 		abstract public function get_check_option();
 
