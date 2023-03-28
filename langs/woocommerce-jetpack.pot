@@ -713,29 +713,29 @@ msgid ""
 "more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:137
+#: includes/admin/wcj-modules-cats.php:138
 msgid "Shipping & Orders"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:138
+#: includes/admin/wcj-modules-cats.php:139
 msgid ""
 "Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping "
 "Methods and more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:165
+#: includes/admin/wcj-modules-cats.php:166
 msgid "PDF Invoicing & Packing Slips"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:166
+#: includes/admin/wcj-modules-cats.php:167
 msgid "PDF Documents"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:182
+#: includes/admin/wcj-modules-cats.php:183
 msgid "Emails & Misc."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:183
+#: includes/admin/wcj-modules-cats.php:184
 msgid "Emails, Reports, Export, Admin Tools, General Options and more."
 msgstr ""
 
@@ -1191,7 +1191,7 @@ msgstr ""
 #: includes/settings/wcj-settings-checkout-custom-fields.php:210
 #: includes/settings/wcj-settings-checkout-custom-info.php:62
 #: includes/settings/wcj-settings-left-to-free-shipping.php:124
-#: includes/settings/wcj-settings-price-by-user-role.php:49
+#: includes/settings/wcj-settings-price-by-user-role.php:57
 msgid "Shipping"
 msgstr ""
 
@@ -1483,6 +1483,7 @@ msgstr ""
 
 #: includes/class-wcj-checkout-custom-fields.php:42
 #: includes/class-wcj-multicurrency.php:53
+#: includes/class-wcj-payment-gateways-pdf-notes.php:38
 #: includes/class-wcj-product-input-fields.php:39
 #: includes/class-wcj-purchase-data.php:43
 #, php-format
@@ -1657,8 +1658,8 @@ msgstr ""
 #: includes/class-wcj-checkout-files-upload.php:949
 #: includes/class-wcj-checkout-files-upload.php:950
 #: includes/settings/wcj-settings-checkout-files-upload.php:111
-#: includes/settings/wcj-settings-price-by-user-role.php:81
 #: includes/settings/wcj-settings-price-by-user-role.php:89
+#: includes/settings/wcj-settings-price-by-user-role.php:97
 #: includes/settings/wcj-settings-product-open-pricing.php:175
 #: includes/settings/wcj-settings-sku.php:349
 #: includes/settings/wcj-settings-sorting.php:147
@@ -2595,9 +2596,9 @@ msgid "Qty Bought"
 msgstr ""
 
 #: includes/class-wcj-max-products-per-user.php:240
-#: includes/functions/wcj-functions-users.php:179
-#: includes/functions/wcj-functions-users.php:215
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:566
+#: includes/functions/wcj-functions-users.php:189
+#: includes/functions/wcj-functions-users.php:225
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:567
 msgid "Guest"
 msgstr ""
 
@@ -3288,6 +3289,21 @@ msgstr ""
 msgid "Maximum amount for %gateway_title% is %max_amount%"
 msgstr ""
 
+#: includes/class-wcj-payment-gateways-pdf-notes.php:29
+msgid "Gateways PDF Notes"
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-pdf-notes.php:30
+msgid "Add PDF notes for various gateways"
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-pdf-notes.php:34
+#, php-format
+msgid ""
+"After setting Notes in the Gateways PDF Notes Options section below, you can "
+"use the below shortcode to the display notes: %s"
+msgstr ""
+
 #: includes/class-wcj-payment-gateways-per-category.php:32
 msgid ""
 "Show payment gateway only if there is selected product or product category in "
@@ -3402,24 +3418,24 @@ msgid ""
 "Categories or Tags."
 msgstr ""
 
-#: includes/class-wcj-price-by-user-role.php:145
+#: includes/class-wcj-price-by-user-role.php:175
 msgid "user roles & variations"
 msgstr ""
 
-#: includes/class-wcj-price-by-user-role.php:149
+#: includes/class-wcj-price-by-user-role.php:179
 msgid "variations"
 msgstr ""
 
-#: includes/class-wcj-price-by-user-role.php:153
+#: includes/class-wcj-price-by-user-role.php:183
 msgid "user roles"
 msgstr ""
 
-#: includes/class-wcj-price-by-user-role.php:167
+#: includes/class-wcj-price-by-user-role.php:197
 #, php-format
 msgid "Copy price to all %s"
 msgstr ""
 
-#: includes/class-wcj-price-by-user-role.php:258
+#: includes/class-wcj-price-by-user-role.php:296
 msgid ""
 "Booster: Free plugin's version is limited to only one price by user role per "
 "products settings product enabled at a time. You will need to get <a href="
@@ -3639,9 +3655,10 @@ msgstr ""
 #: includes/settings/wcj-settings-price-by-country.php:292
 #: includes/settings/wcj-settings-price-by-country.php:300
 #: includes/settings/wcj-settings-price-by-user-role.php:23
-#: includes/settings/wcj-settings-price-by-user-role.php:50
-#: includes/settings/wcj-settings-price-by-user-role.php:97
-#: includes/settings/wcj-settings-price-by-user-role.php:142
+#: includes/settings/wcj-settings-price-by-user-role.php:31
+#: includes/settings/wcj-settings-price-by-user-role.php:58
+#: includes/settings/wcj-settings-price-by-user-role.php:105
+#: includes/settings/wcj-settings-price-by-user-role.php:150
 #: includes/settings/wcj-settings-price-formats.php:24
 #: includes/settings/wcj-settings-price-labels.php:26
 #: includes/settings/wcj-settings-product-add-to-cart.php:29
@@ -3993,7 +4010,7 @@ msgstr ""
 #: includes/class-wcj-product-bulk-meta-editor.php:266
 #: includes/settings/meta-box/wcj-settings-meta-box-add-to-cart-button-visibility.php:22
 #: includes/settings/meta-box/wcj-settings-meta-box-add-to-cart-button-visibility.php:41
-#: includes/settings/wcj-settings-price-by-user-role.php:73
+#: includes/settings/wcj-settings-price-by-user-role.php:81
 #: includes/settings/wcj-settings-product-msrp.php:37
 #: includes/settings/wcj-settings-wholesale-price.php:86
 msgid "Show"
@@ -4500,6 +4517,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency-base-price.php:21
 #: includes/settings/wcj-settings-payment-gateways-currency.php:71
 #: includes/settings/wcj-settings-payment-gateways-icons.php:17
+#: includes/settings/wcj-settings-payment-gateways-pdf-notes.php:25
 #: includes/settings/wcj-settings-price-by-user-role.php:17
 #: includes/settings/wcj-settings-product-addons.php:194
 #: includes/settings/wcj-settings-product-bookings.php:89
@@ -5438,7 +5456,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-user-role.php:43
 #: includes/settings/wcj-settings-multicurrency.php:397
 #: includes/settings/wcj-settings-order-min-amount.php:144
-#: includes/settings/wcj-settings-price-by-user-role.php:158
+#: includes/settings/wcj-settings-price-by-user-role.php:166
 #, php-format
 msgid ""
 "Custom roles can be added via \"Add/Manage Custom Roles\" tool in Booster's "
@@ -5981,22 +5999,22 @@ msgstr ""
 msgid "[{site_title}] Custom Subject - Order ({order_number}) - {order_date}"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:234
+#: includes/emails/class-wc-email-wcj-custom.php:235
 #, php-format
 msgid "New order (%s)"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:236
+#: includes/emails/class-wc-email-wcj-custom.php:237
 #, php-format
 msgid "Order status updated to %s"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:240
+#: includes/emails/class-wc-email-wcj-custom.php:241
 #, php-format
 msgid "Order status %1$s to %2$s"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:247
+#: includes/emails/class-wc-email-wcj-custom.php:248
 #: includes/gateways/class-wc-gateway-wcj-custom-template.php:52
 #: includes/settings/wcj-settings-admin-products-list.php:22
 #: includes/settings/wcj-settings-admin-products-list.php:86
@@ -6006,15 +6024,15 @@ msgstr ""
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:249
+#: includes/emails/class-wc-email-wcj-custom.php:250
 msgid "Enable this email notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:253
+#: includes/emails/class-wc-email-wcj-custom.php:254
 msgid "Trigger(s)"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:257
+#: includes/emails/class-wc-email-wcj-custom.php:258
 msgid ""
 "Please note, that all new orders in WooCommerce by default are created with "
 "Pending Payment status. If you want to change the default order status - you "
@@ -6022,109 +6040,109 @@ msgid ""
 "> Booster > Shipping & Orders > Order Custom Statuses)."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:258
+#: includes/emails/class-wc-email-wcj-custom.php:259
 msgid ""
 "Hold the <code>ctrl</code> key and select the options if you want to trigger "
 "mail on more than one option."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:261
+#: includes/emails/class-wc-email-wcj-custom.php:262
 msgid "New order (Any status)"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:266
+#: includes/emails/class-wc-email-wcj-custom.php:267
 msgid "Reset password notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:267
+#: includes/emails/class-wc-email-wcj-custom.php:268
 msgid "Order fully refunded notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:268
+#: includes/emails/class-wc-email-wcj-custom.php:269
 msgid "Order partially refunded notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:269
+#: includes/emails/class-wc-email-wcj-custom.php:270
 msgid "New customer note notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:270
+#: includes/emails/class-wc-email-wcj-custom.php:271
 msgid "Low stock notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:271
+#: includes/emails/class-wc-email-wcj-custom.php:272
 msgid "No stock notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:272
+#: includes/emails/class-wc-email-wcj-custom.php:273
 msgid "Product on backorder notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:273
+#: includes/emails/class-wc-email-wcj-custom.php:274
 msgid "Created customer notification"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:280
+#: includes/emails/class-wc-email-wcj-custom.php:281
 msgid "Recipient(s)"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:283
+#: includes/emails/class-wc-email-wcj-custom.php:284
 #, php-format
 msgid ""
 "Enter recipients (comma separated) for this email. Defaults to <code>%s</"
 "code>."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:285
+#: includes/emails/class-wc-email-wcj-custom.php:286
 msgid "Or enter <code>%customer%</code> to send to customer billing email."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:291
+#: includes/emails/class-wc-email-wcj-custom.php:292
 msgid "Subject"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:294
+#: includes/emails/class-wc-email-wcj-custom.php:295
 #, php-format
 msgid ""
 "This controls the email subject line. Leave blank to use the default subject: "
 "<code>%s</code>."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:300
+#: includes/emails/class-wc-email-wcj-custom.php:301
 msgid "Email type"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:302
+#: includes/emails/class-wc-email-wcj-custom.php:303
 msgid "Choose which format of email to send."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:308
+#: includes/emails/class-wc-email-wcj-custom.php:309
 msgid "Wrap in WC Email Template"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:314
+#: includes/emails/class-wc-email-wcj-custom.php:315
 msgid ""
 "WC Email Heading. Used only if \"Wrap in WC Email Template\" is enabled and "
 "only for HTML templates."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:316
+#: includes/emails/class-wc-email-wcj-custom.php:317
 #, php-format
 msgid ""
 "This controls the main heading contained within the email notification. Leave "
 "blank to use the default heading: <code>%s</code>."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:322
+#: includes/emails/class-wc-email-wcj-custom.php:323
 msgid "HTML template"
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:324
-#: includes/emails/class-wc-email-wcj-custom.php:333
+#: includes/emails/class-wc-email-wcj-custom.php:325
+#: includes/emails/class-wc-email-wcj-custom.php:334
 msgid "You can use shortcodes here. E.g. Booster's order shortcodes."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:331
+#: includes/emails/class-wc-email-wcj-custom.php:332
 msgid "Plain text template"
 msgstr ""
 
@@ -8587,7 +8605,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency.php:244
 #: includes/settings/wcj-settings-order-min-amount.php:87
 #: includes/settings/wcj-settings-price-by-country.php:257
-#: includes/settings/wcj-settings-price-by-user-role.php:110
+#: includes/settings/wcj-settings-price-by-user-role.php:118
 #: includes/settings/wcj-settings-product-addons.php:251
 msgid "Advanced"
 msgstr ""
@@ -8734,7 +8752,7 @@ msgstr ""
 msgid "Make empty price"
 msgstr ""
 
-#: includes/price-by-country/class-wcj-price-by-country-local.php:249
+#: includes/price-by-country/class-wcj-price-by-country-local.php:257
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-country.php:21
 #: includes/settings/wcj-settings-add-to-cart.php:59
 #: includes/settings/wcj-settings-price-by-country.php:350
@@ -9168,8 +9186,8 @@ msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-multicurrency.php:69
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:154
-#: includes/settings/wcj-settings-price-by-user-role.php:186
-#: includes/settings/wcj-settings-price-by-user-role.php:269
+#: includes/settings/wcj-settings-price-by-user-role.php:194
+#: includes/settings/wcj-settings-price-by-user-role.php:277
 msgid "Make Empty Price"
 msgstr ""
 
@@ -9270,7 +9288,7 @@ msgid "Per Product Settings (press Update after changing)"
 msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:129
-#: includes/settings/wcj-settings-price-by-user-role.php:36
+#: includes/settings/wcj-settings-price-by-user-role.php:44
 msgid "Multiplier"
 msgstr ""
 
@@ -9314,8 +9332,8 @@ msgstr ""
 #: includes/settings/wcj-settings-general.php:137
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:93
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:182
-#: includes/settings/wcj-settings-price-by-user-role.php:59
-#: includes/settings/wcj-settings-price-by-user-role.php:165
+#: includes/settings/wcj-settings-price-by-user-role.php:67
+#: includes/settings/wcj-settings-price-by-user-role.php:173
 #: includes/settings/wcj-settings-product-add-to-cart.php:135
 #: includes/settings/wcj-settings-product-open-pricing.php:101
 #: includes/settings/wcj-settings-sku.php:357
@@ -9580,7 +9598,7 @@ msgstr ""
 #: includes/settings/wcj-settings-checkout-fees.php:76
 #: includes/settings/wcj-settings-global-discount.php:88
 #: includes/settings/wcj-settings-payment-gateways-fees.php:72
-#: includes/settings/wcj-settings-price-by-user-role.php:35
+#: includes/settings/wcj-settings-price-by-user-role.php:43
 #: includes/settings/wcj-settings-purchase-data.php:93
 #: includes/settings/wcj-settings-wholesale-price.php:106
 msgid "Fixed"
@@ -10140,7 +10158,7 @@ msgid "Default columns order"
 msgstr ""
 
 #: includes/settings/wcj-settings-admin-products-list.php:30
-#: includes/settings/wcj-settings-price-by-user-role.php:239
+#: includes/settings/wcj-settings-price-by-user-role.php:247
 #: includes/settings/wcj-settings-shipping.php:58
 msgid ""
 "Save module's settings after changing this option to see new settings fields."
@@ -13207,7 +13225,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency-base-price.php:80
 #: includes/settings/wcj-settings-multicurrency.php:259
 #: includes/settings/wcj-settings-price-by-country.php:262
-#: includes/settings/wcj-settings-price-by-user-role.php:115
+#: includes/settings/wcj-settings-price-by-user-role.php:123
 #: includes/settings/wcj-settings-product-addons.php:279
 #: includes/settings/wcj-settings-product-price-by-formula.php:136
 msgid "Price Filters Priority"
@@ -13217,7 +13235,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency-base-price.php:81
 #: includes/settings/wcj-settings-multicurrency.php:260
 #: includes/settings/wcj-settings-price-by-country.php:263
-#: includes/settings/wcj-settings-price-by-user-role.php:116
+#: includes/settings/wcj-settings-price-by-user-role.php:124
 #: includes/settings/wcj-settings-product-addons.php:280
 #: includes/settings/wcj-settings-product-price-by-formula.php:137
 #: includes/settings/wcj-settings-wholesale-price.php:153
@@ -13461,7 +13479,7 @@ msgstr ""
 #: includes/settings/wcj-settings-order-numbers.php:143
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:72
 #: includes/settings/wcj-settings-price-by-country.php:170
-#: includes/settings/wcj-settings-price-by-user-role.php:135
+#: includes/settings/wcj-settings-price-by-user-role.php:143
 #: includes/settings/wcj-settings-product-msrp.php:116
 msgid "Compatibility"
 msgstr ""
@@ -15333,6 +15351,20 @@ msgstr ""
 msgid "Max"
 msgstr ""
 
+#: includes/settings/wcj-settings-payment-gateways-pdf-notes.php:17
+#, php-format
+msgid "You can use order Shortcodes here, please visit %s."
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-pdf-notes.php:27
+msgid ""
+"If you want to display a gateways notes in the PDF invoice add notes here."
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-pdf-notes.php:47
+msgid "Add notes for "
+msgstr ""
+
 #: includes/settings/wcj-settings-payment-gateways-per-category.php:27
 msgid "Use Variations"
 msgstr ""
@@ -16156,7 +16188,7 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-price-by-country.php:159
-#: includes/settings/wcj-settings-price-by-user-role.php:65
+#: includes/settings/wcj-settings-price-by-user-role.php:73
 msgid "Search Engine Bots"
 msgstr ""
 
@@ -16325,84 +16357,94 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-price-by-user-role.php:30
+msgid "Enable Price by User role for Order Edit"
+msgstr ""
+
+#: includes/settings/wcj-settings-price-by-user-role.php:32
+msgid ""
+"When Enabled, It will allow price by user role while creating/editing order "
+"from admin. Otherwise admin role will be used for price."
+msgstr ""
+
+#: includes/settings/wcj-settings-price-by-user-role.php:38
 msgid "Per Product Settings Type"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:40
+#: includes/settings/wcj-settings-price-by-user-role.php:48
 msgid "Show Roles on per Product Settings"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:41
+#: includes/settings/wcj-settings-price-by-user-role.php:49
 msgid ""
 "If per product settings are enabled, you can choose which roles to show on "
 "product's edit page. Leave blank to show all roles."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:51
+#: includes/settings/wcj-settings-price-by-user-role.php:59
 msgid ""
 "When enabled, this will apply user role multipliers to shipping calculations."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:57
+#: includes/settings/wcj-settings-price-by-user-role.php:65
 msgid "Disable Price based on User Role for Regular Price"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:58
+#: includes/settings/wcj-settings-price-by-user-role.php:66
 msgid ""
 "Disable price by user role for regular price when using multipliers (global "
 "or per product)."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:66
+#: includes/settings/wcj-settings-price-by-user-role.php:74
 msgid "Disable Price based on User Role for Bots"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:72
+#: includes/settings/wcj-settings-price-by-user-role.php:80
 msgid "Show Empty Price Variations"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:74
+#: includes/settings/wcj-settings-price-by-user-role.php:82
 msgid ""
 "Show \"empty price\" variations. This will also hide out of stock messages."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:80
+#: includes/settings/wcj-settings-price-by-user-role.php:88
 msgid "Remove Empty Price Variation Callback"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:82
+#: includes/settings/wcj-settings-price-by-user-role.php:90
 msgid ""
 "Remove \"woocommerce_single_variation\" callback from "
 "\"woocommerce_single_variation\" hook on \"empty price\" variations."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:88
+#: includes/settings/wcj-settings-price-by-user-role.php:96
 msgid "Remove Empty Price Add to Cart Button Callback"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:90
+#: includes/settings/wcj-settings-price-by-user-role.php:98
 msgid ""
 "Remove \"woocommerce_single_variation_add_to_cart_button\" callback from "
 "\"woocommerce_single_variation\" hook on \"empty price\" variations."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:96
+#: includes/settings/wcj-settings-price-by-user-role.php:104
 msgid "Check Child Categories"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:98
+#: includes/settings/wcj-settings-price-by-user-role.php:106
 msgid "Enable to also consider the child categories."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:122
+#: includes/settings/wcj-settings-price-by-user-role.php:130
 msgid "Price Changes"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:123
+#: includes/settings/wcj-settings-price-by-user-role.php:131
 msgid "Disable price based on user role for products with \"Price Changes\""
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:124
+#: includes/settings/wcj-settings-price-by-user-role.php:132
 #: includes/settings/wcj-settings-product-open-pricing.php:157
 #: includes/settings/wcj-settings-wholesale-price.php:146
 msgid ""
@@ -16410,39 +16452,39 @@ msgid ""
 "plugins."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:140
+#: includes/settings/wcj-settings-price-by-user-role.php:148
 msgid "WooCommerce Product Bundles"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:144
+#: includes/settings/wcj-settings-price-by-user-role.php:152
 #, php-format
 msgid ""
 "Enable this option if there is compatibility with <a href=\"%s\" target="
 "\"_blank\">WooCommerce Product Bundles</a> plugin."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:154
+#: includes/settings/wcj-settings-price-by-user-role.php:162
 msgid "Roles & Multipliers"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:164
+#: includes/settings/wcj-settings-price-by-user-role.php:172
 msgid "Disable Price based on User Role for Products on Sale"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:206
+#: includes/settings/wcj-settings-price-by-user-role.php:214
 msgid "Products Categories"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:212
+#: includes/settings/wcj-settings-price-by-user-role.php:220
 msgid "Products Tags"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:233
+#: includes/settings/wcj-settings-price-by-user-role.php:241
 #, php-format
 msgid "Price based on User Role by %s"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:259
+#: includes/settings/wcj-settings-price-by-user-role.php:267
 msgid ""
 "Multiplier is ignored if set to negative number (e.g.: -1). Global multiplier "
 "will be used instead."
@@ -20618,7 +20660,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:398
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:399
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""

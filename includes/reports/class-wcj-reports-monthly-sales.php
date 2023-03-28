@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version
+ * @version 6.0.0
  * @since   2.4.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version
+		 * @version 6.0.0
 		 * @since   2.4.7
 		 */
 		public function get_report() {

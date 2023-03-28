@@ -1,6 +1,7 @@
 {
-    "0" : "= 6.0.4 02/03/2023 =",
-    "1" : "* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed PDF Header and Footer issue.",
-    "2" : "* WooCommerce 7.4.0 Tested",
-    "3" : "* WordPress 6.1.1 Tested"
+    "0" : "= 6.0.5 29/03/2023 =",
+    "1" : "* NEW FEATURE - PAYMENT GATEWAYS - Gateways PDF Notes - Added new module to add PDF notes for various gateways in invoices.",
+    "2" : "* NEW FEATURE - PRICES & CURRENCIES - Price based on User Role - Added new option to allow price by user role while creating/editing order from admin.",
+    "3" : "* WooCommerce 7.5.1 Tested",
+    "4" : "* WordPress 6.1.1 Tested"
 }
