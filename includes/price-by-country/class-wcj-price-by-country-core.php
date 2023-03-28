@@ -839,10 +839,9 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 
 					$user_id              = get_current_user_id();
 					$currentusergroupidnr = get_user_meta( $user_id, 'b2bking_customergroup', true );
-					if(!empty($product))
-					{
-						$b2b_price            = get_post_meta( $product->get_id(), 'b2bking_sale_product_price_group_' . $currentusergroupidnr, true );
-						$b2b_regular_price    = get_post_meta( $product->get_id(), 'b2bking_regular_product_price_group_' . $currentusergroupidnr, true );						
+					if ( ! empty( $product ) ) {
+						$b2b_price         = get_post_meta( $product->get_id(), 'b2bking_sale_product_price_group_' . $currentusergroupidnr, true );
+						$b2b_regular_price = get_post_meta( $product->get_id(), 'b2bking_regular_product_price_group_' . $currentusergroupidnr, true );
 					}
 
 					if ( 'yes' === get_option( 'wcj_price_by_country_b2b_sale_price_group', 'no' ) ) {

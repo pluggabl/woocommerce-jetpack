@@ -79,10 +79,10 @@ if ( ! function_exists( 'wcj_get_order_date' ) ) {
 	 * @param   array $_order defines the _order.
 	 */
 	function wcj_get_order_date( $_order ) {
-		if(!empty($_order)){    
+		if ( ! empty( $_order ) ) {
 			return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->order_date : $_order->get_date_created() );
-		}else{
-			return '' ;
+		} else {
+			return '';
 		}
 	}
 }

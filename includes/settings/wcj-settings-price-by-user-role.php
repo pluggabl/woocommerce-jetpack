@@ -27,12 +27,12 @@ $settings = array(
 		'default'  => 'yes',
 	),
 	array(
-		'title'   => __( 'Enable Price by User role for Order Edit', 'woocommerce-jetpack' ),
+		'title'    => __( 'Enable Price by User role for Order Edit', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'When Enabled, It will allow price by user role while creating/editing order from admin. Otherwise admin role will be used for price.', 'woocommerce-jetpack' ),
-		'type'    => 'checkbox',
-		'id'      => 'wcj_price_by_user_role_admin_order',
-		'default' => 'no',
+		'type'     => 'checkbox',
+		'id'       => 'wcj_price_by_user_role_admin_order',
+		'default'  => 'no',
 	),
 	array(
 		'title'   => __( 'Per Product Settings Type', 'woocommerce-jetpack' ),

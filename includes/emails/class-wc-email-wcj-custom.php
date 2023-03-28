@@ -157,8 +157,8 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 					$this->find['order-date']   = '{order_date}';
 					$this->find['order-number'] = '{order_number}';
 
-					$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
-					if(!empty($this->object)){    
+					$this->replace['order-date'] = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
+					if ( ! empty( $this->object ) ) {
 						$this->replace['order-number'] = $this->object->get_order_number();
 					}
 					global $post;
