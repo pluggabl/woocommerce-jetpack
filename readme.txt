@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.1.1
 Requires PHP: 7.2
-Stable tag: 6.0.4
+Stable tag: 6.0.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,18 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 6.0.5 29/03/2023 =
+
+* NEW FEATURE - PAYMENT GATEWAYS - Gateways PDF Notes - Added new module to add PDF notes for various gateways in invoices.
+* NEW FEATURE - PRICES & CURRENCIES - Price based on User Role - Added new option to allow price by user role while creating/editing order from admin.
+* FIXED - PRODUCTS - Product Addons - Fixed Product addon label issue for select type.
+* FIXED - PRODUCTS - Product Visibility by User Role - Fixed user role not being saved using bulk edit.
+* FIXED - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed price not being saved in per page product issue on variation product.
+* FIXED - Uncaught Error: Call to a member function get_id() booster-elite-for-woocommerce/includes/price-by-country/class-wcj-price-by-country-core.php ...
+* FIXED - Uncaught Error: Uncaught Error: Call to a member function get_date_created() booster-elite-for-woocommerce/includes/functions/wcj-functions-orders.php...
+* WooCommerce 7.5.1 Tested
+* WordPress 6.1.1 Tested
 
 = 6.0.4 02/03/2023 =
 

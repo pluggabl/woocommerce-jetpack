@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 6.0.1
+ * @version 6.0.5
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -22,7 +22,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.3.0
+		 * @version 6.0.5
 		 * @since   2.5.0
 		 */
 		public function __construct() {
@@ -49,6 +49,11 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 						}
 					}
 				}
+
+				add_action( 'wp_ajax_woocommerce_get_customer', array( $this, 'wcj_order_customer_user_id' ) );
+				add_action( 'wp_ajax_nopriv_woocommerce_get_customer', array( $this, 'wcj_order_customer_user_id' ) );
+				add_action( 'wp_ajax_woocommerce_remove_customer', array( $this, 'wcj_remove_order_customer_user_id' ) );
+				add_action( 'wp_ajax_nopriv_woocommerce_remove_customer', array( $this, 'wcj_remove_order_customer_user_id' ) );
 				add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 				add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 				// Admin settings - "copy price" buttons.
@@ -59,6 +64,31 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				// WooCommerce Product Bundles compatibility.
 				add_filter( 'wcj_price_by_user_role_do_change_price', array( $this, 'change_bundle_product_price' ), 10, 3 );
 			}
+		}
+
+		/**
+		 * Wcj_order_customer_user_id.
+		 *
+		 * @version 6.0.5
+		 * @since  1.0.0
+		 */
+		public function wcj_order_customer_user_id() {
+			$wpnonce = isset( $_REQUEST['wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wpnonce'] ), 'wcj-order-users' ) : false;
+			if ( ! $wpnonce || ! isset( $_POST['user_id'] ) ) {
+				return;
+			}
+			$user_id = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
+			WC()->session->set( 'wcj_order_user_id', $user_id );
+		}
+
+		/**
+		 * Wcj_remove_order_customer_user_id.
+		 *
+		 * @version 6.0.5
+		 * @since  1.0.0
+		 */
+		public function wcj_remove_order_customer_user_id() {
+			WC()->session->__unset( 'wcj_order_user_id' );
 		}
 
 		/**
@@ -172,11 +202,19 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Enqueue_admin_script.
 		 *
-		 * @version 3.6.0
+		 * @version 6.0.5
 		 * @since   3.6.0
 		 */
 		public function enqueue_admin_script() {
 			wp_enqueue_script( 'wcj-price-by-user-role-admin', wcj_plugin_url() . '/includes/js/wcj-price-by-user-role-admin.js', array( 'jquery' ), w_c_j()->version, true );
+			wp_localize_script(
+				'wcj-price-by-user-role-admin',
+				'order_user_role_ajax_object',
+				array(
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+					'wpnonce'  => wp_create_nonce( 'wcj-order-users' ),
+				)
+			);
 		}
 
 		/**
@@ -309,7 +347,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 6.0.1
+		 * @version 6.0.5
 		 * @since   2.5.0
 		 * @todo    (maybe) add "enable compound multipliers" option
 		 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
@@ -320,7 +358,13 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		public function change_price( $price, $_product ) {
 
 			$current_user_role = wcj_get_current_user_first_role();
-			$_current_filter   = current_filter();
+
+			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_admin_order', 'no' ) ) {
+				$current_user_role = wcj_get_current_user_first_role();
+				$current_user_role = $current_user_role[0];
+			}
+
+			$_current_filter = current_filter();
 
 			if ( ! apply_filters( 'wcj_price_by_user_role_do_change_price', true, $price, $_product, $current_user_role, $_current_filter ) ) {
 				return $price;

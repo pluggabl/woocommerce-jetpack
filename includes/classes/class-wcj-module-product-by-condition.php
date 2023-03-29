@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 6.0.0
+ * @version 6.0.5
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
@@ -305,7 +305,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		/**
 		 * Save_bulk_and_quick_edit_fields.
 		 *
-		 * @version 6.0.0
+		 * @version 6.0.5
 		 * @since   3.6.0
 		 * @param int       $post_id get post id.
 		 * @param obj|Array $post get post.
@@ -338,14 +338,14 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 				if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) {
 					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', array() );
 				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_visible' ], true ) ) {
-					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) );
+					update_post_meta( $post_id, '_wcj_' . $this->id . '_visible', array_map( 'sanitize_text_field', wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_visible' ] ) ) );
 				}
 			}
 			if ( 'visible' !== apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 				if ( ! isset( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) {
 					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', array() );
 				} elseif ( is_array( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) && ! in_array( 'wcj_no_change', $_REQUEST[ 'wcj_' . $this->id . '_invisible' ], true ) ) {
-					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) );
+					update_post_meta( $post_id, '_wcj_' . $this->id . '_invisible', array_map( 'sanitize_text_field', wp_unslash( $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] ) ) );
 				}
 			}
 			do_action( 'save_bulk_and_quick_edit_fields_' . $this->id, $post_id, $post );

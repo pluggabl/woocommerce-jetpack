@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 5.6.8
+ * @version 6.0.5
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -25,6 +25,14 @@ $settings = array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_price_by_user_role_per_product_enabled',
 		'default'  => 'yes',
+	),
+	array(
+		'title'    => __( 'Enable Price by User role for Order Edit', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When Enabled, It will allow price by user role while creating/editing order from admin. Otherwise admin role will be used for price.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_price_by_user_role_admin_order',
+		'default'  => 'no',
 	),
 	array(
 		'title'   => __( 'Per Product Settings Type', 'woocommerce-jetpack' ),

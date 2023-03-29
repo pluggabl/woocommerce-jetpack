@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 6.0.1
+ * @version 6.0.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -807,7 +807,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 6.0.1
+		 * @version 6.0.5
 		 * @param string $price defines the price for conversion.
 		 * @param object $product Product Object.
 		 */
@@ -839,8 +839,10 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 
 					$user_id              = get_current_user_id();
 					$currentusergroupidnr = get_user_meta( $user_id, 'b2bking_customergroup', true );
-					$b2b_price            = get_post_meta( $product->get_id(), 'b2bking_sale_product_price_group_' . $currentusergroupidnr, true );
-					$b2b_regular_price    = get_post_meta( $product->get_id(), 'b2bking_regular_product_price_group_' . $currentusergroupidnr, true );
+					if ( ! empty( $product ) ) {
+						$b2b_price         = get_post_meta( $product->get_id(), 'b2bking_sale_product_price_group_' . $currentusergroupidnr, true );
+						$b2b_regular_price = get_post_meta( $product->get_id(), 'b2bking_regular_product_price_group_' . $currentusergroupidnr, true );
+					}
 
 					if ( 'yes' === get_option( 'wcj_price_by_country_b2b_sale_price_group', 'no' ) ) {
 

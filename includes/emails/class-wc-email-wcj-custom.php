@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 
+ * @version 6.0.5
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -112,7 +112,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * Trigger.
 		 *
-		 * @version 6.0.1
+		 * @version 6.0.5
 		 *  @param   int $object_id get object id.
 		 */
 		public function trigger( $object_id ) {
@@ -157,9 +157,10 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 					$this->find['order-date']   = '{order_date}';
 					$this->find['order-number'] = '{order_number}';
 
-					$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
-					$this->replace['order-number'] = $this->object->get_order_number();
-
+					$this->replace['order-date'] = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
+					if ( ! empty( $this->object ) ) {
+						$this->replace['order-number'] = $this->object->get_order_number();
+					}
 					global $post;
 					$post = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->object->post : get_post( $object_id ) ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 					setup_postdata( $post );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Local
  *
- * @version 5.6.8
+ * @version 6.0.5
  * @author  Pluggabl LLC.
  * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === wcj_get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  * @package Booster_For_WooCommerce/includes/Price_By_Country
@@ -138,7 +138,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		 * @param string $variation_id_addon defines the variation addon id.
 		 */
 		private function save_options( $post_id, $total_options_groups, $variation_id_addon = '' ) {
-			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			if ( isset( $_POST['security'] ) ) {
+				$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['security'] ) ? sanitize_text_field( wp_unslash( $_POST['security'] ) ) : '' ), 'save-variations' );
+			} else {
+				$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			}
 			$options = $this->get_prices_options();
 			for ( $i = 1; $i <= $total_options_groups; $i++ ) {
 				foreach ( $options as $option ) {
@@ -169,7 +173,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		 * @param object $post defines the post object.
 		 */
 		public function save_custom_meta_box_on_product_edit( $post_id, $post ) {
-			$wpnonce     = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			if ( isset( $_POST['security'] ) ) {
+				$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['security'] ) ? sanitize_text_field( wp_unslash( $_POST['security'] ) ) : '' ), 'save-variations' );
+			} else {
+				$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+			}
 			$meta_box_id = 'price_by_country';
 
 			// Check that we are saving with custom meta box displayed.

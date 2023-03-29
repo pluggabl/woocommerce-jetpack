@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 5.5.6
+ * @version 6.0.5
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -122,6 +122,7 @@ return apply_filters(
 			'all_cat_ids' => array(
 				'payment_gateways',
 				'payment_gateways_icons',
+				'payment_gateways_pdf_notes',
 				'payment_gateways_fees',
 				'payment_gateways_per_category',
 				'payment_gateways_currency',

@@ -1,14 +1,50 @@
 /**
- * Wcj-price-by-user-role-admin.js
+ * wcj-price-by-user-role-admin.js
  *
- * @version 5.6.2
- * @since   3.6.0
- *
- * @package Booster_For_WooCommerce/includes/JS
+ * @version 6.0.5
+ * @since  1.0.0
  */
 
 jQuery( document ).ready(
 	function() {
+
+		var data = {
+			action  : 'woocommerce_remove_customer',
+		};
+
+		jQuery.ajax(
+			{
+				url: order_user_role_ajax_object.ajax_url,
+				data: data,
+				type: 'POST',
+				success: function( response ) {
+				}
+			}
+		);
+
+		jQuery( '#customer_user' ).on(
+			'change',
+			function(){
+
+				var user_id = jQuery( '#customer_user' ).val();
+
+				var data = {
+					user_id  : user_id,
+					wpnonce: order_user_role_ajax_object.wpnonce,
+					action   : 'woocommerce_get_customer',
+				};
+
+				jQuery.ajax(
+					{
+						url: order_user_role_ajax_object.ajax_url,
+						data: data,
+						type: 'POST',
+						success: function( response ) {
+						}
+					}
+				);
+			}
+		);
 		jQuery( '.wcj-copy-price' ).click(
 			function() {
 				var wcj_copy_data   = jQuery.parseJSON( jQuery( this ).attr( 'wcj-copy-data' ) );

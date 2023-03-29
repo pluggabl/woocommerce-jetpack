@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 4.9.0
+ * @version 6.0.5
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -124,10 +124,20 @@ if ( ! function_exists( 'wcj_get_current_user_first_role' ) ) {
 	/**
 	 * Wcj_get_current_user_first_role.
 	 *
-	 * @version 3.2.2
-	 * @since   2.5.3
+	 * @version 6.0.5
+	 * @since  1.0.0
 	 */
 	function wcj_get_current_user_first_role() {
+
+		if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_admin_order', 'no' ) ) {
+
+			$current_user_id = WC()->session->get( 'wcj_order_user_id' );
+			$user_info       = get_userdata( $current_user_id );
+			$role_by_meta    = $user_info->roles;
+
+			return ( '' !== $role_by_meta ? $role_by_meta : 'guest' );
+		}
+
 		if ( wcj_is_module_enabled( 'general' ) && wcj_is_booster_role_changer_enabled() ) {
 			$current_user_id = get_current_user_id();
 			$role_by_meta    = get_user_meta( $current_user_id, '_wcj_booster_user_role', true );
