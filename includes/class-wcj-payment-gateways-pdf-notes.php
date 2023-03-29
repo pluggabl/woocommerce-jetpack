@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways PDF notes
  *
- * @version 6.0.0
+ * @version 6.0.5
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Pdf_Notes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 6.0.0
+		 * @version 6.0.5
 		 */
 		public function __construct() {
 
