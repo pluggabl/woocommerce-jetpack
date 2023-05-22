@@ -56,7 +56,11 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$wpnonce     = isset( $_REQUEST['wcj-country-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-country-nonce'] ), 'wcj-country' ) : false;
+			if ( isset( $_POST['wcj-country'] ) && '' !== $_POST['wcj-country'] ) {
+				$wpnonce = isset( $_REQUEST['wcj-country-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-country-nonce'] ), 'wcj-country' ) : false;
+			} else {
+				$wpnonce = true;
+			}
 			$country     = isset( $_REQUEST['wcj-country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) : '';
 			$req_country = null;
 			if ( $wpnonce && ! empty( $country ) ) {

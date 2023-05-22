@@ -104,7 +104,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				add_action( 'init', array( $this, 'add_settings' ) );
 				add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
 			} else {
-				if ( 'init' === current_filter() ) {
+				if ( 'init' === current_filter() || 'plugins_loaded' === current_filter() ) {
 					$this->add_settings();
 					$this->reset_settings();
 				}

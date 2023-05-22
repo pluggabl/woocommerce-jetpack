@@ -959,7 +959,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$template
 			);
 			$html    .= wcj_get_option( 'wcj_checkout_files_upload_form_template_after', '</table>' );
-			if ( 0 > $order_id ) {
+			if ( 0 !== (int) $order_id ) {
 				$html .= '<input type="hidden" name="wcj_checkout_files_upload_order_id_' . $i . '" value="' . $order_id . '">';
 			}
 			$html .= '</form>';

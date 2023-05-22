@@ -207,7 +207,7 @@ if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priorit
 			'shipping_by_cities'                  => PHP_INT_MAX - 100,
 		);
 		$priority           = wcj_get_option( 'wcj_' . $module_id . '_filter_priority', 0 );
-		return ( 0 !== ( $priority ) ?
+		return ( '0' !== ( (string) $priority ) ?
 			$priority :
 			( isset( $modules_priorities[ $module_id ] ) ? $modules_priorities[ $module_id ] : PHP_INT_MAX )
 		);
