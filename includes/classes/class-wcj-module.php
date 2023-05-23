@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 6.0.3
+ * @version 7.0.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.1.0
+		 * @version 7.0.0
 		 * @param varchar $type Module is main module or sub-module.
 		 */
 		public function __construct( $type = 'module' ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Shipping
  *
- * @version 6.0.1
+ * @version 7.0.0
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -194,7 +194,7 @@ if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priorit
 	/**
 	 * Wcj_get_woocommerce_package_rates_module_filter_priority.
 	 *
-	 * @version 3.6.0
+	 * @version 7.0.0
 	 * @since   3.2.4
 	 * @todo    add `shipping_by_order_amount` module
 	 * @param int $module_id Get module id.

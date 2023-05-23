@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 6.0.5
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Init.
 		 *
-		 * @version 5.6.8
+		 * @version 7.0.0
 		 * @since   2.9.0
 		 */
 		public function init() {
