@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 7.0.0
+ * @version 6.0.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -212,7 +212,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Create_meta_meta_box.
 		 *
-		 * @version 7.0.0
+		 * @version 6.0.6
 		 * @since   2.5.8
 		 * @param string $post defines the post.
 		 */
