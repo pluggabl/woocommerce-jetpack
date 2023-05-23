@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.2.2
 Requires PHP: 7.2
-Stable tag: 7.0.0
+Stable tag: 6.0.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -275,7 +275,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
-= 7.0.0 24/05/2023 =
+= 6.0.6 24/05/2023 =
 
 * FIXED - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed price & currency when users apply the country from the URL.
 * FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed Checkout file remove option not working on thank you page and my account page.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 7.0.0
+ * @version 6.0.6
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -898,7 +898,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Get_the_form.
 		 *
-		 * @version 7.0.0
+		 * @version 6.0.6
 		 * @since   2.5.0
 		 * @param int    $i defines the value of i.
 		 * @param string $file_name defines the file_name.
