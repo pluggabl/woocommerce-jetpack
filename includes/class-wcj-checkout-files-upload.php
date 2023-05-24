@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 5.6.8
+ * @version 6.0.6
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -898,7 +898,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Get_the_form.
 		 *
-		 * @version 5.6.2
+		 * @version 6.0.6
 		 * @since   2.5.0
 		 * @param int    $i defines the value of i.
 		 * @param string $file_name defines the file_name.
@@ -959,7 +959,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$template
 			);
 			$html    .= wcj_get_option( 'wcj_checkout_files_upload_form_template_after', '</table>' );
-			if ( 0 > $order_id ) {
+			if ( 0 !== (int) $order_id ) {
 				$html .= '<input type="hidden" name="wcj_checkout_files_upload_order_id_' . $i . '" value="' . $order_id . '">';
 			}
 			$html .= '</form>';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 6.0.5
+ * @version 6.0.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -51,12 +51,16 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		/**
 		 * Init.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.6
 		 * @since   2.9.0
 		 */
 		public function init() {
 			wcj_session_maybe_start();
-			$wpnonce     = isset( $_REQUEST['wcj-country-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-country-nonce'] ), 'wcj-country' ) : false;
+			if ( isset( $_POST['wcj-country'] ) && '' !== $_POST['wcj-country'] ) {
+				$wpnonce = isset( $_REQUEST['wcj-country-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-country-nonce'] ), 'wcj-country' ) : false;
+			} else {
+				$wpnonce = true;
+			}
 			$country     = isset( $_REQUEST['wcj-country'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-country'] ) ) : '';
 			$req_country = null;
 			if ( $wpnonce && ! empty( $country ) ) {

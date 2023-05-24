@@ -2,9 +2,9 @@
 Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.1.1
+Tested up to: 6.2.2
 Requires PHP: 7.2
-Stable tag: 6.0.5
+Stable tag: 6.0.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -274,6 +274,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 6.0.6 24/05/2023 =
+
+* FIXED - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed price & currency when users apply the country from the URL.
+* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed Checkout file remove option not working on thank you page and my account page.
+* FIXED - SHIPPING & ORDERS - Shipping Options - Fixed the compatibility issue for the Shipping Methods by Users Module and Shipping Options Module.
+* FIXED - EMAILS & MISC - Admin Tools Module - Fixed issue Product meta options for object data. 
+* FIXED - Uncaught Error: Object of class stdClass could not be converted to string in includes/class-wcj-admin-tools.php ...
+* FIXED - Fixed Manage Settings "Load Modules on Init Hook" option.
+* WooCommerce 7.7.0 Tested
+* WordPress 6.2.2 Tested
 
 = 6.0.5 29/03/2023 =
 

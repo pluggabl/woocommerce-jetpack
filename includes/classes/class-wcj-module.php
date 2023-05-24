@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 6.0.3
+ * @version 6.0.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.1.0
+		 * @version 6.0.6
 		 * @param varchar $type Module is main module or sub-module.
 		 */
 		public function __construct( $type = 'module' ) {
@@ -104,7 +104,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				add_action( 'init', array( $this, 'add_settings' ) );
 				add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
 			} else {
-				if ( 'init' === current_filter() ) {
+				if ( 'init' === current_filter() || 'plugins_loaded' === current_filter() ) {
 					$this->add_settings();
 					$this->reset_settings();
 				}

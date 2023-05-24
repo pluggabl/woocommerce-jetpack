@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 5.6.8
+ * @version 6.0.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -212,7 +212,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Create_meta_meta_box.
 		 *
-		 * @version 5.6.8
+		 * @version 6.0.6
 		 * @since   2.5.8
 		 * @param string $post defines the post.
 		 */
@@ -224,7 +224,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			$table_data = array();
 			foreach ( $meta as $meta_key => $meta_values ) {
 				$meta_value   = maybe_unserialize( $meta_values[0] );
-				$meta_value   = is_array( $meta_value ) ? wp_json_encode( $meta_value ) : $meta_value;
+				$meta_value   = is_array( $meta_value ) || is_object( $meta_value ) ? wp_json_encode( $meta_value ) : $meta_value;
 				$table_data[] = array( $meta_key, esc_html( $meta_value ) );
 			}
 			$html .= wcj_get_table_html(
