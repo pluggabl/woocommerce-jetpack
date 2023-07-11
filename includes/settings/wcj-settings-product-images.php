@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Product Images
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'wcj_product_img_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_img_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_img_and_thumb_tab'       => __( 'Product Image and Thumbnails', 'woocommerce-jetpack' ),
+			'wcj_product_img_placeholder_img_tab' => __( 'Placeholder Image', 'woocommerce-jetpack' ),
+			'wcj_product_img_callbacks_tab'       => __( 'Callbacks', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_img_and_thumb_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Product Image and Thumbnails', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -80,8 +97,16 @@ return array(
 		'type'    => 'number',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_images_and_thumbnails_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_img_and_thumb_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_img_placeholder_img_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Placeholder Image', 'woocommerce-jetpack' ),
@@ -97,8 +122,16 @@ return array(
 		'css'      => 'width:100%',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_images_placeholder_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_img_placeholder_img_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_img_callbacks_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Callbacks', 'woocommerce-jetpack' ),
@@ -135,7 +168,11 @@ return array(
 		'type'    => 'text',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_images_cb',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_img_callbacks_tab',
+		'type' => 'tab_end',
 	),
 );

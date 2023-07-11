@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 5.6.2
- * @since   2.9.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -22,9 +22,24 @@ $type_options = array(
 
 return array(
 	array(
-		'title' => __( 'General Options', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_offer_price_general_options',
-		'type'  => 'title',
+		'id'   => 'offer_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'offer_price_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'offer_price_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+			'offer_price_button_tab'          => __( 'Button', 'woocommerce-jetpack' ),
+			'offer_price_form_and_notice_tab' => __( 'Form and Notice', 'woocommerce-jetpack' ),
+			'offer_price_styling_tab'         => __( 'Styling', 'woocommerce-jetpack' ),
+			'offer_price_email_tab'           => __( 'Email', 'woocommerce-jetpack' ),
+			'offer_price_admin_tab'           => __( 'Admin', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'offer_price_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Enable', 'woocommerce-jetpack' ),
@@ -61,9 +76,12 @@ return array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Button Options', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_offer_price_button_options',
-		'type'  => 'title',
+		'id'   => 'offer_price_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'offer_price_button_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Label', 'woocommerce-jetpack' ),
@@ -155,16 +173,19 @@ return array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Form and Notice Options', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_offer_price_form_options',
-		'type'  => 'title',
+		'id'   => 'offer_price_button_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'offer_price_form_and_notice_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Price Input', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Label', 'woocommerce-jetpack' ) .
 			'. ' . wcj_message_replaced_values( array( '%currency_symbol%' ) ),
 		'id'      => 'wcj_offer_price_price_label',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		/* translators: %s: translators Added */
 		'default' => sprintf( __( 'Your price (%s)', 'woocommerce-jetpack' ), '%currency_symbol%' ),
 		'css'     => 'width:100%;',
@@ -204,7 +225,7 @@ return array(
 		'title'   => __( 'Customer Email', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Label', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_offer_price_customer_email',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => __( 'Your email', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%;',
 	),
@@ -212,7 +233,7 @@ return array(
 		'title'   => __( 'Customer Name', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Label', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_offer_price_customer_name',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => __( 'Your name', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%;',
 	),
@@ -220,7 +241,7 @@ return array(
 		'title'   => __( 'Customer Message', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Label', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_offer_price_customer_message',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => __( 'Your message', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%;',
 	),
@@ -228,7 +249,7 @@ return array(
 		'title'   => __( 'Send a Copy to Customer Checkbox', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Label', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_offer_price_customer_copy',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => __( 'Send a copy to your email', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%;',
 	),
@@ -236,7 +257,7 @@ return array(
 		'title'   => __( 'Form Header', 'woocommerce-jetpack' ),
 		'desc'    => wcj_message_replaced_values( array( '%product_title%' ) ),
 		'id'      => 'wcj_offer_price_form_header_template',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		/* translators: %s: translators Added */
 		'default' => '<h3>' . sprintf( __( 'Suggest your price for %s', 'woocommerce-jetpack' ), '%product_title%' ) . '</h3>',
 		'css'     => 'width:100%;',
@@ -251,21 +272,21 @@ return array(
 	array(
 		'title'   => __( 'Form Footer', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_offer_price_form_footer_template',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => '',
 		'css'     => 'width:100%;',
 	),
 	array(
 		'title'   => __( 'Required HTML', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_offer_price_form_required_html',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => ' <abbr class="required" title="required">*</abbr>',
 		'css'     => 'width:100%;',
 	),
 	array(
 		'title'   => __( 'Customer Notice', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_offer_price_customer_notice',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => __( 'Your price offer has been sent.', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%;',
 	),
@@ -274,9 +295,12 @@ return array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Styling Options', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_offer_price_styling_options',
-		'type'  => 'title',
+		'id'   => 'offer_price_form_and_notice_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'offer_price_styling_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Form Width', 'woocommerce-jetpack' ),
@@ -313,9 +337,12 @@ return array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Email Options', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_offer_price_email_options',
-		'type'  => 'title',
+		'id'   => 'offer_price_styling_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'offer_price_email_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Email Recipient', 'woocommerce-jetpack' ),
@@ -331,7 +358,7 @@ return array(
 			) . ' ' .
 			wcj_message_replaced_values( array( '%admin_email%', '%product_author_email%' ) ),
 		'id'      => 'wcj_offer_price_email_address',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' => '%admin_email%',
 		'css'     => 'width:100%;',
 	),
@@ -346,9 +373,9 @@ return array(
 		'title'   => __( 'Email Template', 'woocommerce-jetpack' ),
 		'desc'    => wcj_message_replaced_values( array( '%product_title%', '%product_edit_link%', '%offered_price%', '%customer_name%', '%customer_email%', '%customer_message%', '%user_ip%', '%user_agent%' ) ),
 		'id'      => 'wcj_offer_price_email_template',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'default' =>
-			/* translators: %s: translators Added */
+		/* translators: %s: translators Added */
 			sprintf( __( 'Product: %s', 'woocommerce-jetpack' ), '<a href="%product_edit_link%">%product_title%</a>' ) . '<br>' . PHP_EOL .
 			/* translators: %s: translators Added */
 			sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
@@ -363,9 +390,12 @@ return array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Admin Options', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_offer_price_admin_options',
-		'type'  => 'title',
+		'id'   => 'offer_price_email_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'offer_price_admin_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Offer Price History Meta Box Columns', 'woocommerce-jetpack' ),
@@ -378,5 +408,9 @@ return array(
 	array(
 		'id'   => 'wcj_offer_price_admin_options',
 		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'offer_price_admin_tab',
+		'type' => 'tab_end',
 	),
 );

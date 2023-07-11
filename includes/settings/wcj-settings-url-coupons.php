@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - URL Coupons
  *
- * @version 5.6.8
- * @since   2.9.1
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,9 +14,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $settings = array(
 	array(
+		'id'   => 'url_coupons_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'url_coupons_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'url_coupons_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'url_coupons_general_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'desc'  => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Additionally you can hide standard coupon field on cart page in Booster\'s <a href="%s">Cart Customization</a> module.', 'woocommerce-jetpack' ),
 			admin_url( wcj_admin_tab_url() . '&wcj-cat=cart_and_checkout&section=cart_customization' )
 		),
@@ -27,7 +42,7 @@ $settings = array(
 		'title'    => __( 'URL Coupons Key', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'URL key. If you change this, make sure it\'s unique and is not used anywhere on your site (e.g. by another plugin).', 'woocommerce-jetpack' ),
 		'desc'     => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Your users can apply shop\'s standard coupons, by visiting URL. E.g.: %s.', 'woocommerce-jetpack' ),
 			'<code>' . site_url() . '/?' . wcj_get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' ) . '=couponcode </code>'
 		),
@@ -68,8 +83,12 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_url_coupons_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'url_coupons_general_options_tab',
+		'type' => 'tab_end',
 	),
 );
 return $settings;

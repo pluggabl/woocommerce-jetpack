@@ -1,9 +1,9 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Shipping Methods by Min/Max Order Amount
+ * Booster for WooCommerce - Settings - Shipping Methods by Min/Max Order Amount
  *
- * @version 5.6.0
- * @since   3.2.1
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,6 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_by_order_amount_use_shipping_instance', 'no' ) );
 $settings               = array(
+	array(
+		'id'   => 'shipping_by_order_amount_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'shipping_by_order_amount_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'shipping_by_order_amount_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'shipping_by_order_amount_order_amount_tab'    => __( 'Order Amount', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'shipping_by_order_amount_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -29,8 +45,16 @@ $settings               = array(
 		'default'  => 'no',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_by_order_amount_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'shipping_by_order_amount_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'shipping_by_order_amount_order_amount_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Shipping Methods by Min/Max Order Amount', 'woocommerce-jetpack' ),
@@ -80,8 +104,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_by_order_amount_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_by_order_amount_order_amount_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

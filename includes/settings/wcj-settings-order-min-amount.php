@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Order Minimum Amount
  *
- * @version 6.0.1
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $message  = apply_filters( 'booster_message', '', 'desc' );
 $settings = array(
+	array(
+		'id'   => 'order_min_amount_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'order_min_amount_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'order_min_amount_minimum_amount_tab' => __( 'Minimum Amount', 'woocommerce-jetpack' ),
+			'order_min_amount_compatibility_tab'  => __( 'Compatibility', 'woocommerce-jetpack' ),
+			'order_min_amount_by_user_role_tab'   => __( 'By User Role', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'order_min_amount_minimum_amount_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Order Minimum Amount', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -55,8 +72,8 @@ $settings = array(
 	array(
 		'title'             => __( 'Error message', 'woocommerce-jetpack' ),
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
-		/* translators: %1$s,2$s: translators Added */
-		'desc_tip'          => sprintf( __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %1$s to place your order, your current order total is %2$s.', 'woocommerce-jetpack' ), '%s', '%s' ),
+		/* translators: %s,%s: translators Added */
+		'desc_tip'          => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),//phpcs:ignore
 		'id'                => 'wcj_order_minimum_amount_error_message',
 		/* translators: %1$s,2$s: translators Added */
 		'default'           => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
@@ -75,7 +92,7 @@ $settings = array(
 		'title'             => __( 'Message on cart page', 'woocommerce-jetpack' ),
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		/* translators: %s,%s: translators Added */
-		'desc_tip'          => sprintf( __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %1$s to place your order, your current order total is %2$s.', 'woocommerce-jetpack' ), '%s', '%s' ),
+		'desc_tip'          => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),//phpcs:ignore
 		'id'                => 'wcj_order_minimum_amount_cart_notice_message',
 		/* translators: %s: translators Added */
 		'default'           => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
@@ -112,8 +129,16 @@ $settings = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_minimum_amount_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_min_amount_minimum_amount_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_min_amount_compatibility_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
@@ -132,15 +157,23 @@ $settings = array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_minimum_compatibility',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_min_amount_compatibility_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_min_amount_by_user_role_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Order Minimum Amount by User Role', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'id'    => 'wcj_order_minimum_amount_by_ser_role_options',
 		'desc'  => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
 			admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 		),
@@ -179,8 +212,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_order_minimum_amount_by_ser_role_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'order_min_amount_by_user_role_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 5.6.2
- * @since   2.8.1
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings     = array(
+	array(
+		'id'   => 'product_price_by_formula_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'product_price_by_formula_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'product_price_by_formula_default_settings_tab' => __( 'Default Settings', 'woocommerce-jetpack' ),
+			'product_price_by_formula_general_settings_tab' => __( 'General Settings', 'woocommerce-jetpack' ),
+			'product_price_by_formula_advanced_settings_tab' => __( 'Advanced Settings', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'product_price_by_formula_default_settings_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Default Settings', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -61,8 +78,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_price_by_formula_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'product_price_by_formula_default_settings_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'product_price_by_formula_general_settings_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'General Settings', 'woocommerce-jetpack' ),
@@ -121,11 +146,17 @@ $settings = array_merge(
 			'id'       => 'wcj_product_price_by_formula_admin_quick_edit_product_scope',
 			'default'  => 'no',
 		),
-
-
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_price_by_formula_general_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'product_price_by_formula_general_settings_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'product_price_by_formula_advanced_settings_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Advanced Settings', 'woocommerce-jetpack' ),
@@ -148,8 +179,21 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
+			'title'             => __( 'Reset products', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( "If enabled will also reset formula related settings on products when <code>Reset Settings</code> button is pressed.<br>It's necessary to <code>Save changes</code> first with the option enabled so the <code>Reset settings</code> can be pressed.", 'woocommerce-jetpack' ),
+			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+			'id'                => 'wcj_product_price_by_formula_reset_products',
+			'default'           => 'no',
+			'type'              => 'checkbox',
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		),
+		array(
 			'id'   => 'wcj_product_price_by_formula_advanced_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'product_price_by_formula_advanced_settings_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

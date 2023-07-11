@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Global Discount
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -24,9 +24,20 @@ do_action( 'wcj_after_get_terms', $this->id );
 
 $settings            = array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_global_discount_options',
+		'id'   => 'global_discount_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'global_discount_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'global_discount_general_options_tab'   => __( 'General options', 'woocommerce-jetpack' ),
+			'global_discount_advanced_settings_tab' => __( 'Advanced Settings', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'global_discount_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Total Groups', 'woocommerce-jetpack' ),
@@ -71,8 +82,8 @@ for ( $i = 1; $i <= $discount_groups_num; $i++ ) {
 			),
 			array(
 				'title'    => __( 'Enabled', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Enabled/disables the discount group.', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Enabled/disables the discount group.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_global_discount_sale_enabled_' . $i,
 				'default'  => 'yes',
 				'type'     => 'checkbox',
@@ -207,6 +218,14 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
+			'id'   => 'global_discount_general_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'global_discount_advanced_settings_tab',
+			'type' => 'tab_start',
+		),
+		array(
 			'title' => __( 'Advanced Settings', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'id'    => 'wcj_global_discount_advanced_options',
@@ -237,8 +256,12 @@ $settings = array_merge(
 		$this->get_wpml_terms_in_all_languages_setting(),
 		$this->get_wpml_products_in_all_languages_setting(),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_global_discount_advanced_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'global_discount_advanced_settings_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

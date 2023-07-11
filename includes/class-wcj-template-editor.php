@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Template Editor
  *
- * @version 5.6.8
+ * @version 7.0.0-dev
  * @since   3.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		/**
 		 * Create_templates.
 		 *
-		 * @version 5.6.8
+		 * @version 7.0.0-dev
 		 * @since   3.9.0
 		 * @todo    [dev] also delete on "Reset settings"
 		 * @param string | array $sections defines the sections.
@@ -66,7 +66,9 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 						$_template_file = $_template[ count( $_template ) - 1 ];
 						$_template_dirs = str_replace( $_template_file, '', $template );
 						$_template_path = wcj_get_wcj_uploads_dir( 'templates' . DIRECTORY_SEPARATOR . $_template_dirs ) . DIRECTORY_SEPARATOR . $_template_file;
-						$wp_filesystem->put_contents( $_template_path, $templates_content[ $template ], FS_CHMOD_FILE );
+						if ( $templates_content[ $template ] ) {
+							$wp_filesystem->put_contents( $_template_path, $templates_content[ $template ], FS_CHMOD_FILE );
+						}
 					}
 				}
 			}

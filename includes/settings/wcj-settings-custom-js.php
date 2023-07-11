@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce Settings - Custom JS
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,9 +14,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_custom_js_options',
+		'id'   => 'custom_js_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'custom_js_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'custom_js_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'custom_js_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Code Position', 'woocommerce-jetpack' ),
@@ -32,7 +42,7 @@ return array(
 		'title'   => __( 'Custom JS - Front end (Customers)', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_custom_js_frontend',
 		'default' => '',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;min-height:300px;font-family:monospace;',
 		/* translators: %s: translators Added */
 		'desc'    => sprintf( __( 'Without the %s tag.', 'woocommerce-jetpack' ), '<code>' . esc_html( '<script></script>' ) . '</code>' ),
@@ -41,13 +51,17 @@ return array(
 		'title'   => __( 'Custom JS - Back end (Admin)', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_custom_js_backend',
 		'default' => '',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;min-height:300px;font-family:monospace;',
 		/* translators: %s: translators Added */
 		'desc'    => sprintf( __( 'Without the %s tag.', 'woocommerce-jetpack' ), '<code>' . esc_html( '<script></script>' ) . '</code>' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_custom_js_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'custom_js_general_options_tab',
+		'type' => 'tab_end',
 	),
 );

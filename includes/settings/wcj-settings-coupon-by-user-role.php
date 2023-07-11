@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Coupon by User Role
  *
- * @version 5.6.0
- * @since   3.6.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'wcj_coupon_by_user_role_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_coupon_by_user_role_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_coupon_by_user_role_all_coupons_tab' => __( 'All Coupons', 'woocommerce-jetpack' ),
+			'wcj_coupon_by_user_role_per_coupons_tab' => __( 'Per Coupon', 'woocommerce-jetpack' ),
+			'wcj_coupon_by_user_role_message_tab'     => __( 'Message', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_coupon_by_user_role_all_coupons_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'All Coupons', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -37,8 +54,16 @@ return array(
 		'options'  => wcj_get_user_roles_options(),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_coupon_by_user_role_all_coupons_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_coupon_by_user_role_all_coupons_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_coupon_by_user_role_per_coupons_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Per Coupon', 'woocommerce-jetpack' ),
@@ -56,8 +81,16 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_coupon_by_user_role_per_coupon_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_coupon_by_user_role_per_coupons_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_coupon_by_user_role_message_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Message', 'woocommerce-jetpack' ),
@@ -67,7 +100,7 @@ return array(
 	array(
 		'title'             => __( '"Coupon is not valid" Message', 'woocommerce-jetpack' ),
 		'desc_tip'          => __( 'Message that will be displayed for invalid coupons by user role.', 'woocommerce-jetpack' ),
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'default'           => __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_coupon_by_user_role_invalid_message',
 		'css'               => 'width:100%;',
@@ -75,7 +108,11 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_coupon_by_user_role_messages_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_coupon_by_user_role_message_tab',
+		'type' => 'tab_end',
 	),
 );

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by User Role
  *
- * @version 5.6.8
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $message    = apply_filters( 'booster_message', '', 'desc' );
 $settings   = array(
+	array(
+		'id'   => 'wcj_payment_gateways_by_user_role_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_payment_gateways_by_user_role_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_payment_gateways_by_user_role_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_payment_gateways_by_user_role_payment_gatways_tab'   => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_by_user_role_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -28,15 +44,23 @@ $settings   = array(
 		'id'                => 'wcj_payment_gateways_by_user_role_multi_role_check',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_payment_gateways_by_user_role_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_by_user_role_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_by_user_role_payment_gatways_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ) . ' ' .
 			sprintf(
-				/* translators: %s: translators Added */
+								/* translators: %s: translators Added */
 				__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
 				admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 			),
@@ -90,8 +114,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_by_user_role_gateways_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_by_user_role_payment_gatways_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

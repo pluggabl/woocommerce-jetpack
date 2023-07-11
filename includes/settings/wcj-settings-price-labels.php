@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Custom Price Labels
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -16,6 +16,22 @@ $product_cats = wcj_get_terms( 'product_cat' );
 $products     = wcj_get_products();
 
 return array(
+	array(
+		'id'   => 'price_labels_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'price_labels_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'price_labels_per_product_tab' => __( 'Per Product', 'woocommerce-jetpack' ),
+			'price_labels_globally_tab'    => __( 'Globally', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'price_labels_per_product_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Custom Price Labels - Per Product', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -30,8 +46,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_local_price_labels_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_labels_per_product_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_labels_globally_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Custom Price Labels - Globally', 'woocommerce-jetpack' ),
@@ -44,7 +68,7 @@ return array(
 		'desc_tip'          => __( 'Enter text to add before all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_global_price_labels_add_before_text',
 		'default'           => '',
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'               => 'width:100%;',
@@ -54,7 +78,7 @@ return array(
 		'desc_tip' => __( 'Enter text to add after all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_global_price_labels_add_after_text',
 		'default'  => '',
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),
 	array(
@@ -62,7 +86,7 @@ return array(
 		'desc_tip'          => __( 'Enter text to add between regular and sale prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_global_price_labels_between_regular_and_sale_text',
 		'default'           => '',
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'               => 'width:100%;',
@@ -72,7 +96,7 @@ return array(
 		'desc_tip'          => __( 'Enter text to remove from all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_global_price_labels_remove_text',
 		'default'           => '',
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'               => 'width:100%;',
@@ -82,7 +106,7 @@ return array(
 		'desc_tip' => __( 'Enter text to replace in all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_global_price_labels_replace_text',
 		'default'  => '',
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes'
 					=> apply_filters( 'booster_message', '', 'readonly' ),
@@ -93,7 +117,7 @@ return array(
 		'desc_tip'          => __( 'Enter text to replace with. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_global_price_labels_replace_with_text',
 		'default'           => '',
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'               => 'width:100%;',
@@ -103,7 +127,7 @@ return array(
 		'desc_tip' => __( 'Enter text to display instead of the price. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_global_price_labels_instead_text',
 		'default'  => '',
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),
 	array(
@@ -152,7 +176,11 @@ return array(
 		'options'  => array_merge( wc_get_product_types(), array( 'variation' => __( 'Variable product\'s variation', 'woocommerce-jetpack' ) ) ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_global_price_labels_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_labels_globally_tab',
+		'type' => 'tab_end',
 	),
 );

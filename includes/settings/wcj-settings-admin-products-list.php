@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Admin Products List
  *
- * @version 5.6.0
- * @since   3.2.4
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings     = array(
+	array(
+		'id'   => 'wcj_admin_product_list_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_admin_product_list_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_list_custom_columns_tab' => __( 'Custom Columns', 'woocommerce-jetpack' ),
+			'wcj_product_list_column_order_tab'   => __( 'Columns Order', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_list_custom_columns_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Custom Columns', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -65,7 +81,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'desc_tip' => __( 'You can use shortcodes and/or HTML here.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_products_admin_list_custom_columns_value_' . $i,
 				'default'  => '',
-				'type'     => 'custom_textarea',
+				'type'     => 'textarea',
 			),
 		)
 	);
@@ -74,8 +90,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_products_admin_list_custom_columns_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_list_custom_columns_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_list_column_order_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Columns Order', 'woocommerce-jetpack' ),
@@ -97,8 +121,12 @@ $settings = array_merge(
 			'css'      => 'height:300px;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_products_admin_list_columns_order_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_list_column_order_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

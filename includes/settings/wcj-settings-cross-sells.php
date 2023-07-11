@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Cross-sells
  *
- * @version 5.6.2
- * @since   3.5.3
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,9 +14,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $settings = array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_cross_sells_options',
+		'id'   => 'wcj_cross_sells_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_cross_sells_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_cross_selll_genral_options_tab' => __( 'Genral Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_cross_selll_genral_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Cross-sells Total', 'woocommerce-jetpack' ),
@@ -152,8 +162,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_cross_sells_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cross_selll_genral_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

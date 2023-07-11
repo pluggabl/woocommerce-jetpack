@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Coupon Code Generator
  *
- * @version 5.6.0
- * @since   3.2.3
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -28,6 +28,21 @@ $algorithms = array(
 );
 
 return array(
+	array(
+		'id'   => 'wcj_coupon_code_generator_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_coupon_code_generator_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_coupon_code_generator_general_options_tab'   => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_coupon_code_generator_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -62,7 +77,11 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_coupon_code_generator_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_coupon_code_generator_general_options_tab',
+		'type' => 'tab_end',
 	),
 );

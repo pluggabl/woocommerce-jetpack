@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Templates
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -12,20 +12,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+$invoice_types = ( 'yes' === wcj_get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types() );
+$tab_ids       = array();
+foreach ( $invoice_types as $invoice_type ) {
+	$tab_ids[ 'pdf_invoicing_templates_' . $invoice_type['id'] . '_tab' ] = $invoice_type['title'];
+}
+
 $tip = sprintf(
-				/* translators: %s: translators Added */
+					/* translators: %s: translators Added */
 	__( 'For the list of available shortcodes, please visit %s.', 'woocommerce-jetpack' ),
 	'<a target="_blank" href="https://booster.io/category/shortcodes/?utm_source=shortcodes_list&utm_medium=module_button&utm_campaign=booster_documentation">' .
 		'https://booster.io/category/shortcodes/' .
 	'</a>'
 );
 
-$settings      = array();
-$invoice_types = ( 'yes' === wcj_get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
+$settings = array(
+	array(
+		'type'              => 'module_head',
+		'title'             => __( 'Templates', 'woocommerce-jetpack' ),
+		'desc'              => __( 'PDF Invoicing: Templates Settings' ),
+		'icon'              => 'pr-sm-icn.png',
+		'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . add_query_arg(
+			array(
+				'wcj_reset_settings' => $this->id,
+				'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+			)
+		) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+	),
+	array(
+		'id'   => 'pdf_invoicing_templates_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'pdf_invoicing_templates_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => $tab_ids,
+	),
+);
+
 foreach ( $invoice_types as $invoice_type ) {
 	$settings = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'pdf_invoicing_templates_' . $invoice_type['id'] . '_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				'title' => $invoice_type['title'],
 				'type'  => 'title',
@@ -40,13 +72,12 @@ foreach ( $invoice_types as $invoice_type ) {
 				'css'     => 'width:100%;height:500px;',
 			),
 			array(
-				'title' => __( 'Save all templates', 'woocommerce-jetpack' ),
-				'id'    => 'wcj_invoicing_template_save_all',
-				'type'  => 'wcj_save_settings_button',
-			),
-			array(
 				'type' => 'sectionend',
 				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_templates_options',
+			),
+			array(
+				'id'   => 'pdf_invoicing_templates_' . $invoice_type['id'] . '_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);

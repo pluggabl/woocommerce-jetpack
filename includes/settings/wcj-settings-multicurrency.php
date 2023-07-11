@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 5.6.8
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    "pretty prices"
  * @package Booster_For_WooCommerce/settings
@@ -18,9 +18,24 @@ $all_currencies = wcj_get_woocommerce_currencies_and_symbols();
 $message        = apply_filters( 'booster_message', '', 'desc' );
 $settings       = array(
 	array(
-		'title' => __( 'General Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_multicurrency_options',
+		'id'   => 'multicurrency_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'multicurrency_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'multicurrency_general_options_tab'    => __( 'General options', 'woocommerce-jetpack' ),
+			'multicurrency_compatobolity_tab'      => __( 'Compatibility', 'woocommerce-jetpack' ),
+			'multicurrency_advanced_tab'           => __( 'Advanced', 'woocommerce-jetpack' ),
+			'multicurrency_currencies_options_tab' => __( 'Currencies Options', 'woocommerce-jetpack' ),
+			'multicurrency_default_currency_tab'   => __( 'Default Currency', 'woocommerce-jetpack' ),
+			'multicurrency_role_default_tab'       => __( 'Role Defaults', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'multicurrency_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
@@ -113,8 +128,16 @@ $settings       = array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_multicurrency_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'multicurrency_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'multicurrency_compatobolity_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
@@ -237,8 +260,16 @@ $settings       = array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_multicurrency_compatibility',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'multicurrency_compatobolity_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'multicurrency_advanced_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Advanced', 'woocommerce-jetpack' ),
@@ -279,8 +310,16 @@ $settings       = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_multicurrency_options_adv',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'multicurrency_advanced_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'multicurrency_currencies_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Currencies Options', 'woocommerce-jetpack' ),
@@ -323,6 +362,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'id'      => 'wcj_multicurrency_currency_' . $i,
 				'default' => $currency_from,
 				'type'    => 'select',
+				'class'   => 'wcj_select_search_input',
 				'options' => $all_currencies,
 				'css'     => 'width:250px;',
 			),
@@ -341,8 +381,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_multicurrency_currencies_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'multicurrency_currencies_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'multicurrency_default_currency_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -367,6 +415,7 @@ $settings = array_merge(
 			'id'       => 'wcj_multicurrency_default_currency',
 			'default'  => 1,
 			'type'     => 'select',
+			'class'    => 'wcj_select_search_input',
 			'options'  => $currencies,
 			'desc'     => '',
 			'desc_tip' => __( 'The default currency will only be set if the current user hasn\'t selected it yet.', 'woocommerce-jetpack' ),
@@ -380,8 +429,16 @@ $settings = array_merge(
 			'desc_tip' => __( 'If enabled, the default currency will be fixed and users won\'t be able to change it.', 'woocommerce-jetpack' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_multicurrency_default_currency_opt',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'multicurrency_default_currency_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'multicurrency_role_default_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -393,7 +450,7 @@ $settings          = array_merge(
 			'title' => __( 'Role Defaults', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'desc'  => sprintf(
-				/* translators: %s: translators Added */
+					/* translators: %s: translators Added */
 				__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
 				admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 			),
@@ -437,8 +494,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_multicurrency_role_defaults_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'multicurrency_role_default_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

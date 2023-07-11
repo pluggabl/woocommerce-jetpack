@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 5.6.2
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    deprecate `wcj_sku_prefix` and `wcj_sku_suffix` (as user can now add it directly to "Template")
  * @todo    tags (check SKU plugin); template: '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}'
@@ -17,9 +17,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $settings = array(
 	array(
-		'title' => __( 'SKU Format Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_sku_format_options',
+		'id'   => 'wcj_product_sku_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_sku_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_sku_format_tab'     => __( 'SKU Format', 'woocommerce-jetpack' ),
+			'wcj_product_sku_hashids_tab'    => __( 'Hashids', 'woocommerce-jetpack' ),
+			'wcj_product_sku_categories_tab' => __( 'Categories', 'woocommerce-jetpack' ),
+			'wcj_product_sku_more_tab'       => __( 'More', 'woocommerce-jetpack' ),
+			'wcj_product_sku_tool_tab'       => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_sku_format_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Number Generation', 'woocommerce-jetpack' ),
@@ -33,7 +47,7 @@ $settings = array(
 			'hashids'    => __( 'Hashids - Advanced options', 'woocommerce-jetpack' ),
 		),
 		'desc_tip'          => __( 'Number generation method.', 'woocommerce-jetpack' ) . ' ' .
-					__( 'Possible values: from product ID, sequential, pseudorandom or Hashids.', 'woocommerce-jetpack' ) . '<br />' . __( 'If using Hashids please take a look at Hashids options below.', 'woocommerce-jetpack' ),
+			__( 'Possible values: from product ID, sequential, pseudorandom or Hashids.', 'woocommerce-jetpack' ) . '<br />' . __( 'If using Hashids please take a look at Hashids options below.', 'woocommerce-jetpack' ),
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
@@ -85,12 +99,12 @@ $settings = array(
 	array(
 		'title'             => __( 'Attributes Separator', 'woocommerce-jetpack' ),
 		'desc_tip'          => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Used in %1$s, %2$s, %3$s and %4$s.', 'woocommerce-jetpack' ),
 			'<em>{variation_attributes}</em>',
 			'<em>{variation_attribute=X}</em>',
 			'<em>{attribute=X}</em>',
-			'<em>{parent_attribute=X}'
+			'<em>{parent_attribute=X}</em>'
 		),
 		'id'                => 'wcj_sku_variations_product_slug_sep',
 		'default'           => '-',
@@ -100,11 +114,13 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'title'   => __( 'Characters Case', 'woocommerce-jetpack' ),
-		'id'      => 'wcj_sku_characters_case',
-		'default' => 'original',
-		'type'    => 'select',
-		'options' => array(
+		'title'    => __( 'Characters Case', 'woocommerce-jetpack' ),
+		'desc'     => 'test',
+		'desc_tip' => __( 'Characters Case', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_characters_case',
+		'default'  => 'original',
+		'type'     => 'select',
+		'options'  => array(
 			'original' => __( 'Original (no changes)', 'woocommerce-jetpack' ),
 			'lower'    => __( 'Convert to lowercase', 'woocommerce-jetpack' ),
 			'upper'    => __( 'Convert to uppercase', 'woocommerce-jetpack' ),
@@ -131,7 +147,7 @@ $settings = array(
 				'{parent_attribute=X}',
 			)
 		) . '<br>' . sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'You can also use shortcodes here, e.g.: %s etc.', 'woocommerce-jetpack' ),
 			'<code>' . implode(
 				'</code>, <code>',
@@ -162,13 +178,16 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_sku_format_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Hashids options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_sku_hashids_options',
+		'id'   => 'wcj_product_sku_format_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_sku_hashids_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Salt', 'woocommerce-jetpack' ),
@@ -195,18 +214,21 @@ $settings = array(
 		'id'      => 'wcj_sku_hashids_sku_format',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_sku_hashids_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_sku_hashids_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_sku_categories_tab',
+		'type' => 'tab_start',
 	),
 );
 $settings           = array_merge(
 	$settings,
 	array(
-		array(
-			'title' => __( 'Categories Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_sku_categories_options',
-		),
 		array(
 			'title'    => __( 'Multiple Categories', 'woocommerce-jetpack' ),
 			'desc_tip' => __( 'This options defines how to handle category prefixes and suffixes, if product has multiple categories.', 'woocommerce-jetpack' ),
@@ -264,19 +286,22 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_sku_categories_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_sku_categories_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_sku_more_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
 $settings = array_merge(
 	$settings,
 	array(
-		array(
-			'title' => __( 'More Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_sku_more_options',
-		),
 		array(
 			'title'    => __( 'Automatically Generate SKU for New Products', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -361,8 +386,30 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_sku_more_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_sku_more_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_sku_tool_tab',
+			'type' => 'tab_start',
+		),
+		array(
+			'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_module_tools',
+			'type'     => 'custom_link',
+			'link'     => ( $this->is_enabled() ) ?
+			'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=sku&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+			__( 'Autogenerate SKUs', 'woocommerce-jetpack' ) . '</a> </code>' :
+				'<code>' . __( 'Autogenerate SKUs', 'woocommerce-jetpack' ) . '</code>',
+		),
+		array(
+			'id'   => 'wcj_product_sku_tool_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

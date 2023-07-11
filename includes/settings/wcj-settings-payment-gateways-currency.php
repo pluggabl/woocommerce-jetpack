@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Currency Converter
  *
- * @version 5.6.8
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe make "Advanced: Fix Chosen Payment Method" option enabled by default (or even remove option completely and always perform `$this->fix_chosen_payment_method()`)
  * @package Booster_For_WooCommerce/settings
@@ -14,6 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings           = array(
+	array(
+		'id'   => 'wcj_gateways_currency_converter_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_gateways_currency_converter_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_gateways_currency_converter_payment_gatways_tab'   => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+			'wcj_gateways_currency_converter_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_gateways_currency_converter_payment_gatways_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -45,6 +61,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 				'id'      => 'wcj_gateways_currency_' . $key,
 				'default' => 'no_changes',
 				'type'    => 'select',
+				'class'   => 'wcj_select_search_input',
 				'options' => array_merge( array( 'no_changes' => __( 'No changes', 'woocommerce-jetpack' ) ), wcj_get_woocommerce_currencies_and_symbols() ),
 				'desc'    => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=' . $key ) . '"' .
 					' style="font-style:normal;text-decoration:none;" title="' . __( 'Go to payment gateway\'s settings', 'woocommerce-jetpack' ) . '">&#8505;</a>',
@@ -64,8 +81,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_currency_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_gateways_currency_converter_payment_gatways_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_gateways_currency_converter_general_options_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Options', 'woocommerce-jetpack' ),
@@ -107,8 +132,12 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_currency_general_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_gateways_currency_converter_general_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

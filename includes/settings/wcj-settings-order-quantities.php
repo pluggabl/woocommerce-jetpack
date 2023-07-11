@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 5.6.0
- * @since   2.9.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) generate settings in loop ( min / max )
  * @package Booster_For_WooCommerce/settings
@@ -16,6 +16,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 $qty_step_settings = ( 'yes' === wcj_get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ? '0.000001' : '1' );
 
 return array(
+	array(
+		'id'   => 'order_quantities_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'order_quantities_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'order_quantities_general_options_tab'  => __( 'General Options', 'woocommerce-jetpack' ),
+			'order_quantities_min_qty_tab'          => __( 'Min Qty', 'woocommerce-jetpack' ),
+			'order_quantities_max_qty_tab'          => __( 'Max Qty', 'woocommerce-jetpack' ),
+			'order_quantities_qty_step_tab'         => __( 'Qty Step', 'woocommerce-jetpack' ),
+			'order_quantities_single_item_cart_tab' => __( 'Single Item Cart', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'order_quantities_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -75,8 +94,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_quantities_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_quantities_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_quantities_min_qty_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Minimum Quantity Options', 'woocommerce-jetpack' ),
@@ -107,7 +134,7 @@ return array(
 		'id'      => 'wcj_order_quantities_min_cart_total_message',
 		/* translators: %min_cart_total_quantity%: translators Added */
 		'default' => __( 'Minimum allowed order quantity is %min_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;',
 	),
 	array(
@@ -144,12 +171,20 @@ return array(
 		'desc'    => wcj_message_replaced_values( array( '%product_title%', '%min_per_item_quantity%', '%item_quantity%' ) ),
 		'id'      => 'wcj_order_quantities_min_per_item_message',
 		'default' => __( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_quantities_min_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_quantities_min_qty_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_quantities_max_qty_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Maximum Quantity Options', 'woocommerce-jetpack' ),
@@ -180,7 +215,7 @@ return array(
 		'id'      => 'wcj_order_quantities_max_cart_total_message',
 		/* translators: %max_cart_total_quantity%: translators Added */
 		'default' => __( 'Maximum allowed order quantity is %max_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;',
 	),
 	array(
@@ -218,12 +253,20 @@ return array(
 		'desc'    => wcj_message_replaced_values( array( '%product_title%', '%max_per_item_quantity%', '%item_quantity%' ) ),
 		'id'      => 'wcj_order_quantities_max_per_item_message',
 		'default' => __( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_quantities_max_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_quantities_max_qty_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_quantities_qty_step_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Quantity Step Options', 'woocommerce-jetpack' ),
@@ -269,12 +312,20 @@ return array(
 		'desc'    => wcj_message_replaced_values( array( '%product_title%', '%required_step%', '%item_quantity%' ) ),
 		'id'      => 'wcj_order_quantities_step_message',
 		'default' => __( 'Required step for %product_title% is %required_step%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_quantities_step_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_quantities_qty_step_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_quantities_single_item_cart_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( '"Single Item Cart" Options', 'woocommerce-jetpack' ),
@@ -295,11 +346,15 @@ return array(
 		'title'   => __( 'Message', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_order_quantities_single_item_cart_message',
 		'default' => __( 'Only one item can be added to the cart. Clear the cart or finish the order, before adding another item to the cart.', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_quantities_single_item_cart_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_quantities_single_item_cart_tab',
+		'type' => 'tab_end',
 	),
 );

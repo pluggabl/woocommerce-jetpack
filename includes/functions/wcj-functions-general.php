@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 6.0.3
+ * @version 7.0.0-dev
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1173,10 +1173,10 @@ if ( ! function_exists( 'wcj_admin_tab_url' ) ) {
 	/**
 	 * Wcj_admin_tab_url.
 	 *
-	 * @version 5.6.8
-	 * @since   5.6.8
+	 * @version 7.0.0-dev
+	 * @since   1.0.8
 	 */
 	function wcj_admin_tab_url() {
-		return 'admin.php?page=wc-settings&tab=jetpack&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
+		return 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
 	}
 }

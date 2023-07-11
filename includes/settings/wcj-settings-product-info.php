@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Product Info V1
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 6.0.0
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */

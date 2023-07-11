@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 6.0.5
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,9 +14,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 $message  = apply_filters( 'booster_message', '', 'desc' );
 $settings = array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_price_by_user_role_options',
+		'id'   => 'price_by_user_role_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'price_by_user_role_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'price_by_user_role_general_options_tab'       => __( 'General', 'woocommerce-jetpack' ),
+			'price_by_user_role_advanced_tab'              => __( 'Advanced', 'woocommerce-jetpack' ),
+			'price_by_user_role_compatibility_tab'         => __( 'Compatibility', 'woocommerce-jetpack' ),
+			'price_by_user_role_roles_multipliers_tab'     => __( 'Roles & Multipliers', 'woocommerce-jetpack' ),
+			'price_by_user_role_by_product_categories_tab' => __( 'By Products Categories', 'woocommerce-jetpack' ),
+			'price_by_user_role_by_product_tags_tab'       => __( 'By Products Tags', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'price_by_user_role_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Enable per Product Settings', 'woocommerce-jetpack' ),
@@ -110,8 +125,16 @@ $settings = array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_price_by_user_role_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_by_user_role_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_by_user_role_advanced_tab',
+		'type' => 'tab_start',
 	),
 
 	array(
@@ -136,8 +159,16 @@ $settings = array(
 	),
 	$this->get_wpml_terms_in_all_languages_setting(),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_price_by_user_role_options_adv',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_by_user_role_advanced_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_by_user_role_compatibility_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
@@ -155,8 +186,16 @@ $settings = array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_price_by_user_role_compatibility',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_by_user_role_compatibility_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_by_user_role_roles_multipliers_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Roles & Multipliers', 'woocommerce-jetpack' ),
@@ -204,8 +243,12 @@ $settings   = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_price_by_user_role_multipliers_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'price_by_user_role_roles_multipliers_tab',
+			'type' => 'tab_end',
 		),
 	)
 );
@@ -236,6 +279,10 @@ foreach ( $taxonomies as $taxonomy_data ) {
 	$settings    = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'price_by_user_role_by_product_' . $taxonomy_data['name'] . '_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				/* translators: %s: translators Added */
 				'title' => sprintf( __( 'Price based on User Role by %s', 'woocommerce-jetpack' ), $taxonomy_data['title'] ),
@@ -288,8 +335,12 @@ foreach ( $taxonomies as $taxonomy_data ) {
 		$settings,
 		array(
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_price_by_user_role_' . $taxonomy_data['name'] . '_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'   => 'price_by_user_role_by_product_' . $taxonomy_data['name'] . '_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);

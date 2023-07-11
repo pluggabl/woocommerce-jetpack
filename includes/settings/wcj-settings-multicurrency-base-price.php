@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 5.6.8
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
  * @package Booster_For_WooCommerce/settings
@@ -18,9 +18,22 @@ $all_currencies = wcj_get_woocommerce_currencies_and_symbols();
 $message        = apply_filters( 'booster_message', '', 'desc' );
 $settings       = array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_multicurrency_base_price_options',
+		'id'   => 'multicurrency_base_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'multicurrency_base_price_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'multicurrency_base_price_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+			'multicurrency_base_price_advanced_tab'        => __( 'Advanced', 'woocommerce-jetpack' ),
+			'multicurrency_base_price_compatibility_tab'   => __( 'Compatibility', 'woocommerce-jetpack' ),
+			'multicurrency_base_price_currencies_options_tab' => __( 'Currencies Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'multicurrency_base_price_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
@@ -60,8 +73,16 @@ $settings       = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_multicurrency_base_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'multicurrency_base_price_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'multicurrency_base_price_advanced_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Advanced', 'woocommerce-jetpack' ),
@@ -84,8 +105,16 @@ $settings       = array(
 		'type'     => 'number',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_multicurrency_base_price_advanced',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'multicurrency_base_price_advanced_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'multicurrency_base_price_compatibility_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
@@ -110,8 +139,16 @@ $settings       = array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_multicurrency_base_price_compatibility',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'multicurrency_base_price_compatibility_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'multicurrency_base_price_currencies_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Currencies Options', 'woocommerce-jetpack' ),
@@ -152,6 +189,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'id'      => 'wcj_multicurrency_base_price_currency_' . $i,
 				'default' => $currency_from,
 				'type'    => 'select',
+				'class'   => 'wcj_select_search_input',
 				'options' => $all_currencies,
 				'css'     => 'width:250px;',
 			),
@@ -170,8 +208,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_multicurrency_base_price_currencies_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'multicurrency_base_price_currencies_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

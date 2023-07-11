@@ -1,9 +1,9 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Product by User
+ * Booster for WooCommerce - Settings - Product by User
  *
- * @version 5.6.8
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -59,6 +59,22 @@ foreach ( $fields as $field_id => $field_desc ) {
 $settings                = array_merge(
 	array(
 		array(
+			'id'   => 'wcj_product_by_user_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'      => 'wcj_product_by_user_options',
+			'type'    => 'tab_ids',
+			'tab_ids' => array(
+				'wcj_product_by_user_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+				'wcj_product_by_user_taxonomies_options_tab' => __( 'Taxonomies Options', 'woocommerce-jetpack' ),
+			),
+		),
+		array(
+			'id'   => 'wcj_product_by_user_general_options_tab',
+			'type' => 'tab_start',
+		),
+		array(
 			'title' => __( 'Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'desc'  => __( '<em>Title</em> field is always enabled and required.', 'woocommerce-jetpack' ),
@@ -83,7 +99,7 @@ $settings                = array_merge(
 		array(
 			'title'   => __( 'User Visibility', 'woocommerce-jetpack' ),
 			'desc'    => sprintf(
-				/* translators: %s: translators Added */
+								/* translators: %s: translators Added */
 				__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
 				admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 			),
@@ -139,6 +155,14 @@ $settings                = array_merge(
 			'css'     => 'width:300px;',
 		),
 		array(
+			'id'   => 'wcj_product_by_user_general_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_by_user_taxonomies_options_tab',
+			'type' => 'tab_start',
+		),
+		array(
 			'title'             => __( 'Total Custom Taxonomies', 'woocommerce-jetpack' ),
 			'id'                => 'wcj_product_by_user_custom_taxonomies_total',
 			'default'           => 1,
@@ -155,36 +179,36 @@ $settings                = array_merge(
 );
 $custom_taxonomies_total = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) );
 for ( $i = 1; $i <= $custom_taxonomies_total; $i++ ) {
-	$settings = array_merge(
-		$settings,
-		array(
+		$settings = array_merge(
+			$settings,
 			array(
-				'title'   => __( 'Custom Taxonomy', 'woocommerce-jetpack' ) . ' #' . $i,
-				'desc'    => __( 'Enabled', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_enabled',
-				'default' => 'no',
-				'type'    => 'checkbox',
-			),
-			array(
-				'desc'    => __( 'Required', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_required',
-				'default' => 'no',
-				'type'    => 'checkbox',
-			),
-			array(
-				'desc'    => __( 'ID', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_id',
-				'default' => '',
-				'type'    => 'text',
-			),
-			array(
-				'desc'    => __( 'Title', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_title',
-				'default' => '',
-				'type'    => 'text',
-			),
-		)
-	);
+				array(
+					'title'   => __( 'Custom Taxonomy', 'woocommerce-jetpack' ) . ' #' . $i,
+					'desc'    => __( 'Enabled', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_enabled',
+					'default' => 'no',
+					'type'    => 'checkbox',
+				),
+				array(
+					'desc'    => __( 'Required', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_required',
+					'default' => 'no',
+					'type'    => 'checkbox',
+				),
+				array(
+					'desc'    => __( 'ID', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_id',
+					'default' => '',
+					'type'    => 'text',
+				),
+				array(
+					'desc'    => __( 'Title', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_product_by_user_custom_taxonomy_' . $i . '_title',
+					'default' => '',
+					'type'    => 'text',
+				),
+			)
+		);
 }
 $settings = array_merge(
 	$settings,
@@ -202,8 +226,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_by_user_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_by_user_taxonomies_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

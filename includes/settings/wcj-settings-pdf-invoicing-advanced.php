@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 5.6.8
- * @since   3.3.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) create "Tools (Options)" submodule
  * @todo    (maybe) remove `tcpdf_default` option in `wcj_invoicing_general_header_images_path`
@@ -21,7 +21,7 @@ if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'n
 } else {
 	if ( $is_full_fonts ) {
 		$fonts_manager_desc = __( 'Fonts are up to date.', 'woocommerce-jetpack' ) . ' ' . sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Latest successful download or version check was on %s.', 'woocommerce-jetpack' ),
 			gmdate( 'Y-m-d H:i:s', wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
 		);
@@ -29,14 +29,14 @@ if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'n
 		$fonts_manager_desc = __( 'Fonts are NOT up to date. Please try downloading by pressing the button below.', 'woocommerce-jetpack' );
 		if ( null !== wcj_get_option( 'wcj_invoicing_fonts_version', null ) ) {
 			$fonts_manager_desc .= ' ' . sprintf(
-				/* translators: %s: translators Added */
+								/* translators: %s: translators Added */
 				__( 'Latest successful downloaded version is %s.', 'woocommerce-jetpack' ),
 				get_option( 'wcj_invoicing_fonts_version', null )
 			);
 		}
 		if ( null !== wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) {
 			$fonts_manager_desc .= ' ' . sprintf(
-				/* translators: %s: translators Added */
+								/* translators: %s: translators Added */
 				__( 'Latest download executed on %s.', 'woocommerce-jetpack' ),
 				gmdate( 'Y-m-d H:i:s', wcj_get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
 			);
@@ -45,6 +45,37 @@ if ( 'yes' === wcj_get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'n
 }
 
 return array(
+	array(
+		'type'              => 'module_head',
+		'title'             => __( 'Advanced', 'woocommerce-jetpack' ),
+		'desc'              => __( 'PDF Invoicing : Advanced Settings' ),
+		'icon'              => 'pr-sm-icn.png',
+		'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . add_query_arg(
+			array(
+				'wcj_reset_settings' => $this->id,
+				'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+			)
+		) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'pdf_invoicing_advanced_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'pdf_invoicing_advanced_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+			'pdf_invoicing_advanced_item_name_tab'        => __( 'Item Name as Product Title', 'woocommerce-jetpack' ),
+			'pdf_invoicing_advanced_fonts_tab'            => __( 'Fonts Manager', 'woocommerce-jetpack' ),
+			'pdf_invoicing_advanced_general_tab'          => __( 'General Display', 'woocommerce-jetpack' ),
+			'pdf_invoicing_advanced_report_tab'           => __( 'Report Tool', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_advanced_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'type'  => 'title',
 		'title' => __( 'Advanced Options', 'woocommerce-jetpack' ),
@@ -127,8 +158,16 @@ return array(
 		'type'    => 'text',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_pdf_invoicing_advanced_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_advanced_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_item_name_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'type'  => 'title',
@@ -153,8 +192,16 @@ return array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_pdf_invoicing_advanced_item_name_as_prod_title',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_item_name_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_fonts_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Fonts Manager', 'woocommerce-jetpack' ),
@@ -185,8 +232,16 @@ return array(
 		'id'      => 'wcj_invoicing_fonts_manager_do_not_download',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_invoicing_fonts_manager_styling_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_fonts_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_general_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'General Display Options', 'woocommerce-jetpack' ),
@@ -213,8 +268,16 @@ return array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_invoicing_general_display_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_general_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_report_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Report Tool Options', 'woocommerce-jetpack' ),
@@ -266,7 +329,11 @@ return array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_pdf_invoicing_report_tool_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'pdf_invoicing_advanced_report_tab',
+		'type' => 'tab_end',
 	),
 );

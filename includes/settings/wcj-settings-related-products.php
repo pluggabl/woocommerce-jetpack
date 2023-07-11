@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Related Products
  *
- * @version 5.6.8
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -47,6 +47,24 @@ if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 
 $settings = array(
 	array(
+		'id'   => 'wcj_related_product_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_related_product_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_related_product_genral_options_tab' => __( 'General', 'woocommerce-jetpack' ),
+			'wcj_related_product_order_tab'          => __( 'Order', 'woocommerce-jetpack' ),
+			'wcj_related_product_relate_tab'         => __( 'Relate', 'woocommerce-jetpack' ),
+			'wcj_related_product_hide_tab'           => __( 'Hide', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_related_product_genral_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'General', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'id'    => 'wcj_product_info_related_products_general_options',
@@ -64,8 +82,16 @@ $settings = array(
 		'type'    => 'number',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_info_related_products_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_related_product_genral_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_related_product_order_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Order', 'woocommerce-jetpack' ),
@@ -109,8 +135,16 @@ $settings = array_merge(
 			),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_info_related_products_order_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_related_product_order_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_related_product_relate_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Relate', 'woocommerce-jetpack' ),
@@ -194,8 +228,16 @@ $settings = array_merge(
 			),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_info_related_products_relate_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_related_product_relate_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_related_product_hide_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Hide', 'woocommerce-jetpack' ),
@@ -268,8 +310,12 @@ $settings = array_merge(
 			$is_multiselect_products
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_info_related_products_hide_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_related_product_hide_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -1,9 +1,9 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Product Tabs
+ * Booster for WooCommerce - Settings - Product Tabs
  *
- * @version 5.6.2
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'wcj_product_tab_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_tab_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_tab_genral_options_tab'   => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_product_tab_for_all_product_tab'  => __( 'Tabs - All Products', 'woocommerce-jetpack' ),
+			'wcj_product_tab_for_per_product_tab'  => __( 'Tabs - Per Product', 'woocommerce-jetpack' ),
+			'wcj_product_tab_standard_options_tab' => __( 'Standard Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_tab_genral_options_tab',
+		'type' => 'tab_start',
+	),
 	// General settings.
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
@@ -32,8 +50,16 @@ $settings = array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_custom_product_tabs_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_tab_genral_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_tab_for_all_product_tab',
+		'type' => 'tab_start',
 	),
 	// Global Custom Tabs.
 	array(
@@ -218,7 +244,6 @@ for ( $i = 1; $i <= $product_tabs_global_total_num; $i++ ) {
 			)
 		);
 	}
-
 	if ( '' !== wcj_get_option( 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i, '' ) ) {
 		$settings = array_merge(
 			$settings,
@@ -239,8 +264,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_custom_product_tabs_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_tab_for_all_product_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_tab_for_per_product_tab',
+			'type' => 'tab_start',
 		),
 		// Local Custom Tabs.
 		array(
@@ -396,8 +429,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_custom_product_tabs_options_local',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_tab_for_per_product_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_tab_standard_options_tab',
+			'type' => 'tab_start',
 		),
 		// Standard WooCommerce Tabs.
 		array(
@@ -470,8 +511,12 @@ $settings = array_merge(
 			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_info_product_tabs_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_tab_standard_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

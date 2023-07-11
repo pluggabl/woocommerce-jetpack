@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -31,10 +31,27 @@ $product_cats = wcj_get_terms( 'product_cat' );
 // Settings.
 return array(
 	array(
+		'id'   => 'wcj_product_listing_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_listing_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_listing_shop_page_tab'           => __( 'Shop Page Display Options', 'woocommerce-jetpack' ),
+			'wcj_product_listing_category_display_tab'    => __( 'Category Display Options', 'woocommerce-jetpack' ),
+			'wcj_product_listing_visibility_by_price_tab' => __( 'Product Shop Visibility by Price', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_listing_shop_page_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'Shop Page Display Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'desc'  => ( WCJ_IS_WC_VERSION_BELOW_3_3_0 ? sprintf(
-			/* translators: %s: translators Added */
+		/* translators: %s: translators Added */
 			__( 'You can control what is shown on the product archive in <a href="%s">WooCommerce > Settings > Products > Display > Shop page display</a>.', 'woocommerce-jetpack' ),
 			admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
 		) : '' ),
@@ -82,14 +99,22 @@ return array(
 		'options'  => $product_cats,
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_listings_shop_page_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_listing_shop_page_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_listing_category_display_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Category Display Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'desc'  => ( WCJ_IS_WC_VERSION_BELOW_3_3_0 ? sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'You can control what is shown on category archives in <a href="%s">WooCommerce > Settings > Products > Display > Default category display</a>.', 'woocommerce-jetpack' ),
 			admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
 		) : '' ),
@@ -129,8 +154,16 @@ return array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_listings_archive_pages_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_listing_category_display_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_listing_visibility_by_price_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Product Shop Visibility by Price', 'woocommerce-jetpack' ),
@@ -168,7 +201,11 @@ return array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_listings_product_visibility_by_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_listing_visibility_by_price_tab',
+		'type' => 'tab_end',
 	),
 );

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Order Numbers
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `wcj_order_number_counter_previous_order_date` as `hidden` field (for proper module reset)
  * @package Booster_For_WooCommerce/settings
@@ -14,6 +14,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $message = apply_filters( 'booster_message', '', 'desc' );
 return array(
+	array(
+		'id'   => 'order_numbers_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'order_numbers_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'order_numbers_order_number_tab'    => __( 'Order Numbers', 'woocommerce-jetpack' ),
+			'order_numbers_compatibility_tab'   => __( 'Compatibility', 'woocommerce-jetpack' ),
+			'order_numbers_renumerate_tool_tab' => __( 'Renumerate Tool', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'order_numbers_order_number_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Order Numbers', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -136,8 +153,16 @@ return array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_numbers_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_numbers_order_number_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_numbers_compatibility_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
@@ -155,8 +180,16 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_numbers_compatibility',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_numbers_compatibility_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_numbers_renumerate_tool_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Orders Renumerate Tool Options', 'woocommerce-jetpack' ),
@@ -186,7 +219,21 @@ return array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
+		'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_' . $this->id . '_module_tools',
+		'type'     => 'custom_link',
+		'link'     => ( $this->is_enabled() ) ?
+		'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=renumerate_orders&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+		__( 'Orders Renumerate', 'woocommerce-jetpack' ) . '</a> </code>' :
+			'<code>' . __( 'Orders Renumerate', 'woocommerce-jetpack' ) . '</code>',
+	),
+	array(
 		'id'   => 'wcj_order_numbers_renumerate_tool_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_numbers_renumerate_tool_tab',
+		'type' => 'tab_end',
 	),
 );

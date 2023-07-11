@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Breadcrumbs
  *
- * @version 5.6.0
- * @since   2.9.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'breadcrumbs_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'breadcrumbs_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'breadcrumbs_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'breadcrumbs_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -42,7 +57,11 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_breadcrumbs_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'breadcrumbs_general_options_tab',
+		'type' => 'tab_end',
 	),
 );
