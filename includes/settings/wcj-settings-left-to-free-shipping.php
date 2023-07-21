@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Left to Free Shipping
  *
- * @version 5.6.2
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,17 +14,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	array(
+		'id'   => 'left_to_free_shipping_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'left_to_free_shipping_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'left_to_free_shipping_tab' => __( 'Left to Free Shipping Info Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'left_to_free_shipping_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'Left to Free Shipping Info Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'desc'  => __( 'This section lets you enable info on cart, mini cart and checkout pages.', 'woocommerce-jetpack' ) . '<br><br>' .
 			sprintf(
-				/* translators: %1$s,2$s: translators Added */
+								/* translators: %1$s,2$s: translators Added */
 				__( 'You can also use <em>Booster - Left to Free Shipping</em> widget, %1$s shortcode or %2$s function.', 'woocommerce-jetpack' ),
 				'<code>[wcj_get_left_to_free_shipping content=""]</code>',
 				'<code>wcj_get_left_to_free_shipping( $content );</code>'
 			) . '<br><br>' .
 			sprintf(
-				/* translators: %1$s,2$s: translators Added */
+								/* translators: %1$s,2$s: translators Added */
 				__( 'In content replaced values are: %1$s, %2$s and %3$s.', 'woocommerce-jetpack' ),
 				'<code>%left_to_free%</code>',
 				'<code>%free_shipping_min_amount%</code>',
@@ -149,7 +164,11 @@ return array(
 		'css'      => 'width:100%;height:100px;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_left_to_free_info_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'left_to_free_shipping_tab',
+		'type' => 'tab_end',
 	),
 );

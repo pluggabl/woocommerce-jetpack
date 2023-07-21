@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Call for Price
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'call_for_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'call_for_price_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'call_for_price_call_for_price_tab' => __( 'Call for Price Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'call_for_price_call_for_price_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Call for Price Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -86,7 +101,11 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_call_for_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'call_for_price_call_for_price_tab',
+		'type' => 'tab_end',
 	),
 );

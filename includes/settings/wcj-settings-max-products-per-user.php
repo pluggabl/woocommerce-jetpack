@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Max Products per User
  *
- * @version 5.6.8
- * @since   3.5.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'max_products_per_user_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'max_products_per_user_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'max_products_per_user_all_products_tab'    => __( 'All Products', 'woocommerce-jetpack' ),
+			'max_products_per_user_per_products_tab'    => __( 'Per Products', 'woocommerce-jetpack' ),
+			'max_products_per_user_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'max_products_per_user_all_products_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'All Products', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -33,8 +50,16 @@ return array(
 		'custom_attributes' => array( 'min' => 1 ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_max_products_per_user_global_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'max_products_per_user_all_products_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'max_products_per_user_per_products_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Per Product', 'woocommerce-jetpack' ),
@@ -51,8 +76,16 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_max_products_per_user_local_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'max_products_per_user_per_products_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'max_products_per_user_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
@@ -75,7 +108,7 @@ return array(
 		'desc'    => wcj_message_replaced_values( array( '%max_qty%', '%product_title%', '%qty_already_bought%', '%remaining_qty%' ) ),
 		'id'      => 'wcj_max_products_per_user_message',
 		'default' => __( 'You can only buy maximum %max_qty% pcs. of %product_title% (you already bought %qty_already_bought% pcs.).', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;height:100px;',
 	),
 	array(
@@ -105,7 +138,11 @@ return array(
 			'</a>',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_max_products_per_user_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'max_products_per_user_general_options_tab',
+		'type' => 'tab_end',
 	),
 );

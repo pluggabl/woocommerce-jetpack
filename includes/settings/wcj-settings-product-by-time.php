@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Product Availability by Time
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings  = array(
+	array(
+		'id'   => 'wcj_product_by_time_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_by_time_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_by_time_all_product_tab'       => __( 'All Products Options', 'woocommerce-jetpack' ),
+			'wcj_product_by_time_per_product_tab'       => __( 'Per Product Options', 'woocommerce-jetpack' ),
+			'wcj_product_by_time_frontend_messages_tab' => __( 'Frontend Messages Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_by_time_all_product_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'All Products Options', 'woocommerce-jetpack' ),
 		/* translators: %s: translators Added */
@@ -49,8 +66,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_by_time_all_products_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_by_time_all_product_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_by_time_per_product_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Per Product Options', 'woocommerce-jetpack' ),
@@ -66,8 +91,16 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_by_time_per_product_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_by_time_per_product_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_by_time_frontend_messages_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Frontend Messages Options', 'woocommerce-jetpack' ),
@@ -77,29 +110,33 @@ $settings = array_merge(
 		array(
 			'title'             => __( 'Message', 'woocommerce-jetpack' ),
 			'desc'              => __( 'Message when product is not available by time.', 'woocommerce-jetpack' ) .
-				' ' . __( 'Replaceable values:', 'woocommerce-jetpack' ) . '<code>%product_title%</code> , <code>%time_today%</code>.' .
-				' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
+			' ' . __( 'Replaceable values:', 'woocommerce-jetpack' ) . '<code>%product_title%</code> , <code>%time_today%</code>.' .
+			' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
 				' ' . apply_filters( 'booster_message', '', 'desc' ),
 			'id'                => 'wcj_product_by_time_unavailable_message',
 			'default'           => '<p style="color:red;">' . __( '%product_title% is available only at %time_today% today.', 'woocommerce-jetpack' ) . '</p>',
-			'type'              => 'custom_textarea',
+			'type'              => 'textarea',
 			'css'               => 'width:66%;min-width:300px;',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		),
 		array(
 			'title'             => __( 'Message (Day Off)', 'woocommerce-jetpack' ),
 			'desc'              => __( 'Message when product is not available by time (day off).', 'woocommerce-jetpack' ) .
-				' ' . __( 'Replaceable value:', 'woocommerce-jetpack' ) . '<code>%product_title%</code>.' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
+			' ' . __( 'Replaceable value:', 'woocommerce-jetpack' ) . '<code>%product_title%</code>.' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
 				' ' . apply_filters( 'booster_message', '', 'desc' ),
 			'id'                => 'wcj_product_by_time_unavailable_message_day_off',
 			'default'           => '<p style="color:red;">' . __( '%product_title% is not available today.', 'woocommerce-jetpack' ) . '</p>',
-			'type'              => 'custom_textarea',
+			'type'              => 'textarea',
 			'css'               => 'width:66%;min-width:300px;',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_by_time_messages_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_by_time_frontend_messages_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

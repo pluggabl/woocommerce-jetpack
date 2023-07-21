@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'pdf_invoicing_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'pdf_invoicing_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'pdf_invoicing_document_options_tab' => __( 'Documents Options', 'woocommerce-jetpack' ),
+			'pdf_invoicing_general_options_tab'  => __( 'General options', 'woocommerce-jetpack' ),
+			'pdf_invoicing_tools_options_tab'    => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'pdf_invoicing_document_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Documents Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -43,6 +60,18 @@ foreach ( $invoice_types as $k => $invoice_type ) {
 		$settings = array_merge(
 			$settings,
 			array(
+				array(
+					'id'   => 'pdf_invoicing_options',
+					'type' => 'sectionend',
+				),
+				array(
+					'id'   => 'pdf_invoicing_document_options_tab',
+					'type' => 'tab_end',
+				),
+				array(
+					'id'   => 'pdf_invoicing_general_options_tab',
+					'type' => 'tab_start',
+				),
 				array(
 					'title'             => __( 'Number of Custom Documents', 'woocommerce-jetpack' ),
 					'desc_tip'          => __( 'Save changes after setting this number.', 'woocommerce-jetpack' ),
@@ -85,8 +114,35 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_pdf_invoicing_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'pdf_invoicing_general_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'pdf_invoicing_tools_options_tab',
+			'type' => 'tab_start',
+		),
+		array(
+			'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_module_tools',
+			'type'     => 'custom_link',
+			'link'     => ( $this->is_enabled() ) ?
+			'<p><code><a href="' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=renumerate_invoices&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' . __( 'Renumerate Invoices', 'woocommerce-jetpack' ) . '</a></code>
+			<p>
+			<p><code><a href="' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=invoices_report&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' . __( 'Invoices Report', 'woocommerce-jetpack' ) . '</a></code>
+			<p>
+			' :
+				'<p><code>' . __( 'Renumerate Invoices', 'woocommerce-jetpack' ) . '</code></p>
+				<p><code>' . __( 'Invoices Report', 'woocommerce-jetpack' ) . '</code></p>
+			',
+		),
+		array(
+			'id'   => 'pdf_invoicing_tools_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

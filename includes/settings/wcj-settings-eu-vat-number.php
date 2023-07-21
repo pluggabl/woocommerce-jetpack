@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - EU VAT Number
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
  * @package Booster_For_WooCommerce/settings
@@ -14,6 +14,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $message  = apply_filters( 'booster_message', '', 'desc' );
 $settings = array(
+	array(
+		'id'   => 'wcj_eu_vat_number_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_eu_vat_number_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_eu_vat_number_general_options_tab'  => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_eu_vat_number_messages_options_tab' => __( 'Messages & Other Options', 'woocommerce-jetpack' ),
+			'wcj_eu_vat_number_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+			'wcj_eu_vat_number_tool_options_tab'     => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -125,7 +143,7 @@ $settings = array(
 	array(
 		'title'             => __( 'Preserve VAT in Base Country', 'woocommerce-jetpack' ),
 		'desc_tip'          => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'This will validate the VAT, but won\'t exempt VAT for base country VAT numbers. Base (i.e. store) country is set in %s.', 'woocommerce-jetpack' ),
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' . __( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>'
 		) . '<br>' .
@@ -155,6 +173,14 @@ $settings = array(
 			'after_order_table'  => __( 'After order table', 'woocommerce-jetpack' ),
 			'in_billing_address' => __( 'In billing address', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_messages_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Add Progress Messages', 'woocommerce-jetpack' ),
@@ -222,8 +248,16 @@ $settings = array(
 		'type'              => 'multiselect',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_eu_vat_number_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_messages_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_advanced_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Advanced Options', 'woocommerce-jetpack' ),
@@ -249,8 +283,30 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_eu_vat_number_advanced_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_advanced_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_tool_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
+		'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_' . $this->id . '_module_tools',
+		'type'     => 'custom_link',
+		'link'     => ( $this->is_enabled() ) ?
+		'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=eu_countries_vat_rates&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+		__( 'EU Countries VAT Rates', 'woocommerce-jetpack' ) . '</a> </code>' :
+			'<code>' . __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ) . '</code>',
+	),
+	array(
+		'id'   => 'wcj_eu_vat_number_tool_options_tab',
+		'type' => 'tab_end',
 	),
 );
 return $settings;

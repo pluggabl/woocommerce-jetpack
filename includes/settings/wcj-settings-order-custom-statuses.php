@@ -1,9 +1,9 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Order Custom Statuses
+ * Booster for WooCommerce - Settings - Order Custom Statuses
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'order_custom_statuses_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'order_custom_statuses_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'order_custom_statuses_custom_statuses_tab' => __( 'Custom Statuses', 'woocommerce-jetpack' ),
+			'order_custom_statuses_custom_tool_tab'     => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'order_custom_statuses_custom_statuses_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Custom Statuses', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -64,7 +80,8 @@ return array(
 	array(
 		'title'             => __( 'Remove Status Prefix', 'woocommerce-jetpack' ),
 		'desc'              => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip'          => __( 'Removes the <code>wc-</code> prefix from custom statuses.', 'woocommerce-jetpack' ) . ' ' . __( 'Enable it if you can\'t see the orders or the statuses.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip'          => __( 'Removes the <code>wc-</code> prefix from custom statuses.', 'woocommerce-jetpack' ) . ' ' . __( 'Enable it if you can\'t see the orders or the statuses.', 'woocommerce-jetpack' ) . ' ' .
+		apply_filters( 'booster_message', '', 'desc' ),
 		'id'                => 'wcj_orders_custom_statuses_remove_prefix',
 		'default'           => 'no',
 		'type'              => 'checkbox',
@@ -123,7 +140,29 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_orders_custom_statuses_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'order_custom_statuses_custom_statuses_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'order_custom_statuses_custom_tool_tab',
+		'type' => 'tab_start',
+	),
+	array(
+		'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_' . $this->id . '_module_tools',
+		'type'     => 'custom_link',
+		'link'     => ( $this->is_enabled() ) ?
+		'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=custom_statuses&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+		__( 'Custom Statuses', 'woocommerce-jetpack' ) . '</a> </code>' :
+			'<code>' . __( 'Custom Statuses', 'woocommerce-jetpack' ) . '</code>',
+	),
+	array(
+		'id'   => 'order_custom_statuses_custom_tool_tab',
+		'type' => 'tab_end',
 	),
 );

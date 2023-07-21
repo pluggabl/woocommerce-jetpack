@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Product Add To Cart
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'wcj_add_to_cart_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_add_to_cart_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_add_to_cart_local_redirect'    => __( 'Local Redirect', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_on_visit'          => __( 'On Visit', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_variable_product'  => __( 'Variable Product', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_replace_button'    => __( 'Replace Button on Archives with Single', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_quantity'          => __( 'Quantity', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_custom_url'        => __( 'Button Custom URL', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_ajax'              => __( 'Button AJAX', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_external_products' => __( 'External Products', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_message_options'   => __( 'Message Options', 'woocommerce-jetpack' ),
+			'wcj_add_to_cart_position_options'  => __( 'Position Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_local_redirect',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Add to Cart Local Redirect', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -49,14 +73,22 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
+		'id'   => 'wcj_add_to_cart_on_visit_enabled',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_redirect_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_local_redirect',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_on_visit',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
+		'desc'  => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart – duplicate product is not added.', 'woocommerce-jetpack' ),
+		'id'    => 'wcj_add_to_cart_on_visit_enabled_title',
 		'type'  => 'title',
-		'desc'  => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart - duplicate product is not added. ', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_add_to_cart_on_visit_options',
 	),
 	array(
 		'title'    => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
@@ -71,8 +103,16 @@ return array(
 		),
 	),
 	array(
+		'id'   => 'wcj_add_to_cart_variable_as_radio_enabled',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_on_visit_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_on_visit',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_variable_product',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Add to Cart Variable Product', 'woocommerce-jetpack' ),
@@ -93,7 +133,7 @@ return array(
 		'desc'              => wcj_message_replaced_values( array( '%variation_title%', '%variation_price%' ) ),
 		'id'                => 'wcj_add_to_cart_variable_as_radio_variation_label_template',
 		'default'           => '%variation_title% (%variation_price%)',
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'css'               => 'width:99%;',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'desc_tip'          => apply_filters( 'booster_message', '', 'desc_no_link' ),
@@ -103,7 +143,7 @@ return array(
 		'desc'              => wcj_message_replaced_values( array( '%variation_description%' ) ),
 		'id'                => 'wcj_add_to_cart_variable_as_radio_variation_desc_template',
 		'default'           => '<br><small>%variation_description%</small>',
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'css'               => 'width:99%;',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'desc_tip'          => apply_filters( 'booster_message', '', 'desc_no_link' ),
@@ -118,8 +158,16 @@ return array(
 		'desc_tip'          => apply_filters( 'booster_message', '', 'desc_no_link' ),
 	),
 	array(
+		'id'   => 'wcj_add_to_cart_replace_loop_w_single_enabled',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_variable_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_variable_product',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_replace_button',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Replace Add to Cart Button on Archives with Single', 'woocommerce-jetpack' ),
@@ -138,8 +186,16 @@ return array(
 		),
 	),
 	array(
+		'id'   => 'wcj_add_to_cart_quantity_disable',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_replace_loop_w_single_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_replace_button',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_quantity',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Add to Cart Quantity', 'woocommerce-jetpack' ),
@@ -169,8 +225,16 @@ return array(
 		'type'    => 'checkbox',
 	),
 	array(
+		'id'   => 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_quantity_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_quantity',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_custom_url',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Add to Cart Button Custom URL', 'woocommerce-jetpack' ),
@@ -186,8 +250,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'id'   => 'wcj_add_to_cart_button_ajax_per_product_enabled',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_button_custom_url_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_custom_url',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_ajax',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Add to Cart Button AJAX', 'woocommerce-jetpack' ),
@@ -203,8 +275,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'id'   => 'wcj_add_to_cart_button_external_open_new_window_loop',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_button_ajax_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_ajax',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_external_products',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'External Products', 'woocommerce-jetpack' ),
@@ -227,8 +307,16 @@ return array(
 		'checkboxgroup' => 'end',
 	),
 	array(
+		'id'   => 'wcj_product_add_to_cart_message_continue_shopping_enabled',
 		'type' => 'sectionend',
-		'id'   => 'wcj_add_to_cart_button_external_product_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_external_products',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_message_options',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Add to Cart Message Options', 'woocommerce-jetpack' ),
@@ -264,8 +352,16 @@ return array(
 		'type'    => 'text',
 	),
 	array(
+		'id'   => 'wcj_product_add_to_cart_button_position_enabled',
 		'type' => 'sectionend',
-		'id'   => 'wcj_product_add_to_cart_message_options',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_message_options',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_position_options',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Add to Cart Button Position Options', 'woocommerce-jetpack' ),
@@ -345,7 +441,11 @@ return array(
 		'type'    => 'number',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_add_to_cart_button_position_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_add_to_cart_position_options',
+		'type' => 'tab_end',
 	),
 );

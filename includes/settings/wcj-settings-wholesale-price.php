@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 6.0.1
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -15,13 +15,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'wcj_before_get_products', $this->id );
 do_action( 'wcj_before_get_terms', $this->id );
 $product_cats = wcj_get_terms( 'product_cat' );
+$products     = wcj_get_products();
+
 
 $settings = array(
+	array(
+		'id'   => 'wholesale_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wholesale_price_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wholesale_price_general_options_tab'          => __( 'General Options', 'woocommerce-jetpack' ),
+			'wholesale_price_template_variables_tab'       => __( 'Template Variables', 'woocommerce-jetpack' ),
+			'wholesale_price_wholesale_levels_options_tab' => __( 'Wholesale Levels Options', 'woocommerce-jetpack' ),
+			'wholesale_price_additional_user_role_options_tab' => __( 'Additional User Roles Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wholesale_price_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'desc'  => sprintf(
-			/* translators: %s: translators Added */
+		/* translators: %s: translators Added */
 			__( 'If you want to display prices table on frontend, use %s shortcode.', 'woocommerce-jetpack' ),
 			'<code>[wcj_product_wholesale_price_table]</code>'
 		),
@@ -158,8 +178,16 @@ $settings = array(
 	$this->get_wpml_terms_in_all_languages_setting(),
 	$this->get_wpml_products_in_all_languages_setting(),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_wholesale_price_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wholesale_price_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wholesale_price_template_variables_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Template Variables', 'woocommerce-jetpack' ),
@@ -196,8 +224,16 @@ $settings = array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_wholesale_price_template_vars',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wholesale_price_template_variables_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wholesale_price_wholesale_levels_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Wholesale Levels Options', 'woocommerce-jetpack' ),
@@ -258,8 +294,16 @@ $settings   = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_wholesale_price_level_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wholesale_price_wholesale_levels_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wholesale_price_additional_user_role_options_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Additional User Roles Options', 'woocommerce-jetpack' ),
@@ -334,8 +378,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_wholesale_price_by_user_role_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wholesale_price_additional_user_role_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

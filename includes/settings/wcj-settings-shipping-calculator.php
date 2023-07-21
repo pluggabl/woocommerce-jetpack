@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Calculator
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'shipping_calculator_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'shipping_calculator_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'shipping_calculator_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'shipping_calculator_lablels_options_tab' => __( 'Labels Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'shipping_calculator_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Shipping Calculator Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -59,8 +75,16 @@ return array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_calculator_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'shipping_calculator_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'shipping_calculator_lablels_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Labels Options', 'woocommerce-jetpack' ),
@@ -93,7 +117,11 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_calculator_labels_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'shipping_calculator_lablels_options_tab',
+		'type' => 'tab_end',
 	),
 );

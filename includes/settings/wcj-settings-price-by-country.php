@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 5.6.8
- * @since   2.8.1
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -19,8 +19,8 @@ $autogenerate_buttons_data = array(
 );
 foreach ( $autogenerate_buttons_data as $autogenerate_button_id => $autogenerate_button_desc ) {
 	$autogenerate_buttons[] = ( 0 === apply_filters( 'booster_option', 1, '' ) ?
-	'<a class="button" disabled title="' . __( 'Available in Booster Plus only.', 'woocommerce-jetpack' ) . '">' . $autogenerate_button_desc . '</a>' :
-	'<a class="button" href="' .
+	'<a class="button wcj-btn-sm wcj-autogenerate-button" disabled title="' . __( 'Available in Booster Plus only.', 'woocommerce-jetpack' ) . '">' . $autogenerate_button_desc . '</a>' :
+	'<a class="button wcj-btn-sm wcj-autogenerate-button" href="' .
 		esc_url(
 			add_query_arg(
 				array(
@@ -37,6 +37,25 @@ foreach ( $autogenerate_buttons_data as $autogenerate_button_id => $autogenerate
 $autogenerate_buttons = implode( ' ', $autogenerate_buttons );
 
 $settings = array(
+	array(
+		'id'   => 'price_by_country_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'price_by_country_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'price_by_country_price_by_country_tab' => __( 'Price by Country', 'woocommerce-jetpack' ),
+			'price_by_country_compatibiliry_tab'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+			'price_by_country_advanced_tab'         => __( 'Advanced', 'woocommerce-jetpack' ),
+			'price_by_country_country_groups_tab'   => __( 'Country Groups', 'woocommerce-jetpack' ),
+			'price_by_country_exchange_rates_tab'   => __( 'Exchange Rates', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'price_by_country_price_by_country_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Price by Country Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -163,8 +182,16 @@ $settings = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_price_by_country_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_by_country_price_by_country_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_by_country_compatibiliry_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
@@ -250,8 +277,16 @@ $settings = array(
 		'type'              => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_price_by_country_compatibility',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_by_country_compatibiliry_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_by_country_advanced_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Advanced', 'woocommerce-jetpack' ),
@@ -303,8 +338,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_price_by_country_country_advanced',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_by_country_advanced_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_by_country_country_groups_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Country Groups', 'woocommerce-jetpack' ),
@@ -398,6 +441,7 @@ for ( $i = 1; $i <= $country_total_num; $i++ ) {
 				'id'      => 'wcj_price_by_country_exchange_rate_currency_group_' . $i,
 				'default' => 'EUR',
 				'type'    => 'select',
+				'class'   => 'wcj_select_search_input',
 				'options' => wcj_get_woocommerce_currencies_and_symbols(),
 			),
 			array(
@@ -413,8 +457,16 @@ $settings                   = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_price_by_country_country_groups_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'price_by_country_country_groups_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'price_by_country_exchange_rates_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Exchange Rates', 'woocommerce-jetpack' ),
@@ -474,8 +526,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_price_by_country_exchange_rate_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'price_by_country_exchange_rates_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

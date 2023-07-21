@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 5.6.8
+ * @version 7.0.0-dev
  * @since   1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.8
+		 * @version 7.0.0-dev
 		 */
 		public function __construct() {
 

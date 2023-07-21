@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Info
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    [dev] clean up
  * @package Booster_For_WooCommerce/settings
@@ -14,6 +14,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings     = array(
+	array(
+		'id'   => 'checkout_custom_info_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'checkout_custom_info_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'checkout_custom_info_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'checkout_custom_info_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Checkout Custom Info Blocks', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -75,10 +90,19 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'type'    => 'number',
 			),
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_checkout_custom_info_options_' . $i,
+				'type' => 'sectionend',
 			),
 		)
 	);
 }
+$settings = array_merge(
+	$settings,
+	array(
+		array(
+			'id'   => 'checkout_custom_info_general_options_tab',
+			'type' => 'tab_end',
+		),
+	)
+);
 return $settings;

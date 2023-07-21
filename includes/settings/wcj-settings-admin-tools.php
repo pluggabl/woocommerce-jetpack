@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 5.6.2
- * @since   2.7.2
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,14 +14,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 $message = apply_filters( 'booster_message', '', 'desc' );
 return array(
 	array(
-		'title' => __( 'Admin Tools Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_admin_tools_general_options',
+		'id'   => 'admin_tools_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'admin_tools_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'admin_tools_general_options_tab'  => __( 'General options', 'woocommerce-jetpack' ),
+			'admin_tools_orders_options_tab'   => __( 'Orders options', 'woocommerce-jetpack' ),
+			'admin_tools_products_options_tab' => __( 'Products options', 'woocommerce-jetpack' ),
+			'admin_tools_users_options_tab'    => __( 'Users options', 'woocommerce-jetpack' ),
+			'admin_tools_tool_tab'             => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'admin_tools_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Show Booster Menus Only to Admin', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf(
-			/* translators: %1$s,%2$s: translators Added */
+						/* translators: %1$s,%2$s: translators Added */
 			__( 'Will require %1$s capability to see Booster menus (instead of %2$s capability).', 'woocommerce-jetpack' ),
 			'<code>manage_options</code>',
 			'<code>manage_woocommerce</code>'
@@ -35,7 +49,7 @@ return array(
 		'title'    => __( 'Suppress Admin Connect Notice', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Will remove "%s" admin notice.', 'woocommerce-jetpack' ),
 			__( 'Connect your store to WooCommerce.com to receive extensions updates and support.', 'woocommerce-jetpack' )
 		),
@@ -63,13 +77,16 @@ return array(
 		'options'           => wcj_get_user_roles_options(),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_admin_tools_general_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Orders Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_admin_tools_orders_options',
+		'id'   => 'admin_tools_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'admin_tools_orders_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Show Order Meta', 'woocommerce-jetpack' ),
@@ -80,13 +97,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_admin_tools_orders_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Products Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_admin_tools_products_options',
+		'id'   => 'admin_tools_orders_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'admin_tools_products_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Show Product Meta', 'woocommerce-jetpack' ),
@@ -122,13 +142,16 @@ return array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_admin_tools_products_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Users Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_admin_tools_users_options',
+		'id'   => 'admin_tools_products_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'admin_tools_users_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Shop Manager Editable Roles', 'woocommerce-jetpack' ),
@@ -142,7 +165,29 @@ return array(
 		'options'           => wcj_get_user_roles_options(),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_admin_tools_users_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'admin_tools_users_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'admin_tools_tool_tab',
+		'type' => 'tab_start',
+	),
+	array(
+		'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_' . $this->id . '_module_tools',
+		'type'     => 'custom_link',
+		'link'     => ( $this->is_enabled() ) ?
+		'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=products_atts&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+		__( 'Products Attributes', 'woocommerce-jetpack' ) . '</a> </code>' :
+			'<code>' . __( 'Products Attributes', 'woocommerce-jetpack' ) . '</code>',
+	),
+	array(
+		'id'   => 'admin_tools_tool_tab',
+		'type' => 'tab_end',
 	),
 );

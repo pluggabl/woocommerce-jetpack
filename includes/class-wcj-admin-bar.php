@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 5.6.8
+ * @version 7.0.0-dev
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -57,7 +57,6 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 					add_action( 'admin_head', array( $this, 'add_booster_admin_bar_icon_style' ) );
 				}
 			}
-			add_action( 'woojetpack_after_settings_save', array( $this, 'reload_page_after_settings_save' ), PHP_INT_MAX, 2 );
 		}
 
 		/**
@@ -131,7 +130,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		/**
 		 * Get_nodes_booster_modules.
 		 *
-		 * @version 5.6.8
+		 * @version 7.0.0-dev
 		 * @since   2.9.0
 		 * @todo    (maybe) dashes instead of underscores
 		 * @todo    (maybe) dashboard > alphabetically - list all modules
@@ -151,21 +150,17 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 					$nodes[ $id ]['nodes'] = apply_filters(
 						'wcj_admin_bar_dashboard_nodes',
 						array(
-							'alphabetically' => array(
-								'title' => __( 'Alphabetically', 'woocommerce-jetpack' ),
-								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=alphabetically' ),
-							),
-							'by_category'    => array(
+							'by_category' => array(
 								'title' => __( 'By Category', 'woocommerce-jetpack' ),
-								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=by_category' ),
+								'href'  => admin_url( wcj_admin_tab_url() ),
 							),
-							'active'         => array(
+							'active'      => array(
 								'title' => __( 'Active', 'woocommerce-jetpack' ),
 								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=active' ),
 							),
-							'manager'        => array(
+							'manager'     => array(
 								'title' => __( 'Manage Settings', 'woocommerce-jetpack' ),
-								'href'  => admin_url( wcj_admin_tab_url() . '&wcj-cat=dashboard&section=manager' ),
+								'href'  => admin_url( 'admin.php?page=wcj-general-settings' ),
 							),
 						)
 					);

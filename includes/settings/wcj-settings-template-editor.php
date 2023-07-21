@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Template Editor
  *
- * @version 
- * @since   3.9.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')
  * @todo    [dev] default template: check if `$default_template_path` exists before calling `file_get_contents()`
@@ -26,6 +26,22 @@ foreach ( $new_paths as $paths ) {
 update_option( 'wcj_template_editor_templates_by_path', $templates_by_path );
 $settings = array(
 	array(
+		'id'   => 'template_editor_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'template_editor_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'template_editor_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+			'template_editor_templates_tab'       => __( 'Templates', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'template_editor_general_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'id'    => 'wcj_template_editor_options',
@@ -40,8 +56,16 @@ $settings = array(
 		'desc_tip' => sprintf( __( 'One path per line relative to: %s', 'woocommerce-jetpack' ), WP_PLUGIN_DIR ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_template_editor_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'template_editor_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'template_editor_templates_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Templates', 'woocommerce-jetpack' ),
@@ -69,8 +93,8 @@ foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as 
 		$settings,
 		array(
 			array(
-				'title'   => $template,
-				'desc'    =>
+				'title'              => $template,
+				'desc'               =>
 				'<details>' .
 					'<summary>' . __( 'Info', 'woocommerce-jetpack' ) . '</summary>' .
 					wcj_get_table_html(
@@ -85,11 +109,12 @@ foreach ( wcj_get_option( 'wcj_template_editor_templates_to_edit', array() ) as 
 						)
 					) .
 				'</details>',
-				'id'      => "wcj_template_editor_templates_content[{$template}]",
-				'type'    => 'textarea',
-				'default' => $wp_filesystem->get_contents( $default_template_path, FS_CHMOD_FILE ),
-				'css'     => 'width:100%;height:500px;font-family:monospace;',
-				'wcj_raw' => true,
+				'is_template_editor' => true,
+				'id'                 => "wcj_template_editor_templates_content[{$template}]",
+				'type'               => 'textarea',
+				'css'                => 'width:100%;height:500px;font-family:monospace;',
+				'wcj_raw'            => true,
+				'default'            => $wp_filesystem->get_contents( $default_template_path, FS_CHMOD_FILE ),
 			),
 		)
 	);
@@ -98,8 +123,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_template_editor_templates_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'template_editor_templates_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

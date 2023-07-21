@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Export
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    add "Additional Export Fields" for "Customers from Orders" and (maybe) "Customers"
  * @package Booster_For_WooCommerce/settings
@@ -15,9 +15,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 $message      = apply_filters( 'booster_message', '', 'desc' );
 $settings     = array(
 	array(
-		'title' => __( 'Export Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_export_options',
+		'id'   => 'export_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'export_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'export_export_tab'                      => __( 'Export', 'woocommerce-jetpack' ),
+			'export_export_order_tab'                => __( 'Export Orders', 'woocommerce-jetpack' ),
+			'export_export_order_items_tab'          => __( 'Export Orders Items', 'woocommerce-jetpack' ),
+			'export_export_products_tab'             => __( 'Export Products', 'woocommerce-jetpack' ),
+			'export_export_customers_tab'            => __( 'Export Customers', 'woocommerce-jetpack' ),
+			'export_export_customers_from_order_tab' => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
+			'export_tools_tab'                       => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'export_export_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'CSV Separator', 'woocommerce-jetpack' ),
@@ -44,13 +60,16 @@ $settings     = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_export_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Export Orders Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_export_orders_options',
+		'id'   => 'export_export_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'export_export_order_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Export Orders Fields', 'woocommerce-jetpack' ),
@@ -120,13 +139,16 @@ $settings     = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_export_orders_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Export Orders Items Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_export_orders_items_options',
+			'id'   => 'export_export_order_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'export_export_order_items_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'    => __( 'Export Orders Items Fields', 'woocommerce-jetpack' ),
@@ -200,13 +222,16 @@ $settings     = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_export_orders_items_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Export Products Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_export_products_options',
+			'id'   => 'export_export_order_items_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'export_export_products_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'    => __( 'Export Products Fields', 'woocommerce-jetpack' ),
@@ -288,13 +313,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_export_products_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Export Customers Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_export_customers_options',
+			'id'   => 'export_export_products_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'export_export_customers_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'    => __( 'Export Customers Fields', 'woocommerce-jetpack' ),
@@ -306,13 +334,16 @@ $settings = array_merge(
 			'css'      => 'height:150px;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_export_customers_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Export Customers from Orders Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_export_customers_from_orders_options',
+			'id'   => 'export_export_customers_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'export_export_customers_from_order_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'    => __( 'Export Customers from Orders Fields', 'woocommerce-jetpack' ),
@@ -324,8 +355,44 @@ $settings = array_merge(
 			'css'      => 'height:150px;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_export_customers_from_orders_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'export_export_customers_from_order_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'export_tools_tab',
+			'type' => 'tab_start',
+		),
+		array(
+			'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_module_tools',
+			'type'     => 'custom_link',
+			'link'     => ( $this->is_enabled() ) ?
+			'<p><code><a href="' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=export_customers&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' . __( 'Export Customers', 'woocommerce-jetpack' ) . '</a></code>
+			<p>
+			<p><code><a href="' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=export_customers_from_orders&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' . __( 'Export Customers from Orders', 'woocommerce-jetpack' ) . '</a></code>
+			<p>
+			<p><code><a href="' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=export_orders&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' . __( 'Export Orders', 'woocommerce-jetpack' ) . '</a></code>
+			<p>
+			<p><code><a href="' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=export_orders_items&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' . __( 'Export Orders Items', 'woocommerce-jetpack' ) . '</a></code>
+			<p>
+			<p><code><a href="' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=export_products&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' . __( 'Export Products', 'woocommerce-jetpack' ) . '</a></code>
+			<p>
+			' :
+				'<p><code>' . __( 'Export Customers', 'woocommerce-jetpack' ) . '</code></p>
+				<p><code>' . __( 'Export Customers from Orders', 'woocommerce-jetpack' ) . '</code></p>
+				<p><code>' . __( 'Export Orders', 'woocommerce-jetpack' ) . '</code></p>
+				<p><code>' . __( 'Export Orders Items', 'woocommerce-jetpack' ) . '</code></p>
+				<p><code>' . __( 'Export Products', 'woocommerce-jetpack' ) . '</code></p>
+			',
+		),
+		array(
+			'id'   => 'export_tools_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

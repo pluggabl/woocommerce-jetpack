@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Sorting
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'wcj_product_sorting_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_sorting_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_sorting_custom_tab'          => __( 'Custom Sorting', 'woocommerce-jetpack' ),
+			'wcj_product_sorting_rearrange_tab'       => __( 'Rearrange Sorting', 'woocommerce-jetpack' ),
+			'wcj_product_sorting_default_tab'         => __( 'Default Sorting', 'woocommerce-jetpack' ),
+			'wcj_product_sorting_remove_all_tab'      => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
+			'wcj_product_sorting_restore_default_tab' => __( 'Restore Default Sorting', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_sorting_custom_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Add Custom Sorting', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -89,8 +108,16 @@ $settings = array(
 		'css'      => 'min-width:300px;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_more_sorting_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_sorting_custom_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_sorting_rearrange_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Rearrange Sorting', 'woocommerce-jetpack' ),
@@ -113,8 +140,16 @@ $settings = array(
 		'css'      => 'min-height:300px;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_sorting_rearrange_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_sorting_rearrange_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_sorting_default_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Default WooCommerce Sorting', 'woocommerce-jetpack' ),
@@ -154,8 +189,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_sorting_default_sorting_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_sorting_default_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_sorting_remove_all_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
@@ -172,8 +215,16 @@ $settings = array_merge(
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_sorting_remove_all_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_sorting_remove_all_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_sorting_restore_default_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'   => __( 'Restore Default WooCommerce Sorting', 'woocommerce-jetpack' ),
@@ -199,8 +250,12 @@ $settings = array_merge(
 			'id'       => 'wcj_sorting_restore_default_sorting_theme',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_sorting_restore_default_sorting_opt',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_sorting_restore_default_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

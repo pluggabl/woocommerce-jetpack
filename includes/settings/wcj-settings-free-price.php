@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Free Price
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -11,7 +11,22 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
+$settings      = array(
+	array(
+		'id'   => 'free_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'free_price_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'free_price_simple_tab'   => __( 'Simple and Custom Products', 'woocommerce-jetpack' ),
+			'free_price_variable_tab' => __( 'Variable Products', 'woocommerce-jetpack' ),
+			'free_price_grouped_tab'  => __( 'Grouped Products', 'woocommerce-jetpack' ),
+			'free_price_external_tab' => __( 'External Products', 'woocommerce-jetpack' ),
+		),
+	),
+);
 $product_types = array(
 	'simple'   => __( 'Simple and Custom Products', 'woocommerce-jetpack' ),
 	'variable' => __( 'Variable Products', 'woocommerce-jetpack' ),
@@ -25,8 +40,16 @@ $views         = array(
 	'page'    => __( 'Pages (e.g. Shortcodes)', 'woocommerce-jetpack' ),
 	'archive' => __( 'Archives (Product Categories)', 'woocommerce-jetpack' ),
 );
-$settings      = array();
 foreach ( $product_types as $product_type => $product_type_desc ) {
+	$settings      = array_merge(
+		$settings,
+		array(
+			array(
+				'id'   => 'free_price_' . $product_type . '_tab',
+				'type' => 'tab_start',
+			),
+		)
+	);
 	$default_value = ( 'simple' === $product_type || 'external' === $product_type ) ? '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>' : __( 'Free!', 'woocommerce' );
 	$settings      = array_merge(
 		$settings,
@@ -63,8 +86,12 @@ foreach ( $product_types as $product_type => $product_type_desc ) {
 		$settings,
 		array(
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_free_price_' . $product_type . 'options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'   => 'free_price_' . $product_type . '_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);

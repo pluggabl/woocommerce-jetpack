@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Icons
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings           = array(
+	array(
+		'id'   => 'wcj_payment_gateways_icons_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_payment_gateways_icons_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_payment_gateways_icons_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_icons_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -61,8 +76,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_icons_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_icons_general_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

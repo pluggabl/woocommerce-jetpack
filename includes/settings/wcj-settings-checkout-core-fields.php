@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Core Fields
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -15,6 +15,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_cats = wcj_get_terms( 'product_cat' );
 
 $settings = array(
+	array(
+		'id'   => 'wcj_cart_core_fields_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_cart_core_fields_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_cart_core_fields_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_cart_core_fields_fields_options_tab'  => __( 'Fields Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_cart_core_fields_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -64,8 +80,16 @@ $settings = array(
 		'default'           => 'and',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_checkout_core_fields_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_cart_core_fields_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_cart_core_fields_fields_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Fields Options', 'woocommerce-jetpack' ),
@@ -181,8 +205,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_core_fields_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cart_core_fields_fields_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

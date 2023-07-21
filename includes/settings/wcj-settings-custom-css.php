@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce Settings - Custom CSS
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -14,9 +14,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_custom_css_options',
+		'id'   => 'custom_css_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'custom_css_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'custom_css_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'custom_css_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Code Position', 'woocommerce-jetpack' ),
@@ -32,7 +42,7 @@ return array(
 		'title'   => __( 'Custom CSS - Front end (Customers)', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_general_custom_css',
 		'default' => '',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;min-height:300px;font-family:monospace;',
 		/* translators: %s: translators Added */
 		'desc'    => sprintf( __( 'Without the %s tag.', 'woocommerce-jetpack' ), '<code>' . esc_html( '<style></style>' ) . '</code>' ),
@@ -41,7 +51,7 @@ return array(
 		'title'   => __( 'Custom CSS - Back end (Admin)', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_general_custom_admin_css',
 		'default' => '',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;min-height:300px;font-family:monospace;',
 		/* translators: %s: translators Added */
 		'desc'    => sprintf( __( 'Without the %s tag.', 'woocommerce-jetpack' ), '<code>' . esc_html( '<style></style>' ) . '</code>' ),
@@ -59,11 +69,15 @@ return array(
 		'title'   => __( 'Custom CSS on per Product Basis - Default Field Value', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_custom_css_per_product_default_value',
 		'default' => '',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;min-height:100px;font-family:monospace;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_custom_css_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'custom_css_general_options_tab',
+		'type' => 'tab_end',
 	),
 );

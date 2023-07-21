@@ -1,9 +1,9 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Orders
+ * Booster for WooCommerce - Settings - Orders
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -25,6 +25,27 @@ if ( function_exists( 'WC' ) && is_callable( array( WC()->payment_gateways, 'pay
 }
 
 $settings = array(
+	array(
+		'id'   => 'orders_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'orders_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'orders_currency_tab'        => __( 'Currency', 'woocommerce-jetpack' ),
+			'orders_navigation_tab'      => __( 'Navigation', 'woocommerce-jetpack' ),
+			'orders_editable_tab'        => __( 'Editable', 'woocommerce-jetpack' ),
+			'orders_auto_complete_tab'   => __( 'Auto-Complete', 'woocommerce-jetpack' ),
+			'orders_country_by_ip_tab'   => __( 'Country by IP', 'woocommerce-jetpack' ),
+			'orders_bulk_regenerate_tab' => __( 'Bulk Regenerate', 'woocommerce-jetpack' ),
+
+		),
+	),
+	array(
+		'id'   => 'orders_currency_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Admin Order Currency', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -50,8 +71,16 @@ $settings = array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_admin_currency_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'orders_currency_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'orders_navigation_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Admin Order Navigation', 'woocommerce-jetpack' ),
@@ -68,8 +97,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_orders_navigation_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'orders_navigation_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'orders_editable_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Editable Orders', 'woocommerce-jetpack' ),
@@ -94,8 +131,16 @@ $settings = array(
 		'options' => array_merge( wcj_get_order_statuses(), array( 'auto-draft' => __( 'Auto-draft', 'woocommerce-jetpack' ) ) ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_orders_editable_status_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'orders_editable_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'orders_auto_complete_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Orders Auto-Complete', 'woocommerce-jetpack' ),
@@ -122,8 +167,16 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_auto_complete_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'orders_auto_complete_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'orders_country_by_ip_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Country by IP', 'woocommerce-jetpack' ),
@@ -139,8 +192,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_orders_country_by_ip_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'orders_country_by_ip_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'orders_bulk_regenerate_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Bulk Regenerate Download Permissions for Orders', 'woocommerce-jetpack' ),
@@ -187,8 +248,12 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_order_bulk_regenerate_download_permissions_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'orders_bulk_regenerate_tab',
+		'type' => 'tab_end',
 	),
 );
 return $settings;

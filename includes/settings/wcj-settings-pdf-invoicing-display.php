@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Display
  *
- * @version 5.6.0
- * @since   2.8.0
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add "Save all settings" buttons to each document type
  * @package Booster_For_WooCommerce/settings
@@ -13,14 +13,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$settings      = array();
-$invoice_types = ( 'yes' === wcj_get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
+$invoice_types = ( 'yes' === wcj_get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types() );
+$tab_ids       = array();
+foreach ( $invoice_types as $invoice_type ) {
+	$tab_ids[ 'pdf_invoicing_display_' . $invoice_type['id'] . '_tab' ] = $invoice_type['title'];
+}
+
+$settings = array(
+	array(
+		'type'              => 'module_head',
+		'title'             => __( 'Display & Misc.', 'woocommerce-jetpack' ),
+		'desc'              => __( 'PDF Invoicing : Display & Misc. Settings' ),
+		'icon'              => 'pr-sm-icn.png',
+		'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . add_query_arg(
+			array(
+				'wcj_reset_settings' => $this->id,
+				'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+			)
+		) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+	),
+	array(
+		'id'   => 'pdf_invoicing_display_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'pdf_invoicing_display_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => $tab_ids,
+	),
+);
+
 foreach ( $invoice_types as $invoice_type ) {
 	$document_number_shortode = ( isset( $invoice_type['is_custom_doc'] ) && true === $invoice_type['is_custom_doc'] ?
 		'[wcj_custom_doc_number doc_nr="' . $invoice_type['custom_doc_nr'] . '"]' : '[wcj_' . $invoice_type['id'] . '_number]' );
 	$settings                 = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'pdf_invoicing_display_' . $invoice_type['id'] . '_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				'title' => $invoice_type['title'],
 				'type'  => 'title',
@@ -102,7 +134,7 @@ foreach ( $invoice_types as $invoice_type ) {
 				'id'      => 'wcj_invoicing_' . $invoice_type['id'] . '_thankyou_page_template',
 				/* translators: %s: translators Added */
 				'default' => '<p><strong>' . sprintf( __( 'Your %s:', 'woocommerce-jetpack' ), $invoice_type['title'] ) . ' </strong> %link%</p>',
-				'type'    => 'custom_textarea',
+				'type'    => 'textarea',
 				'class'   => 'widefat',
 			),
 			array(
@@ -130,7 +162,7 @@ foreach ( $invoice_types as $invoice_type ) {
 			array(
 				'title'   => __( 'PDF File Name', 'woocommerce-jetpack' ),
 				'desc'    => sprintf(
-					/* translators: %s: translators Added */
+									/* translators: %s: translators Added */
 					__( 'Enter file name for PDF documents. You can use shortcodes here, e.g. %s.', 'woocommerce-jetpack' ),
 					'<code>' . $document_number_shortode . '</code>'
 				),
@@ -149,8 +181,12 @@ foreach ( $invoice_types as $invoice_type ) {
 				'options' => wcj_get_user_roles_options(),
 			),
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'   => 'pdf_invoicing_display_' . $invoice_type['id'] . '_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);

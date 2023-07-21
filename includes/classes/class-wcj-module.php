@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 6.0.6
+ * @version 7.0.0-dev
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -560,10 +560,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @param string $module_desc get module desc.
 		 */
 		public function add_standard_settings( $settings = array(), $module_desc = '' ) {
-			if ( isset( $this->tools_array ) && ! empty( $this->tools_array ) ) {
-				$settings = $this->add_tools_list( $settings );
-			}
-			$settings = $this->add_reset_settings_button( $settings );
 			$settings = $this->setup_default_autoload( $settings );
 			return $this->add_enable_module_setting( $settings, $module_desc );
 		}
@@ -1034,7 +1030,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				return $settings;
 			}
 			if ( '' === $module_desc && ! empty( $this->get_extra_desc() ) ) {
-				$module_desc = '<div style="padding: 15px; background-color: #ffffff; color: #000000;">' . $this->get_extra_desc() . '</div>';
+				$module_desc = '<div class="wcj-plugins-sing-acc-sub-cnt" style="margin-top:10px;">' . $this->get_extra_desc() . '</div>';
 			}
 			if ( ! isset( $this->link ) && isset( $this->link_slug ) && '' !== $this->link_slug ) {
 
@@ -1063,6 +1059,22 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'type'     => 'checkbox',
 					'wcj_desc' => $this->get_desc(),
 					'wcj_link' => ( isset( $this->link ) ? $this->link : '' ),
+				),
+				array(
+					'type'              => 'module_head',
+					'title'             => $this->short_desc,
+					'desc'              => $this->get_desc(),
+					'id'                => 'wcj_' . $this->id . '_enabled',
+					'key'               => $this->id,
+					'default'           => 'no',
+					'wcj_link'          => ( isset( $this->link ) ? $this->link : '' ),
+					'module_desc'       => $module_desc,
+					'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . add_query_arg(
+						array(
+							'wcj_reset_settings' => $this->id,
+							'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+						)
+					) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 				),
 				array(
 					'type' => 'sectionend',

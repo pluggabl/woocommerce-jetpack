@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 5.6.8
+ * @version 7.0.0-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -19,41 +19,31 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 
 		/**
 		 * Constructor.
+		 *
+		 * @version 7.0.0-dev
 		 */
 		public function __construct() {
 			if ( is_admin() ) {
 				if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
-					add_action( 'admin_menu', array( $this, 'add_wcj_tools' ), 100 );
-					add_action( 'admin_enqueue_scripts', array( $this, 'wcj_new_desing_dashboard_enqueue' ) );
+					add_action( 'admin_menu', array( $this, 'add_wcj_tools' ), 1000 );
+					$wpnonce     = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+					$active_page = ( isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '' );
+					if ( 'wcj-tools' === $active_page ) {
+						add_action( 'admin_head', array( $this, 'admin_head_tools_page_style' ), 10 );
+					}
 				}
 			}
 		}
 
 		/**
-		 * Wcj_new_desing_dashboard_enqueue.
-		 *
-		 * @version 5.6.8
-		 * @since   5.5.6
-		 */
-		public function wcj_new_desing_dashboard_enqueue() {
-			$_get = array();
-			parse_str( isset( $_SERVER['QUERY_STRING'] ) ? sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ) : '', $_get );
-			$page = isset( $_get['page'] ) ? sanitize_text_field( wp_unslash( $_get['page'] ) ) : '';
-			if ( 'wcj-tools' === $page ) {
-				wp_enqueue_style( 'wcj-admin-wcj-new_desing', wcj_plugin_url() . '/includes/css/admin-style.css', array(), time() );
-				wp_enqueue_script( 'wcj-admin-script', wcj_plugin_url() . '/includes/js/admin-script.js', array( 'jquery' ), '5.0.0', true );
-
-			}
-		}
-		/**
 		 * Add_wcj_tools.
 		 *
-		 * @version 4.8.0
+		 * @version 7.0.0-dev
 		 */
 		public function add_wcj_tools() {
 			if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
 				add_submenu_page(
-					'woocommerce',
+					'wcj-dashboard',
 					__( 'Booster for WooCommerce Tools', 'woocommerce-jetpack' ),
 					__( 'Booster Tools', 'woocommerce-jetpack' ),
 					( 'yes' === wcj_get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
@@ -61,6 +51,20 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 					array( $this, 'create_tools_page' )
 				);
 			}
+		}
+
+		/**
+		 * Admin_head_tools_page_style.
+		 *
+		 * @version 7.0.0-dev
+		 */
+		public function admin_head_tools_page_style() {
+			$style = '<style>
+		    #wpbody {
+			padding-left: 20px;
+		    } 
+		  </style>';
+			echo wp_kses_post( $style );
 		}
 
 		/**

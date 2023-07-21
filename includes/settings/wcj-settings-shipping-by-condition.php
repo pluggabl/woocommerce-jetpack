@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 5.6.0
- * @since   3.2.1
+ * @version 7.0.0-dev
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    [dev] hide settings for the disabled subsection
  * @package Booster_For_WooCommerce/settings
@@ -28,6 +28,108 @@ $check_multiple_roles_option = array(
 	'id'                => 'wcj_' . $this->id . '_check_multiple_roles',
 );
 
+if ( 'shipping_by_time' === $this->id ) {
+	$settings = array_merge(
+		$settings,
+		array(
+			array(
+				'id'   => 'shipping_by_condition_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'      => 'shipping_by_condition_options',
+				'type'    => 'tab_ids',
+				'tab_ids' => array(
+					'shipping_by_condition_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_time_tab' => __( 'By Date/Time', 'woocommerce-jetpack' ),
+					'shipping_by_condition_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'id'   => 'shipping_by_condition_general_options_tab',
+				'type' => 'tab_start',
+			),
+		)
+	);
+}
+if ( 'shipping_by_cities' === $this->id ) {
+	$settings = array_merge(
+		$settings,
+		array(
+			array(
+				'id'   => 'shipping_by_condition_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'      => 'shipping_by_condition_options',
+				'type'    => 'tab_ids',
+				'tab_ids' => array(
+					'shipping_by_condition_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_cities_tab' => __( 'By Cities', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_postcodes_tab' => __( 'By Postcodes', 'woocommerce-jetpack' ),
+					'shipping_by_condition_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'id'   => 'shipping_by_condition_general_options_tab',
+				'type' => 'tab_start',
+			),
+		)
+	);
+}
+if ( 'shipping_by_products' === $this->id ) {
+	$settings = array_merge(
+		$settings,
+		array(
+			array(
+				'id'   => 'shipping_by_condition_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'      => 'shipping_by_condition_options',
+				'type'    => 'tab_ids',
+				'tab_ids' => array(
+					'shipping_by_condition_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_products_tab' => __( 'By Products', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_product_cats_tab' => __( 'By Product Categories', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_product_tags_tab' => __( 'By Product Tags', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_classes_tab' => __( 'By Product Shipping Classes', 'woocommerce-jetpack' ),
+					'shipping_by_condition_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'id'   => 'shipping_by_condition_general_options_tab',
+				'type' => 'tab_start',
+			),
+		)
+	);
+}
+if ( 'shipping_by_user_role' === $this->id ) {
+	$settings = array_merge(
+		$settings,
+		array(
+			array(
+				'id'   => 'shipping_by_condition_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'      => 'shipping_by_condition_options',
+				'type'    => 'tab_ids',
+				'tab_ids' => array(
+					'shipping_by_condition_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_user_roles_tab' => __( 'By User Roles', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_user_id_tab' => __( 'By Users', 'woocommerce-jetpack' ),
+					'shipping_by_condition_by_user_membership_tab' => __( 'By User Membership Plans', 'woocommerce-jetpack' ),
+					'shipping_by_condition_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'id'   => 'shipping_by_condition_general_options_tab',
+				'type' => 'tab_start',
+			),
+		)
+	);
+}
 $settings = array_merge(
 	$settings,
 	array(
@@ -47,8 +149,12 @@ $settings = array_merge(
 		),
 		$this->add_multiple_roles_option() ? $check_multiple_roles_option : array(),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_' . $this->id . '_general_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_by_condition_general_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );
@@ -57,6 +163,10 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 	$settings = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'shipping_by_condition_by_' . $options_id . '_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				/* translators: %s: translators Added */
 				'title' => sprintf( __( 'Shipping Methods by %s', 'woocommerce-jetpack' ), $options_data['title'] ),
@@ -164,8 +274,12 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		$settings,
 		array(
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_shipping_by_' . $options_id . '_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'   => 'shipping_by_condition_by_' . $options_id . '_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);
@@ -173,6 +287,10 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 $settings = array_merge(
 	$settings,
 	array(
+		array(
+			'id'   => 'shipping_by_condition_advanced_options_tab',
+			'type' => 'tab_start',
+		),
 		array(
 			'title' => __( 'Advanced Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
@@ -187,8 +305,12 @@ $settings = array_merge(
 			'desc'     => __( 'Change the Priority of the current module\'s execution, Greater value for late execution & Lower value for early execution.', 'woocommerce-jetpack' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_' . $this->id . '_advanced_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_by_condition_advanced_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );
