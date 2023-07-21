@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Custom PHP
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */

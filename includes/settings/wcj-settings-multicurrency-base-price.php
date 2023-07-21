@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
  * @package Booster_For_WooCommerce/settings

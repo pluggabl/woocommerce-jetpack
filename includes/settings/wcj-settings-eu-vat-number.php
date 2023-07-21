@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - EU VAT Number
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
  * @package Booster_For_WooCommerce/settings

@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Products XML
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    recheck "URL" in `'wcj_products_xml_file_path_' . $i`
  * @todo    (maybe) add more options to `wcj_products_xml_orderby_` (see https://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters)

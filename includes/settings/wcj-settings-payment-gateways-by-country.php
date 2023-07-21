@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Gateways by Country or State
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    change `textarea` to `readonly`
  * @package Booster_For_WooCommerce/settings

@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -21,8 +21,8 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.0.0
-		 * @since  1.0.0
+		 * @version 7.0.0-dev
+		 * @since   2.9.0
 		 * @todo    add options to import/export selected modules only
 		 */
 		public function __construct() {
@@ -34,8 +34,8 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options.
 		 *
-		 * @version 7.0.0
-		 * @since  1.0.0
+		 * @version 7.0.0-dev
+		 * @since   2.5.2
 		 */
 		public function manage_options() {
 			$msg = __( 'Your settings have been saved.', 'woocommerce-jetpack' );
@@ -105,8 +105,8 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_import.
 		 *
-		 * @version 7.0.0
-		 * @since  1.0.0
+		 * @version 7.0.0-dev
+		 * @since   2.5.2
 		 */
 		public function manage_options_import() {
 			$wcj_notice = '';
@@ -155,8 +155,8 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_export.
 		 *
-		 * @version 7.0.0
-		 * @since  1.0.0
+		 * @version 7.0.0-dev
+		 * @since   2.5.2
 		 * @see     http://php.net/manual/en/function.header.php
 		 */
 		public function manage_options_export() {
@@ -192,8 +192,8 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_reset_meta.
 		 *
-		 * @version 7.0.0
-		 * @since  1.0.0
+		 * @version 7.0.0-dev
+		 * @since   3.4.0
 		 * @todo    order items meta
 		 * @todo    `... LIKE 'wcj_%'`
 		 */
@@ -213,8 +213,8 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_reset.
 		 *
-		 * @version 7.0.0
-		 * @since  1.0.0
+		 * @version 7.0.0-dev
+		 * @since   2.5.2
 		 */
 		public function manage_options_reset() {
 			global $wpdb, $wcj_notice;

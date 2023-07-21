@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - PDF Invoicing - Header
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add info on `<img>` in "Header Image" description
  * @package Booster_For_WooCommerce/settings

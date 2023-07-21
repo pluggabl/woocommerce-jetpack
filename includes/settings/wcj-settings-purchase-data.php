@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Product Cost Price
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add options to set fields and column titles
  * @package Booster_For_WooCommerce/settings

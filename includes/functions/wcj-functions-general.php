@@ -1174,7 +1174,7 @@ if ( ! function_exists( 'wcj_admin_tab_url' ) ) {
 	 * Wcj_admin_tab_url.
 	 *
 	 * @version 7.0.0-dev
-	 * @since   1.0.8
+	 * @since   5.6.8
 	 */
 	function wcj_admin_tab_url() {
 		return 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );

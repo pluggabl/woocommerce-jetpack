@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Template Editor
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   3.9.0
  * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')
  * @todo    [dev] default template: check if `$default_template_path` exists before calling `file_get_contents()`

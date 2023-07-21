@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Core - Admin
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
  */
@@ -17,16 +17,16 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * WCJ_Admin.
 		 *
-		 * @version 6.0.0
-		 * @since   1.0.0
+		 * @version 7.0.0-dev
+		 * @since   3.2.4
 		 */
 	class WCJ_Admin {
 
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.0.0
-		 * @since  1.0.0
+		 * @version 7.0.0-dev
+		 * @since   3.2.4
 		 */
 		public function __construct() {
 
@@ -191,8 +191,8 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Check_plus_version.
 		 *
-		 * @version 7.0.0
-		 * @since   1.0.0
+		 * @version 7.0.0-dev
+		 * @since   2.5.9
 		 * @todo    (maybe) use `wcj_is_plugin_active_by_file()`
 		 * @todo    (maybe) expand "Please upgrade ..." message
 		 */

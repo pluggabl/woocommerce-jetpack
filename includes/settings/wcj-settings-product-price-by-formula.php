@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */

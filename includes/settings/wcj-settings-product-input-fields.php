@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Settings - Product Input Fields
  *
  * @version 7.0.0-dev
- * @since  1.0.0
+ * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
  * @todo    [dev] maybe set "Replace Field ID with Field Label" option (i.e. `wcj_product_input_fields_make_nicer_name_enabled`) to `no` by default
