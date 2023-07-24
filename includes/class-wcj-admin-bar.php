@@ -216,7 +216,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		/**
 		 * Get_nodes_booster_tools.
 		 *
-		 * @version 2.9.0
+		 * @version 7.0.0-dev
 		 * @since   2.9.0
 		 */
 		public function get_nodes_booster_tools() {
@@ -234,7 +234,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 			foreach ( $tools as $tool ) {
 				$nodes[ $tool['id'] ] = array(
 					'title' => $tool['title'],
-					'href'  => admin_url( 'admin.php?page=wcj-tools&tab=' . $tool['id'] ),
+					'href'  => admin_url( 'admin.php?page=wcj-tools&tab=' . $tool['id'] . '&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) ),
 				);
 				if ( isset( $tool['desc'] ) ) {
 					$nodes[ $tool['id'] ]['meta']['title'] = $tool['desc'];

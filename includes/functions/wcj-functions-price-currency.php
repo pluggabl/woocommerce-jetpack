@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 6.0.1
+ * @version 7.0.0-dev
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -29,7 +29,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	/**
 	 * Wcj_get_module_price_hooks_priority.
 	 *
-	 * @version 4.1.0
+	 * @version 7.0.0-dev
 	 * @since   3.2.2
 	 * @todo    add all corresponding modules
 	 * @param   int | string $module_id defines the module_id.
@@ -46,7 +46,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 			'global_discount'          => PHP_INT_MAX,
 		);
 		$priority           = wcj_get_option( 'wcj_' . $module_id . '_advanced_price_hooks_priority', 0 );
-		return ( 0 !== ( $priority ) ? $priority : $modules_priorities[ $module_id ] );
+		return ( 0 !== ( $priority ) && '0' !== ( $priority ) ? $priority : $modules_priorities[ $module_id ] );
 	}
 }
 

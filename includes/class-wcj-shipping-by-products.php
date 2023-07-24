@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 5.6.2
+ * @version 7.0.0-dev
  * @since   3.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 5.6.2
+		 * @version 7.0.0-dev
 		 * @since   3.2.0
 		 * @todo    variations in `classes`
 		 * @todo    check for `if ( is_object( $product ) && is_callable( array( $product, 'get_shipping_class_id' ) ) ) { ... }`
@@ -126,7 +126,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 			foreach ( $this->get_items( $cart_instead_of_package, $package ) as $item ) {
 				switch ( $options_id ) {
 					case 'products':
-						$_product_id = ( $do_add_variations && 0 > $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+						$_product_id = ( $do_add_variations && 0 !== $item['variation_id'] && '0' !== $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
 						if ( $validate_all_for_include && ! in_array( (string) $_product_id, $values, true ) ) {
 							return false;
 						} elseif ( ! $validate_all_for_include && in_array( (string) $_product_id, $values, true ) ) {

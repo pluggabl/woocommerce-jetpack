@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Invoices
  *
- * @version 5.6.8
+ * @version 7.0.0-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -184,11 +184,11 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 		/**
 		 * Wcj_custom_doc_number.
 		 *
-		 * @version 2.7.0
+		 * @version 7.0.0-dev
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_custom_doc_number( $atts ) {
-			$invoice_type_id = ( 1 === $atts['doc_nr'] ) ? 'custom_doc' : 'custom_doc_' . $atts['doc_nr'];
+			$invoice_type_id = ( 1 === $atts['doc_nr'] || '1' === $atts['doc_nr'] ) ? 'custom_doc' : 'custom_doc_' . $atts['doc_nr'];
 			return wcj_get_invoice_number( $atts['order_id'], $invoice_type_id );
 		}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 5.6.8
+ * @version 7.0.0-dev
  * @since   5.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 5.6.2
+		 * @version 7.0.0-dev
 		 * @since   3.2.0
 		 * @todo    use `$package` (and in this case update `wcj_get_left_to_free_shipping()`)
 		 * @param string         $options_id defines the options_id.
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 					if ( ! isset( $this->user_id ) ) {
 						$this->user_id = get_current_user_id();
 					}
-					return in_array( $this->user_id, $user_roles_or_ids_or_membership_plans, true );
+					return in_array( (string) $this->user_id, $user_roles_or_ids_or_membership_plans, true );
 				case 'user_membership':
 					if ( ! isset( $this->user_id ) ) {
 						$this->user_id = get_current_user_id();

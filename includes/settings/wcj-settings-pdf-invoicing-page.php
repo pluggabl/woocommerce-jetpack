@@ -140,6 +140,42 @@ foreach ( $invoice_types as $invoice_type ) {
 				'desc_tip' => __( 'Converts the Background Image URL to its local path.', 'woocommerce-jetpack' ) . '<br>' . __( 'If you are experiencing issues with displaying background image, please try to disable this option', 'woocommerce-jetpack' ),
 			),
 			array(
+				'title'    => __( 'Background Image for Multiple pages', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_multipages_background',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Display Background Image for multiple pages', 'woocommerce-jetpack' ) . '<br>' . __( 'If you are experiencing issues with displaying Header Content, please try to disable this option', 'woocommerce-jetpack' ),
+
+			),
+			array(
+				'title'             => __( 'Opacity for Background Image', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_invoicing_' . $invoice_type['id'] . '_background_opacity',
+				'default'           => 0.5,
+				'custom_attributes' => array(
+					'min'  => 0.1,
+					'step' => 0.1,
+					'max'  => 1,
+				),
+				'type'              => 'number',
+				'desc'              => __( 'Set Opacity for Background Image.', 'woocommerce-jetpack' ),
+
+			),
+			array(
+				'title'   => __( 'Margin Top for Background Image', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_invoicing_' . $invoice_type['id'] . '_background_margin_top',
+				'default' => 25, // PDF_MARGIN_LEFT.
+				'type'    => 'number',
+				'desc'    => __( 'Set 0 for default margin.', 'woocommerce-jetpack' ),
+			),
+			array(
+				'title'   => __( 'Margin Left for Background Image', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_invoicing_' . $invoice_type['id'] . '_background_margin_left',
+				'default' => 0, // PDF_MARGIN_LEFT.
+				'type'    => 'number',
+				'desc'    => __( 'Set 0 for default margin.', 'woocommerce-jetpack' ),
+			),
+			array(
 				'type' => 'sectionend',
 				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_page_options',
 			),

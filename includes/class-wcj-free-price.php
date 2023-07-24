@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Free Price
  *
- * @version 5.6.3
+ * @version 7.0.0-dev
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -49,7 +49,7 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		/**
 		 * Are_all_prices_free
 		 *
-		 * @version 2.7.0
+		 * @version 7.0.0-dev
 		 * @since   2.7.0
 		 * @param string | array $_product defines the _product.
 		 * @param string         $type defines the type.
@@ -57,8 +57,8 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		public function are_all_prices_free( $_product, $type ) {
 			if ( 'variable' === $type ) {
 				$prices    = $_product->get_variation_prices( true );
-				$min_price = current( $prices['price'] );
-				$max_price = end( $prices['price'] );
+				$min_price = (int) current( $prices['price'] );
+				$max_price = (int) end( $prices['price'] );
 				if ( '' !== $min_price && '' !== $max_price ) {
 					return ( 0 === $min_price && 0 === $max_price );
 				}

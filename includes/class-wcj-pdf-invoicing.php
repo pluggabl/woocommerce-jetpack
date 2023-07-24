@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 6.0.1
+ * @version 7.0.0-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -505,7 +505,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Generate_pdf_on_init.
 		 *
-		 * @version 6.0.1
+		 * @version 7.0.0-dev
 		 */
 		public function generate_pdf_on_init() {
 			// Check if all is OK.
@@ -514,7 +514,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			}
 			// Get PDF.
 			$the_invoice = wcj_get_pdf_invoice( $this->order_id, $this->invoice_type_id );
-			$dest        = ( '1' === $this->save_as_pdf ? 'D' : 'I' );
+			$dest        = ( '1' === $this->save_as_pdf || true === $this->save_as_pdf ? 'D' : 'I' );
 			if ( 'yes' === wcj_get_option( 'wcj_general_advanced_disable_output_buffer', 'no' ) ) {
 				ob_clean();
 				ob_flush();
