@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -124,7 +124,7 @@ if ( ! function_exists( 'wcj_get_current_user_first_role' ) ) {
 	/**
 	 * Wcj_get_current_user_first_role.
 	 *
-	 * @version 7.0.0-dev
+	 * @version 7.0.0
 	 * @since  1.0.0
 	 */
 	function wcj_get_current_user_first_role() {

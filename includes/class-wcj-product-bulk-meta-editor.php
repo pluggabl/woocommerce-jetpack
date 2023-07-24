@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -74,7 +74,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Perform_actions.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @since   2.8.0
 		 * @todo    break this into separate functions
 		 */

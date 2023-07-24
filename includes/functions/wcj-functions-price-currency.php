@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -29,7 +29,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	/**
 	 * Wcj_get_module_price_hooks_priority.
 	 *
-	 * @version 7.0.0-dev
+	 * @version 7.0.0
 	 * @since   3.2.2
 	 * @todo    add all corresponding modules
 	 * @param   int | string $module_id defines the module_id.

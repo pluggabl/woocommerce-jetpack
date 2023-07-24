@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Time
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    estimated date calculation

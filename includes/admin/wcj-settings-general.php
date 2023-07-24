@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - HTML of booster setting general page
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */

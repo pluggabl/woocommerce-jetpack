@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -130,7 +130,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		/**
 		 * Get_nodes_booster_modules.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @since   2.9.0
 		 * @todo    (maybe) dashes instead of underscores
 		 * @todo    (maybe) dashboard > alphabetically - list all modules
@@ -216,7 +216,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		/**
 		 * Get_nodes_booster_tools.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @since   2.9.0
 		 */
 		public function get_nodes_booster_tools() {

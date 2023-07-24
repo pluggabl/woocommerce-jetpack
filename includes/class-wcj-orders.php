@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -307,7 +307,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Maybe_bulk_regenerate_download_permissions_all_orders.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @since   3.2.0
 		 */
 		public function maybe_bulk_regenerate_download_permissions_all_orders() {

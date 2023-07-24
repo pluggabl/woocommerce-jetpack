@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -296,7 +296,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Get_max_qty.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @since   3.5.0
 		 * @todo    (maybe) local - add "enabled/disabled" option
 		 * @todo    (maybe) global - apply only to selected products (i.e. include/exclude products, cats, tags)

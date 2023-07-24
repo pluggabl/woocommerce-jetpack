@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   3.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @since   3.2.0
 		 * @todo    variations in `classes`
 		 * @todo    check for `if ( is_object( $product ) && is_callable( array( $product, 'get_shipping_class_id' ) ) ) { ... }`

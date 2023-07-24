@@ -1,7 +1,7 @@
 {
-    "0" : "= 6.0.6 24/05/2023 =",
-    "1" : "* FIXED - PRICES & CURRENCIES - Prices and Currencies by Country - Fixed price & currency when users apply the country from the URL.",
-    "2" : "* FIXED - SHIPPING & ORDERS - Shipping Options - Fixed the compatibility issue for the Shipping Methods by Users Module and Shipping Options Module.",
-    "3" : "* WooCommerce 7.7.0 Tested",
+    "0" : "= 7.0.0 26/07/2023 =",
+    "1" : "* FIXED - EMAILS & MISC - Admin Bar - Fixed Booster Tools not working when accessed through the admin bar.",
+    "2" : "* FIXED - BUTTON & PRICE LABELS - Add to Cart Button Labels - Fixed the Button's text issue when the price is set to 0.",
+    "3" : "* WooCommerce 7.9.0 Tested",
     "4" : "* WordPress 6.2.2 Tested"
 }

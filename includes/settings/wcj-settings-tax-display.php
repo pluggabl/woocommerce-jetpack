@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Tax Display
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   3.2.1
  * @author  Pluggabl LLC.
  * @todo    [dev] hide settings for the disabled subsection

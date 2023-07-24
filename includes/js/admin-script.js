@@ -1,7 +1,7 @@
 /**
  * New admin js
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  */
 
 jQuery( document ).ready(

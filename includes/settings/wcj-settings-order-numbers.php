@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Numbers
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `wcj_order_number_counter_previous_order_date` as `hidden` field (for proper module reset)

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Fees
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

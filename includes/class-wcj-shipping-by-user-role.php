@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   5.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 		/**
 		 * Check.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @since   3.2.0
 		 * @todo    use `$package` (and in this case update `wcj_get_left_to_free_shipping()`)
 		 * @param string         $options_id defines the options_id.

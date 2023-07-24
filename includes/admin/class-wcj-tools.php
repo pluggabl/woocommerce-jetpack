@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 */
 		public function __construct() {
 			if ( is_admin() ) {
@@ -38,7 +38,7 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		/**
 		 * Add_wcj_tools.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 */
 		public function add_wcj_tools() {
 			if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WCJ_Tools' ) ) :
 		/**
 		 * Admin_head_tools_page_style.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 */
 		public function admin_head_tools_page_style() {
 			$style = '<style>

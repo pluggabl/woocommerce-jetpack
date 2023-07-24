@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -106,7 +106,7 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
 	 * Wcj_check_time_from.
 	 *
-	 * @version 7.0.0-dev
+	 * @version 7.0.0
 	 * @since   2.8.0
 	 * @param   string $time_from defines the time_from.
 	 * @param   array  $args defines the args.
@@ -127,7 +127,7 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 	/**
 	 * Wcj_check_time_to.
 	 *
-	 * @version 7.0.0-dev
+	 * @version 7.0.0
 	 * @since   2.8.0
 	 * @param   string $time_to defines the time_to.
 	 * @param   array  $args defines the args.

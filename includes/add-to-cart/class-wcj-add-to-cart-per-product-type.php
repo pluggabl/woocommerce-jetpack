@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Add to Cart Button Labels - Per Product Type
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product_Type' ) ) :
 		/**
 		 * Custom_add_to_cart_button_text.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 * @todo    (maybe) add checkbox options to enable/disable custom labels for each product type (or even for each label)
 		 * @param string $add_to_cart_text Add to cart button text change.
 		 */

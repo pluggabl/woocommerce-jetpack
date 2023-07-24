@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1173,7 +1173,7 @@ if ( ! function_exists( 'wcj_admin_tab_url' ) ) {
 	/**
 	 * Wcj_admin_tab_url.
 	 *
-	 * @version 7.0.0-dev
+	 * @version 7.0.0
 	 * @since   5.6.8
 	 */
 	function wcj_admin_tab_url() {

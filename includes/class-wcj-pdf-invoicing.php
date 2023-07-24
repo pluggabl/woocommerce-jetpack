@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -505,7 +505,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Generate_pdf_on_init.
 		 *
-		 * @version 7.0.0-dev
+		 * @version 7.0.0
 		 */
 		public function generate_pdf_on_init() {
 			// Check if all is OK.

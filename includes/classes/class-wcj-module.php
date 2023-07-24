@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?

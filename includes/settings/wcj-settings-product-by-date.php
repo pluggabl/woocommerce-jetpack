@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Availability by Date
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings

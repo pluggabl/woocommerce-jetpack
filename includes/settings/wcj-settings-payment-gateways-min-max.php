@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Min/Max Amounts
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    checkout notices - add %diff_amount% and %total_in_cart% replaced values (wc_has_notice won't work then?, probably will need to use wc_clear_notices)

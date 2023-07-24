@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Methods by Min/Max Order Amount
  *
- * @version 7.0.0-dev
+ * @version 7.0.0
  * @since   3.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
