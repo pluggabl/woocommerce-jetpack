@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings           = array(
+	array(
+		'id'   => 'add_to_cart_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'add_to_cart_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'add_to_cart_per_category_tab'     => __( 'Per Category', 'woocommerce-jetpack' ),
+			'add_to_cart_per_product_tab'      => __( 'Per Product', 'woocommerce-jetpack' ),
+			'add_to_cart_per_product_type_tab' => __( 'Per Product Type', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'add_to_cart_per_category_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Per Category Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -90,8 +107,16 @@ $settings               = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_add_to_cart_per_category_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'add_to_cart_per_category_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'add_to_cart_per_product_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Per Product Options', 'woocommerce-jetpack' ),
@@ -108,8 +133,16 @@ $settings               = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_add_to_cart_per_product_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'add_to_cart_per_product_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'add_to_cart_per_product_type_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Per Product Type Options', 'woocommerce-jetpack' ),
@@ -254,8 +287,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_add_to_cart_text_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'add_to_cart_per_product_type_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

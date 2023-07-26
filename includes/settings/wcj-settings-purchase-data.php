@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Cost Price
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add options to set fields and column titles
@@ -14,6 +14,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings     = array(
+	array(
+		'id'   => 'wcj_purchase_data_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_purchase_data_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_cost_of_goods_price_fields_tab'           => __( 'Price Fields', 'woocommerce-jetpack' ),
+			'wcj_cost_of_goods_custom_price_fields_tab'    => __( 'Custom Price Fields', 'woocommerce-jetpack' ),
+			'wcj_cost_of_goods_info_fields_tab'            => __( 'Info Fields', 'woocommerce-jetpack' ),
+			'wcj_cost_of_goods_products_list_custom_cols_tab' => __( 'Products List Custom Columns', 'woocommerce-jetpack' ),
+			'wcj_cost_of_goods_order_list_custom_cols_tab' => __( 'Orders List Custom Columns', 'woocommerce-jetpack' ),
+			'wcj_cost_of_goods_more_options_tab'           => __( 'More Options', 'woocommerce-jetpack' ),
+			'wcj_cost_of_goods_tool_tab'                   => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_cost_of_goods_price_fields_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Price Fields', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -53,8 +74,16 @@ $settings     = array(
 		'type'     => 'select',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_purchase_data_price_fields_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_cost_of_goods_price_fields_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_cost_of_goods_custom_price_fields_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Custom Price Fields', 'woocommerce-jetpack' ),
@@ -107,9 +136,18 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 $settings = array_merge(
 	$settings,
 	array(
+
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_purchase_data_custom_price_fields_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_custom_price_fields_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_info_fields_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Info Fields', 'woocommerce-jetpack' ),
@@ -139,8 +177,16 @@ $settings = array_merge(
 			'type'    => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_purchase_data_info_fields_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_info_fields_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_products_list_custom_cols_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Admin Products List Custom Columns', 'woocommerce-jetpack' ),
@@ -167,8 +213,16 @@ $settings = array_merge(
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_purchase_data_custom_products_columns_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_products_list_custom_cols_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_order_list_custom_cols_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Admin Orders List Custom Columns', 'woocommerce-jetpack' ),
@@ -191,8 +245,16 @@ $settings = array_merge(
 			'type'    => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_purchase_data_custom_columns_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_order_list_custom_cols_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_more_options_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'More Options', 'woocommerce-jetpack' ),
@@ -207,8 +269,30 @@ $settings = array_merge(
 			'type'    => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_purchase_data_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_more_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_tool_tab',
+			'type' => 'tab_start',
+		),
+		array(
+			'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_module_tools',
+			'type'     => 'custom_link',
+			'link'     => ( $this->is_enabled() ) ?
+			'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=import_from_wc_cog&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+			__( '"WooCommerce Cost of Goods" Data Import', 'woocommerce-jetpack' ) . '</a> </code>' :
+				'<code>' . __( '"WooCommerce Cost of Goods" Data Import', 'woocommerce-jetpack' ) . '</code>',
+		),
+		array(
+			'id'   => 'wcj_cost_of_goods_tool_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 5.6.8
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -17,9 +17,24 @@ $all_currencies = wcj_get_woocommerce_currencies_and_symbols();
 
 $settings = array(
 	array(
-		'title' => __( 'Cart and Checkout Behaviour Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_currency_per_product_cart_options',
+		'id'   => 'currency_per_product_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'currency_per_product_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'currency_per_product_behaviour_options_tab'   => __( 'Cart and Checkout Behaviour', 'woocommerce-jetpack' ),
+			'currency_per_product_per_product_options_tab' => __( 'Per Product', 'woocommerce-jetpack' ),
+			'currency_per_product_additional_options_tab'  => __( 'Additional', 'woocommerce-jetpack' ),
+			'currency_per_product_exchange_rates_options_tab' => __( 'Exchange Rates', 'woocommerce-jetpack' ),
+			'currency_per_product_currencies_options_tab'  => __( 'Currencies', 'woocommerce-jetpack' ),
+			'currency_per_product_advanced_options_tab'    => __( 'Advanced', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'currency_per_product_behaviour_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Cart and Checkout Behaviour', 'woocommerce-jetpack' ),
@@ -49,13 +64,16 @@ $settings = array(
 		'css'     => 'min-width:300px;width:66%',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_currency_per_product_cart_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Per Product Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_currency_per_product_per_product_options',
+		'id'   => 'currency_per_product_behaviour_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'currency_per_product_per_product_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Currency per Product', 'woocommerce-jetpack' ),
@@ -66,8 +84,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_currency_per_product_per_product_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'currency_per_product_per_product_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'currency_per_product_additional_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Additional Options', 'woocommerce-jetpack' ),
@@ -104,13 +130,16 @@ $settings = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_currency_per_product_additional_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Exchange Rates Updates Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_currency_per_product_exchange_rate_update_options',
+		'id'   => 'currency_per_product_additional_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'currency_per_product_exchange_rates_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'             => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
@@ -128,8 +157,16 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_currency_per_product_exchange_rate_update_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'currency_per_product_exchange_rates_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'currency_per_product_currencies_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Currencies Options', 'woocommerce-jetpack' ),
@@ -183,6 +220,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'id'      => 'wcj_currency_per_product_currency_' . $i,
 				'default' => $currency_from,
 				'type'    => 'select',
+				'class'   => 'wcj_select_search_input',
 				'options' => $all_currencies,
 				'css'     => 'width:250px;',
 			),
@@ -261,25 +299,32 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_currency_per_product_currencies_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Advanced Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_currency_per_product_advanced_options',
+			'id'   => 'currency_per_product_currencies_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'currency_per_product_advanced_options_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'    => __( 'Advanced: Save Calculated Products Prices', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins. If you are facing your price will not be displayed properly then enable this option.', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins. If you are facing your price will not be displayed properly then enable this option.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_currency_per_product_save_prices',
 			'default'  => 'no',
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_currency_per_product_advanced_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'currency_per_product_advanced_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

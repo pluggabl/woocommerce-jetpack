@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -28,9 +28,25 @@ $settings     = array_merge(
 	$settings,
 	array(
 		array(
-			'title' => __( 'Per Product Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_product_addons_per_product_options',
+			'id'   => 'wcj_product_addons_general_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'      => 'wcj_product_addons_general_options',
+			'type'    => 'tab_ids',
+			'tab_ids' => array(
+				'wcj_product_addons_per_product_tab'     => __( 'Per Product Options', 'woocommerce-jetpack' ),
+				'wcj_productaddons_all_product_tab'      => __( 'All Product Options', 'woocommerce-jetpack' ),
+				'wcj_productaddons_genral_options_tab'   => __( 'Genral Options', 'woocommerce-jetpack' ),
+				'wcj_productaddons_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+				'wcj_productaddons_front_template_tab'   => __( 'Frontend Templates', 'woocommerce-jetpack' ),
+				'wcj_productaddons_cart_template_tab'    => __( 'Cart Templates', 'woocommerce-jetpack' ),
+				'wcj_productaddons_order_template_tab'   => __( 'Order Details Table Templates', 'woocommerce-jetpack' ),
+			),
+		),
+		array(
+			'id'   => 'wcj_product_addons_per_product_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'    => __( 'Enable per Product Addons', 'woocommerce-jetpack' ),
@@ -41,19 +57,22 @@ $settings     = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_addons_per_product_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_addons_per_product_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_productaddons_all_product_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
 $settings     = array_merge(
 	$settings,
 	array(
-		array(
-			'title' => __( 'All Product Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_product_addons_all_products_options',
-		),
 		array(
 			'title'    => __( 'Enable All Products Addons', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -182,19 +201,22 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_addons_all_products_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_productaddons_all_product_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_productaddons_genral_options_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
 $settings = array_merge(
 	$settings,
 	array(
-		array(
-			'title' => __( 'Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_product_addons_options',
-		),
 		array(
 			'title'   => __( 'Enable AJAX on Single Product Page', 'woocommerce-jetpack' ),
 			'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
@@ -244,13 +266,16 @@ $settings = array_merge(
 			'type'     => 'number',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_addons_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Advanced', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_product_addons_advanced_options',
+			'id'   => 'wcj_productaddons_genral_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_productaddons_advanced_options_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'   => __( 'Apply Price Filter', 'woocommerce-jetpack' ),
@@ -299,13 +324,16 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_addons_advanced_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Frontend Templates', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_product_addons_template_options',
+			'id'   => 'wcj_productaddons_advanced_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_productaddons_front_template_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'    => __( 'Hide Percentage Price', 'woocommerce-jetpack' ),
@@ -372,13 +400,16 @@ $settings = array_merge(
 			'css'     => 'width:100%;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_addons_template_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Cart Template', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_product_addons_template_cart_options',
+			'id'   => 'wcj_productaddons_front_template_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_productaddons_cart_template_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'   => __( 'Before', 'woocommerce-jetpack' ),
@@ -403,13 +434,16 @@ $settings = array_merge(
 			'css'     => 'width:100%;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_addons_template_cart_options',
+			'type' => 'sectionend',
 		),
 		array(
-			'title' => __( 'Order Details Table Template', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_product_addons_template_order_details_options',
+			'id'   => 'wcj_productaddons_cart_template_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_productaddons_order_template_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title'   => __( 'Before', 'woocommerce-jetpack' ),
@@ -434,8 +468,12 @@ $settings = array_merge(
 			'css'     => 'width:100%;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_addons_template_order_details_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_productaddons_order_template_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Tax Display
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -20,6 +20,23 @@ $product_cats = wcj_get_terms( 'product_cat' );
 
 $settings                         = array(
 	array(
+		'id'   => 'wcj_product_tax_display_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_tax_display_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_tax_display_toggle_button_tab' => __( 'Toggle Button', 'woocommerce-jetpack' ),
+			'wcj_product_tax_display_by_product_tab'    => __( 'By Product', 'woocommerce-jetpack' ),
+			'wcj_product_tax_display_by_user_role_tab'  => __( 'By User Role', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_tax_display_toggle_button_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'TAX Display - Toggle Button', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		/* translators: %s: translators Added */
@@ -34,8 +51,16 @@ $settings                         = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_tax_display_toggle_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_tax_display_toggle_button_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_tax_display_by_product_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'TAX Display by Product', 'woocommerce-jetpack' ),
@@ -91,8 +116,16 @@ $settings                         = array(
 		'options'  => $product_cats,
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_listings_display_taxes_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_tax_display_by_product_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_tax_display_by_user_role_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'TAX Display by User Role', 'woocommerce-jetpack' ),
@@ -111,7 +144,7 @@ $settings                         = array(
 		'title'    => __( 'User Roles', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Save changes after you change this option and new settings fields will appear.', 'woocommerce-jetpack' ),
 		'desc'     => '<br>' . sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Select user roles that you want to change tax display for. For all remaining (i.e. not selected) user roles - default TAX display (set in %s) will be applied.', 'woocommerce-jetpack' ),
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=tax' ) . '">' . __( 'WooCommerce > Settings > Tax', 'woocommerce-jetpack' ) . '</a>'
 		),
@@ -162,8 +195,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_listings_display_taxes_by_user_role_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_tax_display_by_user_role_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

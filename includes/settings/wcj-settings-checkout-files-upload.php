@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 5.6.8
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -17,6 +17,27 @@ $product_cats_options = wcj_get_terms( 'product_cat' );
 $products_options     = wcj_get_products();
 $user_roles_options   = wcj_get_user_roles_options();
 $settings             = array(
+	array(
+		'id'   => 'wcj_checkout_files_upload_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_checkout_files_upload_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_checkout_files_upload_options_tab'        => __( 'Options', 'woocommerce-jetpack' ),
+			'wcj_checkout_files_upload_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_checkout_files_upload_emails_options_tab' => __( 'Emails Options', 'woocommerce-jetpack' ),
+			'wcj_checkout_files_upload_form_template_options_tab' => __( 'Form Template Options', 'woocommerce-jetpack' ),
+			'wcj_checkout_files_upload_order_template_options_tab' => __( 'Order Template Options', 'woocommerce-jetpack' ),
+			'wcj_checkout_files_upload_Email_template_options_tab' => __( 'Email Template Options', 'woocommerce-jetpack' ),
+			'wcj_checkout_files_upload_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_checkout_files_upload_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -229,8 +250,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_files_upload_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_general_options_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -261,8 +290,16 @@ $settings = array_merge(
 			'type'    => 'textarea',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_files_upload_general_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_general_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_emails_options_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -308,8 +345,16 @@ $settings = array_merge(
 			'type'    => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_files_upload_emails_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_emails_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_form_template_options_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -369,8 +414,16 @@ $settings = array_merge(
 			'type'    => 'text',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_files_upload_form_template_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_form_template_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_order_template_options_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -408,7 +461,7 @@ $settings = array_merge(
 		array(
 			'desc'     => __( 'Image style', 'woocommerce-jetpack' ),
 			'desc_tip' => sprintf(
-				/* translators: %s: translators Added */
+							/* translators: %s: translators Added */
 				__( 'Ignored, if %1$s is not included in %2$s option above.', 'woocommerce-jetpack' ),
 				'<em>%image%</em>',
 				'<em>' . __( 'Item', 'woocommerce-jetpack' ) . '</em>'
@@ -418,8 +471,16 @@ $settings = array_merge(
 			'type'     => 'text',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_files_upload_templates[order_options]',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_order_template_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_Email_template_options_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -455,8 +516,16 @@ $settings = array_merge(
 			'css'     => 'width:100%;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_files_upload_templates[email_options]',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_Email_template_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_advanced_options_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -496,8 +565,12 @@ $settings = array_merge(
 			'css'     => 'width:100%;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_checkout_files_upload_advanced_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_checkout_files_upload_advanced_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Options
  *
- * @version 5.6.8
+ * @version 7.0.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings             = array(
+	array(
+		'id'   => 'shipping_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'shipping__options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'shipping_general_options_tab' => __( 'Hide Shipping', 'woocommerce-jetpack' ),
+			'shipping__order_amount_tab'   => __( 'Order Amount', 'woocommerce-jetpack' ),
+			'shipping__show_only_tab'      => __( 'Show Only the Most Expensive Shipping', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'shipping_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Hide if Free Shipping is Available', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -47,8 +64,16 @@ $settings             = array(
 		'type'     => 'number',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_hide_if_free_available_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'shipping_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'shipping__order_amount_tab',
+		'type' => 'tab_start',
 	),
 );
 $settings             = array_merge(
@@ -58,7 +83,7 @@ $settings             = array_merge(
 			'title' => __( 'Free Shipping by Product', 'woocommerce-jetpack' ),
 			'desc'  => __( 'In this section you can select products which grant free shipping when added to cart.', 'woocommerce-jetpack' ) . '<br>' .
 				sprintf(
-					/* translators: %s: translators Added */
+										/* translators: %s: translators Added */
 					__( 'Similar results can be achieved with %s module.', 'woocommerce-jetpack' ),
 					'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=shipping_and_orders&section=shipping_by_products' ) . '">' .
 					__( 'Shipping Methods by Products', 'woocommerce-jetpack' ) . '</a>'
@@ -95,8 +120,16 @@ $settings             = array_merge(
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_free_shipping_by_product_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping__order_amount_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'shipping__show_only_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -134,8 +167,12 @@ $settings             = array_merge(
 			'class'             => 'chosen_select',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_most_expensive',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping__show_only_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Address Formats
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'address_address_formats_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'address_address_formats_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'address_address_formats_force_base_country_display_tab' => __( 'Force Base Country Display', 'woocommerce-jetpack' ),
+			'address_address_formats_address_formats_by_country_tab'   => __( 'Address Formats by Country', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'address_address_formats_force_base_country_display_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Force Base Country Display', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -26,8 +42,16 @@ $settings = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_address_formats_force_country_display_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'address_address_formats_force_base_country_display_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'address_address_formats_address_formats_by_country_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Address Formats by Country', 'woocommerce-jetpack' ),
@@ -54,8 +78,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_address_formats_country_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'address_address_formats_address_formats_by_country_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

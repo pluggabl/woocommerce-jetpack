@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart Button Visibility
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @todo    "Per Tag"
@@ -17,9 +17,21 @@ $products_cats = wcj_get_terms( 'product_cat' );
 
 return array(
 	array(
-		'title' => __( 'All Products', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_add_to_cart_button_visibility_global_options',
+		'id'   => 'wcj_cart_button_visibility_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_cart_button_visibility_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_cart_button_visibility_all_product_tab'  => __( 'All Product', 'woocommerce-jetpack' ),
+			'wcj_cart_button_visibility_per_product_tab'  => __( 'Per Product', 'woocommerce-jetpack' ),
+			'wcj_cart_button_visibility_per_category_tab' => __( 'Per Category', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_cart_button_visibility_all_product_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'All Products', 'woocommerce-jetpack' ),
@@ -51,7 +63,7 @@ return array(
 		'desc_tip' => __( 'Content to replace with on archives (can be empty). You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_button_archives_content',
 		'default'  => '',
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'css'      => 'width:100%',
 	),
 	array(
@@ -77,12 +89,21 @@ return array(
 		'desc_tip' => __( 'Content to replace with on single product pages (can be empty). You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_button_single_content',
 		'default'  => '',
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'css'      => 'width:100%',
 	),
+
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_add_to_cart_button_visibility_global_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_cart_button_visibility_all_product_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_cart_button_visibility_per_product_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Per Product', 'woocommerce-jetpack' ),
@@ -98,8 +119,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_add_to_cart_button_visibility_per_product_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_cart_button_visibility_per_product_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_cart_button_visibility_per_category_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Per Category', 'woocommerce-jetpack' ),
@@ -126,7 +155,7 @@ return array(
 		'desc_tip' => __( 'Content to replace with on archives (can be empty). You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_button_per_category_content_loop',
 		'default'  => '',
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'css'      => 'width:100%',
 	),
 	array(
@@ -142,11 +171,15 @@ return array(
 		'desc_tip' => __( 'Content to replace with on single product pages (can be empty). You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_button_per_category_content_single',
 		'default'  => '',
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'css'      => 'width:100%',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_add_to_cart_button_visibility_per_category_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_cart_button_visibility_per_category_tab',
+		'type' => 'tab_end',
 	),
 );

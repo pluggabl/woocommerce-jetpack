@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'general_shortcodes_options_tab'   => __( 'Shortcodes Options', 'woocommerce-jetpack' ),
+			'general_ip_detection_options_tab' => __( 'Ip Detection', 'woocommerce-jetpack' ),
+			'general_advanced_options_tab'     => __( 'Advanced Options', 'woocommerce-jetpack' ),
+			'general_paypal_email_options_tab' => __( 'PayPal Email per Product', 'woocommerce-jetpack' ),
+			'general_session_options_tab'      => __( 'Session Expiration', 'woocommerce-jetpack' ),
+			'general_user_role_options_tab'    => __( 'Booster User Roles Changer', 'woocommerce-jetpack' ),
+			'general_php_options_tab'          => __( 'PHP Options', 'woocommerce-jetpack' ),
+			'general_php_tools_tab'            => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'general_shortcodes_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Shortcodes Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -39,8 +61,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_general_shortcodes_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'general_shortcodes_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'general_ip_detection_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Ip Detection', 'woocommerce-jetpack' ),
@@ -64,8 +94,16 @@ $settings = array(
 		'type'     => 'textarea',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_general_ip',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'general_ip_detection_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'general_advanced_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Advanced Options', 'woocommerce-jetpack' ),
@@ -140,8 +178,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_general_advanced_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'general_advanced_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'general_paypal_email_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'PayPal Email per Product Options', 'woocommerce-jetpack' ),
@@ -157,8 +203,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_paypal_email_per_product_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'general_paypal_email_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'general_session_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Session Expiration Options', 'woocommerce-jetpack' ),
@@ -189,8 +243,16 @@ $settings = array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_session_expiration_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'general_session_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'general_user_role_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Booster User Roles Changer Options', 'woocommerce-jetpack' ),
@@ -216,8 +278,16 @@ $settings = array(
 		'options' => wcj_get_user_roles_options(),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_general_user_role_changer_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'general_user_role_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'general_php_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'PHP Options', 'woocommerce-jetpack' ),
@@ -243,8 +313,30 @@ $settings = array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_admin_tools_php_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'general_php_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'general_php_tools_tab',
+		'type' => 'tab_start',
+	),
+	array(
+		'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_' . $this->id . '_module_tools',
+		'type'     => 'custom_link',
+		'link'     => ( $this->is_enabled() ) ?
+		'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=custom_roles&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+		__( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ) . '</a> </code>' :
+			'<code>' . __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ) . '</code>',
+	),
+	array(
+		'id'   => 'general_php_tools_tab',
+		'type' => 'tab_end',
 	),
 );
 return $settings;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Sale Flash
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'wcj_product_sale_flash_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_sale_flash_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_sale_flash_globally_tab'        => __( 'Globally', 'woocommerce-jetpack' ),
+			'wcj_product_sale_flash_per_product_tab'     => __( 'Per Product', 'woocommerce-jetpack' ),
+			'wcj_product_sale_flash_per_product_cat_tab' => __( 'Per Category', 'woocommerce-jetpack' ),
+			'wcj_product_sale_flash_per_product_tag_tab' => __( 'Per Tag', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_sale_flash_globally_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Globally', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -55,8 +73,16 @@ $settings = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_sale_flash_global_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_sale_flash_globally_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_sale_flash_per_product_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Per Product', 'woocommerce-jetpack' ),
@@ -73,8 +99,12 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_sale_flash_per_product_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_sale_flash_per_product_tab',
+		'type' => 'tab_end',
 	),
 );
 
@@ -85,6 +115,10 @@ foreach ( $product_terms as $ids => $_product_terms ) {
 	$settings = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'wcj_product_sale_flash_per_' . $ids . '_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				'title' => $titles,
 				'type'  => 'title',
@@ -130,8 +164,12 @@ foreach ( $product_terms as $ids => $_product_terms ) {
 		$settings,
 		array(
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_sale_flash_per_' . $ids . '_options',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'   => 'wcj_product_sale_flash_per_' . $ids . '_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);

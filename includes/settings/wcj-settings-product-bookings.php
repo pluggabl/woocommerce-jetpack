@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Bookings
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -27,6 +27,23 @@ for ( $i = 1; $i <= 12; $i++ ) {
 }
 
 return array(
+	array(
+		'id'   => 'wcj_bookings_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_bookings_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_bookings_labels_and_messages_tab' => __( 'Labels and Messages', 'woocommerce-jetpack' ),
+			'wcj_bookings_options_tab'             => __( 'Options', 'woocommerce-jetpack' ),
+			'wcj_bookings_datepicker_options_tab'  => __( 'Datepicker Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_bookings_labels_and_messages_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Labels and Messages', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -82,8 +99,16 @@ return array(
 		'css'     => 'width:250px;',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_bookings_labels_and_messages_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_bookings_labels_and_messages_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_bookings_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
@@ -114,8 +139,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_bookings_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_bookings_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_bookings_datepicker_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Datepicker Options', 'woocommerce-jetpack' ),
@@ -160,7 +193,11 @@ return array(
 		'options'  => $months_array,
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_bookings_datepicker_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_bookings_datepicker_options_tab',
+		'type' => 'tab_end',
 	),
 );

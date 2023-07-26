@@ -1,20 +1,43 @@
 <?php
 /**
- * Booster Elite for WooCommerce - Settings - Gateways Fees and Discounts
+ * Booster for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since  1.0.0
  * @author  Pluggabl LLC.
- * @package Booster_For_WooCommerce/settings
+ *  @package Booster_For_WooCommerce/settings
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$products = wcj_get_products();
-$message  = apply_filters( 'booster_message', '', 'desc' );
+$products           = wcj_get_products();
+$message            = apply_filters( 'booster_message', '', 'desc' );
+$available_gateways = WC()->payment_gateways->payment_gateways();
+
+$tab_ids = array(
+	'wcj_gateways_fees_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+);
+
+foreach ( $available_gateways as $key => $gateway ) {
+	$tab_ids[ 'wcj_gateways_fees_' . $key . '_tab' ] = $gateway->title;
+}
+
 $settings = array(
+	array(
+		'id'   => 'wcj_gateways_fees_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_gateways_fees_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => $tab_ids,
+	),
+	array(
+		'id'   => 'wcj_gateways_fees_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -40,15 +63,23 @@ $settings = array(
 		'id'       => 'wcj_enable_payment_gateway_charge_discount',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_gateways_fees',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_gateways_fees_general_options_tab',
+		'type' => 'tab_end',
 	),
 );
-$available_gateways = WC()->payment_gateways->payment_gateways();
+
 foreach ( $available_gateways as $key => $gateway ) {
 	$settings = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'wcj_gateways_fees_' . $key . '_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				'title' => $gateway->title . ( $gateway->is_available() ? ' &#10003;' : '' ),
 				'type'  => 'title',
@@ -185,7 +216,6 @@ foreach ( $available_gateways as $key => $gateway ) {
 				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			),
-
 		)
 	);
 	foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
@@ -208,12 +238,21 @@ foreach ( $available_gateways as $key => $gateway ) {
 			$settings,
 			array(
 				array(
-					'type' => 'sectionend',
 					'id'   => "wcj_gateways_fees_options[{$key}]",
+					'type' => 'sectionend',
 				),
 			)
 		);
 
 	}
+	$settings = array_merge(
+		$settings,
+		array(
+			array(
+				'id'   => 'wcj_gateways_fees_' . $key . '_tab',
+				'type' => 'tab_end',
+			),
+		)
+	);
 }
 return $settings;

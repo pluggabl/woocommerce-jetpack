@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price Formats
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `desc_tip` to `wcj_price_formats_general_trim_zeros`
@@ -15,9 +15,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $settings                   = array(
 	array(
-		'title' => __( 'General Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_price_formats_general_options',
+		'id'   => 'price_formats_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'price_formats_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'price_formats_general_options_tab'           => __( 'General options', 'woocommerce-jetpack' ),
+			'price_formats_price_formats_by_currency_tab' => __( 'Price Formats by Currency (or WPML)', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'price_formats_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Trim Zeros in Prices', 'woocommerce-jetpack' ),
@@ -27,8 +38,16 @@ $settings                   = array(
 		'default' => 'no',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_price_formats_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'price_formats_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'price_formats_price_formats_by_currency_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Price Formats by Currency (or WPML)', 'woocommerce-jetpack' ),
@@ -69,6 +88,7 @@ for ( $i = 1; $i <= $price_formats_total_number; $i++ ) {
 				'id'      => 'wcj_price_formats_currency_' . $i,
 				'default' => get_woocommerce_currency(),
 				'type'    => 'select',
+				'class'   => 'wcj_select_search_input',
 				'options' => wcj_get_woocommerce_currencies_and_symbols(),
 				'css'     => 'width:300px;',
 			),
@@ -140,8 +160,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_price_formats_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'price_formats_price_formats_by_currency_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

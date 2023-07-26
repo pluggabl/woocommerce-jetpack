@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 6.0.3
+ * @version 7.0.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    per variation
@@ -119,7 +119,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		/**
 		 * Add_discount_info_to_cart_page.
 		 *
-		 * @version 
+		 * @version
 		 * @param  int    $price_html defines the price_html.
 		 * @param  array  $cart_item defines the cart_item.
 		 * @param  string $cart_item_key defines the cart_item_key.
@@ -171,7 +171,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		/**
 		 * Get_discount_by_quantity.
 		 *
-		 * @version 6.0.3
+		 * @version 7.0.0
 		 * @param  int $quantity defines the quantity.
 		 * @param  int $product_id defines the product_id.
 		 */
@@ -204,6 +204,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 							$discount_type = get_post_meta( $product_id, '_wcj_wholesale_price_discount_type', true );
 							if ( 'price_directly' === $discount_type ) {
 								$convertion_rate = do_shortcode( '[wcj_currency_exchange_rate_wholesale_module]' );
+								$convertion_rate = ( '' === $convertion_rate ) ? 0 : $convertion_rate;
 								$discount        = $discount * $convertion_rate;
 							}
 						} else {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cart Custom Info
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) 'Hide "Note: Shipping and taxes are estimated..." message on Cart page' - `wcj_cart_hide_shipping_and_taxes_estimated_message`
@@ -13,7 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$settings        = array(
+$settings = array(
+	array(
+		'id'   => 'wcj_cart_info_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_cart_info_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_cart_info_info_blocks_tab'      => __( 'Info Blocks', 'woocommerce-jetpack' ),
+			'wcj_cart_info_cart_items_table_tab' => __( 'Cart Items Table', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_cart_info_info_blocks_tab',
+		'type' => 'tab_start',
+	),
 	// Cart Custom Info Options.
 	array(
 		'title' => __( 'Cart Custom Info Blocks', 'woocommerce-jetpack' ),
@@ -32,50 +48,58 @@ $settings        = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_cart_custom_info_options',
+		'type' => 'sectionend',
 	),
 );
 $custom_info_num = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_cart_custom_info_total_number', 1 ) );
 for ( $i = 1; $i <= $custom_info_num;  $i++ ) {
-	$settings = array_merge(
-		$settings,
-		array(
+		$settings = array_merge(
+			$settings,
 			array(
-				'title' => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i,
-				'type'  => 'title',
-				'id'    => 'wcj_cart_custom_info_options_' . $i,
-			),
-			array(
-				'title'   => __( 'Content', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_cart_custom_info_content_' . $i,
-				'default' => '[wcj_cart_items_total_weight before="Total weight: " after=" kg"]',
-				'type'    => 'textarea',
-				'css'     => 'width:100%;height:200px;',
-			),
-			array(
-				'title'   => __( 'Position', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_cart_custom_info_hook_' . $i,
-				'default' => 'woocommerce_after_cart_totals',
-				'type'    => 'select',
-				'options' => wcj_get_cart_filters(),
-			),
-			array(
-				'title'   => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_cart_custom_info_priority_' . $i,
-				'default' => 10,
-				'type'    => 'number',
-			),
-			array(
-				'type' => 'sectionend',
-				'id'   => 'wcj_cart_custom_info_options_' . $i,
-			),
-		)
-	);
+				array(
+					'title' => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i,
+					'type'  => 'title',
+					'id'    => 'wcj_cart_custom_info_options_' . $i,
+				),
+				array(
+					'title'   => __( 'Content', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_cart_custom_info_content_' . $i,
+					'default' => '[wcj_cart_items_total_weight before="Total weight: " after=" kg"]',
+					'type'    => 'textarea',
+					'css'     => 'width:100%;height:200px;',
+				),
+				array(
+					'title'   => __( 'Position', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_cart_custom_info_hook_' . $i,
+					'default' => 'woocommerce_after_cart_totals',
+					'type'    => 'select',
+					'options' => wcj_get_cart_filters(),
+				),
+				array(
+					'title'   => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_cart_custom_info_priority_' . $i,
+					'default' => 10,
+					'type'    => 'number',
+				),
+				array(
+					'type' => 'sectionend',
+					'id'   => 'wcj_cart_custom_info_options_' . $i,
+				),
+			)
+		);
 }
 $settings = array_merge(
 	$settings,
 	array(
+		array(
+			'id'   => 'wcj_cart_info_info_blocks_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_cart_info_cart_items_table_tab',
+			'type' => 'tab_start',
+		),
 		// Cart Items Table Custom Info Options.
 		array(
 			'title' => __( 'Cart Items Table Custom Info', 'woocommerce-jetpack' ),
@@ -92,8 +116,12 @@ $settings = array_merge(
 			'css'      => 'width:100%;height:100px;',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_cart_custom_info_item_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_cart_abandonment_email_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

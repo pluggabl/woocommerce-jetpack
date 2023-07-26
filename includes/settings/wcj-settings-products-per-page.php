@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Products per Page
  *
- * @version 5.6.7
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'wcj_product_per_page_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_per_page_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_per_page_genral_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_per_page_genral_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -57,7 +72,7 @@ return array(
 		'title'   => __( 'Template - Before Form', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_products_per_page_text_before',
 		'default' => '<div class="clearfix"></div><div>',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%',
 	),
 	array(
@@ -65,14 +80,14 @@ return array(
 		'id'      => 'wcj_products_per_page_text',
 		/* translators: %s: translators Added */
 		'default' => sprintf( __( 'Products <strong>%1$s - %2$s</strong> from <strong>%3$s</strong>. Products on page %4$s', 'woocommerce-jetpack' ), '%from%', '%to%', '%total%', '%select_form%' ) . '<br>',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%',
 	),
 	array(
 		'title'   => __( 'Template - After Form', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_products_per_page_text_after',
 		'default' => '</div>',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%',
 	),
 	array(
@@ -96,7 +111,11 @@ return array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_products_per_page_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_xml_genral_options_tab',
+		'type' => 'tab_end',
 	),
 );

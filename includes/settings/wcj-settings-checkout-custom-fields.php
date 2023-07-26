@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -15,6 +15,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_cats        = wcj_get_terms( 'product_cat' );
 $products            = wcj_get_products();
 $settings            = array(
+	array(
+		'id'   => 'wcj_checkout_custom_fields_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_checkout_custom_fields_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_checkout_custom_fields_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_checkout_custom_fields_custom_fields_tab' => __( 'Custom Field', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_checkout_custom_fields_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -96,6 +112,14 @@ $settings            = array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'id'   => 'wcj_checkout_custom_fields_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_checkout_custom_fields_custom_fields_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title'             => __( 'Custom Fields Number', 'woocommerce-jetpack' ),
 		'desc_tip'          => __( 'Click Save changes after you change this number.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_checkout_custom_fields_total_number',
@@ -118,336 +142,345 @@ $settings            = array(
 );
 $checkout_fields_num = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_custom_fields_total_number', 1 ) );
 for ( $i = 1; $i <= $checkout_fields_num; $i++ ) {
-	$settings = array_merge(
-		$settings,
-		array(
+		$settings = array_merge(
+			$settings,
 			array(
-				'title' => __( 'Custom Field', 'woocommerce-jetpack' ) . ' #' . $i,
-				'type'  => 'title',
-				'id'    => 'wcj_checkout_custom_fields_options_' . $i,
-			),
-			array(
-				'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
-				'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
-				'desc_tip' => __( 'Key', 'woocommerce-jetpack' ) . ': ' .
+				array(
+					'title' => __( 'Custom Field', 'woocommerce-jetpack' ) . ' #' . $i,
+					'type'  => 'title',
+					'id'    => 'wcj_checkout_custom_fields_options_' . $i,
+				),
+				array(
+					'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
+					'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
+					'desc_tip' => __( 'Key', 'woocommerce-jetpack' ) . ': ' .
 					'<code>' . wcj_get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_wcj_checkout_field_' . $i . '</code>',
-				'id'       => 'wcj_checkout_custom_field_enabled_' . $i,
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'   => __( 'Type', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_type_' . $i,
-				'default' => 'text',
-				'type'    => 'select',
-				'options' => array(
-					'text'       => __( 'Text', 'woocommerce-jetpack' ),
-					'textarea'   => __( 'Textarea', 'woocommerce-jetpack' ),
-					'number'     => __( 'Number', 'woocommerce-jetpack' ),
-					'checkbox'   => __( 'Checkbox', 'woocommerce-jetpack' ),
-					'datepicker' => __( 'Datepicker', 'woocommerce-jetpack' ),
-					'weekpicker' => __( 'Weekpicker', 'woocommerce-jetpack' ),
-					'timepicker' => __( 'Timepicker', 'woocommerce-jetpack' ),
-					'select'     => __( 'Select', 'woocommerce-jetpack' ),
-					'radio'      => __( 'Radio', 'woocommerce-jetpack' ),
-					'password'   => __( 'Password', 'woocommerce-jetpack' ),
-					'country'    => __( 'Country', 'woocommerce-jetpack' ),
-					'state'      => __( 'State', 'woocommerce-jetpack' ),
-					'email'      => __( 'Email', 'woocommerce-jetpack' ),
-					'tel'        => __( 'Phone', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_enabled_' . $i,
+					'default'  => 'no',
+					'type'     => 'checkbox',
 				),
-			),
-			array(
-				'title'   => __( 'Required', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_required_' . $i,
-				'default' => 'no',
-				'type'    => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Clear Data', 'woocommerce-jetpack' ),
-				'desc'     => __( 'If you have issue with time limit in datepicker field. so must need to Enable this option to Fix.', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Clear autoselected data on checkout page.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_clear_data' . $i,
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'   => __( 'Label', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_label_' . $i,
-				'default' => '',
-				'type'    => 'textarea',
-				'css'     => 'min-width:300px;',
-			),
-			array(
-				'title'   => __( 'Placeholder', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_placeholder_' . $i,
-				'default' => '',
-				'type'    => 'textarea',
-				'css'     => 'min-width:300px;',
-			),
-			array(
-				'title'   => __( 'Description', 'woocommerce-jetpack' ),
-				'desc'    => __( 'You can use HTML here.', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_description_' . $i,
-				'default' => '',
-				'type'    => 'custom_textarea',
-				'css'     => 'min-width:300px;',
-			),
-			array(
-				'title'   => __( 'Priority (i.e. Order)', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_priority_' . $i,
-				'default' => '',
-				'type'    => 'text',
-				'css'     => 'min-width:300px;',
-			),
-			array(
-				'title'   => __( 'Section', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_section_' . $i,
-				'default' => 'billing',
-				'type'    => 'select',
-				'options' => array(
-					'billing'  => __( 'Billing', 'woocommerce-jetpack' ),
-					'shipping' => __( 'Shipping', 'woocommerce-jetpack' ),
-					'order'    => __( 'Order Notes', 'woocommerce-jetpack' ),
-					'account'  => __( 'Account', 'woocommerce-jetpack' ),
+				array(
+					'title'   => __( 'Type', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_type_' . $i,
+					'default' => 'text',
+					'type'    => 'select',
+					'options' => array(
+						'text'       => __( 'Text', 'woocommerce-jetpack' ),
+						'textarea'   => __( 'Textarea', 'woocommerce-jetpack' ),
+						'number'     => __( 'Number', 'woocommerce-jetpack' ),
+						'checkbox'   => __( 'Checkbox', 'woocommerce-jetpack' ),
+						'datepicker' => __( 'Datepicker', 'woocommerce-jetpack' ),
+						'weekpicker' => __( 'Weekpicker', 'woocommerce-jetpack' ),
+						'timepicker' => __( 'Timepicker', 'woocommerce-jetpack' ),
+						'select'     => __( 'Select', 'woocommerce-jetpack' ),
+						'radio'      => __( 'Radio', 'woocommerce-jetpack' ),
+						'password'   => __( 'Password', 'woocommerce-jetpack' ),
+						'country'    => __( 'Country', 'woocommerce-jetpack' ),
+						'state'      => __( 'State', 'woocommerce-jetpack' ),
+						'email'      => __( 'Email', 'woocommerce-jetpack' ),
+						'tel'        => __( 'Phone', 'woocommerce-jetpack' ),
+					),
 				),
-			),
-			array(
-				'title'   => __( 'Class', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_class_' . $i,
-				'default' => 'form-row-wide',
-				'type'    => 'select',
-				'options' => array(
-					'form-row-wide'  => __( 'Wide', 'woocommerce-jetpack' ),
-					'form-row-first' => __( 'First', 'woocommerce-jetpack' ),
-					'form-row-last'  => __( 'Last', 'woocommerce-jetpack' ),
+				array(
+					'title'   => __( 'Required', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_required_' . $i,
+					'default' => 'no',
+					'type'    => 'checkbox',
 				),
-			),
-			array(
-				'title'   => __( 'Clear', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_clear_' . $i,
-				'default' => 'yes',
-				'type'    => 'checkbox',
-			),
-			array(
-				'title'   => __( 'Customer Meta Fields', 'woocommerce-jetpack' ),
-				'desc'    => __( 'Add', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_customer_meta_fields_' . $i,
-				'default' => 'yes',
-				'type'    => 'checkbox',
-			),
-			array(
-				'title'   => __( 'Select/Radio: Options', 'woocommerce-jetpack' ),
-				'desc'    => __( 'One option per line', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_select_options_' . $i,
-				'default' => '',
-				'type'    => 'textarea',
-				'css'     => 'min-width:300px;height:150px;',
-			),
-			array(
-				'title'   => __( 'Select: Use select2 Library', 'woocommerce-jetpack' ),
-				'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_select_select2_' . $i,
-				'default' => 'no',
-				'type'    => 'checkbox',
-			),
-			array(
-				'desc'              => __( 'select2: min input length', 'woocommerce-jetpack' ),
-				'desc_tip'          => __( 'select2: Number of characters necessary to start a search.', 'woocommerce-jetpack' ) . ' ' .
-					__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
-				'id'                => 'wcj_checkout_custom_field_select_select2_min_input_length' . $i,
-				'default'           => 0,
-				'type'              => 'number',
-				'custom_attributes' => array( 'min' => 0 ),
-			),
-			array(
-				'desc'              => __( 'select2: max input length', 'woocommerce-jetpack' ),
-				'desc_tip'          => __( 'select2: Maximum number of characters that can be entered for an input.', 'woocommerce-jetpack' ) . ' ' .
-					__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
-				'id'                => 'wcj_checkout_custom_field_select_select2_max_input_length' . $i,
-				'default'           => 0,
-				'type'              => 'number',
-				'custom_attributes' => array( 'min' => 0 ),
-			),
-			array(
-				'id'      => 'wcj_checkout_custom_field_checkbox_yes_' . $i,
-				'title'   => __( 'Checkbox: Value for ON', 'woocommerce-jetpack' ),
-				'type'    => 'text',
-				'default' => __( 'Yes', 'woocommerce-jetpack' ),
-			),
-			array(
-				'id'      => 'wcj_checkout_custom_field_checkbox_no_' . $i,
-				'title'   => __( 'Checkbox: Value for OFF', 'woocommerce-jetpack' ),
-				'type'    => 'text',
-				'default' => __( 'No', 'woocommerce-jetpack' ),
-			),
-			array(
-				'id'      => 'wcj_checkout_custom_field_checkbox_default_' . $i,
-				'title'   => __( 'Checkbox: Default Value', 'woocommerce-jetpack' ),
-				'type'    => 'select',
-				'default' => 'no',
-				'options' => array(
-					'no'  => __( 'Not Checked', 'woocommerce-jetpack' ),
-					'yes' => __( 'Checked', 'woocommerce-jetpack' ),
+				array(
+					'title'    => __( 'Clear Data', 'woocommerce-jetpack' ),
+					'desc'     => __( 'If you have issue with time limit in datepicker field. so must need to Enable this option to Fix.', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Clear autoselected data on checkout page.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_clear_data' . $i,
+					'default'  => 'no',
+					'type'     => 'checkbox',
 				),
-			),
-			array(
-				'title'    => __( 'Datepicker/Weekpicker: Date Format', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ) . '</br>' . __( 'Use Y-m-d format if you want to use this field for sorting', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_datepicker_format_' . $i,
-				'type'     => 'text',
-				'default'  => '',
-			),
-			array(
-				'title'   => __( 'Datepicker/Weekpicker: Min Date', 'woocommerce-jetpack' ),
-				'desc'    => __( 'days', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_datepicker_mindate_' . $i,
-				'type'    => 'number',
-				'default' => -365,
-			),
-			array(
-				'title'    => __( 'Datepicker/Weekpicker: Current day time limit', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'If the Min Date is 0, Today\'s date will be no longer available after selected time limit.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_datepicker_current_day_time_limit_' . $i,
-				'type'     => 'time',
-				'default'  => '10:00',
-				'css'      => 'width:400px',
-			),
-			array(
-				'title'   => __( 'Datepicker/Weekpicker: Max Date', 'woocommerce-jetpack' ),
-				'desc'    => __( 'days', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,
-				'type'    => 'number',
-				'default' => 365,
-			),
-			array(
-				'title'   => __( 'Datepicker/Weekpicker: Add Year Selector', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_datepicker_changeyear_' . $i,
-				'type'    => 'checkbox',
-				'default' => 'no',
-			),
-			array(
-				'title'    => __( 'Datepicker/Weekpicker: Year Selector: Year Range', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'The range of years displayed in the year drop-down: either relative to today\'s year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_datepicker_yearrange_' . $i,
-				'type'     => 'text',
-				'default'  => 'c-10:c+10',
-			),
-			array(
-				'title'   => __( 'Datepicker/Weekpicker: First Week Day', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_datepicker_firstday_' . $i,
-				'type'    => 'select',
-				'default' => 0,
-				'options' => array(
-					__( 'Sunday', 'woocommerce-jetpack' ),
-					__( 'Monday', 'woocommerce-jetpack' ),
-					__( 'Tuesday', 'woocommerce-jetpack' ),
-					__( 'Wednesday', 'woocommerce-jetpack' ),
-					__( 'Thursday', 'woocommerce-jetpack' ),
-					__( 'Friday', 'woocommerce-jetpack' ),
-					__( 'Saturday', 'woocommerce-jetpack' ),
+				array(
+					'title'   => __( 'Label', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_label_' . $i,
+					'default' => '',
+					'type'    => 'textarea',
+					'css'     => 'min-width:300px;',
 				),
-			),
+				array(
+					'title'   => __( 'Placeholder', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_placeholder_' . $i,
+					'default' => '',
+					'type'    => 'textarea',
+					'css'     => 'min-width:300px;',
+				),
+				array(
+					'title'   => __( 'Description', 'woocommerce-jetpack' ),
+					'desc'    => __( 'You can use HTML here.', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_description_' . $i,
+					'default' => '',
+					'type'    => 'textarea',
+					'css'     => 'min-width:300px;',
+				),
+				array(
+					'title'   => __( 'Priority (i.e. Order)', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_priority_' . $i,
+					'default' => '',
+					'type'    => 'text',
+					'css'     => 'min-width:300px;',
+				),
+				array(
+					'title'   => __( 'Section', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_section_' . $i,
+					'default' => 'billing',
+					'type'    => 'select',
+					'options' => array(
+						'billing'  => __( 'Billing', 'woocommerce-jetpack' ),
+						'shipping' => __( 'Shipping', 'woocommerce-jetpack' ),
+						'order'    => __( 'Order Notes', 'woocommerce-jetpack' ),
+						'account'  => __( 'Account', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'title'   => __( 'Class', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_class_' . $i,
+					'default' => 'form-row-wide',
+					'type'    => 'select',
+					'options' => array(
+						'form-row-wide'  => __( 'Wide', 'woocommerce-jetpack' ),
+						'form-row-first' => __( 'First', 'woocommerce-jetpack' ),
+						'form-row-last'  => __( 'Last', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'title'   => __( 'Clear', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_clear_' . $i,
+					'default' => 'yes',
+					'type'    => 'checkbox',
+				),
+				array(
+					'title'   => __( 'Customer Meta Fields', 'woocommerce-jetpack' ),
+					'desc'    => __( 'Add', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_customer_meta_fields_' . $i,
+					'default' => 'yes',
+					'type'    => 'checkbox',
+				),
+				array(
+					'title'   => __( 'Select/Radio: Options', 'woocommerce-jetpack' ),
+					'desc'    => __( 'One option per line', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_select_options_' . $i,
+					'default' => '',
+					'type'    => 'textarea',
+					'css'     => 'min-width:300px;height:150px;',
+				),
+				array(
+					'title'   => __( 'Select: Use select2 Library', 'woocommerce-jetpack' ),
+					'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_select_select2_' . $i,
+					'default' => 'no',
+					'type'    => 'checkbox',
+				),
+				array(
+					'desc'              => __( 'select2: min input length', 'woocommerce-jetpack' ),
+					'desc_tip'          => __( 'select2: Number of characters necessary to start a search.', 'woocommerce-jetpack' ) . ' ' .
+						__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
+					'id'                => 'wcj_checkout_custom_field_select_select2_min_input_length' . $i,
+					'default'           => 0,
+					'type'              => 'number',
+					'custom_attributes' => array( 'min' => 0 ),
+				),
+				array(
+					'desc'              => __( 'select2: max input length', 'woocommerce-jetpack' ),
+					'desc_tip'          => __( 'select2: Maximum number of characters that can be entered for an input.', 'woocommerce-jetpack' ) . ' ' .
+						__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
+					'id'                => 'wcj_checkout_custom_field_select_select2_max_input_length' . $i,
+					'default'           => 0,
+					'type'              => 'number',
+					'custom_attributes' => array( 'min' => 0 ),
+				),
+				array(
+					'id'      => 'wcj_checkout_custom_field_checkbox_yes_' . $i,
+					'title'   => __( 'Checkbox: Value for ON', 'woocommerce-jetpack' ),
+					'type'    => 'text',
+					'default' => __( 'Yes', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'      => 'wcj_checkout_custom_field_checkbox_no_' . $i,
+					'title'   => __( 'Checkbox: Value for OFF', 'woocommerce-jetpack' ),
+					'type'    => 'text',
+					'default' => __( 'No', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'      => 'wcj_checkout_custom_field_checkbox_default_' . $i,
+					'title'   => __( 'Checkbox: Default Value', 'woocommerce-jetpack' ),
+					'type'    => 'select',
+					'default' => 'no',
+					'options' => array(
+						'no'  => __( 'Not Checked', 'woocommerce-jetpack' ),
+						'yes' => __( 'Checked', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'title'    => __( 'Datepicker/Weekpicker: Date Format', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ) . '</br>' . __( 'Use Y-m-d format if you want to use this field for sorting', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_datepicker_format_' . $i,
+					'type'     => 'text',
+					'default'  => '',
+				),
+				array(
+					'title'   => __( 'Datepicker/Weekpicker: Min Date', 'woocommerce-jetpack' ),
+					'desc'    => __( 'days', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_datepicker_mindate_' . $i,
+					'type'    => 'number',
+					'default' => -365,
+				),
+				array(
+					'title'    => __( 'Datepicker/Weekpicker: Current day time limit', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If the Min Date is 0, Today\'s date will be no longer available after selected time limit.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_datepicker_current_day_time_limit_' . $i,
+					'type'     => 'time',
+					'default'  => '10:00',
+					'css'      => 'width:400px',
+				),
+				array(
+					'title'   => __( 'Datepicker/Weekpicker: Max Date', 'woocommerce-jetpack' ),
+					'desc'    => __( 'days', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,
+					'type'    => 'number',
+					'default' => 365,
+				),
+				array(
+					'title'   => __( 'Datepicker/Weekpicker: Add Year Selector', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_datepicker_changeyear_' . $i,
+					'type'    => 'checkbox',
+					'default' => 'no',
+				),
+				array(
+					'title'    => __( 'Datepicker/Weekpicker: Year Selector: Year Range', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'The range of years displayed in the year drop-down: either relative to today\'s year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_datepicker_yearrange_' . $i,
+					'type'     => 'text',
+					'default'  => 'c-10:c+10',
+				),
+				array(
+					'title'   => __( 'Datepicker/Weekpicker: First Week Day', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_datepicker_firstday_' . $i,
+					'type'    => 'select',
+					'default' => 0,
+					'options' => array(
+						__( 'Sunday', 'woocommerce-jetpack' ),
+						__( 'Monday', 'woocommerce-jetpack' ),
+						__( 'Tuesday', 'woocommerce-jetpack' ),
+						__( 'Wednesday', 'woocommerce-jetpack' ),
+						__( 'Thursday', 'woocommerce-jetpack' ),
+						__( 'Friday', 'woocommerce-jetpack' ),
+						__( 'Saturday', 'woocommerce-jetpack' ),
+					),
+				),
 
-			// Block Dates.
-			array(
-				'title'             => __( 'Datepicker/Weekpicker: Block Dates Format', 'woocommerce-jetpack' ),
-				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-				'desc_tip'          => __( 'Date format used to block dates.', 'woocommerce-jetpack' ) . '<br />' . __( 'Use yy-mm-dd if you want to include the year.', 'woocommerce-jetpack' ),
-				'id'                => 'wcj_checkout_custom_field_datepicker_blockeddates_format_' . $i,
-				'type'              => 'text',
-				'default'           => 'mm-dd',
-			),
-			array(
-				'title'             => __( 'Datepicker/Weekpicker: Block Dates', 'woocommerce-jetpack' ),
-				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-				'desc_tip'          => __( 'Use one date per line.', 'woocommerce-jetpack' ) . '<br />' . __( 'E.g 12-25 for Christmas, if block dates format is mm-dd', 'woocommerce-jetpack' ),
-				'id'                => 'wcj_checkout_custom_field_datepicker_blockeddates_' . $i,
-				'type'              => 'textarea',
-				'default'           => '',
-			),
+				// Block Dates.
+				array(
+					'title'             => __( 'Datepicker/Weekpicker: Block Dates Format', 'woocommerce-jetpack' ),
+					'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+					'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+					'desc_tip'          => __( 'Date format used to block dates.', 'woocommerce-jetpack' ) . '<br />' . __( 'Use yy-mm-dd if you want to include the year.', 'woocommerce-jetpack' ),
+					'id'                => 'wcj_checkout_custom_field_datepicker_blockeddates_format_' . $i,
+					'type'              => 'text',
+					'default'           => 'mm-dd',
+				),
+				array(
+					'title'             => __( 'Datepicker/Weekpicker: Block Dates', 'woocommerce-jetpack' ),
+					'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+					'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+					'desc_tip'          => __( 'Use one date per line.', 'woocommerce-jetpack' ) . '<br />' . __( 'E.g 12-25 for Christmas, if block dates format is mm-dd', 'woocommerce-jetpack' ),
+					'id'                => 'wcj_checkout_custom_field_datepicker_blockeddates_' . $i,
+					'type'              => 'textarea',
+					'default'           => '',
+				),
 
-			// Timepicker.
-			array(
-				'title'   => __( 'Timepicker: Time Format', 'woocommerce-jetpack' ),
-				'desc'    => __( 'Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_timepicker_format_' . $i,
-				'type'    => 'text',
-				'default' => 'hh:mm p',
-			),
-			array(
-				'title'   => __( 'Timepicker: Interval', 'woocommerce-jetpack' ),
-				'desc'    => __( 'minutes', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_checkout_custom_field_timepicker_interval_' . $i,
-				'type'    => 'number',
-				'default' => 15,
-			),
-			array(
-				'title'    => __( 'Exclude Categories', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Hide this field if there is a product of selected category in cart.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_categories_ex_' . $i,
-				'default'  => '',
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'options'  => $product_cats,
-			),
-			array(
-				'title'    => __( 'Include Categories', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Show this field only if there is a product of selected category in cart.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_categories_in_' . $i,
-				'default'  => '',
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'options'  => $product_cats,
-			),
-			array(
-				'title'    => __( 'Exclude Products', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Hide this field if there is a selected product in cart.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_products_ex_' . $i,
-				'default'  => '',
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'options'  => $products,
-			),
-			array(
-				'title'    => __( 'Include Products', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Show this field only if there is a selected product in cart.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_field_products_in_' . $i,
-				'default'  => '',
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'options'  => $products,
-			),
-			array(
-				'title'             => __( 'Min Cart Amount', 'woocommerce-jetpack' ),
-				'desc_tip'          => __( 'Show this field only if cart total is at least this amount. Set zero to disable.', 'woocommerce-jetpack' ),
-				'id'                => 'wcj_checkout_custom_field_min_cart_amount_' . $i,
-				'default'           => 0,
-				'type'              => 'number',
-				'custom_attributes' => array(
-					'min'  => 0,
-					'step' => wcj_get_wc_price_step(),
+				// Timepicker.
+				array(
+					'title'   => __( 'Timepicker: Time Format', 'woocommerce-jetpack' ),
+					'desc'    => __( 'Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_timepicker_format_' . $i,
+					'type'    => 'text',
+					'default' => 'hh:mm p',
 				),
-			),
-			array(
-				'title'             => __( 'Max Cart Amount', 'woocommerce-jetpack' ),
-				'desc_tip'          => __( 'Show this field only if cart total is not more than this amount. Set zero to disable.', 'woocommerce-jetpack' ),
-				'id'                => 'wcj_checkout_custom_field_max_cart_amount_' . $i,
-				'default'           => 0,
-				'type'              => 'number',
-				'custom_attributes' => array(
-					'min'  => 0,
-					'step' => wcj_get_wc_price_step(),
+				array(
+					'title'   => __( 'Timepicker: Interval', 'woocommerce-jetpack' ),
+					'desc'    => __( 'minutes', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_checkout_custom_field_timepicker_interval_' . $i,
+					'type'    => 'number',
+					'default' => 15,
 				),
-			),
-			array(
-				'type' => 'sectionend',
-				'id'   => 'wcj_checkout_custom_fields_options_' . $i,
-			),
-		)
-	);
+				array(
+					'title'    => __( 'Exclude Categories', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Hide this field if there is a product of selected category in cart.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_categories_ex_' . $i,
+					'default'  => '',
+					'type'     => 'multiselect',
+					'class'    => 'chosen_select',
+					'options'  => $product_cats,
+				),
+				array(
+					'title'    => __( 'Include Categories', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Show this field only if there is a product of selected category in cart.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_categories_in_' . $i,
+					'default'  => '',
+					'type'     => 'multiselect',
+					'class'    => 'chosen_select',
+					'options'  => $product_cats,
+				),
+				array(
+					'title'    => __( 'Exclude Products', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Hide this field if there is a selected product in cart.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_products_ex_' . $i,
+					'default'  => '',
+					'type'     => 'multiselect',
+					'class'    => 'chosen_select',
+					'options'  => $products,
+				),
+				array(
+					'title'    => __( 'Include Products', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Show this field only if there is a selected product in cart.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_custom_field_products_in_' . $i,
+					'default'  => '',
+					'type'     => 'multiselect',
+					'class'    => 'chosen_select',
+					'options'  => $products,
+				),
+				array(
+					'title'             => __( 'Min Cart Amount', 'woocommerce-jetpack' ),
+					'desc_tip'          => __( 'Show this field only if cart total is at least this amount. Set zero to disable.', 'woocommerce-jetpack' ),
+					'id'                => 'wcj_checkout_custom_field_min_cart_amount_' . $i,
+					'default'           => 0,
+					'type'              => 'number',
+					'custom_attributes' => array(
+						'min'  => 0,
+						'step' => wcj_get_wc_price_step(),
+					),
+				),
+				array(
+					'title'             => __( 'Max Cart Amount', 'woocommerce-jetpack' ),
+					'desc_tip'          => __( 'Show this field only if cart total is not more than this amount. Set zero to disable.', 'woocommerce-jetpack' ),
+					'id'                => 'wcj_checkout_custom_field_max_cart_amount_' . $i,
+					'default'           => 0,
+					'type'              => 'number',
+					'custom_attributes' => array(
+						'min'  => 0,
+						'step' => wcj_get_wc_price_step(),
+					),
+				),
+				array(
+					'type' => 'sectionend',
+					'id'   => 'wcj_checkout_custom_fields_options_' . $i,
+				),
+			)
+		);
 }
+$settings = array_merge(
+	$settings,
+	array(
+		array(
+			'id'   => 'wcj_checkout_custom_fields_general_options_tab',
+			'type' => 'tab_end',
+		),
+	)
+);
 return $settings;

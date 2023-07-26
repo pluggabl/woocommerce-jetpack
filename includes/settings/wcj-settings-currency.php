@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currencies
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings       = array(
+	array(
+		'id'   => 'currency_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'currency_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'currency_options_currency_symbol_tab'   => __( 'Currency Symbol', 'woocommerce-jetpack' ),
+			'currency_options_custom_currencies_tab' => __( 'Custom Currencies', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'currency_options_currency_symbol_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Currency Symbol Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -60,8 +76,16 @@ $settings                     = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_all_currencies_list_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'currency_options_currency_symbol_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'currency_options_custom_currencies_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Custom Currencies', 'woocommerce-jetpack' ),
@@ -109,8 +133,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_currency_custom_currency_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'currency_options_custom_currencies_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -1,10 +1,10 @@
 === Booster for WooCommerce ===
-Contributors: anbinder, karzin, pluggabl
+Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
 Tested up to: 6.2.2
 Requires PHP: 7.2
-Stable tag: 6.0.6
+Stable tag: 7.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -112,6 +112,9 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 * *Subscriptions* - Give customers more control of their subscriptions, Cancellation questionnaire, Change next payment date, Add Products to Existing Subscription, Turn existing one-time products to subscriptions base etc.(Available in paid Booster bundles)
 
+**Marketing**
+
+* *Sales Notifications* - Give proof of sales to your prospects and increase your eCommerce sales.(Available in paid Booster bundles)
 
 **Prices & Currencies**
 
@@ -274,6 +277,37 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.0.0 26/07/2023 =
+
+* FIXED - EMAILS & MISC - Admin Bar - Fixed Booster Tools not working when accessed through the admin bar.
+* FIXED - BUTTON & PRICE LABELS - Add to Cart Button Labels - Fixed the Button's text issue when the price is set to 0.
+* FIXED - BUTTON & PRICE LABELS - Free Price Labels - Fixed the issue of Free Price Labels not working with variable products.
+* FIXED - PRICES & CURRENCIES - Price based on User Role - Fixed the issue of the module stopping working When enabled the >> Enable Price by User role for Order Edit option.
+* FIXED - PRODUCTS - Product Bulk Meta Editor Module - Fixed the meta delete option while using the Product Bulk Meta Editor Module Tool.
+* FIXED - PRODUCTS - Product Availability by Time - Fixed the Product availability filter issue not working for the minutes.
+* FIXED - CART & CHECKOUT - Checkout Files Upload - Fixed the HTML tag not being saved with the Order Template option.
+* FIXED - SHIPPING & ORDERS - Maximum Products per User - Fixed the global qty limit should be used when the per product qty limit is set to 0.
+* FIXED - SHIPPING & ORDERS - Orders - Fixed the module redirection issue After setup the >> Bulk Regenerate Download Permissions for the Orders settings option.
+* FIXED - SHIPPING & ORDERS - Order Quantities - Fixed the global min/max qty limit should be called when the per product qty limit is set to 0.
+* FIXED - SHIPPING & ORDERS - Order Quantities - Fixed Max quantities should be disabled when qty set to the -1 from per product section.
+* FIXED - SHIPPING & ORDERS - Order Quantities - Fixed Global step limit should be used when per product step set to 0.
+* FIXED - SHIPPING & ORDERS - Order Quantities - PHP Fatal error: Uncaught DivisionByZeroError: Modulo by zero in includes/class-wcj-order-quantities.php.
+* FIXED - SHIPPING & ORDERS - Shipping Methods by Products - Fixed shipping method include/exclude filter issues with the variable products.
+* FIXED - SHIPPING & ORDERS - Shipping Methods by Users - Fixed shipping method not filtered according to selected users.
+* FIXED - PRICES & CURRENCIES - Wholesale Price - Uncaught Error: Uncaught TypeError: Unsupported operand types: string * string  in includes/class-wcj-wholesale-price.php...
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed save pdf instead of view pdf in browser option.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed name format issue while saving the custom document.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed the Header Content disappearing when using the background image.
+* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Create a new option to control the opacity of the background image.
+* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Add a new option to adjust the margin-top for the background image.
+* NEW FEATURE - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Add a new option to set the margin left for the background image.
+* Complete overhaul of User Interface (UI), offering a modern, sleek, and intuitive design.
+* Improved navigation system across 120+ modules, enabling easy and quick access to features.
+* Implementation of a consistent design language across all modules for a seamless user experience.
+* Enhanced user experience (UX) with interactive and optimized module interactions.
+* WooCommerce 7.9.0 Tested
+* WordPress 6.2.2 Tested
 
 = 6.0.6 24/05/2023 =
 

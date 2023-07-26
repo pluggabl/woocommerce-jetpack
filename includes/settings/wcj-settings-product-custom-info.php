@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Info
  *
- * @version 5.6.2
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -19,7 +19,27 @@ $product_cats            = ( $is_multiselect_cats ? wcj_get_terms( 'product_cat'
 $product_tags            = ( $is_multiselect_tags ? wcj_get_terms( 'product_tag' ) : false );
 $settings                = array();
 $single_or_archive_array = array( 'single', 'archive' );
+$products                = wcj_get_products();
 
+$settings = array_merge(
+	$settings,
+	array(
+		array(
+			'id'   => 'wcj_product_info_general_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'      => 'wcj_product_info_general_options',
+			'type'    => 'tab_ids',
+			'tab_ids' => array(
+				'wcj_product_info_single'           => __( 'Single Product Pages', 'woocommerce-jetpack' ),
+				'wcj_product_info_single_advanced'  => __( 'Single Product Advanced Options', 'woocommerce-jetpack' ),
+				'wcj_product_info_archive'          => __( 'Archives', 'woocommerce-jetpack' ),
+				'wcj_product_info_archive_advanced' => __( 'Archives Advanced Options', 'woocommerce-jetpack' ),
+			),
+		),
+	)
+);
 foreach ( $single_or_archive_array as $single_or_archive ) {
 	$extra_filters = wcj_get_option( 'wcj_product_custom_info_extra_filters_' . $single_or_archive, '' );
 	if ( '' === ( $extra_filters ) ) {
@@ -50,6 +70,10 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 	$settings                = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'wcj_product_info_' . $single_or_archive,
+				'type' => 'tab_start',
+			),
 			array(
 				'title' => $single_or_archive_desc,
 				'type'  => 'title',
@@ -127,7 +151,7 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 					'title'    => __( 'Content', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i,
 					'default'  => '[wcj_product_total_sales before="Total sales: " after=" pcs."]',
-					'type'     => 'custom_textarea',
+					'type'     => 'textarea',
 					'desc_tip' => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 					'css'      => 'width:100%;height:200px;',
 				),
@@ -238,6 +262,14 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 		$settings,
 		array(
 			array(
+				'id'   => 'wcj_product_info_' . $single_or_archive,
+				'type' => 'tab_end',
+			),
+			array(
+				'id'   => 'wcj_product_info_' . $single_or_archive . '_advanced',
+				'type' => 'tab_start',
+			),
+			array(
 				'title' => $single_or_archive_desc . ': ' . __( 'Advanced Options', 'woocommerce-jetpack' ),
 				'type'  => 'title',
 				'id'    => 'wcj_product_custom_info_advanced_options_' . $single_or_archive,
@@ -246,16 +278,20 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'title'    => __( 'Extra Filters', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Leave blank to disable.', 'woocommerce-jetpack' ),
 				'desc'     => __( 'You can add custom filters here (one per line, in filter|title format).', 'woocommerce-jetpack' ) . '<br>' .
-				/* translators: %s: translators Added */
-					sprintf( __( 'E.g.: %s.', 'woocommerce-jetpack' ), '<code>rehub_woo_after_compact_grid_title|Rehub: After title</code>' ),
+								/* translators: %s: translators Added */
+								sprintf( __( 'E.g.: %s.', 'woocommerce-jetpack' ), '<code>rehub_woo_after_compact_grid_title|Rehub: After title</code>' ),
 				'id'       => 'wcj_product_custom_info_extra_filters_' . $single_or_archive,
 				'default'  => '',
-				'type'     => 'custom_textarea',
+				'type'     => 'textarea',
 				'css'      => 'height:100px',
 			),
 			array(
 				'type' => 'sectionend',
 				'id'   => 'wcj_product_custom_info_advanced_options_' . $single_or_archive,
+			),
+			array(
+				'id'   => 'wcj_product_info_' . $single_or_archive . '_advanced',
+				'type' => 'tab_end',
 			),
 		)
 	);

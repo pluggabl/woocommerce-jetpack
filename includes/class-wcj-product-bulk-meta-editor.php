@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 5.6.8
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -74,7 +74,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Perform_actions.
 		 *
-		 * @version 5.6.8
+		 * @version 7.0.0
 		 * @since   2.8.0
 		 * @todo    break this into separate functions
 		 */
@@ -105,7 +105,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
 			$save_delete_wpnonce &&
-			isset( $_POST['wcj_product_bulk_meta_editor_delete_single'] ) && 0 > $_POST['wcj_product_bulk_meta_editor_delete_single'] &&
+			isset( $_POST['wcj_product_bulk_meta_editor_delete_single'] ) && 0 < $_POST['wcj_product_bulk_meta_editor_delete_single'] &&
 			isset( $_POST['wcj_product_bulk_meta_editor_meta'] ) && '' !== $_POST['wcj_product_bulk_meta_editor_meta']
 			) {
 				$meta_name   = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_meta'] ) );

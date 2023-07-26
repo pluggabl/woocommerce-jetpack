@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Modules By User Roles
  *
- * @version 6.0.1
+ * @version 7.0.0
  * @since   3.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -19,11 +19,31 @@ foreach ( w_c_j()->all_modules as $module_id => $module_obj ) {
 }
 unset( $modules['modules_by_user_roles'] );
 
-$settings = array();
+$tab_ids = array();
+foreach ( $user_roles as $role_id => $role_desc ) {
+	$tab_ids[ 'modules_by_user_roles_' . $role_id . '_tab' ] = $role_desc;
+}
+
+$settings = array(
+	array(
+		'id'   => 'modules_by_user_roles_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'modules_by_user_roles_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => $tab_ids,
+	),
+);
+
 foreach ( $user_roles as $role_id => $role_desc ) {
 	$settings = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'modules_by_user_roles_' . $role_id . '_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				'title' => $role_desc,
 				'type'  => 'title',
@@ -48,8 +68,12 @@ foreach ( $user_roles as $role_id => $role_desc ) {
 				'options'  => $modules,
 			),
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_modules_by_user_roles_' . $role_id,
+				'type' => 'sectionend',
+			),
+			array(
+				'id'   => 'modules_by_user_roles_' . $role_id . '_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Min/Max Amounts
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    checkout notices - add %diff_amount% and %total_in_cart% replaced values (wc_has_notice won't work then?, probably will need to use wc_clear_notices)
@@ -14,6 +14,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'wcj_payment_gateways_min_max_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_payment_gateways_min_max_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_payment_gateways_min_max_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_payment_gateways_min_compatibility_tab' => __( 'Compatibility', 'woocommerce-jetpack' ),
+			'wcj_payment_gateways_min_max_payment_gatways_tab' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_min_max_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -65,8 +82,16 @@ $settings = array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_payment_gateways_min_max_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_min_max_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_min_compatibility_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Compatibility', 'woocommerce-jetpack' ),
@@ -81,8 +106,16 @@ $settings = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_payment_gateways_min_max_comp',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_min_compatibility_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_min_max_payment_gatways_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
@@ -144,8 +177,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_min_max_gateways_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_min_max_payment_gatways_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

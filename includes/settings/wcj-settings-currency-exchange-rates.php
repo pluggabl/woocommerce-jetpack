@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 6.0.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)
@@ -13,7 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Exchange rates.
+$exchange_rate_settings = $this->get_all_currencies_exchange_rates_settings( true );
+
 $desc = '';
+
+$tab_ids = array(
+	'currency_exchange_rates_general_options_tab'   => __( 'General options', 'woocommerce-jetpack' ),
+	'currency_exchange_rates_api_keys_tab'          => __( 'API Keys', 'woocommerce-jetpack' ),
+	'currency_exchange_rates_custom_currencies_tab' => __( 'Custom Currencies', 'woocommerce-jetpack' ),
+);
+
+if ( ! empty( $exchange_rate_settings ) ) {
+	$tab_ids['currency_exchange_rates_exchange_rates_tab'] = __( 'Exchange Rates', 'woocommerce-jetpack' );
+}
+
 if ( $this->is_enabled() ) {
 	if ( '' !== wcj_get_option( 'wcj_currency_exchange_rate_cron_time', '' ) ) {
 		$scheduled_time_diff = wcj_get_option( 'wcj_currency_exchange_rate_cron_time', '' ) - time();
@@ -28,9 +42,17 @@ if ( $this->is_enabled() ) {
 }
 $settings = array(
 	array(
-		'title' => __( 'General Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_currency_exchange_rates_options',
+		'id'   => 'currency_exchange_rates_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'currency_exchange_rates_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => $tab_ids,
+	),
+	array(
+		'id'   => 'currency_exchange_rates_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'    => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
@@ -104,8 +126,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_currency_exchange_rates_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'currency_exchange_rates_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'currency_exchange_rates_api_keys_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'API Keys', 'woocommerce-jetpack' ),
@@ -121,8 +151,16 @@ $settings = array(
 		'id'    => 'wcj_currency_exchange_api_key_fccapi',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_currency_exchange_api_key',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'currency_exchange_rates_api_keys_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'currency_exchange_rates_custom_currencies_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Custom Currencies Options', 'woocommerce-jetpack' ),
@@ -160,26 +198,35 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'id'      => 'wcj_currency_exchange_custom_currencies_' . $i,
 				'default' => 'disabled',
 				'type'    => 'select',
+				'class'   => 'wcj_select_search_input',
 				'options' => array_merge( array( 'disabled' => __( 'Disabled', 'woocommerce-jetpack' ) ), $all_currencies ),
 			),
 		)
 	);
 }
+
 $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_currency_exchange_custom_currencies_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'currency_exchange_rates_custom_currencies_tab',
+			'type' => 'tab_end',
 		),
 	)
 );
-// Exchange rates.
-$exchange_rate_settings = $this->get_all_currencies_exchange_rates_settings( true );
+
 if ( ! empty( $exchange_rate_settings ) ) {
 	$settings = array_merge(
 		$settings,
 		array(
+			array(
+				'id'   => 'currency_exchange_rates_exchange_rates_tab',
+				'type' => 'tab_start',
+			),
 			array(
 				'title' => __( 'Exchange Rates', 'woocommerce-jetpack' ),
 				'type'  => 'title',
@@ -193,8 +240,12 @@ if ( ! empty( $exchange_rate_settings ) ) {
 		$settings,
 		array(
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_currency_exchange_rates_rates',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'   => 'currency_exchange_rates_exchange_rates_tab',
+				'type' => 'tab_end',
 			),
 		)
 	);

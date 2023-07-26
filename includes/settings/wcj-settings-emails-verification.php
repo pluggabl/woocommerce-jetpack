@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Email Verification
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -14,9 +14,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	array(
-		'title' => __( 'General Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_emails_verification_general_options',
+		'id'   => 'emails_verification_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'emails_verification_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'emails_verification_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+			'emails_verification_messges_tab'         => __( 'Messages', 'woocommerce-jetpack' ),
+			'emails_verification_email_options_tab'   => __( 'Email Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'emails_verification_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Skip Email Verification for User Roles', 'woocommerce-jetpack' ),
@@ -58,8 +70,16 @@ return array(
 		'css'      => 'width:100%',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_emails_verification_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'emails_verification_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'emails_verification_messges_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Messages', 'woocommerce-jetpack' ),
@@ -68,7 +88,7 @@ return array(
 	),
 	array(
 		'title'   => __( 'Message - Success', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'id'      => 'wcj_emails_verification_success_message',
 		'default' => __( '<strong>Success:</strong> Your account has been activated!', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%',
@@ -77,7 +97,7 @@ return array(
 		'title'    => __( 'Message - Error', 'woocommerce-jetpack' ),
 		/* translators: %s: translators Added */
 		'desc_tip' => sprintf( __( 'Replaced value: %s', 'woocommerce-jetpack' ), '%resend_verification_url%' ),
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'id'       => 'wcj_emails_verification_error_message',
 		'default'  => __( 'Your account has to be activated before you can login. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' ),
 		'css'      => 'width:100%',
@@ -86,35 +106,43 @@ return array(
 		'title'    => __( 'Message - Failed', 'woocommerce-jetpack' ),
 		/* translators: %s: translators Added */
 		'desc_tip' => sprintf( __( 'Replaced value: %s', 'woocommerce-jetpack' ), '%resend_verification_url%' ),
-		'type'     => 'custom_textarea',
+		'type'     => 'textarea',
 		'id'       => 'wcj_emails_verification_failed_message',
 		'default'  => __( '<strong>Error:</strong> Activation failed, please contact our administrator. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' ),
 		'css'      => 'width:100%',
 	),
 	array(
 		'title'   => __( 'Message - Failed (no user ID)', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'id'      => 'wcj_emails_verification_failed_message_no_user_id',
 		'default' => __( '<strong>Error:</strong> Activation failed, please contact our administrator.', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%',
 	),
 	array(
 		'title'   => __( 'Message - Activate', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'id'      => 'wcj_emails_verification_activation_message',
 		'default' => __( 'Thank you for your registration. Your account has to be activated before you can login. Please check your email.', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%',
 	),
 	array(
 		'title'   => __( 'Message - Resend', 'woocommerce-jetpack' ),
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'id'      => 'wcj_emails_verification_email_resend_message',
 		'default' => __( '<strong>Success:</strong> Your activation email has been resent. Please check your email.', 'woocommerce-jetpack' ),
 		'css'     => 'width:100%',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_emails_verification_messages_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'emails_verification_messges_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'emails_verification_email_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Email Options', 'woocommerce-jetpack' ),
@@ -123,7 +151,7 @@ return array(
 	),
 	array(
 		'title'             => __( 'Email Subject', 'woocommerce-jetpack' ),
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'id'                => 'wcj_emails_verification_email_subject',
 		'default'           => __( 'Please activate your account', 'woocommerce-jetpack' ),
 		'css'               => 'width:100%',
@@ -134,7 +162,7 @@ return array(
 		'title'             => __( 'Email Content', 'woocommerce-jetpack' ),
 		/* translators: %s: translators Added */
 		'desc_tip'          => sprintf( __( 'Replaced value: %s', 'woocommerce-jetpack' ), '%verification_url%' ),
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'id'                => 'wcj_emails_verification_email_content',
 		'default'           => __( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ),
 		'css'               => 'width:100%;height:150px',
@@ -157,14 +185,18 @@ return array(
 	array(
 		'desc_tip'          => __( 'If WooCommerce template is selected, set email heading here.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_emails_verification_email_template_wc_heading',
-		'type'              => 'custom_textarea',
+		'type'              => 'textarea',
 		'default'           => __( 'Activate your account', 'woocommerce-jetpack' ),
 		'css'               => 'width:100%',
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_emails_verification_email_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'emails_verification_email_options_tab',
+		'type' => 'tab_end',
 	),
 );

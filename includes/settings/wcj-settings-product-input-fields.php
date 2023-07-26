@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 5.6.2
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
@@ -15,6 +15,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings                      = array(
+	array(
+		'id'   => 'wcj_product_input_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_input_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_input_per_product_tab'      => __( 'Per Product Options', 'woocommerce-jetpack' ),
+			'wcj_product_input_global_options_tab'   => __( 'Global Options', 'woocommerce-jetpack' ),
+			'wcj_product_input_frontend_view_tab'    => __( 'Frontend View Options', 'woocommerce-jetpack' ),
+			'wcj_product_input_emails_tab'           => __( 'Emails Options', 'woocommerce-jetpack' ),
+			'wcj_product_input_admin_order_view_tab' => __( 'Admin Order View Options', 'woocommerce-jetpack' ),
+			'wcj_product_input_advanced_tab'         => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_input_per_product_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Product Input Fields per Product Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -46,8 +66,16 @@ $settings                      = array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_input_fields_local_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_input_per_product_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_input_global_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Product Input Fields Global Options', 'woocommerce-jetpack' ),
@@ -79,13 +107,14 @@ $settings                      = array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_input_fields_global_options',
+		'type' => 'sectionend',
 	),
 );
 $is_multiselect_products       = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
 $product_cats                  = wcj_get_terms( 'product_cat' );
 $product_tags                  = wcj_get_terms( 'product_tag' );
+$products                      = wcj_get_products();
 $options                       = $this->get_global_product_fields_options();
 $input_fields_global_total_num = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_input_fields_global_total_number', 1 ) );
 for ( $i = 1; $i <= $input_fields_global_total_num;  $i++ ) {
@@ -215,6 +244,14 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
+			'id'   => 'wcj_product_input_global_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_input_frontend_view_tab',
+			'type' => 'tab_start',
+		),
+		array(
 			'title' => __( 'Frontend View Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'id'    => 'wcj_product_input_fields_frontend_view_options',
@@ -239,35 +276,35 @@ $settings = array_merge(
 			'title'   => __( 'HTML Template - Start', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_start_template',
 			'default' => '',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
 			'title'   => __( 'HTML Template - Each Field', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_field_template',
 			'default' => '<p><label for="%field_id%">%field_title%</label> %field_html%</p>',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
 			'title'   => __( 'HTML Template - End', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_end_template',
 			'default' => '',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
 			'title'   => __( 'HTML Template - Radio Field', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_field_template_radio',
 			'default' => '%radio_field_html%<label for="%radio_field_id%" class="radio">%radio_field_title%</label><br>',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
 			'title'   => __( 'HTML to add after required field title', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_frontend_view_required_html',
 			'default' => '&nbsp;<abbr class="required" title="required">*</abbr>',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
@@ -285,21 +322,21 @@ $settings = array_merge(
 			'title'   => __( 'Cart HTML Template - Start', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_cart_start_template',
 			'default' => '<dl style="font-size:smaller;">',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
 			'title'   => __( 'Cart HTML Template - Each Field', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_cart_field_template',
 			'default' => '<dt>%title%</dt><dd>%value%</dd>',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
 			'title'   => __( 'Cart HTML Template - End', 'woocommerce-jetpack' ),
 			'id'      => 'wcj_product_input_fields_cart_end_template',
 			'default' => '</dl>',
-			'type'    => 'custom_textarea',
+			'type'    => 'textarea',
 			'css'     => 'width:50%;min-width:300px;',
 		),
 		array(
@@ -308,7 +345,7 @@ $settings = array_merge(
 			'id'       => 'wcj_product_input_fields_frontend_view_order_table_format',
 			/* translators: %title% %value%: translators Added */
 			'default'  => '&nbsp;| %title% %value%',
-			'type'     => 'custom_textarea',
+			'type'     => 'textarea',
 			'css'      => 'width:50%;min-width:300px;',
 		),
 		array(
@@ -320,8 +357,16 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_input_fields_frontend_view_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_img_placeholder_img_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_input_emails_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -348,8 +393,16 @@ $settings = array_merge(
 			'type'    => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_input_fields_emails_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_input_emails_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_input_admin_order_view_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -365,7 +418,7 @@ $settings = array_merge(
 			'title'    => __( 'Replace Field ID with Field Label', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 			'desc_tip' => sprintf(
-				/* translators: %s: translators Added */
+			/* translators: %s: translators Added */
 				__( 'Please note: %s', 'woocommerce-jetpack' ),
 				__( 'When checked - will disable input fields editing on admin order edit page.', 'woocommerce-jetpack' )
 			),
@@ -382,8 +435,16 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_input_fields_admin_view_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_input_admin_order_view_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_input_advanced_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -413,8 +474,12 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_product_input_fields_advanced_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_input_advanced_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

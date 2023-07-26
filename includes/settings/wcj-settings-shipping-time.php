@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Time
  *
- * @version 5.6.0
- * @since   3.5.0
+ * @version 7.0.0
+ * @since  1.0.0
  * @author  Pluggabl LLC.
  * @todo    estimated date calculation
  * @todo    add e.g.: "... order before 2 PM to receive"
@@ -26,6 +26,22 @@ $settings               = array();
 $settings               = array_merge(
 	$settings,
 	array(
+		array(
+			'id'   => 'shipping_time_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'      => 'shipping_time_options',
+			'type'    => 'tab_ids',
+			'tab_ids' => array(
+				'shipping_time_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+				'shipping_time_shipping_time_tab'   => __( 'Shipping Time Options', 'woocommerce-jetpack' ),
+			),
+		),
+		array(
+			'id'   => 'shipping_time_general_options_tab',
+			'type' => 'tab_start',
+		),
 		array(
 			'title' => __( 'General Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
@@ -51,8 +67,16 @@ $settings               = array_merge(
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_time_general_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_time_general_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'shipping_time_shipping_time_tab',
+			'type' => 'tab_start',
 		),
 	)
 );
@@ -90,8 +114,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_time_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_time_shipping_time_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Custom Gateways
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -16,11 +16,27 @@ $wocommerce_checkout_settings_url = admin_url( 'admin.php?page=wc-settings&tab=c
 $wocommerce_checkout_settings_url = '<a href="' . $wocommerce_checkout_settings_url . '">' . __( 'WooCommerce > Settings > Checkout', 'woocommerce-jetpack' ) . '</a>';
 $settings                         = array(
 	array(
+		'id'   => 'wcj_payment_gateways_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_payment_gateways_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_payment_gateways_gatways_options_tab'  => __( 'Gateways Options', 'woocommerce-jetpack' ),
+			'wcj_payment_gateways_advanced_options_tab' => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_gatways_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'Custom Payment Gateways Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'id'    => 'wcj_custom_payment_gateways_options',
 		'desc'  => __( 'This section lets you set number of custom payment gateways to add.', 'woocommerce-jetpack' )
-		/* translators: %s: translators Added */
+				/* translators: %s: translators Added */
 			. ' ' . sprintf( __( 'After setting the number, visit %s to set each gateway options.', 'woocommerce-jetpack' ), $wocommerce_checkout_settings_url ),
 	),
 	array(
@@ -55,8 +71,16 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_custom_payment_gateways_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_gatways_options_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_advanced_options_tab',
+			'type' => 'tab_start',
 		),
 		array(
 			'title' => __( 'Advanced Options', 'woocommerce-jetpack' ),
@@ -72,8 +96,12 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_custom_payment_gateways_advanced_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_advanced_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

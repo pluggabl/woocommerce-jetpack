@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Icons
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings               = array(
+	array(
+		'id'   => 'shipping_icons_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'shipping_icons_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'shipping_icons_general_options_tab'       => __( 'General Options', 'woocommerce-jetpack' ),
+			'shipping_icons_shipping_method_icons_tab' => __( 'Shipping Methods Icons', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'shipping_icons_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -51,8 +67,16 @@ $settings               = array(
 		'type'     => 'text',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_icons_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'shipping_icons_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'shipping_icons_shipping_method_icons_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Shipping Methods Icons', 'woocommerce-jetpack' ),
@@ -90,8 +114,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_icons_methods_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_icons_shipping_method_icons_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

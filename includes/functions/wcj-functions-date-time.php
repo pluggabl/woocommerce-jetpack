@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 5.6.8
+ * @version 7.0.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -106,7 +106,7 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
 	 * Wcj_check_time_from.
 	 *
-	 * @version 2.8.0
+	 * @version 7.0.0
 	 * @since   2.8.0
 	 * @param   string $time_from defines the time_from.
 	 * @param   array  $args defines the args.
@@ -116,7 +116,7 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 		if ( isset( $time_from[0] ) && $args['hours_now'] < $time_from[0] ) {
 			return false;
 		}
-		if ( isset( $time_from[1] ) && $time_from[0] === $args['hours_now'] && $args['minutes_now'] < $time_from[1] ) {
+		if ( isset( $time_from[1] ) && (int) $time_from[0] === $args['hours_now'] && $args['minutes_now'] < $time_from[1] ) {
 			return false;
 		}
 		return true;
@@ -127,7 +127,7 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 	/**
 	 * Wcj_check_time_to.
 	 *
-	 * @version 2.8.0
+	 * @version 7.0.0
 	 * @since   2.8.0
 	 * @param   string $time_to defines the time_to.
 	 * @param   array  $args defines the args.
@@ -137,7 +137,7 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 		if ( isset( $time_to[0] ) && $args['hours_now'] > $time_to[0] ) {
 			return false;
 		}
-		if ( isset( $time_to[1] ) && $time_to[0] === $args['hours_now'] && $args['minutes_now'] > $time_to[1] ) {
+		if ( isset( $time_to[1] ) && (int) $time_to[0] === $args['hours_now'] && $args['minutes_now'] > $time_to[1] ) {
 			return false;
 		}
 		return true;

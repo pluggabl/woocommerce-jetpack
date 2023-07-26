@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways per Product or Category
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -19,6 +19,22 @@ $products                = ( $is_multiselect_products ? wcj_get_products( array(
 $available_gateways      = WC()->payment_gateways->payment_gateways();
 $settings                = array(
 	array(
+		'id'   => 'payment_gateways_per_category_role_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'payment_gateways_per_category_role_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'payment_gateways_per_category_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'payment_gateways_per_category_payment_gatways_tab'   => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'payment_gateways_per_category_general_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'id'    => 'wcj_gateways_per_category_general_options',
@@ -32,8 +48,16 @@ $settings                = array(
 		'default'  => 'no',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_gateways_per_category_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'payment_gateways_per_category_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'payment_gateways_per_category_payment_gatways_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Gateways', 'woocommerce-jetpack' ),
@@ -113,8 +137,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_gateways_per_category_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'payment_gateways_per_category_payment_gatways_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

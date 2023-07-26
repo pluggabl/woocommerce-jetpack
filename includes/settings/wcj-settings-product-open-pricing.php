@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -22,9 +22,20 @@ $positions          = array(
 );
 return array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_product_open_price_options',
+		'id'   => 'product_open_pricing_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'product_open_pricing_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'product_open_pricing_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+			'product_open_pricing_product_bundles_tab' => __( 'Product Bundles', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'product_open_pricing_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Frontend Label', 'woocommerce-jetpack' ),
@@ -123,7 +134,7 @@ return array(
 		'desc'    => __( 'Product price info in archives template. Replaceable values: <code>%default_price%</code>, <code>%min_price%</code>, <code>%max_price%</code>.', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_product_open_price_loop_price_info_template',
 		'default' => '<span class="price">%default_price%</span>',
-		'type'    => 'custom_textarea',
+		'type'    => 'textarea',
 		'css'     => 'width:100%;',
 	),
 	array(
@@ -160,8 +171,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_open_price_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'product_open_pricing_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'product_open_pricing_product_bundles_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Product Bundles', 'woocommerce-jetpack' ),
@@ -198,7 +217,11 @@ return array(
 		),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_product_open_price_woosb_product_bundles',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'product_open_pricing_product_bundles_tab',
+		'type' => 'tab_end',
 	),
 );

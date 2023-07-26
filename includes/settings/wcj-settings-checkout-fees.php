@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Fees
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings     = array(
+	array(
+		'id'   => 'wcj_checkout_fees_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_checkout_fees_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_checkout_fees_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_checkout_fees_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Fees', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -148,10 +163,19 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'default'  => 0,
 			),
 			array(
-				'type' => 'sectionend',
 				'id'   => "wcj_checkout_fees_data_options[$i]",
+				'type' => 'sectionend',
 			),
 		)
 	);
 }
+$settings = array_merge(
+	$settings,
+	array(
+		array(
+			'id'   => 'wcj_checkout_fees_general_options_tab',
+			'type' => 'tab_end',
+		),
+	)
+);
 return $settings;

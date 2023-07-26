@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Descriptions
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings               = array(
+	array(
+		'id'   => 'shipping_description_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'shipping_description_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'shipping_description_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'shipping_description_shipping_method_descriptions_tab' => __( 'Shipping Methods Descriptions', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'shipping_description_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -52,8 +68,16 @@ $settings               = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_description_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'shipping_description_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'shipping_description_shipping_method_descriptions_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Shipping Methods Descriptions', 'woocommerce-jetpack' ),
@@ -90,8 +114,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_description_methods_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_description_shipping_method_descriptions_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

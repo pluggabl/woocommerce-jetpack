@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - WPML
  *
- * @version 6.0.1
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -22,9 +22,21 @@ if ( function_exists( 'w_c_j' ) && ! empty( w_c_j()->modules ) ) {
 $message      = apply_filters( 'booster_message', '', 'desc' );
 $settings     = array(
 	array(
-		'title' => __( 'General Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_wpml_general_options',
+		'id'   => 'wpml_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wpml_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wpml_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+			'wpml_file_options_tab'    => __( 'Language Config File Options', 'woocommerce-jetpack' ),
+			'wpml_file_tools_tab'      => __( 'Tools', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wpml_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title'   => __( 'Use Translation Product IDs', 'woocommerce-jetpack' ),
@@ -51,8 +63,16 @@ $settings     = array(
 		'default'           => 'no',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_wpml_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wpml_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wpml_file_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'WPML Language Configuration File Options', 'woocommerce-jetpack' ),
@@ -99,19 +119,31 @@ $settings     = array(
 		'id'    => 'wcj_' . $this->id . '_tools_options',
 	),
 	array(
+		'id'   => 'wcj_' . $this->id . '_tools_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wpml_file_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wpml_file_tools_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_' . $this->id . '_module_tools',
 		'type'     => 'custom_link',
 		'link'     => ( $this->is_enabled() ) ?
-			'<code> <a href="' . esc_url( add_query_arg( 'create_wpml_xml_file', '1' ) ) . '">' .
-				__( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</a> </code>' .
+		'<code> <a href="' . esc_url( add_query_arg( 'create_wpml_xml_file', '1' ) ) . '">' .
+		__( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</a> </code>' .
 				'<pre>' . $this->notice . '</pre>' :
 			'<code>' . __( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</code>',
 	),
 	array(
-		'type' => 'sectionend',
-		'id'   => 'wcj_' . $this->id . '_tools_options',
+		'id'   => 'wpml_file_tools_tab',
+		'type' => 'tab_end',
 	),
 );
 $this->notice = '';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Products XML
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    recheck "URL" in `'wcj_products_xml_file_path_' . $i`
@@ -19,6 +19,21 @@ $product_tags_options    = wcj_get_terms( 'product_tag' );
 $products_options        = wcj_get_products();
 $is_multiselect_products = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
 $settings                = array(
+	array(
+		'id'   => 'wcj_product_xml_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_xml_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_xml_genral_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_xml_genral_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -55,22 +70,22 @@ $settings                = array(
 );
 $xml_total_files         = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_products_xml_total_files', 1 ) );
 for ( $i = 1; $i <= $xml_total_files; $i++ ) {
-	wcj_maybe_convert_and_update_option_value(
-		array(
+		wcj_maybe_convert_and_update_option_value(
 			array(
-				'id'      => 'wcj_products_xml_products_incl_' . $i,
-				'default' => '',
+				array(
+					'id'      => 'wcj_products_xml_products_incl_' . $i,
+					'default' => '',
+				),
+				array(
+					'id'      => 'wcj_products_xml_products_excl_' . $i,
+					'default' => '',
+				),
 			),
-			array(
-				'id'      => 'wcj_products_xml_products_excl_' . $i,
-				'default' => '',
-			),
-		),
-		$is_multiselect_products
-	);
+			$is_multiselect_products
+		);
 	$products_xml_cron_desc = '';
 	if ( $this->is_enabled() ) {
-		$products_xml_cron_desc = '<a class="button" title="' .
+		$products_xml_cron_desc = '<a class="button wcj-btn-sm wcj-autogenerate-button" title="' .
 			__( 'If you\'ve made any changes in module\'s settings - don\'t forget to save changes before clicking this button.', 'woocommerce-jetpack' ) . '"' .
 			' href="' . esc_url( add_query_arg( 'wcj_create_products_xml', $i, remove_query_arg( 'wcj_create_products_xml_result' ) ) ) . '">' .
 			__( 'Create Now', 'woocommerce-jetpack' ) . '</a>' .
@@ -79,7 +94,7 @@ for ( $i = 1; $i <= $xml_total_files; $i++ ) {
 	$products_time_file_created_desc = '';
 	if ( '' !== wcj_get_option( 'wcj_products_time_file_created_' . $i, '' ) ) {
 		$products_time_file_created_desc = sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'Recent file was created on %s', 'woocommerce-jetpack' ),
 			'<code>' . date_i18n( wcj_get_option( 'date_format' ) . ' ' . wcj_get_option( 'time_format' ), wcj_get_option( 'wcj_products_time_file_created_' . $i, '' ) ) . '</code>'
 		);
@@ -113,7 +128,7 @@ for ( $i = 1; $i <= $xml_total_files; $i++ ) {
 			array(
 				'title'   => __( 'XML Item', 'woocommerce-jetpack' ),
 				'desc'    => sprintf(
-					/* translators: %s: translators Added */
+										/* translators: %s: translators Added */
 					__( 'You can use shortcodes here. Please take a look at <a target="_blank" href="%s">Booster\'s products shortcodes</a>.', 'woocommerce-jetpack' ),
 					'https://booster.io/category/shortcodes/products-shortcodes/'
 				),
@@ -269,10 +284,21 @@ for ( $i = 1; $i <= $xml_total_files; $i++ ) {
 				'custom_attributes' => array( 'min' => -1 ),
 			),
 			array(
-				'type' => 'sectionend',
 				'id'   => 'wcj_products_xml_options_' . $i,
+				'type' => 'sectionend',
 			),
 		)
 	);
 }
+
+$settings = array_merge(
+	$settings,
+	array(
+		array(
+			'id'   => 'wcj_product_xml_genral_options_tab',
+			'type' => 'tab_end',
+		),
+	)
+);
+
 return $settings;

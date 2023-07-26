@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 5.6.8
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -307,15 +307,40 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Maybe_bulk_regenerate_download_permissions_all_orders.
 		 *
-		 * @version 3.2.0
+		 * @version 7.0.0
 		 * @since   3.2.0
 		 */
 		public function maybe_bulk_regenerate_download_permissions_all_orders() {
 			if ( 'yes' === wcj_get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' ) ) {
 				update_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' );
 				$total_orders = $this->bulk_regenerate_download_permissions_all_orders();
-				wp_safe_redirect( add_query_arg( 'wcj_bulk_regenerated_download_permissions', $total_orders ) );
-				exit;
+				$wpnonce      = isset( $_REQUEST['wcj-verify-save-module-settings'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-verify-save-module-settings'] ), 'wcj-verify-save-module-settings' ) : false;
+				$active_tab   = isset( $_POST['wcj_setting_active_tab'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_setting_active_tab'] ) ) : '';
+
+				if ( isset( $_POST['return_url'] ) ) {
+					$return_url = sanitize_text_field( wp_unslash( $_POST['return_url'] ) ) . '&active_tab=' . $active_tab . '&success=1&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
+					wp_safe_redirect(
+						add_query_arg(
+							array(
+								'wcj_bulk_regenerated_download_permissions' => $total_orders,
+								'wcj_bulk_regenerated_download_permissions-nonce' => wp_create_nonce( 'wcj_bulk_regenerated_download_permissions' ),
+							),
+							$return_url,
+						)
+					);
+					exit();
+				} else {
+					wp_safe_redirect(
+						add_query_arg(
+							array(
+								'wcj_bulk_regenerated_download_permissions' => $total_orders,
+								'wcj_bulk_regenerated_download_permissions-nonce' => wp_create_nonce( 'wcj_bulk_regenerated_download_permissions' ),
+							),
+							admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ),
+						)
+					);
+					exit();
+				}
 			}
 		}
 

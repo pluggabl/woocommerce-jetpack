@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Upsells
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'wcj_product_upsells_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_upsells_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_upsells_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_upsells_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -98,8 +113,12 @@ $settings = array(
 		'options' => wcj_get_products(),
 	),
 	array(
+		'id'   => 'wcj_product_tax_display_by_product_tab',
 		'type' => 'sectionend',
-		'id'   => 'wcj_upsells_options',
+	),
+	array(
+		'id'   => 'wcj_product_upsells_general_options_tab',
+		'type' => 'tab_end',
 	),
 );
 return $settings;

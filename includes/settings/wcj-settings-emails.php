@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Custom Emails
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -10,16 +10,30 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
-
 }
 
 $settings     = array(
+	array(
+		'id'   => 'emails_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'emails_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'emails_custom_emails_tab' => __( 'Custom Emails', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'emails_custom_emails_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Custom Emails', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'id'    => 'wcj_emails_custom_emails_options',
 		'desc'  => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'This section lets you set number of custom emails to add. After setting the number, visit <a href="%s">WooCommerce > Settings > Emails</a> to set each email options.', 'woocommerce-jetpack' ),
 			admin_url( 'admin.php?page=wc-settings&tab=email' )
 		),
@@ -51,8 +65,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_emails_custom_emails_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'emails_custom_emails_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

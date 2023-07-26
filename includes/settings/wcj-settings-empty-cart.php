@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Empty Cart Button
+ * Booster for WooCommerce - Settings - Empty Cart Button
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'wcj_empty_cart_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_empty_cart_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_empty_cart_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_empty_cart_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'desc'  => __( 'You can also use <strong>[wcj_empty_cart_button]</strong> shortcode to place the button anywhere on your site.', 'woocommerce-jetpack' ),
@@ -89,7 +104,11 @@ return array(
 		'type'    => 'text',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_empty_cart_customization_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_empty_cart_general_options_tab',
+		'type' => 'tab_end',
 	),
 );

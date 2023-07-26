@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Shipping Methods by Min/Max Order Quantity
+ * Booster for WooCommerce - Settings - Shipping Methods by Min/Max Order Quantity
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   4.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -14,6 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_shipping_by_order_qty_use_shipping_instance', 'no' ) );
 $settings               = array(
+	array(
+		'id'   => 'shipping_by_order_qty_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'shipping_by_order_qty_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'shipping_by_order_qty_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'shipping_by_order_qty_order_quantity_tab'  => __( 'Order Quantity', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'shipping_by_order_qty_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -29,8 +45,16 @@ $settings               = array(
 		'default'  => 'no',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_shipping_by_order_qty_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'shipping_by_order_qty_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'shipping_by_order_qty_order_quantity_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Shipping Methods by Min/Max Order Quantity', 'woocommerce-jetpack' ),
@@ -80,8 +104,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_shipping_by_order_qty_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'shipping_by_order_qty_order_quantity_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

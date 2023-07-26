@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Reports
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $reports_and_settings = array(
+	array(
+		'id'   => 'reports_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'reports_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'reports_options_orders_reports_tab'      => __( 'Orders Reports', 'woocommerce-jetpack' ),
+			'reports_endpoints_customers_reports_tab' => __( 'Customers Reports', 'woocommerce-jetpack' ),
+			'reports_pages_stock_reports_tab'         => __( 'Stock Reports', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'reports_options_orders_reports_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Orders Reports', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -128,6 +145,14 @@ $reports_and_settings = array(
 		'type' => 'sectionend',
 	),
 	array(
+		'id'   => 'reports_options_orders_reports_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'reports_endpoints_customers_reports_tab',
+		'type' => 'tab_start',
+	),
+	array(
 		'title' => __( 'Customers Reports', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'id'    => 'wcj_reports_customers_options',
@@ -147,6 +172,14 @@ $reports_and_settings = array(
 	array(
 		'id'   => 'wcj_reports_customers_options',
 		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'reports_endpoints_customers_reports_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'reports_pages_stock_reports_tab',
+		'type' => 'tab_start',
 	),
 	array(
 		'title' => __( 'Stock Reports', 'woocommerce-jetpack' ),
@@ -193,6 +226,10 @@ $reports_and_settings = array(
 	array(
 		'id'   => 'wcj_reports_stock_options',
 		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'reports_pages_stock_reports_tab',
+		'type' => 'tab_end',
 	),
 );
 $settings             = array();

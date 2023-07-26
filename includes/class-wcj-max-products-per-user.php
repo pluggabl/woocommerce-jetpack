@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 6.0.1
+ * @version 7.0.0
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -296,7 +296,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Get_max_qty.
 		 *
-		 * @version 3.5.0
+		 * @version 7.0.0
 		 * @since   3.5.0
 		 * @todo    (maybe) local - add "enabled/disabled" option
 		 * @todo    (maybe) global - apply only to selected products (i.e. include/exclude products, cats, tags)
@@ -305,7 +305,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		 */
 		public function get_max_qty( $product_id ) {
 			$qty = get_post_meta( $product_id, '_wcj_max_products_per_user_qty', true );
-			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) && 0 !== ( $qty ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) && 0 !== ( $qty ) && '0' !== ( $qty ) && '' !== ( $qty ) ) {
 				return $qty;
 			} elseif ( 'yes' === wcj_get_option( 'wcj_max_products_per_user_global_enabled', 'no' ) ) {
 				return wcj_get_option( 'wcj_max_products_per_user_global_max_qty', 1 );

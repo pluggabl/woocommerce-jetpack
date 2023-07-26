@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by Condition
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings = array(
+	array(
+		'id'   => 'wcj_product_custom_visibility_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_product_custom_visibility_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_product_custom_visibility_options_tab' => __( 'Visibility Options', 'woocommerce-jetpack' ),
+			'wcj_product_custom_visibility_options_list_tab' => __( 'Options List', 'woocommerce-jetpack' ),
+			'wcj_product_custom_visibility_admin_options_tab' => __( 'Admin Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_product_custom_visibility_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Visibility Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -50,11 +67,37 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_' . $this->id . '_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_product_custom_visibility_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_product_custom_visibility_options_list_tab',
+		'type' => 'tab_start',
 	),
 );
+
 $settings = array_merge( $settings, $this->maybe_add_extra_settings() );
+$settings = array_merge(
+	$settings,
+	array(
+		array(
+			'id'   => 'wcj_' . $this->id . '_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_custom_visibility_options_list_tab',
+			'type' => 'tab_end',
+		),
+		array(
+			'id'   => 'wcj_product_custom_visibility_admin_options_tab',
+			'type' => 'tab_start',
+		),
+	)
+);
 $settings = array_merge(
 	$settings,
 	array(
@@ -118,8 +161,12 @@ $settings = array_merge(
 			'type'     => 'checkbox',
 		),
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_' . $this->id . '_admin_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_product_custom_visibility_admin_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

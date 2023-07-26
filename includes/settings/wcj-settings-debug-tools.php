@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Debug Tools
  *
- * @version 5.6.8
+ * @version 7.0.0
  * @since   4.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -14,33 +14,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	array(
-		'title' => __( 'Debug Tools Options', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'id'    => 'wcj_debug_tools_options',
+		'id'   => 'debug_tools_options',
+		'type' => 'sectionend',
 	),
 	array(
-		'title'    => __( 'Log', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Enables logging to Booster log.', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_logging_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'id'      => 'debug_tools_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'debug_tools_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'debug_tools_tools_options_tab'   => __( 'Tools', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
-		'title'    => __( 'WooCommerce Log', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Enables logging to WooCommerce log.', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_wc_logging_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'id'   => 'debug_tools_general_options_tab',
+		'type' => 'tab_start',
 	),
 	array(
-		'title'    => __( 'Debug', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Enables debug mode.', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_debuging_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'title'   => __( 'Log', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Enables logging to Booster log.', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_logging_enabled',
+		'default' => 'no',
+		'type'    => 'checkbox',
+	),
+	array(
+		'title'   => __( 'WooCommerce Log', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Enables logging to WooCommerce log.', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_wc_logging_enabled',
+		'default' => 'no',
+		'type'    => 'checkbox',
+	),
+	array(
+		'title'   => __( 'Debug', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Enables debug mode.', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_debuging_enabled',
+		'default' => 'no',
+		'type'    => 'checkbox',
 	),
 	array(
 		'title'   => __( 'System Info', 'woocommerce-jetpack' ),
@@ -65,7 +73,29 @@ return array(
 			) . '</pre>',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_debug_tools_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'debug_tools_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'debug_tools_tools_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
+		'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_' . $this->id . '_module_tools',
+		'type'     => 'custom_link',
+		'link'     => ( $this->is_enabled() ) ?
+		'<code> <a href=" ' . esc_url( admin_url( 'admin.php?page=wcj-tools&tab=debug_tools&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) . '' ) ) . '">' .
+		__( 'Log', 'woocommerce-jetpack' ) . '</a> </code>' :
+			'<code>' . __( 'Log', 'woocommerce-jetpack' ) . '</code>',
+	),
+	array(
+		'id'   => 'debug_tools_tools_options_tab',
+		'type' => 'tab_end',
 	),
 );

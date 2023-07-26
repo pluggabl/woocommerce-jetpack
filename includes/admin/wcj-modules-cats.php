@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 6.0.5
+ * @version 7.0.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -25,6 +25,7 @@ return apply_filters(
 		),
 
 		'prices_and_currencies' => array(
+			'icon'        => 'side-menu-icn5.png',
 			'label'       => __( 'Prices & Currencies', 'woocommerce-jetpack' ),
 			'desc'        => __( 'Multicurrency, Price Converter, Wholesale Pricing, Name You Price, Price based on User Role and more.', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(
@@ -46,6 +47,7 @@ return apply_filters(
 			),
 		),
 		'labels'                => array(
+			'icon'        => 'side-menu-icn2.png',
 			'label'       => __( 'Button & Price Labels', 'woocommerce-jetpack' ),
 			'desc'        => __( 'Add to Cart Labels, Call for Price, Custom Price Labels and more.', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(
@@ -58,6 +60,7 @@ return apply_filters(
 		),
 
 		'products'              => array(
+			'icon'        => 'side-menu-icn3.png',
 			'label'       => __( 'Products', 'woocommerce-jetpack' ),
 			'desc'        => __( 'Bookings, Crowdfunding Products, Product Addons and Input Fields, Product Listings, Product Tabs and more.', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(
@@ -95,6 +98,7 @@ return apply_filters(
 		),
 
 		'cart_and_checkout'     => array(
+			'icon'        => 'side-menu-icn4.png',
 			'label'       => __( 'Cart & Checkout', 'woocommerce-jetpack' ),
 			'desc'        => __( 'Cart and Checkout Customization, Empty Cart Button, Mini Cart, Coupons and more.', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(
@@ -117,6 +121,7 @@ return apply_filters(
 		),
 
 		'payment_gateways'      => array(
+			'icon'        => 'side-menu-icn5.png',
 			'label'       => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 			'desc'        => __( 'Custom Payment Gateways, Gateways Currency, Gateways Fees and Discounts and more.', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(
@@ -135,6 +140,7 @@ return apply_filters(
 		),
 
 		'shipping_and_orders'   => array(
+			'icon'        => 'side-menu-icn6.png',
 			'label'       => __( 'Shipping & Orders', 'woocommerce-jetpack' ),
 			'desc'        => __( 'Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping Methods and more.', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(
@@ -163,6 +169,7 @@ return apply_filters(
 		),
 
 		'pdf_invoicing'         => array(
+			'icon'        => 'side-menu-icn8.png',
 			'label'       => __( 'PDF Invoicing & Packing Slips', 'woocommerce-jetpack' ),
 			'desc'        => __( 'PDF Documents', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(
@@ -180,6 +187,7 @@ return apply_filters(
 		),
 
 		'emails_and_misc'       => array(
+			'icon'        => 'side-menu-icn5.png',
 			'label'       => __( 'Emails & Misc.', 'woocommerce-jetpack' ),
 			'desc'        => __( 'Emails, Reports, Export, Admin Tools, General Options and more.', 'woocommerce-jetpack' ),
 			'all_cat_ids' => array(

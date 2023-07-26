@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by Currency
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $settings                            = array(
+	array(
+		'id'   => 'wcj_payment_gateways_by_currency_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_payment_gateways_by_currency_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_payment_gateways_by_currency_payment_gatways_tab'   => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_by_currency_payment_gatways_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -76,8 +91,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_by_currency_gateways_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_by_currency_payment_gatways_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

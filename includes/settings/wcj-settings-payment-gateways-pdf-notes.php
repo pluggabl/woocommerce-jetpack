@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways PDF notes
  *
- * @version 6.0.5
+ * @version 7.0.0
  * @since  1.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -22,7 +22,18 @@ $tip = sprintf(
 
 $settings           = array(
 	array(
-		'title' => __( 'Options', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_pdf_notes_general_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_pdf_notes_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_pdf_notes_general_options_tab',
+		'type' => 'tab_start',
+	),
+	array(
+		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'desc'  => __( 'If you want to display a gateways notes in the PDF invoice add notes here.', 'woocommerce-jetpack' ),
 		'id'    => 'wcj_payment_gateways_pdf_notes_options',
@@ -61,6 +72,10 @@ $settings = array_merge(
 		array(
 			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_pdf_notes_options',
+		),
+		array(
+			'id'   => 'wcj_pdf_notes_general_options_tab',
+			'type' => 'tab_end',
 		),
 	)
 );

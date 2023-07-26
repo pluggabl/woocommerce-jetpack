@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - User Tracking
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -13,6 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
+	array(
+		'id'   => 'track_users_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'track_users_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'track_users_general_options_tab' => __( 'General options', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'track_users_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -56,7 +71,7 @@ return array(
 	array(
 		'desc'              => __( 'Order List Columns: Referer', 'woocommerce-jetpack' ),
 		'desc_tip'          => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'This will add "Referer" column to the <a href="%s">orders list</a>.', 'woocommerce-jetpack' ),
 			admin_url( 'edit.php?post_type=shop_order' )
 		) . '<br>' .
@@ -69,7 +84,7 @@ return array(
 	array(
 		'desc'              => __( 'Order List Columns: Referer Type', 'woocommerce-jetpack' ),
 		'desc_tip'          => sprintf(
-			/* translators: %s: translators Added */
+						/* translators: %s: translators Added */
 			__( 'This will add "Referer Type" column to the <a href="%s">orders list</a>.', 'woocommerce-jetpack' ),
 			admin_url( 'edit.php?post_type=shop_order' )
 		) . '<br>' .
@@ -80,7 +95,11 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_track_users_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'track_users_general_options_tab',
+		'type' => 'tab_end',
 	),
 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 6.0.4
+ * @version 7.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -37,7 +37,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		/**
 		 * Prepare_pdf.
 		 *
-		 * @version 6.0.4
+		 * @version 7.0.0
 		 * @todo    [dev] check `addTTFfont()`
 		 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster Elite for WooCommerce' )`
 		 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`
@@ -59,7 +59,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 
 			// Create new PDF document.
 			$background_image = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) );
-			if ( '' !== $background_image ) {
+			if ( '' !== $background_image && 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_multipages_background', '' ) ) {
 
 				require_once wcj_free_plugin_path() . '/includes/classes/class-wcj-tcpdfbg.php';
 			} else {
@@ -177,13 +177,26 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$background_image = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) );
 			if ( '' !== $background_image ) {
 				$pdf->SetPrintHeader( true );
+
+				$background_opacity     = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_opacity', '0.5' ) );
+				$background_margin_top  = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_margin_top', '25' ) );
+				$background_margin_left = do_shortcode( wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_margin_left', '0' ) );
+				$background_opacity     = isset( $background_opacity ) && '' !== $background_opacity ? $background_opacity : '0.5';
+
+				$pdf->SetAlpha( $background_opacity );
+
 				$parse_bkg_image  = wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_background_image_parse', 'yes' );
 				$document_root    = isset( $_SERVER['DOCUMENT_ROOT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['DOCUMENT_ROOT'] ) ) : '';
 				$background_image = 'yes' === ( $parse_bkg_image ) ? $document_root . wp_parse_url( $background_image, PHP_URL_PATH ) : $background_image;
+
+				$background_margin_top  = isset( $background_margin_top ) && '' !== $background_margin_top ? $background_margin_top : '25';
+				$background_margin_left = isset( $background_margin_left ) && '' !== $background_margin_left ? $background_margin_left : '0';
+
 				$pdf->SetAutoPageBreak( false, 0 );
-				$pdf->Image( $background_image, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), '', '', '', false, 300, '', false, false, 0 );
+				$pdf->Image( $background_image, $background_margin_left, $background_margin_top, $pdf->getPageWidth(), $pdf->getPageHeight(), '', '', '', false, 300, '', false, false, 0 );
 				$pdf->SetAutoPageBreak( true, wcj_get_option( 'wcj_invoicing_' . $invoice_type . '_margin_bottom', 10 ) );
 				$pdf->setPageMark();
+				$pdf->SetAlpha( 1 );
 			}
 			return $pdf;
 		}

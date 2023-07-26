@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Payment Gateways by Shipping
+ * Booster for WooCommerce - Settings - Payment Gateways by Shipping
  *
- * @version 5.6.0
+ * @version 7.0.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) remove COD, Custom Booster Payment Gateways (and maybe other payment gateways) that already have `enable_for_methods` option
@@ -16,6 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 $use_shipping_instance = ( 'yes' === wcj_get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
 $shipping_methods      = ( $use_shipping_instance ? wcj_get_shipping_methods_instances() : wcj_get_shipping_methods() );
 $settings              = array(
+	array(
+		'id'   => 'wcj_payment_gateways_by_shipping_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'      => 'wcj_payment_gateways_by_shipping_options',
+		'type'    => 'tab_ids',
+		'tab_ids' => array(
+			'wcj_payment_gateways_by_shipping_general_options_tab' => __( 'General Options', 'woocommerce-jetpack' ),
+			'wcj_payment_gateways_by_shipping_payment_gatways_tab'   => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_by_shipping_general_options_tab',
+		'type' => 'tab_start',
+	),
 	array(
 		'title' => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
@@ -31,8 +47,16 @@ $settings              = array(
 		'default'  => 'no',
 	),
 	array(
-		'type' => 'sectionend',
 		'id'   => 'wcj_payment_gateways_by_shipping_general_options',
+		'type' => 'sectionend',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_by_shipping_general_options_tab',
+		'type' => 'tab_end',
+	),
+	array(
+		'id'   => 'wcj_payment_gateways_by_shipping_payment_gatways_tab',
+		'type' => 'tab_start',
 	),
 );
 $settings              = array_merge(
@@ -80,8 +104,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_by_shipping_options',
+			'type' => 'sectionend',
+		),
+		array(
+			'id'   => 'wcj_payment_gateways_by_shipping_payment_gatways_tab',
+			'type' => 'tab_end',
 		),
 	)
 );
