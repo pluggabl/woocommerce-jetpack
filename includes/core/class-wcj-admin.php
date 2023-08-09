@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.0.0
+ * @version 7.1.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -56,19 +56,16 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Save module settings.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.0
 		 */
 		public function wcj_save_module_settings() {
-			$wpnonce = isset( $_REQUEST['wcj-verify-save-module-settings'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-verify-save-module-settings'] ), 'wcj-verify-save-module-settings' ) : false;
-
+			$wpnonce = isset( $_POST['wcj-verify-save-module-settings'] ) ? wp_verify_nonce( sanitize_key( $_POST['wcj-verify-save-module-settings'] ), 'wcj-verify-save-module-settings' ) : false;
 			if ( $wpnonce ) {
 
 				if ( isset( $_POST['section'] ) ) {
 					$settings = $this->get_settings( sanitize_key( $_POST['section'] ) );
-					foreach ( $_POST as $key => $value ) {
-						update_option( $key, wp_unslash( $value ) );
-					}
 					WC_Admin_Settings::save_fields( $settings );
+					$this->wcj_save_other_modules_key_settings();
 					$this->disable_autoload_options_from_section( $settings );
 					if ( isset( $_POST['wcj_template_editor_templates_content'] ) ) {
 						$wcj_template_editor_templates_content = wp_unslash( $_POST['wcj_template_editor_templates_content'] ); // phpcs:ignore	
@@ -76,9 +73,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					}
 					do_action( 'woojetpack_after_settings_save', $this->get_sections(), sanitize_key( $_POST['section'] ) );
 				} else {
-					foreach ( $_POST as $key => $value ) {
-						update_option( $key, wp_unslash( $value ) );
-					}
+					$this->wcj_save_other_modules_key_settings();
 				}
 
 				$active_tab = isset( $_POST['wcj_setting_active_tab'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_setting_active_tab'] ) ) : '';
@@ -90,6 +85,30 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				} else {
 					wp_safe_redirect( admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) );
 					exit();
+				}
+			}
+		}
+
+		/**
+		 * Wcj_save_other_modules_key_settings.
+		 *
+		 * @version 7.1.0
+		 * @since  7.1.0
+		 */
+		public function wcj_save_other_modules_key_settings() {
+			if ( is_admin() ) {
+				$wpnonce = isset( $_POST['wcj-verify-save-module-settings'] ) ? wp_verify_nonce( sanitize_key( $_POST['wcj-verify-save-module-settings'] ), 'wcj-verify-save-module-settings' ) : false;
+				if ( $wpnonce ) {
+					$module_keys             = array_column( w_c_j()->module_statuses, 'id' );
+					$post_keys               = array_keys( $_POST );
+					$other_modules_to_enable = array_intersect( $module_keys, $post_keys );
+
+					foreach ( $other_modules_to_enable as $key => $module_key ) {
+						$module_enable_setting = isset( $_POST[ $module_key ] ) && '' !== $_POST[ $module_key ] ? sanitize_text_field( wp_unslash( $_POST[ $module_key ] ) ) : null;
+						if ( ! empty( $module_enable_setting ) && null !== $module_enable_setting ) {
+							update_option( $module_key, wp_unslash( $module_enable_setting ) );
+						}
+					}
 				}
 			}
 		}

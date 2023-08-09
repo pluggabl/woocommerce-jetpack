@@ -1,7 +1,5 @@
 {
-    "0" : "= 7.0.0 26/07/2023 =",
-    "1" : "* FIXED - EMAILS & MISC - Admin Bar - Fixed Booster Tools not working when accessed through the admin bar.",
-    "2" : "* FIXED - BUTTON & PRICE LABELS - Add to Cart Button Labels - Fixed the Button's text issue when the price is set to 0.",
-    "3" : "* WooCommerce 7.9.0 Tested",
-    "4" : "* WordPress 6.2.2 Tested"
+    "0" : "= 7.1.0 09/08/2023 =",
+    "1" : "* FIXED - Added Security vulnerability fixes.",
+    "2" : "* WooCommerce 8.0.0 Tested"
 }
