@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.2.2
 Requires PHP: 7.2
-Stable tag: 7.0.0
+Stable tag: 7.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -60,14 +60,15 @@ Paid Booster bundles comes with a 30-day no-questions-asked money-back guarantee
 
 == Screenshots ==
 
-1. Booster for WooCommerce - Prices & Currencies.
-2. Booster for WooCommerce - Button & Price Labels.
-3. Booster for WooCommerce - Products.
-4. Booster for WooCommerce - Cart & Checkout.
-5. Booster for WooCommerce - Payment Gateways.
-6. Booster for WooCommerce - Shipping & Orders.
-7. Booster for WooCommerce - PDF Invoicing & Packing Slips.
-8. Booster for WooCommerce - Emails & Misc.
+1. Booster for WooCommerce - Dashboard.
+2. Booster for WooCommerce - Prices & Currencies.
+3. Booster for WooCommerce - Button & Price Labels.
+4. Booster for WooCommerce - Products.
+5. Booster for WooCommerce - Cart & Checkout.
+6. Booster for WooCommerce - Payment Gateways.
+7. Booster for WooCommerce - Shipping & Orders.
+8. Booster for WooCommerce - PDF Invoicing & Packing Slips.
+9. Booster for WooCommerce - Emails & Misc.
 
 == Frequently Asked Questions ==
 
@@ -277,6 +278,11 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.0 09/08/2023 =
+
+* FIXED - Added Security vulnerability fixes.
+* WooCommerce 8.0.0 tested
 
 = 7.0.0 26/07/2023 =
 

@@ -44,7 +44,7 @@ msgstr ""
 #: includes/class-wcj-track-users.php:175 includes/class-wcj-track-users.php:268
 #: includes/classes/class-wcj-module.php:682
 #: includes/classes/class-wcj-module.php:891
-#: includes/core/class-wcj-admin.php:267 includes/core/class-wcj-admin.php:268
+#: includes/core/class-wcj-admin.php:286 includes/core/class-wcj-admin.php:287
 #: includes/settings/wcj-settings-price-by-country.php:310
 msgid "Booster"
 msgstr ""
@@ -78,8 +78,8 @@ msgstr ""
 #: includes/admin/wcj-modules-cats.php:17
 #: includes/admin/wcj-settings-header.php:40
 #: includes/class-wcj-admin-bar.php:229 includes/class-wcj-my-account.php:39
-#: includes/core/class-wcj-admin.php:278 includes/core/class-wcj-admin.php:279
-#: includes/core/class-wcj-admin.php:646
+#: includes/core/class-wcj-admin.php:297 includes/core/class-wcj-admin.php:298
+#: includes/core/class-wcj-admin.php:665
 msgid "Dashboard"
 msgstr ""
 
@@ -125,71 +125,71 @@ msgstr ""
 #: includes/admin/class-wc-settings-jetpack.php:412
 #: includes/admin/class-wc-settings-jetpack.php:640
 #: includes/class-wcj-admin-bar.php:179 includes/class-wcj-admin-bar.php:530
-#: includes/class-wcj-admin-bar.php:630 includes/core/class-wcj-admin.php:341
-#: includes/core/class-wcj-admin.php:757
+#: includes/class-wcj-admin-bar.php:630 includes/core/class-wcj-admin.php:360
+#: includes/core/class-wcj-admin.php:776
 msgid "Settings"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:466
-#: includes/core/class-wcj-admin.php:478
+#: includes/core/class-wcj-admin.php:497
 msgid ""
 "This section lets you export, import or reset all Booster's modules settings."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:494
 #: includes/admin/class-wc-settings-jetpack.php:1060
-#: includes/class-wcj-export-import.php:31 includes/core/class-wcj-admin.php:484
+#: includes/class-wcj-export-import.php:31 includes/core/class-wcj-admin.php:503
 #: includes/settings/wcj-settings-export.php:25
 msgid "Export"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:495
-#: includes/core/class-wcj-admin.php:483
+#: includes/core/class-wcj-admin.php:502
 msgid "Export all Booster's options to a file."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:498
 #: includes/admin/class-wc-settings-jetpack.php:1051
 #: includes/class-wcj-purchase-data.php:121
-#: includes/core/class-wcj-admin.php:489
+#: includes/core/class-wcj-admin.php:508
 msgid "Import"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:500
-#: includes/core/class-wcj-admin.php:488
+#: includes/core/class-wcj-admin.php:507
 msgid "Import all Booster's options from a file."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:504
-#: includes/core/class-wcj-admin.php:495
+#: includes/core/class-wcj-admin.php:514
 msgid ""
 "This will reset settings to defaults for all Booster modules. Are you sure?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:505
 #: includes/admin/class-wc-settings-jetpack.php:1071
-#: includes/core/class-wcj-admin.php:496
+#: includes/core/class-wcj-admin.php:515
 msgid "Reset"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:506
-#: includes/core/class-wcj-admin.php:493
+#: includes/core/class-wcj-admin.php:512
 msgid "Reset all Booster's options."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:510
-#: includes/core/class-wcj-admin.php:502
+#: includes/core/class-wcj-admin.php:521
 msgid "This will delete all Booster meta. Are you sure?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:511
 #: includes/admin/class-wc-settings-jetpack.php:1080
-#: includes/core/class-wcj-admin.php:503
+#: includes/core/class-wcj-admin.php:522
 msgid "Reset meta"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:512
-#: includes/core/class-wcj-admin.php:500
+#: includes/core/class-wcj-admin.php:519
 msgid "Reset all Booster's meta."
 msgstr ""
 
@@ -236,12 +236,12 @@ msgid "Total Modules:"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:723
-#: includes/core/class-wcj-admin.php:506
+#: includes/core/class-wcj-admin.php:525
 msgid "Autoload Booster's Options"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:725
-#: includes/core/class-wcj-admin.php:508
+#: includes/core/class-wcj-admin.php:527
 msgid ""
 "Choose if you want Booster's options to be autoloaded when calling "
 "add_option. After saving this option, you need to Reset all Booster's "
@@ -249,45 +249,45 @@ msgid ""
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:730
-#: includes/core/class-wcj-admin.php:513
+#: includes/core/class-wcj-admin.php:532
 msgid "Load Modules on Init Hook"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:732
-#: includes/core/class-wcj-admin.php:515
+#: includes/core/class-wcj-admin.php:534
 msgid "Choose if you want to load Booster Modules on Init hook."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:732
-#: includes/core/class-wcj-admin.php:515
+#: includes/core/class-wcj-admin.php:534
 msgid ""
 "It will load the locale appropriately if users change it from the profile "
 "page."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:737
-#: includes/core/class-wcj-admin.php:520
+#: includes/core/class-wcj-admin.php:539
 msgid "Use List Instead of Comma Separated Text for Products in Settings"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:741
 #: includes/admin/class-wc-settings-jetpack.php:762
 #: includes/admin/class-wc-settings-jetpack.php:778
-#: includes/core/class-wcj-admin.php:524 includes/core/class-wcj-admin.php:545
-#: includes/core/class-wcj-admin.php:561
+#: includes/core/class-wcj-admin.php:543 includes/core/class-wcj-admin.php:564
+#: includes/core/class-wcj-admin.php:580
 #, php-format
 msgid "Supported modules: %s."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:745
 #: includes/class-wcj-payment-gateways-per-category.php:31
-#: includes/core/class-wcj-admin.php:528
+#: includes/core/class-wcj-admin.php:547
 msgid "Gateways per Product or Category"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:746
 #: includes/class-wcj-global-discount.php:38
-#: includes/core/class-wcj-admin.php:529
+#: includes/core/class-wcj-admin.php:548
 #: includes/settings/wcj-settings-product-addons.php:300
 msgid "Global Discount"
 msgstr ""
@@ -296,8 +296,8 @@ msgstr ""
 #: includes/admin/class-wc-settings-jetpack.php:766
 #: includes/admin/class-wc-settings-jetpack.php:782
 #: includes/class-wcj-product-custom-info.php:29
-#: includes/core/class-wcj-admin.php:530 includes/core/class-wcj-admin.php:549
-#: includes/core/class-wcj-admin.php:565
+#: includes/core/class-wcj-admin.php:549 includes/core/class-wcj-admin.php:568
+#: includes/core/class-wcj-admin.php:584
 #: includes/functions/wcj-functions-general.php:443
 msgid "Product Info"
 msgstr ""
@@ -306,32 +306,32 @@ msgstr ""
 #: includes/admin/wcj-settings-dashboard.php:185
 #: includes/admin/wcj-welcome-screen-content.php:82
 #: includes/class-wcj-product-input-fields.php:29
-#: includes/core/class-wcj-admin.php:531
+#: includes/core/class-wcj-admin.php:550
 #: includes/input-fields/class-wcj-product-input-fields-core.php:214
 msgid "Product Input Fields"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:749
-#: includes/core/class-wcj-admin.php:532
+#: includes/core/class-wcj-admin.php:551
 msgid "Products XML"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:750
 #: includes/class-wcj-related-products.php:30
-#: includes/core/class-wcj-admin.php:533
+#: includes/core/class-wcj-admin.php:552
 #: includes/settings/meta-box/wcj-settings-meta-box-related-products.php:33
 #: includes/settings/wcj-settings-free-price.php:38
 msgid "Related Products"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:758
-#: includes/core/class-wcj-admin.php:541
+#: includes/core/class-wcj-admin.php:560
 msgid ""
 "Use List Instead of Comma Separated Text for Products Categories in Settings"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:774
-#: includes/core/class-wcj-admin.php:557
+#: includes/core/class-wcj-admin.php:576
 msgid "Use List Instead of Comma Separated Text for Products Tags in Settings"
 msgstr ""
 
@@ -523,22 +523,22 @@ msgid "SEE MORE"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1124
-#: includes/core/class-wcj-admin.php:242
+#: includes/core/class-wcj-admin.php:261
 msgid "Please rate "
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1124
-#: includes/core/class-wcj-admin.php:242
+#: includes/core/class-wcj-admin.php:261
 msgid "Booster for Woocommerce"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1132
-#: includes/core/class-wcj-admin.php:250
+#: includes/core/class-wcj-admin.php:269
 msgid "WordPress.org"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1132
-#: includes/core/class-wcj-admin.php:250
+#: includes/core/class-wcj-admin.php:269
 msgid " to help us spread the word. Thank you from Booster team!"
 msgstr ""
 
@@ -615,46 +615,46 @@ msgid "Upgrade to Booster Plus"
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:79
-#: includes/core/class-wcj-admin.php:1124
+#: includes/core/class-wcj-admin.php:1143
 #, php-format
 msgid "Grab raw %1$s rate from %2$s."
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:80
-#: includes/core/class-wcj-admin.php:1125
+#: includes/core/class-wcj-admin.php:1144
 msgid "Doesn't apply rounding, offset etc."
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:350
-#: includes/core/class-wcj-admin.php:1062
+#: includes/core/class-wcj-admin.php:1081
 msgid "Save changes"
 msgstr ""
 
-#: includes/admin/class-wcj-settings-manager.php:41
-#: includes/admin/wcj-settings-plugins.php:85
+#: includes/admin/class-wcj-settings-manager.php:47
+#: includes/admin/wcj-settings-plugins.php:81
 msgid "Your settings have been saved."
 msgstr ""
 
-#: includes/admin/class-wcj-settings-manager.php:114
+#: includes/admin/class-wcj-settings-manager.php:130
 msgid "Please upload a file to import!"
 msgstr ""
 
-#: includes/admin/class-wcj-settings-manager.php:131
-#: includes/admin/class-wcj-settings-manager.php:137
+#: includes/admin/class-wcj-settings-manager.php:147
+#: includes/admin/class-wcj-settings-manager.php:153
 msgid "Wrong file format!"
 msgstr ""
 
-#: includes/admin/class-wcj-settings-manager.php:148
+#: includes/admin/class-wcj-settings-manager.php:164
 #, php-format
 msgid "%d options successfully imported."
 msgstr ""
 
-#: includes/admin/class-wcj-settings-manager.php:209
+#: includes/admin/class-wcj-settings-manager.php:225
 #, php-format
 msgid "%d meta successfully deleted."
 msgstr ""
 
-#: includes/admin/class-wcj-settings-manager.php:229
+#: includes/admin/class-wcj-settings-manager.php:245
 #, php-format
 msgid "%d options successfully deleted."
 msgstr ""
@@ -948,58 +948,58 @@ msgid ""
 msgstr ""
 
 #: includes/admin/wcj-settings-header.php:52
-#: includes/core/class-wcj-admin.php:287 includes/core/class-wcj-admin.php:288
+#: includes/core/class-wcj-admin.php:306 includes/core/class-wcj-admin.php:307
 msgid "Plugins"
 msgstr ""
 
 #: includes/admin/wcj-settings-header.php:64
-#: includes/core/class-wcj-admin.php:296 includes/core/class-wcj-admin.php:297
-#: includes/core/class-wcj-admin.php:477
+#: includes/core/class-wcj-admin.php:315 includes/core/class-wcj-admin.php:316
+#: includes/core/class-wcj-admin.php:496
 #: includes/settings/wcj-settings-product-price-by-formula.php:25
 #: includes/settings/wcj-settings-product-price-by-formula.php:93
 msgid "General Settings"
 msgstr ""
 
 #: includes/admin/wcj-settings-header.php:76
-#: includes/core/class-wcj-admin.php:347
+#: includes/core/class-wcj-admin.php:366
 msgid "Support"
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:34
+#: includes/admin/wcj-settings-plugins.php:30
 msgid "All Plugins"
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:41
+#: includes/admin/wcj-settings-plugins.php:35
 #: includes/class-wcj-admin-bar.php:158
 msgid "Active"
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:46
+#: includes/admin/wcj-settings-plugins.php:42
 msgid "Search plugins and settings..."
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:47
+#: includes/admin/wcj-settings-plugins.php:43
 msgid "Search"
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:71
-#: includes/core/class-wcj-admin.php:918 includes/core/class-wcj-admin.php:1281
+#: includes/admin/wcj-settings-plugins.php:67
+#: includes/core/class-wcj-admin.php:937 includes/core/class-wcj-admin.php:1300
 msgid "Save Changes"
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:96
-#: includes/class-wcj-pdf-invoicing.php:28 includes/core/class-wcj-admin.php:757
+#: includes/admin/wcj-settings-plugins.php:92
+#: includes/class-wcj-pdf-invoicing.php:28 includes/core/class-wcj-admin.php:776
 #: includes/settings/wcj-settings-wpml.php:18
 msgid "PDF Invoicing"
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:97
+#: includes/admin/wcj-settings-plugins.php:93
 #: includes/class-wcj-pdf-invoicing.php:31
 msgid "Invoices, Proforma Invoices, Credit Notes and Packing Slips."
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:105
-#: includes/core/class-wcj-admin.php:729 includes/core/class-wcj-admin.php:878
+#: includes/admin/wcj-settings-plugins.php:101
+#: includes/core/class-wcj-admin.php:748 includes/core/class-wcj-admin.php:897
 #: includes/settings/meta-box/wcj-settings-meta-box-product-add-to-cart.php:81
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:45
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:71
@@ -1018,7 +1018,7 @@ msgstr ""
 msgid "Disable"
 msgstr ""
 
-#: includes/admin/wcj-settings-plugins.php:106
+#: includes/admin/wcj-settings-plugins.php:102
 #: includes/class-wcj-price-labels.php:46
 #: includes/class-wcj-product-by-country.php:203
 #: includes/class-wcj-product-by-user-role.php:62
@@ -1028,7 +1028,7 @@ msgstr ""
 #: includes/class-wcj-shipping-options.php:191
 #: includes/classes/class-wcj-module.php:221
 #: includes/classes/class-wcj-module.php:242
-#: includes/core/class-wcj-admin.php:730 includes/core/class-wcj-admin.php:879
+#: includes/core/class-wcj-admin.php:749 includes/core/class-wcj-admin.php:898
 #: includes/settings/meta-box/wcj-settings-meta-box-product-add-to-cart.php:82
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:81
 #: includes/settings/meta-box/wcj-settings-meta-box-related-products.php:22
@@ -6292,61 +6292,61 @@ msgstr ""
 msgid "Page %page_number% / %total_pages%"
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:213
+#: includes/core/class-wcj-admin.php:232
 msgid "Please update <strong>Booster Plus for WooCommerce</strong> plugin."
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:216
+#: includes/core/class-wcj-admin.php:235
 #, php-format
 msgid ""
 "Visit <a target=\"_blank\" href=\"%s\">your account page</a> on booster.io to "
 "download the latest Booster Plus version."
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:221
+#: includes/core/class-wcj-admin.php:240
 #, php-format
 msgid "Click <a target=\"_blank\" href=\"%s\">here</a> for more info."
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:342
+#: includes/core/class-wcj-admin.php:361
 msgid "Docs"
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:345
+#: includes/core/class-wcj-admin.php:364
 msgid "Unlock all"
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:462
+#: includes/core/class-wcj-admin.php:481
 msgid "Site Key Settings"
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:463
+#: includes/core/class-wcj-admin.php:482
 msgid ""
 "This section lets you manage site key for paid Booster Plus for WooCommerce "
 "plugin."
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:467
+#: includes/core/class-wcj-admin.php:486
 msgid "Site Key"
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:590
+#: includes/core/class-wcj-admin.php:609
 msgid "Booster Elite for WooCommerce"
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:668
+#: includes/core/class-wcj-admin.php:687
 msgid "Your search"
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:668
+#: includes/core/class-wcj-admin.php:687
 msgid "did not match with any plugins. please try different keywords."
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:782
+#: includes/core/class-wcj-admin.php:801
 msgid "No Active module found."
 msgstr ""
 
-#: includes/core/class-wcj-admin.php:784
+#: includes/core/class-wcj-admin.php:803
 msgid "No Modules available."
 msgstr ""
 

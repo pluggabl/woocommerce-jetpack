@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 7.0.0
+ * @version 7.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -307,7 +307,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Maybe_bulk_regenerate_download_permissions_all_orders.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.0
 		 * @since   3.2.0
 		 */
 		public function maybe_bulk_regenerate_download_permissions_all_orders() {
@@ -325,7 +325,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 								'wcj_bulk_regenerated_download_permissions' => $total_orders,
 								'wcj_bulk_regenerated_download_permissions-nonce' => wp_create_nonce( 'wcj_bulk_regenerated_download_permissions' ),
 							),
-							$return_url,
+							$return_url
 						)
 					);
 					exit();
@@ -336,7 +336,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 								'wcj_bulk_regenerated_download_permissions' => $total_orders,
 								'wcj_bulk_regenerated_download_permissions-nonce' => wp_create_nonce( 'wcj_bulk_regenerated_download_permissions' ),
 							),
-							admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ),
+							admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) )
 						)
 					);
 					exit();

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
- * @version 7.0.0
+ * @version 7.1.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
@@ -21,23 +21,29 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.0
 		 * @since   2.9.0
 		 * @todo    add options to import/export selected modules only
 		 */
 		public function __construct() {
 			if ( is_admin() ) {
-				add_action( 'admin_post_wcj_save_general_settings', array( $this, 'manage_options' ) );
+				if ( ! function_exists( 'current_user_can' ) || ! current_user_can( 'manage_options' ) ) {
+					return;
+				}
+				add_action( 'admin_post_wcj_save_general_settings', array( $this, 'wcj_manage_plugin_options' ) );
 			}
 		}
 
 		/**
 		 * Manage_options.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.0
 		 * @since   2.5.2
 		 */
-		public function manage_options() {
+		public function wcj_manage_plugin_options() {
+			if ( ! function_exists( 'current_user_can' ) || ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
 			$msg = __( 'Your settings have been saved.', 'woocommerce-jetpack' );
 
 			require_once ABSPATH . '/wp-admin/includes/file.php';
@@ -85,8 +91,18 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 					exit();
 				}
 
-				foreach ( $_POST as $key => $value ) {
-					update_option( $key, $value );
+				$general_setting_fields = array(
+					'wcj_autoload_options'       => isset( $_POST['wcj_autoload_options'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_autoload_options'] ) ) : null,
+					'wcj_load_modules_on_init'   => isset( $_POST['wcj_load_modules_on_init'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_load_modules_on_init'] ) ) : null,
+					'wcj_list_for_products'      => isset( $_POST['wcj_list_for_products'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_list_for_products'] ) ) : null,
+					'wcj_list_for_products_cats' => isset( $_POST['wcj_list_for_products_cats'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_list_for_products_cats'] ) ) : null,
+					'wcj_list_for_products_tags' => isset( $_POST['wcj_list_for_products_tags'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_list_for_products_tags'] ) ) : null,
+				);
+
+				foreach ( $general_setting_fields as $setting_key => $setting_value ) {
+					if ( ! empty( $setting_value ) && null !== $setting_value ) {
+						update_option( $setting_key, $setting_value );
+					}
 				}
 
 				if ( isset( $_POST['wcj_site_key'] ) ) {
@@ -105,11 +121,11 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		/**
 		 * Manage_options_import.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.0
 		 * @since   2.5.2
 		 */
 		public function manage_options_import() {
-			$wcj_notice = '';
+			global $wcj_notice;
 			if ( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' === $_FILES['booster_import_settings_file']['tmp_name'] ) {
 				$wcj_notice     .= __( 'Please upload a file to import!', 'woocommerce-jetpack' );
 				$import_settings = array();

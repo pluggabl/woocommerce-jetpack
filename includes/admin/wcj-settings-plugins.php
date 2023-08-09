@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - HTML of booster all plugin page
  *
- * @version 7.0.0
+ * @version 7.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -25,20 +25,16 @@ require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 						$wcj_search          = ( isset( $_REQUEST['wcj_search'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_search'] ) ) : '' );
 						$wcj_search_replaced = str_replace( ' ', '+', $wcj_search );
 					?>
-					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) ); ?>" class="
-												<?php
-												if ( 'wcj-plugins' === $active_page && 'active' !== $section ) {
-													echo 'active';
-												}
-												?>
-							"><?php esc_html_e( 'All Plugins', 'woocommerce-jetpack' ); ?></a></li>
-					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&section=active&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) ); ?>" class="
-												<?php
-												if ( 'wcj-plugins' === $active_page && 'active' === $section ) {
-													echo 'active';
-												}
-												?>
-							"><?php esc_html_e( 'Active', 'woocommerce-jetpack' ); ?></a></li>
+					<li>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) ); ?>" class="<?php echo 'wcj-plugins' === $active_page && 'active' !== $section ? 'active' : ''; ?>">
+							<?php esc_html_e( 'All Plugins', 'woocommerce-jetpack' ); ?>
+						</a>
+					</li>
+					<li>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&section=active&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) ); ?>" class="<?php echo 'wcj-plugins' === $active_page && 'active' === $section ? 'active' : ''; ?>">
+							<?php esc_html_e( 'Active', 'woocommerce-jetpack' ); ?>
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div class="wcj-plugins-tp-search src_plug">
