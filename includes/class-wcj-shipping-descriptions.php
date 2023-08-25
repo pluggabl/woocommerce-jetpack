@@ -65,11 +65,11 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 			if ( '' !== ( $desc ) ) {
 				switch ( $this->shipping_descriptions_position ) {
 					case 'before':
-						return $desc . $label;
+						return __( do_shortcode( $desc ) ) . $label;
 					case 'instead':
-						return $desc;
-					default: // after.
-						return $label . $desc;
+						return __( do_shortcode( $desc ) );
+					default: // 'after'.
+						return $label . __( do_shortcode( $desc ) );
 				}
 			} else {
 				return $label;
