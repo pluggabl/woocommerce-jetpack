@@ -298,7 +298,7 @@ msgstr ""
 #: includes/class-wcj-product-custom-info.php:29
 #: includes/core/class-wcj-admin.php:549 includes/core/class-wcj-admin.php:568
 #: includes/core/class-wcj-admin.php:584
-#: includes/functions/wcj-functions-general.php:443
+#: includes/functions/wcj-functions-general.php:452
 msgid "Product Info"
 msgstr ""
 
@@ -2804,7 +2804,7 @@ msgid "Booster: Send Email: %s"
 msgstr ""
 
 #: includes/class-wcj-empty-cart-button.php:30
-#: includes/shortcodes/class-wcj-general-shortcodes.php:600
+#: includes/shortcodes/class-wcj-general-shortcodes.php:609
 msgid "Empty Cart Button"
 msgstr ""
 
@@ -6281,7 +6281,7 @@ msgid "Company Name"
 msgstr ""
 
 #: includes/classes/class-wcj-shortcodes.php:156
-#: includes/shortcodes/class-wcj-general-shortcodes.php:600
+#: includes/shortcodes/class-wcj-general-shortcodes.php:609
 #, php-format
 msgid "\"%s\" module is not enabled!"
 msgstr ""
@@ -8135,92 +8135,92 @@ msgstr ""
 msgid "CoinMarketCap"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:663
+#: includes/functions/wcj-functions-general.php:672
 #: includes/settings/wcj-settings-cross-sells.php:88
 #: includes/settings/wcj-settings-empty-cart.php:65
 msgid "Before cart"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:664
+#: includes/functions/wcj-functions-general.php:673
 msgid "Before cart table"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:665
+#: includes/functions/wcj-functions-general.php:674
 msgid "Before cart contents"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:666
+#: includes/functions/wcj-functions-general.php:675
 msgid "Cart contents"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:667
+#: includes/functions/wcj-functions-general.php:676
 msgid "Cart coupon"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:668
+#: includes/functions/wcj-functions-general.php:677
 msgid "Cart actions"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:669
+#: includes/functions/wcj-functions-general.php:678
 msgid "After cart contents"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:670
+#: includes/functions/wcj-functions-general.php:679
 msgid "After cart table"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:671
+#: includes/functions/wcj-functions-general.php:680
 #: includes/settings/wcj-settings-cross-sells.php:89
 msgid "Cart collaterals"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:672
+#: includes/functions/wcj-functions-general.php:681
 #: includes/settings/wcj-settings-cross-sells.php:90
 #: includes/settings/wcj-settings-empty-cart.php:74
 msgid "After cart"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:674
+#: includes/functions/wcj-functions-general.php:683
 msgid "Before cart totals"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:675
+#: includes/functions/wcj-functions-general.php:684
 #: includes/settings/wcj-settings-empty-cart.php:67
 msgid "Cart totals: Before shipping"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:676
+#: includes/functions/wcj-functions-general.php:685
 #: includes/settings/wcj-settings-empty-cart.php:68
 msgid "Cart totals: After shipping"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:677
+#: includes/functions/wcj-functions-general.php:686
 #: includes/settings/wcj-settings-empty-cart.php:69
 msgid "Cart totals: Before order total"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:678
+#: includes/functions/wcj-functions-general.php:687
 #: includes/settings/wcj-settings-empty-cart.php:70
 msgid "Cart totals: After order total"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:679
+#: includes/functions/wcj-functions-general.php:688
 msgid "Proceed to checkout"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:680
+#: includes/functions/wcj-functions-general.php:689
 msgid "After cart totals"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:682
+#: includes/functions/wcj-functions-general.php:691
 msgid "Before shipping calculator"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:683
+#: includes/functions/wcj-functions-general.php:692
 msgid "After shipping calculator"
 msgstr ""
 
-#: includes/functions/wcj-functions-general.php:685
+#: includes/functions/wcj-functions-general.php:694
 msgid "If cart is empty"
 msgstr ""
 
@@ -21536,7 +21536,7 @@ msgstr ""
 msgid "Tax toggle (excl.)"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-input-field-shortcodes.php:62
+#: includes/shortcodes/class-wcj-input-field-shortcodes.php:69
 msgid "Attribute \"name\" is required!"
 msgstr ""
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Input Field
  *
- * @version 4.7.0
+ * @version 7.1.1
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -52,13 +52,20 @@ if ( ! class_exists( 'WCJ_Input_Field_Shortcodes' ) ) :
 		/**
 		 * Wcj_input_field.
 		 *
-		 * @version 4.7.0
+		 * @version 7.1.1
 		 * @since   2.5.2
 		 * @param array  $atts The user defined shortcode attributes.
 		 * @param string $content Optional. The content between the opening and closing shortcode tags. Default is an empty string.
 		 */
 		public function wcj_input_field( $atts, $content ) {
-			if ( '' === $atts['name'] ) {
+
+			$type        = wcj_sanitize_input_attribute_values( $atts['type'] );
+			$class       = wcj_sanitize_input_attribute_values( $atts['class'] );
+			$name        = wcj_sanitize_input_attribute_values( $atts['name'] );
+			$label       = wcj_sanitize_input_attribute_values( $atts['label'] );
+			$value       = wcj_sanitize_input_attribute_values( $atts['value'] );
+			$placeholder = wcj_sanitize_input_attribute_values( $atts['placeholder'] );
+			if ( '' === $name ) {
 				return __( 'Attribute "name" is required!', 'woocommerce-jetpack' );
 			}
 
@@ -70,39 +77,38 @@ if ( ! class_exists( 'WCJ_Input_Field_Shortcodes' ) ) :
 			$data_attributes_html = wcj_get_data_attributes_html( $data_attributes );
 
 			// Name.
-			$name_html = ' name="wcj_input_field_' . $atts['name'] . '"';
+			$name_html = ' name="wcj_input_field_' . $name . '"';
 			if ( isset( $atts['name_array'] ) && ! empty( $atts['name_array'] ) ) {
-				$name_html = ' name="wcj_input_field_' . $atts['name_array'] . '[' . $atts['name'] . '][value]"';
+				$name_html = ' name="wcj_input_field_' . $atts['name_array'] . '[' . $name . '][value]"';
 			}
 
 			$the_field  = '';
 			$the_field .= '<input' .
 			$data_attributes_html .
-			' type="' . $atts['type'] . '"' .
-			' class="' . $atts['class'] . '"' .
-			' value="' . $atts['value'] . '"' .
-			' placeholder="' . $atts['placeholder'] . '"' .
+			' type="' . $type . '"' .
+			' class="' . $class . '"' .
+			' value="' . $value . '"' .
+			' placeholder="' . $placeholder . '"' .
 			$name_html .
-			' id="wcj_input_field_' . $atts['name'] . '">';
+			' id="wcj_input_field_' . $name . '">';
 			if ( '' !== $atts['attach_to'] ) {
-				$the_field .= '<input type="hidden" name="for_wcj_input_field_' . $atts['name'] . '" value="' . $atts['attach_to'] . '">';
+				$the_field .= '<input type="hidden" name="for_wcj_input_field_' . $name . '" value="' . $atts['attach_to'] . '">';
 			}
 
 			// Label.
-			if ( '' !== $atts['label'] ) {
-				$label_name_html = ' name="label_for_wcj_input_field_' . $atts['name'] . '"';
+			if ( '' !== $label ) {
+				$label_name_html = ' name="label_for_wcj_input_field_' . $name . '"';
 				if ( isset( $atts['name_array'] ) && ! empty( $atts['name_array'] ) ) {
-					$label_name_html = ' name="wcj_input_field_' . $atts['name_array'] . '[' . $atts['name'] . '][label]"';
+					$label_name_html = ' name="wcj_input_field_' . $atts['name_array'] . '[' . $name . '][label]"';
 				}
-				$the_field .= '<input type="hidden" ' . $label_name_html . ' value="' . $atts['label'] . '">';
+				$the_field .= '<input type="hidden" ' . $label_name_html . ' value="' . $label . '">';
 			}
 
 			if ( 'yes' === $atts['required'] ) {
-				$the_field .= '<input type="hidden" name="wcj_input_field_' . $atts['name'] . '_required" value="yes">';
+				$the_field .= '<input type="hidden" name="wcj_input_field_' . $name . '_required" value="yes">';
 			}
 			return $the_field;
 		}
-
 	}
 
 endif;

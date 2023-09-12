@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.0.0
+ * @version 7.1.1
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -187,33 +187,38 @@ if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 	/**
 	 * Wcj_tcpdf_barcode.
 	 *
-	 * @version 3.4.0
+	 * @version 7.1.1
 	 * @since   3.3.0
 	 * @todo    `color`
 	 * @todo    `align` (try 'T')
 	 * @param   array $atts defines the atts.
 	 */
 	function wcj_tcpdf_barcode( $atts ) {
+		$type      = wcj_sanitize_input_attribute_values( $atts['type'] );
+		$width     = wcj_sanitize_input_attribute_values( $atts['width'] );
+		$height    = wcj_sanitize_input_attribute_values( $atts['height'] );
+		$dimension = wcj_sanitize_input_attribute_values( $atts['dimension'] );
+
 		if ( '' === $atts['code'] ) {
 			return '';
 		}
-		if ( '' === $atts['type'] ) {
-			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
+		if ( '' === $type ) {
+			$type = ( '1D' === $dimension ? 'C39' : 'PDF417' );
 		}
-		if ( 0 === $atts['width'] ) {
-			$atts['width'] = ( '1D' === $atts['dimension'] ? 80 : 80 );
+		if ( 0 === $width ) {
+			$width = ( '1D' === $dimension ? 80 : 80 );
 		}
-		if ( 0 === $atts['height'] ) {
-			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 80 );
+		if ( 0 === $height ) {
+			$height = ( '1D' === $dimension ? 30 : 80 );
 		}
-		if ( '1D' === $atts['dimension'] ) {
+		if ( '1D' === $dimension ) {
 			$params = array(
 				$atts['code'],
-				$atts['type'],
+				$type,
 				'',  // x.
 				'',  // y.
-				$atts['width'],
-				$atts['height'],
+				$width,
+				$height,
 				0.4, // xres.
 				array( // style.
 					'position' => 'S',
@@ -254,34 +259,38 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 	/**
 	 * Wcj_barcode.
 	 *
-	 * @version 5.6.1
+	 * @version 7.1.1
 	 * @since   3.3.0
 	 * @todo    (maybe) "Barcodes" module
 	 * @todo    (maybe) `getBarcodePNG()`
 	 * @param   array $atts defines the atts.
 	 */
 	function wcj_barcode( $atts ) {
+		$type      = wcj_sanitize_input_attribute_values( $atts['type'] );
+		$width     = wcj_sanitize_input_attribute_values( $atts['width'] );
+		$height    = wcj_sanitize_input_attribute_values( $atts['height'] );
+		$dimension = wcj_sanitize_input_attribute_values( $atts['dimension'] );
 		if ( '' === $atts['code'] ) {
 			return '';
 		}
-		if ( '' === $atts['type'] ) {
-			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
+		if ( '' === $type ) {
+			$type = ( '1D' === $dimension ? 'C39' : 'PDF417' );
 		}
-		if ( 0 === $atts['width'] ) {
-			$atts['width'] = ( '1D' === $atts['dimension'] ? 2 : 10 );
+		if ( 0 === $width ) {
+			$width = ( '1D' === $dimension ? 2 : 10 );
 		}
-		if ( 0 === $atts['height'] ) {
-			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 10 );
+		if ( 0 === $height ) {
+			$height = ( '1D' === $dimension ? 30 : 10 );
 		}
-		if ( '1D' === $atts['dimension'] ) {
+		if ( '1D' === $dimension ) {
 			require_once WCJ_FREE_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_1d.php';
-			$barcode = new TCPDFBarcode( $atts['code'], $atts['type'] );
+			$barcode = new TCPDFBarcode( $atts['code'], $type );
 		} else {
 			require_once WCJ_FREE_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_2d.php';
-			$barcode = new TCPDF2DBarcode( $atts['code'], $atts['type'] );
+			$barcode = new TCPDF2DBarcode( $atts['code'], $type );
 		}
 		$barcode_array = $barcode->getBarcodeArray();
-		return ( ! empty( $barcode_array ) && is_array( $barcode_array ) ? $barcode->getBarcodeHTML( $atts['width'], $atts['height'], $atts['color'] ) : '' );
+		return ( ! empty( $barcode_array ) && is_array( $barcode_array ) ? $barcode->getBarcodeHTML( $width, $height, $atts['color'] ) : '' );
 	}
 }
 
@@ -1178,5 +1187,34 @@ if ( ! function_exists( 'wcj_admin_tab_url' ) ) {
 	 */
 	function wcj_admin_tab_url() {
 		return 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
+	}
+}
+
+
+
+
+if ( ! function_exists( 'wcj_sanitize_input_attribute_values' ) ) {
+	/**
+	 * Wcj_sanitize_input_attribute_values.
+	 *
+	 * @param string $field get the field.
+	 * @param string $attr get the attr.
+	 * @version 7.1.1
+	 * @since   7.1.1
+	 */
+	function wcj_sanitize_input_attribute_values( $field, $attr = '' ) {
+
+		switch ( $attr ) {
+			case 'style':
+				$sanitize_field = ( ! empty( $field ) ? preg_replace( '/[^-A-Za-z0-9_#:; ]/', '', wp_strip_all_tags( $field ) ) : '' ); // All style related characters are allowed!
+				break;
+
+			default:
+				$sanitize_field = ( ! empty( $field ) ? preg_replace( '/[^-A-Za-z0-9_ ]/', '', wp_strip_all_tags( $field ) ) : '' ); // Only text, num, space, _ and - allowed.
+				break;
+
+		}
+		return $sanitize_field;
+
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 
+ * @version 7.1.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -524,7 +524,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Get_cell.
 		 *
-		 * @version 
+		 * @version 7.1.1
 		 * @since   3.2.0
 		 * @todo    do we need `pa_` replacement?
 		 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
@@ -586,7 +586,8 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 						$the_item_title = $this->get_product_item_name( $item );
 						// Variation (if needed).
 						if ( 'yes' === $atts['add_variation_info_to_item_name'] && isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && ! in_array( 'item_variation', $columns, true ) ) {
-							$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';
+							$style           = wcj_sanitize_input_attribute_values( $atts['style_item_name_variation'], 'style' );
+							$the_item_title .= '<div style="' . $style . '">';
 							if ( 'yes' === $atts['variation_as_metadata'] ) {
 								$the_item_title .= wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
 							} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
@@ -695,8 +696,10 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					if ( is_array( $image_src ) ) {
 						$image_src = $image_src[0];
 					}
-					$maybe_width  = ( 0 !== $atts['product_image_width'] ) ? ' width="' . $atts['product_image_width'] . '"' : '';
-					$maybe_height = ( 0 !== $atts['product_image_height'] ) ? ' height="' . $atts['product_image_height'] . '"' : '';
+					$width        = wcj_sanitize_input_attribute_values( $atts['product_image_width'] );
+					$height       = wcj_sanitize_input_attribute_values( $atts['product_image_height'] );
+					$maybe_width  = ( 0 !== $width ) ? ' width="' . $width . '"' : '';
+					$maybe_height = ( 0 !== $height ) ? ' height="' . $height . '"' : '';
 					return '<img src="' . $image_src . '"' . $maybe_width . $maybe_height . '>';
 
 				case 'item_sku':
