@@ -1,5 +1,7 @@
 {
-    "0" : "= 7.1.0 09/08/2023 =",
-    "1" : "* FIXED - Added Security vulnerability fixes.",
-    "2" : "* WooCommerce 8.0.0 Tested"
+    "0" : "= 7.1.1 13/09/2023 =",
+    "1" : "* FIXED - Rectified the issue of Authenticated Information Disclosure through Shortcodes.",
+    "2" : "* FIXED - Addressed the Cross-Site Scripting vulnerability issue associated with the Shortcodes.",
+    "3" : "* WooCommerce 8.0.3 Tested",
+    "4" : "* WordPress 6.3.1 Tested"
 }
