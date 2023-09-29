@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 5.6.8
+ * @version 7.1.2-dev
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -269,7 +269,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_add_new.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.2-dev
 		 * @since   2.5.0
 		 * @todo    `multipart` only if image
 		 * @param array $atts The user defined shortcode atts.
@@ -468,7 +468,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 
 			$footer_html .= '<input type="submit" class="button" name="wcj_add_new_product" value="' . ( ( 0 === $atts['product_id'] ) ?
 			__( 'Add', 'woocommerce-jetpack' ) : __( 'Edit', 'woocommerce-jetpack' ) ) . '">';
-			$footer_html .= wp_nonce_field( 'wcj_add_new_product', 'wcj_add_new_product-nonce' );
+			$footer_html .= wp_nonce_field( 'wcj_add_new_product', 'wcj_add_new_product-nonce', true, false );
 			$footer_html .= '</form>';
 
 			return $notice_html . $header_html . $input_fields_html . $footer_html;

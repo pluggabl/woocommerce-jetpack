@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 7.0.0
+ * @version 7.1.2-dev
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -195,6 +195,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
+		 * @version 7.1.2-dev
 		 * @todo    (maybe) `if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -213,6 +214,17 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			// phpcs:enable WordPress.Security.NonceVerification
 			if ( 0 === $atts['order_id'] ) {
 				return false;
+			}
+
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				$order = wc_get_order( $atts['order_id'] );
+				if ( isset( $order ) && ! empty( $order->get_user_id() ) ) {
+					if ( $order->get_user_id() !== get_current_user_id() ) {
+						return false;
+					}
+				} else {
+						return false;
+				}
 			}
 
 			// Class properties.
