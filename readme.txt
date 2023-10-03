@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.3.1
 Requires PHP: 7.2
-Stable tag: 7.1.1
+Stable tag: 7.1.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,15 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.2 04/10/2023 =
+
+* FIXED - Addressed the issue of sensitive order-related information being exposed via Shortcodes. 
+* FIXED - Fixed the Cross-Site Scripting vulnerability issue associated with Shortcodes.
+* FIXED - Resolved the problem of Authenticated Information Disclosure via Shortcodes.
+* FIXED - PRODUCTS - User Products - Rectified the problem of malicious post/page insertion/update via WordPress parse-media-shortcode AJAX action.
+* WooCommerce 8.1.1 Tested
+* WordPress 6.3.1 Tested
 
 = 7.1.1 13/09/2023 =
 

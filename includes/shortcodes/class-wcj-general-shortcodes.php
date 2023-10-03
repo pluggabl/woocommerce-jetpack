@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 7.1.2-dev
+ * @version 7.1.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -137,7 +137,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_get_option.
 		 *
-		 * @version 7.1.2-dev
+		 * @version 7.1.2
 		 * @since   3.9.0
 		 * @todo    [dev] handle multidimensional arrays
 		 * @todo    [dev] maybe also add `get_site_option()`

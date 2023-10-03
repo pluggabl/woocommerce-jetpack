@@ -2804,7 +2804,7 @@ msgid "Booster: Send Email: %s"
 msgstr ""
 
 #: includes/class-wcj-empty-cart-button.php:30
-#: includes/shortcodes/class-wcj-general-shortcodes.php:609
+#: includes/shortcodes/class-wcj-general-shortcodes.php:613
 msgid "Empty Cart Button"
 msgstr ""
 
@@ -3168,7 +3168,7 @@ msgstr ""
 #: includes/class-wcj-max-products-per-user.php:240
 #: includes/functions/wcj-functions-users.php:189
 #: includes/functions/wcj-functions-users.php:225
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:567
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:579
 msgid "Guest"
 msgstr ""
 
@@ -6281,7 +6281,7 @@ msgid "Company Name"
 msgstr ""
 
 #: includes/classes/class-wcj-shortcodes.php:156
-#: includes/shortcodes/class-wcj-general-shortcodes.php:609
+#: includes/shortcodes/class-wcj-general-shortcodes.php:613
 #, php-format
 msgid "\"%s\" module is not enabled!"
 msgstr ""
@@ -21540,7 +21540,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:399
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:411
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""

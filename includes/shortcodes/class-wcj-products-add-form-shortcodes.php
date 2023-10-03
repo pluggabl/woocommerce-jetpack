@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 7.1.2-dev
+ * @version 7.1.2
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -269,7 +269,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_add_new.
 		 *
-		 * @version 7.1.2-dev
+		 * @version 7.1.2
 		 * @since   2.5.0
 		 * @todo    `multipart` only if image
 		 * @param array $atts The user defined shortcode atts.
