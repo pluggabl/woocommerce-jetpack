@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 7.1.1
+ * @version 7.1.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -137,17 +137,21 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_get_option.
 		 *
-		 * @version 3.9.0
+		 * @version 7.1.2
 		 * @since   3.9.0
 		 * @todo    [dev] handle multidimensional arrays
 		 * @todo    [dev] maybe also add `get_site_option()`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_get_option( $atts ) {
-			$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
-			return ( is_array( $result ) ?
-			( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
-			$result );
+			if ( isset( $atts['name'] ) && str_contains( $atts['name'], 'wcj' ) ) {
+				$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
+				return ( is_array( $result ) ?
+				( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
+				$result );
+			} else {
+				return '';
+			}
 		}
 
 		/**
