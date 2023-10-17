@@ -215,7 +215,7 @@ msgstr ""
 #: includes/settings/wcj-settings-eu-vat-number.php:55
 #: includes/settings/wcj-settings-product-by-user.php:16
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:190
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:369
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:399
 msgid "Description"
 msgstr ""
 
@@ -1665,7 +1665,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-by-user.php:22
 #: includes/settings/wcj-settings-sku.php:29
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:196
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:433
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:463
 msgid "Categories"
 msgstr ""
 
@@ -1673,7 +1673,7 @@ msgstr ""
 #: includes/export/class-wcj-export-fields-helper.php:323
 #: includes/settings/wcj-settings-product-by-user.php:23
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:197
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:443
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:473
 msgid "Tags"
 msgstr ""
 
@@ -3076,7 +3076,7 @@ msgstr ""
 #: includes/class-wcj-product-by-user.php:301
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:163
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:387
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:391
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:421
 #: includes/tools/class-wcj-order-statuses-tool.php:213
 msgid "Delete"
 msgstr ""
@@ -3168,7 +3168,7 @@ msgstr ""
 #: includes/class-wcj-max-products-per-user.php:240
 #: includes/functions/wcj-functions-users.php:189
 #: includes/functions/wcj-functions-users.php:225
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:579
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:588
 msgid "Guest"
 msgstr ""
 
@@ -4337,7 +4337,7 @@ msgstr ""
 #: includes/functions/wcj-functions-html.php:138
 #: includes/reports/class-wcj-reports-monthly-sales.php:385
 #: includes/settings/wcj-settings-empty-cart.php:103
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:391
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:421
 #: includes/tools/class-wcj-order-statuses-tool.php:213
 #: includes/tools/class-wcj-order-statuses-tool.php:369
 msgid "Are you sure?"
@@ -4744,7 +4744,7 @@ msgstr ""
 #: includes/settings/wcj-settings-upsells.php:60
 #: includes/shipping/class-wc-shipping-wcj-custom-template.php:122
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:223
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:361
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:391
 #: includes/widgets/class-wcj-widget-country-switcher.php:80
 #: includes/widgets/class-wcj-widget-left-to-free-shipping.php:66
 #: includes/widgets/class-wcj-widget-multicurrency.php:85
@@ -4753,7 +4753,7 @@ msgid "Title"
 msgstr ""
 
 #: includes/class-wcj-product-by-user.php:292
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:470
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:500
 #: includes/tools/class-wcj-order-statuses-tool.php:228
 #: includes/tools/class-wcj-order-statuses-tool.php:306
 msgid "Edit"
@@ -5677,7 +5677,7 @@ msgstr ""
 #: includes/settings/wcj-settings-purchase-data.php:242
 #: includes/settings/wcj-settings-sku.php:339
 #: includes/settings/wcj-settings-sku.php:366
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:470
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:500
 #: includes/tools/class-wcj-order-statuses-tool.php:306
 msgid "Add"
 msgstr ""
@@ -6844,7 +6844,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:108
 #: includes/settings/wcj-settings-product-by-user.php:19
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:193
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:405
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:435
 msgid "Regular Price"
 msgstr ""
 
@@ -6854,7 +6854,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:117
 #: includes/settings/wcj-settings-product-by-user.php:20
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:194
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:414
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:444
 msgid "Sale Price"
 msgstr ""
 
@@ -6884,7 +6884,7 @@ msgstr ""
 #: includes/export/class-wcj-export-fields-helper.php:296
 #: includes/settings/wcj-settings-product-by-user.php:17
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:191
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:378
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:408
 msgid "Short Description"
 msgstr ""
 
@@ -10990,7 +10990,7 @@ msgid "Or"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-core-fields.php:118
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:354
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:384
 msgid "required"
 msgstr ""
 
@@ -18103,7 +18103,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-by-user.php:18
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:192
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:397
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:427
 msgid "Image"
 msgstr ""
 
@@ -18156,7 +18156,7 @@ msgid "Message: Product Successfully Added"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-by-user.php:146
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:314
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:344
 msgid "\"%product_title%\" successfully added!"
 msgstr ""
 
@@ -18165,7 +18165,7 @@ msgid "Message: Product Successfully Edited"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-by-user.php:153
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:322
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:352
 msgid "\"%product_title%\" successfully edited!"
 msgstr ""
 
@@ -21540,7 +21540,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:411
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:420
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""
@@ -21558,7 +21558,7 @@ msgid "Product exists!"
 msgstr ""
 
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:195
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:423
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:453
 msgid "Product URL"
 msgstr ""
 
@@ -21571,15 +21571,15 @@ msgstr ""
 msgid "Sale price must be less than the regular price!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:306
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:336
 msgid "Error!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:349
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:379
 msgid "Add New Product"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:349
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:379
 msgid "Edit Product"
 msgstr ""
 

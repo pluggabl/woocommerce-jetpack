@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 7.1.2
+ * @version 7.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -1114,12 +1114,12 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_image.
 		 *
-		 * @version 7.1.1
+		 * @version 7.1.3
 		 * @since   3.9.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_image( $atts ) {
-			$src    = ( ! empty( $atts['src'] ) ? $atts['src'] : '' );
+			$src    = wcj_sanitize_input_attribute_values( $atts['src'], 'src' );
 			$class  = wcj_sanitize_input_attribute_values( $atts['class'] );
 			$style  = wcj_sanitize_input_attribute_values( $atts['style'], 'style' );
 			$width  = wcj_sanitize_input_attribute_values( $atts['width'] );

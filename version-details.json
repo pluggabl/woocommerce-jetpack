@@ -1,7 +1,7 @@
 {
-    "0" : "= 7.1.2 04/10/2023 =",
-    "1" : "* FIXED - Addressed the issue of sensitive order-related information being exposed via Shortcodes.",
-    "2" : "* FIXED - Fixed the Cross-Site Scripting vulnerability issue associated with Shortcodes.",
-    "3" : "* WooCommerce 8.1.1 Tested",
-    "4" : "* WordPress 6.3.1 Tested"
+    "0" : "= 7.1.3 18/10/2023 =",
+    "1" : "* FIXED - Fixed the Cross-Site Scripting vulnerability issue associated with the '[wcj_image]' Shortcode.",
+    "2" : "* FIXED - Resolved the issue of sensitive data from orders being revealed through Shortcodes.",
+    "3" : "* WooCommerce 8.2.0 Tested",
+    "4" : "* WordPress 6.3.2 Tested"
 }
