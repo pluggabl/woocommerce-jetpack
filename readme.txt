@@ -2,9 +2,9 @@
 Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.3.1
+Tested up to: 6.3.2
 Requires PHP: 7.2
-Stable tag: 7.1.2
+Stable tag: 7.1.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,15 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.3 18/10/2023 =
+
+* FIXED - Fixed the Cross-Site Scripting vulnerability issue associated with the '[wcj_image]' Shortcode.
+* FIXED - Resolved the issue of sensitive data from orders being revealed through Shortcodes.
+* FIXED - EMAILS & MISC - Custom Emails - Addressed the issue of missing Order Information for guest users. 
+* FIXED - PRODUCTS - User Products - Restricted access to selected user roles for security authentication.
+* WooCommerce 8.2.0 Tested
+* WordPress 6.3.2 Tested
 
 = 7.1.2 04/10/2023 =
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 7.1.2
+ * @version 7.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -195,7 +195,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
-		 * @version 7.1.2
+		 * @version 7.1.3
 		 * @todo    (maybe) `if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -218,9 +218,18 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				$order = wc_get_order( $atts['order_id'] );
-				if ( isset( $order ) && ! empty( $order->get_user_id() ) ) {
-					if ( $order->get_user_id() !== get_current_user_id() ) {
-						return false;
+				if ( isset( $order ) && ! empty( $order ) ) { // Verify that Order exists.
+
+					if ( ! empty( $order->get_user_id() ) && 0 !== $order->get_user_id() && '0' !== $order->get_user_id() ) { // Verify that UserId exists.
+						if ( $order->get_user_id() !== get_current_user_id() ) { // Compare UserId.
+							return false;
+						}
+					} elseif ( ! empty( $order->get_customer_ip_address() ) && function_exists( 'wcj_get_the_ip' ) ) { // Verify that IP exists.
+						if ( $order->get_customer_ip_address() !== wcj_get_the_ip() ) { // Compare IP.
+							return false;
+						}
+					} else {
+							return false;
 					}
 				} else {
 						return false;

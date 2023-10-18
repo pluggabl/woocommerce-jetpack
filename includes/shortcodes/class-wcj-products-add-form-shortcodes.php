@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 7.1.2
+ * @version 7.1.3
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -269,12 +269,42 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_add_new.
 		 *
-		 * @version 7.1.2
+		 * @version 7.1.3
 		 * @since   2.5.0
 		 * @todo    `multipart` only if image
 		 * @param array $atts The user defined shortcode atts.
 		 */
 		public function wcj_product_add_new( $atts ) {
+			// Allowed User-roles.
+			$allowed_user_roles = array( 'administrator', 'shop_manager', 'customer' );
+
+			if ( function_exists( 'wcj_get_current_user_all_roles' ) ) {
+				// Current user role.
+				$current_user_role = wcj_get_current_user_all_roles();
+
+				if ( isset( $current_user_role ) && ! empty( $current_user_role ) ) {
+					// Initialize a result array.
+					$authorized_user = array();
+
+					// Loop through the values to check.
+					foreach ( $current_user_role as $user_role ) {
+						if ( in_array( $user_role, $allowed_user_roles, true ) ) {
+							// Value exists in the array.
+							$authorized_user[] = $user_role;
+						}
+					}
+
+					// Check the result.
+					if ( empty( $authorized_user ) ) {
+						return false;
+					}
+				} else {
+					return false; // Executes if $current_user_role is empty.
+				}
+			} else {
+					return false;
+			}
+
 			$wpnonce           = isset( $_REQUEST['wcj_add_new_product-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_add_new_product-nonce'] ), 'wcj_add_new_product' ) : false;
 			$header_html       = '';
 			$notice_html       = '';
