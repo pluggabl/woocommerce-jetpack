@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 6.0.3
+ * @version 7.1.4
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.1.4
 		 * @since   3.1.3
 		 * @todo    (maybe) if `wcj_track_users_enabled` set to `yes`, check if "General" module is also enabled (when upgrading from version 3.1.2)
 		 */
@@ -70,8 +70,13 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 				'yes' === wcj_get_option( 'wcj_track_users_shop_order_columns_referer', 'no' ) ||
 				'yes' === wcj_get_option( 'wcj_track_users_shop_order_columns_referer_type', 'no' )
 				) {
-					add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX - 2 );
-					add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
+					if ( true === wcj_is_hpos_enabled() ) {
+						add_filter( 'woocommerce_shop_order_list_table_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX - 1 );
+						add_action( 'woocommerce_shop_order_list_table_custom_column', array( $this, 'render_order_columns_hpos' ), PHP_INT_MAX, 2 );
+					} else {
+						add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX - 2 );
+						add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
+					}
 				}
 			}
 		}
@@ -104,6 +109,28 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			if ( 'wcj_track_users_referer' === $column || 'wcj_track_users_referer_type' === $column ) {
 				$order_id = get_the_ID();
 				$referer  = get_post_meta( $order_id, '_wcj_track_users_http_referer', true );
+				switch ( $column ) {
+					case 'wcj_track_users_referer':
+						echo esc_html( $referer );
+						break;
+					case 'wcj_track_users_referer_type':
+						echo esc_html( $this->get_referer_type( $referer ) );
+						break;
+				}
+			}
+		}
+
+		/**
+		 * Render_order_columns_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since   1.0.0
+		 * @param string $column defines the column.
+		 * @param string $order defines the order.
+		 */
+		public function render_order_columns_hpos( $column, $order ) {
+			if ( 'wcj_track_users_referer' === $column || 'wcj_track_users_referer_type' === $column ) {
+				$referer = $order->get_meta( '_wcj_track_users_http_referer' );
 				switch ( $column ) {
 					case 'wcj_track_users_referer':
 						echo esc_html( $referer );
@@ -166,18 +193,33 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Add_http_referer_order_meta_box.
 		 *
-		 * @version 2.9.1
+		 * @version 7.1.4
 		 * @since   2.9.1
 		 */
 		public function add_http_referer_order_meta_box() {
-			add_meta_box(
-				'wc-jetpack-' . $this->id,
-				__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Acquisition Source', 'woocommerce-jetpack' ),
-				array( $this, 'create_http_referer_order_meta_box' ),
-				'shop_order',
-				'side',
-				'low'
-			);
+
+			if ( true === wcj_is_hpos_enabled() ) {
+
+				add_meta_box(
+					'wc-jetpack-' . $this->id,
+					__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Acquisition Source', 'woocommerce-jetpack' ),
+					array( $this, 'create_http_referer_order_meta_box' ),
+					'woocommerce_page_wc-orders',
+					'side',
+					'low'
+				);
+
+			} else {
+
+				add_meta_box(
+					'wc-jetpack-' . $this->id,
+					__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Acquisition Source', 'woocommerce-jetpack' ),
+					array( $this, 'create_http_referer_order_meta_box' ),
+					'shop_order',
+					'side',
+					'low'
+				);
+			}
 		}
 
 		/**
@@ -201,11 +243,20 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Create_http_referer_order_meta_box.
 		 *
-		 * @version 2.9.1
+		 * @version 7.1.4
 		 * @since   2.9.1
 		 */
 		public function create_http_referer_order_meta_box() {
-			$http_referer = get_post_meta( get_the_ID(), '_wcj_track_users_http_referer', true );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order_id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification
+				$_order   = wcj_get_order( $order_id );
+				if ( $_order && false !== $_order ) {
+					$http_referer = $_order->get_meta( '_wcj_track_users_http_referer' );
+				}
+			} else {
+				$http_referer = get_post_meta( get_the_ID(), '_wcj_track_users_http_referer', true );
+			}
+
 			if ( '' === ( $http_referer ) ) {
 				$http_referer = 'N/A';
 			}
@@ -216,7 +267,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * Add_http_referer_to_order.
 		 *
-		 * @version 6.0.0
+		 * @version 7.1.4
 		 * @since   2.9.1
 		 * @todo    add "all orders by referer type" stats
 		 * @param int $order_id defines the order_id.
@@ -233,8 +284,18 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 					$http_referer = $result->referer;
 				}
 			}
-			// phpcs:enable
-			update_post_meta( $order_id, '_wcj_track_users_http_referer', $http_referer );
+			if ( true === wcj_is_hpos_enabled() ) {
+
+				$order = wcj_get_order( $order_id );
+				if ( $order && false !== $order ) {
+					$order->update_meta_data( '_wcj_track_users_http_referer', $http_referer );
+					$order->save();
+				}
+			} else {
+				// phpcs:enable
+				update_post_meta( $order_id, '_wcj_track_users_http_referer', $http_referer );
+
+			}
 		}
 
 		/**

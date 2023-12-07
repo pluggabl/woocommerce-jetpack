@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 5.6.8
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -10,6 +10,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
 if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 	/**
@@ -62,11 +64,19 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				}
 				// Editable order number.
 				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_order_number_editable_order_number_meta_box_enabled', 'no' ) ) ) {
-					$this->meta_box_screen   = 'shop_order';
-					$this->meta_box_context  = 'side';
-					$this->meta_box_priority = 'high';
-					add_action( 'add_meta_boxes', array( $this, 'maybe_add_meta_box' ), PHP_INT_MAX, 2 );
-					add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+					if ( true === wcj_is_hpos_enabled() ) {
+						$this->meta_box_screen   = 'woocommerce_page_wc-orders';
+						$this->meta_box_context  = 'side';
+						$this->meta_box_priority = 'high';
+						add_action( 'add_meta_boxes', array( $this, 'maybe_add_meta_box' ), PHP_INT_MAX, 2 );
+						add_action( 'woocommerce_process_shop_order_meta', array( $this, 'save_meta_box_hpos' ), PHP_INT_MAX, 2 );
+					} else {
+						$this->meta_box_screen   = 'shop_order';
+						$this->meta_box_context  = 'side';
+						$this->meta_box_priority = 'high';
+						add_action( 'add_meta_boxes', array( $this, 'maybe_add_meta_box' ), PHP_INT_MAX, 2 );
+						add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+					}
 				}
 
 				// Compatibility with WPNotif plugin.
@@ -149,15 +159,21 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Maybe_add_meta_box.
 		 *
-		 * @version 3.5.0
+		 * @version 7.1.4
 		 * @since   3.5.0
 		 * @todo    re-think if setting number for yet not-numbered order should be allowed (i.e. do not check for `( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) )`)
 		 * @param string         $post_type defines the post_type.
 		 * @param string | array $post defines the post.
 		 */
 		public function maybe_add_meta_box( $post_type, $post ) {
-			if ( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) ) {
+			$order            = wcj_get_order( $post->ID );
+			$wcj_order_number = ( isset( $order ) && false !== $order ? $order->get_meta( '_wcj_order_number' ) : '' );
+			if ( true === wcj_is_hpos_enabled() && $wcj_order_number ) {
 				parent::add_meta_box();
+			} else {
+				if ( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) ) {
+					parent::add_meta_box();
+				}
 			}
 		}
 
@@ -308,13 +324,17 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Display order number.
 		 *
-		 * @version 3.5.0
+		 * @version 7.1.4
 		 * @param int            $order_number defines the order_number.
 		 * @param string | array $order defines the order.
 		 */
 		public function display_order_number( $order_number, $order ) {
-			$order_id          = wcj_get_order_id( $order );
-			$order_number_meta = get_post_meta( $order_id, '_wcj_order_number', true );
+			$order_id = wcj_get_order_id( $order );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order_number_meta = $order->get_meta( '_wcj_order_number' );
+			} else {
+				$order_number_meta = get_post_meta( $order_id, '_wcj_order_number', true );
+			}
 			if ( '' === $order_number_meta || 'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 				$order_number_meta = $order_id;
 			}
@@ -487,10 +507,70 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			}
 		}
 
+
+		/**
+		 * Add/update order_number meta to order HPOS.
+		 *
+		 * @version 7.1.4
+		 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
+		 * @param int  $order_id defines the order_id.
+		 * @param bool $do_overwrite defines the do_overwrite.
+		 */
+		public function add_order_number_meta_hpos( $order_id, $do_overwrite ) {
+			$order = wcj_get_order( $order_id );
+
+			if ( $order && false !== $order ) {
+
+				if ( 'shop_order' !== OrderUtil::get_order_type( $order_id ) || 'auto-draft' === $order->get_status() ) {
+					return;
+				}
+
+				if ( true === $do_overwrite || 0 === $order->get_meta( '_wcj_order_number' ) || $order->get_meta( '_wcj_order_number' ) ) {
+
+					if ( $order_id < wcj_get_option( 'wcj_order_numbers_min_order_id', 0 ) ) {
+						return;
+					}
+					if ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'yes' === wcj_get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
+						global $wpdb;
+						// phpcs:disable
+						$wpdb->query( 'START TRANSACTION' );
+						$wp_options_table = $wpdb->prefix . 'options';
+						$result_select    = $wpdb->get_row( "SELECT * FROM $wp_options_table WHERE option_name = 'wcj_order_number_counter'" );
+						if ( null !== $result_select ) {
+							$current_order_number = $this->maybe_reset_sequential_counter( $result_select->option_value, $order_id );
+							$result_update        = $wpdb->update( $wp_options_table, array( 'option_value' => ( $current_order_number + 1 ) ), array( 'option_name' => 'wcj_order_number_counter' ) );
+							if ( null !== $result_update || ( $current_order_number + 1 ) === $result_select->option_value ) {
+								$wpdb->query( 'COMMIT' ); // all ok.
+								$order->update_meta_data('_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
+							} else {
+								$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback.
+							}
+						} else {
+							$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback.
+						}
+						// phpcs:enable
+					} else {
+						if ( 'hash_crc32' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+							$current_order_number = sprintf( '%u', crc32( $order_id ) );
+						} elseif ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+							$current_order_number = $this->maybe_reset_sequential_counter( wcj_get_option( 'wcj_order_number_counter', 1 ), $order_id );
+							update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
+						} else { // 'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) // order ID.
+							$current_order_number = '';
+						}
+						$order->update_meta_data( '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
+					}
+				}
+
+				$order->save();
+			}
+		}
+
+
 		/**
 		 * Renumerate orders function.
 		 *
-		 * @version 3.3.0
+		 * @version 7.1.4
 		 * @todo    renumerate in date range only
 		 * @todo    (maybe) selectable `post_status`
 		 * @todo    (maybe) set default value for `wcj_order_numbers_renumerate_tool_orderby` to `ID` (instead of `date`)
@@ -502,22 +582,48 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			$offset     = 0;
 			$block_size = 512;
 			while ( true ) {
-				$args = array(
-					'post_type'      => 'shop_order',
-					'post_status'    => 'any',
-					'posts_per_page' => $block_size,
-					'orderby'        => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
-					'order'          => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order', 'ASC' ),
-					'offset'         => $offset,
-					'fields'         => 'ids',
-				);
-				$loop = new WP_Query( $args );
-				if ( ! $loop->have_posts() ) {
-					break;
+
+				if ( true === wcj_is_hpos_enabled() ) {
+
+					$args  = array(
+						'type'           => 'shop_order',
+						'status'         => 'any',
+						'posts_per_page' => $block_size,
+						'orderby'        => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
+						'order'          => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order', 'ASC' ),
+						'offset'         => $offset,
+						'fields'         => 'ids',
+					);
+					$order = wc_get_orders( $args );
+					if ( ! $order ) {
+						break;
+					}
+					$i = 0;
+					foreach ( $order as $order_id ) {
+
+						$this->add_order_number_meta_hpos( $order[ $i ]->id, true );
+						$i++;
+					}
+				} else {
+
+					$args = array(
+						'post_type'      => 'shop_order',
+						'post_status'    => 'any',
+						'posts_per_page' => $block_size,
+						'orderby'        => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
+						'order'          => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order', 'ASC' ),
+						'offset'         => $offset,
+						'fields'         => 'ids',
+					);
+					$loop = new WP_Query( $args );
+					if ( ! $loop->have_posts() ) {
+						break;
+					}
+					foreach ( $loop->posts as $order_id ) {
+						$this->add_order_number_meta( $order_id, true );
+					}
 				}
-				foreach ( $loop->posts as $order_id ) {
-					$this->add_order_number_meta( $order_id, true );
-				}
+
 				$offset += $block_size;
 			}
 		}

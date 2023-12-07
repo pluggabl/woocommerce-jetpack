@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales - Gateways
  *
- * @version 6.0.0
+ * @version 7.1.4
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -35,12 +35,16 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version 3.6.0
+		 * @version 7.1.4
 		 * @since   3.6.0
 		 */
 		public function get_report() {
 			$this->get_report_args();
-			$this->get_report_data();
+			if ( true === wcj_is_hpos_enabled() ) {
+				$this->get_report_data_hpos();
+			} else {
+				$this->get_report_data();
+			}
 			return $this->output_report_data();
 		}
 
@@ -95,6 +99,54 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 				}
 				foreach ( $loop_orders->posts as $order_id ) {
 					$payment_gateway = get_post_meta( $order_id, '_payment_method_title', true );
+					if ( '' === ( $payment_gateway ) ) {
+						$payment_gateway = __( 'N/A', 'woocommerce-jetpack' );
+					}
+					if ( ! isset( $this->gateways[ $payment_gateway ] ) ) {
+						$this->gateways[ $payment_gateway ] = 0;
+					}
+					$this->gateways[ $payment_gateway ]++;
+				}
+				$offset += $block_size;
+			}
+		}
+
+		/**
+		 * Get_report_data_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since  1.0.0
+		 * @todo    by "order status"
+		 */
+		public function get_report_data_hpos() {
+			$this->gateways = array();
+			$offset         = 0;
+			$block_size     = 1024;
+			while ( true ) {
+				$args_orders = array(
+					'type'           => 'shop_order',
+					'status'         => 'any',
+					'posts_per_page' => $block_size,
+					'orderby'        => 'ID',
+					'order'          => 'DESC',
+					'offset'         => $offset,
+					'fields'         => 'ids',
+					'date_query'     => array(
+						array(
+							'after'     => $this->start_date,
+							'before'    => $this->end_date,
+							'inclusive' => true,
+						),
+					),
+				);
+				$orders      = wc_get_orders( $args_orders );
+				if ( ! $orders ) {
+					break;
+				}
+				foreach ( $orders as $order ) {
+					$order_id        = $order->get_id();
+					$order           = wc_get_order( $order_id );
+					$payment_gateway = $order->get_meta( '_payment_method_title' );
 					if ( '' === ( $payment_gateway ) ) {
 						$payment_gateway = __( 'N/A', 'woocommerce-jetpack' );
 					}

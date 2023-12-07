@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Invoices
  *
- * @version 7.0.0
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -10,6 +10,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
 if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 
@@ -73,8 +75,14 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 					return false;
 				}
 			}
-			if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) {
-				return false;
+			if ( true === wcj_is_hpos_enabled() ) {
+				if ( 'shop_order' !== OrderUtil::get_order_type( $atts['order_id'] ) ) {
+					return false;
+				}
+			} else {
+				if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) {
+					return false;
+				}
 			}
 			// phpcs:enable WordPress.Security.NonceVerification
 

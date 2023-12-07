@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 6.0.0
+ * @version 7.1.4
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -35,12 +35,16 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * Get_report.
 		 *
-		 * @version 2.9.0
+		 * @version 7.1.4
 		 * @since   2.9.0
 		 */
 		public function get_report() {
 			$this->get_report_args();
-			$this->get_report_data();
+			if ( true === wcj_is_hpos_enabled() ) {
+				$this->get_report_data_hpos();
+			} else {
+				$this->get_report_data();
+			}
 			return $this->output_report_data();
 		}
 
@@ -154,6 +158,107 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 							$this->last_sale_data[ $product_id ]['date']         = get_the_time( 'Y-m-d H:i:s', $order_id );
 							$this->last_sale_data[ $product_id ]['order_id']     = $order_id;
 							$this->last_sale_data[ $product_id ]['order_status'] = get_post_status( $order_id );
+						}
+					}
+					$this->total_orders++;
+				}
+				$offset += $block_size;
+			}
+		}
+
+		/**
+		 * Get_report_data_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since  1.0.0
+		 * @todo    (maybe) currency conversion
+		 * @todo    recheck if `wc_get_product_purchase_price()` working correctly for variations
+		 */
+		public function get_report_data_hpos() {
+			$include_taxes    = ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_daily_include_taxes', 'no' ) );
+			$count_variations = ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_daily_count_variations', 'no' ) );
+			$order_statuses   = wcj_get_option( 'wcj_reports_products_sales_daily_order_statuses', '' );
+			if ( empty( $order_statuses ) ) {
+				$order_statuses = 'any';
+			} elseif ( 1 === count( $order_statuses ) ) {
+				$order_statuses = $order_statuses[0];
+			}
+			$this->sales_by_day       = array();
+			$this->total_sales_by_day = array();
+			$this->purchase_data      = array();
+			$this->last_sale_data     = array();
+			$this->total_orders       = 0;
+			$offset                   = 0;
+			$block_size               = 512;
+			while ( true ) {
+				$args_orders = array(
+					'type'           => 'shop_order',
+					'status'         => $order_statuses,
+					'posts_per_page' => $block_size,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'offset'         => $offset,
+					'fields'         => 'ids',
+					'date_query'     => array(
+						array(
+							'after'     => $this->start_date,
+							'before'    => $this->end_date,
+							'inclusive' => true,
+						),
+					),
+				);
+				$orders      = wc_get_orders( $args_orders );
+				if ( ! $orders ) {
+					break;
+				}
+				foreach ( $orders as $order ) {
+					$order_id = $order->get_id();
+					$order    = wc_get_order( $order_id );
+					$items    = $order->get_items();
+					foreach ( $items as $item ) {
+						// Filtering by product title.
+						if ( '' !== $this->product_title && false === stripos( $item['name'], $this->product_title ) ) {
+							continue;
+						}
+						// Preparing data.
+						$product_id      = ( 0 !== $item['variation_id'] && $count_variations ) ? $item['variation_id'] : $item['product_id'];
+						$order_day_date  = get_the_date( 'Y-m-d', $order_id );
+						$sale_line_total = $item['line_total'] + ( $include_taxes ? $item['line_tax'] : 0 );
+						// Total sales by day.
+						if ( ! isset( $this->total_sales_by_day[ $order_day_date ] ) ) {
+							$this->total_sales_by_day[ $order_day_date ] = array(
+								'qty' => 0,
+								'sum' => 0,
+							);
+						}
+						$this->total_sales_by_day[ $order_day_date ]['qty'] += $item['qty'];
+						$this->total_sales_by_day[ $order_day_date ]['sum'] += $sale_line_total;
+						// Sales by day by product.
+						if ( ! isset( $this->sales_by_day[ $order_day_date ] ) ) {
+							$this->sales_by_day[ $order_day_date ] = array();
+						}
+						if ( ! isset( $this->sales_by_day[ $order_day_date ][ $product_id ] ) ) {
+							$this->sales_by_day[ $order_day_date ][ $product_id ] = array(
+								'qty' => 0,
+								'sum' => 0,
+							);
+						}
+						if ( $count_variations ) {
+							$this->sales_by_day[ $order_day_date ][ $product_id ]['name'] = $item['name'];
+						} else {
+							$this->sales_by_day[ $order_day_date ][ $product_id ]['name'][] = $item['name'];
+						}
+						$this->sales_by_day[ $order_day_date ][ $product_id ]['qty'] += $item['qty'];
+						$this->sales_by_day[ $order_day_date ][ $product_id ]['sum'] += $sale_line_total;
+						// Purchase data.
+						if ( ! isset( $this->purchase_data[ $product_id ] ) ) {
+							$this->purchase_data[ $product_id ] = wc_get_product_purchase_price( $product_id );
+						}
+						// Last Sale Time.
+						if ( ! isset( $this->last_sale_data[ $product_id ] ) ) {
+							$this->last_sale_data[ $product_id ]['date']         = get_the_time( 'Y-m-d H:i:s', $order_id );
+							$this->last_sale_data[ $product_id ]['order_id']     = $order_id;
+							$this->last_sale_data[ $product_id ]['order_status'] = $order->get_status();
 						}
 					}
 					$this->total_orders++;

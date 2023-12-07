@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -23,7 +23,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.1
+		 * @version 7.1.4
 		 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 		 */
 		public function __construct() {
@@ -84,7 +84,11 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 				add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue_scripts' ) );
 
 				// Update checkout fields from admin edit order.
-				add_action( 'save_post_shop_order', array( $this, 'update_custom_checkout_fields_order_meta' ) );
+				if ( true === wcj_is_hpos_enabled() ) {
+					add_action( 'woocommerce_process_shop_order_meta', array( $this, 'update_custom_checkout_fields_order_meta' ) );
+				} else {
+					add_action( 'save_post_shop_order', array( $this, 'update_custom_checkout_fields_order_meta' ) );
+				}
 
 				// Update checkout fields from admin on a subscription order.
 				add_action( 'save_post_shop_subscription', array( $this, 'update_custom_checkout_fields_order_meta' ) );
@@ -238,7 +242,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Update_custom_checkout_fields_order_meta.
 		 *
-		 * @version 5.6.2
+		 * @version 7.1.4
 		 *
 		 * @param string $order_id defines the order_id.
 		 */
@@ -254,27 +258,59 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 					$option_name_label = $the_section . '_wcj_checkout_field_label_' . $i;
 					$option_name_type  = $the_section . '_wcj_checkout_field_type_' . $i;
 
-					$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : get_post_meta( $order_id, '_' . $option_name, true ) ); // phpcs:ignore WordPress.Security.NonceVerification
-					if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
-						update_post_meta( $order_id, '_' . $option_name_type, $the_type );
-						update_post_meta( $order_id, '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
-						if ( 'checkbox' === $the_type ) {
-							$the_value = ! empty( $post_value ) ? 1 : 0;
-							update_post_meta( $order_id, '_' . $option_name, $the_value );
-							$option_name_checkbox_value = $the_section . '_wcj_checkout_field_checkbox_value_' . $i;
-							$checkbox_value             = ( 1 === $the_value ) ?
-							get_option( 'wcj_checkout_custom_field_checkbox_yes_' . $i ) :
-							get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
-							update_post_meta( $order_id, '_' . $option_name_checkbox_value, $checkbox_value );
-						} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
-							update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
-							$option_name_values = $the_section . '_wcj_checkout_field_select_options_' . $i;
-							$the_values         = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i );
-							update_post_meta( $order_id, '_' . $option_name_values, $the_values );
-						} elseif ( 'textarea' === $the_type && 'no' === wcj_get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
-							update_post_meta( $order_id, '_' . $option_name, urldecode( $post_value ) );
-						} else {
-							update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
+					if ( true === wcj_is_hpos_enabled() ) {
+
+						$order = wcj_get_order( $order_id );
+						if ( $order && false !== $order ) {
+							$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : $order->get_meta( '_' . $option_name ) ); // phpcs:ignore WordPress.Security.NonceVerification
+							if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
+								$order->update_meta_data( '_' . $option_name_type, $the_type );
+								$order->update_meta_data( '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
+								if ( 'checkbox' === $the_type ) {
+									$the_value = ! empty( $post_value ) ? 1 : 0;
+									$order->update_meta_data( '_' . $option_name, $the_value );
+									$option_name_checkbox_value = $the_section . '_wcj_checkout_field_checkbox_value_' . $i;
+									$checkbox_value             = ( 1 === $the_value ) ?
+									get_option( 'wcj_checkout_custom_field_checkbox_yes_' . $i ) :
+									get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
+									$order->update_meta_data( '_' . $option_name_checkbox_value, $checkbox_value );
+								} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
+									$order->update_meta_data( '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
+									$option_name_values = $the_section . '_wcj_checkout_field_select_options_' . $i;
+									$the_values         = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i );
+									$order->update_meta_data( '_' . $option_name_values, $the_values );
+								} elseif ( 'textarea' === $the_type && 'no' === wcj_get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
+									$order->update_meta_data( '_' . $option_name, urldecode( $post_value ) );
+								} else {
+									$order->update_meta_data( '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
+								}
+								$order->save();
+							}
+						}
+					} else {
+
+						$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : get_post_meta( $order_id, '_' . $option_name, true ) ); // phpcs:ignore WordPress.Security.NonceVerification
+						if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
+							update_post_meta( $order_id, '_' . $option_name_type, $the_type );
+							update_post_meta( $order_id, '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
+							if ( 'checkbox' === $the_type ) {
+								$the_value = ! empty( $post_value ) ? 1 : 0;
+								update_post_meta( $order_id, '_' . $option_name, $the_value );
+								$option_name_checkbox_value = $the_section . '_wcj_checkout_field_checkbox_value_' . $i;
+								$checkbox_value             = ( 1 === $the_value ) ?
+								get_option( 'wcj_checkout_custom_field_checkbox_yes_' . $i ) :
+								get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
+								update_post_meta( $order_id, '_' . $option_name_checkbox_value, $checkbox_value );
+							} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
+								update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
+								$option_name_values = $the_section . '_wcj_checkout_field_select_options_' . $i;
+								$the_values         = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i );
+								update_post_meta( $order_id, '_' . $option_name_values, $the_values );
+							} elseif ( 'textarea' === $the_type && 'no' === wcj_get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
+								update_post_meta( $order_id, '_' . $option_name, urldecode( $post_value ) );
+							} else {
+								update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
+							}
 						}
 					}
 				}
@@ -321,7 +357,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_custom_fields_to_order_display.
 		 *
-		 * @version 5.4.7
+		 * @version 7.1.4
 		 * @since   2.3.0
 		 * @todo    convert from before version 2.3.0
 		 * @param string $order defines the order.
@@ -329,7 +365,14 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $templates defines the templates.
 		 */
 		public function add_custom_fields_to_order_display( $order, string $section = null, $templates ) {
-			$post_meta    = get_post_meta( wcj_get_order_id( $order ) );
+			$post_meta = get_post_meta( wcj_get_order_id( $order ) );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$post_meta = array();
+				foreach ( $order->get_meta_data() as $meta_data_obj ) {
+					$meta_data_array                      = $meta_data_obj->get_data();
+					$post_meta[ $meta_data_array['key'] ] = array( $meta_data_array['value'] );
+				}
+			}
 			$final_output = '';
 			foreach ( $post_meta as $key => $values ) {
 				if ( false !== strpos( $key, 'wcj_checkout_field_' ) && isset( $values[0] ) ) {
@@ -511,13 +554,133 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			return $fields;
 		}
 
+
+		/**
+		 * Add_woocommerce_admin_fields_hpos.
+		 *
+		 * @version 7.1.4
+		 * @todo    converting from before version 2.3.0: section?
+		 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
+		 * @param string $fields defines the fields.
+		 * @param string $section defines the section.
+		 */
+		public function add_woocommerce_admin_fields_hpos( $fields, $section ) {
+			$order_id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification
+			$order    = wcj_get_order( $order_id );
+			if ( $order && false !== $order ) {
+
+				for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
+					if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
+						$the_section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
+						if ( $section !== $the_section ) {
+							continue;
+						}
+						$the_type = wcj_get_option( 'wcj_checkout_custom_field_type_' . $i );
+						if ( 'textarea' === $the_type ) {
+							?>
+					<script type="text/javascript">
+						jQuery(document).ready(function($){
+							$("input.textarea").each(function () {
+								var $txtarea = $("<textarea />");
+								$txtarea.attr("id", this.id);
+								$txtarea.attr("rows", 8);
+								$txtarea.attr("cols", 30);        
+								$txtarea.val(this.value);
+								$(this).replaceWith($txtarea);
+							});
+						});
+					</script>
+							<?php
+						}
+						if ( 'select' === $the_type ) {
+							$the_class = 'first';
+							$options   = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+						} elseif ( 'textarea' === $the_type ) {
+							$the_class = 'first textarea';
+						} elseif ( 'radio' === $the_type ) {
+							$the_options = $order->get_meta( '_' . $section . '_wcj_checkout_field_select_options_' . $i );
+							if ( ! empty( $the_options ) ) {
+								$the_type  = 'select';
+								$the_class = 'first';
+								$options   = wcj_get_select_options( $the_options );
+							} else {
+								$the_options = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+								if ( ! empty( $the_options ) ) {
+									$the_type  = 'select';
+									$the_class = 'first';
+									$options   = $the_options;
+								} else {
+									$the_type  = 'text';
+									$the_class = 'short';
+								}
+							}
+						} elseif ( 'country' === $the_type ) {
+							$the_type  = 'select';
+							$the_class = 'js_field-country select short';
+							$options   = WC()->countries->get_allowed_countries();
+						} else {
+							$the_type  = 'text';
+							$the_class = 'short';
+						}
+						$the_key       = 'wcj_checkout_field_' . $i;
+						$the_key_label = 'wcj_checkout_field_label_' . $i;
+						$the_meta      = $order->get_meta( '_' . $section . '_' . $the_key );
+						if ( is_array( $the_meta ) ) {
+							// Converting from before version 2.3.0.
+							if ( isset( $the_meta['value'] ) ) {
+								$order->update_meta_data( '_' . $section . '_' . $the_key, $the_meta['value'] );
+							}
+							if ( isset( $the_meta['label'] ) ) {
+								$order->update_meta_data( '_' . $section . '_' . $the_key_label, $the_meta['label'] );
+							}
+							$order->save();
+						}
+						// phpcs:disable WordPress.Security.NonceVerification
+						if ( ! isset( $_POST[ '_' . $section . '_' . $the_key ] ) ) {
+							$fields[ $the_key ] = array(
+								'type'          => $the_type,
+								'label'         => ( '' !== $order->get_meta( '_' . $section . '_' . $the_key_label ) ) ?
+									$order->get_meta( '_' . $section . '_' . $the_key_label ) :
+									get_option( 'wcj_checkout_custom_field_label_' . $i ),
+								'show'          => true,
+								'class'         => $the_class,
+								'wrapper_class' => 'form-field-wide',
+							);
+							if ( ! empty( $the_meta ) && ! is_array( $the_meta ) ) {
+								$fields[ $the_key ]['value'] = $the_meta;
+							}
+							if ( isset( $options ) ) {
+								add_filter(
+									"woocommerce_order_get__{$section}_{$the_key}",
+									function ( $name ) use ( $options ) {
+										if ( isset( $options[ $name ] ) ) {
+											return $options[ $name ];
+										}
+										return $name;
+									}
+								);
+								$fields[ $the_key ]['options'] = $options;
+							}
+						}
+						// phpcs:enable WordPress.Security.NonceVerification
+					}
+				}
+			}
+			return $fields;
+		}
+
+
 		/**
 		 * Add_custom_billing_fields_to_admin_order_display.
 		 *
 		 * @param array $fields defines the fields.
 		 */
 		public function add_custom_billing_fields_to_admin_order_display( $fields ) {
-			return $this->add_woocommerce_admin_fields( $fields, 'billing' );
+			if ( true === wcj_is_hpos_enabled() ) {
+				return $this->add_woocommerce_admin_fields_hpos( $fields, 'billing' );
+			} else {
+				return $this->add_woocommerce_admin_fields( $fields, 'billing' );
+			}
 		}
 
 		/**
@@ -526,7 +689,11 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param array $fields defines the fields.
 		 */
 		public function add_custom_shipping_fields_to_admin_order_display( $fields ) {
-			return $this->add_woocommerce_admin_fields( $fields, 'shipping' );
+			if ( true === wcj_is_hpos_enabled() ) {
+				return $this->add_woocommerce_admin_fields_hpos( $fields, 'shipping' );
+			} else {
+				return $this->add_woocommerce_admin_fields( $fields, 'shipping' );
+			}
 		}
 
 		/**
@@ -634,7 +801,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_custom_checkout_fields.
 		 *
-		 * @version 
+		 * @version
 		 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 		 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 		 * @param array $fields defines the fields.
@@ -740,7 +907,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Clear_checkout_fields.
 		 *
-		 * @version 
+		 * @version
 		 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 		 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 		 * @param string $value defines the value.

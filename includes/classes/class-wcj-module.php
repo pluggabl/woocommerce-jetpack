@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 7.0.0
+ * @version 7.1.4
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -668,23 +668,82 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		}
 
 		/**
+		 * Save_meta_box_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since  1.0.0
+		 * @todo    (maybe) also order_id in `$the_post_id = ...`
+		 * @param int   $order_id Get order id.
+		 * @param Array $order Get order.
+		 */
+		public function save_meta_box_hpos( $order_id, $order ) {
+			// Check that we are saving with current metabox displayed.
+			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
+				return;
+			}
+			// Save options.
+			foreach ( $this->get_meta_box_options() as $option ) {
+				if ( isset( $option['type'] ) && 'title' === $option['type'] ) {
+					continue;
+				}
+				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
+				if ( $is_enabled ) {
+					$option_value = '';
+					$wpnonce      = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
+					$option_name  = isset( $option['name'] ) ? $option['name'] : '';
+					if ( $wpnonce && isset( $_POST[ $option_name ] ) ) {
+						$option_value = is_array( $_POST[ $option_name ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $option_name ] ) ) : wp_kses_post( wp_unslash( $_POST[ $option_name ] ) );
+					} elseif ( isset( $option['default'] ) ) {
+						$option_value = $option['default'];
+					}
+					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $order_id;
+					$the_meta_name = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option_name;
+					if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
+						$option_value = strtotime( $option_value );
+						if ( empty( $option_value ) ) {
+							continue;
+						}
+					}
+
+					$order->update_meta_data( $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option_name, $this->id ) );
+				}
+			}
+			$order->save();
+		}
+
+		/**
 		 * Add_meta_box.
 		 *
-		 * @version 2.3.10
+		 * @version 7.1.4
 		 * @since   2.2.6
 		 */
 		public function add_meta_box() {
-			$screen   = ( isset( $this->meta_box_screen ) ) ? $this->meta_box_screen : 'product';
-			$context  = ( isset( $this->meta_box_context ) ) ? $this->meta_box_context : 'normal';
-			$priority = ( isset( $this->meta_box_priority ) ) ? $this->meta_box_priority : 'high';
-			add_meta_box(
-				'wc-jetpack-' . $this->id,
-				__( 'Booster', 'woocommerce-jetpack' ) . ': ' . $this->short_desc,
-				array( $this, 'create_meta_box' ),
-				$screen,
-				$context,
-				$priority
-			);
+			if ( true === wcj_is_hpos_enabled() && 'woocommerce_page_wc-orders' === get_current_screen()->id ) {
+				$screen   = ( isset( $this->meta_box_screen ) ) ? $this->meta_box_screen : 'product';
+				$context  = ( isset( $this->meta_box_context ) ) ? $this->meta_box_context : 'normal';
+				$priority = ( isset( $this->meta_box_priority ) ) ? $this->meta_box_priority : 'high';
+				add_meta_box(
+					'wc-jetpack-' . $this->id,
+					__( 'Booster', 'woocommerce-jetpack' ) . ': ' . $this->short_desc,
+					array( $this, 'create_meta_box_hpos' ),
+					$screen,
+					$context,
+					$priority
+				);
+			} else {
+				$screen   = ( isset( $this->meta_box_screen ) ) ? $this->meta_box_screen : 'product';
+				$context  = ( isset( $this->meta_box_context ) ) ? $this->meta_box_context : 'normal';
+				$priority = ( isset( $this->meta_box_priority ) ) ? $this->meta_box_priority : 'high';
+				add_meta_box(
+					'wc-jetpack-' . $this->id,
+					__( 'Booster', 'woocommerce-jetpack' ) . ': ' . $this->short_desc,
+					array( $this, 'create_meta_box' ),
+					$screen,
+					$context,
+					$priority
+				);
+			}
+
 		}
 
 		/**
@@ -713,6 +772,116 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						$the_meta_name     = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
 						if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
 							$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
+						} else {
+							$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
+						}
+						$css          = ( isset( $option['css'] ) ? $option['css'] : '' );
+						$class        = ( isset( $option['class'] ) ? $option['class'] : '' );
+						$show_value   = ( isset( $option['show_value'] ) && $option['show_value'] );
+						$input_ending = '';
+						if ( 'select' === $option['type'] ) {
+							if ( isset( $option['multiple'] ) ) {
+								$custom_attributes = ' multiple';
+								$option_name       = $option['name'] . '[]';
+							} else {
+								$option_name = $option['name'];
+							}
+							if ( isset( $option['custom_attributes'] ) ) {
+								$custom_attributes .= ' ' . $option['custom_attributes'];
+							}
+							$options = '';
+							foreach ( $option['options'] as $select_option_key => $select_option_value ) {
+								$selected = '';
+								if ( is_array( $option_value ) ) {
+									foreach ( $option_value as $single_option_value ) {
+										$selected = selected( $single_option_value, $select_option_key, false );
+										if ( '' !== $selected ) {
+											break;
+										}
+									}
+								} else {
+									$selected = selected( $option_value, $select_option_key, false );
+								}
+								$options .= '<option value="' . $select_option_key . '" ' . $selected . '>' . $select_option_value . '</option>';
+							}
+						} elseif ( 'textarea' === $option['type'] ) {
+							if ( '' === $css ) {
+								$css = 'min-width:300px;';
+							}
+						} else {
+							$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
+							if ( isset( $option['custom_attributes'] ) ) {
+								$input_ending = ' ' . $option['custom_attributes'] . $input_ending;
+							}
+							if ( isset( $option['placeholder'] ) ) {
+								$input_ending = ' placeholder="' . $option['placeholder'] . '"' . $input_ending;
+							}
+						}
+						switch ( $option['type'] ) {
+							case 'price':
+								$field_html = '<input style="' . $css . '" class="short wc_input_price" type="number" step="' .
+								apply_filters( 'wcj_get_meta_box_options_type_price_step', '0.0001' ) . '"' . $input_ending;
+								break;
+							case 'date':
+								$field_html = '<input style="' . $css . '" class="input-text" display="date" type="text"' . $input_ending;
+								break;
+							case 'textarea':
+								$field_html = '<textarea style="' . $css . '" id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
+								break;
+							case 'select':
+								$field_html = '<select' . $custom_attributes . ' class="' . $class . '" style="' . $css . '" id="' . $option['name'] . '" name="' .
+								$option_name . '">' . $options . '</select>' .
+								/* translators: %s: search term */
+								( $show_value && ! empty( $option_value ) ? sprintf( '<em>' . __( 'Selected: %s.', 'woocommerce-jetpack' ), implode( ', ', $option_value ) ) . '</em>' : '' );
+								break;
+							default:
+								$field_html = '<input style="' . $css . '" class="short" type="' . $option['type'] . '"' . $input_ending;
+								break;
+						}
+						$html         .= '<tr>';
+						$maybe_tooltip = ( isset( $option['tooltip'] ) && '' !== $option['tooltip'] ) ? '<span style="float:right;">' . wc_help_tip( $option['tooltip'], true ) . '</span>' : '';
+						$html         .= '<th style="text-align:left;width:25%;font-weight:bold;">' . $option['title'] . $maybe_tooltip . '</th>';
+						if ( isset( $option['desc'] ) && '' !== $option['desc'] ) {
+							$html .= '<td style="font-style:italic;width:25%;">' . $option['desc'] . '</td>';
+						}
+						$html .= '<td>' . $field_html . '</td>';
+						$html .= '</tr>';
+					}
+				}
+			}
+			$html .= '</table>';
+			$html .= '<input type="hidden" name="woojetpack_' . $this->id . '_save_post" value="woojetpack_' . $this->id . '_save_post">';
+			echo wp_kses_post( $html );
+		}
+
+		/**
+		 * Create_meta_box_hpos.
+		 *
+		 * @version 7.1.4
+		 * @todo    `placeholder` for textarea
+		 * @todo    `class` for all types (now only for select)
+		 * @todo    `show_value` for all types (now only for multiple select)
+		 * @todo    `$the_post_id` maybe also `order_id` (i.e. not only `product_id`)?
+		 */
+		public function create_meta_box_hpos() {
+			$current_post_id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification
+			$order           = wc_get_order( $current_post_id );
+
+			$html  = '';
+			$html .= '<table class="widefat striped">';
+			foreach ( $this->get_meta_box_options() as $option ) {
+				$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
+				if ( is_array( $option ) && $is_enabled ) {
+					if ( 'title' === $option['type'] ) {
+						$html .= '<tr>';
+						$html .= '<th colspan="3" style="' . ( isset( $option['css'] ) ? $option['css'] : 'text-align:left;font-weight:bold;' ) . '">' . $option['title'] . '</th>';
+						$html .= '</tr>';
+					} else {
+						$custom_attributes = '';
+						$the_post_id       = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
+						$the_meta_name     = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
+						if ( $order->get_meta( $the_meta_name ) ) {
+							$option_value = $order->get_meta( $the_meta_name );
 						} else {
 							$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
 						}

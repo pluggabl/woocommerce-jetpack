@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 6.0.5
+ * @version 7.1.4
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -204,15 +204,20 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Maybe_reduce_addons_qty.
 		 *
-		 * @version 3.3.0
+		 * @version 7.1.4
 		 * @since   3.3.0
 		 * @todo    (maybe) $order->add_order_note
 		 * @param int $order_id defines the order_id.
 		 */
 		public function maybe_reduce_addons_qty( $order_id ) {
-			$order = wc_get_order( $order_id );
-			if ( $order ) {
-				if ( 'yes' !== get_post_meta( $order_id, '_wcj_product_addons_qty_reduced', true ) ) {
+			$order = wcj_get_order( $order_id );
+			if ( $order && false !== $order ) {
+				if ( true === wcj_is_hpos_enabled() ) {
+					$_wcj_product_addons_qty_reduced = $order->get_meta( '_wcj_product_addons_qty_reduced' );
+				} else {
+					$_wcj_product_addons_qty_reduced = get_post_meta( $order_id, '_wcj_product_addons_qty_reduced', true );
+				}
+				if ( 'yes' !== $_wcj_product_addons_qty_reduced ) {
 					if ( count( $order->get_items() ) > 0 ) {
 						foreach ( $order->get_items() as $item ) {
 							$product = $item->get_product();
@@ -245,7 +250,12 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 								}
 							}
 						}
-						update_post_meta( $order_id, '_wcj_product_addons_qty_reduced', 'yes' );
+						if ( true === wcj_is_hpos_enabled() ) {
+							$order->update_meta_data( '_wcj_product_addons_qty_reduced', 'yes' );
+							$order->save();
+						} else {
+							update_post_meta( $order_id, '_wcj_product_addons_qty_reduced', 'yes' );
+						}
 					}
 				}
 			}

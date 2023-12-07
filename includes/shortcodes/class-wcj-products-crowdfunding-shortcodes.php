@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Crowdfunding
  *
- * @version 5.6.8
+ * @version 7.1.4
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 		/**
 		 * Get_product_orders_data.
 		 *
-		 * @version 5.6.2
+		 * @version 7.1.4
 		 * @since   2.2.6
 		 * @param string | null $return_value The user defined shortcode return_value.
 		 * @param array         $atts The user defined shortcode attributes.
@@ -102,42 +102,84 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 			$offset           = 0;
 			$block_size       = 512;
 			$date_query_after = ( isset( $atts['start_date'] ) ? $atts['start_date'] : get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_wcj_crowdfunding_startdate', true ) );
-			while ( true ) {
-				$args = array(
-					'post_type'      => 'shop_order',
-					'post_status'    => ( isset( $atts['order_status'] ) ? array_map( 'trim', explode( ',', $atts['order_status'] ) ) : 'wc-completed' ),
-					'posts_per_page' => $block_size,
-					'offset'         => $offset,
-					'orderby'        => 'date',
-					'order'          => 'ASC',
-					'date_query'     => array(
-						array(
-							'after'     => $date_query_after,
-							'inclusive' => true,
+			if ( true === wcj_is_hpos_enabled() ) {
+				while ( true ) {
+					$args   = array(
+						'type'           => 'shop_order',
+						'status'         => ( isset( $atts['order_status'] ) ? array_map( 'trim', explode( ',', $atts['order_status'] ) ) : 'wc-completed' ),
+						'posts_per_page' => $block_size,
+						'offset'         => $offset,
+						'orderby'        => 'date',
+						'order'          => 'ASC',
+						'date_query'     => array(
+							array(
+								'after'     => $date_query_after,
+								'inclusive' => true,
+							),
 						),
-					),
-					'fields'         => 'ids',
-				);
-				$loop = new WP_Query( $args );
-				if ( ! $loop->have_posts() ) {
-					break;
-				}
-				foreach ( $loop->posts as $order_id ) {
-					$the_order  = wc_get_order( $order_id );
-					$the_items  = $the_order->get_items();
-					$item_found = false;
-					foreach ( $the_items as $item ) {
-						if ( in_array( $item['product_id'], $product_ids, true ) ) {
-							$total_sum += $item['line_total'] + $item['line_tax'];
-							$total_qty += $item['qty'];
-							$item_found = true;
+						'fields'         => 'ids',
+					);
+					$orders = wc_get_orders( $args );
+					if ( ! $orders ) {
+						break;
+					}
+
+					foreach ( $orders as $order ) {
+						$order_id   = $order->get_id();
+						$the_order  = wc_get_order( $order_id );
+						$the_items  = $the_order->get_items();
+						$item_found = false;
+						foreach ( $the_items as $item ) {
+							if ( in_array( $item['product_id'], $product_ids, true ) ) {
+								$total_sum += $item['line_total'] + $item['line_tax'];
+								$total_qty += $item['qty'];
+								$item_found = true;
+							}
+						}
+						if ( $item_found ) {
+							$total_orders++;
 						}
 					}
-					if ( $item_found ) {
-						$total_orders++;
-					}
+					$offset += $block_size;
 				}
-				$offset += $block_size;
+			} else {
+				while ( true ) {
+					$args = array(
+						'post_type'      => 'shop_order',
+						'post_status'    => ( isset( $atts['order_status'] ) ? array_map( 'trim', explode( ',', $atts['order_status'] ) ) : 'wc-completed' ),
+						'posts_per_page' => $block_size,
+						'offset'         => $offset,
+						'orderby'        => 'date',
+						'order'          => 'ASC',
+						'date_query'     => array(
+							array(
+								'after'     => $date_query_after,
+								'inclusive' => true,
+							),
+						),
+						'fields'         => 'ids',
+					);
+					$loop = new WP_Query( $args );
+					if ( ! $loop->have_posts() ) {
+						break;
+					}
+					foreach ( $loop->posts as $order_id ) {
+						$the_order  = wc_get_order( $order_id );
+						$the_items  = $the_order->get_items();
+						$item_found = false;
+						foreach ( $the_items as $item ) {
+							if ( in_array( $item['product_id'], $product_ids, true ) ) {
+								$total_sum += $item['line_total'] + $item['line_tax'];
+								$total_qty += $item['qty'];
+								$item_found = true;
+							}
+						}
+						if ( $item_found ) {
+							$total_orders++;
+						}
+					}
+					$offset += $block_size;
+				}
 			}
 			switch ( $return_value ) {
 				case 'orders_sum':

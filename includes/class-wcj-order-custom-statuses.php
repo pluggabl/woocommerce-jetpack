@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 6.0.0
+ * @version 7.1.4
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.3.3
+		 * @version 7.1.4
 		 * @todo    [feature] add options to change icon and icon's color for all statuses (i.e. not only custom)
 		 * @todo    [dev] maybe rename module to "Custom Order Statuses"
 		 */
@@ -46,7 +46,11 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 			if ( $this->is_enabled() ) {
 
 				// Core.
-				add_filter( 'wc_order_statuses', array( $this, 'add_custom_statuses_to_filter' ), PHP_INT_MAX );
+				if ( true === wcj_is_hpos_enabled() ) {
+					add_filter( 'wc_order_statuses', array( $this, 'add_custom_statuses_to_filter_hpos' ), PHP_INT_MAX );
+				} else {
+					add_filter( 'wc_order_statuses', array( $this, 'add_custom_statuses_to_filter' ), PHP_INT_MAX );
+				}
 				if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 					add_action( 'init', array( $this, 'register_custom_post_statuses' ) );
 				} else {
@@ -211,7 +215,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Add_custom_status_to_processing_and_completed_actions.
 		 *
-		 * @version 4.0.0
+		 * @version 7.1.4
 		 * @since   2.8.0
 		 * @param array | string $actions defines the actions.
 		 * @param array | string $_order defines the _order.
@@ -224,6 +228,12 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 					$custom_order_statuses_without_wc_prefix[] = substr( $slug, 3 );
 				}
 				global $post;
+
+				if ( true === wcj_is_hpos_enabled() ) {
+					$order_id = $_order->get_id();
+				} else {
+					$order_id = $post->ID;
+				}
 				$default_actions = array();
 				$show            = apply_filters( 'booster_option', 'hide', wcj_get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) );
 				if (
@@ -231,7 +241,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 				$_order->has_status( array_merge( array( 'pending', 'on-hold' ), $custom_order_statuses_without_wc_prefix ) )
 				) {
 					$default_actions['processing'] = array(
-						'url'    => $this->get_custom_order_statuses_action_url( 'processing', $post->ID ),
+						'url'    => $this->get_custom_order_statuses_action_url( 'processing', $order_id ),
 						'name'   => __( 'Processing', 'woocommerce' ),
 						'action' => 'processing',
 					);
@@ -241,7 +251,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 				$_order->has_status( array_merge( array( 'pending', 'on-hold', 'processing' ), $custom_order_statuses_without_wc_prefix ) )
 				) {
 					$default_actions['complete'] = array(
-						'url'    => $this->get_custom_order_statuses_action_url( 'completed', $post->ID ),
+						'url'    => $this->get_custom_order_statuses_action_url( 'completed', $order_id ),
 						'name'   => __( 'Complete', 'woocommerce' ),
 						'action' => 'complete',
 					);
@@ -413,6 +423,25 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		}
 
 		/**
+		 * Add_custom_statuses_to_filter_hpos.
+		 *
+		 * @version 7.1.4
+		 *
+		 * @todo Check if there is a way to output the Status Label and not its slug when using the option "Remove Status Prefix", because `wc_get_order_status_name()` has issues when there is no prefix.
+		 * @param bool | string $order_statuses defines the order_statuses.
+		 */
+		public function add_custom_statuses_to_filter_hpos( $order_statuses ) {
+			$wpnonce = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ), 'woocommerce_save_data' ) : false;
+			if ( $wpnonce && isset( $_REQUEST['page'] ) && isset( $_REQUEST['action'] ) && 'wc-orders' === $_REQUEST['page'] && 'edit_order' === $_REQUEST['action'] ) {
+				$custom_order_statuses = $this->get_custom_order_statuses();
+			} else {
+				$custom_order_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
+			}
+
+			return array_merge( ( '' === $order_statuses ? array() : $order_statuses ), $custom_order_statuses );
+		}
+
+		/**
 		 * Hook_statuses_column_css.
 		 *
 		 * @version 3.6.0
@@ -463,12 +492,12 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		 *
 		 * Using Javascript until WordPress core fixes: http://core.trac.wordpress.org/ticket/16031
 		 *
-		 * @version 5.6.3
+		 * @version 7.1.4
 		 * @since   2.2.7
 		 */
 		public function bulk_admin_footer() {
 			global $post_type;
-			if ( 'shop_order' === $post_type ) {
+			if ( 'shop_order' === $post_type || ( isset( $_REQUEST['page'] ) && 'wc-orders' === $_REQUEST['page'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification
 				?><script type="text/javascript">
 				<?php
 				foreach ( wcj_get_order_statuses() as $key => $order_status ) {

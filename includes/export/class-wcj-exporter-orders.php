@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 6.0.1
+ * @version 7.1.4
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -339,6 +339,134 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			return $data;
 		}
 
+
+		/**
+		 * Export_orders_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since   1.0.0
+		 * @param object $fields_helper defines the fields helper.
+		 *
+		 * @todo    (maybe) metainfo as separate column
+		 */
+		public function export_orders_hpos( $fields_helper ) {
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
+			// Standard Fields.
+			$all_fields = $fields_helper->get_order_export_fields();
+			$fields_ids = wcj_get_option( 'wcj_export_orders_fields', $fields_helper->get_order_export_default_fields_ids() );
+			$titles     = array();
+			foreach ( $fields_ids as $field_id ) {
+				$titles[] = $all_fields[ $field_id ];
+			}
+
+			// Additional Fields.
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				if ( 'yes' === wcj_get_option( 'wcj_export_orders_fields_additional_enabled_' . $i, 'no' ) ) {
+					$titles[] = wcj_get_option( 'wcj_export_orders_fields_additional_title_' . $i, '' );
+				}
+			}
+
+			$data       = array();
+			$data[]     = $titles;
+			$offset     = 0;
+			$block_size = 1024;
+			while ( true ) {
+				$args_orders = array(
+					'type'           => 'shop_order',
+					'status'         => 'any',
+					'posts_per_page' => $block_size,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'offset'         => $offset,
+					'fields'         => 'ids',
+				);
+				$args_orders = wcj_maybe_add_date_query( $args_orders );
+				$orders      = wc_get_orders( $args_orders );
+				if ( ! $orders ) {
+					break;
+				}
+				$i = 0;
+				foreach ( $orders as $order ) {
+					$order_id = $order->get_id();
+
+					$order = wc_get_order( $order_id );
+					if ( ! apply_filters( 'wcj_export_validation', true, 'order', $order ) ) {
+						continue;
+					}
+
+					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
+						if ( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() ) !== $_POST['wcj_filter_by_order_billing_country'] ) {
+							continue;
+						}
+					}
+
+					$filter_by_product_title = true;
+					if ( isset( $_POST['wcj_filter_by_product_title'] ) && '' !== $_POST['wcj_filter_by_product_title'] ) {
+						$filter_by_product_title = false;
+					}
+					$items                      = array();
+					$items_product_input_fields = array();
+					foreach ( $order->get_items() as $item_id => $item ) {
+						if ( in_array( 'order-items', $fields_ids, true ) ) {
+							$meta_info = ( 0 !== $item['variation_id'] ) ? wcj_get_order_item_meta_info( $item_id, $item, $order, true ) : '';
+							if ( '' !== $meta_info ) {
+								$meta_info = ' [' . $meta_info . ']';
+							}
+							$items[] = $item['name'] . $meta_info;
+						}
+						if ( in_array( 'order-items-product-input-fields', $fields_ids, true ) ) {
+							$item_product_input_fields = wcj_get_product_input_fields( $item );
+							if ( '' !== $item_product_input_fields ) {
+								$items_product_input_fields[] = $item_product_input_fields;
+							}
+						}
+						if ( ! $filter_by_product_title ) {
+							if ( false !== strpos( $item['name'], sanitize_text_field( wp_unslash( $_POST['wcj_filter_by_product_title'] ) ) ) ) {
+								$filter_by_product_title = true;
+							}
+						}
+					}
+					$items                      = implode( ' / ', $items );
+					$items_product_input_fields = implode( ' / ', $items_product_input_fields );
+					if ( ! $filter_by_product_title ) {
+						continue;
+					}
+
+					$row = $this->get_export_orders_row( $fields_ids, $order_id, $order, $items, $items_product_input_fields, null, null );
+
+					// Additional Fields.
+					$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+					for ( $i = 1; $i <= $total_number; $i++ ) {
+						if ( 'yes' === wcj_get_option( 'wcj_export_orders_fields_additional_enabled_' . $i, 'no' ) ) {
+							$additional_field_value = wcj_get_option( 'wcj_export_orders_fields_additional_value_' . $i, '' );
+							if ( '' !== ( $additional_field_value ) ) {
+								if ( 'meta' === wcj_get_option( 'wcj_export_orders_fields_additional_type_' . $i, 'meta' ) ) {
+									$row[] = wp_strip_all_tags( html_entity_decode( $order->get_meta( $additional_field_value ) ) );
+								} else {
+									if ( str_contains( $additional_field_value, ']' ) ) {
+										$get_value        = $additional_field_value;
+										$order_id         = ' order_id="' . $order_id . '"]';
+										$custom_shortcode = str_replace( ']', $order_id, $get_value );
+									} else {
+										$custom_shortcode = $additional_field_value;
+									}
+									$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $custom_shortcode ) ) );
+								}
+							} else {
+								$row[] = '';
+							}
+						}
+					}
+
+					$data[] = $row;
+					$i++;
+				}
+				$offset += $block_size;
+			}
+			return $data;
+		}
+
 		/**
 		 * Export_orders_items.
 		 *
@@ -426,6 +554,122 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 											setup_postdata( $post );
 											$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
 											wp_reset_postdata();
+											break;
+										case 'shortcode_product':
+											global $post;
+											$product_id = ( 0 !== $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+											$post       = get_post( $product_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+											setup_postdata( $post );
+											$row[] = do_shortcode( $additional_field_value );
+											wp_reset_postdata();
+											break;
+									}
+								} else {
+									$row[] = '';
+								}
+							}
+						}
+
+						$data[] = $row;
+					}
+				}
+				$offset += $block_size;
+			}
+			return $data;
+		}
+
+		/**
+		 * Export_orders_items_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since  1.0.0
+		 * @param object $fields_helper defines the fields helper.
+		 */
+		public function export_orders_items_hpos( $fields_helper ) {
+			$wpnonce = isset( $_REQUEST['wcj_tools_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_tools_nonce'] ), 'wcj_tools' ) : false;
+			// Standard Fields.
+			$all_fields = $fields_helper->get_order_items_export_fields();
+			$fields_ids = apply_filters( 'wcj_export_orders_items_fields', wcj_get_option( 'wcj_export_orders_items_fields', $fields_helper->get_order_items_export_default_fields_ids() ) );
+			$titles     = array();
+			foreach ( $fields_ids as $field_id ) {
+				$titles[] = $all_fields[ $field_id ];
+			}
+
+			// Additional Fields.
+			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				if ( 'yes' === wcj_get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
+					$titles[] = wcj_get_option( 'wcj_export_orders_items_fields_additional_title_' . $i, '' );
+				}
+			}
+
+			$data       = array();
+			$data[]     = $titles;
+			$offset     = 0;
+			$block_size = 1024;
+			while ( true ) {
+				$args_orders = array(
+					'type'           => 'shop_order',
+					'status'         => 'any',
+					'posts_per_page' => $block_size,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'offset'         => $offset,
+					'fields'         => 'ids',
+				);
+				$args_orders = wcj_maybe_add_date_query( $args_orders );
+				$orders      = wc_get_orders( $args_orders );
+				if ( ! $orders ) {
+					break;
+				}
+				foreach ( $orders as $order ) {
+					$order_id = $order->get_id();
+
+					$order = wc_get_order( $order_id );
+					if ( ! apply_filters( 'wcj_export_validation', true, 'order', $order ) ) {
+						continue;
+					}
+
+					if ( $wpnonce && isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' !== $_POST['wcj_filter_by_order_billing_country'] ) {
+						if ( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() ) !== $_POST['wcj_filter_by_order_billing_country'] ) {
+							continue;
+						}
+					}
+
+					foreach ( $order->get_items() as $item_id => $item ) {
+						if ( ! apply_filters( 'wcj_export_validation', true, 'order_item', $item ) ) {
+							continue;
+						}
+
+						$row = $this->get_export_orders_row( $fields_ids, $order_id, $order, null, null, $item, $item_id );
+
+						// Additional Fields.
+						$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+						for ( $i = 1; $i <= $total_number; $i++ ) {
+							if ( 'yes' === wcj_get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
+								$additional_field_value = wcj_get_option( 'wcj_export_orders_items_fields_additional_value_' . $i, '' );
+								if ( '' !== ( $additional_field_value ) ) {
+									$field_type = wcj_get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' );
+									switch ( $field_type ) {
+										case 'meta':
+											$row[] = ( $order->get_meta( $additional_field_value ) );
+											break;
+										case 'item_meta':
+											$row[] = wcj_maybe_implode( wc_get_order_item_meta( $item_id, $additional_field_value ) );
+											break;
+										case 'meta_product':
+											$product_id = ( 0 !== $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+											$row[]      = $this->safely_get_post_meta( $product_id, $additional_field_value );
+											break;
+										case 'shortcode':
+											if ( str_contains( $additional_field_value, ']' ) ) {
+												$get_value_custom = $additional_field_value;
+												$order_id_custom  = ' order_id="' . $order_id . '"]';
+												$custom_shortcode = str_replace( ']', $order_id_custom, $get_value_custom );
+											} else {
+												$custom_shortcode = $additional_field_value;
+											}
+											$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $custom_shortcode ) ) );
 											break;
 										case 'shortcode_product':
 											global $post;

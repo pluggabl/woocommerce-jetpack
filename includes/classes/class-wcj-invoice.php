@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 5.6.8
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -47,18 +47,34 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		 * Is_created.
 		 */
 		public function is_created() {
-			return ( '' !== get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', true ) );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = wcj_get_order( $this->order_id );
+				if ( $order && false !== $order ) {
+					return ( '' !== $order->get_meta( '_wcj_invoicing_' . $this->invoice_type . '_date' ) );
+				}
+			} else {
+				return ( '' !== get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', true ) );
+			}
 		}
 
 		/**
 		 * Delete.
 		 *
-		 * @version 5.3.6
+		 * @version 7.1.4
 		 * @todo    removed update_option( $option_name, ( $the_invoice_counter - 1 ) ); It was causing the issue on the count.
 		 */
 		public function delete() {
-			update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', 0 );
-			update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', '' );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = wcj_get_order( $this->order_id );
+				if ( $order && false !== $order ) {
+					$order->update_meta_data( '_wcj_invoicing_' . $this->invoice_type . '_number_id', 0 );
+					$order->update_meta_data( '_wcj_invoicing_' . $this->invoice_type . '_date', '' );
+					$order->save();
+				}
+			} else {
+				update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', 0 );
+				update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', '' );
+			}
 			if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_sequential_enabled', 'no' ) ) {
 				$option_name         = 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter';
 				$the_invoice_counter = wcj_get_option( $option_name, 1 );
@@ -68,7 +84,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		/**
 		 * Create.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 		 * @todo    used get_option instead wcj_get_option to get current numbering_counter.
 		 * @param number $date get date.
@@ -90,8 +106,17 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 				$the_invoice_number = $order_id;
 			}
 			$the_date = ( '' === $date ) ? (string) wcj_get_timestamp_date_from_gmt() : $date;
-			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
-			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = wcj_get_order( $order_id );
+				if ( $order && false !== $order ) {
+					$order->update_meta_data( '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
+					$order->update_meta_data( '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
+					$order->save();
+				}
+			} else {
+				update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
+				update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
+			}
 		}
 
 		/**
@@ -111,24 +136,45 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		 * Get_invoice_date.
 		 */
 		public function get_invoice_date() {
-			$the_date = get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', true );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = wcj_get_order( $this->order_id );
+				if ( $order && false !== $order ) {
+					$the_date = $order->get_meta( '_wcj_invoicing_' . $this->invoice_type . '_date' );
+				}
+			} else {
+				$the_date = get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', true );
+			}
 			return apply_filters( 'wcj_get_' . $this->invoice_type . '_date', $the_date, $this->order_id );
 		}
 
 		/**
 		 * Get_invoice_number.
 		 *
-		 * @version 3.2.2
+		 * @version 7.1.4
 		 */
 		public function get_invoice_number() {
-			$replaced_values = array(
-				'%prefix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix', '' ),
-				'%counter%' => sprintf(
-					'%0' . wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ) . 'd',
-					get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', true )
-				),
-				'%suffix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix', '' ),
-			);
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = wcj_get_order( $this->order_id );
+				if ( $order && false !== $order ) {
+					$replaced_values = array(
+						'%prefix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix', '' ),
+						'%counter%' => sprintf(
+							'%0' . wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ) . 'd',
+							$order->get_meta( '_wcj_invoicing_' . $this->invoice_type . '_number_id' )
+						),
+						'%suffix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix', '' ),
+					);
+				}
+			} else {
+				$replaced_values = array(
+					'%prefix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix', '' ),
+					'%counter%' => sprintf(
+						'%0' . wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ) . 'd',
+						get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', true )
+					),
+					'%suffix%'  => wcj_get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix', '' ),
+				);
+			}
 			return apply_filters(
 				'wcj_get_' . $this->invoice_type . '_number',
 				do_shortcode(

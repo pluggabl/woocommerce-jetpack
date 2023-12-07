@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 6.0.3
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -22,7 +22,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.6.0
+		 * @version 7.1.4
 		 */
 		public function __construct() {
 
@@ -34,8 +34,14 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 
 			if ( $this->is_enabled() ) {
 				// Columns on Admin's Orders page.
-				add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
-				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), 2 );
+				if ( true === wcj_is_hpos_enabled() ) {
+					add_filter( 'woocommerce_shop_order_list_table_columns', array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
+					add_action( 'woocommerce_shop_order_list_table_custom_column', array( $this, 'render_order_columns_hpos' ), PHP_INT_MAX, 2 );
+				} else {
+					add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
+					add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), 2 );
+
+				}
 				// Action Links on Customer's My Account page.
 				add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'add_pdf_invoices_action_links' ), PHP_INT_MAX, 2 );
 				// Action Links on Customer's Thank You page.
@@ -242,6 +248,40 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		}
 
 		/**
+		 * Output custom columns for products HPOS.
+		 *
+		 * @version 7.1.4
+		 * @param  string $column Get column columns.
+		 * @param  string $order Get order columns.
+		 */
+		public function render_order_columns_hpos( $column, $order ) {
+			$invoice_types_ids = wcj_get_enabled_invoice_types_ids();
+			if ( ! in_array( $column, $invoice_types_ids, true ) ) {
+				return;
+			}
+			$order_id        = $order->id;
+			$invoice_type_id = $column;
+			$html            = '';
+			if ( wcj_is_invoice_created( $order_id, $invoice_type_id ) ) {
+				$the_invoice = wcj_get_invoice( $order_id, $invoice_type_id );
+				$the_number  = $the_invoice->get_invoice_number();
+
+				// Document Link.
+				$query_args = array(
+					'order_id'        => $order_id,
+					'invoice_type_id' => $invoice_type_id,
+					'get_invoice'     => '1',
+				);
+				if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ) {
+					$query_args['save_pdf_invoice'] = '1';
+				}
+				$html .= '<a href="' . esc_url( add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'create_invoice_for_order_id-nonce', 'delete_invoice_for_order_id', 'delete_invoice_for_order_id-nonce' ) ) ) ) . '">' .
+				$the_number . '</a>';
+			}
+			echo wp_kses_post( $html );
+		}
+
+		/**
 		 * Add_pdf_invoices_links_to_thankyou_page.
 		 *
 		 * @version 5.5.9
@@ -326,26 +366,37 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Add_invoices_meta_box.
 		 *
-		 * @version 3.1.0
+		 * @version 7.1.4
 		 * @since   2.8.0
 		 */
 		public function add_invoices_meta_box() {
 			if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box', 'yes' ) ) {
-				add_meta_box(
-					'wc-booster-pdf-invoicing',
-					'<span class="dashicons dashicons-media-default" style="color:#23282d;"></span>' . __( 'Booster: PDF Invoices', 'woocommerce-jetpack' ),
-					array( $this, 'create_invoices_meta_box' ),
-					'shop_order',
-					'side',
-					'default'
-				);
+				if ( true === wcj_is_hpos_enabled() ) {
+					add_meta_box(
+						'wc-booster-pdf-invoicing',
+						'<span class="dashicons dashicons-media-default" style="color:#23282d;"></span>' . __( 'Booster: PDF Invoices', 'woocommerce-jetpack' ),
+						array( $this, 'create_invoices_meta_box' ),
+						'woocommerce_page_wc-orders',
+						'side',
+						'default'
+					);
+				} else {
+					add_meta_box(
+						'wc-booster-pdf-invoicing',
+						'<span class="dashicons dashicons-media-default" style="color:#23282d;"></span>' . __( 'Booster: PDF Invoices', 'woocommerce-jetpack' ),
+						array( $this, 'create_invoices_meta_box' ),
+						'shop_order',
+						'side',
+						'default'
+					);
+				}
 			}
 		}
 
 		/**
 		 * Create_invoices_meta_box.
 		 *
-		 * @version 5.6.7
+		 * @version 7.1.4
 		 * @since   2.8.0
 		 */
 		public function create_invoices_meta_box() {
@@ -391,12 +442,21 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 						if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
 							$number_option = 'wcj_invoicing_' . $invoice_type['id'] . '_number_id';
 							$date_option   = 'wcj_invoicing_' . $invoice_type['id'] . '_date';
-							$number_input  = '<br>' .
-							'<input style="width:100%;" type="number"' .
-								' id="' . $number_option . '" name="' . $number_option . '" value="' . get_post_meta( $order_id, '_' . $number_option, true ) . '">' .
-							'<input style="width:100%;" type="text"' .
-								' id="' . $date_option . '" name="' . $date_option . '" value="' . gmdate( 'Y-m-d H:i:s', get_post_meta( $order_id, '_' . $date_option, true ) ) . '">' .
-							'<input type="hidden" name="woojetpack_pdf_invoicing_save_post" value="woojetpack_pdf_invoicing_save_post">';
+							if ( true === wcj_is_hpos_enabled() ) {
+								$number_input = '<br>' .
+								'<input style="width:100%;" type="number"' .
+									' id="' . $number_option . '" name="' . $number_option . '" value="' . $_order->get_meta( '_' . $number_option ) . '">' .
+								'<input style="width:100%;" type="text"' .
+									' id="' . $date_option . '" name="' . $date_option . '" value="' . gmdate( 'Y-m-d H:i:s', $_order->get_meta( '_' . $date_option ) ) . '">' .
+								'<input type="hidden" name="woojetpack_pdf_invoicing_save_post" value="woojetpack_pdf_invoicing_save_post">';
+							} else {
+								$number_input = '<br>' .
+								'<input style="width:100%;" type="number"' .
+									' id="' . $number_option . '" name="' . $number_option . '" value="' . get_post_meta( $order_id, '_' . $number_option, true ) . '">' .
+								'<input style="width:100%;" type="text"' .
+									' id="' . $date_option . '" name="' . $date_option . '" value="' . gmdate( 'Y-m-d H:i:s', get_post_meta( $order_id, '_' . $date_option, true ) ) . '">' .
+								'<input type="hidden" name="woojetpack_pdf_invoicing_save_post" value="woojetpack_pdf_invoicing_save_post">';
+							}
 						}
 						// Actions.
 						$actions = array( $view_link . ' | ' . $delete_link . $number_input );
