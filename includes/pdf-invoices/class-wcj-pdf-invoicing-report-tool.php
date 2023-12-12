@@ -618,7 +618,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 
 			$columns = wcj_get_option( 'wcj_pdf_invoicing_report_tool_columns', '' );
 			if ( empty( $columns ) ) {
-				$columns = array_keys( WCJ()->all_modules['pdf_invoicing_advanced']->get_report_columns() );
+				$columns = array_keys( w_c_j()->all_modules['pdf_invoicing_advanced']->get_report_columns() );
 			}
 
 			$total_sum          = 0;
