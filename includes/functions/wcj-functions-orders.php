@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 6.0.5
+ * @version 7.1.4
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -43,6 +43,47 @@ if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
 		return false;
 	}
 }
+
+
+if ( ! function_exists( 'wcj_get_adjacent_order_id_hpos' ) ) {
+	/**
+	 * Wcj_get_adjacent_order_id_hpos.
+	 *
+	 * @version 7.1.4
+	 * @since   1.0.0
+	 * @todo    isn't there an easier way?
+	 * @param   int    $current_id defines the current_id.
+	 * @param   string $direction defines the direction.
+	 */
+	function wcj_get_adjacent_order_id_hpos( $current_id, $direction = 'next' ) {
+		$args         = array(
+			'type'           => 'shop_order',
+			'status'         => array_keys( wc_get_order_statuses() ),
+			'posts_per_page' => -1,
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
+			'fields'         => 'ids',
+		);
+		$order        = wc_get_orders( $args );
+		$i            = 0;
+		$order_number = array();
+		foreach ( $order as $orders ) {
+			$order_number[] = $order[ $i ]->id;
+			$i++;
+		}
+
+		foreach ( $order_number as $order_id ) {
+
+			if ( $current_id === (string) $order_id ) {
+				return $direction( $order_number );
+			}
+			next( $order_number );
+
+		}
+		return false;
+	}
+}
+
 
 if ( ! function_exists( 'wcj_get_order_status' ) ) {
 	/**
@@ -284,3 +325,33 @@ if ( ! function_exists( 'wcj_get_order_fees_total_tax' ) ) {
 	}
 }
 
+
+if ( ! function_exists( 'wcj_get_order' ) ) {
+	/**
+	 * Wcj_get_order.
+	 *
+	 * @version 7.1.4
+	 * @since  1.0.0
+	 *
+	 * @param   array $order_id defines the order_id.
+	 *
+	 * @return int
+	 */
+	function wcj_get_order( $order_id ) {
+		// Check if the order ID is set and not null.
+		if ( isset( $order_id ) && null !== $order_id ) {
+			// Return the order object if the order ID is valid.
+			$order = wc_get_order( $order_id );
+			// Check if the order object is valid.
+			if ( $order && is_a( $order, 'WC_Order' ) && is_object( $order ) ) {
+				return $order;
+			} else {
+				// Handle the case where the order object is not valid.
+				return false;
+			}
+		} else {
+			// Handle the case where the order ID is not valid.
+			return false;
+		}
+	}
+}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 5.6.8
+ * @version 7.1.4
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -119,16 +119,20 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Admin_validate_vat_and_maybe_remove_taxes.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 * @since   3.3.0
 		 */
 		public function admin_validate_vat_and_maybe_remove_taxes() {
 			$wpnonce = isset( $_REQUEST['validate_vat_and_maybe_remove_taxes-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['validate_vat_and_maybe_remove_taxes-nonce'] ), 'validate_vat_and_maybe_remove_taxes' ) : false;
 			if ( $wpnonce && isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
 				$order_id = sanitize_text_field( wp_unslash( $_GET['validate_vat_and_maybe_remove_taxes'] ) );
-				$order    = wc_get_order( $order_id );
+				$order    = wcj_get_order( $order_id );
 				if ( $order ) {
-					$vat_id = get_post_meta( $order_id, '_billing_eu_vat_number', true );
+					if ( true === wcj_is_hpos_enabled() && $order && false !== $order ) {
+						$vat_id = $order->get_meta( '_billing_eu_vat_number' );
+					} else {
+						$vat_id = get_post_meta( $order_id, '_billing_eu_vat_number', true );
+					}
 					if ( '' !== $vat_id && strlen( $vat_id ) > 2 ) {
 						if ( wcj_validate_vat( substr( $vat_id, 0, 2 ), substr( $vat_id, 2 ) ) ) {
 							foreach ( $order->get_items( array( 'line_item', 'fee' ) ) as $item_id => $item ) {
@@ -164,32 +168,50 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Add_meta_box.
 		 *
-		 * @version 2.6.0
+		 * @version 7.1.4
 		 * @since   2.6.0
 		 */
 		public function add_meta_box() {
-			$screen   = ( isset( $this->meta_box_screen ) ) ? $this->meta_box_screen : 'shop_order';
-			$context  = ( isset( $this->meta_box_context ) ) ? $this->meta_box_context : 'side';
-			$priority = ( isset( $this->meta_box_priority ) ) ? $this->meta_box_priority : 'low';
-			add_meta_box(
-				'wc-jetpack-' . $this->id,
-				__( 'Booster', 'woocommerce-jetpack' ) . ': ' . $this->short_desc,
-				array( $this, 'create_meta_box' ),
-				$screen,
-				$context,
-				$priority
-			);
+			if ( true === wcj_is_hpos_enabled() ) {
+				$screen   = ( isset( $this->meta_box_screen ) ) ? $this->meta_box_screen : 'woocommerce_page_wc-orders';
+				$context  = ( isset( $this->meta_box_context ) ) ? $this->meta_box_context : 'side';
+				$priority = ( isset( $this->meta_box_priority ) ) ? $this->meta_box_priority : 'low';
+				add_meta_box(
+					'wc-jetpack-' . $this->id,
+					__( 'Booster', 'woocommerce-jetpack' ) . ': ' . $this->short_desc,
+					array( $this, 'create_meta_box' ),
+					$screen,
+					$context,
+					$priority
+				);
+			} else {
+				$screen   = ( isset( $this->meta_box_screen ) ) ? $this->meta_box_screen : 'shop_order';
+				$context  = ( isset( $this->meta_box_context ) ) ? $this->meta_box_context : 'side';
+				$priority = ( isset( $this->meta_box_priority ) ) ? $this->meta_box_priority : 'low';
+				add_meta_box(
+					'wc-jetpack-' . $this->id,
+					__( 'Booster', 'woocommerce-jetpack' ) . ': ' . $this->short_desc,
+					array( $this, 'create_meta_box' ),
+					$screen,
+					$context,
+					$priority
+				);
+			}
 		}
 
 		/**
 		 * Create_meta_box.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 * @since   2.6.0
 		 */
 		public function create_meta_box() {
-			$order_id             = get_the_ID();
-			$_order               = wc_get_order( $order_id );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order_id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification
+			} else {
+				$order_id = get_the_ID();
+			}
+			$_order               = wcj_get_order( $order_id );
 			$_customer_ip_address = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->customer_ip_address : $_order->get_customer_ip_address() );
 
 			// Country by IP.
@@ -206,7 +228,11 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			}
 
 			// Customer EU VAT number.
-			$customer_eu_vat_number = get_post_meta( $order_id, '_billing_eu_vat_number', true );
+			if ( true === wcj_is_hpos_enabled() && $_order && false !== $_order ) {
+				$customer_eu_vat_number = $_order->get_meta( '_billing_eu_vat_number' );
+			} else {
+				$customer_eu_vat_number = get_post_meta( $order_id, '_billing_eu_vat_number', true );
+			}
 			if ( '' === $customer_eu_vat_number ) {
 				$customer_eu_vat_number = '-';
 			}
@@ -311,29 +337,37 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Add_eu_vat_number_to_order_billing_address.
 		 *
-		 * @version 2.7.0
+		 * @version 7.1.4
 		 * @since   2.5.2
 		 * @param array          $fields defines the fields.
 		 * @param string | array $_order defines the _order.
 		 */
 		public function add_eu_vat_number_to_order_billing_address( $fields, $_order ) {
-			$field_name            = 'billing_' . $this->id;
-			$fields[ $field_name ] = get_post_meta( wcj_get_order_id( $_order ), '_' . $field_name, true );
+			$field_name = 'billing_' . $this->id;
+			if ( true === wcj_is_hpos_enabled() ) {
+				$fields[ $field_name ] = $_order->get_meta( '_' . $field_name );
+			} else {
+				$fields[ $field_name ] = get_post_meta( wcj_get_order_id( $_order ), '_' . $field_name, true );
+			}
 			return $fields;
 		}
 
 		/**
 		 * Add_eu_vat_number_to_order_display.
 		 *
-		 * @version 3.2.2
+		 * @version 7.1.4
 		 * @since   2.4.7
 		 * @param array | string | int $order defines the order.
 		 */
 		public function add_eu_vat_number_to_order_display( $order ) {
-			$order_id          = wcj_get_order_id( $order );
-			$html              = '';
-			$option_name       = '_billing_' . $this->id;
-			$the_eu_vat_number = get_post_meta( $order_id, $option_name, true );
+			$order_id    = wcj_get_order_id( $order );
+			$html        = '';
+			$option_name = '_billing_' . $this->id;
+			if ( true === wcj_is_hpos_enabled() ) {
+				$the_eu_vat_number = $order->get_meta( $option_name );
+			} else {
+				$the_eu_vat_number = get_post_meta( $order_id, $option_name, true );
+			}
 			if ( '' !== $the_eu_vat_number ) {
 				$the_label = wcj_get_option( 'wcj_eu_vat_number_field_label', __( 'EU VAT Number', 'woocommerce-jetpack' ) );
 				$html     .= '<p><strong>' . $the_label . '</strong>: ' . $the_eu_vat_number . '</p>';
@@ -623,7 +657,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Add_billing_eu_vat_number_field_to_admin_order_display.
 		 *
-		 * @version 4.6.0
+		 * @version 7.1.4
 		 * @param  array $fields defines the fields.
 		 */
 		public function add_billing_eu_vat_number_field_to_admin_order_display( $fields ) {
@@ -642,7 +676,15 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 				if ( is_a( $order, 'WC_Order' ) ) {
 					$metas = array( '_billing_eu_vat_number', '_vat_number', '_billing_vat_number' );
 					foreach ( $metas as $meta ) {
-						$vat_number = get_post_meta( $order->get_id(), $meta, true );
+						if ( true === wcj_is_hpos_enabled() ) {
+							$order_id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification
+							$order    = wcj_get_order( $order_id );
+							if ( $order && false !== $order ) {
+								$vat_number = $order->get_meta( $meta );
+							}
+						} else {
+							$vat_number = get_post_meta( $order->get_id(), $meta, true );
+						}
 						if ( ! empty( $vat_number ) ) {
 							break;
 						}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.1.3
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1005,7 +1005,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 6.0.3
+	 * @version 7.1.4
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1124,6 +1124,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'offerprice'            => true,
 				'wcj_bestprice_arr_key' => true,
 				'is_variable'           => true,
+				'product_id'            => true,
 				'image_url'             => true,
 			),
 			'style'    => array(
@@ -1219,6 +1220,24 @@ if ( ! function_exists( 'wcj_sanitize_input_attribute_values' ) ) {
 
 		}
 		return $sanitize_field;
+
+	}
+}
+
+if ( ! function_exists( 'wcj_is_hpos_enabled' ) ) {
+	/**
+	 * Wcj_is_hpos_enabled.
+	 *
+	 * @version 7.1.4
+	 * @since   1.0.8
+	 */
+	function wcj_is_hpos_enabled() {
+
+		if ( 'yes' === get_option( 'woocommerce_custom_orders_table_enabled' ) ) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 }

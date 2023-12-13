@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 6.0.6
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -10,6 +10,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 
 if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 
@@ -23,7 +26,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.1.4
 		 * @todo    [feature] (maybe) add editable (product and order) metas
 		 */
 		public function __construct() {
@@ -47,7 +50,11 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			if ( $this->is_enabled() ) {
 				// Order Meta.
 				if ( 'yes' === wcj_get_option( 'wcj_admin_tools_show_order_meta_enabled', 'no' ) ) {
-					add_action( 'add_meta_boxes', array( $this, 'add_order_meta_meta_box' ) );
+					if ( true === wcj_is_hpos_enabled() ) {
+						add_action( 'add_meta_boxes', array( $this, 'add_order_meta_meta_box_hpos' ) );
+					} else {
+						add_action( 'add_meta_boxes', array( $this, 'add_order_meta_meta_box' ) );
+					}
 				}
 				// Product Meta.
 				if ( 'yes' === wcj_get_option( 'wcj_admin_tools_show_product_meta_enabled', 'no' ) ) {
@@ -210,6 +217,23 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		}
 
 		/**
+		 * Add_order_meta_meta_box_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since  1.0.0
+		 */
+		public function add_order_meta_meta_box_hpos() {
+			add_meta_box(
+				'wcj-admin-tools-order-meta',
+				__( 'Order Meta', 'woocommerce-jetpack' ),
+				array( $this, 'create_meta_meta_box_hpos' ),
+				'woocommerce_page_wc-orders',
+				'normal',
+				'low'
+			);
+		}
+
+		/**
 		 * Create_meta_meta_box.
 		 *
 		 * @version 6.0.6
@@ -262,6 +286,71 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 			}
 			// Output.
 			echo wp_kses_post( $html );
+		}
+
+
+		/**
+		 * Create_meta_meta_box_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since   1.0.0
+		 * @param string $post defines the post.
+		 */
+		public function create_meta_meta_box_hpos( $post ) {
+			$html    = '';
+			$post_id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification
+			// Meta.
+			$order = wcj_get_order( $post_id );
+			if ( $order && false !== $order ) {
+
+					$post_meta = array();
+				foreach ( $order->get_meta_data() as $meta_data_obj ) {
+					$meta_data_array                      = $meta_data_obj->get_data();
+					$post_meta[ $meta_data_array['key'] ] = array( $meta_data_array['value'] );
+				}
+
+				$table_data = array();
+				foreach ( $post_meta as $meta_key => $meta_values ) {
+					$meta_value   = maybe_unserialize( $meta_values[0] );
+					$meta_value   = is_array( $meta_value ) || is_object( $meta_value ) ? wp_json_encode( $meta_value ) : $meta_value;
+					$table_data[] = array( $meta_key, esc_html( $meta_value ) );
+				}
+				$html .= wcj_get_table_html(
+					$table_data,
+					array(
+						'table_class'        => 'widefat striped',
+						'table_heading_type' => 'vertical',
+					)
+				);
+				// Items Meta (for orders only).
+				if ( 'shop_order' === OrderUtil::get_order_type( $post_id ) ) {
+					$_order     = wc_get_order( $post_id );
+					$table_data = array();
+					foreach ( $_order->get_items() as $item_key => $item ) {
+						foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
+							$item_meta_value = maybe_unserialize( $item_meta_value );
+							$item_meta_value = is_array( $item_meta_value ) ? wp_json_encode( $item_meta_value ) : $item_meta_value;
+							$table_data[]    = array( $item_key, $item_meta_key, $item_meta_value );
+						}
+					}
+					if ( ! empty( $table_data ) ) {
+						$html      .= '<h3>' . __( 'Order Items Meta', 'woocommerce-jetpack' ) . '</h3>';
+						$table_data = array_merge(
+							array( array( __( 'Item Key', 'woocommerce-jetpack' ), __( 'Item Meta Key', 'woocommerce-jetpack' ), __( 'Item Meta Value', 'woocommerce-jetpack' ) ) ),
+							$table_data
+						);
+						$html      .= wcj_get_table_html(
+							$table_data,
+							array(
+								'table_class'        => 'widefat striped',
+								'table_heading_type' => 'horizontal',
+							)
+						);
+					}
+				}
+				// Output.
+				echo wp_kses_post( $html );
+			}
 		}
 
 		/**

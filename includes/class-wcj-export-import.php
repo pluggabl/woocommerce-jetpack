@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 6.0.0
+ * @version 7.1.4
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -72,7 +72,7 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		/**
 		 * Export.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 * @since   2.4.8
 		 * @todo    [dev] when filtering now using `strpos`, but other options would be `stripos` (case-insensitive) or strict equality
 		 * @todo    [dev] (maybe) do filtering directly in WP_Query
@@ -87,15 +87,27 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 					break;
 				case 'customers_from_orders':
 					$exporter = require_once 'export/class-wcj-exporter-customers.php';
-					$data     = $exporter->export_customers_from_orders( $this->fields_helper );
+					if ( true === wcj_is_hpos_enabled() ) {
+						$data = $exporter->export_customers_from_orders_hpos( $this->fields_helper );
+					} else {
+						$data = $exporter->export_customers_from_orders( $this->fields_helper );
+					}
 					break;
 				case 'orders':
 					$exporter = require_once 'export/class-wcj-exporter-orders.php';
-					$data     = $exporter->export_orders( $this->fields_helper );
+					if ( true === wcj_is_hpos_enabled() ) {
+						$data = $exporter->export_orders_hpos( $this->fields_helper );
+					} else {
+						$data = $exporter->export_orders( $this->fields_helper );
+					}
 					break;
 				case 'orders_items':
 					$exporter = require_once 'export/class-wcj-exporter-orders.php';
-					$data     = $exporter->export_orders_items( $this->fields_helper );
+					if ( true === wcj_is_hpos_enabled() ) {
+						$data = $exporter->export_orders_items_hpos( $this->fields_helper );
+					} else {
+						$data = $exporter->export_orders_items( $this->fields_helper );
+					}
 					break;
 				case 'products':
 					$exporter = require_once 'export/class-wcj-exporter-products.php';

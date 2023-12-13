@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 
+ * @version 7.1.4
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -167,7 +167,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Restrict_countries_by_customer_ip.
 		 *
-		 * @version 4.6.0
+		 * @version 7.1.4
 		 * @since   3.4.0
 		 * @todo    (maybe) handle case when `wcj_get_country_by_ip()` returns empty string
 		 * @todo    (maybe) for shipping countries - filter `woocommerce_ship_to_countries` option
@@ -196,8 +196,15 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 			if ( 'yes' === wcj_get_option( 'wcj_checkout_restrict_countries_based_on_yith_raq', 'no' ) && class_exists( 'YITH_Request_Quote' ) ) {
 				$yith_order_id = WC()->session->get( 'order_awaiting_payment' );
 				if ( ! empty( $yith_order_id ) ) {
-					$order_billing_country = get_post_meta( $yith_order_id, '_billing_country', true );
-					$user_country          = ! empty( $order_billing_country ) ? $order_billing_country : wcj_get_country_by_ip();
+					if ( true === wcj_is_hpos_enabled() ) {
+						$order = wcj_get_order( $yith_order_id );
+						if ( $order && false !== $order ) {
+							$order_billing_country = $order->get_meta( '_billing_country' );
+						}
+					} else {
+						$order_billing_country = get_post_meta( $yith_order_id, '_billing_country', true );
+					}
+					$user_country = ! empty( $order_billing_country ) ? $order_billing_country : wcj_get_country_by_ip();
 				}
 			}
 			return array( $user_country => wcj_get_country_name_by_code( $user_country ) );
@@ -217,7 +224,7 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Customize_order_received_message.
 		 *
-		 * @version 
+		 * @version
 		 * @since   3.1.0
 		 * @param string       $message defines the message.
 		 * @param int | string $_order defines the _order.

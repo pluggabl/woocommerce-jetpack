@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 5.6.8
+ * @version 7.1.4
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2
+		 * @version 7.1.4
 		 * @todo    (maybe) pre-calculate profit for orders
 		 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 		 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -75,8 +75,14 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 					'yes' === wcj_get_option( 'wcj_purchase_data_custom_columns_profit', 'yes' ) ||
 					'yes' === wcj_get_option( 'wcj_purchase_data_custom_columns_purchase_cost', 'no' )
 				) {
-					add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX - 2 );
-					add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
+					if ( true === wcj_is_hpos_enabled() ) {
+						add_filter( 'woocommerce_shop_order_list_table_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX - 2 );
+						add_action( 'woocommerce_shop_order_list_table_custom_column', array( $this, 'render_order_columns_hpos' ), PHP_INT_MAX, 2 );
+					} else {
+						add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX - 2 );
+						add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
+
+					}
 				}
 
 				// Products columns.
@@ -258,6 +264,55 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 							$is_forecasted = true;
 						}
 						$total += $value;
+					}
+				}
+				if ( 0 !== $total ) {
+					if ( ! $is_forecasted ) {
+						echo '<span style="color:green;">';
+					}
+					echo wp_kses_post( wc_price( $total ) );
+					if ( ! $is_forecasted ) {
+						echo '</span>';
+					}
+				}
+			}
+		}
+
+		/**
+		 * Output custom columns for orders HPOS.
+		 *
+		 * @version 7.1.4
+		 * @since   1.0.0
+		 * @todo    forecasted profit `$value = $line_total * $average_profit_margin`
+		 * @todo    (maybe) use `[wcj_order_profit]` and `[wcj_order_items_cost]`
+		 * @param string $column defines the column.
+		 * @param   string $order defines the order.
+		 */
+		public function render_order_columns_hpos( $column, $order ) {
+			if ( 'profit' === $column || 'purchase_cost' === $column ) {
+				$total     = 0;
+				$the_order = wcj_get_order( $order->id );
+				if ( $the_order && false !== $the_order ) {
+					if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ), true ) ) {
+						$is_forecasted = false;
+						foreach ( $the_order->get_items() as $item_id => $item ) {
+							$value          = 0;
+							$product_id     = ( isset( $item['variation_id'] ) && 0 !== $item['variation_id'] && 'no' === wcj_get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
+							? $item['variation_id'] : $item['product_id'] );
+							$purchase_price = wc_get_product_purchase_price( $product_id );
+							if ( (float) 0 !== $purchase_price ) {
+								if ( 'profit' === $column ) {
+									$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->prices_include_tax : $the_order->get_prices_include_tax() );
+									$line_total                = ( $_order_prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
+									$value                     = $line_total - $purchase_price * $item['qty'];
+								} else {
+									$value = $purchase_price * $item['qty'];
+								}
+							} else {
+								$is_forecasted = true;
+							}
+							$total += $value;
+						}
 					}
 				}
 				if ( 0 !== $total ) {

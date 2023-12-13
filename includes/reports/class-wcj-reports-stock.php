@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 6.0.0
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -29,7 +29,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.9.0
+		 * @version 7.1.4
 		 * @todo    (maybe) `most_stock_price`, `sales_up`, `good_sales_low_stock`
 		 * @todo    (maybe) `echo __( 'Here you can generate reports. Some reports are generated using all your orders and products, so if you have a lot of them - it may take a while.', 'woocommerce-jetpack' );`
 		 * @todo    (maybe) wcj_get_option( 'woocommerce_manage_stock' ) -> `echo __( 'Please enable stock management in <strong>WooCommerce > Settings > Products > Inventory</strong> to generate stock based reports.', 'woocommerce-jetpack' );`
@@ -62,7 +62,11 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 			$this->start_time               = microtime( true );
 			$products_info                  = array();
 			$this->gather_products_data( $products_info );
-			$this->gather_orders_data( $products_info );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$this->gather_orders_data_hpos( $products_info );
+			} else {
+				$this->gather_orders_data( $products_info );
+			}
 			$info = $this->get_stock_summary( $products_info );
 			if ( 'on_stock' === $this->report_id || 'overstocked' === $this->report_id ) {
 				$this->sort_products_info( $products_info, 'stock_price' );
@@ -188,6 +192,71 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 				foreach ( $loop_orders->posts as $order_id ) {
 					$order = wc_get_order( $order_id );
 					$items = $order->get_items();
+					foreach ( $items as $item ) {
+						$product_id = ( 'product' !== $this->product_type && ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
+						if ( ! isset( $products_info[ $product_id ] ) && $this->include_deleted_products ) {
+							// Deleted product.
+							$products_info[ $product_id ] = array(
+								'ID'              => $product_id,
+								'title'           => $item['name'] . ' (' . __( 'N/A', 'woocommerce-jetpack' ) . ')',
+								'category'        => '',
+								'permalink'       => '',
+								'price'           => '',
+								'stock'           => '',
+								'stock_price'     => '',
+								'total_sales'     => '',
+								'date_added'      => '',
+								'purchase_price'  => '',
+								'last_sale'       => 0,
+								'sales_in_period' => array( $the_period => 0 ),
+							);
+						}
+						if ( isset( $products_info[ $product_id ] ) ) {
+							$products_info[ $product_id ]['sales_in_period'][ $the_period ] += $item['qty'];
+							if ( 0 === $products_info[ $product_id ]['last_sale'] ) {
+								$products_info[ $product_id ]['last_sale'] = get_the_time( 'U', $order_id );
+							}
+						}
+					}
+				}
+				$offset += $block_size;
+			}
+		}
+
+		/**
+		 * Gather_orders_data_hpos.
+		 *
+		 * @version 7.1.4
+		 * @param Array $products_info Get product data.
+		 */
+		public function gather_orders_data_hpos( &$products_info ) {
+			$offset     = 0;
+			$block_size = 1024;
+			while ( true ) {
+				$args_orders = array(
+					'type'           => 'shop_order',
+					'status'         => 'wc-completed',
+					'posts_per_page' => $block_size,
+					'offset'         => $offset,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'date_query'     => array(
+						array(
+							'column' => 'post_date_gmt',
+							'after'  => $this->range_days . ' days ago',
+						),
+					),
+					'fields'         => 'ids',
+				);
+				$the_period  = $this->range_days;
+				$orders      = wc_get_orders( $args_orders );
+				if ( ! $orders ) {
+					break;
+				}
+				foreach ( $orders as $order ) {
+					$order_id = $order->get_id();
+					$order    = wc_get_order( $order_id );
+					$items    = $order->get_items();
 					foreach ( $items as $item ) {
 						$product_id = ( 'product' !== $this->product_type && ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
 						if ( ! isset( $products_info[ $product_id ] ) && $this->include_deleted_products ) {

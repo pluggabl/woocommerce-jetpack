@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 5.6.8
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 */
 		public function __construct() {
 
@@ -34,8 +34,14 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 			if ( $this->is_enabled() ) {
 				include_once 'gateways/class-wc-gateway-wcj-custom-template.php';
 				add_action( 'woocommerce_after_checkout_validation', array( $this, 'check_required_wcj_input_fields' ), PHP_INT_MAX, 2 );
-				add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_custom_payment_gateways_fields_order_meta' ), PHP_INT_MAX, 2 );
-				add_action( 'add_meta_boxes', array( $this, 'add_custom_payment_gateways_fields_admin_order_meta_box' ) );
+
+				if ( true === wcj_is_hpos_enabled() ) {
+					add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_custom_payment_gateways_fields_order_meta_hpos' ), PHP_INT_MAX, 2 );
+					add_action( 'add_meta_boxes', array( $this, 'add_custom_payment_gateways_fields_admin_order_meta_box_hpos' ) );
+				} else {
+					add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_custom_payment_gateways_fields_order_meta' ), PHP_INT_MAX, 2 );
+					add_action( 'add_meta_boxes', array( $this, 'add_custom_payment_gateways_fields_admin_order_meta_box' ) );
+				}
 				add_action( 'admin_init', array( $this, 'maybe_delete_payment_gateway_input_fields' ) );
 			}
 		}
@@ -43,14 +49,23 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Maybe_delete_payment_gateway_input_fields.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 * @since   3.3.0
 		 */
 		public function maybe_delete_payment_gateway_input_fields() {
 			$wpnonce = isset( $_GET['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'wcj_delete_payment_gateway_input_fields' ) : false;
 			if ( $wpnonce && isset( $_GET['wcj_delete_payment_gateway_input_fields'] ) ) {
 				$order_id = sanitize_text_field( wp_unslash( $_GET['wcj_delete_payment_gateway_input_fields'] ) );
-				delete_post_meta( $order_id, '_wcj_custom_payment_gateway_input_fields' );
+				if ( true === wcj_is_hpos_enabled() ) {
+					$order = wcj_get_order( $order_id );
+					if ( $order && false !== $order ) {
+						$order->delete_meta_data( '_wcj_custom_payment_gateway_input_fields' );
+						$order->save();
+					}
+				} else {
+					delete_post_meta( $order_id, '_wcj_custom_payment_gateway_input_fields' );
+				}
+
 				wp_safe_redirect( esc_url_raw( remove_query_arg( array( 'wcj_delete_payment_gateway_input_fields', '_wpnonce' ) ) ) );
 				exit;
 			}
@@ -110,16 +125,55 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		}
 
 		/**
+		 * Add_custom_payment_gateways_fields_admin_order_meta_box_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since  1.0.0
+		 */
+		public function add_custom_payment_gateways_fields_admin_order_meta_box_hpos() {
+
+			$order_id = ( isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '' );//phpcs:ignore WordPress.Security.NonceVerification
+
+			$order = wcj_get_order( $order_id );
+			if ( $order && false !== $order ) {
+				$input_fields = $order->get_meta( '_wcj_custom_payment_gateway_input_fields' );
+			}
+			if ( ! empty( $input_fields ) ) {
+				$payment_method_title = $order->get_meta( '_payment_method_title' );
+				$screen               = 'woocommerce_page_wc-orders';
+				$context              = 'side';
+				$priority             = 'high';
+				add_meta_box(
+					'wc-jetpack-' . $this->id,
+					/* translators: %s: translation added */
+					__( 'Booster', 'woocommerce-jetpack' ) . ': ' . sprintf( __( '%s Fields', 'woocommerce-jetpack' ), $payment_method_title ),
+					array( $this, 'create_custom_payment_gateways_fields_admin_order_meta_box' ),
+					$screen,
+					$context,
+					$priority
+				);
+			}
+		}
+
+		/**
 		 * Create_custom_payment_gateways_fields_admin_order_meta_box.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 * @since   2.5.2
 		 */
 		public function create_custom_payment_gateways_fields_admin_order_meta_box() {
-			$order_id     = get_the_ID();
-			$html         = '';
-			$input_fields = get_post_meta( $order_id, '_wcj_custom_payment_gateway_input_fields', true );
-			$table_data   = array();
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order_id = ( isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '' );//phpcs:ignore WordPress.Security.NonceVerification
+				$order    = wcj_get_order( $order_id );
+				if ( $order && false !== $order ) {
+					$input_fields = $order->get_meta( '_wcj_custom_payment_gateway_input_fields' );
+				}
+			} else {
+				$order_id     = get_the_ID();
+				$input_fields = get_post_meta( $order_id, '_wcj_custom_payment_gateway_input_fields', true );
+			}
+			$html       = '';
+			$table_data = array();
 			foreach ( $input_fields as $name => $value ) {
 				$table_data[] = array( $name, $value );
 			}
@@ -176,6 +230,54 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 				}
 				if ( ! empty( $input_fields ) ) {
 					update_post_meta( $order_id, '_wcj_custom_payment_gateway_input_fields', $input_fields );
+				}
+			}
+		}
+
+
+		/**
+		 * Update_custom_payment_gateways_fields_order_meta_hpos.
+		 *
+		 * @version 7.1.4
+		 * @since  1.0.0
+		 * @param int    $order_id defines the order_id.
+		 * @param string $posted defines the posted.
+		 */
+		public function update_custom_payment_gateways_fields_order_meta_hpos( $order_id, $posted ) {
+			$order = wcj_get_order( $order_id );
+			if ( $order && false !== $order ) {
+				$payment_method = $order->get_meta( '_payment_method' );
+				if ( 'jetpack_custom_gateway' === substr( $payment_method, 0, 22 ) ) {
+					$input_fields = array();
+					$wpnonce      = isset( $_REQUEST['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['woocommerce-process-checkout-nonce'] ), 'woocommerce-process_checkout' ) : false;
+					foreach ( $_POST as $key => $value ) {
+						if ( 'wcj_input_field_' === substr( $key, 0, 16 ) ) {
+							if ( ! is_array( $value ) ) {
+								if ( $wpnonce && isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
+									if ( isset( $_POST[ 'label_for_' . $key ] ) ) {
+										$input_fields[ sanitize_text_field( wp_unslash( $_POST[ 'label_for_' . $key ] ) ) ] = $value;
+									} else {
+										$input_fields[ substr( $key, 16 ) ] = $value;
+									}
+								}
+							} else {
+								if ( substr( $key, 16 ) === $payment_method ) {
+									foreach ( $value as $input_name => $input_value ) {
+										$label_value = isset( $input_value['label'] ) ? $input_value['label'] : '';
+										if ( ! empty( $label_value ) ) {
+											$input_fields[ $label_value ] = $input_value['value'];
+										} else {
+											$input_fields[ $input_name ] = $input_value['value'];
+										}
+									}
+								}
+							}
+						}
+					}
+					if ( ! empty( $input_fields ) ) {
+						$order->update_meta_data( '_wcj_custom_payment_gateway_input_fields', $input_fields );
+						$order->save();
+					}
 				}
 			}
 		}

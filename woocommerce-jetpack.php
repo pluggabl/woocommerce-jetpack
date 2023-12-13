@@ -3,13 +3,13 @@
  * Plugin Name: Booster for WooCommerce
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules.All in one WooCommerce plugin.
- * Version: 7.1.3
+ * Version: 7.1.4
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
  * Copyright: © 2020 Pluggabl LLC.
- * WC tested up to: 8.2.0
+ * WC tested up to: 8.3.1
  * License: GNU General Public License v3.0
  * php version 7.2
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -65,7 +65,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '7.1.3';
+		public $version = '7.1.4';
 
 		/**
 		 * The single instance of the class
@@ -201,3 +201,12 @@ function wcj_activation_hook() {
 	set_transient( '_wcj_activation_redirect', 1, 30 );
 }
 register_activation_hook( __FILE__, 'wcj_activation_hook' );
+
+add_action(
+	'before_woocommerce_init',
+	function() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);

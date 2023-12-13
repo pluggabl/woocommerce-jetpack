@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 7.0.0
+ * @version 7.1.4
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -388,7 +388,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		/**
 		 * Add_woocommerce_admin_bar.
 		 *
-		 * @version 4.1.0
+		 * @version 7.1.4
 		 * @since   2.9.0
 		 * @todo    (maybe) reports > customers > customers > add dates
 		 * @todo    (maybe) reports > taxes > taxes_by_code > add dates
@@ -401,6 +401,13 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return;
 			}
+			if ( true === wcj_is_hpos_enabled() ) {
+				$shop_order   = 'admin.php?page=wc-orders';
+				$create_order = 'admin.php?page=wc-orders&action=new';
+			} else {
+				$shop_order   = 'edit.php?post_type=shop_order';
+				$create_order = 'post-new.php?post_type=shop_order';
+			}
 			$nodes = array(
 				'wcj-wc' => array(
 					'title' => '<span class="ab-icon"></span>' . __( 'WooCommerce', 'woocommerce' ),
@@ -411,15 +418,15 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 					'nodes' => array(
 						'orders'        => array(
 							'title' => __( 'Orders', 'woocommerce' ),
-							'href'  => admin_url( 'edit.php?post_type=shop_order' ),
+							'href'  => admin_url( $shop_order ),
 							'nodes' => array(
 								'orders'    => array(
 									'title' => __( 'Orders', 'woocommerce' ),
-									'href'  => admin_url( 'edit.php?post_type=shop_order' ),
+									'href'  => admin_url( $shop_order ),
 								),
 								'add-order' => array(
 									'title' => __( 'Add order', 'woocommerce' ),
-									'href'  => admin_url( 'post-new.php?post_type=shop_order' ),
+									'href'  => admin_url( $create_order ),
 								),
 								'customers' => array(
 									'title' => __( 'Customers', 'woocommerce' ),

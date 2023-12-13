@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 7.1.3
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -10,6 +10,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
 if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 	/**
@@ -195,7 +197,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
-		 * @version 7.1.3
+		 * @version 7.1.4
 		 * @todo    (maybe) `if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -237,8 +239,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			}
 
 			// Class properties.
-			$this->the_order = ( 'shop_order' === get_post_type( $atts['order_id'] ) ) ? wc_get_order( $atts['order_id'] ) : null;
-			if ( ! $this->the_order ) {
+			if ( true === wcj_is_hpos_enabled() ) {
+				$this->the_order = ( 'shop_order' === OrderUtil::get_order_type( $atts['order_id'] ) ) ? wcj_get_order( $atts['order_id'] ) : null;
+			} else {
+				$this->the_order = ( 'shop_order' === get_post_type( $atts['order_id'] ) ) ? wc_get_order( $atts['order_id'] ) : null;
+			}
+
+			if ( ! $this->the_order || false === $this->the_order ) {
 				return false;
 			}
 
@@ -766,11 +773,17 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_payment_method.
 		 *
-		 * @version 2.7.0
+		 * @version 7.1.4
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_payment_method( $atts ) {
-			return get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method_title', true );
+			if ( true === wcj_is_hpos_enabled() ) {
+				if ( $this->the_order && false !== $this->the_order ) {
+					return $this->the_order->get_meta( '_payment_method_title' );
+				}
+			} else {
+				return get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method_title', true );
+			}
 		}
 
 		/**
@@ -1785,13 +1798,25 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_payment_method_notes
 		 *
-		 * @version 6.0.5
+		 * @version 7.1.4
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_payment_method_notes( $atts ) {
 
-			$get_payment_notes = 'wcj_gateways_' . get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method', true ) . '_pdf_notes';
-			return do_shortcode( get_option( $get_payment_notes ) );
+			if ( true === wcj_is_hpos_enabled() && false !== $this->the_order ) {
+				$get_payment_notes = 'wcj_gateways_' . $this->the_order->get_meta( '_payment_method' ) . '_pdf_notes';
+				if ( str_contains( get_option( $get_payment_notes ), ']' ) ) {
+					$get_value        = get_option( $get_payment_notes );
+					$order_id         = ' order_id="' . wcj_get_order_id( $this->the_order ) . '"]';
+					$custom_shortcode = str_replace( ']', $order_id, $get_value );
+				} else {
+					$custom_shortcode = get_option( $get_payment_notes );
+				}
+			} else {
+				$get_payment_notes = 'wcj_gateways_' . get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method', true ) . '_pdf_notes';
+				$custom_shortcode  = get_option( $get_payment_notes );
+			}
+			return do_shortcode( $custom_shortcode );
 		}
 	}
 

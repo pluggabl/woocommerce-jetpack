@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 7.1.1
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -10,6 +10,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 
 if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
@@ -81,12 +84,16 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
-		 * @version 2.5.7
+		 * @version 7.1.4
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function init_atts( $atts ) {
-			$this->the_order = ( 'shop_order' === get_post_type( $atts['order_id'] ) ) ? wc_get_order( $atts['order_id'] ) : null;
-			if ( ! $this->the_order ) {
+			if ( true === wcj_is_hpos_enabled() ) {
+				$this->the_order = ( 'shop_order' === OrderUtil::get_order_type( $atts['order_id'] ) ) ? wcj_get_order( $atts['order_id'] ) : null;
+			} else {
+				$this->the_order = ( 'shop_order' === get_post_type( $atts['order_id'] ) ) ? wc_get_order( $atts['order_id'] ) : null;
+			}
+			if ( ! $this->the_order || false === $this->the_order ) {
 				return false;
 			}
 			if ( 0 !== $atts['item_image_width'] ) {

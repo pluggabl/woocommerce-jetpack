@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 7.0.0
+ * @version 7.1.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -20,7 +20,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.1.4
 		 */
 		public function __construct() {
 
@@ -79,7 +79,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 
 				// Editable numbers in meta box.
 				if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
-					add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+					if ( true === wcj_is_hpos_enabled() ) {
+						add_action( 'woocommerce_process_shop_order_meta', array( $this, 'save_meta_box_hpos' ), PHP_INT_MAX, 2 );
+					} else {
+						add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+					}
 				}
 			}
 		}

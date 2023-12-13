@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 7.0.0
+ * @version 7.1.4
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Calculate_data.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.4
 		 * @since   3.5.0
 		 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 		 */
@@ -177,22 +177,44 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 				$block_size   = 512;
 				$total_orders = 0;
 				while ( true ) {
-					$args = array(
-						'post_type'      => 'shop_order',
-						'post_status'    => $this->order_status,
-						'posts_per_page' => $block_size,
-						'orderby'        => 'ID',
-						'order'          => 'DESC',
-						'offset'         => $offset,
-						'fields'         => 'ids',
-					);
-					$loop = new WP_Query( $args );
-					if ( ! $loop->have_posts() ) {
-						break;
-					}
-					foreach ( $loop->posts as $_order_id ) {
-						$this->save_quantities( $_order_id );
-						$total_orders++;
+					if ( true === wcj_is_hpos_enabled() ) {
+						$args  = array(
+							'type'           => 'shop_order',
+							'status'         => $this->order_status,
+							'posts_per_page' => $block_size,
+							'orderby'        => 'ID',
+							'order'          => 'DESC',
+							'offset'         => $offset,
+							'fields'         => 'ids',
+						);
+						$order = wc_get_orders( $args );
+						if ( ! $order ) {
+							break;
+						}
+						$i = 0;
+						foreach ( $order as $order_id ) {
+							$this->save_quantities( $order[ $i ]->id );
+							$total_orders++;
+							$i++;
+						}
+					} else {
+						$args = array(
+							'post_type'      => 'shop_order',
+							'post_status'    => $this->order_status,
+							'posts_per_page' => $block_size,
+							'orderby'        => 'ID',
+							'order'          => 'DESC',
+							'offset'         => $offset,
+							'fields'         => 'ids',
+						);
+						$loop = new WP_Query( $args );
+						if ( ! $loop->have_posts() ) {
+							break;
+						}
+						foreach ( $loop->posts as $_order_id ) {
+							$this->save_quantities( $_order_id );
+							$total_orders++;
+						}
 					}
 					$offset += $block_size;
 				}
@@ -261,34 +283,61 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		/**
 		 * Save_quantities.
 		 *
-		 * @version 3.5.0
+		 * @version 7.1.4
 		 * @since   3.5.0
 		 * @param int $order_id defines the order_id.
 		 */
 		public function save_quantities( $order_id ) {
-			$order = wc_get_order( $order_id );
-			if ( $order ) {
-				if ( 'yes' !== get_post_meta( $order_id, '_wcj_max_products_per_user_saved', true ) ) {
-					if ( count( $order->get_items() ) > 0 ) {
-						$user_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_user : $order->get_customer_id() );
-						foreach ( $order->get_items() as $item ) {
-							$product = $item->get_product();
-							if ( $item->is_type( 'line_item' ) && ( $product ) ) {
-								$product_id       = wcj_get_product_id_or_variation_parent_id( $product );
-								$product_qty      = $item->get_quantity();
-								$users_quantities = get_post_meta( $product_id, '_wcj_max_products_per_user_report', true );
-								if ( '' === ( $users_quantities ) ) {
-									$users_quantities = array();
+			$order = wcj_get_order( $order_id );
+			if ( $order && false !== $order ) {
+				if ( true === wcj_is_hpos_enabled() ) {
+					if ( 'yes' !== $order->get_meta( '_wcj_max_products_per_user_saved' ) ) {
+						if ( count( $order->get_items() ) > 0 ) {
+							$user_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_user : $order->get_customer_id() );
+							foreach ( $order->get_items() as $item ) {
+								$product = $item->get_product();
+								if ( $item->is_type( 'line_item' ) && ( $product ) ) {
+									$product_id       = wcj_get_product_id_or_variation_parent_id( $product );
+									$product_qty      = $item->get_quantity();
+									$users_quantities = get_post_meta( $product_id, '_wcj_max_products_per_user_report', true );
+									if ( '' === ( $users_quantities ) ) {
+										$users_quantities = array();
+									}
+									if ( isset( $users_quantities[ $user_id ] ) ) {
+										$product_qty += $users_quantities[ $user_id ];
+									}
+									$users_quantities[ $user_id ] = $product_qty;
+									update_post_meta( $product_id, '_wcj_max_products_per_user_report', $users_quantities );
 								}
-								if ( isset( $users_quantities[ $user_id ] ) ) {
-									$product_qty += $users_quantities[ $user_id ];
-								}
-								$users_quantities[ $user_id ] = $product_qty;
-								update_post_meta( $product_id, '_wcj_max_products_per_user_report', $users_quantities );
 							}
 						}
+						$order->update_meta_data( '_wcj_max_products_per_user_saved', 'yes' );
+						$order->save();
 					}
-					update_post_meta( $order_id, '_wcj_max_products_per_user_saved', 'yes' );
+				} else {
+
+					if ( 'yes' !== get_post_meta( $order_id, '_wcj_max_products_per_user_saved', true ) ) {
+						if ( count( $order->get_items() ) > 0 ) {
+							$user_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_user : $order->get_customer_id() );
+							foreach ( $order->get_items() as $item ) {
+								$product = $item->get_product();
+								if ( $item->is_type( 'line_item' ) && ( $product ) ) {
+									$product_id       = wcj_get_product_id_or_variation_parent_id( $product );
+									$product_qty      = $item->get_quantity();
+									$users_quantities = get_post_meta( $product_id, '_wcj_max_products_per_user_report', true );
+									if ( '' === ( $users_quantities ) ) {
+										$users_quantities = array();
+									}
+									if ( isset( $users_quantities[ $user_id ] ) ) {
+										$product_qty += $users_quantities[ $user_id ];
+									}
+									$users_quantities[ $user_id ] = $product_qty;
+									update_post_meta( $product_id, '_wcj_max_products_per_user_report', $users_quantities );
+								}
+							}
+						}
+						update_post_meta( $order_id, '_wcj_max_products_per_user_saved', 'yes' );
+					}
 				}
 			}
 		}
