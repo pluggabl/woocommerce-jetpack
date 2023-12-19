@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.4.2
 Requires PHP: 7.2
-Stable tag: 7.1.4
+Stable tag: 7.1.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,23 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.5 20/12/2023 =
+
+* NEW FEATURE - EMAILS & MISC - General - Introduced a new option to display order shortcodes forcefully.
+* FIXED - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Hide the "wcj-currency-nonce" nonce field, as it breaks the WooCommerce Rest API JSON response in certain instances.
+* FIXED - PDF INVOICING & PACKING SLIPS - PDF Invoicing - Fixed PHP Deprecated errors associated with TCPDF library.
+* FIXED - PHP Deprecated:  Optional parameter $isunicode declared before required parameter $currentfont is implicitly treated as a required parameter in... includes/lib/tcpdf/include/tcpdf_fonts.php on line 1998
+* FIXED - PHP Deprecated:  Optional parameter $setbom declared before required parameter $currentfont is implicitly treated as a required parameter in... includes/lib/tcpdf/include/tcpdf_fonts.php on line 2040
+* FIXED - PHP Deprecated:  Optional parameter $str declared before required parameter $currentfont is implicitly treated as a required parameter in... includes/lib/tcpdf/include/tcpdf_fonts.php on line 2077
+* FIXED - PHP Deprecated:  Optional parameter $default_css declared before required parameter $tagvspaces is implicitly treated as a required parameter in... includes/lib/tcpdf/include/tcpdf_static.php on line 1139
+* FIXED - PHP Deprecated:  Optional parameter $tagvs declared before required parameter $tagvspaces is implicitly treated as a required parameter in... includes/lib/tcpdf/include/tcpdf_static.php on line 1139
+* FIXED - PHP Deprecated:  Optional parameter $tidy_options declared before required parameter $tagvspaces is implicitly treated as a required parameter in... includes/lib/tcpdf/include/tcpdf_static.php on line 1139
+* FIXED - PHP Deprecated:  Optional parameter $points declared before required parameter $k is implicitly treated as a required parameter in... includes/lib/tcpdf/include/tcpdf_static.php on line 2510
+* FIXED - PHP Deprecated:  Implicit conversion from float 2.547055555555555 to int loses precision in... includes/lib/tcpdf/tcpdf.php on line 4138
+* FIXED - PHP Deprecated:  Implicit conversion from float 1.961444444444444 to int loses precision in... includes/lib/tcpdf/tcpdf.php on line 4137
+* WooCommerce 8.4.0 Tested
+* WordPress 6.4.2 Tested
 
 = 7.1.4 13/12/2023 =
 
