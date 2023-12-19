@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 7.1.3
+ * @version 7.1.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -931,7 +931,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Get_currency_selector.
 		 *
-		 * @version 7.1.1
+		 * @version 7.1.5
 		 * @since   2.4.5
 		 * @param array          $atts The user defined shortcode attributes.
 		 * @param array | string $content The user defined shortcode content.
@@ -990,7 +990,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			if ( 'select' === $type ) {
 				$html .= '</select>';
 			}
-			$html .= wp_nonce_field( 'wcj-currency', 'wcj-currency-nonce' );
+			$html .= wp_nonce_field( 'wcj-currency', 'wcj-currency-nonce', true, false );
 			$html .= '</form>';
 			return $html;
 		}

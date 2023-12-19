@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 7.1.4
+ * @version 7.1.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -197,7 +197,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
-		 * @version 7.1.4
+		 * @version 7.1.5
 		 * @todo    (maybe) `if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -218,26 +218,27 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 				return false;
 			}
 
-			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				$order = wc_get_order( $atts['order_id'] );
-				if ( isset( $order ) && ! empty( $order ) ) { // Verify that Order exists.
+			if ( 'yes' !== wcj_get_option( 'wcj_general_shortcodes_display_order_shortcodes_forcefully' ) ) {
+				if ( ! current_user_can( 'manage_woocommerce' ) ) {
+					$order = wc_get_order( $atts['order_id'] );
+					if ( isset( $order ) && ! empty( $order ) ) { // Verify that Order exists.
 
-					if ( ! empty( $order->get_user_id() ) && 0 !== $order->get_user_id() && '0' !== $order->get_user_id() ) { // Verify that UserId exists.
-						if ( $order->get_user_id() !== get_current_user_id() ) { // Compare UserId.
-							return false;
-						}
-					} elseif ( ! empty( $order->get_customer_ip_address() ) && function_exists( 'wcj_get_the_ip' ) ) { // Verify that IP exists.
-						if ( $order->get_customer_ip_address() !== wcj_get_the_ip() ) { // Compare IP.
+						if ( ! empty( $order->get_user_id() ) && 0 !== $order->get_user_id() && '0' !== $order->get_user_id() ) { // Verify that UserId exists.
+							if ( $order->get_user_id() !== get_current_user_id() ) { // Compare UserId.
+								return false;
+							}
+						} elseif ( ! empty( $order->get_customer_ip_address() ) && function_exists( 'wcj_get_the_ip' ) ) { // Verify that IP exists.
+							if ( $order->get_customer_ip_address() !== wcj_get_the_ip() ) { // Compare IP.
+								return false;
+							}
+						} else {
 							return false;
 						}
 					} else {
-							return false;
-					}
-				} else {
 						return false;
+					}
 				}
 			}
-
 			// Class properties.
 			if ( true === wcj_is_hpos_enabled() ) {
 				$this->the_order = ( 'shop_order' === OrderUtil::get_order_type( $atts['order_id'] ) ) ? wcj_get_order( $atts['order_id'] ) : null;
