@@ -1010,10 +1010,10 @@ msgstr ""
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:45
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:71
 #: includes/settings/wcj-settings-general.php:58
-#: includes/settings/wcj-settings-general.php:144
-#: includes/settings/wcj-settings-general.php:159
+#: includes/settings/wcj-settings-general.php:152
 #: includes/settings/wcj-settings-general.php:167
 #: includes/settings/wcj-settings-general.php:175
+#: includes/settings/wcj-settings-general.php:183
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:124
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:229
 #: includes/settings/wcj-settings-price-by-user-role.php:82
@@ -1093,9 +1093,10 @@ msgstr ""
 #: includes/settings/wcj-settings-eu-vat-number.php:280
 #: includes/settings/wcj-settings-export.php:47
 #: includes/settings/wcj-settings-general.php:46
-#: includes/settings/wcj-settings-general.php:117
-#: includes/settings/wcj-settings-general.php:199
-#: includes/settings/wcj-settings-general.php:265
+#: includes/settings/wcj-settings-general.php:66
+#: includes/settings/wcj-settings-general.php:125
+#: includes/settings/wcj-settings-general.php:207
+#: includes/settings/wcj-settings-general.php:273
 #: includes/settings/wcj-settings-global-discount.php:85
 #: includes/settings/wcj-settings-global-discount.php:235
 #: includes/settings/wcj-settings-global-discount.php:243
@@ -3030,8 +3031,8 @@ msgid "Booster for WooCommerce general front-end tools."
 msgstr ""
 
 #: includes/class-wcj-general.php:37
-#: includes/settings/wcj-settings-general.php:334
-#: includes/settings/wcj-settings-general.php:335
+#: includes/settings/wcj-settings-general.php:342
+#: includes/settings/wcj-settings-general.php:343
 msgid "Add/Manage Custom Roles"
 msgstr ""
 
@@ -3180,7 +3181,7 @@ msgstr ""
 #: includes/class-wcj-max-products-per-user.php:262
 #: includes/functions/wcj-functions-users.php:189
 #: includes/functions/wcj-functions-users.php:225
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:595
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:596
 msgid "Guest"
 msgstr ""
 
@@ -6214,7 +6215,7 @@ msgstr ""
 #: includes/settings/wcj-settings-debug-tools.php:88
 #: includes/settings/wcj-settings-eu-vat-number.php:298
 #: includes/settings/wcj-settings-export.php:370
-#: includes/settings/wcj-settings-general.php:328
+#: includes/settings/wcj-settings-general.php:336
 #: includes/settings/wcj-settings-old-slugs.php:31
 #: includes/settings/wcj-settings-order-custom-statuses.php:155
 #: includes/settings/wcj-settings-order-numbers.php:222
@@ -9656,8 +9657,8 @@ msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-offer-price.php:46
 #: includes/settings/meta-box/wcj-settings-meta-box-offer-price.php:55
-#: includes/settings/wcj-settings-general.php:300
-#: includes/settings/wcj-settings-general.php:309
+#: includes/settings/wcj-settings-general.php:308
+#: includes/settings/wcj-settings-general.php:317
 #: includes/settings/wcj-settings-offer-price.php:210
 #: includes/settings/wcj-settings-offer-price.php:218
 msgid "Set zero to disable."
@@ -10215,7 +10216,7 @@ msgstr ""
 #: includes/settings/wcj-settings-add-to-cart.php:41
 #: includes/settings/wcj-settings-add-to-cart.php:129
 #: includes/settings/wcj-settings-add-to-cart.php:155
-#: includes/settings/wcj-settings-general.php:224
+#: includes/settings/wcj-settings-general.php:232
 #: includes/settings/wcj-settings-shipping-calculator.php:96
 #: includes/settings/wcj-settings-sorting.php:42
 #: includes/settings/wcj-settings-sorting.php:129
@@ -10745,7 +10746,7 @@ msgstr ""
 #: includes/settings/wcj-settings-debug-tools.php:89
 #: includes/settings/wcj-settings-eu-vat-number.php:299
 #: includes/settings/wcj-settings-export.php:371
-#: includes/settings/wcj-settings-general.php:329
+#: includes/settings/wcj-settings-general.php:337
 #: includes/settings/wcj-settings-old-slugs.php:32
 #: includes/settings/wcj-settings-order-custom-statuses.php:156
 #: includes/settings/wcj-settings-order-numbers.php:223
@@ -11887,7 +11888,7 @@ msgstr ""
 #: includes/settings/wcj-settings-eu-vat-number.php:27
 #: includes/settings/wcj-settings-eu-vat-number.php:263
 #: includes/settings/wcj-settings-general.php:26
-#: includes/settings/wcj-settings-general.php:109
+#: includes/settings/wcj-settings-general.php:117
 #: includes/settings/wcj-settings-payment-gateways.php:27
 #: includes/settings/wcj-settings-payment-gateways.php:86
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:68
@@ -13393,28 +13394,28 @@ msgid "Shortcodes Options"
 msgstr ""
 
 #: includes/settings/wcj-settings-general.php:25
-#: includes/settings/wcj-settings-general.php:76
+#: includes/settings/wcj-settings-general.php:84
 msgid "Ip Detection"
 msgstr ""
 
 #: includes/settings/wcj-settings-general.php:27
-#: includes/settings/wcj-settings-general.php:198
+#: includes/settings/wcj-settings-general.php:206
 msgid "PayPal Email per Product"
 msgstr ""
 
 #: includes/settings/wcj-settings-general.php:28
-#: includes/settings/wcj-settings-general.php:223
-#: includes/settings/wcj-settings-general.php:238
+#: includes/settings/wcj-settings-general.php:231
+#: includes/settings/wcj-settings-general.php:246
 msgid "Session Expiration"
 msgstr ""
 
 #: includes/settings/wcj-settings-general.php:29
-#: includes/settings/wcj-settings-general.php:264
+#: includes/settings/wcj-settings-general.php:272
 msgid "Booster User Roles Changer"
 msgstr ""
 
 #: includes/settings/wcj-settings-general.php:30
-#: includes/settings/wcj-settings-general.php:293
+#: includes/settings/wcj-settings-general.php:301
 msgid "PHP Options"
 msgstr ""
 
@@ -13439,122 +13440,132 @@ msgid ""
 "memory saving)."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:81
+#: includes/settings/wcj-settings-general.php:64
+msgid "Booster's order shortcodes display forcefully "
+msgstr ""
+
+#: includes/settings/wcj-settings-general.php:65
+msgid ""
+"Enable the option if you encounter any issues related to missing order "
+"shortcodes data."
+msgstr ""
+
+#: includes/settings/wcj-settings-general.php:89
 msgid "Overwrite WooCommerce IP Detection"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:82
+#: includes/settings/wcj-settings-general.php:90
 msgid "Try to overwrite WooCommerce IP detection"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:83
+#: includes/settings/wcj-settings-general.php:91
 msgid ""
 "The \"HTTP_X_REAL_IP\" param on $_SERVER variable will be replaced by IP "
 "detected from Booster"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:89
+#: includes/settings/wcj-settings-general.php:97
 msgid "Detection Methods"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:90
+#: includes/settings/wcj-settings-general.php:98
 msgid ""
 "IP Detection Methods used by some Booster modules when not using IP detection "
 "from WooCommerce. Change order for different results."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:91
+#: includes/settings/wcj-settings-general.php:99
 msgid "Default values are:"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:114
+#: includes/settings/wcj-settings-general.php:122
 msgid "Recalculate Cart Totals"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:115
+#: includes/settings/wcj-settings-general.php:123
 msgid "Will recalculate cart totals on every page load."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:116
+#: includes/settings/wcj-settings-general.php:124
 msgid ""
 "This may solve multicurrency issues with wrong currency symbol in mini-cart."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:123
+#: includes/settings/wcj-settings-general.php:131
 msgid "Session Type in Booster"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:128
+#: includes/settings/wcj-settings-general.php:136
 msgid "Standard PHP sessions"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:129
+#: includes/settings/wcj-settings-general.php:137
 msgid "WC sessions"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:131
+#: includes/settings/wcj-settings-general.php:139
 msgid ""
 "If you are having issues with currency related modules, You can change the "
 "session type"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:134
+#: includes/settings/wcj-settings-general.php:142
 msgid "Read and Close"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:135
+#: includes/settings/wcj-settings-general.php:143
 msgid ""
 "Enable <strong>Read and Close</strong> parameter on <strong>session_start()</"
 "strong>."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:136
+#: includes/settings/wcj-settings-general.php:144
 msgid ""
 "Requires Session Type option set as Standard PHP Sessions and PHP version >= "
 "7.0"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:142
+#: includes/settings/wcj-settings-general.php:150
 msgid "Datepicker/Weekpicker CSS Loading"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:143
+#: includes/settings/wcj-settings-general.php:151
 msgid "Disables datepicker/weekpicker CSS loading."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:150
+#: includes/settings/wcj-settings-general.php:158
 msgid "Datepicker/Weekpicker CSS Source"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:157
+#: includes/settings/wcj-settings-general.php:165
 msgid "Datepicker/Weekpicker JavaScript Loading"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:158
+#: includes/settings/wcj-settings-general.php:166
 msgid "Disables datepicker/weekpicker JavaScript loading."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:165
+#: includes/settings/wcj-settings-general.php:173
 msgid "Timepicker CSS Loading"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:166
+#: includes/settings/wcj-settings-general.php:174
 msgid "Disables timepicker CSS loading."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:173
+#: includes/settings/wcj-settings-general.php:181
 msgid "Timepicker JavaScript Loading"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:174
+#: includes/settings/wcj-settings-general.php:182
 msgid "Disables timepicker JavaScript loading."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:193
+#: includes/settings/wcj-settings-general.php:201
 msgid "PayPal Email per Product Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:200
+#: includes/settings/wcj-settings-general.php:208
 #: includes/settings/wcj-settings-max-products-per-user.php:72
 #: includes/settings/wcj-settings-product-by-date.php:89
 #: includes/settings/wcj-settings-product-by-time.php:88
@@ -13562,47 +13573,47 @@ msgstr ""
 msgid "This will add new meta box to each product's edit page."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:218
+#: includes/settings/wcj-settings-general.php:226
 msgid "Session Expiration Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:230
+#: includes/settings/wcj-settings-general.php:238
 msgid "Session Expiring"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:231
+#: includes/settings/wcj-settings-general.php:239
 msgid "In seconds. Default: 47 hours (60 * 60 * 47)"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:239
+#: includes/settings/wcj-settings-general.php:247
 msgid "In seconds. Default: 48 hours (60 * 60 * 48)"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:258
+#: includes/settings/wcj-settings-general.php:266
 msgid "Booster User Roles Changer Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:259
+#: includes/settings/wcj-settings-general.php:267
 msgid "This will add user roles changer tool to admin bar."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:273
+#: includes/settings/wcj-settings-general.php:281
 msgid "Enabled for"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:298
+#: includes/settings/wcj-settings-general.php:306
 msgid "PHP Memory Limit"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:299
+#: includes/settings/wcj-settings-general.php:307
 msgid "megabytes."
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:307
+#: includes/settings/wcj-settings-general.php:315
 msgid "PHP Time Limit"
 msgstr ""
 
-#: includes/settings/wcj-settings-general.php:308
+#: includes/settings/wcj-settings-general.php:316
 msgid "seconds."
 msgstr ""
 
@@ -21587,7 +21598,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:427
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:428
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""

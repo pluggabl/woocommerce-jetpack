@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 7.0.0
+ * @version 7.1.5
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -57,6 +57,14 @@ $settings = array(
 		),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_shortcodes_disable_booster_shortcodes',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Booster\'s order shortcodes display forcefully ', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable the option if you encounter any issues related to missing order shortcodes data.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_shortcodes_display_order_shortcodes_forcefully',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
