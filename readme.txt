@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.4.2
 Requires PHP: 7.2
-Stable tag: 7.1.5
+Stable tag: 7.1.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,20 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.6 07/02/2024 =
+
+* FIXED - Addressed PHP Deprecated errors related to the creation of dynamic properties throughout the entire plugin.
+* FIXED - SHIPPING & ORDERS - Admin Orders List - Resolved the issue of orders not being filtered based on the applied filter from the "Add Presets to Admin Menu" option.
+* FIXED - SHIPPING & ORDERS - Order Numbers - Addressed the problem encountered when searching for an order using a custom order number.
+* FIXED - EMAILS & MISC - Admin Bar - Fixed the issue of tools not working when accessed through the admin bar.
+* NEW FEATURE - PRICES & CURRENCIES  - Price based on User Role - Introduced a new option called "Compatibility with Product Addon" to address compatibility issues with the Product Addon module.
+* NEW FEATURE - PRODUCTS  - Product Addons -  Implemented a new option to filter addon prices based on user roles.
+* NEW FEATURE - CART & CHECKOUT - EU VAT Number - Added a new feature named "Apply Country Code Prefix to EU VAT" to resolve the VAT verification issue.
+* NEW FEATURE - CART & CHECKOUT - EU VAT Number - Added a new feature named "Preserve VAT in Base Country By Billing country" to validate the billing country against the store base country before applying for VAT exemption
+* NEW FEATURE - CART & CHECKOUT - EU VAT Number - Added a new feature named "Preserve VAT in Base Country By Shipping Country", it cross-checks the shipping country with the store base country before VAT exemption.
+* WooCommerce 8.5.2 Tested
+* WordPress 6.4.2 Tested
 
 = 7.1.5 20/12/2023 =
 

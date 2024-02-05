@@ -1,6 +1,6 @@
 <?php // phpcs:ignore WordPress.Files.FileName
 /**
- * Plugin Name: Booster for WooCommerce-v7.1.6
+ * Plugin Name: Booster for WooCommerce
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules.All in one WooCommerce plugin.
  * Version: 7.1.6
@@ -9,7 +9,7 @@
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
  * Copyright: © 2020 Pluggabl LLC.
- * WC tested up to: 8.4.0
+ * WC tested up to: 8.5.2
  * License: GNU General Public License v3.0
  * php version 7.2
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -28,6 +28,16 @@ require_once 'includes/functions/wcj-functions-core.php';
 if ( ! wcj_is_plugin_activated( 'woocommerce', 'woocommerce.php' ) ) {
 	return;
 }
+
+// Declare WooCommerce HPOS compatibility.
+add_action(
+	'before_woocommerce_init',
+	function() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);
 
 // Check if Plus is active.
 if ( 'woocommerce-jetpack.php' === basename( __FILE__ ) &&
@@ -237,12 +247,3 @@ function wcj_activation_hook() {
 	set_transient( '_wcj_activation_redirect', 1, 30 );
 }
 register_activation_hook( __FILE__, 'wcj_activation_hook' );
-
-add_action(
-	'before_woocommerce_init',
-	function() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-		}
-	}
-);
