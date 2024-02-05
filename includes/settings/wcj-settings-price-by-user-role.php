@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 7.0.0
+ * @version 7.1.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -184,6 +184,14 @@ $settings = array(
 		'id'                => 'wcj_price_by_user_role_compatibility_wc_product_bundles',
 		'default'           => 'no',
 		'type'              => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Compatibility with Product Addon', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try enabling this checkbox, if you are having compatibility issues with Booster Product Addon module.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_compatibility_product_addon',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'id'   => 'wcj_price_by_user_role_compatibility',

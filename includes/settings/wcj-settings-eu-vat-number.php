@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - EU VAT Number
  *
- * @version 7.0.0
+ * @version 7.1.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
@@ -141,15 +141,29 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'             => __( 'Preserve VAT in Base Country', 'woocommerce-jetpack' ),
+		'title'             => __( 'Preserve VAT in Base Country By Billing country', 'woocommerce-jetpack' ),
 		'desc_tip'          => sprintf(
 						/* translators: %s: translators Added */
-			__( 'This will validate the VAT, but won\'t exempt VAT for base country VAT numbers. Base (i.e. store) country is set in %s.', 'woocommerce-jetpack' ),
+			__( 'This will validate the VAT, but won\'t exempt VAT if base country matches the Billing country. Base (i.e. store) country is set in %s.', 'woocommerce-jetpack' ),
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' . __( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>'
 		) . '<br>' .
 			apply_filters( 'booster_message', '', 'desc' ),
 		'desc'              => __( 'Yes', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_eu_vat_number_preserve_in_base_country',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'             => __( 'Preserve VAT in Base Country By Shipping country', 'woocommerce-jetpack' ),
+		'desc_tip'          => sprintf(
+						/* translators: %s: translators Added */
+			__( 'This will validate the VAT, but won\'t exempt VAT if base country matches the Shipping country. Base (i.e. store) country is set in %s.', 'woocommerce-jetpack' ),
+			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' . __( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>'
+		) . '<br>' .
+			apply_filters( 'booster_message', '', 'desc' ),
+		'desc'              => __( 'Yes', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_eu_vat_number_preserve_in_base_country_by_shipping_country',
 		'default'           => 'no',
 		'type'              => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
@@ -272,6 +286,14 @@ $settings = array(
 		'id'       => 'wcj_eu_vat_number_advanced_skip_countries',
 		'default'  => '',
 		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Apply Country Code Prefix to EU VAT ', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If the VAT number missing a country code, this feature will automatically assign the country code based on the billing country.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_eu_vat_number_apply_country_code',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( "Read '_vat_number' meta", 'woocommerce-jetpack' ),

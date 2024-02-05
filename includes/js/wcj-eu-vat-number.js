@@ -1,8 +1,8 @@
 /**
- * Wu-vat-number.
+ * Eu-vat-number.
  *
- * @version 5.6.8
- * @package Booster_For_WooCommerce/includes/JS
+ * @version 7.1.6
+ * @package Booster_For_WooCommerce/includes
  */
 
 var _ajax_object = ajax_object;
@@ -11,10 +11,12 @@ jQuery(
 	function ($) {
 
 		// Setup before functions.
-		var inputTimer;               // timer identifier.
-		var doneInputInterval = 1000; // time in ms.
-		var $vatInput         = $( 'input[name="billing_eu_vat_number"]' );
-		var $vatParagraph     = $( 'p[id="billing_eu_vat_number_field"]' );
+		var inputTimer;               // Timer identifier.
+		var doneInputInterval    = 1000; // Time in ms.
+		var $vatInput            = $( 'input[name="billing_eu_vat_number"]' );
+		var $countryInput        = $( 'select[name="billing_country"]' );
+		var $shipingcountryInput = $( 'select[name="shipping_country"]' );
+		var $vatParagraph        = $( 'p[id="billing_eu_vat_number_field"]' );
 
 		// Add progress text.
 		if ('yes' == _ajax_object.add_progress_text) {
@@ -24,9 +26,29 @@ jQuery(
 
 		// Initial validate.
 		validateVat();
+		jQuery( '#billing_country' ).on( 'change', validateVat );
+		jQuery( '#shipping_country' ).on( 'change', validateVat );
 
 		// On input, start the countdown.
 		$vatInput.on(
+			'input',
+			function () {
+				clearTimeout( inputTimer );
+				inputTimer = setTimeout( validateVat, doneInputInterval );
+			}
+		);
+
+		// On input, start the countdown.
+		$countryInput.on(
+			'input',
+			function () {
+				clearTimeout( inputTimer );
+				inputTimer = setTimeout( validateVat, doneInputInterval );
+			}
+		);
+
+		// On input, start the countdown.
+		$shipingcountryInput.on(
 			'input',
 			function () {
 				clearTimeout( inputTimer );
@@ -41,7 +63,9 @@ jQuery(
 			if ('yes' == _ajax_object.is_vat_field_required_for_eu_only) {
 				jQuery( '#billing_eu_vat_number_field label span.optional' ).replaceWith( '<abbr class="required" title="required">*</abbr>' );
 			}
-			var vatNumberToCheck = $vatInput.val();
+			var vatNumberToCheck       = $vatInput.val();
+			var countryToCheck         = $countryInput.val();
+			var shippingcountryToCheck = $shipingcountryInput.val();
 			if ('' != vatNumberToCheck) {
 				// Validating EU VAT Number through AJAX call.
 				if ('yes' == _ajax_object.add_progress_text) {
@@ -50,6 +74,8 @@ jQuery(
 				var data = {
 					'action': 'wcj_validate_eu_vat_number',
 					'wcj_eu_vat_number_to_check': vatNumberToCheck,
+					'wcj_eu_country_to_check': countryToCheck,
+					'wcj_eu_shipping_country_to_check': shippingcountryToCheck,
 					'_wpnonce': _ajax_object._wpnonce,
 				};
 				$.ajax(

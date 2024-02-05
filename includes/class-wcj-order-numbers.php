@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -208,7 +208,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Search_by_custom_number.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.6
 		 * @since   2.6.0
 		 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
 		 * @param array | string $query defines the query.
@@ -238,12 +238,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			$final_search                = empty( $search_no_suffix_and_prefix ) ? $search : $search_no_suffix_and_prefix;
 
 			if ( $search === $final_search ) {
-
-				$final_search = substr( $final_search, strlen( $prefix ) );
 				$final_search = ltrim( $final_search, 0 );
-				if ( strlen( $suffix ) > 0 ) {
-					$final_search = substr( $final_search, 0, -strlen( $suffix ) );
-				}
 			}
 			// Post Status.
 			$get_data = array();
@@ -270,7 +265,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			);
 
 			// If found, create the query by meta_key.
-			if ( 1 === $search_query->found_posts ) {
+			if ( 0 !== $search_query->found_posts ) {
 				$query->set( 'post_status', $post_status );
 				$query->set( 's', '' );
 				$query->set( 'post__in', array() );

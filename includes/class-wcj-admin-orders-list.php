@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -105,7 +105,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Admin_menu_multiple_status.
 		 *
-		 * @version 7.1.4
+		 * @version 7.1.6
 		 * @since   3.7.0
 		 * @todo    add presets as links (same as "Not completed" link)
 		 * @todo    fix: custom (i.e. presets) menus are not highlighted
@@ -117,6 +117,8 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 			if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_admin_menu_remove_original', 'no' ) ) {
 				remove_submenu_page( 'woocommerce', 'edit.php?post_type=shop_order' );
 			}
+			$nonce = wp_create_nonce( 'wcj_admin_filter_statuses_nonce' );
+
 			// Add presets.
 			$titles       = wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_titles', array() );
 			$statuses     = wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_statuses', array() );
@@ -125,7 +127,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 				if ( ! empty( $titles[ $i ] ) && ! empty( $statuses[ $i ] ) ) {
 					$menu_slug = 'edit.php?post_type=shop_order';
 					foreach ( $statuses[ $i ] as $x => $status ) {
-						$menu_slug .= "&wcj_admin_filter_statuses[{$x}]={$status}";
+						$menu_slug .= "&wcj_admin_filter_statuses_nonce=$nonce&wcj_admin_filter_statuses[{$x}]={$status}";
 					}
 					$orders_count_html = '';
 					if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_admin_menu_counter', 'no' ) ) {
@@ -149,7 +151,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		/**
 		 * Admin_menu_multiple_status_hpos.
 		 *
-		 * @version 7.1.4
+		 * @version 7.1.6
 		 * @since  1.0.0
 		 * @todo    add presets as links (same as "Not completed" link)
 		 * @todo    fix: custom (i.e. presets) menus are not highlighted
@@ -161,13 +163,17 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 			if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_admin_menu_remove_original', 'no' ) ) {
 				remove_submenu_page( 'woocommerce', 'wc-orders' );
 			}
+			$nonce = wp_create_nonce( 'wcj_admin_filter_statuses_nonce' );
 			// Add presets.
 			$titles       = wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_titles', array() );
 			$statuses     = wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_statuses', array() );
 			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_order_admin_list_multiple_status_presets_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( ! empty( $titles[ $i ] ) && ! empty( $statuses[ $i ] ) ) {
-					$menu_slug         = 'wc-orders';
+					$menu_slug = '?page=wc-orders';
+					foreach ( $statuses[ $i ] as $x => $status ) {
+						$menu_slug .= "&wcj_admin_filter_statuses_nonce=$nonce&wcj_admin_filter_statuses[{$x}]={$status}";
+					}
 					$orders_count_html = '';
 					if ( 'yes' === wcj_get_option( 'wcj_order_admin_list_multiple_status_admin_menu_counter', 'no' ) ) {
 						$order_count = 0;

@@ -355,7 +355,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Change_price.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.6
 		 * @since   2.5.0
 		 * @todo    (maybe) add "enable compound multipliers" option
 		 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
@@ -378,6 +378,13 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			}
 
 			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_check_for_product_changes_price', 'no' ) && $_product ) {
+				$product_changes = $_product->get_changes();
+				if ( ! empty( $product_changes ) && isset( $product_changes['price'] ) ) {
+					return $price;
+				}
+			}
+
+			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_compatibility_product_addon', 'no' ) && 'fixed' === wcj_get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) && $_product ) {
 				$product_changes = $_product->get_changes();
 				if ( ! empty( $product_changes ) && isset( $product_changes['price'] ) ) {
 					return $price;
