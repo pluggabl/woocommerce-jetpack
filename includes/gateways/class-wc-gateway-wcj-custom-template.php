@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -21,9 +21,79 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom' ) ) {
 			/**
 			 * WC_Gateway_WCJ_Custom_Template class.
 			 *
-			 * @version 5.3.4
+			 * @version 7.1.6
 			 */
 			class WC_Gateway_WCJ_Custom_Template extends WC_Payment_Gateway {
+
+				/**
+				 * The module id_count
+				 *
+				 * @var varchar $id_count Module.
+				 */
+				public $id_count;
+
+				/**
+				 * The module min_amount
+				 *
+				 * @var varchar $min_amount Module.
+				 */
+				public $min_amount;
+
+				/**
+				 * The module instructions
+				 *
+				 * @var varchar $instructions Module.
+				 */
+				public $instructions;
+
+				/**
+				 * The module custom_return_url
+				 *
+				 * @var varchar $custom_return_url Module.
+				 */
+				public $custom_return_url;
+
+				/**
+				 * The module enable_for_methods
+				 *
+				 * @var varchar $enable_for_methods Module.
+				 */
+				public $enable_for_methods;
+
+				/**
+				 * The module enable_for_virtual
+				 *
+				 * @var varchar $enable_for_virtual Module.
+				 */
+				public $enable_for_virtual;
+
+				/**
+				 * The module send_email_to_admin
+				 *
+				 * @var varchar $send_email_to_admin Module.
+				 */
+				public $send_email_to_admin;
+
+				/**
+				 * The module default_order_status
+				 *
+				 * @var varchar $default_order_status Module.
+				 */
+				public $default_order_status;
+
+				/**
+				 * The module instructions_in_email
+				 *
+				 * @var varchar $instructions_in_email Module.
+				 */
+				public $instructions_in_email;
+
+				/**
+				 * The module send_email_to_customer
+				 *
+				 * @var varchar $send_email_to_customer Module.
+				 */
+				public $send_email_to_customer;
 
 				/**
 				 * Initialise Gateway Settings Form Fields

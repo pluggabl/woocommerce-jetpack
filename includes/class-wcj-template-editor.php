@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Template Editor
  *
- * @version 7.0.0
+ * @version 7.1.6
  * @since   3.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,17 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 	/**
 	 * WCJ_Template_Editor.
 	 *
-	 * @version 3.9.0
+	 * @version 7.1.6
 	 * @since   3.9.0
 	 */
 	class WCJ_Template_Editor extends WCJ_Module {
+
+		/**
+		 * The module templates_to_edit
+		 *
+		 * @var varchar $templates_to_edit Module templates_to_edit.
+		 */
+		public $templates_to_edit;
 
 		/**
 		 * Constructor.

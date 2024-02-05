@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - currencies
  *
- * @version 3.9.0
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,6 +16,13 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 	 * WCJ_Currencies.
 	 */
 	class WCJ_Currencies extends WCJ_Module {
+
+		/**
+		 * The module saved_symbol
+		 *
+		 * @var varchar $saved_symbol Module.
+		 */
+		public $saved_symbol;
 
 		/**
 		 * Constructor.

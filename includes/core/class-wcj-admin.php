@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.1.0
+ * @version 7.1.6
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -17,11 +17,35 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * WCJ_Admin.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.6
 		 * @since   3.2.4
 		 */
 	class WCJ_Admin {
 
+		/**
+		 * The module cats
+		 *
+		 * @var varchar $cats Module.
+		 */
+		public $cats;
+		/**
+		 * The module site_url
+		 *
+		 * @var varchar $site_url Module.
+		 */
+		public $site_url;
+		/**
+		 * The module module_statuses
+		 *
+		 * @var varchar $module_statuses Module.
+		 */
+		public $module_statuses;
+		/**
+		 * The module custom_dashboard_modules
+		 *
+		 * @var varchar $custom_dashboard_modules Module.
+		 */
+		public $custom_dashboard_modules;
 		/**
 		 * Constructor.
 		 *

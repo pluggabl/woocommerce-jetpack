@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 5.6.7
+ * @version 7.1.6
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,9 +16,16 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 	/**
 	 * WCJ_Checkout_Customization.
 	 *
-	 * @version 2.7.0
+	 * @version 7.1.6
 	 */
 	class WCJ_Checkout_Fees extends WCJ_Module {
+
+		/**
+		 * The module checkout_fields
+		 *
+		 * @var varchar $checkout_fields Module checkout_fields.
+		 */
+		public $checkout_fields;
 
 		/**
 		 * Constructor.

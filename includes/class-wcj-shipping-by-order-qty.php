@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Quantity
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @since   4.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,24 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Qty' ) ) :
 	/**
 	 * WCJ_Shipping_By_Order_Qty.
 	 *
-	 * @version 4.3.0
+	 * @version 7.1.6
 	 * @since   4.3.0
 	 */
 	class WCJ_Shipping_By_Order_Qty extends WCJ_Module {
+
+		/**
+		 * The module min_qty
+		 *
+		 * @var varchar $min_qty Module min_qty.
+		 */
+		public $min_qty;
+
+		/**
+		 * The module max_qty
+		 *
+		 * @var varchar $max_qty Module max_qty.
+		 */
+		public $max_qty;
 
 		/**
 		 * Constructor.

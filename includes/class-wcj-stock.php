@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 5.3.8
+ * @version 7.1.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,73 @@ if ( ! class_exists( 'WCJ_Stock' ) ) :
 		/**
 		 * WCJ_Stock.
 		 *
-		 * @version 5.3.8
+		 * @version 7.1.6
 		 * @since   2.8.0
 		 */
 	class WCJ_Stock extends WCJ_Module {
+
+		/**
+		 * The module is_custom_in_stock
+		 *
+		 * @var varchar $is_custom_in_stock Module is_custom_in_stock.
+		 */
+		public $is_custom_in_stock;
+
+		/**
+		 * The module is_custom_in_stock_text
+		 *
+		 * @var varchar $is_custom_in_stock_text Module is_custom_in_stock_text.
+		 */
+		public $is_custom_in_stock_text;
+
+		/**
+		 * The module is_custom_in_stock_class
+		 *
+		 * @var varchar $is_custom_in_stock_class Module is_custom_in_stock_class.
+		 */
+		public $is_custom_in_stock_class;
+
+		/**
+		 * The module is_custom_out_of_stock
+		 *
+		 * @var varchar $is_custom_out_of_stock Module is_custom_out_of_stock.
+		 */
+		public $is_custom_out_of_stock;
+
+		/**
+		 * The module is_custom_out_of_stock_text
+		 *
+		 * @var varchar $is_custom_out_of_stock_text Module is_custom_out_of_stock_text.
+		 */
+		public $is_custom_out_of_stock_text;
+
+		/**
+		 * The module is_custom_out_of_stock_class
+		 *
+		 * @var varchar $is_custom_out_of_stock_class Module is_custom_out_of_stock_class.
+		 */
+		public $is_custom_out_of_stock_class;
+
+		/**
+		 * The module is_custom_backorder
+		 *
+		 * @var varchar $is_custom_backorder Module is_custom_backorder.
+		 */
+		public $is_custom_backorder;
+
+		/**
+		 * The module is_custom_backorder_text
+		 *
+		 * @var varchar $is_custom_backorder_text Module is_custom_backorder_text.
+		 */
+		public $is_custom_backorder_text;
+
+		/**
+		 * The module is_custom_backorder_class
+		 *
+		 * @var varchar $is_custom_backorder_class Module is_custom_backorder_class.
+		 */
+		public $is_custom_backorder_class;
 
 		/**
 		 * Constructor.

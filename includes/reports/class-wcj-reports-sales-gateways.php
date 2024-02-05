@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales - Gateways
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,31 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 		/**
 		 * WCJ_Reports_Sales_Gateways.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.6
 		 * @since   3.6.0
 		 */
 	class WCJ_Reports_Sales_Gateways {
+
+		/**
+		 * The module start_date
+		 *
+		 * @var varchar $start_date Module start_date.
+		 */
+		public $start_date;
+
+		/**
+		 * The module end_date
+		 *
+		 * @var varchar $end_date Module end_date.
+		 */
+		public $end_date;
+
+		/**
+		 * The module gateways
+		 *
+		 * @var varchar $gateways Module gateways.
+		 */
+		public $gateways;
 
 		/**
 		 * Constructor.

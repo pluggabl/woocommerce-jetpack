@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,10 +17,16 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 	/**
 	 * WCJ_Admin_Bar.
 	 *
-	 * @version 2.7.0
+	 * @version 7.1.6
 	 */
 	class WCJ_Admin_Bar extends WCJ_Module {
 
+		/**
+		 * The module active_modules
+		 *
+		 * @var array
+		 */
+		public $active_modules = array();
 		/**
 		 * Constructor.
 		 *

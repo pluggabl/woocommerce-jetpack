@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,6 +18,12 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		 */
 	class WCJ_WPML extends WCJ_Module {
 
+		/**
+		 * The module notice
+		 *
+		 * @var varchar $notice Module.
+		 */
+		public $notice;
 		/**
 		 * WCJ_WPML_Meta_Sync
 		 *

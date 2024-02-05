@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Shipping
  *
- * @version 5.3.0
+ * @version 7.1.6
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.5.0
+		 * @version 7.1.6
 		 * @since   2.7.0
 		 * @todo    re-check in which more modules `use_shipping_instance` can be used
 		 */
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
-				$this->use_shipping_instance = ( 'yes' === wcj_get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
+				$this->use_shipping_instances = ( 'yes' === wcj_get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
 				add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX, 1 );
 			}
 		}
@@ -42,7 +42,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 		/**
 		 * Check_if_enabled_for_methods.
 		 *
-		 * @version 5.3.0
+		 * @version 7.1.6
 		 * @since   2.7.0
 		 * @see     `is_available()` function in WooCommerce `WC_Gateway_COD` class
 		 * @todo    (maybe) virtual orders (`enable_for_virtual`)
@@ -108,7 +108,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 				$found = false;
 
 				// Shipping method instance.
-				if ( $this->use_shipping_instance ) {
+				if ( $this->use_shipping_instances ) {
 					$_check_method = explode( ':', $check_method, 2 );
 					if ( ! isset( $_check_method[1] ) || ! is_numeric( $_check_method[1] ) ) {
 						// "Flexible Shipping" plugin (e.g. `flexible_shipping_13_2`).
@@ -125,7 +125,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 
 				// Final check.
 				foreach ( $enable_for_methods as $method_id ) {
-					if ( $this->use_shipping_instance ) {
+					if ( $this->use_shipping_instances ) {
 						if ( $check_method === $method_id ) {
 							return true;
 						}
@@ -147,13 +147,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 		/**
 		 * Available_payment_gateways.
 		 *
-		 * @version 3.5.0
+		 * @version 7.1.6
 		 * @since   2.7.0
 		 * @param array $_available_gateways defines the _available_gateways.
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			foreach ( $_available_gateways as $key => $gateway ) {
-				$enable_for_methods = ( $this->use_shipping_instance ?
+				$enable_for_methods = ( $this->use_shipping_instances ?
 				get_option( 'wcj_gateways_by_shipping_enable_instance_' . $key, '' ) :
 				get_option( 'wcj_gateways_by_shipping_enable_' . $key, '' ) );
 				if ( ! empty( $enable_for_methods ) && ! $this->check_if_enabled_for_methods( $key, $enable_for_methods ) ) {

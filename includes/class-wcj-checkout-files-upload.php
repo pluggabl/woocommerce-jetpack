@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,28 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 	/**
 	 * WCJ_Checkout_Customization.
 	 *
-	 * @version 2.7.0
+	 * @version 7.1.6
 	 */
 	class WCJ_Checkout_Files_Upload extends WCJ_Module {
 
+		/**
+		 * The module checkout_files_upload_notice_type
+		 *
+		 * @var varchar $checkout_files_upload_notice_type Module.
+		 */
+		public $checkout_files_upload_notice_type;
+		/**
+		 * The module additional_admin_emails_settings
+		 *
+		 * @var varchar $additional_admin_emails_settings Module.
+		 */
+		public $additional_admin_emails_settings;
+		/**
+		 * The module templates_settings
+		 *
+		 * @var varchar $templates_settings Module.
+		 */
+		public $templates_settings;
 		/**
 		 * Constructor.
 		 *

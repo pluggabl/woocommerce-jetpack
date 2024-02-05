@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 6.0.0
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -15,10 +15,44 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * WCJ_Shortcodes.
 		 *
-		 * @version 5.4.8
+		 * @version 7.1.6
 		 */
 	class WCJ_Shortcodes {
 
+		/**
+		 * The module the_order
+		 *
+		 * @var varchar $the_order Module the_order.
+		 */
+		public $the_order;
+
+		/**
+		 * The module the_product
+		 *
+		 * @var varchar $the_product Module the_product.
+		 */
+		public $the_product;
+
+		/**
+		 * The module the_shortcodes
+		 *
+		 * @var array
+		 */
+		public $the_shortcodes = array();
+
+		/**
+		 * The module the_atts
+		 *
+		 * @var array
+		 */
+		public $the_atts = array();
+
+		/**
+		 * The module passed_product
+		 *
+		 * @var array
+		 */
+		public $passed_product;
 
 		/**
 		 * Constructor.

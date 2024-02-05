@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,6 +16,13 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 	 * WCJ_Product_Tabs.
 	 */
 	class WCJ_Product_Tabs extends WCJ_Module {
+
+		/**
+		 * The module tab_option_keys
+		 *
+		 * @var array
+		 */
+		public $tab_option_keys = array();
 
 		/**
 		 * Constructor.

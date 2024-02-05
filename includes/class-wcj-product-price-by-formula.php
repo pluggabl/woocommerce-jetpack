@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @since   2.5.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,20 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 	 * WCJ_Product_Price_By_Formula.
 	 */
 	class WCJ_Product_Price_By_Formula extends WCJ_Module {
+
+		/**
+		 * The module rounding
+		 *
+		 * @var varchar $rounding Module rounding.
+		 */
+		public $rounding;
+
+		/**
+		 * The module rounding_precision
+		 *
+		 * @var varchar $rounding_precision Module rounding_precision.
+		 */
+		public $rounding_precision;
 
 		/**
 		 * Constructor.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon by User Role
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @since   3.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,13 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 	 * WCJ_Coupon_By_User_Role.
 	 */
 	class WCJ_Coupon_By_User_Role extends WCJ_Module {
+
+		/**
+		 * The module invalid_per_coupon_enabled
+		 *
+		 * @var varchar $invalid_per_coupon_enabled Module invalid_per_coupon_enabled.
+		 */
+		public $invalid_per_coupon_enabled;
 
 		/**
 		 * Constructor.

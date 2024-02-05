@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 5.6.7
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -17,6 +17,24 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 	 */
 	class WCJ_Product_Input_Fields extends WCJ_Module {
 
+		/**
+		 * The module scope
+		 *
+		 * @var varchar $scope Module scope.
+		 */
+		public $scope;
+		/**
+		 * The module global_product_fields
+		 *
+		 * @var varchar $global_product_fields Module global_product_fields.
+		 */
+		public $global_product_fields;
+		/**
+		 * The module local_product_fields
+		 *
+		 * @var varchar $local_product_fields Module local_product_fields.
+		 */
+		public $local_product_fields;
 		/**
 		 * Constructor.
 		 *

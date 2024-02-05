@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 5.6.6
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,10 +16,28 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 	/**
 	 * WCJ_Checkout_Core_Fields.
 	 *
-	 * @version 2.7.0
+	 * @version 7.1.6
 	 */
 	class WCJ_Checkout_Core_Fields extends WCJ_Module {
 
+		/**
+		 * The module woocommerce_core_checkout_fields
+		 *
+		 * @var array
+		 */
+		public $woocommerce_core_checkout_fields = array();
+		/**
+		 * The module country_locale_override
+		 *
+		 * @var varchar $country_locale_override Module.
+		 */
+		public $country_locale_override;
+		/**
+		 * The module default_address_override
+		 *
+		 * @var varchar $default_address_override Module.
+		 */
+		public $default_address_override;
 		/**
 		 * Constructor.
 		 *
@@ -64,6 +82,7 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 			);
 
 			if ( $this->is_enabled() ) {
+
 				add_filter( 'woocommerce_checkout_fields', array( $this, 'custom_override_checkout_fields' ), PHP_INT_MAX );
 				add_action( 'woocommerce_checkout_fields', array( $this, 'enqueue_scripts' ), PHP_INT_MAX );
 				$this->country_locale_override = wcj_get_option( 'wcj_checkout_core_fields_override_country_locale_fields', 'billing' );

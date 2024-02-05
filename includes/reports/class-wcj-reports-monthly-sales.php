@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.4.7
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,17 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		/**
 		 * WCJ_Reports_Monthly_Sales.
 		 *
-		 * @version 2.7.0
+		 * @version 7.1.6
 		 * @since   2.4.7
 		 */
 	class WCJ_Reports_Monthly_Sales {
+
+		/**
+		 * The module year
+		 *
+		 * @var varchar $year Module year.
+		 */
+		public $year;
 
 		/**
 		 * Constructor.

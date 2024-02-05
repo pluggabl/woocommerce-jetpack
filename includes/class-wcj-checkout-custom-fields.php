@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,10 +16,16 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 	/**
 	 * WCJ_Checkout_Custom_Fields.
 	 *
-	 * @version 2.7.0
+	 * @version 7.1.6
 	 */
 	class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
+		/**
+		 * The module wcj_checkout_custom_fields_total_number
+		 *
+		 * @var varchar $wcj_checkout_custom_fields_total_number Module.
+		 */
+		public $wcj_checkout_custom_fields_total_number;
 		/**
 		 * Constructor.
 		 *

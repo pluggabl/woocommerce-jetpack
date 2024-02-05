@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways per Product or Category
  *
- * @version 5.6.2
+ * @version 7.1.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 	 * WCJ_Payment_Gateways_Per_Category.
 	 */
 	class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
+
+		/**
+		 * The module do_use_variations
+		 *
+		 * @var varchar $do_use_variations Module do_use_variations.
+		 */
+		public $do_use_variations;
 
 		/**
 		 * Constructor.

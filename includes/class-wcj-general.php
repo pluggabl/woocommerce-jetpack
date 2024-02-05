@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -17,6 +17,18 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 	 */
 	class WCJ_General extends WCJ_Module {
 
+		/**
+		 * The module current_php_memory_limit
+		 *
+		 * @var varchar $current_php_memory_limit Module.
+		 */
+		public $current_php_memory_limit;
+		/**
+		 * The module current_php_time_limit
+		 *
+		 * @var varchar $current_php_time_limit Module.
+		 */
+		public $current_php_time_limit;
 		/**
 		 * Constructor.
 		 *

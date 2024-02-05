@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,6 +18,12 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 	 */
 	class WCJ_EU_VAT_Number extends WCJ_Module {
 
+		/**
+		 * The module eu_countries_vat_rates_tool
+		 *
+		 * @var varchar $eu_countries_vat_rates_tool Module.
+		 */
+		public $eu_countries_vat_rates_tool;
 		/**
 		 * Constructor.
 		 *

@@ -1,9 +1,9 @@
 <?php // phpcs:ignore WordPress.Files.FileName
 /**
- * Plugin Name: Booster for WooCommerce
+ * Plugin Name: Booster for WooCommerce-v7.1.6
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules.All in one WooCommerce plugin.
- * Version: 7.1.5
+ * Version: 7.1.6
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
@@ -65,7 +65,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '7.1.5';
+		public $version = '7.1.6';
 
 		/**
 		 * The single instance of the class
@@ -83,6 +83,42 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 * @var array
 		 */
 		public $options = array();
+
+		/**
+		 * WC Jetpack
+		 *
+		 * @version 7.1.6
+		 *
+		 * @var array
+		 */
+		public $shortcodes = array();
+
+		/**
+		 * WC Jetpack
+		 *
+		 * @version 7.1.6
+		 *
+		 * @var array
+		 */
+		public $modules = array();
+
+		/**
+		 * WC Jetpack
+		 *
+		 * @version 7.1.6
+		 *
+		 * @var array
+		 */
+		public $all_modules = array();
+
+		/**
+		 * WC Jetpack
+		 *
+		 * @version 7.1.6
+		 *
+		 * @var array
+		 */
+		public $module_statuses = array();
 
 		/**
 		 * Main WC_Jetpack Instance.
@@ -135,20 +171,20 @@ if ( ! function_exists( 'w_c_j' ) ) {
 	 * @version 6.0.3
 	 * @since   6.0.3
 	 */
-	function wcj_delete_free_plugin_database_option() {
-		global $wpdb;
+function wcj_delete_free_plugin_database_option() {
+	global $wpdb;
 
-		$plugin_options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%' OR option_name LIKE '_transient_timeout_wcj%' OR option_name LIKE '_transient_wcj%' OR option_name LIKE 'woocommerce_wcj_%' OR option_name LIKE 'widget_wcj_widget_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		foreach ( $plugin_options as $option ) {
-			delete_option( $option->option_name );
-			delete_site_option( $option->option_name );
-		}
-
-		$plugin_meta = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		foreach ( $plugin_meta as $meta ) {
-			delete_post_meta( $meta->post_id, $meta->meta_key );
-		}
+	$plugin_options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%' OR option_name LIKE '_transient_timeout_wcj%' OR option_name LIKE '_transient_wcj%' OR option_name LIKE 'woocommerce_wcj_%' OR option_name LIKE 'widget_wcj_widget_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	foreach ( $plugin_options as $option ) {
+		delete_option( $option->option_name );
+		delete_site_option( $option->option_name );
 	}
+
+	$plugin_meta = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	foreach ( $plugin_meta as $meta ) {
+		delete_post_meta( $meta->post_id, $meta->meta_key );
+	}
+}
 
 	register_uninstall_hook( __FILE__, 'wcj_delete_free_plugin_database_option' );
 

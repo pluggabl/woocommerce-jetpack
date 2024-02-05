@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -15,7 +15,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		/**
 		 * WCJ_Reports_Stock.
 		 *
-		 * @version 3.9.0
+		 * @version 7.1.6
 		 */
 	class WCJ_Reports_Stock {
 
@@ -25,6 +25,69 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		 * @var array Possible ranges in days values.
 		 */
 		public $ranges_in_days;
+
+		/**
+		 * The module report_id
+		 *
+		 * @var varchar $report_id Module report_id.
+		 */
+		public $report_id;
+
+		/**
+		 * The module range_days
+		 *
+		 * @var varchar $range_days Module range_days.
+		 */
+		public $range_days;
+
+		/**
+		 * The module reports_info
+		 *
+		 * @var varchar $reports_info Module reports_info.
+		 */
+		public $reports_info;
+
+		/**
+		 * The module product_type
+		 *
+		 * @var varchar $product_type Module product_type.
+		 */
+		public $product_type;
+
+		/**
+		 * The module include_deleted_products
+		 *
+		 * @var varchar $include_deleted_products Module include_deleted_products.
+		 */
+		public $include_deleted_products;
+
+		/**
+		 * The module start_time
+		 *
+		 * @var varchar $start_time Module start_time.
+		 */
+		public $start_time;
+
+		/**
+		 * The module data_products
+		 *
+		 * @var varchar $data_products Module data_products.
+		 */
+		public $data_products;
+
+		/**
+		 * The module data_summary
+		 *
+		 * @var varchar $data_summary Module data_summary.
+		 */
+		public $data_summary;
+
+		/**
+		 * The module data_reports
+		 *
+		 * @var varchar $data_reports Module data_reports.
+		 */
+		public $data_reports;
 
 		/**
 		 * Constructor.

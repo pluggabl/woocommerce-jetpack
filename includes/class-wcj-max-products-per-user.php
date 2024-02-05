@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   3.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,13 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 	 * WCJ_Max_products_Per_User.
 	 */
 	class WCJ_Max_Products_Per_User extends WCJ_Module {
+
+		/**
+		 * The module order_status
+		 *
+		 * @var varchar $order_status Module.
+		 */
+		public $order_status;
 
 		/**
 		 * Constructor.

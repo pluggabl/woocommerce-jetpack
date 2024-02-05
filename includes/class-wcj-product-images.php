@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 5.1.0
+ * @version 7.1.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,13 @@ if ( ! class_exists( 'WCJ_Product_Images' ) ) :
 	 * WCJ_Product_Images.
 	 */
 	class WCJ_Product_Images extends WCJ_Module {
+
+		/**
+		 * The module product_images_placeholder_src
+		 *
+		 * @var varchar $product_images_placeholder_src Module product_images_placeholder_src.
+		 */
+		public $product_images_placeholder_src;
 
 		/**
 		 * Constructor.

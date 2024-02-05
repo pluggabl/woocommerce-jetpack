@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -19,6 +19,19 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 	 */
 	class WCJ_Product_Addons extends WCJ_Module {
 
+		/**
+		 * The module co
+		 *
+		 * @var varchar $co Module.
+		 */
+		public $co;
+
+		/**
+		 * The module are_addons_displayed
+		 *
+		 * @var varchar $are_addons_displayed Module.
+		 */
+		public $are_addons_displayed;
 
 		/**
 		 * Constructor.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Time
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,6 +18,33 @@ if ( ! class_exists( 'WCJ_Product_By_Time' ) ) :
 	 */
 	class WCJ_Product_By_Time extends WCJ_Module {
 
+		/**
+		 * The module hours_now
+		 *
+		 * @var varchar $hours_now Module hours_now.
+		 */
+		public $hours_now;
+
+		/**
+		 * The module minutes_now
+		 *
+		 * @var varchar $minutes_now Module minutes_now.
+		 */
+		public $minutes_now;
+
+		/**
+		 * The module day_of_week_now
+		 *
+		 * @var varchar $day_of_week_now Module day_of_week_now.
+		 */
+		public $day_of_week_now;
+
+		/**
+		 * The module meta_box_validate_value
+		 *
+		 * @var varchar $meta_box_validate_value Module meta_box_validate_value.
+		 */
+		public $meta_box_validate_value;
 		/**
 		 * Constructor.
 		 *
