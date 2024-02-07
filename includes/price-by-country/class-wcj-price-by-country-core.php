@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 6.0.6
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes/Price_By_Country
  */
@@ -17,6 +17,34 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 	 * WCJ_Price_By_Country_Core.
 	 */
 	class WCJ_Price_By_Country_Core {
+
+		/**
+		 * The module scope
+		 *
+		 * @var varchar $scope Module scope.
+		 */
+		public $scope;
+
+		/**
+		 * The module customer_country_by_ip
+		 *
+		 * @var varchar $customer_country_by_ip Module customer_country_by_ip.
+		 */
+		public $customer_country_by_ip;
+
+		/**
+		 * The module customer_country_group_id
+		 *
+		 * @var varchar $customer_country_group_id Module customer_country_group_id.
+		 */
+		public $customer_country_group_id;
+
+		/**
+		 * The module price_hooks_priority
+		 *
+		 * @var varchar $price_hooks_priority Module price_hooks_priority.
+		 */
+		public $price_hooks_priority;
 
 		/**
 		 * Constructor.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 5.6.2
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,6 +16,13 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 	 * WCJ_Product_Listings.
 	 */
 	class WCJ_Product_Listings extends WCJ_Module {
+
+		/**
+		 * The module cats_products_to_hide_on_shop
+		 *
+		 * @var varchar $cats_products_to_hide_on_shop Module cats_products_to_hide_on_shop.
+		 */
+		public $cats_products_to_hide_on_shop;
 
 		/**
 		 * Constructor.

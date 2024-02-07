@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,7 +18,24 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 	 */
 	class WCJ_Currency_Per_Product extends WCJ_Module {
 
-
+		/**
+		 * The module do_save_converted_prices
+		 *
+		 * @var varchar $do_save_converted_prices Module.
+		 */
+		public $do_save_converted_prices;
+		/**
+		 * The module is_currency_per_product_by_product_enabled
+		 *
+		 * @var varchar $is_currency_per_product_by_product_enabled Module.
+		 */
+		public $is_currency_per_product_by_product_enabled;
+		/**
+		 * The module saved_product_prices
+		 *
+		 * @var varchar $saved_product_prices Module.
+		 */
+		public $saved_product_prices;
 		/**
 		 * Constructor.
 		 *

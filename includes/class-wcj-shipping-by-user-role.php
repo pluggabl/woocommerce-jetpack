@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 7.0.0
+ * @version 7.1.6
  * @since   5.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,24 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 		/**
 		 * WCJ_Shipping_By_User_Role.
 		 *
-		 * @version 5.2.0
+		 * @version 7.1.6
 		 * @since   2.8.0
 		 */
 	class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
+
+		/**
+		 * The module user_id
+		 *
+		 * @var varchar $user_id Module user_id.
+		 */
+		public $user_id;
+
+		/**
+		 * The module customer_roles
+		 *
+		 * @var varchar $customer_roles Module customer_roles.
+		 */
+		public $customer_roles;
 
 		/**
 		 * Constructor.

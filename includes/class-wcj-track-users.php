@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   3.1.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,11 +16,17 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		/**
 		 * WCJ_Track_Users.
 		 *
-		 * @version 5.6.2
+		 * @version 7.1.6
 		 * @since   3.6.0
 		 */
 	class WCJ_Track_Users extends WCJ_Module {
 
+		/**
+		 * The module track_users_scopes
+		 *
+		 * @var array
+		 */
+		public $track_users_scopes = array();
 		/**
 		 * Constructor.
 		 *

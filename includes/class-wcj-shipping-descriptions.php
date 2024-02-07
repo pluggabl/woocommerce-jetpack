@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Descriptions
  *
- * @version 5.6.2
+ * @version 7.1.6
  * @since   3.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,24 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 		/**
 		 * WCJ_Shipping_Descriptions.
 		 *
-		 * @version 5.2.0
+		 * @version 7.1.6
 		 * @since   3.4.0
 		 */
 	class WCJ_Shipping_Descriptions extends WCJ_Module {
+
+		/**
+		 * The module shipping_descriptions_position
+		 *
+		 * @var varchar $shipping_descriptions_position Module shipping_descriptions_position.
+		 */
+		public $shipping_descriptions_position;
+
+		/**
+		 * The module shipping_descriptions_visibility
+		 *
+		 * @var varchar $shipping_descriptions_visibility Module shipping_descriptions_visibility.
+		 */
+		public $shipping_descriptions_visibility;
 
 		/**
 		 * Constructor.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,27 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 	 * WCJ_Product_By_Date.
 	 */
 	class WCJ_Product_By_Date extends WCJ_Module {
+
+		/**
+		 * The module day_now
+		 *
+		 * @var varchar $day_now Module day_now.
+		 */
+		public $day_now;
+
+		/**
+		 * The module month_now
+		 *
+		 * @var varchar $month_now Module month_now.
+		 */
+		public $month_now;
+
+		/**
+		 * The module meta_box_validate_value
+		 *
+		 * @var varchar $meta_box_validate_value Module meta_box_validate_value.
+		 */
+		public $meta_box_validate_value;
 
 		/**
 		 * Constructor.

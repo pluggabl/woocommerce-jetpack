@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - TCPDF
  *
- * @version 6.0.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @todo    (maybe) `Header()`
  * @package Booster_For_WooCommerce/classes
@@ -25,9 +25,16 @@ if ( ! class_exists( 'WCJ_TCPDF' ) ) :
 	/**
 	 * WCJ_TCPDF.
 	 *
-	 * @version 6.0.0
+	 * @version 7.1.6
 	 */
 	class WCJ_TCPDF extends TCPDF {
+
+		/**
+		 * Invoice_type.
+		 *
+		 * @var $invoice_type
+		 */
+		public $invoice_type;
 
 		/**
 		 * Set_invoice_type.

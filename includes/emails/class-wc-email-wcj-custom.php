@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 6.0.5
+ * @version 7.1.6
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @extends WC_Email
@@ -19,12 +19,18 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
 		/**
 		 * WC_Email_WCJ_Custom.
 		 *
-		 * @version 5.3.4
+		 * @version 7.1.6
 		 */
 	class WC_Email_WCJ_Custom extends WC_Email {
 
 		/**
-		 * Constructor.
+		 * The module original_recipient
+		 *
+		 * @var varchar $original_recipient Module.
+		 */
+		public $original_recipient;
+		/**
+		 * Constructor
 		 *
 		 * @version 5.3.4
 		 * @param   int $id get id..

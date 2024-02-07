@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 7.0.0
+ * @version 7.1.6
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -298,6 +298,7 @@ $settings = array_merge(
 				'multicurrency_base_price' => __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' ),
 				'multicurrency'            => __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' ),
 				'global_discount'          => __( 'Global Discount', 'woocommerce-jetpack' ),
+				'price_by_user_role'       => __( 'Price based on User Role', 'woocommerce-jetpack' ),
 			),
 		),
 		array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -17,6 +17,42 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 	 */
 	class WCJ_PDF_Invoicing extends WCJ_Module {
 
+		/**
+		 * The module order_id
+		 *
+		 * @var varchar $order_id Module.
+		 */
+		public $order_id;
+		/**
+		 * The module get_invoice
+		 *
+		 * @var varchar $get_invoice Module.
+		 */
+		public $get_invoice;
+		/**
+		 * The module save_as_pdf
+		 *
+		 * @var varchar $save_as_pdf Module.
+		 */
+		public $save_as_pdf;
+		/**
+		 * The module invoice_type_id
+		 *
+		 * @var varchar $invoice_type_id Module.
+		 */
+		public $invoice_type_id;
+		/**
+		 * The module section_title
+		 *
+		 * @var varchar $section_title Module.
+		 */
+		public $section_title;
+		/**
+		 * The module the_pdf_invoicing_report_tool
+		 *
+		 * @var varchar $the_pdf_invoicing_report_tool Module.
+		 */
+		public $the_pdf_invoicing_report_tool;
 		/**
 		 * Constructor.
 		 *

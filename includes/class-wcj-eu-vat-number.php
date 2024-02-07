@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.3.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,6 +18,12 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 	 */
 	class WCJ_EU_VAT_Number extends WCJ_Module {
 
+		/**
+		 * The module eu_countries_vat_rates_tool
+		 *
+		 * @var varchar $eu_countries_vat_rates_tool Module.
+		 */
+		public $eu_countries_vat_rates_tool;
 		/**
 		 * Constructor.
 		 *
@@ -422,7 +428,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Start_session.
 		 *
-		 * @version 5.6.7
+		 * @version 7.1.6
 		 */
 		public function start_session() {
 			if ( is_admin() ) {
@@ -433,9 +439,11 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			if ( isset( $_REQUEST['post_data'] ) ) {
 				parse_str( sanitize_text_field( wp_unslash( $_REQUEST['post_data'] ) ), $args );
 				$wpnonce = isset( $args['woocommerce-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( $args['woocommerce-process-checkout-nonce'] ), 'woocommerce-process_checkout' ) : false;
-				if ( $wpnonce && isset( $args['billing_eu_vat_number'] ) && wcj_session_get( 'wcj_eu_vat_number_to_check' ) !== $args['billing_eu_vat_number'] ) {
-					wcj_session_set( 'wcj_is_eu_vat_number_valid', null );
-					wcj_session_set( 'wcj_eu_vat_number_to_check', null );
+				if ( 'yes' !== wcj_get_option( 'wcj_eu_vat_number_apply_country_code', 'no' ) ) {
+					if ( $wpnonce && isset( $args['billing_eu_vat_number'] ) && wcj_session_get( 'wcj_eu_vat_number_to_check' ) !== $args['billing_eu_vat_number'] ) {
+						wcj_session_set( 'wcj_is_eu_vat_number_valid', null );
+						wcj_session_set( 'wcj_eu_vat_number_to_check', null );
+					}
 				}
 			}
 		}
@@ -464,7 +472,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Enqueue_scripts.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.6
 		 */
 		public function enqueue_scripts() {
 			if (
@@ -473,7 +481,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			) {
 				return;
 			}
-			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/wcj-eu-vat-number.js', array(), w_c_j()->version, true );
+			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/wcj-eu-vat-number.js', array(), time(), true );
 			wp_localize_script(
 				'wcj-eu-vat-number',
 				'ajax_object',
@@ -495,23 +503,49 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Wcj_validate_eu_vat_number.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.6
 		 * @param array $param defines the param.
 		 */
 		public function wcj_validate_eu_vat_number( $param ) {
-			$param         = wp_parse_args(
+			$param                            = wp_parse_args(
 				$param,
 				array(
 					'wcj_eu_vat_number_to_check' => '',
 					'echo'                       => true,
 				)
 			);
-			$wpnonce       = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj_eu_vat_number_to_check' ) : false;
-			$eu_vat_number = isset( $param['wcj_eu_vat_number_to_check'] ) && '' !== $param['wcj_eu_vat_number_to_check'] && null !== $param['wcj_eu_vat_number_to_check'] ? sanitize_text_field( wp_unslash( $param['wcj_eu_vat_number_to_check'] ) ) : '';
-			$eu_vat_number = $wpnonce && empty( $eu_vat_number ) && isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' !== $_POST['wcj_eu_vat_number_to_check'] && null !== $_POST['wcj_eu_vat_number_to_check'] ? sanitize_text_field( wp_unslash( $_POST['wcj_eu_vat_number_to_check'] ) ) : $eu_vat_number;
+			$wpnonce                          = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj_eu_vat_number_to_check' ) : false;
+			$eu_vat_number                    = isset( $param['wcj_eu_vat_number_to_check'] ) && '' !== $param['wcj_eu_vat_number_to_check'] && null !== $param['wcj_eu_vat_number_to_check'] ? sanitize_text_field( wp_unslash( $param['wcj_eu_vat_number_to_check'] ) ) : '';
+			$wcj_eu_country_to_check          = isset( $param['wcj_eu_country_to_check'] ) && '' !== $param['wcj_eu_country_to_check'] && null !== $param['wcj_eu_country_to_check'] ? sanitize_text_field( wp_unslash( $param['wcj_eu_country_to_check'] ) ) : '';
+			$wcj_eu_shipping_country_to_check = isset( $param['wcj_eu_shipping_country_to_check'] ) && '' !== $param['wcj_eu_shipping_country_to_check'] && null !== $param['wcj_eu_shipping_country_to_check'] ? sanitize_text_field( wp_unslash( $param['wcj_eu_shipping_country_to_check'] ) ) : '';
+
+			$eu_vat_number       = $wpnonce && empty( $eu_vat_number ) && isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' !== $_POST['wcj_eu_vat_number_to_check'] && null !== $_POST['wcj_eu_vat_number_to_check'] ? sanitize_text_field( wp_unslash( $_POST['wcj_eu_vat_number_to_check'] ) ) : $eu_vat_number;
+			$eu_country          = $wpnonce && empty( $wcj_eu_country_to_check ) && isset( $_POST['wcj_eu_country_to_check'] ) && '' !== $_POST['wcj_eu_country_to_check'] && null !== $_POST['wcj_eu_country_to_check'] ? sanitize_text_field( wp_unslash( $_POST['wcj_eu_country_to_check'] ) ) : $wcj_eu_country_to_check;
+			$eu_shipping_country = $wpnonce && empty( $wcj_eu_shipping_country_to_check ) && isset( $_POST['wcj_eu_shipping_country_to_check'] ) && '' !== $_POST['wcj_eu_shipping_country_to_check'] && null !== $_POST['wcj_eu_shipping_country_to_check'] ? sanitize_text_field( wp_unslash( $_POST['wcj_eu_shipping_country_to_check'] ) ) : $wcj_eu_shipping_country_to_check;
+
 			if ( ! empty( $eu_vat_number ) ) {
-				$eu_vat_number_to_check         = substr( $eu_vat_number, 2 );
-				$eu_vat_number_country_to_check = substr( $eu_vat_number, 0, 2 );
+
+				if ( 'yes' === wcj_get_option( 'wcj_eu_vat_number_apply_country_code', 'no' ) ) {
+					if ( ctype_digit( substr( $eu_vat_number, 0, 2 ) ) ) {
+						$eu_vat_number_to_check         = $eu_vat_number;
+						$eu_vat_number_country_to_check = $eu_country;
+						$eu_vat_number                  = $eu_country . $eu_vat_number_to_check;
+						if ( 'yes' === wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country_by_shipping_country', 'no' ) ) {
+							$shipping_eu_vat_number = $eu_shipping_country . $eu_vat_number_to_check;
+						}
+					} else {
+						$eu_vat_number_to_check         = substr( $eu_vat_number, 2 );
+						$eu_vat_number_country_to_check = $eu_country;
+						$eu_vat_number                  = $eu_country . $eu_vat_number_to_check;
+						if ( 'yes' === wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country_by_shipping_country', 'no' ) ) {
+							$shipping_eu_vat_number = $eu_shipping_country . $eu_vat_number_to_check;
+						}
+					}
+				} else {
+					$eu_vat_number_to_check         = substr( $eu_vat_number, 2 );
+					$eu_vat_number_country_to_check = substr( $eu_vat_number, 0, 2 );
+				}
+
 				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_check_ip_location_country', 'no' ) ) ) {
 					$location = WC_Geolocation::geolocate_ip();
 					if ( empty( $location['country'] ) ) {
@@ -528,6 +562,9 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			}
 			wcj_session_set( 'wcj_is_eu_vat_number_valid', $is_valid );
 			wcj_session_set( 'wcj_eu_vat_number_to_check', $eu_vat_number );
+			if ( 'yes' === wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country_by_shipping_country', 'no' ) ) {
+				wcj_session_set( 'wcj_shipping_eu_vat_number_to_check', $shipping_eu_vat_number );
+			}
 			$response = '3';
 			if ( false === $is_valid ) {
 				$response = '0';
@@ -546,13 +583,14 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Need_to_exclude_vat.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.6
 		 * @since   4.6.0
 		 *
 		 * @return bool
 		 */
 		public function need_to_exclude_vat() {
-			$eu_vat_number = wcj_session_get( 'wcj_eu_vat_number_to_check' );
+			$eu_vat_number          = wcj_session_get( 'wcj_eu_vat_number_to_check' );
+			$shipping_eu_vat_number = wcj_session_get( 'wcj_shipping_eu_vat_number_to_check' );
 			if (
 			(
 				( function_exists( 'is_checkout' ) && is_checkout() ) ||
@@ -573,16 +611,33 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			)
 			) {
 				$preserve_base_country_check_passed = true;
-				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'no' ) ) ) {
-					$location = wc_get_base_location();
-					if ( empty( $location['country'] ) ) {
-						$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', wcj_get_option( 'woocommerce_default_country' ) ) );
-					}
+				$location                           = wc_get_base_location();
+				if ( empty( $location['country'] ) ) {
+					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', wcj_get_option( 'woocommerce_default_country' ) ) );
+				}
+				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'no' ) ) && 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country_by_shipping_country', 'no' ) ) ) {
 					$selected_country = substr( $eu_vat_number, 0, 2 );
 					if ( 'EL' === $selected_country ) {
 						$selected_country = 'GR';
 					}
 					$preserve_base_country_check_passed = ( strtoupper( $location['country'] ) !== strtoupper( $selected_country ) );
+				} elseif ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country_by_shipping_country', 'no' ) ) && 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'no' ) ) ) {
+					$selected_country = substr( $shipping_eu_vat_number, 0, 2 );
+					if ( 'EL' === $selected_country ) {
+						$selected_country = 'GR';
+					}
+					$preserve_base_country_check_passed = ( strtoupper( $location['country'] ) !== strtoupper( $selected_country ) );
+				} elseif ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'no' ) ) && 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_eu_vat_number_preserve_in_base_country_by_shipping_country', 'no' ) ) ) {
+					$selected_country          = substr( $eu_vat_number, 0, 2 );
+					$selected_shipping_country = substr( $shipping_eu_vat_number, 0, 2 );
+					if ( 'EL' === $selected_country ) {
+						$selected_country = 'GR';
+					}
+					if ( 'EL' === $selected_shipping_country ) {
+						$selected_shipping_country = 'GR';
+					}
+					$check_both_countries               = array( $selected_country, $selected_shipping_country );
+					$preserve_base_country_check_passed = ( ! in_array( $location['country'], $check_both_countries, true ) );
 				}
 				if ( $preserve_base_country_check_passed ) {
 					return true;
@@ -615,7 +670,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		/**
 		 * Checkout_validate_vat.
 		 *
-		 * @version 5.5.0
+		 * @version 7.1.6
 		 * @param  array $_posted defines the _posted.
 		 */
 		public function checkout_validate_vat( $_posted ) {
@@ -639,6 +694,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 					'1' !== $this->wcj_validate_eu_vat_number(
 						array(
 							'wcj_eu_vat_number_to_check' => $_posted['billing_eu_vat_number'],
+							'wcj_eu_country_to_check'    => $_posted['billing_country'],
 							'echo'                       => false,
 						)
 					)

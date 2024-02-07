@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 7.0.0
+ * @version 7.1.6
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,27 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 	 * WCJ_Order_Quantities.
 	 */
 	class WCJ_Order_Quantities extends WCJ_Module {
+
+		/**
+		 * The module is_min_per_product_enabled
+		 *
+		 * @var varchar $is_min_per_product_enabled Module is_min_per_product_enabled.
+		 */
+		public $is_min_per_product_enabled;
+
+		/**
+		 * The module is_max_per_product_enabled
+		 *
+		 * @var varchar $is_max_per_product_enabled Module is_max_per_product_enabled.
+		 */
+		public $is_max_per_product_enabled;
+
+		/**
+		 * The module is_step_per_product_enabled
+		 *
+		 * @var varchar $is_step_per_product_enabled Module is_step_per_product_enabled.
+		 */
+		public $is_step_per_product_enabled;
 
 		/**
 		 * Constructor.

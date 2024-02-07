@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Templates
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -15,9 +15,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Templates' ) ) :
 		/**
 		 * WCJ_PDF_Invoicing_Templates.
 		 *
-		 * @version 2.3.7
+		 * @version 7.1.6
 		 */
 	class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
+
+		/**
+		 * The module default_template
+		 *
+		 * @var array
+		 */
+		public $default_template = array();
 
 		/**
 		 * Constructor.

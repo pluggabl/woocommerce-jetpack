@@ -1,7 +1,7 @@
 {
-    "0" : "= 7.1.5 20/12/2023 =",
-    "1" : "* NEW FEATURE - EMAILS & MISC - General - Introduced a new option to display order shortcodes forcefully.",
-    "2" : "* FIXED - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Hide the 'wcj-currency-nonce' nonce field, as it breaks the WooCommerce Rest API JSON response in certain instances.",
-    "3" : "* WooCommerce 8.4.0 Tested",
+    "0" : "= 7.1.6 07/02/2024 =",
+    "1" : "* FIXED - Addressed PHP Deprecated errors related to the creation of dynamic properties throughout the entire plugin.",
+    "2" : "* FIXED - SHIPPING & ORDERS - Admin Orders List - Resolved the issue of orders not being filtered based on the applied filter from the 'Add Presets to Admin Menu' option.",
+    "3" : "* WooCommerce 8.5.2 Tested",
     "4" : "* WordPress 6.4.2 Tested"
 }

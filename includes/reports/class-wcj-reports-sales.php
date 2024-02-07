@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Sales
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -15,10 +15,24 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		/**
 		 * WCJ_Reports_Sales.
 		 *
-		 * @version 2.6.0
+		 * @version 7.1.6
 		 * @since   2.3.0
 		 */
 	class WCJ_Reports_Sales {
+
+		/**
+		 * The module year
+		 *
+		 * @var varchar $year Module year.
+		 */
+		public $year;
+
+		/**
+		 * The module product_title
+		 *
+		 * @var varchar $product_title Module product_title.
+		 */
+		public $product_title;
 
 		/**
 		 * Constructor.

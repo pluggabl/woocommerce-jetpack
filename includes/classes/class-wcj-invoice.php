@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -16,7 +16,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		/**
 		 * WCJ_Invoice.
 		 *
-		 * @version 5.3.6
+		 * @version 7.1.6
 		 */
 	class WCJ_Invoice {
 		/**
@@ -31,6 +31,12 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 		 * @var $invoice_type
 		 */
 		public $invoice_type;
+		/**
+		 * Wcj_invoice_type.
+		 *
+		 * @var $wcj_invoice_type
+		 */
+		public $wcj_invoice_type;
 
 		/**
 		 * Constructor.

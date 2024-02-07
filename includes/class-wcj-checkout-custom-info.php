@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Info
  *
- * @version 5.2.0
+ * @version 7.1.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -15,10 +15,16 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Info' ) ) :
 	/**
 	 * WCJ_Checkout_Custom_Info.
 	 *
-	 * @version 2.7.0
+	 * @version 7.1.6
 	 */
 	class WCJ_Checkout_Custom_Info extends WCJ_Module {
 
+		/**
+		 * The module wcj_checkout_custom_info_total_number
+		 *
+		 * @var varchar $wcj_checkout_custom_info_total_number Module.
+		 */
+		public $wcj_checkout_custom_info_total_number;
 		/**
 		 * Constructor.
 		 *

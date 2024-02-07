@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 6.0.2
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -15,7 +15,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * WCJ_Product_Input_Fields_Core
 		 *
-		 * @version 4.2.0
+		 * @version 7.1.6
 		 * @since   4.2.0
 		 */
 	class WCJ_Product_Input_Fields_Core {
@@ -26,6 +26,13 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @var string scope.
 		 */
 		public $scope = '';
+
+		/**
+		 * The module are_product_input_fields_displayed
+		 *
+		 * @var varchar $are_product_input_fields_displayed Module are_product_input_fields_displayed.
+		 */
+		public $are_product_input_fields_displayed;
 
 		/**
 		 * Constructor.
@@ -602,7 +609,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Add_product_input_fields_to_frontend.
 		 *
-		 * @version 
+		 * @version
 		 * @todo    `$set_value` - add "default" option for all other types except checkbox
 		 * @todo    `$set_value` - 'file' type
 		 * @todo    add `required` attributes

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.5.3
  * @author  Pluggabl LLC.
  * @todo    admin order view (names)
@@ -19,6 +19,19 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 	 */
 	class WCJ_Product_Addons extends WCJ_Module {
 
+		/**
+		 * The module co
+		 *
+		 * @var varchar $co Module.
+		 */
+		public $co;
+
+		/**
+		 * The module are_addons_displayed
+		 *
+		 * @var varchar $are_addons_displayed Module.
+		 */
+		public $are_addons_displayed;
 
 		/**
 		 * Constructor.
@@ -329,7 +342,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Maybe_convert_currency.
 		 *
-		 * @version 6.0.1
+		 * @version 7.1.6
 		 * @since   2.8.0
 		 * @param int          $price defines the price.
 		 * @param null | array $product defines the product.
@@ -349,6 +362,10 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				// Global Discount module.
 				if ( ( empty( $modules_to_apply ) || in_array( 'global_discount', $modules_to_apply, true ) ) && w_c_j()->all_modules['global_discount']->is_enabled() ) {
 					$price = w_c_j()->all_modules['global_discount']->add_global_discount( $price, $product, 'price' );
+				}
+				// Price based on User Role module.
+				if ( ( empty( $modules_to_apply ) || in_array( 'price_by_user_role', $modules_to_apply, true ) ) && w_c_j()->all_modules['price_by_user_role']->is_enabled() ) {
+					$price = w_c_j()->all_modules['price_by_user_role']->change_price( $price, $product );
 				}
 			} elseif ( 'yes' === $apply_price_filters ) {
 				$price = apply_filters( WCJ_PRODUCT_GET_PRICE_FILTER, $price, $product );
@@ -673,7 +690,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		/**
 		 * Add_addons_price_to_cart_item.
 		 *
-		 * @version 4.5.0
+		 * @version 7.1.6
 		 * @since   2.5.3
 		 * @param array  $cart_item_data defines the cart_item_data.
 		 * @param string $cart_item_key defines the cart_item_key.
@@ -688,8 +705,19 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					$cart_item_data['wcj_pa_extra_price'] += (float) $cart_item_data[ $addon['price_key'] ];
 				}
 			}
+			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_price_by_user_role_compatibility_product_addon', 'no' ) && 'fixed' === wcj_get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) && 'yes' === get_post_meta( wcj_maybe_get_product_id_wpml( $cart_item_data['product_id'] ), '_wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
+				$current_user_role         = wcj_get_current_user_first_role();
+				$regular_price_per_product = get_post_meta( $cart_item_data['product_id'], '_wcj_price_by_user_role_regular_price_' . $current_user_role, true );
+				$sale_price_per_product    = get_post_meta( $cart_item_data['product_id'], '_wcj_price_by_user_role_sale_price_' . $current_user_role, true );
+				$modified_price            = ( '' !== $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
+				$product_price             = ( isset( $modified_price ) && '' !== $modified_price ) ? $modified_price : $cart_item_data['data']->get_data()['price'];
+			} else {
+				$product_price = $cart_item_data['data']->get_data()['price'];
+
+			}
+
 			if ( isset( $cart_item_data['wcj_pa_extra_price'] ) ) {
-				$cart_item_data['wcj_pa_total_extra_price'] = $cart_item_data['data']->get_data()['price'] + $cart_item_data['wcj_pa_extra_price'];
+				$cart_item_data['wcj_pa_total_extra_price'] = $product_price + $cart_item_data['wcj_pa_extra_price'];
 				$cart_item_data['data']->set_price( $cart_item_data['wcj_pa_total_extra_price'] );
 			}
 			return $cart_item_data;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Exchange Rates - Crons
  *
- * @version 5.6.4
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,9 +16,16 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 		/**
 		 * WCJ_Exchange_Rates_Crons.
 		 *
-		 * @version 2.7.0
+		 * @version 7.1.6
 		 */
 	class WCJ_Exchange_Rates_Crons {
+
+		/**
+		 * The module update_intervals
+		 *
+		 * @var varchar $update_intervals Module.
+		 */
+		public $update_intervals;
 
 		/**
 		 * Constructor.

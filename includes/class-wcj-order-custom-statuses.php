@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,6 +18,12 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 	 */
 	class WCJ_Order_Custom_Statuses extends WCJ_Module {
 
+		/**
+		 * The module custom_statuses_tool
+		 *
+		 * @var varchar $custom_statuses_tool Module.
+		 */
+		public $custom_statuses_tool;
 		/**
 		 * Constructor.
 		 *

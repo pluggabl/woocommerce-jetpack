@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,6 +16,48 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 	 * WCJ_Price_Labels.
 	 */
 	class WCJ_Price_Labels extends WCJ_Module {
+
+		/**
+		 * The module prices_filters
+		 *
+		 * @var array
+		 */
+		public $prices_filters = array();
+
+		/**
+		 * The module custom_tab_group_name
+		 *
+		 * @var varchar $custom_tab_group_name Module.
+		 */
+		public $custom_tab_group_name;
+
+		/**
+		 * The module custom_tab_sections
+		 *
+		 * @var array
+		 */
+		public $custom_tab_sections = array();
+
+		/**
+		 * The module custom_tab_sections_titles
+		 *
+		 * @var array
+		 */
+		public $custom_tab_sections_titles = array();
+
+		/**
+		 * The module custom_tab_section_variations
+		 *
+		 * @var array
+		 */
+		public $custom_tab_section_variations = array();
+
+		/**
+		 * The module custom_tab_section_variations_titles
+		 *
+		 * @var array
+		 */
+		public $custom_tab_section_variations_titles = array();
 
 		/**
 		 * Constructor.

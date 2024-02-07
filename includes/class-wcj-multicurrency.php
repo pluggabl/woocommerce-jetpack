@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @since   2.4.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -24,6 +24,13 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @var bkg_process_price_updater
 		 */
 		protected $bkg_process_price_updater;
+
+		/**
+		 * Additional_price_filters
+		 *
+		 * @var additional_price_filters
+		 */
+		public $additional_price_filters;
 
 		/**
 		 * Constructor.

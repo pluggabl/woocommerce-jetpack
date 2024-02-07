@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,6 +18,12 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 	 */
 	class WCJ_Export_Import extends WCJ_Module {
 
+		/**
+		 * The module fields_helper
+		 *
+		 * @var varchar $fields_helper Module.
+		 */
+		public $fields_helper;
 		/**
 		 * Constructor.
 		 *

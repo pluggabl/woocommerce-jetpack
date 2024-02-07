@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -18,6 +18,33 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 	 */
 	class WCJ_My_Account extends WCJ_Module {
 
+		/**
+		 * The module custom_pages
+		 *
+		 * @var varchar $custom_pages Module.
+		 */
+		public $custom_pages;
+
+		/**
+		 * The module account_menu_items
+		 *
+		 * @var array
+		 */
+		public $account_menu_items = array();
+
+		/**
+		 * The module account_menu_endpoints
+		 *
+		 * @var array
+		 */
+		public $account_menu_endpoints = array();
+
+		/**
+		 * The module menu_order_default
+		 *
+		 * @var varchar $menu_order_default Module.
+		 */
+		public $menu_order_default;
 		/**
 		 * Constructor.
 		 *

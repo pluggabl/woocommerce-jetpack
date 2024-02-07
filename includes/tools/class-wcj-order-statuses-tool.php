@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 
+ * @version 7.1.6
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -17,11 +17,23 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * WCJ_Order_Statuses_Tool.
 		 *
-		 * @version 3.2.2
+		 * @version 7.1.6
 		 * @since   3.2.2
 		 */
 	class WCJ_Order_Statuses_Tool {
 
+		/**
+		 * The module id
+		 *
+		 * @var varchar $id Module.
+		 */
+		public $id;
+		/**
+		 * The module module
+		 *
+		 * @var varchar $module Module.
+		 */
+		public $module;
 		/**
 		 * Constructor.
 		 *
@@ -319,7 +331,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Process_actions.
 		 *
-		 * @version 
+		 * @version
 		 * @since   3.2.2
 		 * @todo    (maybe) use `init` hook for processing actions
 		 */

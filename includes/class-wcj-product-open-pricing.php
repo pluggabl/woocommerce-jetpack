@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,27 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 	 * WCJ_Currencies.
 	 */
 	class WCJ_Product_Open_Pricing extends WCJ_Module {
+
+		/**
+		 * The module shop_currency
+		 *
+		 * @var varchar $shop_currency Module shop_currency.
+		 */
+		public $shop_currency;
+
+		/**
+		 * The module loop_price_info_template
+		 *
+		 * @var varchar $loop_price_info_template Module loop_price_info_template.
+		 */
+		public $loop_price_info_template;
+
+		/**
+		 * The module is_open_price_input_field_displayed
+		 *
+		 * @var varchar $is_open_price_input_field_displayed Module is_open_price_input_field_displayed.
+		 */
+		public $is_open_price_input_field_displayed;
 
 		/**
 		 * Constructor.

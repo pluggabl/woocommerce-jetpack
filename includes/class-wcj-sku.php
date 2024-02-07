@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -15,9 +15,23 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 	/**
 	 * WCJ_SKU.
 	 *
-	 * @version 5.2.0
+	 * @version 7.1.6
 	 */
 	class WCJ_SKU extends WCJ_Module {
+
+		/**
+		 * The module preview_buffer
+		 *
+		 * @var varchar $preview_buffer Module preview_buffer.
+		 */
+		public $preview_buffer;
+
+		/**
+		 * The module product_counter
+		 *
+		 * @var varchar $product_counter Module product_counter.
+		 */
+		public $product_counter;
 
 		/**
 		 * Constructor.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 5.6.7
+ * @version 7.1.6
  * @since   2.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,13 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 	 * WCJ_Products_Per_Page.
 	 */
 	class WCJ_Products_Per_Page extends WCJ_Module {
+
+		/**
+		 * The module products_per_page_saving_method
+		 *
+		 * @var varchar $products_per_page_saving_method Module products_per_page_saving_method.
+		 */
+		public $products_per_page_saving_method;
 
 		/**
 		 * Constructor.

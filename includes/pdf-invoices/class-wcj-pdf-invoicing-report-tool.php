@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.2.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,10 +17,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 		/**
 		 * WCJ_PDF_Invoicing_Report_Tool.
 		 *
-		 * @version 2.5.7
+		 * @version 7.1.6
 		 */
 	class WCJ_PDF_Invoicing_Report_Tool {
 
+		/**
+		 * The module notice
+		 *
+		 * @var varchar $notice Module.
+		 */
+		public $notice;
 		/**
 		 * Constructor.
 		 *

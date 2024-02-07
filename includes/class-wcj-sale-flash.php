@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sale Flash
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,41 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 	 * WCJ_Sale_Flash.
 	 */
 	class WCJ_Sale_Flash extends WCJ_Module {
+
+		/**
+		 * The module globally_enabled
+		 *
+		 * @var varchar $globally_enabled Module globally_enabled.
+		 */
+		public $globally_enabled;
+
+		/**
+		 * The module per_tag_enabled
+		 *
+		 * @var varchar $per_tag_enabled Module per_tag_enabled.
+		 */
+		public $per_tag_enabled;
+
+		/**
+		 * The module per_product_enabled
+		 *
+		 * @var varchar $per_product_enabled Module per_product_enabled.
+		 */
+		public $per_product_enabled;
+
+		/**
+		 * The module per_category_enabled
+		 *
+		 * @var varchar $per_category_enabled Module per_category_enabled.
+		 */
+		public $per_category_enabled;
+
+		/**
+		 * The module sale_flash_per_taxonomy
+		 *
+		 * @var array
+		 */
+		public $sale_flash_per_taxonomy = array();
 
 		/**
 		 * Constructor.

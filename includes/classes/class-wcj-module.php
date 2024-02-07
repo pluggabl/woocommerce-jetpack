@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -17,7 +17,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * WCJ_Module contains all the functions for single module setting page.
 	 *
-	 * @version 5.1.0
+	 * @version 7.1.6
 	 * @since   5.1.0
 	 */
 	class WCJ_Module {
@@ -79,12 +79,97 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @var varchar $link Module link.
 		 */
 		public $link;
+
+		/**
+		 * The module link_slug
+		 *
+		 * @var varchar $link_slug Module link_slug.
+		 */
+		public $link_slug;
+
 		/**
 		 * The module options
 		 *
 		 * @var array
 		 */
 		public $options = array();
+
+		/**
+		 * The module tools_array
+		 *
+		 * @var array
+		 */
+		public $tools_array = array();
+
+		/**
+		 * The module title
+		 *
+		 * @var varchar $title Module title.
+		 */
+		public $title;
+
+		/**
+		 * The module time_now
+		 *
+		 * @var varchar $time_now Module time_now.
+		 */
+		public $time_now;
+
+		/**
+		 * The module use_shipping_instances
+		 *
+		 * @var varchar $use_shipping_instances Module use_shipping_instances.
+		 */
+		public $use_shipping_instances;
+
+		/**
+		 * The module condition_options
+		 *
+		 * @var array
+		 */
+		public $condition_options = array();
+
+		/**
+		 * The module meta_box_screen
+		 *
+		 * @var varchar $meta_box_screen Module meta_box_screen.
+		 */
+		public $meta_box_screen;
+
+		/**
+		 * The module meta_box_context
+		 *
+		 * @var varchar $meta_box_context Module meta_box_context.
+		 */
+		public $meta_box_context;
+
+		/**
+		 * The module meta_box_priority
+		 *
+		 * @var varchar $meta_box_priority Module meta_box_priority.
+		 */
+		public $meta_box_priority;
+
+		/**
+		 * The module price_hooks_priority
+		 *
+		 * @var varchar $price_hooks_priority Module price_hooks_priority.
+		 */
+		public $price_hooks_priority;
+
+		/**
+		 * The module calculated_products_prices
+		 *
+		 * @var varchar $calculated_products_prices Module calculated_products_prices.
+		 */
+		public $calculated_products_prices;
+
+		/**
+		 * The module active_currencies
+		 *
+		 * @var varchar $active_currencies Module active_currencies.
+		 */
+		public $active_currencies;
 
 		/**
 		 * Constructor.

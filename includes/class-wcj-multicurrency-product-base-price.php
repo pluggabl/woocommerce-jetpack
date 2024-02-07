@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,13 @@ if ( ! class_exists( 'WCJ_Multicurrency_Product_Base_Price' ) ) :
 	 * WCJ_Multicurrency_Product_Base_Price.
 	 */
 	class WCJ_Multicurrency_Product_Base_Price extends WCJ_Module {
+
+		/**
+		 * The module do_convert_in_back_end
+		 *
+		 * @var varchar $do_convert_in_back_end Module do_convert_in_back_end.
+		 */
+		public $do_convert_in_back_end;
 
 		/**
 		 * Constructor.

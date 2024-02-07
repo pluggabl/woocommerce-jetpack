@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 6.0.1
+ * @version 7.1.6
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,13 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 	 * WCJ_Product_Bookings.
 	 */
 	class WCJ_Product_Bookings extends WCJ_Module {
+
+		/**
+		 * The module are_bookings_input_fields_displayed
+		 *
+		 * @var varchar $are_bookings_input_fields_displayed Module are_bookings_input_fields_displayed.
+		 */
+		public $are_bookings_input_fields_displayed;
 
 		/**
 		 * Constructor.

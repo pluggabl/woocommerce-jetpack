@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Styling
  *
- * @version 5.6.8
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -15,9 +15,16 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		/**
 		 * WCJ_PDF_Invoicing_Styling.
 		 *
-		 * @version 2.9.0
+		 * @version 7.1.6
 		 */
 	class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
+
+		/**
+		 * The module default_css_template
+		 *
+		 * @var array
+		 */
+		public $default_css_template = array();
 
 		/**
 		 * Constructor.

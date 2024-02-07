@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Info V1 (Deprecated)
  *
- * @version 5.6.2
+ * @version 7.1.6
  * @author  Pluggabl LLC.
  * @deprecated
  * @package Booster_For_WooCommerce/includes
@@ -17,6 +17,20 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 	 * WCJ_Product_Info.
 	 */
 	class WCJ_Product_Info extends WCJ_Module {
+
+		/**
+		 * The module product_info_on_archive_filters_array
+		 *
+		 * @var array
+		 */
+		public $product_info_on_archive_filters_array = array();
+
+		/**
+		 * The module product_info_on_single_filters_array
+		 *
+		 * @var array
+		 */
+		public $product_info_on_single_filters_array = array();
 
 		/**
 		 * Search_and_replace_deprecated_shortcodes.
@@ -325,6 +339,7 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 				);
 			}
 		}
+
 	}
 
 endif;

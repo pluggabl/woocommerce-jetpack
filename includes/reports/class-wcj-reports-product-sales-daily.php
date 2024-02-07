@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 7.1.4
+ * @version 7.1.6
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,66 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		/**
 		 * WCJ_Reports_Product_Sales_Daily.
 		 *
-		 * @version 2.9.0
+		 * @version 7.1.6
 		 * @since   2.9.0
 		 */
 	class WCJ_Reports_Product_Sales_Daily {
+
+		/**
+		 * The module start_date
+		 *
+		 * @var varchar $start_date Module start_date.
+		 */
+		public $start_date;
+
+		/**
+		 * The module end_date
+		 *
+		 * @var varchar $end_date Module end_date.
+		 */
+		public $end_date;
+
+		/**
+		 * The module product_title
+		 *
+		 * @var varchar $product_title Module product_title.
+		 */
+		public $product_title;
+
+		/**
+		 * The module sales_by_day
+		 *
+		 * @var varchar $sales_by_day Module sales_by_day.
+		 */
+		public $sales_by_day;
+
+		/**
+		 * The module total_sales_by_day
+		 *
+		 * @var varchar $total_sales_by_day Module total_sales_by_day.
+		 */
+		public $total_sales_by_day;
+
+		/**
+		 * The module purchase_data
+		 *
+		 * @var varchar $purchase_data Module purchase_data.
+		 */
+		public $purchase_data;
+
+		/**
+		 * The module last_sale_data
+		 *
+		 * @var varchar $last_sale_data Module last_sale_data.
+		 */
+		public $last_sale_data;
+
+		/**
+		 * The module total_orders
+		 *
+		 * @var varchar $total_orders Module total_orders.
+		 */
+		public $total_orders;
 
 		/**
 		 * Constructor.
