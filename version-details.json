@@ -1,7 +1,7 @@
 {
-    "0" : "= 7.1.6 07/02/2024 =",
-    "1" : "* FIXED - Addressed PHP Deprecated errors related to the creation of dynamic properties throughout the entire plugin.",
-    "2" : "* FIXED - SHIPPING & ORDERS - Admin Orders List - Resolved the issue of orders not being filtered based on the applied filter from the 'Add Presets to Admin Menu' option.",
+    "0" : "= 7.1.7 12/02/2024 =",
+    "1" : "* FIXED - Fixed the cross-site scripting vulnerability issue associated with the '[wcj_product_barcode]' shortcode.",
+    "2" : "* NEW FEATURE - PRODUCTS - Cost of Goods - Introduce a new feature labeled 'Charge Calculation' for differentiating charge calculation methods: percentage of product price or purchase cost (default).",
     "3" : "* WooCommerce 8.5.2 Tested",
     "4" : "* WordPress 6.4.2 Tested"
 }

@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.4.2
 Requires PHP: 7.2
-Stable tag: 7.1.6
+Stable tag: 7.1.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,13 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.7 12/02/2024 =
+
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the '[wcj_product_barcode]' shortcode.
+* NEW FEATURE - PRODUCTS - Cost of Goods - Introduce a new feature labeled 'Charge Calculation' for differentiating charge calculation methods: percentage of product price or purchase cost (default).
+* WooCommerce 8.5.2 Tested
+* WordPress 6.4.2 Tested
 
 = 7.1.6 07/02/2024 =
 
