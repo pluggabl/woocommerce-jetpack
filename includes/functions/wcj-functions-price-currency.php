@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 7.0.0
+ * @version 7.1.7
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -605,14 +605,15 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 	/**
 	 * Wc_get_product_purchase_price.
 	 *
-	 * @version 4.2.0
+	 * @version 7.1.7
 	 * @param   int $product_id defines the product_id.
 	 */
 	function wc_get_product_purchase_price( $product_id = 0 ) {
 		if ( 0 === $product_id ) {
 			$product_id = get_the_ID();
 		}
-		$product = wc_get_product( $product_id );
+		$product       = wc_get_product( $product_id );
+		$product_price = ( isset( $product ) && $product->get_price() ) ? $product->get_price() : 0;
 		if ( ! $product ) {
 			return 0;
 		}
@@ -633,7 +634,12 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 			}
 			$meta_value = (float) get_post_meta( $product_id, '_wcj_purchase_price_custom_field_' . $i, true );
 			if ( 0 !== $meta_value ) {
-				$purchase_price += ( 'fixed' === wcj_get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' ) ) ? $meta_value : $purchase_price * $meta_value / 100.0;
+
+				if ( 'yes' === wcj_get_option( 'wcj_purchase_data_custom_price_charge_calculation_' . $i, '' ) ) {
+					$purchase_price += ( 'fixed' === wcj_get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' ) ) ? $meta_value : $product_price * $meta_value / 100.0;
+				} else {
+					$purchase_price += ( 'fixed' === wcj_get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' ) ) ? $meta_value : $purchase_price * $meta_value / 100.0;
+				}
 			}
 		}
 		if ( $product->is_type( 'variable' ) ) {
