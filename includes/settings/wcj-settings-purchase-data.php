@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Cost Price
  *
- * @version 7.0.0
+ * @version 7.1.7
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add options to set fields and column titles
@@ -129,6 +129,13 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'default'           => 0,
 				'type'              => 'number',
 				'custom_attributes' => array( 'step' => '0.0001' ),
+			),
+			array(
+				'desc'     => __( 'Charge Calculation ( For Percent type only)', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Enable this option to calculate charges as a percentage of the product price rather than its purchase cost ( default ) .', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_purchase_data_custom_price_charge_calculation_' . $i,
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 		)
 	);

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping
  *
- * @version 6.0.1
+ * @version 7.1.7
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,10 +16,44 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		/**
 		 * WC_Shipping_WCJ_Custom_Template
 		 *
-		 * @version 2.8.0
+		 * @version 7.1.7
 		 */
 	class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 
+		/**
+		 * The module cost
+		 *
+		 * @var varchar $cost Module cost.
+		 */
+		public $cost;
+
+		/**
+		 * The module min_weight
+		 *
+		 * @var varchar $min_weight Module min_weight.
+		 */
+		public $min_weight;
+
+		/**
+		 * The module max_weight
+		 *
+		 * @var varchar $max_weight Module max_weight.
+		 */
+		public $max_weight;
+
+		/**
+		 * The module type
+		 *
+		 * @var varchar $type Module type.
+		 */
+		public $type;
+
+		/**
+		 * The module weight_table_total_rows
+		 *
+		 * @var varchar $weight_table_total_rows Module weight_table_total_rows.
+		 */
+		public $weight_table_total_rows;
 		/**
 		 * Constructor shipping class
 		 *

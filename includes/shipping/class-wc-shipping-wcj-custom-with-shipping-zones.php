@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 7.1.6
+ * @version 7.1.7
  * @since   2.5.6
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -16,7 +16,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 	/**
 	 * WC_Shipping_WCJ_Custom_With_Shipping_Zones
 	 *
-	 * @version 7.1.6
+	 * @version 7.1.7
 	 */
 	class WC_Shipping_WCJ_Custom_With_Shipping_Zones extends WC_Shipping_Method {
 		/**
@@ -45,6 +45,41 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 		 * @var string
 		 */
 		public $cost_rounding;
+
+		/**
+		 * The module cost
+		 *
+		 * @var varchar $cost Module cost.
+		 */
+		public $cost;
+
+		/**
+		 * The module min_weight
+		 *
+		 * @var varchar $min_weight Module min_weight.
+		 */
+		public $min_weight;
+
+		/**
+		 * The module max_weight
+		 *
+		 * @var varchar $max_weight Module max_weight.
+		 */
+		public $max_weight;
+
+		/**
+		 * The module type
+		 *
+		 * @var varchar $type Module type.
+		 */
+		public $type;
+
+		/**
+		 * The module weight_table_total_rows
+		 *
+		 * @var varchar $weight_table_total_rows Module weight_table_total_rows.
+		 */
+		public $weight_table_total_rows;
 
 		/**
 		 * Constructor shipping class

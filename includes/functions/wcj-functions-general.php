@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.1.4
+ * @version 7.1.7
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -259,7 +259,7 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 	/**
 	 * Wcj_barcode.
 	 *
-	 * @version 7.1.1
+	 * @version 7.1.7
 	 * @since   3.3.0
 	 * @todo    (maybe) "Barcodes" module
 	 * @todo    (maybe) `getBarcodePNG()`
@@ -270,6 +270,8 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 		$width     = wcj_sanitize_input_attribute_values( $atts['width'] );
 		$height    = wcj_sanitize_input_attribute_values( $atts['height'] );
 		$dimension = wcj_sanitize_input_attribute_values( $atts['dimension'] );
+		$color     = wcj_sanitize_input_attribute_values( $atts['color'] );
+
 		if ( '' === $atts['code'] ) {
 			return '';
 		}
@@ -290,7 +292,7 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 			$barcode = new TCPDF2DBarcode( $atts['code'], $type );
 		}
 		$barcode_array = $barcode->getBarcodeArray();
-		return ( ! empty( $barcode_array ) && is_array( $barcode_array ) ? $barcode->getBarcodeHTML( $width, $height, $atts['color'] ) : '' );
+		return ( ! empty( $barcode_array ) && is_array( $barcode_array ) ? $barcode->getBarcodeHTML( $width, $height, $color ) : '' );
 	}
 }
 
