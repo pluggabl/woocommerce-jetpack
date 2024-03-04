@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 5.6.2
+ * @version 7.1.8
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -412,7 +412,7 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 	/**
 	 * Wcj_get_products.
 	 *
-	 * @version 4.1.0
+	 * @version 7.1.8
 	 * @todo    [dev] optimize `if ( $variations_only ) { ... }`
 	 * @todo    [dev] maybe use `wc_get_products()` instead of `WP_Query`
 	 * @param Array  $products Get products.
@@ -440,8 +440,10 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 			foreach ( $loop->posts as $post_id ) {
 				if ( $variations_only ) {
 					$_product = wc_get_product( $post_id );
-					if ( $_product->is_type( 'variable' ) ) {
-						continue;
+					if ( isset( $_product ) ) {
+						if ( $_product->is_type( 'variable' ) ) {
+							continue;
+						}
 					}
 				}
 				$products[ $post_id ] = get_the_title( $post_id ) . ' (ID:' . $post_id . ')';
@@ -505,7 +507,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	/**
 	 * Wcj_is_product_wholesale_enabled.
 	 *
-	 * @version 5.6.2
+	 * @version 7.1.8
 	 * @param int $product_id Get product id.
 	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {
@@ -519,7 +521,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 					$is_product_eligible = true;
 				}
 
-				if ( 'no' === wcj_get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) ) {
+				if ( 'no' === wcj_get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) || 'yes' === wcj_get_option( 'wcj_wholesale_price_product_cats_to_exclude_forcefully', 'no' ) ) {
 					$product_cats_to_exclude = wcj_get_option( 'wcj_wholesale_price_product_cats_to_exclude', array() );
 					if ( ! empty( $product_cats_to_exclude ) && wcj_is_product_term( $product_id, $product_cats_to_exclude, 'product_cat' ) ) {
 						if ( ! empty( $product_cats_to_exclude ) && in_array( (string) $product_id, $product_cats_to_exclude, true ) ) {
@@ -536,7 +538,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 					$is_product_eligible = true;
 				}
 
-				if ( 'no' === wcj_get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) ) {
+				if ( 'no' === wcj_get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) || 'yes' === wcj_get_option( 'wcj_wholesale_price_products_to_exclude_forcefully', 'no' ) ) {
 					$products_to_exclude = wcj_get_option( 'wcj_wholesale_price_products_to_exclude', array() );
 					if ( ! empty( $products_to_exclude ) && in_array( (string) $product_id, $products_to_exclude, true ) ) {
 						$is_product_eligible = false;

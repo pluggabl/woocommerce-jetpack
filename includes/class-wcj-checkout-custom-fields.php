@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 7.1.6
+ * @version 7.1.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -363,7 +363,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_custom_fields_to_order_display.
 		 *
-		 * @version 7.1.4
+		 * @version 7.1.8
 		 * @since   2.3.0
 		 * @todo    convert from before version 2.3.0
 		 * @param string $order defines the order.
@@ -417,7 +417,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 						$select_values_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_select_options_', $key );
 						$select_values     = ( sanitize_text_field( wp_unslash( $post_meta[ $select_values_key ][0] ) ) ) ? $post_meta[ $select_values_key ][0] : '';
 						if ( ! empty( $select_values ) ) {
-							$select_values_prepared = wcj_get_select_options( $select_values );
+							$select_values_prepared = wcj_get_select_options( $select_values, false );
 							$value                  = ( sanitize_text_field( wp_unslash( $select_values_prepared[ $_value ] ) ) ? $select_values_prepared[ $_value ] : $_value );
 						} else {
 							$value = $_value;
@@ -455,7 +455,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_woocommerce_admin_fields.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.8
 		 * @todo    converting from before version 2.3.0: section?
 		 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 		 * @param string $fields defines the fields.
@@ -487,7 +487,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 
 					if ( 'select' === $the_type ) {
 						$the_class = 'first';
-						$options   = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+						$options   = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ), false );
 					} elseif ( 'textarea' === $the_type ) {
 						$the_class = 'first textarea';
 					} elseif ( 'radio' === $the_type ) {
@@ -495,9 +495,9 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 						if ( ! empty( $the_options ) ) {
 							$the_type  = 'select';
 							$the_class = 'first';
-							$options   = wcj_get_select_options( $the_options );
+							$options   = wcj_get_select_options( $the_options, false );
 						} else {
-							$the_options = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+							$the_options = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ), false );
 							if ( ! empty( $the_options ) ) {
 								$the_type  = 'select';
 								$the_class = 'first';
@@ -564,7 +564,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Add_woocommerce_admin_fields_hpos.
 		 *
-		 * @version 7.1.4
+		 * @version 7.1.8
 		 * @todo    converting from before version 2.3.0: section?
 		 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 		 * @param string $fields defines the fields.
@@ -600,7 +600,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 						}
 						if ( 'select' === $the_type ) {
 							$the_class = 'first';
-							$options   = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+							$options   = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ), false );
 						} elseif ( 'textarea' === $the_type ) {
 							$the_class = 'first textarea';
 						} elseif ( 'radio' === $the_type ) {
@@ -608,9 +608,9 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 							if ( ! empty( $the_options ) ) {
 								$the_type  = 'select';
 								$the_class = 'first';
-								$options   = wcj_get_select_options( $the_options );
+								$options   = wcj_get_select_options( $the_options, false );
 							} else {
-								$the_options = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+								$the_options = wcj_get_select_options( wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ), false );
 								if ( ! empty( $the_options ) ) {
 									$the_type  = 'select';
 									$the_class = 'first';

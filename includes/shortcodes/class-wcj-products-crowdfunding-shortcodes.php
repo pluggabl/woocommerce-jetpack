@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Crowdfunding
  *
- * @version 7.1.4
+ * @version 7.1.8
  * @since   2.5.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -51,7 +51,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 		/**
 		 * Inits shortcode atts and properties.
 		 *
-		 * @version 5.6.2
+		 * @version 7.1.8
 		 * @since   2.5.4
 		 * @param   array $atts Shortcode atts.
 		 * @return  array The (modified) shortcode atts.
@@ -82,6 +82,12 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 			if ( ! $this->the_product ) {
 				return false;
 			}
+
+			$atts['product_id']    = wcj_sanitize_input_attribute_values( $atts['product_id'] );
+			$atts['hide_currency'] = wcj_sanitize_input_attribute_values( $atts['hide_currency'] );
+			$atts['offset']        = wcj_sanitize_input_attribute_values( $atts['offset'] );
+			$atts['start_date']    = wcj_sanitize_input_attribute_values( $atts['start_date'], 'restrict_quotes' );
+			$atts['order_status']  = wcj_sanitize_input_attribute_values( $atts['order_status'] );
 
 			return $atts;
 		}

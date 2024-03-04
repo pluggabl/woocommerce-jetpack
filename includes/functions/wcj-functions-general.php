@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.1.7
+ * @version 7.1.8
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1202,23 +1202,44 @@ if ( ! function_exists( 'wcj_sanitize_input_attribute_values' ) ) {
 	 *
 	 * @param string $field get the field.
 	 * @param string $attr get the attr.
-	 * @version 7.1.3
+	 * @version 7.1.8
 	 * @since   7.1.1
 	 */
 	function wcj_sanitize_input_attribute_values( $field, $attr = '' ) {
 
-		switch ( $attr ) {
-			case 'style':
-				$sanitize_field = ( ! empty( $field ) ? preg_replace( '/[^-A-Za-z0-9_#:; ]/', '', wp_strip_all_tags( $field ) ) : '' ); // All style related characters are allowed!
-				break;
+		if ( null !== $field ) { // Avoide null values.
 
-			case 'src':
-				$sanitize_field = ( ! empty( $field ) ? preg_replace( '/["\']/', '', wp_strip_all_tags( $field ) ) : '' ); // Restrict quotes.
-				break;
+			switch ( $attr ) {
+				case 'style':
+					$sanitize_field = ( ! empty( $field ) ? preg_replace( '/[^-A-Za-z0-9_#:; ]/', '', wp_strip_all_tags( $field ) ) : '' ); // All style related characters are allowed!
+					break;
 
-			default:
-				$sanitize_field = ( ! empty( $field ) ? preg_replace( '/[^-A-Za-z0-9_ ]/', '', wp_strip_all_tags( $field ) ) : '' ); // Only text, num, space, _ and - allowed.
-				break;
+				case 'src':
+					$sanitize_field = ( ! empty( $field ) ? preg_replace( '/["\']/', '', wp_strip_all_tags( $field ) ) : '' ); // Restrict quotes.
+					break;
+
+				case 'restrict_quotes':
+					$sanitize_field = ( ! empty( $field ) ? preg_replace( '/["\']/', '', $field ) : '' ); // Allow HTML tags and Restrict quotes.
+					break;
+
+				default:
+					$original_type = gettype( $field );
+
+					$sanitize_field = ( ! empty( $field ) ? preg_replace( '/[^-A-Za-z0-9_ ]/', '', wp_strip_all_tags( $field ) ) : '' ); // Only text, num, space, _ and - allowed.
+
+					// Cast $sanitize_field back to its original type.
+					if ( 'integer' === $original_type ) {
+						$sanitize_field = intval( $sanitize_field );
+					} elseif ( 'double' === $original_type ) {
+						$sanitize_field = floatval( $sanitize_field );
+					} elseif ( 'boolean' === $original_type ) {
+						$sanitize_field = (bool) $sanitize_field;
+					}
+					break;
+
+			}
+		} else {
+			$sanitize_field = null;
 
 		}
 		return $sanitize_field;

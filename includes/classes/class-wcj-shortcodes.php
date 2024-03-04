@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 7.1.6
+ * @version 7.1.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -125,7 +125,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_shortcode.
 		 *
-		 * @version 6.0.0
+		 * @version 7.1.8
 		 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 		 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 		 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -170,6 +170,30 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 				'multiply'                      => 1,
 			);
 			$atts            = array_merge( $global_defaults, $atts );
+
+			$atts['plus']                          = wcj_sanitize_input_attribute_values( $atts['plus'] );
+			$atts['before']                        = wcj_sanitize_input_attribute_values( $atts['before'], 'restrict_quotes' );  // Restrict quotes.
+			$atts['after']                         = wcj_sanitize_input_attribute_values( $atts['after'], 'restrict_quotes' );
+			$atts['visibility']                    = wcj_sanitize_input_attribute_values( $atts['visibility'] ); // Only text, num, space, _ and - allowed.
+			$atts['wrong_user_text']               = wcj_sanitize_input_attribute_values( $atts['wrong_user_text'], 'restrict_quotes' );
+			$atts['wrong_user_text_not_logged_in'] = wcj_sanitize_input_attribute_values( $atts['wrong_user_text_not_logged_in'], 'restrict_quotes' );
+			$atts['site_visibility']               = wcj_sanitize_input_attribute_values( $atts['site_visibility'] );
+			$atts['location']                      = wcj_sanitize_input_attribute_values( $atts['location'] );
+			$atts['not_location']                  = wcj_sanitize_input_attribute_values( $atts['not_location'] );
+			$atts['wpml_language']                 = wcj_sanitize_input_attribute_values( $atts['wpml_language'] );
+			$atts['wpml_not_language']             = wcj_sanitize_input_attribute_values( $atts['wpml_not_language'] );
+			$atts['billing_country']               = wcj_sanitize_input_attribute_values( $atts['billing_country'] );
+			$atts['not_billing_country']           = wcj_sanitize_input_attribute_values( $atts['not_billing_country'] );
+			$atts['payment_method']                = wcj_sanitize_input_attribute_values( $atts['payment_method'] );
+			$atts['not_payment_method']            = wcj_sanitize_input_attribute_values( $atts['not_payment_method'] );
+			$atts['module']                        = wcj_sanitize_input_attribute_values( $atts['module'] );
+			$atts['find']                          = wcj_sanitize_input_attribute_values( $atts['find'] );
+			$atts['replace']                       = wcj_sanitize_input_attribute_values( $atts['replace'] );
+			$atts['strip_tags']                    = wcj_sanitize_input_attribute_values( $atts['strip_tags'] );
+			$atts['on_empty']                      = wcj_sanitize_input_attribute_values( $atts['on_empty'] );
+			$atts['on_zero']                       = wcj_sanitize_input_attribute_values( $atts['on_zero'] );
+			$atts['time']                          = wcj_sanitize_input_attribute_values( $atts['time'] );
+			$atts['multiply']                      = wcj_sanitize_input_attribute_values( $atts['multiply'] );
 
 			// Check for required atts.
 			$atts = $this->init_atts( $atts );

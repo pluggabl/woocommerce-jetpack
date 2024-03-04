@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 7.0.0
+ * @version 7.1.8
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -144,6 +144,14 @@ $settings = array(
 		true
 	),
 	array(
+		'title'    => __( 'Products to Exclude forcefully', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable the option if you encounter any difficulties with Product Exclusion.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wholesale_price_products_to_exclude_forcefully',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'   => __( 'Product Categories to Include', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Leave blank to include all products.', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_wholesale_price_product_cats_to_include',
@@ -159,6 +167,14 @@ $settings = array(
 		'type'    => 'multiselect',
 		'class'   => 'chosen_select',
 		'options' => $product_cats,
+	),
+	array(
+		'title'    => __( 'Product Categories to Exclude forcefully', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable the option if you encounter any difficulties with Product Categories Exclusion.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wholesale_price_product_cats_to_exclude_forcefully',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Advanced: Price Changes', 'woocommerce-jetpack' ),

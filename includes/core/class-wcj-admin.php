@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.1.6
+ * @version 7.1.8
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -832,7 +832,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Output_settings.
 		 *
-		 * @version 7.0.0
+		 * @version 7.1.8
 		 * @param   array $current_section defines the current section.
 		 */
 		public function output_settings( $current_section = '' ) {
@@ -941,6 +941,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 								$tab_ids_key = key( $setting['tab_ids'] );
 								$wpnonce     = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 								$active_tab  = ( isset( $_GET['active_tab'] ) ? sanitize_text_field( wp_unslash( $_GET['active_tab'] ) ) : $tab_ids_key );
+								$active_tab  = esc_attr( $active_tab );
 								foreach ( $setting['tab_ids'] as $key => $option ) {
 									$tab_ids_titles[] = $option;
 									$final_html      .= '<li class="wcj-nav-item">

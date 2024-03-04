@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 7.1.3
+ * @version 7.1.8
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		/**
 		 * Validate_args.
 		 *
-		 * @version 2.8.0
+		 * @version 7.1.8
 		 * @since   2.5.0
 		 * @param array $args The user defined shortcode args.
 		 * @param array $shortcode_atts The user defined shortcode shortcode_atts.
@@ -216,6 +216,33 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 
 			if ( $args['sale_price'] > $args['regular_price'] ) {
 				$errors .= '<li>' . __( 'Sale price must be less than the regular price!', 'woocommerce-jetpack' ) . '</li>';
+			}
+
+			$product_image_name = isset( $args['image']['name'] ) ? sanitize_text_field( wp_unslash( $args['image']['name'] ) ) : '';
+			$gallery_images     = isset( $args['image_gallery']['name'] ) ? array_map( 'sanitize_text_field', wp_unslash( $args['image_gallery']['name'] ) ) : array();
+
+			$allowed_types = array( '.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif', '.gif' ); // Allowed File types by WordPress https://wordpress.com/support/accepted-filetypes/.
+
+			// Verify and restrict Product Image.
+			if ( isset( $product_image_name ) && '' !== $product_image_name ) {
+				$file_type = '.' . pathinfo( $product_image_name, PATHINFO_EXTENSION );
+				if ( ! in_array( $file_type, $allowed_types, true ) ) {
+					$errors .= '<li>' . __( 'Sorry, only JPG, JPEG, PNG, WEBP, HEIC, HEIF and GIF files are allowed', 'woocommerce-jetpack' ) . '</li>';
+				}
+			}
+			// Verify and restrict Gallery Image.
+			if ( isset( $gallery_images ) && ! empty( array_filter( $gallery_images ) ) ) {
+				$error_encountered = false; // Flag variable to track if an error has been encountered.
+				foreach ( $gallery_images as $gallery_image_name ) {
+					$gallery_file_type = '.' . pathinfo( $gallery_image_name, PATHINFO_EXTENSION );
+					if ( ! in_array( $gallery_file_type, $allowed_types, true ) ) {
+						if ( ! $error_encountered && ! $errors ) {
+
+							$errors           .= '<li>' . __( 'Sorry, only JPG, JPEG, PNG, WEBP, HEIC, HEIF and GIF files are allowed', 'woocommerce-jetpack' ) . '</li>';
+							$error_encountered = true; // Set the flag to true to indicate error has been encountered.
+						}
+					}
+				}
 			}
 			return ( '' === $errors ) ? true : $errors;
 		}
