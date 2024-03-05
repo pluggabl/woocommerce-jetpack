@@ -221,7 +221,7 @@ msgstr ""
 #: includes/settings/wcj-settings-eu-vat-number.php:55
 #: includes/settings/wcj-settings-product-by-user.php:16
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:190
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:399
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:426
 msgid "Description"
 msgstr ""
 
@@ -621,18 +621,18 @@ msgid "Upgrade to Booster Plus"
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:79
-#: includes/core/class-wcj-admin.php:1167
+#: includes/core/class-wcj-admin.php:1168
 #, php-format
 msgid "Grab raw %1$s rate from %2$s."
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:80
-#: includes/core/class-wcj-admin.php:1168
+#: includes/core/class-wcj-admin.php:1169
 msgid "Doesn't apply rounding, offset etc."
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:350
-#: includes/core/class-wcj-admin.php:1105
+#: includes/core/class-wcj-admin.php:1106
 msgid "Save changes"
 msgstr ""
 
@@ -989,7 +989,7 @@ msgid "Search"
 msgstr ""
 
 #: includes/admin/wcj-settings-plugins.php:67
-#: includes/core/class-wcj-admin.php:961 includes/core/class-wcj-admin.php:1324
+#: includes/core/class-wcj-admin.php:962 includes/core/class-wcj-admin.php:1325
 msgid "Save Changes"
 msgstr ""
 
@@ -1294,6 +1294,8 @@ msgstr ""
 #: includes/settings/wcj-settings-wholesale-price.php:80
 #: includes/settings/wcj-settings-wholesale-price.php:89
 #: includes/settings/wcj-settings-wholesale-price.php:99
+#: includes/settings/wcj-settings-wholesale-price.php:149
+#: includes/settings/wcj-settings-wholesale-price.php:174
 #: includes/settings/wcj-settings-wpml.php:43
 #: includes/settings/wcj-settings-wpml.php:50
 #: includes/settings/wcj-settings-wpml.php:59
@@ -1674,7 +1676,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-by-user.php:22
 #: includes/settings/wcj-settings-sku.php:29
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:196
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:463
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:490
 msgid "Categories"
 msgstr ""
 
@@ -1682,7 +1684,7 @@ msgstr ""
 #: includes/export/class-wcj-export-fields-helper.php:323
 #: includes/settings/wcj-settings-product-by-user.php:23
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:197
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:473
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:500
 msgid "Tags"
 msgstr ""
 
@@ -3091,7 +3093,7 @@ msgstr ""
 #: includes/class-wcj-product-by-user.php:301
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:169
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:438
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:421
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:448
 #: includes/tools/class-wcj-order-statuses-tool.php:225
 msgid "Delete"
 msgstr ""
@@ -4355,7 +4357,7 @@ msgstr ""
 #: includes/reports/class-wcj-reports-monthly-sales.php:396
 #: includes/reports/class-wcj-reports-monthly-sales.php:702
 #: includes/settings/wcj-settings-empty-cart.php:103
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:421
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:448
 #: includes/tools/class-wcj-order-statuses-tool.php:225
 #: includes/tools/class-wcj-order-statuses-tool.php:381
 msgid "Are you sure?"
@@ -4762,7 +4764,7 @@ msgstr ""
 #: includes/settings/wcj-settings-upsells.php:60
 #: includes/shipping/class-wc-shipping-wcj-custom-template.php:156
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:272
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:391
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:418
 #: includes/widgets/class-wcj-widget-country-switcher.php:80
 #: includes/widgets/class-wcj-widget-left-to-free-shipping.php:66
 #: includes/widgets/class-wcj-widget-multicurrency.php:85
@@ -4771,7 +4773,7 @@ msgid "Title"
 msgstr ""
 
 #: includes/class-wcj-product-by-user.php:292
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:500
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:527
 #: includes/tools/class-wcj-order-statuses-tool.php:240
 #: includes/tools/class-wcj-order-statuses-tool.php:318
 msgid "Edit"
@@ -5696,7 +5698,7 @@ msgstr ""
 #: includes/settings/wcj-settings-purchase-data.php:249
 #: includes/settings/wcj-settings-sku.php:339
 #: includes/settings/wcj-settings-sku.php:366
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:500
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:527
 #: includes/tools/class-wcj-order-statuses-tool.php:318
 msgid "Add"
 msgstr ""
@@ -6300,7 +6302,7 @@ msgstr ""
 msgid "Company Name"
 msgstr ""
 
-#: includes/classes/class-wcj-shortcodes.php:190
+#: includes/classes/class-wcj-shortcodes.php:214
 #: includes/shortcodes/class-wcj-general-shortcodes.php:613
 #, php-format
 msgid "\"%s\" module is not enabled!"
@@ -6864,7 +6866,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:108
 #: includes/settings/wcj-settings-product-by-user.php:19
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:193
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:435
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:462
 msgid "Regular Price"
 msgstr ""
 
@@ -6874,7 +6876,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:117
 #: includes/settings/wcj-settings-product-by-user.php:20
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:194
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:444
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:471
 msgid "Sale Price"
 msgstr ""
 
@@ -6904,7 +6906,7 @@ msgstr ""
 #: includes/export/class-wcj-export-fields-helper.php:296
 #: includes/settings/wcj-settings-product-by-user.php:17
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:191
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:408
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:435
 msgid "Short Description"
 msgstr ""
 
@@ -7093,983 +7095,983 @@ msgstr ""
 msgid "Upgrade Booster to change value."
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:172
+#: includes/functions/wcj-functions-country.php:185
 msgid "Afghanistan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:173
+#: includes/functions/wcj-functions-country.php:186
 msgid "&#197;land Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:174
+#: includes/functions/wcj-functions-country.php:187
 msgid "Albania"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:175
+#: includes/functions/wcj-functions-country.php:188
 msgid "Algeria"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:176
+#: includes/functions/wcj-functions-country.php:189
 msgid "Andorra"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:177
+#: includes/functions/wcj-functions-country.php:190
 msgid "Angola"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:178
+#: includes/functions/wcj-functions-country.php:191
 msgid "Anguilla"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:179
+#: includes/functions/wcj-functions-country.php:192
 msgid "Antarctica"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:180
+#: includes/functions/wcj-functions-country.php:193
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:181
+#: includes/functions/wcj-functions-country.php:194
 msgid "Argentina"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:182
+#: includes/functions/wcj-functions-country.php:195
 msgid "Armenia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:183
+#: includes/functions/wcj-functions-country.php:196
 msgid "Aruba"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:184
+#: includes/functions/wcj-functions-country.php:197
 msgid "Australia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:185
+#: includes/functions/wcj-functions-country.php:198
 msgid "Austria"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:186
+#: includes/functions/wcj-functions-country.php:199
 msgid "Azerbaijan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:187
+#: includes/functions/wcj-functions-country.php:200
 msgid "Bahamas"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:188
+#: includes/functions/wcj-functions-country.php:201
 msgid "Bahrain"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:189
+#: includes/functions/wcj-functions-country.php:202
 msgid "Bangladesh"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:190
+#: includes/functions/wcj-functions-country.php:203
 msgid "Barbados"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:191
+#: includes/functions/wcj-functions-country.php:204
 msgid "Belarus"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:192
+#: includes/functions/wcj-functions-country.php:205
 msgid "Belgium"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:193
+#: includes/functions/wcj-functions-country.php:206
 msgid "Belau"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:194
+#: includes/functions/wcj-functions-country.php:207
 msgid "Belize"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:195
+#: includes/functions/wcj-functions-country.php:208
 msgid "Benin"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:196
+#: includes/functions/wcj-functions-country.php:209
 msgid "Bermuda"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:197
+#: includes/functions/wcj-functions-country.php:210
 msgid "Bhutan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:198
+#: includes/functions/wcj-functions-country.php:211
 msgid "Bolivia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:199
+#: includes/functions/wcj-functions-country.php:212
 msgid "Bonaire, Saint Eustatius and Saba"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:200
+#: includes/functions/wcj-functions-country.php:213
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:201
+#: includes/functions/wcj-functions-country.php:214
 msgid "Botswana"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:202
+#: includes/functions/wcj-functions-country.php:215
 msgid "Bouvet Island"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:203
+#: includes/functions/wcj-functions-country.php:216
 msgid "Brazil"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:204
+#: includes/functions/wcj-functions-country.php:217
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:205
+#: includes/functions/wcj-functions-country.php:218
 msgid "British Virgin Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:206
+#: includes/functions/wcj-functions-country.php:219
 msgid "Brunei"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:207
+#: includes/functions/wcj-functions-country.php:220
 msgid "Bulgaria"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:208
+#: includes/functions/wcj-functions-country.php:221
 msgid "Burkina Faso"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:209
+#: includes/functions/wcj-functions-country.php:222
 msgid "Burundi"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:210
+#: includes/functions/wcj-functions-country.php:223
 msgid "Cambodia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:211
+#: includes/functions/wcj-functions-country.php:224
 msgid "Cameroon"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:212
+#: includes/functions/wcj-functions-country.php:225
 msgid "Canada"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:213
+#: includes/functions/wcj-functions-country.php:226
 msgid "Cape Verde"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:214
+#: includes/functions/wcj-functions-country.php:227
 msgid "Cayman Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:215
+#: includes/functions/wcj-functions-country.php:228
 msgid "Central African Republic"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:216
+#: includes/functions/wcj-functions-country.php:229
 msgid "Chad"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:217
+#: includes/functions/wcj-functions-country.php:230
 msgid "Chile"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:218
+#: includes/functions/wcj-functions-country.php:231
 msgid "China"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:219
+#: includes/functions/wcj-functions-country.php:232
 msgid "Christmas Island"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:220
+#: includes/functions/wcj-functions-country.php:233
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:221
+#: includes/functions/wcj-functions-country.php:234
 msgid "Colombia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:222
+#: includes/functions/wcj-functions-country.php:235
 msgid "Comoros"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:223
+#: includes/functions/wcj-functions-country.php:236
 msgid "Congo (Brazzaville)"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:224
+#: includes/functions/wcj-functions-country.php:237
 msgid "Congo (Kinshasa)"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:225
+#: includes/functions/wcj-functions-country.php:238
 msgid "Cook Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:226
+#: includes/functions/wcj-functions-country.php:239
 msgid "Costa Rica"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:227
+#: includes/functions/wcj-functions-country.php:240
 msgid "Croatia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:228
+#: includes/functions/wcj-functions-country.php:241
 msgid "Cuba"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:229
+#: includes/functions/wcj-functions-country.php:242
 msgid "Cura&Ccedil;ao"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:230
+#: includes/functions/wcj-functions-country.php:243
 msgid "Cyprus"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:231
+#: includes/functions/wcj-functions-country.php:244
 msgid "Czech Republic"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:232
+#: includes/functions/wcj-functions-country.php:245
 msgid "Denmark"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:233
+#: includes/functions/wcj-functions-country.php:246
 msgid "Djibouti"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:234
+#: includes/functions/wcj-functions-country.php:247
 msgid "Dominica"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:235
+#: includes/functions/wcj-functions-country.php:248
 msgid "Dominican Republic"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:236
+#: includes/functions/wcj-functions-country.php:249
 msgid "Ecuador"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:237
+#: includes/functions/wcj-functions-country.php:250
 msgid "Egypt"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:238
+#: includes/functions/wcj-functions-country.php:251
 msgid "El Salvador"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:239
+#: includes/functions/wcj-functions-country.php:252
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:240
+#: includes/functions/wcj-functions-country.php:253
 msgid "Eritrea"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:241
+#: includes/functions/wcj-functions-country.php:254
 msgid "Estonia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:242
+#: includes/functions/wcj-functions-country.php:255
 msgid "Ethiopia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:243
+#: includes/functions/wcj-functions-country.php:256
 msgid "Falkland Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:244
+#: includes/functions/wcj-functions-country.php:257
 msgid "Faroe Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:245
+#: includes/functions/wcj-functions-country.php:258
 msgid "Fiji"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:246
+#: includes/functions/wcj-functions-country.php:259
 msgid "Finland"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:247
+#: includes/functions/wcj-functions-country.php:260
 msgid "France"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:248
+#: includes/functions/wcj-functions-country.php:261
 msgid "French Guiana"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:249
+#: includes/functions/wcj-functions-country.php:262
 msgid "French Polynesia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:250
+#: includes/functions/wcj-functions-country.php:263
 msgid "French Southern Territories"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:251
+#: includes/functions/wcj-functions-country.php:264
 msgid "Gabon"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:252
+#: includes/functions/wcj-functions-country.php:265
 msgid "Gambia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:253
+#: includes/functions/wcj-functions-country.php:266
 msgid "Georgia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:254
+#: includes/functions/wcj-functions-country.php:267
 msgid "Germany"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:255
+#: includes/functions/wcj-functions-country.php:268
 msgid "Ghana"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:256
+#: includes/functions/wcj-functions-country.php:269
 msgid "Gibraltar"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:257
+#: includes/functions/wcj-functions-country.php:270
 msgid "Greece"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:258
+#: includes/functions/wcj-functions-country.php:271
 msgid "Greenland"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:259
+#: includes/functions/wcj-functions-country.php:272
 msgid "Grenada"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:260
+#: includes/functions/wcj-functions-country.php:273
 msgid "Guadeloupe"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:261
+#: includes/functions/wcj-functions-country.php:274
 msgid "Guatemala"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:262
+#: includes/functions/wcj-functions-country.php:275
 msgid "Guernsey"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:263
+#: includes/functions/wcj-functions-country.php:276
 msgid "Guinea"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:264
+#: includes/functions/wcj-functions-country.php:277
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:265
+#: includes/functions/wcj-functions-country.php:278
 msgid "Guyana"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:266
+#: includes/functions/wcj-functions-country.php:279
 msgid "Haiti"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:267
+#: includes/functions/wcj-functions-country.php:280
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:268
+#: includes/functions/wcj-functions-country.php:281
 msgid "Honduras"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:269
+#: includes/functions/wcj-functions-country.php:282
 msgid "Hong Kong"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:270
+#: includes/functions/wcj-functions-country.php:283
 msgid "Hungary"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:271
+#: includes/functions/wcj-functions-country.php:284
 msgid "Iceland"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:272
+#: includes/functions/wcj-functions-country.php:285
 msgid "India"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:273
+#: includes/functions/wcj-functions-country.php:286
 msgid "Indonesia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:274
+#: includes/functions/wcj-functions-country.php:287
 msgid "Iran"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:275
+#: includes/functions/wcj-functions-country.php:288
 msgid "Iraq"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:276
+#: includes/functions/wcj-functions-country.php:289
 msgid "Republic of Ireland"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:277
+#: includes/functions/wcj-functions-country.php:290
 msgid "Isle of Man"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:278
+#: includes/functions/wcj-functions-country.php:291
 msgid "Israel"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:279
+#: includes/functions/wcj-functions-country.php:292
 msgid "Italy"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:280
+#: includes/functions/wcj-functions-country.php:293
 msgid "Ivory Coast"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:281
+#: includes/functions/wcj-functions-country.php:294
 msgid "Jamaica"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:282
+#: includes/functions/wcj-functions-country.php:295
 msgid "Japan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:283
+#: includes/functions/wcj-functions-country.php:296
 msgid "Jersey"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:284
+#: includes/functions/wcj-functions-country.php:297
 msgid "Jordan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:285
+#: includes/functions/wcj-functions-country.php:298
 msgid "Kazakhstan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:286
+#: includes/functions/wcj-functions-country.php:299
 msgid "Kenya"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:287
+#: includes/functions/wcj-functions-country.php:300
 msgid "Kiribati"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:288
+#: includes/functions/wcj-functions-country.php:301
 msgid "Kuwait"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:289
+#: includes/functions/wcj-functions-country.php:302
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:290
+#: includes/functions/wcj-functions-country.php:303
 msgid "Laos"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:291
+#: includes/functions/wcj-functions-country.php:304
 msgid "Latvia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:292
+#: includes/functions/wcj-functions-country.php:305
 msgid "Lebanon"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:293
+#: includes/functions/wcj-functions-country.php:306
 msgid "Lesotho"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:294
+#: includes/functions/wcj-functions-country.php:307
 msgid "Liberia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:295
+#: includes/functions/wcj-functions-country.php:308
 msgid "Libya"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:296
+#: includes/functions/wcj-functions-country.php:309
 msgid "Liechtenstein"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:297
+#: includes/functions/wcj-functions-country.php:310
 msgid "Lithuania"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:298
+#: includes/functions/wcj-functions-country.php:311
 msgid "Luxembourg"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:299
+#: includes/functions/wcj-functions-country.php:312
 msgid "Macao S.A.R., China"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:300
+#: includes/functions/wcj-functions-country.php:313
 msgid "Macedonia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:301
+#: includes/functions/wcj-functions-country.php:314
 msgid "Madagascar"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:302
+#: includes/functions/wcj-functions-country.php:315
 msgid "Malawi"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:303
+#: includes/functions/wcj-functions-country.php:316
 msgid "Malaysia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:304
+#: includes/functions/wcj-functions-country.php:317
 msgid "Maldives"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:305
+#: includes/functions/wcj-functions-country.php:318
 msgid "Mali"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:306
+#: includes/functions/wcj-functions-country.php:319
 msgid "Malta"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:307
+#: includes/functions/wcj-functions-country.php:320
 msgid "Marshall Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:308
+#: includes/functions/wcj-functions-country.php:321
 msgid "Martinique"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:309
+#: includes/functions/wcj-functions-country.php:322
 msgid "Mauritania"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:310
+#: includes/functions/wcj-functions-country.php:323
 msgid "Mauritius"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:311
+#: includes/functions/wcj-functions-country.php:324
 msgid "Mayotte"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:312
+#: includes/functions/wcj-functions-country.php:325
 msgid "Mexico"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:313
+#: includes/functions/wcj-functions-country.php:326
 msgid "Micronesia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:314
+#: includes/functions/wcj-functions-country.php:327
 msgid "Moldova"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:315
+#: includes/functions/wcj-functions-country.php:328
 msgid "Monaco"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:316
+#: includes/functions/wcj-functions-country.php:329
 msgid "Mongolia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:317
+#: includes/functions/wcj-functions-country.php:330
 msgid "Montenegro"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:318
+#: includes/functions/wcj-functions-country.php:331
 msgid "Montserrat"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:319
+#: includes/functions/wcj-functions-country.php:332
 msgid "Morocco"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:320
+#: includes/functions/wcj-functions-country.php:333
 msgid "Mozambique"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:321
+#: includes/functions/wcj-functions-country.php:334
 msgid "Myanmar"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:322
+#: includes/functions/wcj-functions-country.php:335
 msgid "Namibia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:323
+#: includes/functions/wcj-functions-country.php:336
 msgid "Nauru"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:324
+#: includes/functions/wcj-functions-country.php:337
 msgid "Nepal"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:325
+#: includes/functions/wcj-functions-country.php:338
 msgid "Netherlands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:326
+#: includes/functions/wcj-functions-country.php:339
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:327
+#: includes/functions/wcj-functions-country.php:340
 msgid "New Caledonia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:328
+#: includes/functions/wcj-functions-country.php:341
 msgid "New Zealand"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:329
+#: includes/functions/wcj-functions-country.php:342
 msgid "Nicaragua"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:330
+#: includes/functions/wcj-functions-country.php:343
 msgid "Niger"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:331
+#: includes/functions/wcj-functions-country.php:344
 msgid "Nigeria"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:332
+#: includes/functions/wcj-functions-country.php:345
 msgid "Niue"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:333
+#: includes/functions/wcj-functions-country.php:346
 msgid "Norfolk Island"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:334
+#: includes/functions/wcj-functions-country.php:347
 msgid "North Korea"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:335
+#: includes/functions/wcj-functions-country.php:348
 msgid "Norway"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:336
+#: includes/functions/wcj-functions-country.php:349
 msgid "Oman"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:337
+#: includes/functions/wcj-functions-country.php:350
 msgid "Pakistan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:338
+#: includes/functions/wcj-functions-country.php:351
 msgid "Palestinian Territory"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:339
+#: includes/functions/wcj-functions-country.php:352
 msgid "Panama"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:340
+#: includes/functions/wcj-functions-country.php:353
 msgid "Papua New Guinea"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:341
+#: includes/functions/wcj-functions-country.php:354
 msgid "Paraguay"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:342
+#: includes/functions/wcj-functions-country.php:355
 msgid "Peru"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:343
+#: includes/functions/wcj-functions-country.php:356
 msgid "Philippines"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:344
+#: includes/functions/wcj-functions-country.php:357
 msgid "Pitcairn"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:345
+#: includes/functions/wcj-functions-country.php:358
 msgid "Poland"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:346
+#: includes/functions/wcj-functions-country.php:359
 msgid "Portugal"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:347
+#: includes/functions/wcj-functions-country.php:360
 msgid "Qatar"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:348
+#: includes/functions/wcj-functions-country.php:361
 msgid "Reunion"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:349
+#: includes/functions/wcj-functions-country.php:362
 msgid "Romania"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:350
+#: includes/functions/wcj-functions-country.php:363
 msgid "Russia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:351
+#: includes/functions/wcj-functions-country.php:364
 msgid "Rwanda"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:352
+#: includes/functions/wcj-functions-country.php:365
 msgid "Saint Barth&eacute;lemy"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:353
+#: includes/functions/wcj-functions-country.php:366
 msgid "Saint Helena"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:354
+#: includes/functions/wcj-functions-country.php:367
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:355
+#: includes/functions/wcj-functions-country.php:368
 msgid "Saint Lucia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:356
+#: includes/functions/wcj-functions-country.php:369
 msgid "Saint Martin (French part)"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:357
+#: includes/functions/wcj-functions-country.php:370
 msgid "Saint Martin (Dutch part)"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:358
+#: includes/functions/wcj-functions-country.php:371
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:359
+#: includes/functions/wcj-functions-country.php:372
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:360
+#: includes/functions/wcj-functions-country.php:373
 msgid "San Marino"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:361
+#: includes/functions/wcj-functions-country.php:374
 msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:362
+#: includes/functions/wcj-functions-country.php:375
 msgid "Saudi Arabia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:363
+#: includes/functions/wcj-functions-country.php:376
 msgid "Senegal"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:364
+#: includes/functions/wcj-functions-country.php:377
 msgid "Serbia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:365
+#: includes/functions/wcj-functions-country.php:378
 msgid "Seychelles"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:366
+#: includes/functions/wcj-functions-country.php:379
 msgid "Sierra Leone"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:367
+#: includes/functions/wcj-functions-country.php:380
 msgid "Singapore"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:368
+#: includes/functions/wcj-functions-country.php:381
 msgid "Slovakia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:369
+#: includes/functions/wcj-functions-country.php:382
 msgid "Slovenia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:370
+#: includes/functions/wcj-functions-country.php:383
 msgid "Solomon Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:371
+#: includes/functions/wcj-functions-country.php:384
 msgid "Somalia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:372
+#: includes/functions/wcj-functions-country.php:385
 msgid "South Africa"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:373
+#: includes/functions/wcj-functions-country.php:386
 msgid "South Georgia/Sandwich Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:374
+#: includes/functions/wcj-functions-country.php:387
 msgid "South Korea"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:375
+#: includes/functions/wcj-functions-country.php:388
 msgid "South Sudan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:376
+#: includes/functions/wcj-functions-country.php:389
 msgid "Spain"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:377
+#: includes/functions/wcj-functions-country.php:390
 msgid "Sri Lanka"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:378
+#: includes/functions/wcj-functions-country.php:391
 msgid "Sudan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:379
+#: includes/functions/wcj-functions-country.php:392
 msgid "Suriname"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:380
+#: includes/functions/wcj-functions-country.php:393
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:381
+#: includes/functions/wcj-functions-country.php:394
 msgid "Swaziland"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:382
+#: includes/functions/wcj-functions-country.php:395
 msgid "Sweden"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:383
+#: includes/functions/wcj-functions-country.php:396
 msgid "Switzerland"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:384
+#: includes/functions/wcj-functions-country.php:397
 msgid "Syria"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:385
+#: includes/functions/wcj-functions-country.php:398
 msgid "Taiwan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:386
+#: includes/functions/wcj-functions-country.php:399
 msgid "Tajikistan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:387
+#: includes/functions/wcj-functions-country.php:400
 msgid "Tanzania"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:388
+#: includes/functions/wcj-functions-country.php:401
 msgid "Thailand"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:389
+#: includes/functions/wcj-functions-country.php:402
 msgid "Timor-Leste"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:390
+#: includes/functions/wcj-functions-country.php:403
 msgid "Togo"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:391
+#: includes/functions/wcj-functions-country.php:404
 msgid "Tokelau"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:392
+#: includes/functions/wcj-functions-country.php:405
 msgid "Tonga"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:393
+#: includes/functions/wcj-functions-country.php:406
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:394
+#: includes/functions/wcj-functions-country.php:407
 msgid "Tunisia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:395
+#: includes/functions/wcj-functions-country.php:408
 msgid "Turkey"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:396
+#: includes/functions/wcj-functions-country.php:409
 msgid "Turkmenistan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:397
+#: includes/functions/wcj-functions-country.php:410
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:398
+#: includes/functions/wcj-functions-country.php:411
 msgid "Tuvalu"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:399
+#: includes/functions/wcj-functions-country.php:412
 msgid "Uganda"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:400
+#: includes/functions/wcj-functions-country.php:413
 msgid "Ukraine"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:401
+#: includes/functions/wcj-functions-country.php:414
 msgid "United Arab Emirates"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:402
+#: includes/functions/wcj-functions-country.php:415
 msgid "United Kingdom (UK)"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:403
+#: includes/functions/wcj-functions-country.php:416
 msgid "United States (US)"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:404
+#: includes/functions/wcj-functions-country.php:417
 msgid "Uruguay"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:405
+#: includes/functions/wcj-functions-country.php:418
 msgid "Uzbekistan"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:406
+#: includes/functions/wcj-functions-country.php:419
 msgid "Vanuatu"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:407
+#: includes/functions/wcj-functions-country.php:420
 msgid "Vatican"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:408
+#: includes/functions/wcj-functions-country.php:421
 msgid "Venezuela"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:409
+#: includes/functions/wcj-functions-country.php:422
 msgid "Vietnam"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:410
+#: includes/functions/wcj-functions-country.php:423
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:411
+#: includes/functions/wcj-functions-country.php:424
 msgid "Western Sahara"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:412
+#: includes/functions/wcj-functions-country.php:425
 msgid "Western Samoa"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:413
+#: includes/functions/wcj-functions-country.php:426
 msgid "Yemen"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:414
+#: includes/functions/wcj-functions-country.php:427
 msgid "Zambia"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:415
+#: includes/functions/wcj-functions-country.php:428
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/functions/wcj-functions-country.php:416
+#: includes/functions/wcj-functions-country.php:429
 msgid "European Union"
 msgstr ""
 
@@ -10058,10 +10060,10 @@ msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:71
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:108
-#: includes/settings/wcj-settings-wholesale-price.php:283
-#: includes/settings/wcj-settings-wholesale-price.php:284
-#: includes/settings/wcj-settings-wholesale-price.php:365
-#: includes/settings/wcj-settings-wholesale-price.php:366
+#: includes/settings/wcj-settings-wholesale-price.php:299
+#: includes/settings/wcj-settings-wholesale-price.php:300
+#: includes/settings/wcj-settings-wholesale-price.php:381
+#: includes/settings/wcj-settings-wholesale-price.php:382
 msgid "Discount"
 msgstr ""
 
@@ -11042,7 +11044,7 @@ msgid "Or"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-core-fields.php:118
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:384
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:411
 msgid "required"
 msgstr ""
 
@@ -13825,7 +13827,7 @@ msgstr ""
 #: includes/settings/wcj-settings-price-by-user-role.php:147
 #: includes/settings/wcj-settings-product-addons.php:306
 #: includes/settings/wcj-settings-product-price-by-formula.php:168
-#: includes/settings/wcj-settings-wholesale-price.php:173
+#: includes/settings/wcj-settings-wholesale-price.php:189
 msgid ""
 "Priority for all module's price filters. If you face pricing issues while "
 "using another plugin or booster module, You can change the Priority, Greater "
@@ -14433,7 +14435,7 @@ msgid "Roles"
 msgstr ""
 
 #: includes/settings/wcj-settings-multicurrency.php:461
-#: includes/settings/wcj-settings-wholesale-price.php:316
+#: includes/settings/wcj-settings-wholesale-price.php:332
 msgid "Save settings after you change this option. Leave blank to disable."
 msgstr ""
 
@@ -17204,7 +17206,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-price-by-user-role.php:155
 #: includes/settings/wcj-settings-product-open-pricing.php:168
-#: includes/settings/wcj-settings-wholesale-price.php:166
+#: includes/settings/wcj-settings-wholesale-price.php:182
 msgid ""
 "Try enabling this checkbox, if you are having compatibility issues with other "
 "plugins."
@@ -18197,7 +18199,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-by-user.php:18
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:192
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:427
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:454
 msgid "Image"
 msgstr ""
 
@@ -18250,7 +18252,7 @@ msgid "Message: Product Successfully Added"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-by-user.php:146
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:344
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:371
 msgid "\"%product_title%\" successfully added!"
 msgstr ""
 
@@ -18259,7 +18261,7 @@ msgid "Message: Product Successfully Edited"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-by-user.php:153
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:352
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:379
 msgid "\"%product_title%\" successfully edited!"
 msgstr ""
 
@@ -18317,7 +18319,7 @@ msgid "Inside product title"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-custom-info.php:196
-#: includes/settings/wcj-settings-wholesale-price.php:147
+#: includes/settings/wcj-settings-wholesale-price.php:155
 msgid "Product Categories to Include"
 msgstr ""
 
@@ -18331,7 +18333,7 @@ msgid "Leave blank to disable the option."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-custom-info.php:206
-#: includes/settings/wcj-settings-wholesale-price.php:156
+#: includes/settings/wcj-settings-wholesale-price.php:164
 msgid "Product Categories to Exclude"
 msgstr ""
 
@@ -18610,7 +18612,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-input-fields.php:216
 #: includes/settings/wcj-settings-product-input-fields.php:228
 #: includes/settings/wcj-settings-wholesale-price.php:132
-#: includes/settings/wcj-settings-wholesale-price.php:148
+#: includes/settings/wcj-settings-wholesale-price.php:156
 msgid "Leave blank to include all products."
 msgstr ""
 
@@ -19062,7 +19064,7 @@ msgid "Allow price entering in switched currency"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-open-pricing.php:166
-#: includes/settings/wcj-settings-wholesale-price.php:164
+#: includes/settings/wcj-settings-wholesale-price.php:180
 msgid "Advanced: Price Changes"
 msgstr ""
 
@@ -21285,17 +21287,17 @@ msgid "Automatically add coupon's products to the cart"
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:31
-#: includes/settings/wcj-settings-wholesale-price.php:193
+#: includes/settings/wcj-settings-wholesale-price.php:209
 msgid "Template Variables"
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:32
-#: includes/settings/wcj-settings-wholesale-price.php:239
+#: includes/settings/wcj-settings-wholesale-price.php:255
 msgid "Wholesale Levels Options"
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:33
-#: includes/settings/wcj-settings-wholesale-price.php:309
+#: includes/settings/wcj-settings-wholesale-price.php:325
 msgid "Additional User Roles Options"
 msgstr ""
 
@@ -21371,75 +21373,94 @@ msgstr ""
 msgid "If show discount info on cart page is enabled, set format here."
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:165
-msgid "Disable wholesale pricing for products with \"Price Changes\""
+#: includes/settings/wcj-settings-wholesale-price.php:147
+msgid "Products to Exclude forcefully"
+msgstr ""
+
+#: includes/settings/wcj-settings-wholesale-price.php:148
+msgid ""
+"Enable the option if you encounter any difficulties with Product Exclusion."
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:172
+msgid "Product Categories to Exclude forcefully"
+msgstr ""
+
+#: includes/settings/wcj-settings-wholesale-price.php:173
+msgid ""
+"Enable the option if you encounter any difficulties with Product Categories "
+"Exclusion."
+msgstr ""
+
+#: includes/settings/wcj-settings-wholesale-price.php:181
+msgid "Disable wholesale pricing for products with \"Price Changes\""
+msgstr ""
+
+#: includes/settings/wcj-settings-wholesale-price.php:188
 msgid "Advanced: Price Filters Priority"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:195
+#: includes/settings/wcj-settings-wholesale-price.php:211
 msgid "Options regarding template variables"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:199
+#: includes/settings/wcj-settings-wholesale-price.php:215
 msgid "Discount Value - Fixed Discount Totals"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:204
+#: includes/settings/wcj-settings-wholesale-price.php:220
 msgid ""
 "Defines how the <code>%discount_value%</code> will calculate the totals when "
 "the fixed discount is in use."
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:208
-#: includes/settings/wcj-settings-wholesale-price.php:222
+#: includes/settings/wcj-settings-wholesale-price.php:224
+#: includes/settings/wcj-settings-wholesale-price.php:238
 msgid "Do not consider quantity"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:209
-#: includes/settings/wcj-settings-wholesale-price.php:223
+#: includes/settings/wcj-settings-wholesale-price.php:225
+#: includes/settings/wcj-settings-wholesale-price.php:239
 msgid "Consider quantity"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:213
+#: includes/settings/wcj-settings-wholesale-price.php:229
 msgid "Discount Value - Price Directly Totals"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:218
+#: includes/settings/wcj-settings-wholesale-price.php:234
 msgid ""
 "Defines how the <code>%discount_value%</code> will calculate the totals when "
 "the price directly is in use."
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:244
-#: includes/settings/wcj-settings-wholesale-price.php:332
+#: includes/settings/wcj-settings-wholesale-price.php:260
+#: includes/settings/wcj-settings-wholesale-price.php:348
 msgid "Number of Levels"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:259
+#: includes/settings/wcj-settings-wholesale-price.php:275
 msgid "Default Max Qty Level"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:272
-#: includes/settings/wcj-settings-wholesale-price.php:354
+#: includes/settings/wcj-settings-wholesale-price.php:288
+#: includes/settings/wcj-settings-wholesale-price.php:370
 msgid "Min Quantity"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:273
-#: includes/settings/wcj-settings-wholesale-price.php:355
+#: includes/settings/wcj-settings-wholesale-price.php:289
+#: includes/settings/wcj-settings-wholesale-price.php:371
 msgid "Minimum quantity to apply discount"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:311
+#: includes/settings/wcj-settings-wholesale-price.php:327
 msgid ""
 "If you want to set different wholesale pricing options for different user "
 "roles, fill this section. Please note that you can also use Booster's \"Price "
 "based on User Role\" module without filling this section."
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:315
+#: includes/settings/wcj-settings-wholesale-price.php:331
 msgid "User Roles Settings"
 msgstr ""
 
@@ -21662,7 +21683,7 @@ msgid "Product exists!"
 msgstr ""
 
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:195
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:453
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:480
 msgid "Product URL"
 msgstr ""
 
@@ -21675,15 +21696,20 @@ msgstr ""
 msgid "Sale price must be less than the regular price!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:336
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:230
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:241
+msgid "Sorry, only JPG, JPEG, PNG, WEBP, HEIC, HEIF and GIF files are allowed"
+msgstr ""
+
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:363
 msgid "Error!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:379
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:406
 msgid "Add New Product"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:379
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:406
 msgid "Edit Product"
 msgstr ""
 

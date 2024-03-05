@@ -4,7 +4,7 @@ Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, 
 Requires at least: 5.8
 Tested up to: 6.4.2
 Requires PHP: 7.2
-Stable tag: 7.1.7
+Stable tag: 7.1.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,21 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.8 06/03/2024 =
+
+* FIXED - CART & CHECKOUT - Checkout Custom Fields - Resolved the issue causing unexpected modification of custom fields when saving orders from the admin order edit page.
+* FIXED - PRODUCTS - User Products - Implemented client/server-side validation to restrict file uploads to specific types only.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the '[wcj_product_wholesale_price_table]' shortcode.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the currently active tab settings.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the Invoice category.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the Products Crowdfunding category.
+* FIXED - PHP Fatal error: Uncaught Error: Call to a member function get_base_country() on null in... wcj-functions-country.php on line 156. 
+* FIXED - PHP Fatal error: Uncaught Error: Call to a member function is_type() on bool in... wcj-functions-products.php on line 444.
+* NEW FEATURE - PRICES & CURRENCIES - Wholesale Price - Created a new feature 'Products to Exclude forcefully' to exclude Products forcefully.
+* NEW FEATURE - PRICES & CURRENCIES - Wholesale Price - Introduced the 'Product Categories to Exclude forcefully' feature to enable the exclusion of specific product categories.
+* WooCommerce 8.6.1 Tested
+* WordPress 6.4.2 Tested
 
 = 7.1.7 12/02/2024 =
 

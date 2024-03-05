@@ -1,7 +1,7 @@
 {
-    "0" : "= 7.1.7 12/02/2024 =",
-    "1" : "* FIXED - Fixed the cross-site scripting vulnerability issue associated with the '[wcj_product_barcode]' shortcode.",
-    "2" : "* NEW FEATURE - PRODUCTS - Cost of Goods - Introduce a new feature labeled 'Charge Calculation' for differentiating charge calculation methods: percentage of product price or purchase cost (default).",
-    "3" : "* WooCommerce 8.5.2 Tested",
+    "0" : "= 7.1.8 06/03/2024 =",
+    "1" : "* FIXED - CART & CHECKOUT - Checkout Custom Fields - Resolved the issue causing unexpected modification of custom fields when saving orders from the admin order edit page.",
+    "2" : "* FIXED - PRODUCTS - User Products - Implemented client/server-side validation to restrict file uploads to specific types only.",
+    "3" : "* WooCommerce 8.6.1 Tested",
     "4" : "* WordPress 6.4.2 Tested"
 }
