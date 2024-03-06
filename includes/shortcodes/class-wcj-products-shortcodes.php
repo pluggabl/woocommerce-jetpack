@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 6.0.3
+ * @version 7.1.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -715,7 +715,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_total_sales.
 		 *
-		 * @version 
+		 * @version
 		 * @since   2.2.6
 		 * @param   array $atts Shortcode atts.
 		 */
@@ -1011,7 +1011,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Wcj_product_wholesale_price_table.
 		 *
-		 * @version 6.0.3
+		 * @version 7.1.8
 		 * @todo    (maybe) `if ( 'yes' === $atts['add_percent_row'] )` for 'fixed' or 'price_directly'; `if ( 'yes' === $atts['add_discount_row'] )` for 'percent' or 'price_directly'
 		 * @param   array $atts Shortcode atts.
 		 */
@@ -1138,7 +1138,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ?
 					$atts['before_level_max_qty'] . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : $atts['last_level_max_qty'];
 				$data_qty[]    = str_replace(
-					array( '%level_qty%', '%level_min_qty%', '%level_max_qty%' ), // %level_qty% is deprecated
+					array( '%level_qty%', '%level_min_qty%', '%level_max_qty%' ), // %level_qty% is deprecated.
 					array( $wholesale_price_level['quantity'], $wholesale_price_level['quantity'], $level_max_qty ),
 					$atts['heading_format']
 				);
@@ -1156,7 +1156,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 					}
 				}
 
-				$columns_styles[] = $atts['columns_style'];
+				$columns_styles[] = wcj_sanitize_input_attribute_values( $atts['columns_style'], 'style' );
 			}
 
 			$table_rows = array( $data_qty );

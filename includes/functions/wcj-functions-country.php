@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version 5.6.1
+ * @version 7.1.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
  */
@@ -149,14 +149,27 @@ if ( ! function_exists( 'wcj_get_states' ) ) {
 	/**
 	 * Get all states array.
 	 *
-	 * @version 2.4.4
+	 * @version 7.1.8
 	 * @since   2.4.4
 	 * @return  array
 	 */
 	function wcj_get_states() {
-		$base_country = WC()->countries->get_base_country();
-		$states       = WC()->countries->get_states( $base_country );
-		return ( isset( $states ) && ! empty( $states ) ) ? $states : array();
+
+		if ( wcj_is_plugin_activated( 'woocommerce', 'woocommerce.php' ) ) { // Check if WooCommerce is activated.
+			// Check if WC_Countries class exists and if the countries property is initialized.
+			if ( class_exists( 'WC_Countries' ) && isset( WC()->countries ) && WC()->countries !== null ) {
+				$base_country = WC()->countries->get_base_country();
+				$states       = WC()->countries->get_states( $base_country );
+				return ( isset( $states ) && ! empty( $states ) ) ? $states : array();
+			} else {
+				// Handle case where WC_Countries or countries property is not properly initialized.
+				return array(); // or return an error message.
+			}
+		} else {
+			// Handle case where WooCommerce is not activated.
+			return array(); // or return an error message.
+		}
+
 	}
 }
 
