@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Invoices
  *
- * @version 7.1.8
+ * @version 7.1.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.5.0
+		 * @version 7.1.9
 		 */
 		public function __construct() {
 
@@ -51,6 +51,7 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 				'days'         => 0,
 				'invoice_type' => 'invoice',
 				'doc_nr'       => 1,
+				'srcs'         => '',
 			);
 
 			parent::__construct();
