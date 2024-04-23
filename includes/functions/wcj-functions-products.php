@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 7.1.8
+ * @version 7.1.9
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -412,7 +412,7 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 	/**
 	 * Wcj_get_products.
 	 *
-	 * @version 7.1.8
+	 * @version 7.1.9
 	 * @todo    [dev] optimize `if ( $variations_only ) { ... }`
 	 * @todo    [dev] maybe use `wc_get_products()` instead of `WP_Query`
 	 * @param Array  $products Get products.
@@ -440,7 +440,7 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 			foreach ( $loop->posts as $post_id ) {
 				if ( $variations_only ) {
 					$_product = wc_get_product( $post_id );
-					if ( isset( $_product ) ) {
+					if ( isset( $_product ) && is_object( $_product ) && method_exists( $_product, 'is_type' ) ) {
 						if ( $_product->is_type( 'variable' ) ) {
 							continue;
 						}

@@ -221,6 +221,10 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 			$atts['image_nr']              = wcj_sanitize_input_attribute_values( $atts['image_nr'] );
 			$atts['instock']               = wcj_sanitize_input_attribute_values( $atts['instock'] );
 			$atts['outofstock']            = wcj_sanitize_input_attribute_values( $atts['outofstock'] );
+			$atts['meta_key']              = wcj_sanitize_input_attribute_values( $atts['meta_key'] );  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			if ( isset( $atts['user_role'] ) && '' !== $atts['user_role'] ) {
+				$atts['user_role'] = wcj_sanitize_input_attribute_values( $atts['user_role'], 'restrict_quotes' );
+			}
 			return $atts;
 		}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 7.1.6
+ * @version 7.1.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -22,7 +22,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.1.9
 		 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 		 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 		 */
@@ -46,7 +46,11 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 
 			if ( $this->is_enabled() ) {
 				// Add & display custom order number.
-				add_action( 'wp_insert_post', array( $this, 'add_new_order_number' ), PHP_INT_MAX );
+				if ( true === wcj_is_hpos_enabled() ) {
+					add_action( 'woocommerce_new_order', array( $this, 'add_new_order_number' ), PHP_INT_MAX );
+				} else {
+					add_action( 'wp_insert_post', array( $this, 'add_new_order_number' ), PHP_INT_MAX );
+				}
 				add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
 				// Order tracking.
 				if ( 'yes' === wcj_get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
@@ -55,7 +59,12 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				}
 				// Search by custom number.
 				if ( 'yes' === wcj_get_option( 'wcj_order_number_search_by_custom_number_enabled', 'yes' ) ) {
-					add_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
+					if ( true === wcj_is_hpos_enabled() ) {
+						add_action( 'woocommerce_shop_order_search_fields', array( $this, 'search_by_custom_number_hpos' ) );
+						add_filter( 'woocommerce_order_table_search_query_meta_keys', array( $this, 'search_by_custom_number_hpos' ) );
+					} else {
+						add_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
+					}
 				}
 				// "WooCommerce Subscriptions" plugin.
 				$woocommerce_subscriptions_types = array( 'subscription', 'renewal_order', 'resubscribe_order', 'copy_order' );
@@ -280,6 +289,20 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			}
 		}
 
+
+		/**
+		 * Function search_by_custom_number.
+		 *
+		 * @param array $metakeys Array of the metakeys to search order numbers on shop order page.
+		 * @version 7.1.9
+		 * @since   7.1.9
+		 */
+		public function search_by_custom_number_hpos( $metakeys ) {
+			$metakeys[] = '_wcj_order_number';
+
+			return $metakeys;
+		}
+
 		/**
 		 * Add_order_number_to_tracking.
 		 *
@@ -404,7 +427,11 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @param int $order_id defines the order_id.
 		 */
 		public function add_new_order_number( $order_id ) {
-			$this->add_order_number_meta( $order_id, false );
+			if ( true === wcj_is_hpos_enabled() ) {
+				$this->add_order_number_meta_hpos( $order_id, false );
+			} else {
+				$this->add_order_number_meta( $order_id, false );
+			}
 		}
 
 		/**
@@ -506,7 +533,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Add/update order_number meta to order HPOS.
 		 *
-		 * @version 7.1.4
+		 * @version 7.1.9
 		 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 		 * @param int  $order_id defines the order_id.
 		 * @param bool $do_overwrite defines the do_overwrite.
@@ -520,7 +547,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					return;
 				}
 
-				if ( true === $do_overwrite || 0 === $order->get_meta( '_wcj_order_number' ) || $order->get_meta( '_wcj_order_number' ) ) {
+				if ( true === $do_overwrite || 0 === $order->get_meta( '_wcj_order_number' ) || '' === $order->get_meta( '_wcj_order_number' ) ) {
 
 					if ( $order_id < wcj_get_option( 'wcj_order_numbers_min_order_id', 0 ) ) {
 						return;
@@ -555,9 +582,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 						}
 						$order->update_meta_data( '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
 					}
+					$order->save();
 				}
-
-				$order->save();
 			}
 		}
 
