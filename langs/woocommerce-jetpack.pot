@@ -1647,7 +1647,7 @@ msgstr ""
 #: includes/class-wcj-admin-bar.php:475
 #: includes/settings/wcj-settings-offer-price.php:68
 #: includes/settings/wcj-settings-stock.php:138
-#: includes/shortcodes/class-wcj-products-shortcodes.php:646
+#: includes/shortcodes/class-wcj-products-shortcodes.php:704
 msgid "Out of stock"
 msgstr ""
 
@@ -2819,7 +2819,7 @@ msgid "Booster: Send Email: %s"
 msgstr ""
 
 #: includes/class-wcj-empty-cart-button.php:30
-#: includes/shortcodes/class-wcj-general-shortcodes.php:613
+#: includes/shortcodes/class-wcj-general-shortcodes.php:684
 msgid "Empty Cart Button"
 msgstr ""
 
@@ -3658,23 +3658,23 @@ msgstr ""
 msgid "Tool renumerates all orders."
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:367
+#: includes/class-wcj-order-numbers.php:390
 msgid "Orders successfully renumerated!"
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:372
+#: includes/class-wcj-order-numbers.php:395
 #, php-format
 msgid "Sequential number generation is enabled. Next order number will be %s."
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:385
+#: includes/class-wcj-order-numbers.php:408
 #, php-format
 msgid ""
 "Press the button below to renumerate all existing orders starting from order "
 "counter settings in <a href=\"%s\">Order Numbers</a> module."
 msgstr ""
 
-#: includes/class-wcj-order-numbers.php:393
+#: includes/class-wcj-order-numbers.php:416
 msgid "Renumerate orders"
 msgstr ""
 
@@ -4464,7 +4464,7 @@ msgid "Products category"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-price-converter.php:315
-#: includes/shortcodes/class-wcj-products-shortcodes.php:376
+#: includes/shortcodes/class-wcj-products-shortcodes.php:434
 msgid "Any"
 msgstr ""
 
@@ -6303,7 +6303,7 @@ msgid "Company Name"
 msgstr ""
 
 #: includes/classes/class-wcj-shortcodes.php:214
-#: includes/shortcodes/class-wcj-general-shortcodes.php:613
+#: includes/shortcodes/class-wcj-general-shortcodes.php:684
 #, php-format
 msgid "\"%s\" module is not enabled!"
 msgstr ""
@@ -21713,20 +21713,20 @@ msgstr ""
 msgid "Edit Product"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-shortcodes.php:349
+#: includes/shortcodes/class-wcj-products-shortcodes.php:407
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-shortcodes.php:356
+#: includes/shortcodes/class-wcj-products-shortcodes.php:414
 msgid "No sales yet."
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-shortcodes.php:643
+#: includes/shortcodes/class-wcj-products-shortcodes.php:701
 msgid "In stock"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-shortcodes.php:1136
+#: includes/shortcodes/class-wcj-products-shortcodes.php:1194
 msgid "from %level_min_qty% pcs."
 msgstr ""
 

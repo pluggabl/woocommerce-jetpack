@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 7.1.8
+ * @version 7.1.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.8
+		 * @version 7.1.9
 		 * @todo    (maybe) add `[wcj_product_stock_price]`
 		 */
 		public function __construct() {
@@ -129,6 +129,10 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				'height'                => 0,
 				'color'                 => 'black',
 				'meta_key'              => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'search'                => 'min_variation',
+				'format'                => 'yes',
+				'instock'               => null,
+				'outofstock'            => null,
 			);
 
 			parent::__construct();
@@ -137,7 +141,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Inits shortcode atts and properties.
 		 *
-		 * @version 3.3.0
+		 * @version 7.1.9
 		 * @param   array $atts Shortcode atts.
 		 * @return  array The (modified) shortcode atts.
 		 */
@@ -167,6 +171,60 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				return false;
 			}
 
+			$atts['code']                  = wcj_sanitize_input_attribute_values( $atts['code'], 'restrict_quotes' );
+			$atts['type']                  = wcj_sanitize_input_attribute_values( $atts['type'] );
+			$atts['dimension']             = wcj_sanitize_input_attribute_values( $atts['dimension'] );
+			$atts['height']                = wcj_sanitize_input_attribute_values( $atts['height'] );
+			$atts['width']                 = wcj_sanitize_input_attribute_values( $atts['width'] );
+			$atts['color']                 = wcj_sanitize_input_attribute_values( $atts['color'] );
+			$atts['product_id']            = wcj_sanitize_input_attribute_values( $atts['product_id'] );
+			$atts['avatar_size']           = wcj_sanitize_input_attribute_values( $atts['avatar_size'] );
+			$atts['name']                  = wcj_sanitize_input_attribute_values( $atts['name'] );
+			$atts['apply_filters']         = wcj_sanitize_input_attribute_values( $atts['apply_filters'] );
+			$atts['length']                = wcj_sanitize_input_attribute_values( $atts['length'] );
+			$atts['variations']            = wcj_sanitize_input_attribute_values( $atts['variations'] );
+			$atts['to_unit']               = wcj_sanitize_input_attribute_values( $atts['to_unit'] );
+			$atts['round']                 = wcj_sanitize_input_attribute_values( $atts['round'] );
+			$atts['precision']             = wcj_sanitize_input_attribute_values( $atts['precision'] );
+			$atts['hide_currency']         = wcj_sanitize_input_attribute_values( $atts['hide_currency'] );
+			$atts['multiply_by']           = wcj_sanitize_input_attribute_values( $atts['multiply_by'] );
+			$atts['addition_by']           = wcj_sanitize_input_attribute_values( $atts['addition_by'] );
+			$atts['subtraction_by']        = wcj_sanitize_input_attribute_values( $atts['subtraction_by'] );
+			$atts['division_by']           = wcj_sanitize_input_attribute_values( $atts['division_by'] );
+			$atts['find']                  = wcj_sanitize_input_attribute_values( $atts['find'] );
+			$atts['replace']               = wcj_sanitize_input_attribute_values( $atts['replace'] );
+			$atts['count_variations']      = wcj_sanitize_input_attribute_values( $atts['count_variations'] );
+			$atts['show_always']           = wcj_sanitize_input_attribute_values( $atts['show_always'] );
+			$atts['order_status']          = wcj_sanitize_input_attribute_values( $atts['order_status'] );
+			$atts['days_to_cover']         = wcj_sanitize_input_attribute_values( $atts['days_to_cover'] );
+			$atts['hide_if_no_sales']      = wcj_sanitize_input_attribute_values( $atts['hide_if_no_sales'] );
+			$atts['hide_if_zero']          = wcj_sanitize_input_attribute_values( $atts['hide_if_zero'] );
+			$atts['offset']                = wcj_sanitize_input_attribute_values( $atts['offset'] );
+			$atts['format']                = wcj_sanitize_input_attribute_values( $atts['format'] );
+			$atts['search']                = wcj_sanitize_input_attribute_values( $atts['search'] );
+			$atts['reverse']               = wcj_sanitize_input_attribute_values( $atts['reverse'] );
+			$atts['excerpt_length']        = wcj_sanitize_input_attribute_values( $atts['excerpt_length'] );
+			$atts['table_format']          = wcj_sanitize_input_attribute_values( $atts['table_format'] );
+			$atts['heading_format']        = wcj_sanitize_input_attribute_values( $atts['heading_format'], 'restrict_quotes' );
+			$atts['price_row_format']      = wcj_sanitize_input_attribute_values( $atts['price_row_format'], 'restrict_quotes' );
+			$atts['before_level_max_qty']  = wcj_sanitize_input_attribute_values( $atts['before_level_max_qty'], 'restrict_quotes' );
+			$atts['last_level_max_qty']    = wcj_sanitize_input_attribute_values( $atts['last_level_max_qty'], 'restrict_quotes' );
+			$atts['add_price_row']         = wcj_sanitize_input_attribute_values( $atts['add_price_row'] );
+			$atts['add_percent_row']       = wcj_sanitize_input_attribute_values( $atts['add_percent_row'] );
+			$atts['add_discount_row']      = wcj_sanitize_input_attribute_values( $atts['add_discount_row'] );
+			$atts['hide_if_zero_quantity'] = wcj_sanitize_input_attribute_values( $atts['hide_if_zero_quantity'] );
+			$atts['add_links']             = wcj_sanitize_input_attribute_values( $atts['add_links'] );
+			$atts['sep']                   = wcj_sanitize_input_attribute_values( $atts['sep'], 'restrict_quotes' );
+			$atts['image_size']            = wcj_sanitize_input_attribute_values( $atts['image_size'] );
+			$atts['currency']              = wcj_sanitize_input_attribute_values( $atts['currency'] );
+			$atts['multiply_by_meta']      = wcj_sanitize_input_attribute_values( $atts['multiply_by_meta'] );
+			$atts['image_nr']              = wcj_sanitize_input_attribute_values( $atts['image_nr'] );
+			$atts['instock']               = wcj_sanitize_input_attribute_values( $atts['instock'] );
+			$atts['outofstock']            = wcj_sanitize_input_attribute_values( $atts['outofstock'] );
+			$atts['meta_key']              = wcj_sanitize_input_attribute_values( $atts['meta_key'] );  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			if ( isset( $atts['user_role'] ) && '' !== $atts['user_role'] ) {
+				$atts['user_role'] = wcj_sanitize_input_attribute_values( $atts['user_role'], 'restrict_quotes' );
+			}
 			return $atts;
 		}
 

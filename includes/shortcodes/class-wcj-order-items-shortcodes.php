@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 7.1.4
+ * @version 7.1.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -506,7 +506,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Get_product_item_name.
 		 *
-		 * @version 5.3.0
+		 * @version 7.1.9
 		 * @since   5.3.0
 		 *
 		 * @param array $item The user defined shortcode item.
@@ -520,9 +520,17 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 				'yes' === wcj_get_option( 'wcj_pdf_invoicing_advanced_item_name_as_prod_title_wpml', 'no' )
 				&& function_exists( 'icl_object_id' )
 				) {
-					$item_name = get_the_title( icl_object_id( $item->get_product_ID(), 'product', false, ICL_LANGUAGE_CODE ) );
+					if ( isset( $item ) && $item instanceof WC_Order_Item_Product ) {
+						$item_name = get_the_title( icl_object_id( $item->get_product_ID(), 'product', false, ICL_LANGUAGE_CODE ) );
+					} else {
+						$item_name = '';
+					}
 				} else {
-					$item_name = get_the_title( $item->get_product_ID() );
+					if ( isset( $item ) && $item instanceof WC_Order_Item_Product ) {
+						$item_name = get_the_title( $item->get_product_ID() );
+					} else {
+						$item_name = '';
+					}
 				}
 			}
 			return $item_name;

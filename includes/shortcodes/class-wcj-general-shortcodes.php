@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 7.1.5
+ * @version 7.1.9
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -16,14 +16,14 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * WCJ_General_Shortcodes.
 		 *
-		 * @version 4.1.0
+		 * @version 7.1.9
 		 */
 	class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		/**
 		 * Constructor.
 		 *
-		 * @version 4.1.0
+		 * @version 7.1.9
 		 */
 		public function __construct() {
 
@@ -112,9 +112,83 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				'color'                 => 'black',
 				'x'                     => 0,
 				'y'                     => 0,
+				'force_display'         => 'no',
+				'src'                   => '',
+				'offset'                => '',
+				'limit'                 => 0,
+				'columns'               => 4,
+				'orderby'               => '',
+				'order'                 => '',
+				'name'                  => '',
+				'field'                 => '',
+				'table'                 => '',
+				'cmp'                   => 'max',
+				'prop'                  => 'quantity',
 			);
 
 			parent::__construct();
+
+		}
+
+		/**
+		 * Inits shortcode atts and properties.
+		 *
+		 * @version 7.1.9
+		 * @param   array $atts Shortcode atts.
+		 * @return  array The (modified) shortcode atts.
+		 */
+		public function init_atts( $atts ) {
+
+			$atts['label_excl']            = wcj_sanitize_input_attribute_values( $atts['label_excl'] );
+			$atts['label_incl']            = wcj_sanitize_input_attribute_values( $atts['label_incl'] );
+			$atts['class']                 = wcj_sanitize_input_attribute_values( $atts['class'] );
+			$atts['style']                 = wcj_sanitize_input_attribute_values( $atts['style'], 'style' );
+			$atts['form_method']           = wcj_sanitize_input_attribute_values( $atts['form_method'] );
+			$atts['force_display']         = wcj_sanitize_input_attribute_values( $atts['force_display'] );
+			$atts['countries']             = wcj_sanitize_input_attribute_values( $atts['countries'], 'restrict_quotes' );
+			$atts['replace_with_currency'] = wcj_sanitize_input_attribute_values( $atts['replace_with_currency'] );
+			$atts['slug']                  = wcj_sanitize_input_attribute_values( $atts['slug'] );
+			$atts['date_format']           = wcj_sanitize_input_attribute_values( $atts['date_format'], 'restrict_quotes' );
+			$atts['time_format']           = wcj_sanitize_input_attribute_values( $atts['time_format'], 'restrict_quotes' );
+			$atts['from']                  = wcj_sanitize_input_attribute_values( $atts['from'] );
+			$atts['to']                    = wcj_sanitize_input_attribute_values( $atts['to'] );
+			$atts['default']               = wcj_sanitize_input_attribute_values( $atts['default'] );
+			$atts['datetime_format']       = wcj_sanitize_input_attribute_values( $atts['datetime_format'], 'restrict_quotes' );
+			$atts['key']                   = wcj_sanitize_input_attribute_values( $atts['key'] );
+			$atts['multiply_by']           = wcj_sanitize_input_attribute_values( $atts['multiply_by'] );
+			$atts['content']               = wcj_sanitize_input_attribute_values( $atts['content'], 'restrict_quotes' );
+			$atts['src']                   = wcj_sanitize_input_attribute_values( $atts['src'], 'src' );
+			$atts['width']                 = wcj_sanitize_input_attribute_values( $atts['width'] );
+			$atts['height']                = wcj_sanitize_input_attribute_values( $atts['height'] );
+			$atts['offset']                = wcj_sanitize_input_attribute_values( $atts['offset'] );
+			$atts['selector_type']         = wcj_sanitize_input_attribute_values( $atts['selector_type'] );
+			$atts['company']               = wcj_sanitize_input_attribute_values( $atts['company'] );
+			$atts['limit']                 = wcj_sanitize_input_attribute_values( $atts['limit'] );
+			$atts['columns']               = wcj_sanitize_input_attribute_values( $atts['columns'] );
+			$atts['orderby']               = wcj_sanitize_input_attribute_values( $atts['orderby'] );
+			$atts['order']                 = wcj_sanitize_input_attribute_values( $atts['order'] );
+			$atts['full_country_name']     = wcj_sanitize_input_attribute_values( $atts['full_country_name'] );
+			$atts['hide_if_zero_quantity'] = wcj_sanitize_input_attribute_values( $atts['hide_if_zero_quantity'] );
+			$atts['before_level_max_qty']  = wcj_sanitize_input_attribute_values( $atts['before_level_max_qty'], 'restrict_quotes' );
+			$atts['last_level_max_qty']    = wcj_sanitize_input_attribute_values( $atts['last_level_max_qty'], 'restrict_quotes' );
+			$atts['heading_format']        = wcj_sanitize_input_attribute_values( $atts['heading_format'], 'restrict_quotes' );
+			$atts['columns_style']         = wcj_sanitize_input_attribute_values( $atts['columns_style'], 'style' );
+			$atts['table_format']          = wcj_sanitize_input_attribute_values( $atts['table_format'] );
+			$atts['option']                = wcj_sanitize_input_attribute_values( $atts['option'] );
+			$atts['field']                 = wcj_sanitize_input_attribute_values( $atts['field'] );
+			$atts['name']                  = wcj_sanitize_input_attribute_values( $atts['name'] );
+			$atts['table']                 = wcj_sanitize_input_attribute_values( $atts['table'], 'restrict_quotes' );
+			$atts['prop']                  = wcj_sanitize_input_attribute_values( $atts['prop'] );
+			$atts['cmp']                   = wcj_sanitize_input_attribute_values( $atts['cmp'] );
+			$atts['x']                     = wcj_sanitize_input_attribute_values( $atts['x'] );
+			$atts['y']                     = wcj_sanitize_input_attribute_values( $atts['y'] );
+			$atts['currencies']            = wcj_sanitize_input_attribute_values( $atts['currencies'], 'restrict_quotes' );
+			$atts['lang']                  = wcj_sanitize_input_attribute_values( $atts['lang'], 'restrict_quotes' );
+			$atts['code']                  = wcj_sanitize_input_attribute_values( $atts['code'], 'restrict_quotes' );
+			$atts['type']                  = wcj_sanitize_input_attribute_values( $atts['type'], 'restrict_quotes' );
+			$atts['dimension']             = wcj_sanitize_input_attribute_values( $atts['dimension'], 'restrict_quotes' );
+			$atts['color']                 = wcj_sanitize_input_attribute_values( $atts['color'], 'restrict_quotes' );
+			return $atts;
 
 		}
 
@@ -316,7 +390,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_tcpdf_rectangle.
 		 *
-		 * @version 7.1.1
+		 * @version 7.1.9
 		 * @since   3.3.0
 		 * @see     https://tcpdf.org/examples/example_012/
 		 * @todo    add more atts (e.g. style, fill color etc.)
@@ -339,8 +413,8 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			);
 			$fill_color   = array();
 
-			$width  = wcj_sanitize_input_attribute_values( $atts['width'] );
-			$height = wcj_sanitize_input_attribute_values( $atts['height'] );
+			$width  = $atts['width'];
+			$height = $atts['height'];
 			$params = array(
 				$atts['x'],
 				$atts['y'],
@@ -405,7 +479,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_button_toggle_tax_display.
 		 *
-		 * @version 7.1.1
+		 * @version 7.1.9
 		 * @since   3.2.4
 		 * @todo    (dev) different style/class for different tax state
 		 * @todo    (maybe) `get` instead of `post`
@@ -415,11 +489,9 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$session_value = wcj_session_get( 'wcj_toggle_tax_display' );
 			$current_value = ( ( '' === $session_value || null === $session_value ) ? wcj_get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
 			$current_value = '' === $current_value ? 'excl' : $current_value;
-			$label         = wcj_sanitize_input_attribute_values( $atts[ 'label_' . $current_value ] );
-			$class         = wcj_sanitize_input_attribute_values( $atts['class'] );
-			$style         = wcj_sanitize_input_attribute_values( $atts['style'], 'style' );
+			$label         = $atts[ 'label_' . $current_value ];
 			return '<form method="post" action="">' . wp_nonce_field( 'wcj_button_toggle_tax_display', 'wcj-button-toggle-tax-display-nonce' ) . '<input type="submit" name="wcj_button_toggle_tax_display"' .
-			' class="' . $class . '" style="' . $style . '" value="' . $label . '"></form>';
+			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';
 		}
 
 		/**
@@ -488,7 +560,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_selector.
 		 *
-		 * @version 7.1.1
+		 * @version 7.1.9
 		 * @since   3.1.0
 		 * @todo    add `default` attribute
 		 * @todo    (maybe) add more selector types (e.g.: currency)
@@ -499,11 +571,10 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$html           = '';
 			$options        = '';
 			$countries      = apply_filters( 'booster_option', 'all', wcj_get_option( 'wcj_product_by_country_country_list_shortcode', 'all' ) );
-			$selector_type  = wcj_sanitize_input_attribute_values( $atts['selector_type'] );
-			$wpnonce        = isset( $_REQUEST[ 'wcj_' . $selector_type . '_selector-nonce' ] ) ? wp_verify_nonce( sanitize_key( $_REQUEST[ 'wcj_' . $selector_type . '_selector-nonce' ] ), 'wcj_' . $selector_type . '_selector' ) : false;
-			$selected_value = ( ( $wpnonce && isset( $_REQUEST[ 'wcj_' . $selector_type . '_selector' ] ) ) ?
-			sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $selector_type . '_selector' ] ) ) :
-			wcj_session_get( 'wcj_selected_' . $selector_type )
+			$wpnonce        = isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector-nonce' ] ) ? wp_verify_nonce( sanitize_key( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector-nonce' ] ), 'wcj_' . $atts['selector_type'] . '_selector' ) : false;
+			$selected_value = ( ( $wpnonce && isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) ?
+			sanitize_text_field( wp_unslash( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ) :
+			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 			);
 
 			switch ( $countries ) {
@@ -515,7 +586,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 					break;
 			}
 
-			switch ( $selector_type ) {
+			switch ( $atts['selector_type'] ) {
 				case 'product_custom_visibility':
 					$options = wcj_get_select_options( wcj_get_option( 'wcj_product_custom_visibility_options_list', '' ) );
 					break;
@@ -528,10 +599,10 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				$html .= '<option value="' . $value . '" ' . selected( $selected_value, $value, false ) . '>' . $title . '</option>';
 			}
 			return '<form method="post" action="">' .
-			'<select name="wcj_' . $selector_type . '_selector" class="wcj_' . $selector_type . '_selector" onchange="this.form.submit()">' .
+			'<select name="wcj_' . $atts['selector_type'] . '_selector" class="wcj_' . $atts['selector_type'] . '_selector" onchange="this.form.submit()">' .
 				$html .
 			'</select>' .
-			wp_nonce_field( 'wcj_' . $selector_type . '_selector', 'wcj_' . $selector_type . '_selector-nonce' ) .
+			wp_nonce_field( 'wcj_' . $atts['selector_type'] . '_selector', 'wcj_' . $atts['selector_type'] . '_selector-nonce' ) .
 			'</form>';
 		}
 
@@ -931,7 +1002,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Get_currency_selector.
 		 *
-		 * @version 7.1.5
+		 * @version 7.1.9
 		 * @since   2.4.5
 		 * @param array          $atts The user defined shortcode attributes.
 		 * @param array | string $content The user defined shortcode content.
@@ -939,13 +1010,10 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 */
 		private function get_currency_selector( $atts, $content, $type = 'select' ) {
 			// Start.
-			$form_method = wcj_sanitize_input_attribute_values( $atts['form_method'] );
-			$class       = wcj_sanitize_input_attribute_values( $atts['class'] );
-			$style       = wcj_sanitize_input_attribute_values( $atts['style'], 'style' );
-			$html        = '';
-			$html       .= '<form action="" method="' . $form_method . '">';
+			$html  = '';
+			$html .= '<form action="" method="' . $atts['form_method'] . '">';
 			if ( 'select' === $type ) {
-				$html .= '<select name="wcj-currency" id="wcj-currency-select" style="' . $style . '" class="' . $class . '" onchange="this.form.submit()">';
+				$html .= '<select name="wcj-currency" id="wcj-currency-select" style="' . $atts['style'] . '" class="' . $atts['class'] . '" onchange="this.form.submit()">';
 			}
 			$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 			// Options.
@@ -1022,14 +1090,11 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_country_select_drop_down_list.
 		 *
-		 * @version 7.1.1
+		 * @version 7.1.9
 		 * @param array          $atts The user defined shortcode attributes.
 		 * @param array | string $content The user defined shortcode content.
 		 */
 		public function wcj_country_select_drop_down_list( $atts, $content ) {
-			$form_method  = wcj_sanitize_input_attribute_values( $atts['form_method'] );
-			$select_class = wcj_sanitize_input_attribute_values( $atts['class'] );
-			$select_style = wcj_sanitize_input_attribute_values( $atts['style'], 'style' );
 
 			if ( ! isset( $atts['force_display'] ) || ! filter_var( $atts['force_display'], FILTER_VALIDATE_BOOLEAN ) ) {
 				if ( ! wcj_is_module_enabled( 'price_by_country' ) ) {
@@ -1045,8 +1110,8 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				$currencies_names_and_symbols = wcj_get_woocommerce_currencies_and_symbols();
 			}
 			$html  = '';
-			$html .= '<form action="" method="' . $form_method . '">';
-			$html .= '<select name="wcj-country" id="wcj-country" style="' . $select_style . '" class="' . $select_class . '" onchange="this.form.submit()">';
+			$html .= '<form action="" method="' . $atts['form_method'] . '">';
+			$html .= '<select name="wcj-country" id="wcj-country" style="' . $atts['style'] . '" class="' . $atts['class'] . '" onchange="this.form.submit()">';
 			if ( empty( $shortcode_countries ) ) {
 				foreach ( $countries as $country_code => $country_name ) {
 					$data_icon    = ( 'yes' === wcj_get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ? ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"' : '' );
@@ -1114,23 +1179,17 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_image.
 		 *
-		 * @version 7.1.3
+		 * @version 7.1.9
 		 * @since   3.9.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_image( $atts ) {
-			$src    = wcj_sanitize_input_attribute_values( $atts['src'], 'src' );
-			$class  = wcj_sanitize_input_attribute_values( $atts['class'] );
-			$style  = wcj_sanitize_input_attribute_values( $atts['style'], 'style' );
-			$width  = wcj_sanitize_input_attribute_values( $atts['width'] );
-			$height = wcj_sanitize_input_attribute_values( $atts['height'] );
-
 			return '<img' .
-			' src="' . ( ! empty( $src ) ? $src : '' ) . '"' .
-			' class="' . ( ! empty( $class ) ? $class : '' ) . '"' .
-			' style="' . ( ! empty( $style ) ? $style : '' ) . '"' .
-			' width="' . ( ! empty( $width ) ? $width : '' ) . '"' .
-			' height="' . ( ! empty( $height ) ? $height : '' ) . '"' .
+			' src="' . ( ! empty( $atts['src'] ) ? $atts['src'] : '' ) . '"' .
+			' class="' . ( ! empty( $atts['class'] ) ? $atts['class'] : '' ) . '"' .
+			' style="' . ( ! empty( $atts['style'] ) ? $atts['style'] : '' ) . '"' .
+			' width="' . ( ! empty( $atts['width'] ) ? $atts['width'] : '' ) . '"' .
+			' height="' . ( ! empty( $atts['height'] ) ? $atts['height'] : '' ) . '"' .
 			'>';
 		}
 	}

@@ -2,9 +2,9 @@
 Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.4.2
+Tested up to: 6.5.2
 Requires PHP: 7.2
-Stable tag: 7.1.8
+Stable tag: 7.1.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,17 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.1.9 24/04/2024 =
+
+* FIXED - SHIPPING & ORDERS - Order Numbers - Fixed the order renumbering issue that occurred with the generation of new orders.
+* FIXED - SHIPPING & ORDERS - Order Numbers - Addressed the problem encountered when searching orders by their custom numbers with WooCommerce HPOS.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the Product category.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the General category.
+* FIXED - PHP Warning:  Undefined array key "srcs" in... class-wcj-invoices-shortcodes.php on line 93.
+* FIXED - PHP Fatal error: Uncaught Error: Call to undefined method WC_Order_Item_Fee::get_product_ID() in... class-wcj-order-items-shortcodes.php:523.
+* WooCommerce 8.8.2 Tested
+* WordPress 6.5.2 Tested
 
 = 7.1.8 06/03/2024 =
 
