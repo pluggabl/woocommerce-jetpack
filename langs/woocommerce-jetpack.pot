@@ -483,7 +483,7 @@ msgid "BOOSTER WEBSITE"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1041
-#: includes/class-wcj-general.php:262 includes/class-wcj-product-by-user.php:276
+#: includes/class-wcj-general.php:262 includes/class-wcj-product-by-user.php:284
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:213
 #: includes/tools/class-wcj-order-statuses-tool.php:203
 #: includes/tools/class-wcj-order-statuses-tool.php:303
@@ -3090,7 +3090,7 @@ msgstr ""
 #: includes/class-wcj-general.php:276
 #: includes/class-wcj-payment-gateways.php:189
 #: includes/class-wcj-product-bulk-meta-editor.php:418
-#: includes/class-wcj-product-by-user.php:301
+#: includes/class-wcj-product-by-user.php:309
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:169
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:438
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:448
@@ -4349,7 +4349,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-product-bulk-meta-editor.php:320
-#: includes/class-wcj-product-by-user.php:301
+#: includes/class-wcj-product-by-user.php:309
 #: includes/class-wcj-purchase-data.php:128
 #: includes/classes/class-wcj-module.php:1258
 #: includes/functions/wcj-functions-general.php:166
@@ -4730,16 +4730,20 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-product-by-user.php:234
-#: includes/class-wcj-product-by-user.php:243
+#: includes/class-wcj-product-by-user.php:247
 msgid "Wrong user ID!"
 msgstr ""
 
-#: includes/class-wcj-product-by-user.php:276
+#: includes/class-wcj-product-by-user.php:252
+msgid "Invalid Product ID!"
+msgstr ""
+
+#: includes/class-wcj-product-by-user.php:284
 #: includes/export/class-wcj-export-fields-helper.php:298
 msgid "Status"
 msgstr ""
 
-#: includes/class-wcj-product-by-user.php:276
+#: includes/class-wcj-product-by-user.php:284
 #: includes/class-wcj-product-tabs.php:670
 #: includes/gateways/class-wc-gateway-wcj-custom-template.php:129
 #: includes/input-fields/wcj-product-input-fields-options.php:53
@@ -4772,7 +4776,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: includes/class-wcj-product-by-user.php:292
+#: includes/class-wcj-product-by-user.php:300
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:527
 #: includes/tools/class-wcj-order-statuses-tool.php:240
 #: includes/tools/class-wcj-order-statuses-tool.php:318
