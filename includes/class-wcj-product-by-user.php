@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 5.6.8
+ * @version 7.2.0
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -217,7 +217,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Add_my_products_content_my_account_page.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.0
 		 * @since   2.5.2
 		 */
 		public function add_my_products_content_my_account_page() {
@@ -237,12 +237,20 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 				}
 			}
 			if ( $edit_wpnonce && isset( $_GET['wcj_edit_product'] ) ) {
-				$product_id     = sanitize_text_field( wp_unslash( $_GET['wcj_edit_product'] ) );
-				$post_author_id = get_post_field( 'post_author', $product_id );
-				if ( (string) $user_ID !== $post_author_id ) {
-					echo '<p>' . esc_html__( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+
+				$product_id = preg_replace( '/[^0-9]/', '', sanitize_text_field( wp_unslash( $_GET['wcj_edit_product'] ) ) );
+				$product    = ( isset( $product_id ) && ! empty( $product_id ) ) ? get_post( $product_id ) : '';
+				if ( ! empty( $product ) && 'product' === $product->post_type ) {
+
+					$post_author_id = get_post_field( 'post_author', $product_id );
+					if ( (string) $user_ID !== $post_author_id ) {
+						echo '<p>' . esc_html__( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+					} else {
+						echo do_shortcode( '[wcj_product_add_new product_id="' . $product_id . '"]' );
+					}
 				} else {
-					echo do_shortcode( '[wcj_product_add_new product_id="' . $product_id . '"]' );
+					echo '<div class="woocommerce"><ul class="woocommerce-error"><li>' . esc_html__( 'Invalid Product ID!', 'woocommerce-jetpack' ) . '</li></ul></div>';
+
 				}
 			}
 			$offset     = 0;
