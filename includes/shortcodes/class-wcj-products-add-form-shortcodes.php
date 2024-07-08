@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Add Form
  *
- * @version 7.1.8
+ * @version 7.2.1
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -73,6 +73,46 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			}
 
 			parent::__construct();
+		}
+
+		/**
+		 * Init_atts.
+		 *
+		 * @version 7.2.1
+		 * @param array $atts The user defined shortcode attributes.
+		 */
+		public function init_atts( $atts ) {
+			$atts['product_id']              = (int) wcj_sanitize_input_attribute_values( $atts['product_id'] );
+			$atts['post_status']             = wcj_sanitize_input_attribute_values( $atts['post_status'] );
+			$atts['desc_enabled']            = wcj_sanitize_input_attribute_values( $atts['desc_enabled'] );
+			$atts['short_desc_enabled']      = wcj_sanitize_input_attribute_values( $atts['short_desc_enabled'] );
+			$atts['regular_price_enabled']   = wcj_sanitize_input_attribute_values( $atts['regular_price_enabled'] );
+			$atts['sale_price_enabled']      = wcj_sanitize_input_attribute_values( $atts['sale_price_enabled'] );
+			$atts['external_url_enabled']    = wcj_sanitize_input_attribute_values( $atts['external_url_enabled'] );
+			$atts['cats_enabled']            = wcj_sanitize_input_attribute_values( $atts['cats_enabled'] );
+			$atts['tags_enabled']            = wcj_sanitize_input_attribute_values( $atts['tags_enabled'] );
+			$atts['image_gallery_enabled']   = wcj_sanitize_input_attribute_values( $atts['image_gallery_enabled'] );
+			$atts['image_enabled']           = wcj_sanitize_input_attribute_values( $atts['image_enabled'] );
+			$atts['desc_required']           = wcj_sanitize_input_attribute_values( $atts['desc_required'] );
+			$atts['short_desc_required']     = wcj_sanitize_input_attribute_values( $atts['short_desc_required'] );
+			$atts['regular_price_required']  = wcj_sanitize_input_attribute_values( $atts['regular_price_required'] );
+			$atts['sale_price_required']     = wcj_sanitize_input_attribute_values( $atts['sale_price_required'] );
+			$atts['external_url_required']   = wcj_sanitize_input_attribute_values( $atts['external_url_required'] );
+			$atts['cats_required']           = wcj_sanitize_input_attribute_values( $atts['cats_required'] );
+			$atts['tags_required']           = wcj_sanitize_input_attribute_values( $atts['tags_required'] );
+			$atts['image_required']          = wcj_sanitize_input_attribute_values( $atts['image_required'] );
+			$atts['image_gallery_required']  = wcj_sanitize_input_attribute_values( $atts['image_gallery_required'] );
+			$atts['visibility']              = wcj_sanitize_input_attribute_values( $atts['visibility'], 'restrict_quotes' );
+			$atts['module']                  = wcj_sanitize_input_attribute_values( $atts['module'] );
+			$atts['module_name']             = wcj_sanitize_input_attribute_values( $atts['module_name'] );
+			$atts['custom_taxonomies_total'] = wcj_sanitize_input_attribute_values( $atts['custom_taxonomies_total'] );
+			for ( $i = 1; $i <= $atts['custom_taxonomies_total']; $i++ ) {
+				$atts[ 'custom_taxonomy_' . $i . '_enabled' ]  = wcj_sanitize_input_attribute_values( $atts[ 'custom_taxonomy_' . $i . '_enabled' ] );
+				$atts[ 'custom_taxonomy_' . $i . '_required' ] = wcj_sanitize_input_attribute_values( $atts[ 'custom_taxonomy_' . $i . '_required' ] );
+				$atts[ 'custom_taxonomy_' . $i . '_id' ]       = wcj_sanitize_input_attribute_values( $atts[ 'custom_taxonomy_' . $i . '_id' ] );
+				$atts[ 'custom_taxonomy_' . $i . '_title' ]    = wcj_sanitize_input_attribute_values( $atts[ 'custom_taxonomy_' . $i . '_title' ] );
+			}
+			return $atts;
 		}
 
 		/**

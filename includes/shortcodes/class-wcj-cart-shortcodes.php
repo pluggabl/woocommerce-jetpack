@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Cart
  *
- * @version 3.5.1
+ * @version 7.2.1
  * @since   3.5.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -17,7 +17,7 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		/**
 		 * WCJ_Cart_Shortcodes.
 		 *
-		 * @version 3.5.1
+		 * @version 7.2.1
 		 * @since   3.5.1
 		 */
 	class WCJ_Cart_Shortcodes extends WCJ_Shortcodes {
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.5.1
+		 * @version 7.2.1
 		 * @since   3.5.1
 		 * @todo    (maybe) add `$atts['multiply_by']` to (all) shortcodes
 		 */
@@ -49,10 +49,25 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 			);
 
 			$this->the_atts = array(
-				'multiply_by' => 1,
+				'multiply_by'   => 1,
+				'function_name' => null,
 			);
 
 			parent::__construct();
+
+		}
+
+		/**
+		 * Inits shortcode atts and properties.
+		 *
+		 * @version 7.2.1
+		 * @param   array $atts Shortcode atts.
+		 * @return  array The (modified) shortcode atts.
+		 */
+		public function init_atts( $atts ) {
+			$atts['function_name'] = wcj_sanitize_input_attribute_values( $atts['function_name'] );
+			$atts['multiply_by']   = (int) wcj_sanitize_input_attribute_values( $atts['multiply_by'] );
+			return $atts;
 
 		}
 

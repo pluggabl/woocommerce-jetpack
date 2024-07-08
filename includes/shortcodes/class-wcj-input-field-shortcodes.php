@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Input Field
  *
- * @version 7.1.1
+ * @version 7.2.1
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
@@ -17,7 +17,7 @@ if ( ! class_exists( 'WCJ_Input_Field_Shortcodes' ) ) :
 		/**
 		 * WCJ_Input_Field_Shortcodes.
 		 *
-		 * @version 3.0.1
+		 * @version 7.2.1
 		 * @since   2.5.2
 		 */
 	class WCJ_Input_Field_Shortcodes extends WCJ_Shortcodes {
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_Input_Field_Shortcodes' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.0.1
+		 * @version 7.2.1
 		 * @since   2.5.2
 		 */
 		public function __construct() {
@@ -35,14 +35,15 @@ if ( ! class_exists( 'WCJ_Input_Field_Shortcodes' ) ) :
 			);
 
 			$this->the_atts = array(
-				'type'        => 'text',
-				'class'       => '',
-				'value'       => '',
-				'placeholder' => '',
-				'name'        => '',
-				'attach_to'   => '',
-				'label'       => '',
-				'required'    => 'no',
+				'type'            => 'text',
+				'class'           => '',
+				'value'           => '',
+				'placeholder'     => '',
+				'name'            => '',
+				'attach_to'       => '',
+				'label'           => '',
+				'required'        => 'no',
+				'data_attributes' => null,
 			);
 
 			parent::__construct();
@@ -52,19 +53,23 @@ if ( ! class_exists( 'WCJ_Input_Field_Shortcodes' ) ) :
 		/**
 		 * Wcj_input_field.
 		 *
-		 * @version 7.1.1
+		 * @version 7.2.1
 		 * @since   2.5.2
 		 * @param array  $atts The user defined shortcode attributes.
 		 * @param string $content Optional. The content between the opening and closing shortcode tags. Default is an empty string.
 		 */
 		public function wcj_input_field( $atts, $content ) {
 
-			$type        = wcj_sanitize_input_attribute_values( $atts['type'] );
-			$class       = wcj_sanitize_input_attribute_values( $atts['class'] );
-			$name        = wcj_sanitize_input_attribute_values( $atts['name'] );
-			$label       = wcj_sanitize_input_attribute_values( $atts['label'] );
-			$value       = wcj_sanitize_input_attribute_values( $atts['value'] );
-			$placeholder = wcj_sanitize_input_attribute_values( $atts['placeholder'] );
+			$type                    = wcj_sanitize_input_attribute_values( $atts['type'] );
+			$class                   = wcj_sanitize_input_attribute_values( $atts['class'] );
+			$name                    = wcj_sanitize_input_attribute_values( $atts['name'] );
+			$label                   = wcj_sanitize_input_attribute_values( $atts['label'] );
+			$value                   = wcj_sanitize_input_attribute_values( $atts['value'] );
+			$atts['attach_to']       = wcj_sanitize_input_attribute_values( $atts['attach_to'] );
+			$placeholder             = wcj_sanitize_input_attribute_values( $atts['placeholder'] );
+			$atts['required']        = wcj_sanitize_input_attribute_values( $atts['required'] );
+			$atts['name_array']      = wcj_sanitize_input_attribute_values( $atts['name_array'] );
+			$atts['data_attributes'] = wcj_sanitize_input_attribute_values( $atts['data_attributes'], 'restrict_quotes' );
 			if ( '' === $name ) {
 				return __( 'Attribute "name" is required!', 'woocommerce-jetpack' );
 			}
