@@ -2,9 +2,9 @@
 Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.5.3
+Tested up to: 6.5.5
 Requires PHP: 7.2
-Stable tag: 7.2.0
+Stable tag: 7.2.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -246,10 +246,14 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
-= 7.2.0 05/06/2024 =
+= 7.2.1 10/07/2024 =
 
-* FIXED - PRODUCTS - User Products - Addressed the unauthenticated arbitrary shortcode execution vulnerability in the user product module.
-* WooCommerce 8.9.1 Tested
-* WordPress 6.5.3 Tested
+* FIXED - PRODUCTS - Tax Display - Hide the 'wcj-button-toggle-tax-display-nonce' nonce field to prevent it from breaking the WooCommerce REST API JSON response in certain instances.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the Cart category.
+* FIXED - Addressed cross-site scripting vulnerabilities associated with Product Input-field shortcodes.
+* FIXED - Rectified cross-site scripting vulnerabilities linked to the Add New Product '[wcj_product_add_new]' shortcode.
+* FIXED - PHP Fatal error: Uncaught Error: Call to a member function get_price() on bool in... wcj-functions-price-currency.php:616.
+* WooCommerce 9.0.2 Tested
+* WordPress 6.5.5 Tested
 
 [See changelog for all versions](https://raw.githubusercontent.com/pluggabl/woocommerce-jetpack/master/changelog.txt).

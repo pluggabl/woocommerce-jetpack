@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 7.1.7
+ * @version 7.2.1
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -605,18 +605,18 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 	/**
 	 * Wc_get_product_purchase_price.
 	 *
-	 * @version 7.1.7
+	 * @version 7.2.1
 	 * @param   int $product_id defines the product_id.
 	 */
 	function wc_get_product_purchase_price( $product_id = 0 ) {
 		if ( 0 === $product_id ) {
 			$product_id = get_the_ID();
 		}
-		$product       = wc_get_product( $product_id );
-		$product_price = ( isset( $product ) && $product->get_price() ) ? $product->get_price() : 0;
+		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
 			return 0;
 		}
+		$product_price  = ( isset( $product ) && $product->get_price() ) ? $product->get_price() : 0;
 		$purchase_price = 0;
 		if ( 'yes' === wcj_get_option( 'wcj_purchase_price_enabled', 'yes' ) ) {
 			$purchase_price += (float) get_post_meta( $product_id, '_wcj_purchase_price', true );
