@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 7.1.5
+ * @version 7.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -119,52 +119,59 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		public function add_extra_atts( $atts ) {
 			$modified_atts = array_merge(
 				array(
-					'order_id'                   => 0,
-					'hide_currency'              => 'no',
-					'excl_tax'                   => 'no',
-					'date_format'                => wcj_get_option( 'date_format' ),
-					'time_format'                => wcj_get_option( 'time_format' ),
-					'hide_if_zero'               => 'no',
-					'add_html_on_price'          => true,
-					'field_id'                   => '',
-					'name'                       => '',
-					'round_by_line'              => 'no',
-					'whole'                      => '',
-					'decimal'                    => '&cent;',
-					'precision'                  => wcj_get_option( 'woocommerce_price_num_decimals', 2 ),
-					'lang'                       => 'EN',
-					'unique_only'                => 'no',
-					'function_name'              => '',
-					'sep'                        => ', ',
-					'item_number'                => 'all',
-					'field'                      => 'name',
-					'order_user_roles'           => '',
-					'meta_key'                   => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-					'tax_class'                  => '',
-					'fallback_billing_address'   => 'no',
-					'tax_display'                => '',
-					'table_class'                => '',
-					'columns_styles'             => '',
-					'columns_titles'             => '',
-					'columns'                    => '',
-					'price_prefix'               => '',
-					'display_refunded'           => 'yes',
-					'insert_page_break'          => '',
-					'key'                        => null,
-					'days'                       => 0,
-					'code'                       => '',
-					'type'                       => '',
-					'dimension'                  => '2D',
-					'width'                      => 0,
-					'height'                     => 0,
-					'color'                      => 'black',
-					'currency'                   => '',
-					'doc_type'                   => 'invoice',
-					'exclude_by_categories'      => '',
-					'exclude_by_tags'            => '',
-					'exclude_by_attribute__name' => '',
-					'show_label'                 => true,
-					'tax_label_spaces'           => 0,
+					'order_id'                    => 0,
+					'hide_currency'               => 'no',
+					'excl_tax'                    => 'no',
+					'date_format'                 => wcj_get_option( 'date_format' ),
+					'time_format'                 => wcj_get_option( 'time_format' ),
+					'hide_if_zero'                => 'no',
+					'add_html_on_price'           => true,
+					'field_id'                    => '',
+					'name'                        => '',
+					'round_by_line'               => 'no',
+					'whole'                       => '',
+					'decimal'                     => '&cent;',
+					'precision'                   => wcj_get_option( 'woocommerce_price_num_decimals', 2 ),
+					'lang'                        => 'EN',
+					'unique_only'                 => 'no',
+					'function_name'               => '',
+					'sep'                         => ', ',
+					'item_number'                 => 'all',
+					'field'                       => 'name',
+					'order_user_roles'            => '',
+					'meta_key'                    => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'tax_class'                   => '',
+					'fallback_billing_address'    => 'no',
+					'tax_display'                 => '',
+					'table_class'                 => '',
+					'columns_styles'              => '',
+					'columns_titles'              => '',
+					'columns'                     => '',
+					'price_prefix'                => '',
+					'display_refunded'            => 'yes',
+					'insert_page_break'           => '',
+					'key'                         => null,
+					'days'                        => 0,
+					'code'                        => '',
+					'type'                        => '',
+					'dimension'                   => '2D',
+					'width'                       => 0,
+					'height'                      => 0,
+					'color'                       => 'black',
+					'currency'                    => '',
+					'doc_type'                    => 'invoice',
+					'exclude_by_categories'       => '',
+					'exclude_by_tags'             => '',
+					'exclude_by_attribute__name'  => '',
+					'exclude_by_attribute__value' => '',
+					'show_label'                  => true,
+					'tax_label_spaces'            => 0,
+					'plus_fees'                   => true,
+					'use_currency_symbol'         => '',
+					'vat_exempt_text'             => '',
+					'taxonomy'                    => '',
+					'limit'                       => 0,
+
 				),
 				$atts
 			);
@@ -197,11 +204,65 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
-		 * @version 7.1.5
+		 * @version 7.2.2
 		 * @todo    (maybe) `if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function init_atts( $atts ) {
+
+			$atts['order_id']                    = wcj_sanitize_input_attribute_values( $atts['order_id'] );
+			$atts['field_id']                    = wcj_sanitize_input_attribute_values( $atts['field_id'] );
+			$atts['name']                        = wcj_sanitize_input_attribute_values( $atts['name'] );
+			$atts['key']                         = wcj_sanitize_input_attribute_values( $atts['key'] );
+			$atts['days']                        = wcj_sanitize_input_attribute_values( $atts['days'] );
+			$atts['date_format']                 = wcj_sanitize_input_attribute_values( $atts['date_format'], 'restrict_quotes' );
+			$atts['function_name']               = wcj_sanitize_input_attribute_values( $atts['function_name'] );
+			$atts['field']                       = wcj_sanitize_input_attribute_values( $atts['field'] );
+			$atts['item_number']                 = wcj_sanitize_input_attribute_values( $atts['item_number'] );
+			$atts['sep']                         = wcj_sanitize_input_attribute_values( $atts['sep'], 'restrict_quotes' );
+			$atts['meta_key']                    = wcj_sanitize_input_attribute_values( $atts['meta_key'] );// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			$atts['unique_only']                 = wcj_sanitize_input_attribute_values( $atts['unique_only'] );
+			$atts['hide_if_zero']                = wcj_sanitize_input_attribute_values( $atts['hide_if_zero'] );
+			$atts['hide_currency']               = wcj_sanitize_input_attribute_values( $atts['hide_currency'] );
+			$atts['type']                        = wcj_sanitize_input_attribute_values( $atts['type'] );
+			$atts['limit']                       = wcj_sanitize_input_attribute_values( $atts['limit'] );
+			$atts['taxonomy']                    = wcj_sanitize_input_attribute_values( $atts['taxonomy'] );
+			$atts['table_class']                 = wcj_sanitize_input_attribute_values( $atts['table_class'] );
+			$atts['insert_page_break']           = wcj_sanitize_input_attribute_values( $atts['insert_page_break'], 'restrict_quotes' );
+			$atts['columns']                     = wcj_sanitize_input_attribute_values( $atts['columns'], 'restrict_quotes' );
+			$atts['columns_titles']              = wcj_sanitize_input_attribute_values( $atts['columns_titles'], 'restrict_quotes' );
+			$atts['columns_styles']              = wcj_sanitize_input_attribute_values( $atts['columns_styles'], 'restrict_quotes' );
+			$atts['price_prefix']                = wcj_sanitize_input_attribute_values( $atts['price_prefix'] );
+			$atts['fallback_billing_address']    = wcj_sanitize_input_attribute_values( $atts['fallback_billing_address'] );
+			$atts['excl_tax']                    = wcj_sanitize_input_attribute_values( $atts['excl_tax'] );
+			$atts['standard']                    = wcj_sanitize_input_attribute_values( $atts['standard'] );
+			$atts['plus_fees']                   = wcj_sanitize_input_attribute_values( $atts['plus_fees'] );
+			$atts['tax_display']                 = wcj_sanitize_input_attribute_values( $atts['tax_display'] );
+			$atts['tax_class']                   = wcj_sanitize_input_attribute_values( $atts['tax_class'] );
+			$atts['tax_label_spaces']            = wcj_sanitize_input_attribute_values( $atts['tax_label_spaces'] );
+			$atts['show_label']                  = wcj_sanitize_input_attribute_values( $atts['show_label'] );
+			$atts['code']                        = wcj_sanitize_input_attribute_values( $atts['code'], 'restrict_quotes' );
+			$atts['time_format']                 = wcj_sanitize_input_attribute_values( $atts['time_format'], 'restrict_quotes' );
+			$atts['display_refunded']            = wcj_sanitize_input_attribute_values( $atts['display_refunded'] );
+			$atts['whole']                       = wcj_sanitize_input_attribute_values( $atts['whole'] );
+			$atts['use_currency_symbol']         = wcj_sanitize_input_attribute_values( $atts['use_currency_symbol'] );
+			$atts['precision']                   = wcj_sanitize_input_attribute_values( $atts['precision'] );
+			$atts['vat_exempt_text']             = wcj_sanitize_input_attribute_values( $atts['vat_exempt_text'], 'restrict_quotes' );
+			$atts['round_by_line']               = wcj_sanitize_input_attribute_values( $atts['round_by_line'] );
+			$atts['decimal']                     = wcj_sanitize_input_attribute_values( $atts['decimal'], 'restrict_quotes' );
+			$atts['lang']                        = wcj_sanitize_input_attribute_values( $atts['lang'] );
+			$atts['add_html_on_price']           = wcj_sanitize_input_attribute_values( $atts['add_html_on_price'] );
+			$atts['order_user_roles']            = wcj_sanitize_input_attribute_values( $atts['order_user_roles'], 'restrict_quotes' );
+			$atts['dimension']                   = wcj_sanitize_input_attribute_values( $atts['dimension'] );
+			$atts['width']                       = wcj_sanitize_input_attribute_values( $atts['width'] );
+			$atts['height']                      = wcj_sanitize_input_attribute_values( $atts['height'] );
+			$atts['color']                       = wcj_sanitize_input_attribute_values( $atts['color'] );
+			$atts['currency']                    = wcj_sanitize_input_attribute_values( $atts['currency'], 'restrict_quotes' );
+			$atts['doc_type']                    = wcj_sanitize_input_attribute_values( $atts['doc_type'] );
+			$atts['exclude_by_categories']       = wcj_sanitize_input_attribute_values( $atts['exclude_by_categories'], 'restrict_quotes' );
+			$atts['exclude_by_tags']             = wcj_sanitize_input_attribute_values( $atts['exclude_by_tags'], 'restrict_quotes' );
+			$atts['exclude_by_attribute__name']  = wcj_sanitize_input_attribute_values( $atts['exclude_by_attribute__name'], 'restrict_quotes' );
+			$atts['exclude_by_attribute__value'] = wcj_sanitize_input_attribute_values( $atts['exclude_by_attribute__value'], 'restrict_quotes' );
 
 			// Atts.
 			// phpcs:disable WordPress.Security.NonceVerification
