@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 6.0.1
+ * @version 7.2.2
  * @since   2.4.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -77,7 +77,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 		/**
 		 * Remove_payment_gateways.
 		 *
-		 * @version 6.0.1
+		 * @version 7.2.2
 		 * @since   4.7.0
 		 *
 		 * @param array $_available_gateways defines the _available_gateways.
@@ -92,6 +92,17 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 				);
 			}
 			$total_in_cart = WC()->cart->cart_contents_total;
+
+			if ( 'yes' === wcj_get_option( 'wcj_payment_gateways_min_max_include_tax', 'no' ) ) {
+
+				// Get the total tax amount.
+				$cart_totals = WC()->cart->get_totals();
+
+				// Extract the total tax.
+				$total_tax = isset( $cart_totals['total_tax'] ) ? $cart_totals['total_tax'] : 0;
+
+				$total_in_cart += $total_tax;
+			}
 			if ( 'no' === wcj_get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) {
 				$total_in_cart += WC()->cart->shipping_total;
 			}
