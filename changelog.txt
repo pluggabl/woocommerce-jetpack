@@ -1,5 +1,14 @@
 == Changelog ==
 
+= 7.2.2 12/08/2024 =
+
+* NEW FEATURE - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Introduced a new feature to include tax in the cart total when comparing with minimum/maximum limits.
+* FIXED - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Resolved the issue of an empty cart page notice during reorders.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the Order category.
+* FIXED - Addressed cross-site scripting vulnerabilities associated with Order Items shortcode.
+* WooCommerce 9.1.4 Tested
+* WordPress 6.6.1 Tested
+
 = 7.2.1 10/07/2024 =
 
 * FIXED - PRODUCTS - Tax Display - Hide the 'wcj-button-toggle-tax-display-nonce' nonce field to prevent it from breaking the WooCommerce REST API JSON response in certain instances.

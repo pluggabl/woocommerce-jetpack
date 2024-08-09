@@ -10,7 +10,7 @@
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
  * Copyright: © 2020 Pluggabl LLC.
- * WC tested up to: 9.0.2
+ * WC tested up to: 9.1.4
  * License: GNU General Public License v3.0
  * php version 7.2
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '7.2.1';
+		public $version = '7.2.2';
 
 		/**
 		 * The single instance of the class
