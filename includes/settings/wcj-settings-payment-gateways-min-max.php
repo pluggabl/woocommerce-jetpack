@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Min/Max Amounts
  *
- * @version 7.0.0
+ * @version 7.2.2
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    checkout notices - add %diff_amount% and %total_in_cart% replaced values (wc_has_notice won't work then?, probably will need to use wc_clear_notices)
@@ -40,6 +40,13 @@ $settings = array(
 		'title'   => __( 'Exclude Shipping', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Exclude shipping from total cart sum, when comparing with min/max amounts.', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_payment_gateways_min_max_exclude_shipping',
+		'default' => 'no',
+		'type'    => 'checkbox',
+	),
+	array(
+		'title'   => __( 'Include Tax', 'woocommerce-jetpack' ),
+		'desc'    => __( 'Include Tax with total cart sum, when comparing with min/max amounts.', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_payment_gateways_min_max_include_tax',
 		'default' => 'no',
 		'type'    => 'checkbox',
 	),

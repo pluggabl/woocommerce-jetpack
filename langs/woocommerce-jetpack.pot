@@ -761,7 +761,7 @@ msgstr ""
 #: includes/settings/wcj-settings-payment-gateways-currency.php:25
 #: includes/settings/wcj-settings-payment-gateways-currency.php:34
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:27
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:121
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:128
 #: includes/settings/wcj-settings-payment-gateways-per-category.php:30
 #: includes/settings/wcj-settings-reports.php:138
 msgid "Payment Gateways"
@@ -3185,7 +3185,7 @@ msgstr ""
 #: includes/class-wcj-max-products-per-user.php:269
 #: includes/functions/wcj-functions-users.php:189
 #: includes/functions/wcj-functions-users.php:225
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:596
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:657
 msgid "Guest"
 msgstr ""
 
@@ -3876,13 +3876,13 @@ msgstr ""
 msgid "Add min/max amounts for payment gateways to show up."
 msgstr ""
 
-#: includes/class-wcj-payment-gateways-min-max.php:100
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:59
+#: includes/class-wcj-payment-gateways-min-max.php:111
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:66
 msgid "Minimum amount for %gateway_title% is %min_amount%"
 msgstr ""
 
-#: includes/class-wcj-payment-gateways-min-max.php:102
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:69
+#: includes/class-wcj-payment-gateways-min-max.php:113
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:76
 msgid "Maximum amount for %gateway_title% is %max_amount%"
 msgstr ""
 
@@ -4478,7 +4478,7 @@ msgid "\"Pretty prices\" threshold"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-price-converter.php:325
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:123
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:130
 msgid "Leave zero to disable."
 msgstr ""
 
@@ -5054,22 +5054,22 @@ msgstr ""
 msgid "Open Pricing"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:403
+#: includes/class-wcj-product-open-pricing.php:413
 #: includes/settings/wcj-settings-product-open-pricing.php:90
 msgid "Price is required!"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:415
+#: includes/class-wcj-product-open-pricing.php:425
 #: includes/settings/wcj-settings-product-open-pricing.php:98
 msgid "Entered price is too small!"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:430
+#: includes/class-wcj-product-open-pricing.php:440
 #: includes/settings/wcj-settings-product-open-pricing.php:106
 msgid "Entered price is too big!"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:540
+#: includes/class-wcj-product-open-pricing.php:550
 #: includes/settings/wcj-settings-product-open-pricing.php:43
 msgid "Name Your Price"
 msgstr ""
@@ -14054,7 +14054,7 @@ msgstr ""
 #: includes/settings/wcj-settings-order-numbers.php:26
 #: includes/settings/wcj-settings-order-numbers.php:168
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:26
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:97
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:104
 #: includes/settings/wcj-settings-price-by-country.php:49
 #: includes/settings/wcj-settings-price-by-country.php:197
 #: includes/settings/wcj-settings-price-by-user-role.php:26
@@ -15126,12 +15126,12 @@ msgid "Cart notice type"
 msgstr ""
 
 #: includes/settings/wcj-settings-order-min-amount.php:120
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:79
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:86
 msgid "Notice"
 msgstr ""
 
 #: includes/settings/wcj-settings-order-min-amount.php:121
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:80
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:87
 msgid "Error"
 msgstr ""
 
@@ -15957,52 +15957,60 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:47
-msgid "Notices on Checkout"
+msgid "Include Tax"
 msgstr ""
 
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:48
-msgid "Enable Notices"
+msgid "Include Tax with total cart sum, when comparing with min/max amounts."
 msgstr ""
 
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:54
+msgid "Notices on Checkout"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:55
+msgid "Enable Notices"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:61
 msgid "Notice Template (Minimum Amount)"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:56
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:63
 msgid "Replaced values: %gateway_title%, %min_amount%."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:64
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:71
 msgid "Notice Template (Maximum Amount)"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:66
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:73
 msgid "Replaced values: %gateway_title%, %max_amount%."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:74
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:81
 msgid "Notice Styling"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:81
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:88
 msgid "Success"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:102
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:109
 #: includes/settings/wcj-settings-product-msrp.php:162
 msgid "Multicurrency"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:103
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:110
 #: includes/settings/wcj-settings-product-msrp.php:163
 msgid "Enable compatibility with Multicurrency module"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:146
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:153
 msgid "Min"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:161
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:168
 msgid "Max"
 msgstr ""
 
@@ -18034,7 +18042,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-by-condition.php:134
 #: includes/settings/wcj-settings-related-products.php:216
-#: includes/shortcodes/class-wcj-order-items-shortcodes.php:226
+#: includes/shortcodes/class-wcj-order-items-shortcodes.php:261
 msgid "Standard"
 msgstr ""
 
@@ -21669,7 +21677,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:428
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:489
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""

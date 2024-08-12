@@ -2,9 +2,9 @@
 Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.5.5
+Tested up to: 6.6.1
 Requires PHP: 7.2
-Stable tag: 7.2.1
+Stable tag: 7.2.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -246,14 +246,13 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
-= 7.2.1 10/07/2024 =
+= 7.2.2 12/08/2024 =
 
-* FIXED - PRODUCTS - Tax Display - Hide the 'wcj-button-toggle-tax-display-nonce' nonce field to prevent it from breaking the WooCommerce REST API JSON response in certain instances.
-* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the Cart category.
-* FIXED - Addressed cross-site scripting vulnerabilities associated with Product Input-field shortcodes.
-* FIXED - Rectified cross-site scripting vulnerabilities linked to the Add New Product '[wcj_product_add_new]' shortcode.
-* FIXED - PHP Fatal error: Uncaught Error: Call to a member function get_price() on bool in... wcj-functions-price-currency.php:616.
-* WooCommerce 9.0.2 Tested
-* WordPress 6.5.5 Tested
+* NEW FEATURE - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Introduced a new feature to include tax in the cart total when comparing with minimum/maximum limits.
+* FIXED - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Resolved the issue of an empty cart page notice during reorders.
+* FIXED - Fixed the cross-site scripting vulnerability issue associated with the shortcodes of the Order category.
+* FIXED - Addressed cross-site scripting vulnerabilities associated with Order Items shortcode.
+* WooCommerce 9.1.4 Tested
+* WordPress 6.6.1 Tested
 
 [See changelog for all versions](https://raw.githubusercontent.com/pluggabl/woocommerce-jetpack/master/changelog.txt).

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 7.1.6
+ * @version 7.2.2
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -389,12 +389,22 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Validate_open_price_on_add_to_cart.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.2
 		 * @since   2.4.8
 		 * @param string $passed defines the passed.
 		 * @param int    $product_id defines the product_id.
 		 */
 		public function validate_open_price_on_add_to_cart( $passed, $product_id ) {
+			// Check if the product is being reordered.
+			if ( isset( $_REQUEST['subscription_renewal'] ) && 'true' === $_REQUEST['subscription_renewal'] ) {
+				return $passed;
+			}
+
+			// Check if the product is being reordered.
+			$reorder_nonce = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'woocommerce-order_again' ) : false;
+			if ( isset( $_REQUEST['order_again'] ) && false !== $reorder_nonce ) {
+				return $passed;
+			}
 			$wpnonce     = isset( $_REQUEST['wcj_open_price-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_open_price-nonce'] ), 'wcj_open_price' ) : false;
 			$the_product = wc_get_product( $product_id );
 			if ( $this->is_open_price_product( $the_product ) ) {

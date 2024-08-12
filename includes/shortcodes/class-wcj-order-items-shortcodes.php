@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 7.1.9
+ * @version 7.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -84,10 +84,45 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Init_atts.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.2
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function init_atts( $atts ) {
+
+			$atts['order_id']                            = wcj_sanitize_input_attribute_values( $atts['order_id'] );
+			$atts['hide_currency']                       = wcj_sanitize_input_attribute_values( $atts['hide_currency'] );
+			$atts['table_class']                         = wcj_sanitize_input_attribute_values( $atts['table_class'] );
+			$atts['shipping_as_item']                    = wcj_sanitize_input_attribute_values( $atts['shipping_as_item'], 'restrict_quotes' );
+			$atts['discount_as_item']                    = wcj_sanitize_input_attribute_values( $atts['discount_as_item'], 'restrict_quotes' );
+			$atts['columns']                             = wcj_sanitize_input_attribute_values( $atts['columns'], 'restrict_quotes' );
+			$atts['columns_titles']                      = wcj_sanitize_input_attribute_values( $atts['columns_titles'], 'restrict_quotes' );
+			$atts['columns_styles']                      = wcj_sanitize_input_attribute_values( $atts['columns_styles'], 'restrict_quotes' );
+			$atts['tax_percent_format']                  = wcj_sanitize_input_attribute_values( $atts['tax_percent_format'], 'restrict_quotes' );
+			$atts['item_image_width']                    = wcj_sanitize_input_attribute_values( $atts['item_image_width'] );
+			$atts['item_image_height']                   = wcj_sanitize_input_attribute_values( $atts['item_image_height'] );
+			$atts['product_image_width']                 = wcj_sanitize_input_attribute_values( $atts['product_image_width'] );
+			$atts['product_image_height']                = wcj_sanitize_input_attribute_values( $atts['product_image_height'] );
+			$atts['price_prefix']                        = wcj_sanitize_input_attribute_values( $atts['price_prefix'] );
+			$atts['quantity_prefix']                     = wcj_sanitize_input_attribute_values( $atts['quantity_prefix'] );
+			$atts['order_user_roles']                    = wcj_sanitize_input_attribute_values( $atts['order_user_roles'], 'restrict_quotes' );
+			$atts['exclude_by_categories']               = wcj_sanitize_input_attribute_values( $atts['exclude_by_categories'], 'restrict_quotes' );
+			$atts['exclude_by_tags']                     = wcj_sanitize_input_attribute_values( $atts['exclude_by_tags'], 'restrict_quotes' );
+			$atts['exclude_by_attribute__name']          = wcj_sanitize_input_attribute_values( $atts['exclude_by_attribute__name'], 'restrict_quotes' );
+			$atts['exclude_by_attribute__value']         = wcj_sanitize_input_attribute_values( $atts['exclude_by_attribute__value'], 'restrict_quotes' );
+			$atts['style_item_name_variation']           = wcj_sanitize_input_attribute_values( $atts['style_item_name_variation'], 'style' );
+			$atts['variation_as_metadata']               = wcj_sanitize_input_attribute_values( $atts['variation_as_metadata'] );
+			$atts['wc_extra_product_options_show_price'] = wcj_sanitize_input_attribute_values( $atts['wc_extra_product_options_show_price'] );
+			$atts['add_variation_info_to_item_name']     = wcj_sanitize_input_attribute_values( $atts['add_variation_info_to_item_name'] );
+			$atts['insert_page_break']                   = wcj_sanitize_input_attribute_values( $atts['insert_page_break'], 'restrict_quotes' );
+			$atts['multiply_cost']                       = wcj_sanitize_input_attribute_values( $atts['multiply_cost'] );
+			$atts['multiply_profit']                     = wcj_sanitize_input_attribute_values( $atts['multiply_profit'] );
+			$atts['refunded_items_table']                = wcj_sanitize_input_attribute_values( $atts['refunded_items_table'] );
+			$atts['hide_zero_prices']                    = wcj_sanitize_input_attribute_values( $atts['hide_zero_prices'] );
+			$atts['multicolumns_glue']                   = wcj_sanitize_input_attribute_values( $atts['multicolumns_glue'], 'restrict_quotes' );
+			$atts['sort_by_column']                      = wcj_sanitize_input_attribute_values( $atts['sort_by_column'] );
+			$atts['product_barcode_width']               = wcj_sanitize_input_attribute_values( $atts['product_barcode_width'] );
+			$atts['product_barcode_height']              = wcj_sanitize_input_attribute_values( $atts['product_barcode_height'] );
+
 			if ( true === wcj_is_hpos_enabled() ) {
 				$this->the_order = ( 'shop_order' === OrderUtil::get_order_type( $atts['order_id'] ) ) ? wcj_get_order( $atts['order_id'] ) : null;
 			} else {
