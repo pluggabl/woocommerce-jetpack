@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 7.2.3 11/09/2024 =
+
+* WooCommerce 9.2.3 Tested
+* WordPress 6.6.1 Tested
+
 = 7.2.2 12/08/2024 =
 
 * NEW FEATURE - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Introduced a new feature to include tax in the cart total when comparing with minimum/maximum limits.
