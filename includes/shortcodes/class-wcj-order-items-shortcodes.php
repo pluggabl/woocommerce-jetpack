@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 7.2.2
+ * @version 7.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -574,7 +574,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 		/**
 		 * Get_cell.
 		 *
-		 * @version 7.1.1
+		 * @version 7.2.4
 		 * @since   3.2.0
 		 * @todo    do we need `pa_` replacement?
 		 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
@@ -886,7 +886,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					return ( ! is_object( $the_product ) || ! isset( $column_param ) || '' === $column_param ) ? '' : $the_product->get_meta( $column_param );
 
 				case 'product_post_meta':
-					return ( true === $item['is_custom'] || ! isset( $column_param ) || '' === $column_param ) ? '' : get_post_meta( $item['product_id'], $column_param, true );
+					return ( true === $item['is_custom'] || ! isset( $column_param ) || '' === $column_param ) ? '' : esc_js( get_post_meta( $item['product_id'], $column_param, true ) );
 
 				case 'product_purchase_note':
 					return ( ! is_object( $the_product ) ) ? '' : $the_product->get_purchase_note();
@@ -907,7 +907,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 									$code = $the_product->get_permalink();
 									break;
 								default: // meta.
-									$code = get_post_meta( $the_product->get_id(), $column_param, true );
+									$code = esc_js( get_post_meta( $the_product->get_id(), $column_param, true ) );
 							}
 						}
 						$atts = array(

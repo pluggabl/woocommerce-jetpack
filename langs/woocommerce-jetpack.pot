@@ -1655,7 +1655,7 @@ msgstr ""
 msgid "Most Stocked"
 msgstr ""
 
-#: includes/class-wcj-admin-bar.php:485 includes/class-wcj-eu-vat-number.php:272
+#: includes/class-wcj-admin-bar.php:485 includes/class-wcj-eu-vat-number.php:282
 msgid "Taxes"
 msgstr ""
 
@@ -2836,7 +2836,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-eu-vat-number.php:36
-#: includes/class-wcj-eu-vat-number.php:378
+#: includes/class-wcj-eu-vat-number.php:388
 #: includes/settings/wcj-settings-eu-vat-number.php:43
 #: includes/settings/wcj-settings-eu-vat-number.php:50
 msgid "EU VAT Number"
@@ -2866,11 +2866,11 @@ msgstr ""
 msgid "Add all EU countries VAT standard rates to WooCommerce."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:260
+#: includes/class-wcj-eu-vat-number.php:270
 msgid "Customer IP"
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:264 includes/class-wcj-orders.php:214
+#: includes/class-wcj-eu-vat-number.php:274 includes/class-wcj-orders.php:214
 #: includes/class-wcj-orders.php:225
 #: includes/settings/wcj-settings-orders.php:40
 #: includes/settings/wcj-settings-orders.php:182
@@ -2878,35 +2878,35 @@ msgstr ""
 msgid "Country by IP"
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:268
+#: includes/class-wcj-eu-vat-number.php:278
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:494
+#: includes/class-wcj-eu-vat-number.php:504
 #: includes/settings/wcj-settings-eu-vat-number.php:209
 msgid "Validating VAT. Please wait..."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:495
+#: includes/class-wcj-eu-vat-number.php:505
 #: includes/settings/wcj-settings-eu-vat-number.php:216
 msgid "VAT is valid."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:496
+#: includes/class-wcj-eu-vat-number.php:506
 #: includes/settings/wcj-settings-eu-vat-number.php:223
 msgid "VAT is not valid."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:497
+#: includes/class-wcj-eu-vat-number.php:507
 #: includes/settings/wcj-settings-eu-vat-number.php:231
 msgid "Validation failed. Please try again."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:684
+#: includes/class-wcj-eu-vat-number.php:694
 msgid "<strong>Billing EU VAT Number</strong>is a required field."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:704
+#: includes/class-wcj-eu-vat-number.php:714
 #: includes/settings/wcj-settings-eu-vat-number.php:96
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
@@ -3183,9 +3183,9 @@ msgid "Qty Bought"
 msgstr ""
 
 #: includes/class-wcj-max-products-per-user.php:269
-#: includes/functions/wcj-functions-users.php:189
-#: includes/functions/wcj-functions-users.php:225
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:657
+#: includes/functions/wcj-functions-users.php:192
+#: includes/functions/wcj-functions-users.php:228
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:658
 msgid "Guest"
 msgstr ""
 
@@ -3765,27 +3765,27 @@ msgid_plural "Download permissions regenerated for %s orders."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wcj-orders.php:475
+#: includes/class-wcj-orders.php:479
 #: includes/functions/wcj-functions-crons.php:116
 msgid "Once weekly"
 msgstr ""
 
-#: includes/class-wcj-orders.php:479
+#: includes/class-wcj-orders.php:483
 #: includes/functions/wcj-functions-crons.php:120
 msgid "Once every 30 minutes"
 msgstr ""
 
-#: includes/class-wcj-orders.php:483
+#: includes/class-wcj-orders.php:487
 #: includes/functions/wcj-functions-crons.php:124
 msgid "Once every 15 minutes"
 msgstr ""
 
-#: includes/class-wcj-orders.php:487
+#: includes/class-wcj-orders.php:491
 #: includes/functions/wcj-functions-crons.php:128
 msgid "Once every 5 minutes"
 msgstr ""
 
-#: includes/class-wcj-orders.php:491
+#: includes/class-wcj-orders.php:495
 #: includes/functions/wcj-functions-crons.php:132
 msgid "Once a minute"
 msgstr ""
@@ -21677,7 +21677,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-orders-shortcodes.php:489
+#: includes/shortcodes/class-wcj-orders-shortcodes.php:490
 #, php-format
 msgid "Refund #%1$s - %2$s"
 msgstr ""
