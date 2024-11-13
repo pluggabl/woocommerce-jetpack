@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Display
  *
- * @version 7.0.0
+ * @version 7.2.4
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add "Save all settings" buttons to each document type
@@ -25,10 +25,12 @@ $settings = array(
 		'title'             => __( 'Display & Misc.', 'woocommerce-jetpack' ),
 		'desc'              => __( 'PDF Invoicing : Display & Misc. Settings' ),
 		'icon'              => 'pr-sm-icn.png',
-		'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . add_query_arg(
-			array(
-				'wcj_reset_settings' => $this->id,
-				'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+		'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . esc_url(
+			add_query_arg(
+				array(
+					'wcj_reset_settings' => $this->id,
+					'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+				)
 			)
 		) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 	),

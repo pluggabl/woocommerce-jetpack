@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 7.2.2
+ * @version 7.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -113,7 +113,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Add_extra_atts.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.4
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function add_extra_atts( $atts ) {
@@ -171,6 +171,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					'vat_exempt_text'             => '',
 					'taxonomy'                    => '',
 					'limit'                       => 0,
+					'standard'                    => '',
 
 				),
 				$atts
@@ -413,7 +414,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_tcpdf_barcode.
 		 *
-		 * @version 3.3.0
+		 * @version 7.2.4
 		 * @since   3.3.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -429,7 +430,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					$atts['code'] = wcj_get_invoice_number( $atts['order_id'], $atts['doc_type'] );
 					break;
 				case '%meta%':
-					$atts['code'] = get_post_meta( $atts['order_id'], $atts['meta_key'], true );
+					$atts['code'] = esc_js( get_post_meta( $atts['order_id'], $atts['meta_key'], true ) );
 					break;
 				default:
 					return '';
@@ -835,7 +836,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_payment_method.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.4
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_payment_method( $atts ) {
@@ -844,7 +845,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					return $this->the_order->get_meta( '_payment_method_title' );
 				}
 			} else {
-				return get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method_title', true );
+				return esc_js( get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method_title', true ) );
 			}
 		}
 
@@ -1158,7 +1159,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_products_meta.
 		 *
-		 * @version 3.9.0
+		 * @version 7.2.4
 		 * @since   3.9.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -1170,7 +1171,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			$items = $this->the_order->get_items();
 			foreach ( $items as $item_id => $item ) {
 				$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
-				$meta       = get_post_meta( $product_id, $atts['meta_key'], true );
+				$meta       = esc_js( get_post_meta( $product_id, $atts['meta_key'], true ) );
 				if ( '' !== ( $meta ) ) {
 					$metas[] = $meta;
 				}
@@ -1209,12 +1210,12 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_meta.
 		 *
-		 * @version 2.7.0
+		 * @version 7.2.4
 		 * @since   2.2.9
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_meta( $atts ) {
-			return ( '' !== $atts['meta_key'] ? get_post_meta( wcj_get_order_id( $this->the_order ), $atts['meta_key'], true ) : '' );
+			return ( '' !== $atts['meta_key'] ? esc_js( get_post_meta( wcj_get_order_id( $this->the_order ), $atts['meta_key'], true ) ) : '' );
 		}
 
 		/**
@@ -1398,16 +1399,16 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_total_tax_percent.
 		 *
-		 * @version 2.4.0
+		 * @version 7.2.4
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_total_tax_percent( $atts ) {
 			$order_total_tax_not_rounded = $this->the_order->get_cart_tax() + $this->the_order->get_shipping_tax();
 			$order_total_excl_tax        = $this->the_order->get_total() - $order_total_tax_not_rounded;
 			$order_total_tax_percent     = ( 0 === $order_total_excl_tax ) ? 0 : $order_total_tax_not_rounded / $order_total_excl_tax * 100;
-			$order_total_tax_percent     = round( $order_total_tax_percent, $atts['precision'] );
+			$order_total_tax_percent     = round( $order_total_tax_percent, (int) $atts['precision'] );
 			apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
-			return number_format( $order_total_tax_percent, $atts['precision'] );
+			return number_format( $order_total_tax_percent, (int) $atts['precision'] );
 		}
 
 		/**

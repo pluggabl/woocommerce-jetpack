@@ -2,9 +2,9 @@
 Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.2
-Stable tag: 7.2.3
+Stable tag: 7.2.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -246,7 +246,18 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 == Changelog ==
 
-== Changelog ==
+= 7.2.4 13/11/2024 =
+
+* FIXED - Uncaught Error: round(): Argument #2 ($precision) must be of type int, string given in includes/shortcodes/class-wcj-orders-shortcodes.php...
+* FIXED - Fatal error: Call to a member function get() on null in includes/functions/wcj-functions-users.php...
+* FIXED - Fatal error: Call to a member function get_tax_totals() on null in includes/class-wcj-eu-vat-number.php...
+* FIXED - Fatal error: Call to a member function get_customer_ip_address() on null in includes/functions/class-wcj-eu-vat-number.php...
+* FIXED - Fatal error: Unsupported operand types: float + string in includes/reports/class-wcj-reports-stock.php...
+* FIXED - Fatal error: Unsupported operand types: int + string in includes/reports/class-wcj-reports-stock.php...
+* FIXED - Fix security vulnerability related to add_query_arg & remove_query_arg functions.
+* FIXED - Fix security vulnerability related to get_post_meta() function.
+* WooCommerce 9.3.3 Tested
+* WordPress 6.6.2 Tested
 
 = 7.2.3 11/09/2024 =
 

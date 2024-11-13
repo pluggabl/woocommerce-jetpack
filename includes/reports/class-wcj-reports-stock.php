@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 7.1.6
+ * @version 7.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -402,7 +402,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 		/**
 		 * Get_report_html.
 		 *
-		 * @version 6.0.0
+		 * @version 7.2.4
 		 */
 		public function get_report_html() {
 			$products_info = $this->data_products;
@@ -452,7 +452,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 				( $product_info['sales_in_period'][ $this->range_days ] > 1 ) &&
 				( $product_info['stock'] < ( $product_info['sales_in_period'][ $this->range_days ] / 2 ) ) )
 				) {
-					$total_current_stock_price += $product_info['stock_price'];
+					$total_current_stock_price += (float) $product_info['stock_price'];
 					$product_counter++;
 					$html                               .= '<tr>';
 					$html                               .= '<td>' . $product_counter . '</td>';
@@ -477,7 +477,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 					$html                               .= '<td class="wcj_report_table_sales_columns">' . $product_info['sales_in_period'][ $this->range_days ] . $profit_html . '</td>';
 					$html                               .= '<td class="wcj_report_table_sales_columns">' . $product_info['total_sales'] . '</td>';
 					if ( $product_info['sales_in_period'][ $this->range_days ] > 0 ) {
-						$stock_to_minimum = ( $product_info['sales_in_period'][ $this->range_days ] / 2 ) - $product_info['stock'];
+						$stock_to_minimum = ( $product_info['sales_in_period'][ $this->range_days ] / 2 ) - (int) $product_info['stock'];
 						$stock_to_minimum = ( $stock_to_minimum > 0 ) ? round( $stock_to_minimum ) : '';
 					} else {
 						$stock_to_minimum = '';

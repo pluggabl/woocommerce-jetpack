@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 7.1.6
+ * @version 7.2.4
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -189,7 +189,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_custom_statuses_table.
 		 *
-		 * @version 6.0.1
+		 * @version 7.2.4
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_table() {
@@ -215,26 +215,30 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 					$icon_data       = $this->module->get_status_icon_data( substr( $status, 3 ) );
 					$color_html      = '<input disabled type="color" value="' . $icon_data['color'] . '">';
 					$text_color_html = '<input disabled type="color" value="' . $icon_data['text_color'] . '">';
-					$delete_button   = '<a class="button-primary" href="' . add_query_arg(
-						array(
-							'delete'                     => $status,
-							'delete_custom_status-nonce' => wp_create_nonce( 'delete_custom_status' ),
-						),
-						remove_query_arg( array( 'edit', 'edit-custom-statuses-nonce', 'delete_custom_status-nonce', 'delete_all_custom_status-nonce' ) )
+					$delete_button   = '<a class="button-primary" href="' . esc_url(
+						add_query_arg(
+							array(
+								'delete' => $status,
+								'delete_custom_status-nonce' => wp_create_nonce( 'delete_custom_status' ),
+							),
+							remove_query_arg( array( 'edit', 'edit-custom-statuses-nonce', 'delete_custom_status-nonce', 'delete_all_custom_status-nonce' ) )
+						)
 					) .
 					'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
 					$edit_button     = '<a class="button-primary"' . ( '' !== apply_filters( 'booster_message', '', 'desc' ) ?
 					' disabled title="' . __( 'Get Booster Plus to enable.', 'woocommerce-jetpack' ) . '"' :
-					' href="' . add_query_arg(
-						array(
-							'edit'                       => $status,
-							'edit-custom-statuses-nonce' => wp_create_nonce( 'edit-custom-statuses' ),
-						),
-						remove_query_arg(
+					' href="' . esc_url(
+						add_query_arg(
 							array(
-								'delete',
-								'edit-custom-statuses-nonce',
-								'delete_all_custom_status-nonce',
+								'edit' => $status,
+								'edit-custom-statuses-nonce' => wp_create_nonce( 'edit-custom-statuses' ),
+							),
+							remove_query_arg(
+								array(
+									'delete',
+									'edit-custom-statuses-nonce',
+									'delete_all_custom_status-nonce',
+								)
 							)
 						)
 					) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
@@ -271,7 +275,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_custom_statuses_add_edit_table.
 		 *
-		 * @version 5.6.7
+		 * @version 7.2.4
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_add_edit_table() {
@@ -316,7 +320,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 				$columns_styles[] = 'width:16%;';
 			}
 			return '<h4>' . ( $is_editing ? __( 'Edit', 'woocommerce-jetpack' ) : __( 'Add', 'woocommerce-jetpack' ) ) . '</h4>' .
-			'<form method="post" action="' . ( remove_query_arg( 'delete' ) ) . '">' .
+			'<form method="post" action="' . esc_url( remove_query_arg( 'delete' ) ) . '">' .
 				wcj_get_table_html(
 					$table_data,
 					array(
@@ -361,11 +365,11 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_delete_all_custom_statuses_button.
 		 *
-		 * @version 5.6.7
+		 * @version 7.2.4
 		 * @since   3.2.2
 		 */
 		public function get_delete_all_custom_statuses_button() {
-			return '<p> <a class="button-primary" href="' . (
+			return '<p> <a class="button-primary" href="' . esc_url(
 				add_query_arg(
 					array(
 						'delete_all'                     => '1',

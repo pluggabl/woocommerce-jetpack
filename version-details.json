@@ -1,5 +1,6 @@
 {
-    "0" : "= 7.2.3 11/09/2024 =",
-    "1" : "* WooCommerce 9.2.3 Tested",
-    "2" : "* WordPress 6.6.1 Tested"
+    "0" : "= 7.2.4 13/11/2024 =",
+    "1" : "* FIXED - Uncaught Error: round(): Argument #2 ($precision) must be of type int, string given in includes/shortcodes/class-wcj-orders-shortcodes.php",
+    "2" : "* FIXED - Fix security vulnerability related to add_query_arg & remove_query_arg & get_post_meta() methods",
+    "3" : "* FIXED - Fatal error: Unsupported operand types: int + string and float + string in includes/reports/class-wcj-reports-stock.php"
 }

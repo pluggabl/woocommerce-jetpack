@@ -3,7 +3,7 @@
  * This is the class that sends all the data back to the home site
  * It also handles opting in and deactivation
  *
- * @version 5.6.8
+ * @version 7.2.4
  * @package Booster_For_WooCommerce/tracking
  */
 
@@ -996,7 +996,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 				$this->set_can_collect_email( sanitize_text_field( wp_unslash( $_GET['marketing_optin'] ) ), $this->plugin_name );
 				// Do tracking.
 				$this->do_tracking( true );
-			} elseif ( isset( $_GET['marketing'] ) && 'yes' === $_GET['marketing'] ) {
+			} elseif ( ( isset( $_GET['marketing'] ) && 'yes' === $_GET['marketing'] ) || ( isset( $_GET['marketing_optin'] ) && 'yes' === $_GET['marketing_optin'] ) ) {
 				// Display the notice requesting permission to collect email address.
 				// Retrieve current plugin information.
 				$plugin      = $this->plugin_data();

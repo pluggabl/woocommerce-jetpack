@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 7.1.9
+ * @version 7.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -955,7 +955,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 		/**
 		 * Get product meta.
 		 *
-		 * @version 5.6.2
+		 * @version 7.2.4
 		 * @since   2.5.7
 		 * @return  string
 		 * @param   array $atts Shortcode atts.
@@ -965,13 +965,13 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 				return '';
 			}
 			// Checking get_post_meta type ie. Array or String.
-			$checking_postmeta_value = gettype( get_post_meta( $atts['product_id'], $atts['name'], true ) );
+			$checking_postmeta_value = gettype( esc_js( get_post_meta( $atts['product_id'], $atts['name'], true ) ) );
 			// if get_post_meta return Array.
 			if ( 'array' === $checking_postmeta_value ) {
 				// convert Array To String.
-				return implode( ',', get_post_meta( $atts['product_id'], $atts['name'], true ) );
+				return implode( ',', esc_js( get_post_meta( $atts['product_id'], $atts['name'], true ) ) );
 			}
-			return get_post_meta( $atts['product_id'], $atts['name'], true );
+			return esc_js( get_post_meta( $atts['product_id'], $atts['name'], true ) );
 		}
 
 		/**
