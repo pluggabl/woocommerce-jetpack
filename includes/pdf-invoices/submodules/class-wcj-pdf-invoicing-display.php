@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 7.1.4
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -250,7 +250,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Output custom columns for products HPOS.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.5
 		 * @param  string $column Get column columns.
 		 * @param  string $order Get order columns.
 		 */
@@ -259,7 +259,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 			if ( ! in_array( $column, $invoice_types_ids, true ) ) {
 				return;
 			}
-			$order_id        = $order->id;
+			$order_id        = $order->get_id();
 			$invoice_type_id = $column;
 			$html            = '';
 			if ( wcj_is_invoice_created( $order_id, $invoice_type_id ) ) {

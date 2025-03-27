@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 7.2.0
+ * @version 7.2.5
  * @since   2.5.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -217,7 +217,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		/**
 		 * Add_my_products_content_my_account_page.
 		 *
-		 * @version 7.2.0
+		 * @version 7.2.5
 		 * @since   2.5.2
 		 */
 		public function add_my_products_content_my_account_page() {
@@ -309,7 +309,9 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 						) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>',
 					);
 				}
-				echo wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ) );
+				$allowed_tags                 = wp_kses_allowed_html( 'post' );
+				$allowed_tags['a']['onclick'] = true;
+				echo wp_kses( wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ), $allowed_tags );
 			}
 		}
 

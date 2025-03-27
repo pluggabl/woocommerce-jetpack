@@ -2,9 +2,9 @@
 Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.6.2
+Tested up to: 6.7.2
 Requires PHP: 7.2
-Stable tag: 7.2.4
+Stable tag: 7.2.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -245,6 +245,16 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.2.5 27/03/2025 =
+
+* FIXED - SHIPPING & ORDERS - Order Quantities - Min Qty - Exclude products from the minimum order quantity restriction.
+* FIXED - PDF Invoice - Bulk Actions for HPOS order listing issue for HPOS as well.
+* FIXED - PDF Invoice - Renumerate Invoices Report issue for HPOS.
+* FIXED - Fix security vulnerability related to malicious file type.
+* FIXED - Fix security vulnerability related to malicious scripted tag.
+* WooCommerce 9.7.1 Tested
+* WordPress 6.7.2 Tested
 
 = 7.2.4 13/11/2024 =
 

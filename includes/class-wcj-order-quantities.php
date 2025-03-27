@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -650,7 +650,7 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		/**
 		 * Check_quantities.
 		 *
-		 * @version 7.0.0
+		 * @version 7.2.5
 		 * @since   2.9.0
 		 * @param string        $min_or_max defines the min_or_max.
 		 * @param int           $cart_item_quantities defines the cart_item_quantities.
@@ -660,6 +660,13 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		 */
 		public function check_quantities( $min_or_max, $cart_item_quantities, $cart_total_quantity, $_is_cart, $_return ) {
 			$min_or_max_cart_total_quantity = wcj_get_option( 'wcj_order_quantities_' . $min_or_max . '_cart_total_quantity', 0 );
+
+			foreach ( $cart_item_quantities as $product_id => $qty ) {
+				$products_excl = wcj_get_option( 'wcj_order_quantities_min_cart_total_quantity_exclude_product', array() );
+				if ( in_array( (string) $product_id, $products_excl, true ) ) {
+					$cart_total_quantity = $cart_total_quantity - $qty;
+				}
+			}
 			if ( (string) 0 !== ( $min_or_max_cart_total_quantity ) && 0 !== ( $min_or_max_cart_total_quantity ) ) {
 				if (
 				( 'max' === $min_or_max && $cart_total_quantity > $min_or_max_cart_total_quantity ) ||

@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.2.4 13/11/2024 =",
-    "1" : "* FIXED - Uncaught Error: round(): Argument #2 ($precision) must be of type int, string given in includes/shortcodes/class-wcj-orders-shortcodes.php",
-    "2" : "* FIXED - Fix security vulnerability related to add_query_arg & remove_query_arg & get_post_meta() methods",
-    "3" : "* FIXED - Fatal error: Unsupported operand types: int + string and float + string in includes/reports/class-wcj-reports-stock.php"
+    "0" : "= 7.2.5 27/03/2025 =",
+    "1" : "* FIXED - SHIPPING & ORDERS - Order Quantities - Min Qty - Exclude products from the minimum order quantity restriction",
+    "2" : "* FIXED - PDF Invoice - Bulk Actions for HPOS order listing issue for HPOS",
+    "3" : "* FIXED - Fix security vulnerability related to malicious file type."
 }

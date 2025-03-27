@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @since   2.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -60,7 +60,7 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		/**
 		 * Add_products_per_page_form.
 		 *
-		 * @version 5.6.7
+		 * @version 7.2.5
 		 * @since   2.5.3
 		 */
 		public function add_products_per_page_form() {
@@ -109,7 +109,9 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 			$html .= '</form>';
 			$html .= wcj_get_option( 'wcj_products_per_page_text_after', '</div>' );
 
-			echo wp_kses_post( $html );
+			$allowed_tags                       = wp_kses_allowed_html( 'post' );
+			$allowed_tags['select']['onchange'] = true;
+			echo wp_kses( $html, $allowed_tags );
 		}
 
 		/**

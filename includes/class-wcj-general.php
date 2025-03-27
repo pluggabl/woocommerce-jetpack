@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -209,7 +209,7 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		/**
 		 * Create_custom_roles_tool.
 		 *
-		 * @version 5.6.7
+		 * @version 7.2.5
 		 * @since   2.5.3
 		 */
 		public function create_custom_roles_tool() {
@@ -278,7 +278,9 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 				$table_data[] = array( $role_key, $role_data['name'], $caps, $delete_html );
 			}
 			echo '<h3>' . wp_kses_post( 'Existing Roles', 'woocommerce-jetpack' ) . '</h3>';
-			echo wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) );
+			$allowed_tags                 = wp_kses_allowed_html( 'post' );
+			$allowed_tags['a']['onclick'] = true;
+			echo wp_kses( wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ), $allowed_tags );
 
 			$table_data   = array();
 			$table_data[] = array( __( 'ID', 'woocommerce-jetpack' ), '<input style="width:100%" required type="text" name="wcj_custom_role_id">' );

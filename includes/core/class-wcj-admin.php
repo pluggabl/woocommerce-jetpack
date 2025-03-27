@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.1.8
+ * @version 7.2.5
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -49,7 +49,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.0.0
+		 * @version 7.2.5
 		 * @since   3.2.4
 		 */
 		public function __construct() {
@@ -70,6 +70,8 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 
 					add_action( 'admin_enqueue_scripts', array( $this, 'wcj_new_desing_dashboard' ) );
 				}
+
+				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ), PHP_INT_MAX );
 
 				add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'unclean_custom_textarea' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'maybe_unclean_field' ), PHP_INT_MAX, 3 );
@@ -229,6 +231,24 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					)
 				);
 			}
+		}
+
+		/**
+		 * Enqueue_admin_script.
+		 *
+		 * @version 7.2.5
+		 * @since  1.0.0
+		 */
+		public function enqueue_admin_script() {
+			wp_enqueue_script( 'wcj-admin-js', trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-admin.js', array( 'jquery' ), w_c_j()->version, true );
+			wp_localize_script(
+				'wcj-admin-js',
+				'admin_object',
+				array(
+					'resetSettings' => __( 'This will reset settings to defaults for all Booster modules.', 'woocommerce-jetpack' ),
+					'deleteMeta'    => __( 'This will delete all Booster meta. Are you sure?', 'woocommerce-jetpack' ),
+				)
+			);
 		}
 
 		/**
@@ -492,7 +512,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Get_manager_settings.
 		 *
-		 * @version 7.0.0
+		 * @version 7.2.5
 		 * @since   1.0.0
 		 * @param   string $section defines the section type.
 		 * @return  array
@@ -534,15 +554,13 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					array(
 						'type'  => 'button',
 						'title' => __( 'Reset all Booster\'s options.', 'woocommerce-jetpack' ),
-						'html'  => '<button style="width:100px;" class="wcj_manage_settting_btn" type="submit" name="booster_reset_settings"' .
-						wcj_get_js_confirmation( __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) ) . '>' .
+						'html'  => '<button style="width:100px;" class="wcj_manage_settting_btn" type="submit" name="booster_reset_settings">' .
 						__( 'Reset', 'woocommerce-jetpack' ) . '</button>',
 					),
 					array(
 						'type'  => 'button',
 						'title' => __( 'Reset all Booster\'s meta.', 'woocommerce-jetpack' ),
-						'html'  => '<button style="width:100px;" class="wcj_manage_settting_btn" type="submit" name="booster_reset_settings_meta"' .
-						wcj_get_js_confirmation( __( 'This will delete all Booster meta. Are you sure?', 'woocommerce-jetpack' ) ) . '>' .
+						'html'  => '<button style="width:100px;" class="wcj_manage_settting_btn" type="submit" name="booster_reset_settings_meta">' .
 						__( 'Reset meta', 'woocommerce-jetpack' ) . '</button>',
 					),
 					array(
