@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -492,7 +492,7 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		/**
 		 * Maybe_add_js_links.
 		 *
-		 * @version 5.6.2
+		 * @version 7.2.5
 		 * @since   2.8.0
 		 */
 		public function maybe_add_js_links() {
@@ -505,7 +505,9 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 					$key  = 'global_' . $i;
 					$link = wcj_get_option( 'wcj_custom_product_tabs_link_' . $key, '' );
 					if ( '' !== wcj_get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) && '' !== $link ) {
-						echo wp_kses_post( $this->get_js_link_script( $link, $this->get_tab_key( $key, 'global' ), wcj_get_option( 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) ) );
+						$allowed_tags           = wp_kses_allowed_html( 'post' );
+						$allowed_tags['script'] = array();
+						echo wp_kses( $this->get_js_link_script( $link, $this->get_tab_key( $key, 'global' ), wcj_get_option( 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) ), $allowed_tags );
 					}
 				}
 			}
@@ -523,7 +525,9 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 					$link = get_post_meta( $current_post_id, '_wcj_custom_product_tabs_link_' . $key, true );
 					if ( '' !== get_post_meta( $current_post_id, '_wcj_custom_product_tabs_title_' . $key, true ) ) {
 						if ( '' !== $link ) {
-							echo wp_kses_post( $this->get_js_link_script( $link, $this->get_tab_key( $key, 'local', $current_post_id ), get_post_meta( $current_post_id, '_wcj_custom_product_tabs_link_new_tab_' . $key, true ) ) );
+							$allowed_tags           = wp_kses_allowed_html( 'post' );
+							$allowed_tags['script'] = array();
+							echo wp_kses( $this->get_js_link_script( $link, $this->get_tab_key( $key, 'local', $current_post_id ), get_post_meta( $current_post_id, '_wcj_custom_product_tabs_link_new_tab_' . $key, true ) ), $allowed_tags );
 						}
 					}
 				}

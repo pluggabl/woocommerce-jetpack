@@ -1,7 +1,7 @@
 /**
  * Wcj-admin.
  *
- * @version 5.6.7
+ * @version 7.2.5
  * @since   5.4.2
  * @package Booster_For_WooCommerce/includes/JS
  */
@@ -23,7 +23,7 @@ jQuery( document ).ready(
 		/* Klaviyo Email Subscription From Welcome Page */
 		jQuery( "#subscribe-email .subscribe-email-btn" ).click(
 			function() {
-				var email = jQuery( "#subscribe-email input[name=user_email]" );
+				var email                 = jQuery( "#subscribe-email input[name=user_email]" );
 				var subscribe_email_nonce = jQuery( "#subscribe-email input[name=subscribe-email-nonce]" ).val();
 				if (IsValidEmail( email.val() ) == false) {
 					email.focus();
@@ -66,5 +66,26 @@ jQuery( document ).ready(
 			var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 			return regex.test( email ) ? true : false;
 		}
+
+		jQuery( 'button[name="booster_reset_settings"]' ).on(
+			'click',
+			function () {
+				return confirm( admin_object.resetSettings );
+			}
+		);
+
+		jQuery( 'button[name="booster_reset_settings_meta"]' ).on(
+			'click',
+			function () {
+				return confirm( admin_object.deleteMeta );
+			}
+		);
+
+		jQuery( 'button[data-confirm]' ).on(
+			'click',
+			function () {
+				return confirm( jQuery( this ).data( 'confirm' ) );
+			}
+		);
 	}
 );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 7.1.4
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -158,7 +158,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/**
 		 * Create_custom_payment_gateways_fields_admin_order_meta_box.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.5
 		 * @since   2.5.2
 		 */
 		public function create_custom_payment_gateways_fields_admin_order_meta_box() {
@@ -188,7 +188,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 				$html .= '<p><a style="color:#a00;" href="' . esc_url( wp_nonce_url( add_query_arg( 'wcj_delete_payment_gateway_input_fields', $order_id ), 'wcj_delete_payment_gateway_input_fields' ) ) . '"' . wcj_get_js_confirmation() . '>' .
 				__( 'Delete', 'woocommerce-jetpack' ) . '</a></p>';
 			}
-			echo wp_kses_post( $html );
+			$allowed_tags                 = wp_kses_allowed_html( 'post' );
+			$allowed_tags['a']['onclick'] = true;
+			echo wp_kses( $html, $allowed_tags );
 		}
 
 		/**

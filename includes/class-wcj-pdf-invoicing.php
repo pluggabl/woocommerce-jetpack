@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.5
 		 */
 		public function __construct() {
 
@@ -92,8 +92,10 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 
 				// Bulk actions.
 				add_filter( 'bulk_actions-edit-shop_order', array( $this, 'bulk_actions_register' ) );
+				add_filter( 'bulk_actions-woocommerce_page_wc-orders', array( $this, 'bulk_actions_register' ) );
 				add_filter( 'handle_bulk_actions-edit-shop_order', array( $this, 'bulk_actions_handle' ), 10, 3 );
-				add_action( 'admin_notices', array( $this, 'bulk_actions_pdfs_notices' ) );
+				add_action( 'all_admin_notices', array( $this, 'bulk_actions_pdfs_notices' ) ); // Ensure it runs on HPOS screens.
+				add_filter( 'handle_bulk_actions-woocommerce_page_wc-orders', array( $this, 'bulk_actions_handle' ), 10, 3 );
 
 				$this->the_pdf_invoicing_report_tool = include_once 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php';
 
@@ -154,52 +156,63 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Bulk_actions_pdfs_notices.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.5
 		 * @since   2.5.7
 		 */
 		public function bulk_actions_pdfs_notices() {
-			global $post_type, $pagenow;
-			if ( 'edit.php' === $pagenow && 'shop_order' === $post_type ) {
-				$wpnonce = isset( $_REQUEST['pdf-generated-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['pdf-generated-nonce'] ), 'pdf-generated' ) : false;
-				if ( $wpnonce && isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
-					/* translators: %s: translation added */
-					$message = sprintf( wp_kses_post( 'Document generated.', '%s documents generated.', sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ), number_format_i18n( sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ) );
+			global $pagenow, $typenow;
 
-					echo wp_kses_post( "<div class='updated'><p>{$message}</p></div>" );
-				}
-				if ( isset( $_GET['wcj_notice'] ) ) {
-					switch ( $_GET['wcj_notice'] ) {
-						case 'ziparchive_class_missing':
-							echo '<div class="notice notice-error"><p><strong>' .
-							/* translators: %s: translation added */
-							sprintf(
-								wp_kses_post( 'Booster: %s class is not accessible on your server. Please contact your hosting provider.', 'woocommerce-jetpack' ),
-								'<a target="_blank" href="http://php.net/manual/en/class.ziparchive.php">PHP ZipArchive</a>'
-							) .
-							'</strong></p></div>';
-							break;
-						case 'ziparchive_error':
-							echo '<div class="notice notice-error"><p>' .
-							wp_kses_post( 'Booster: ZipArchive error.', 'woocommerce-jetpack' ) .
-							'</p></div>';
-							break;
-						case 'merge_pdfs_no_files':
-							echo '<div class="notice notice-error"><p>' .
-							wp_kses_post( 'Booster: Merge PDFs: No files.', 'woocommerce-jetpack' ) .
-							'</p></div>';
-							break;
-						case 'merge_pdfs_php_version':
-							echo '<div class="notice notice-error"><p>' .
-							sprintf( wp_kses_post( 'Booster: Merge PDFs: Command requires PHP version 5.3.0 at least. You have PHP version %s installed.', 'woocommerce-jetpack' ), PHP_VERSION ) .
-							'</p></div>';
-							break;
-						default:
-							echo '<div class="notice notice-error"><p>' .
-							/* translators: %s: translation added */
-							sprintf( wp_kses_post( __( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . sanitize_text_field( wp_unslash( $_GET['wcj_notice'] ) ) . '</code>' ) ) .
-							'</p></div>';
-							break;
-					}
+			$current_screen = get_current_screen();
+
+			// Check for both Classic and HPOS screens.
+			$is_shop_order_screen = (
+				( 'edit.php' === $pagenow && 'shop_order' === $typenow ) ||
+				( 'woocommerce_page_wc-orders' === $current_screen->id )
+			);
+
+			if ( ! $is_shop_order_screen ) {
+				return;
+			}
+
+			$wpnonce = isset( $_REQUEST['pdf-generated-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['pdf-generated-nonce'] ), 'pdf-generated' ) : false;
+			if ( $wpnonce && isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
+				/* translators: %s: translation added */
+				$message = sprintf( wp_kses_post( 'Document generated.', '%s documents generated.', sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ), number_format_i18n( sanitize_text_field( wp_unslash( $_REQUEST['generated'] ) ) ) );
+
+				echo wp_kses_post( "<div class='updated'><p>{$message}</p></div>" );
+			}
+			if ( isset( $_GET['wcj_notice'] ) ) {
+				switch ( $_GET['wcj_notice'] ) {
+					case 'ziparchive_class_missing':
+						echo '<div class="notice notice-error"><p><strong>' .
+						/* translators: %s: translation added */
+						sprintf(
+							wp_kses_post( 'Booster: %s class is not accessible on your server. Please contact your hosting provider.', 'woocommerce-jetpack' ),
+							'<a target="_blank" href="http://php.net/manual/en/class.ziparchive.php">PHP ZipArchive</a>'
+						) .
+						'</strong></p></div>';
+						break;
+					case 'ziparchive_error':
+						echo '<div class="notice notice-error"><p>' .
+						wp_kses_post( 'Booster: ZipArchive error.', 'woocommerce-jetpack' ) .
+						'</p></div>';
+						break;
+					case 'merge_pdfs_no_files':
+						echo '<div class="notice notice-error"><p>' .
+						wp_kses_post( 'Booster: Merge PDFs: No files.', 'woocommerce-jetpack' ) .
+						'</p></div>';
+						break;
+					case 'merge_pdfs_php_version':
+						echo '<div class="notice notice-error"><p>' .
+						sprintf( wp_kses_post( 'Booster: Merge PDFs: Command requires PHP version 5.3.0 at least. You have PHP version %s installed.', 'woocommerce-jetpack' ), PHP_VERSION ) .
+						'</p></div>';
+						break;
+					default:
+						echo '<div class="notice notice-error"><p>' .
+						/* translators: %s: translation added */
+						sprintf( wp_kses_post( __( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . sanitize_text_field( wp_unslash( $_GET['wcj_notice'] ) ) . '</code>' ) ) .
+						'</p></div>';
+						break;
 				}
 			}
 		}
@@ -207,7 +220,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Processes the PDF bulk actions.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.5
 		 * @since   2.5.7
 		 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 		 *
@@ -220,10 +233,20 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		public function bulk_actions_handle( $redirect_to, $action, $post_ids ) {
 			if (
 			false === preg_match( '(generate|download|merge)', $action ) ||
-			false === preg_match( '(invoice|packing_slip|credit_note)', $action ) ||
-			false === check_admin_referer( 'bulk-posts' )
+			false === preg_match( '(invoice|packing_slip|credit_note)', $action )
 			) {
 				return $redirect_to;
+			}
+
+			// OPTIONAL: Sanity check for classic orders screen only.
+			$screen = get_current_screen();
+			if ( 'edit-shop_order' === $screen->id ) {
+				check_admin_referer( 'bulk-posts' );
+			}
+
+			// Ensure we have a valid redirect.
+			if ( empty( $redirect_to ) ) {
+				$redirect_to = admin_url( 'edit.php?post_type=shop_order' );
 			}
 
 			// Validate the action.

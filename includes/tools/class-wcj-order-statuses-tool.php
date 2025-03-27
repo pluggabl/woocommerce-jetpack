@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 7.2.4
+ * @version 7.2.5
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -389,7 +389,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Create_tool.
 		 *
-		 * @version 5.6.2
+		 * @version 7.2.5
 		 * @since   3.2.2
 		 */
 		public function create_tool() {
@@ -403,7 +403,10 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$html .= $this->get_delete_all_custom_statuses_button();
 			$html .= '</div>';
 			$html .= '</div>';
-			echo wp_kses_post( $html );
+
+			$allowed_tags                 = wp_kses_allowed_html( 'post' );
+			$allowed_tags['a']['onclick'] = true;
+			echo wp_kses( $html, $allowed_tags );
 		}
 	}
 

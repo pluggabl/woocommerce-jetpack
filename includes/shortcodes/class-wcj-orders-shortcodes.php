@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 7.2.4
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -836,16 +836,16 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_payment_method.
 		 *
-		 * @version 7.2.4
+		 * @version 7.2.5
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_payment_method( $atts ) {
 			if ( true === wcj_is_hpos_enabled() ) {
 				if ( $this->the_order && false !== $this->the_order ) {
-					return $this->the_order->get_meta( '_payment_method_title' );
+					return $this->the_order->get_payment_method_title();
 				}
 			} else {
-				return esc_js( get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method_title', true ) );
+				return esc_js( $this->the_order->get_payment_method_title() );
 			}
 		}
 

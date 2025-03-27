@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -238,7 +238,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Validate_on_checkout.
 		 *
-		 * @version 5.6.2
+		 * @version 7.2.5
 		 * @since   2.4.5
 		 * @param string $posted defines the posted.
 		 */
@@ -280,7 +280,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 							}
 						}
 					}
-					if ( $this->is_extension_blocked( $file_type ) ) {
+					if ( $this->is_extension_blocked( $file_type, $file_name ) ) {
 						$this->add_notice(
 							sprintf(
 								wcj_get_option(
@@ -335,7 +335,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Create_file_admin_order_meta_box.
 		 *
-		 * @version 5.6.7
+		 * @version 7.2.5
 		 * @since   2.4.5
 		 */
 		public function create_file_admin_order_meta_box() {
@@ -368,14 +368,16 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				) . '"' . wcj_get_js_confirmation() . '>' .
 				__( 'Delete all files', 'woocommerce-jetpack' ) . '</a></p>';
 			}
-			echo wp_kses_post( $html );
+			$allowed_tags                 = wp_kses_allowed_html( 'post' );
+			$allowed_tags['a']['onclick'] = true;
+			echo wp_kses( $html, $allowed_tags );
 		}
 
 
 		/**
 		 * Create_file_admin_order_meta_box_hpos.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.5
 		 * @since  1.0.0
 		 */
 		public function create_file_admin_order_meta_box_hpos() {
@@ -414,18 +416,22 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					) . '"' . wcj_get_js_confirmation() . '>' .
 					__( 'Delete all files', 'woocommerce-jetpack' ) . '</a></p>';
 				}
-				echo wp_kses_post( $html );
+				$allowed_tags                 = wp_kses_allowed_html( 'post' );
+				$allowed_tags['a']['onclick'] = true;
+				echo wp_kses( $html, $allowed_tags );
 			}
 		}
 
 		/**
 		 * Is_extension_blocked.
 		 *
-		 * @version 5.6.2
+		 * @version 7.2.5
 		 * @since   3.2.3
 		 * @param string $ext defines the ext.
+		 * @param string $file_name defines the file name.
 		 */
-		public function is_extension_blocked( $ext ) {
+		public function is_extension_blocked( $ext, $file_name ) {
+			$is_extension_blocked = false;
 			if ( 'no' === wcj_get_option( 'wcj_checkout_files_upload_block_files_enabled', 'yes' ) ) {
 				return false;
 			}
@@ -438,13 +444,20 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				'bat|exe|cmd|sh|php|php0|php1|php2|php3|php4|php5|php6|php7|php8|php9|ph|ph0|ph1|ph2|ph3|ph4|ph5|ph6|ph7|ph8|ph9|pl|cgi|386|dll|com|torrent|js|app|jar|pif|vb|vbscript|wsf|asp|cer|csr|jsp|drv|sys|ade|adp|bas|chm|cpl|crt|csh|fxp|hlp|hta|inf|ins|isp|jse|htaccess|htpasswd|ksh|lnk|mdb|mde|mdt|mdw|msc|msi|msp|mst|ops|pcd|prg|reg|scr|sct|shb|shs|url|vbe|vbs|wsc|wsf|wsh|html|htm'
 			);
 			$blocked_file_exts = explode( '|', $blocked_file_exts );
-			return in_array( $ext, $blocked_file_exts, true );
+			if ( in_array( $ext, $blocked_file_exts, true ) ) {
+				return true;
+			}
+
+			$validate = wp_check_filetype( $file_name );
+			if ( false === $validate['type'] ) {
+				return true;
+			}
 		}
 
 		/**
 		 * Add_files_to_order.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.5
 		 * @since   2.4.5
 		 * @param int    $order_id defines the order_id.
 		 * @param string $posted defines the posted.
@@ -469,7 +482,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					$file_path          = $upload_dir . '/' . $download_file_name;
 					$tmp_file_name      = $session_data['tmp_name'];
 					$file_data          = $wp_filesystem->get_contents( $tmp_file_name );
-					if ( ! $this->is_extension_blocked( $ext ) ) { // should already be validated earlier, but just in case...
+					if ( ! $this->is_extension_blocked( $ext, $file_path ) ) { // should already be validated earlier, but just in case...
 						$wp_filesystem->put_contents( $file_path, $file_data, FS_CHMOD_FILE );
 					}
 					unlink( $tmp_file_name );
@@ -541,7 +554,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Process_checkout_files_upload.
 		 *
-		 * @version 7.1.4
+		 * @version 7.2.5
 		 * @since   2.4.5
 		 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 		 * @todo    `$this->additional_admin_emails_settings` - more customization options, e.g.: admin email, subject, content, from
@@ -664,7 +677,21 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 								}
 							}
 						}
-						if ( $this->is_extension_blocked( $file_type ) ) {
+
+						// Extra security check: Restrict for malicious file types.
+						$validate = wp_check_filetype( $real_file_name );
+						if ( false === $validate['type'] ) {
+							$this->add_notice(
+								sprintf(
+									// translators: %s is the file type that is not allowed.
+									__( 'File type is not allowed: "%s".', 'plugin-slug' ),
+									$real_file_name
+								),
+								'error'
+							);
+							$is_valid = false;
+						}
+						if ( $this->is_extension_blocked( $file_type, $real_file_name ) ) {
 							$this->add_notice(
 								sprintf(
 									wcj_get_option(

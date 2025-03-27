@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 7.0.0
+ * @version 7.2.5
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -327,7 +327,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Get_html_meta_table_set_single_value.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.5
 		 * @since   2.8.0
 		 * @param string $set_meta defines the set_meta.
 		 * @param string $js_confirmation defines the js_confirmation.
@@ -339,7 +339,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			'</p>' .
 			'<p>' .
 			wp_nonce_field( 'wcj_product_bulk_meta_editor_set', 'wcj_product_bulk_meta_editor_set-nonce' ) .
-			'<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_set" value="set"' . $js_confirmation . '>' .
+			'<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_set" value="set" data-confirm="Are you sure?">' .
 				__( 'Set', 'woocommerce-jetpack' ) . '</button>' .
 			'</p>';
 			$table_data        = array();
@@ -377,7 +377,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Get_html_meta_table_content.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.5
 		 * @since   2.8.0
 		 * @param string         $meta_name defines the meta_name.
 		 * @param array          $_products defines the _products.
@@ -414,7 +414,7 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 					$save_button   = '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_save_single" value="' . $product_id . '">'
 					. __( 'Save', 'woocommerce-jetpack' ) . '</button>';
 					$delete_button = ( metadata_exists( 'post', $product_id, $meta_name ) ?
-					'<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_delete_single" value="' . $product_id . '"' . $js_confirmation . '>'
+					'<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_delete_single" value="' . $product_id . '" data-confirm="Are you sure?">'
 						. __( 'Delete', 'woocommerce-jetpack' ) . '</button>' : '' );
 				}
 				$row          = array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -1275,7 +1275,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * Settings_section.
 		 * Only for `module`.
 		 *
-		 * @version 5.2.1
+		 * @version 7.2.5
 		 * @param Array  $settings Get settings.
 		 * @param string $module_desc Get module_desc.
 		 */
@@ -1323,10 +1323,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					'default'           => 'no',
 					'wcj_link'          => ( isset( $this->link ) ? $this->link : '' ),
 					'module_desc'       => $module_desc,
-					'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . add_query_arg(
-						array(
-							'wcj_reset_settings' => $this->id,
-							'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+					'module_reset_link' => '<a style="width:auto;" onclick="return confirm(\'' . __( 'Are you sure? This will reset module to default settings.', 'woocommerce-jetpack' ) . '\')" class="wcj_manage_settting_btn wcj_tab_end_save_btn" href="' . esc_url_raw(
+						add_query_arg(
+							array(
+								'wcj_reset_settings' => $this->id,
+								'wcj_reset_settings-' . $this->id . '-nonce' => wp_create_nonce( 'wcj_reset_settings' ),
+							)
 						)
 					) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 				),

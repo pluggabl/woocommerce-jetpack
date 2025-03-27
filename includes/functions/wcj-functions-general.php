@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.1.8
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1007,7 +1007,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 7.1.4
+	 * @version 7.2.5
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1034,7 +1034,6 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'min'                       => true,
 				'max'                       => true,
 				'disabled'                  => true,
-				'onchange'                  => true,
 				'step'                      => true,
 				'changeyear'                => true,
 				'yearrange'                 => true,
@@ -1044,7 +1043,6 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'data-blocked_dates'        => true,
 				'currentday_time_limit'     => true,
 				'data-blocked_dates_format' => true,
-				'onclick'                   => true,
 				'accept'                    => true,
 				'data-*'                    => true,
 				'attribute_*'               => true,
@@ -1061,7 +1059,6 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'placeholder'  => true,
 				'required'     => true,
 				'disabled'     => true,
-				'onchange'     => true,
 				'autocomplete' => true,
 				'maxlength'    => true,
 			),
@@ -1073,7 +1070,6 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'style'    => true,
 				'size'     => true,
 				'disabled' => true,
-				'onchange' => true,
 				'type'     => true,
 				'required' => true,
 			),
@@ -1117,7 +1113,6 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'style'                 => true,
 				'class'                 => true,
 				'disabled'              => true,
-				'onclick'               => true,
 				'wcj_data'              => true,
 				'fdi'                   => true,
 				'var_id'                => true,
@@ -1132,22 +1127,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 			'style'    => array(
 				'type' => true,
 			),
-			'script'   => array(
-				'type'           => true,
-				'async'          => true,
-				'crossorigin'    => true,
-				'defer'          => true,
-				'integrity'      => true,
-				'nomodule'       => true,
-				'referrerpolicy' => true,
-				'src'            => true,
-				'type'           => true,
-			),
 			'a'        => array(
-				'onclick'       => true,
-				'onblur'        => true,
-				'onfocus'       => true,
-				'onchange'      => true,
 				'target'        => true,
 				'wcj-copy-data' => true,
 				'currency_from' => true,

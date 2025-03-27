@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 7.0.0
+ * @version 7.2.5
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) generate settings in loop ( min / max )
@@ -12,6 +12,10 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+$is_multiselect_products = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
+$products                = ( $is_multiselect_products ? wcj_get_products() : false );
+do_action( 'wcj_after_get_products', $this->id );
 
 $qty_step_settings = ( 'yes' === wcj_get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ? '0.000001' : '1' );
 
@@ -127,6 +131,17 @@ return array(
 			'min'  => 0,
 			'step' => $qty_step_settings,
 		),
+	),
+	wcj_get_settings_as_multiselect_or_text(
+		array(
+			'title'    => __( 'Exclude Products from Cart Total Quantity count', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Set this field to NOT apply quantity of selected products to cart total quantity count. Leave blank to apply to all products.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_order_quantities_min_cart_total_quantity_exclude_product',
+			'default'  => '',
+			'class'    => 'widefat',
+		),
+		$products,
+		$is_multiselect_products
 	),
 	array(
 		'title'   => __( 'Message - Cart Total Quantity', 'woocommerce-jetpack' ),

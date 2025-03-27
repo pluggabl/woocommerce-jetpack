@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 7.1.4
+ * @version 7.2.5
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -99,7 +99,7 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		/**
 		 * Create_import_from_wc_cog_tool.
 		 *
-		 * @version 5.6.8
+		 * @version 7.2.5
 		 * @since   2.9.0
 		 */
 		public function create_import_from_wc_cog_tool() {
@@ -143,7 +143,10 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			) . '</p>';
 			$html .= '</div>';
 			$html .= '</div>';
-			echo wp_kses_post( $html );
+
+			$allowed_tags                     = wp_kses_allowed_html( 'post' );
+			$allowed_tags['input']['onclick'] = true;
+			echo wp_kses( $html, $allowed_tags );
 		}
 
 		/**

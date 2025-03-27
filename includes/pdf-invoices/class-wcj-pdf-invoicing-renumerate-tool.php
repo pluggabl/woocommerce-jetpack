@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Renumerate Tool
  *
- * @version 6.0.0
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 		/**
 		 * Renumerate invoices function.
 		 *
-		 * @version 2.3.10
+		 * @version 7.2.5
 		 * @param string     $invoice_type Get invoice type.
 		 * @param int        $start_number Get invoice start number.
 		 * @param int        $start_date Get invoice start date.
@@ -182,14 +182,18 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 				update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', $start_number );
 			}
 
-			$date_query_array = array(
-				array(
-					'after'     => $start_date,
-					'inclusive' => true,
-				),
-			);
-			if ( '' !== $end_date ) {
-				$date_query_array[0]['before'] = $end_date;
+			if ( '' !== $start_date ) {
+				$date_query_array = array(
+					array(
+						'after'     => $start_date,
+						'inclusive' => true,
+					),
+				);
+				if ( '' !== $end_date ) {
+					$date_query_array[0]['before'] = $end_date;
+				}
+			} else {
+				$date_query_array = array(); // Set to empty if start_date is blank.
 			}
 
 			$deleted_invoices_counter = 0;
@@ -199,46 +203,90 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 			$block_size = 96;
 			while ( true ) {
 
-				$args = array(
-					'post_type'      => 'shop_order',
-					'post_status'    => 'any',
-					'posts_per_page' => $block_size,
-					'offset'         => $offset,
-					'orderby'        => 'date',
-					'order'          => 'ASC',
-					'date_query'     => $date_query_array,
-				);
+				if ( true === wcj_is_hpos_enabled() ) {
+					$args = array(
+						'post_type'      => 'shop_order',
+						'post_status'    => 'any',
+						'posts_per_page' => $block_size,
+						'offset'         => $offset,
+						'orderby'        => 'date',
+						'order'          => 'ASC',
+						'date_query'     => ! empty( $date_query_array ) ? $date_query_array : null,
+					);
 
-				$loop = new WP_Query( $args );
+					$orders = wc_get_orders( $args );
 
-				if ( ! $loop->have_posts() ) {
-					break;
-				}
-
-				while ( $loop->have_posts() ) :
-					$loop->the_post();
-
-					$order_id = $loop->post->ID;
-					if (
-					in_array( $loop->post->post_status, $order_statuses, true ) &&
-					strtotime( $loop->post->post_date ) >= strtotime( $start_date ) &&
-					( strtotime( $loop->post->post_date ) <= strtotime( $end_date ) || '' === $end_date )
-					) {
-
-						$the_order = wc_get_order( $order_id );
-						if ( 0 !== $the_order->get_total() ) {
-
-							wcj_create_invoice( $order_id, $invoice_type, strtotime( $loop->post->post_date ) );
-							$created_invoices_counter++;
-						}
-					} else {
-						if ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
-							wcj_delete_invoice( $order_id, $invoice_type );
-							$deleted_invoices_counter++;
-						}
+					if ( empty( $orders ) ) {
+						break;
 					}
 
-				endwhile;
+					// Loop through orders as an array of WC_Order objects.
+					foreach ( $orders as $order ) {
+						$order_id = $order->get_id();
+
+						// Fetch order details.
+						$order_id                = $order->get_id();
+						$order_status            = $order->get_status();
+						$order_created_date      = $order->get_date_created();
+						$order_created_timestamp = strtotime( $order_created_date );
+						$start_timestamp         = strtotime( $start_date );
+						$end_timestamp           = strtotime( $end_date );
+
+						if (
+							in_array( 'wc-' . $order->get_status(), $order_statuses, true ) &&
+							strtotime( $order->get_date_created() ) >= strtotime( $start_date ) &&
+							( strtotime( $order->get_date_created() ) <= strtotime( $end_date ) || '' === $end_date )
+						) {
+							if ( 0 !== $order->get_total() ) {
+								wcj_create_invoice( $order_id, $invoice_type, strtotime( $order->get_date_created() ) );
+								$created_invoices_counter++;
+							}
+						} else {
+							if ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
+								wcj_delete_invoice( $order_id, $invoice_type );
+								$deleted_invoices_counter++;
+							}
+						}
+					}
+				} else {
+					$args = array(
+						'post_type'      => 'shop_order',
+						'post_status'    => 'any',
+						'posts_per_page' => $block_size,
+						'offset'         => $offset,
+						'orderby'        => 'date',
+						'order'          => 'ASC',
+						'date_query'     => ! empty( $date_query_array ) ? $date_query_array : null,
+					);
+
+					$loop = new WP_Query( $args );
+
+					if ( ! $loop->have_posts() ) {
+						break;
+					}
+
+					while ( $loop->have_posts() ) {
+						$loop->the_post();
+
+						$order_id = $loop->post->ID;
+						if (
+						in_array( $loop->post->post_status, $order_statuses, true ) &&
+						strtotime( $loop->post->post_date ) >= strtotime( $start_date ) &&
+						( strtotime( $loop->post->post_date ) <= strtotime( $end_date ) || '' === $end_date )
+						) {
+							$the_order = wc_get_order( $order_id );
+							if ( 0 !== $the_order->get_total() ) {
+								wcj_create_invoice( $order_id, $invoice_type, strtotime( $loop->post->post_date ) );
+								$created_invoices_counter++;
+							}
+						} else {
+							if ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
+								wcj_delete_invoice( $order_id, $invoice_type );
+								$deleted_invoices_counter++;
+							}
+						}
+					}
+				}
 
 				$offset += $block_size;
 

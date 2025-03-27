@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 7.1.6
+ * @version 7.2.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -496,7 +496,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Validate_product_input_fields_on_add_to_cart.
 		 *
-		 * @version 6.0.2
+		 * @version 7.2.5
 		 * @param bool $passed define passed value.
 		 * @param int  $product_id Get product id.
 		 */
@@ -535,6 +535,11 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
 				if ( 'file' === $type && isset( $_FILES[ $field_name ] ) && '' !== $_FILES[ $field_name ]['name'] ) {
 					// Validate file type.
+					$validate = wp_check_filetype( $_FILES[ $field_name ]['name'] );
+					if ( empty( $validate['type'] ) ) {
+						$passed = false;
+						wc_add_notice( __( 'File type is not allowed.', 'woocommerce-jetpack' ), 'error' );
+					}
 					$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product_id, '' );
 					if ( '' !== ( $file_accept ) ) {
 						$file_accept = explode( ',', $file_accept );
