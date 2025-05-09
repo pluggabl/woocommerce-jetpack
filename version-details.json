@@ -1,6 +1,4 @@
 {
-    "0" : "= 7.2.5 27/03/2025 =",
-    "1" : "* FIXED - SHIPPING & ORDERS - Order Quantities - Min Qty - Exclude products from the minimum order quantity restriction",
-    "2" : "* FIXED - PDF Invoice - Bulk Actions for HPOS order listing issue for HPOS",
-    "3" : "* FIXED - Fix security vulnerability related to malicious file type."
+    "0" : "= 7.2.6 12/05/2025 =",
+    "1" : "* FIXED - PRODUCTS - User Products - Resolved an XSS vulnerability by sanitizing input fields"
 }
