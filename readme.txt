@@ -2,9 +2,9 @@
 Contributors: pluggabl
 Tags: woocommerce customization, woocommerce bundle, woocommerce product addon, woocommerce integration, ecommerce plugin
 Requires at least: 5.8
-Tested up to: 6.7.2
+Tested up to: 6.8.1
 Requires PHP: 7.2
-Stable tag: 7.2.5
+Stable tag: 7.2.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -245,6 +245,12 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.2.6 12/05/2025 =
+
+* FIXED - PRODUCTS - User Products - Resolved an XSS vulnerability by sanitizing input fields.
+* WooCommerce 9.8.4 Tested
+* WordPress 6.8.1 Tested
 
 = 7.2.5 27/03/2025 =
 
