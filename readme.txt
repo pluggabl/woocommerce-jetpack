@@ -250,7 +250,7 @@ To unlock all Booster for WooCommerce features, please install additional paid B
 
 * FIXED - PRODUCTS - User Products - Resolved an XSS vulnerability by sanitizing input fields.
 * WooCommerce 9.8.4 Tested
-* WordPress 6.8 Tested
+* WordPress 6.8.1 Tested
 
 = 7.2.5 27/03/2025 =
 
