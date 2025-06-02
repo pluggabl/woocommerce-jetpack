@@ -1,7 +1,7 @@
 === Booster for WooCommerce ===
 Contributors: pluggabl
 Donate link: https://booster.io/
-Tags: woocommerce, pdf invoices, multi currency, dynamic pricing, checkout fields, product addons, bulk price editor, variation swatches, product feed
+Tags: woocommerce, woocommerce pdf invoices, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce bulk price editor, woocommerce variation swatches, woocommerce product feed
 Requires at least: 5.8
 Tested up to: 6.8.1
 Requires PHP: 7.2
