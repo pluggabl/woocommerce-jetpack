@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 7.0.0
+ * @version 7.2.7
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -116,7 +116,7 @@ return apply_filters(
 				'checkout_customization',
 				'checkout_fees',
 				'eu_vat_number',
-
+				'cart_abandonment',
 			),
 		),
 

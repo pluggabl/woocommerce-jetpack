@@ -1052,6 +1052,8 @@ msgstr ""
 #: includes/settings/wcj-settings-admin-tools.php:130
 #: includes/settings/wcj-settings-breadcrumbs.php:38
 #: includes/settings/wcj-settings-call-for-price.php:97
+#: includes/settings/wcj-settings-cart-abandonment.php:130
+#: includes/settings/wcj-settings-cart-abandonment.php:131
 #: includes/settings/wcj-settings-cart-customization.php:52
 #: includes/settings/wcj-settings-cart-customization.php:75
 #: includes/settings/wcj-settings-checkout-core-fields.php:63
@@ -1456,6 +1458,240 @@ msgstr ""
 msgid "Booster Free Plugin Support"
 msgstr ""
 
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:36
+msgid "Cart Abandonment Order"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:37
+msgid "Cart Abandonment Orders"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:49
+msgid "No Data Found."
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:94
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:127
+#: includes/class-wcj-offer-price.php:168
+#: includes/export/class-wcj-export-fields-helper.php:83
+#: includes/input-fields/wcj-product-input-fields-options.php:47
+#: includes/reports/class-wcj-reports-customers.php:101
+#: includes/settings/wcj-settings-checkout-custom-fields.php:180
+#: includes/settings/wcj-settings-offer-price.php:36
+msgid "Email"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:95
+msgid "Cart Total Amount"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:96
+#: includes/export/class-wcj-export-fields-helper.php:119
+#: includes/export/class-wcj-export-fields-helper.php:200
+#: includes/settings/wcj-settings-max-products-per-user.php:96
+msgid "Order Status"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:97
+#: includes/class-wcj-offer-price.php:164
+#: includes/functions/wcj-functions-reports.php:24
+#: includes/settings/wcj-settings-cross-sells.php:57
+#: includes/settings/wcj-settings-order-numbers.php:206
+#: includes/settings/wcj-settings-products-xml.php:259
+#: includes/settings/wcj-settings-related-products.php:35
+#: includes/settings/wcj-settings-upsells.php:62
+msgid "Date"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:147
+#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:152
+#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:426
+msgid "View"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:148
+#: includes/class-wcj-general.php:276
+#: includes/class-wcj-payment-gateways.php:189
+#: includes/class-wcj-product-bulk-meta-editor.php:418
+#: includes/class-wcj-product-by-user.php:309
+#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:169
+#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:438
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:489
+#: includes/tools/class-wcj-order-statuses-tool.php:227
+msgid "Delete"
+msgstr ""
+
+#: includes/cart-abandonment/class-wcj-cart-abandonment-orders.php:152
+msgid "Unsubscribe"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:37
+msgid "Back to Reports"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:43
+msgid "Order Details:"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:89
+#: includes/settings/wcj-settings-checkout-files-upload.php:446
+#: includes/settings/wcj-settings-checkout-files-upload.php:467
+#: includes/settings/wcj-settings-checkout-files-upload.php:503
+msgid "Item"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:90
+msgid "Product Name"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:91
+#: includes/functions/wcj-functions-reports.php:29
+#: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:168
+#: includes/settings/wcj-settings-product-add-to-cart.php:28
+#: includes/settings/wcj-settings-product-addons.php:191
+msgid "Quantity"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:92
+#: includes/class-wcj-offer-price.php:165
+#: includes/export/class-wcj-export-fields-helper.php:293
+#: includes/reports/class-wcj-reports-stock.php:423
+#: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:71
+#: includes/settings/wcj-settings-cross-sells.php:60
+#: includes/settings/wcj-settings-product-add-to-cart.php:406
+#: includes/settings/wcj-settings-related-products.php:45
+#: includes/settings/wcj-settings-upsells.php:65
+msgid "Price"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:93
+msgid "Subtotal"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:99
+#: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:71
+#: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:108
+#: includes/settings/wcj-settings-wholesale-price.php:299
+#: includes/settings/wcj-settings-wholesale-price.php:300
+#: includes/settings/wcj-settings-wholesale-price.php:381
+#: includes/settings/wcj-settings-wholesale-price.php:382
+msgid "Discount"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:103
+msgid "Tax & Other"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:108
+#: includes/class-wcj-admin-bar.php:587
+#: includes/settings/wcj-settings-checkout-custom-fields.php:234
+#: includes/settings/wcj-settings-checkout-custom-info.php:77
+#: includes/settings/wcj-settings-left-to-free-shipping.php:139
+#: includes/settings/wcj-settings-price-by-user-role.php:72
+msgid "Shipping"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:112
+msgid "Cart Total"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:122
+msgid "Billing Address"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:126
+#: includes/class-wcj-general.php:262 includes/class-wcj-general.php:287
+#: includes/class-wcj-offer-price.php:167
+#: includes/export/class-wcj-export-fields-helper.php:287
+#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:90
+#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:135
+msgid "Name"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:128
+#: includes/input-fields/wcj-product-input-fields-options.php:48
+#: includes/settings/wcj-settings-checkout-custom-fields.php:181
+msgid "Phone"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:129
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:143
+#: includes/class-wcj-track-users.php:410
+#: includes/input-fields/wcj-product-input-fields-options.php:46
+#: includes/settings/wcj-settings-checkout-custom-fields.php:178
+#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:113
+#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:133
+msgid "Country"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:130
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:144
+#: includes/settings/wcj-settings-checkout-custom-fields.php:179
+msgid "State"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:131
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:145
+msgid "City"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:132
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:146
+msgid "Postcode"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:133
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:147
+msgid "Address 1"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:134
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:148
+msgid "Address 2"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:138
+msgid "Shipping Address"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:152
+msgid "Same as billing address"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:154
+msgid "Restore Cart Data Link"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:162
+msgid "Email histrory:"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:165
+#: includes/emails/class-wc-email-wcj-custom.php:298
+msgid "Subject"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:166
+msgid "Coupon"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:167
+#: includes/class-wcj-product-by-user.php:284
+#: includes/export/class-wcj-export-fields-helper.php:298
+msgid "Status"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:168
+msgid "Time"
+msgstr ""
+
+#: includes/cart-abandonment/wcj-cart-abandonment-orders-report.php:18
+msgid ""
+"Want detailed reports, filtering, and to see recoverable vs. lost revenue? "
+"Upgrade to <a href=\"https://booster.io/buy-booster/\" target=\"_blank\"> "
+"Booster Elite! </a>"
+msgstr ""
+
 #: includes/class-wcj-add-to-cart-button-visibility.php:34
 msgid "Add to Cart Button Visibility"
 msgstr ""
@@ -1526,6 +1762,7 @@ msgstr ""
 #: includes/classes/class-wcj-module.php:1116
 #: includes/settings/wcj-settings-admin-tools.php:28
 #: includes/settings/wcj-settings-bulk-price-converter.php:23
+#: includes/settings/wcj-settings-cart-abandonment.php:34
 #: includes/settings/wcj-settings-debug-tools.php:25
 #: includes/settings/wcj-settings-eu-vat-number.php:28
 #: includes/settings/wcj-settings-export.php:31
@@ -1732,14 +1969,6 @@ msgstr ""
 
 #: includes/class-wcj-admin-bar.php:581
 msgid "Standard rates"
-msgstr ""
-
-#: includes/class-wcj-admin-bar.php:587
-#: includes/settings/wcj-settings-checkout-custom-fields.php:234
-#: includes/settings/wcj-settings-checkout-custom-info.php:77
-#: includes/settings/wcj-settings-left-to-free-shipping.php:139
-#: includes/settings/wcj-settings-price-by-user-role.php:72
-msgid "Shipping"
 msgstr ""
 
 #: includes/class-wcj-admin-bar.php:591
@@ -1964,6 +2193,29 @@ msgstr ""
 
 #: includes/class-wcj-call-for-price.php:35
 msgid "Create any custom price label for all products with empty price."
+msgstr ""
+
+#: includes/class-wcj-cart-abandonment.php:31
+msgid "Cart Abandonment"
+msgstr ""
+
+#: includes/class-wcj-cart-abandonment.php:32
+#: includes/class-wcj-cart-abandonment.php:33
+msgid "Stop Cart Abandonments and Recover Your Lost Amount!"
+msgstr ""
+
+#: includes/class-wcj-cart-abandonment.php:39
+#: includes/settings/wcj-settings-cart-abandonment.php:223
+#: includes/settings/wcj-settings-cart-abandonment.php:224
+msgid "Cart Abandonment Report"
+msgstr ""
+
+#: includes/class-wcj-cart-abandonment.php:40
+msgid "Cart Abandonment Report."
+msgstr ""
+
+#: includes/class-wcj-cart-abandonment.php:444
+msgid "Every Fifteen Minutes"
 msgstr ""
 
 #: includes/class-wcj-cart-customization.php:33
@@ -2650,6 +2902,7 @@ msgstr ""
 
 #: includes/class-wcj-email-options.php:31
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-emails.php:31
+#: includes/settings/wcj-settings-cart-abandonment.php:32
 #: includes/settings/wcj-settings-emails-verification.php:26
 #: includes/settings/wcj-settings-emails-verification.php:148
 #: includes/settings/wcj-settings-pdf-invoicing-emails.php:36
@@ -3079,27 +3332,8 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: includes/class-wcj-general.php:262 includes/class-wcj-general.php:287
-#: includes/class-wcj-offer-price.php:167
-#: includes/export/class-wcj-export-fields-helper.php:287
-#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:90
-#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:135
-msgid "Name"
-msgstr ""
-
 #: includes/class-wcj-general.php:262 includes/class-wcj-general.php:288
 msgid "Capabilities"
-msgstr ""
-
-#: includes/class-wcj-general.php:276
-#: includes/class-wcj-payment-gateways.php:189
-#: includes/class-wcj-product-bulk-meta-editor.php:418
-#: includes/class-wcj-product-by-user.php:309
-#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:169
-#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:438
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:489
-#: includes/tools/class-wcj-order-statuses-tool.php:227
-msgid "Delete"
 msgstr ""
 
 #: includes/class-wcj-global-discount.php:39
@@ -3351,27 +3585,6 @@ msgstr ""
 msgid "Booster: Offer Price History"
 msgstr ""
 
-#: includes/class-wcj-offer-price.php:164
-#: includes/functions/wcj-functions-reports.php:24
-#: includes/settings/wcj-settings-cross-sells.php:57
-#: includes/settings/wcj-settings-order-numbers.php:206
-#: includes/settings/wcj-settings-products-xml.php:259
-#: includes/settings/wcj-settings-related-products.php:35
-#: includes/settings/wcj-settings-upsells.php:62
-msgid "Date"
-msgstr ""
-
-#: includes/class-wcj-offer-price.php:165
-#: includes/export/class-wcj-export-fields-helper.php:293
-#: includes/reports/class-wcj-reports-stock.php:423
-#: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:71
-#: includes/settings/wcj-settings-cross-sells.php:60
-#: includes/settings/wcj-settings-product-add-to-cart.php:406
-#: includes/settings/wcj-settings-related-products.php:45
-#: includes/settings/wcj-settings-upsells.php:65
-msgid "Price"
-msgstr ""
-
 #: includes/class-wcj-offer-price.php:166
 #: includes/settings/wcj-settings-coupon-by-user-role.php:26
 #: includes/settings/wcj-settings-coupon-by-user-role.php:96
@@ -3381,15 +3594,6 @@ msgstr ""
 #: includes/settings/wcj-settings-order-quantities.php:361
 #: includes/settings/wcj-settings-product-by-time.php:111
 msgid "Message"
-msgstr ""
-
-#: includes/class-wcj-offer-price.php:168
-#: includes/export/class-wcj-export-fields-helper.php:83
-#: includes/input-fields/wcj-product-input-fields-options.php:47
-#: includes/reports/class-wcj-reports-customers.php:101
-#: includes/settings/wcj-settings-checkout-custom-fields.php:180
-#: includes/settings/wcj-settings-offer-price.php:36
-msgid "Email"
 msgstr ""
 
 #: includes/class-wcj-offer-price.php:169
@@ -4740,11 +4944,6 @@ msgstr ""
 
 #: includes/class-wcj-product-by-user.php:252
 msgid "Invalid Product ID!"
-msgstr ""
-
-#: includes/class-wcj-product-by-user.php:284
-#: includes/export/class-wcj-export-fields-helper.php:298
-msgid "Status"
 msgstr ""
 
 #: includes/class-wcj-product-by-user.php:284
@@ -6099,14 +6298,6 @@ msgid "Top %d countries by visits"
 msgstr ""
 
 #: includes/class-wcj-track-users.php:410
-#: includes/input-fields/wcj-product-input-fields-options.php:46
-#: includes/settings/wcj-settings-checkout-custom-fields.php:178
-#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:113
-#: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:133
-msgid "Country"
-msgstr ""
-
-#: includes/class-wcj-track-users.php:410
 msgid "Visits"
 msgstr ""
 
@@ -6226,6 +6417,7 @@ msgstr ""
 #: includes/classes/class-wcj-module.php:1122
 #: includes/settings/wcj-settings-admin-tools.php:180
 #: includes/settings/wcj-settings-bulk-price-converter.php:31
+#: includes/settings/wcj-settings-cart-abandonment.php:217
 #: includes/settings/wcj-settings-debug-tools.php:88
 #: includes/settings/wcj-settings-eu-vat-number.php:320
 #: includes/settings/wcj-settings-export.php:370
@@ -6496,10 +6688,6 @@ msgstr ""
 msgid "Or enter <code>%customer%</code> to send to customer billing email."
 msgstr ""
 
-#: includes/emails/class-wc-email-wcj-custom.php:298
-msgid "Subject"
-msgstr ""
-
 #: includes/emails/class-wc-email-wcj-custom.php:301
 #, php-format
 msgid ""
@@ -6697,12 +6885,6 @@ msgstr ""
 #: includes/export/class-wcj-export-fields-helper.php:118
 #: includes/export/class-wcj-export-fields-helper.php:199
 msgid "Order Number"
-msgstr ""
-
-#: includes/export/class-wcj-export-fields-helper.php:119
-#: includes/export/class-wcj-export-fields-helper.php:200
-#: includes/settings/wcj-settings-max-products-per-user.php:96
-msgid "Order Status"
 msgstr ""
 
 #: includes/export/class-wcj-export-fields-helper.php:120
@@ -8295,13 +8477,6 @@ msgstr ""
 msgid "Item Title"
 msgstr ""
 
-#: includes/functions/wcj-functions-reports.php:29
-#: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:168
-#: includes/settings/wcj-settings-product-add-to-cart.php:28
-#: includes/settings/wcj-settings-product-addons.php:191
-msgid "Quantity"
-msgstr ""
-
 #: includes/functions/wcj-functions-reports.php:30
 msgid "Sum"
 msgstr ""
@@ -8628,11 +8803,6 @@ msgstr ""
 #: includes/input-fields/wcj-product-input-fields-options.php:45
 #: includes/settings/wcj-settings-checkout-custom-fields.php:177
 msgid "Password"
-msgstr ""
-
-#: includes/input-fields/wcj-product-input-fields-options.php:48
-#: includes/settings/wcj-settings-checkout-custom-fields.php:181
-msgid "Phone"
 msgstr ""
 
 #: includes/input-fields/wcj-product-input-fields-options.php:59
@@ -9092,11 +9262,6 @@ msgstr ""
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:31
 #: includes/settings/wcj-settings-pdf-invoicing-display.php:25
 msgid "Display & Misc."
-msgstr ""
-
-#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:152
-#: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:426
-msgid "View"
 msgstr ""
 
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php:187
@@ -10046,6 +10211,7 @@ msgid "Enable per Product Levels"
 msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:44
+#: includes/settings/wcj-settings-cart-abandonment.php:169
 #: includes/settings/wcj-settings-wholesale-price.php:120
 msgid "Discount Type"
 msgstr ""
@@ -10072,15 +10238,6 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:64
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:101
 msgid "Min quantity"
-msgstr ""
-
-#: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:71
-#: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:108
-#: includes/settings/wcj-settings-wholesale-price.php:299
-#: includes/settings/wcj-settings-wholesale-price.php:300
-#: includes/settings/wcj-settings-wholesale-price.php:381
-#: includes/settings/wcj-settings-wholesale-price.php:382
-msgid "Discount"
 msgstr ""
 
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:27
@@ -10765,6 +10922,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-admin-tools.php:181
 #: includes/settings/wcj-settings-bulk-price-converter.php:32
+#: includes/settings/wcj-settings-cart-abandonment.php:218
 #: includes/settings/wcj-settings-debug-tools.php:89
 #: includes/settings/wcj-settings-eu-vat-number.php:321
 #: includes/settings/wcj-settings-export.php:371
@@ -10852,6 +11010,7 @@ msgid ""
 "prices go back to normal."
 msgstr ""
 
+#: includes/settings/wcj-settings-cart-abandonment.php:31
 #: includes/settings/wcj-settings-cart-customization.php:24
 #: includes/settings/wcj-settings-checkout-core-fields.php:26
 #: includes/settings/wcj-settings-checkout-core-fields.php:35
@@ -10910,6 +11069,136 @@ msgstr ""
 #: includes/settings/wcj-settings-url-coupons.php:24
 #: includes/settings/wcj-settings-wholesale-price.php:30
 msgid "General Options"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:33
+#: includes/settings/wcj-settings-cart-abandonment.php:98
+msgid "Email Templates"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:42
+msgid "Exclude - User Roles"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:43
+#: includes/settings/wcj-settings-product-custom-info.php:197
+#: includes/settings/wcj-settings-product-custom-info.php:207
+#: includes/settings/wcj-settings-product-custom-info.php:217
+#: includes/settings/wcj-settings-product-custom-info.php:227
+#: includes/settings/wcj-settings-product-custom-info.php:237
+#: includes/settings/wcj-settings-product-custom-info.php:247
+msgid "Leave blank to disable the option."
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:50
+msgid ""
+"Need to restrict access to abandoned cart settings and data based on user "
+"roles? <br> Upgrade <a href=\"https://booster.io/buy-booster/\" target="
+"\"_blank\">Booster</a> to set user roles."
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:65
+msgid "Email options"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:70
+msgid "From Name"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:78
+msgid "From Email"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:103
+msgid "Total Email Template"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:107
+msgid ""
+"Need to send a sequence of emails at custom intervals? Want to customize "
+"sender details or use advanced email templates? Upgrade to <a href=\"https://"
+"booster.io/buy-booster/\" target=\"_blank\"> Booster </a> for full automation "
+"control!"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:125
+#: includes/settings/wcj-settings-emails-verification.php:173
+#: includes/settings/wcj-settings-offer-price.php:373
+msgid "Email Template"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:137
+#: includes/settings/wcj-settings-emails-verification.php:153
+#: includes/settings/wcj-settings-offer-price.php:366
+msgid "Email Subject"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:139
+msgid "Is there anything we can help you?"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:144
+#: includes/settings/wcj-settings-emails-verification.php:162
+msgid "Email Content"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:148
+#, php-format
+msgid ""
+"Hi %1$s <p> we just noticed that you tried to make a order, but "
+"unfortunately, you haven't complete. Is there anything we can help you? </"
+"p><p> Here is a link to continue where you left off : <br> %s </p>"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:152
+msgid "Email Trigger Time"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:158
+msgid "Trigger this email after cart is abandoned"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:163
+msgid "Day"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:164
+msgid "Minutes"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:165
+msgid "Hours"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:170
+msgid ""
+"Want to supercharge recovery by offering a discount coupon in your reminder "
+"emails? This powerful feature is available in <a href=\"https://booster.io/"
+"buy-booster/\" target=\"_blank\"> Booster Elite! </a> "
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:175
+msgid "No Discount"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:176
+msgid "Percentage discount"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:177
+msgid "Fixed cart discount"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:182
+msgid "Coupon Amount"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:190
+msgid "Auto Apply Coupon"
+msgstr ""
+
+#: includes/settings/wcj-settings-cart-abandonment.php:191
+msgid "Automatically add the coupon to the cart at the checkout"
 msgstr ""
 
 #: includes/settings/wcj-settings-cart-customization.php:37
@@ -11204,10 +11493,6 @@ msgstr ""
 #: includes/settings/wcj-settings-checkout-custom-fields.php:124
 #: includes/settings/wcj-settings-product-input-fields.php:96
 msgid "Click Save changes after you change this number."
-msgstr ""
-
-#: includes/settings/wcj-settings-checkout-custom-fields.php:179
-msgid "State"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-custom-fields.php:191
@@ -12167,12 +12452,6 @@ msgstr ""
 msgid "Image style"
 msgstr ""
 
-#: includes/settings/wcj-settings-checkout-files-upload.php:446
-#: includes/settings/wcj-settings-checkout-files-upload.php:467
-#: includes/settings/wcj-settings-checkout-files-upload.php:503
-msgid "Item"
-msgstr ""
-
 #: includes/settings/wcj-settings-checkout-files-upload.php:465
 #, php-format
 msgid "Ignored, if %1$s is not included in %2$s option above."
@@ -12942,20 +13221,6 @@ msgstr ""
 
 #: includes/settings/wcj-settings-emails-verification.php:129
 msgid "Message - Resend"
-msgstr ""
-
-#: includes/settings/wcj-settings-emails-verification.php:153
-#: includes/settings/wcj-settings-offer-price.php:366
-msgid "Email Subject"
-msgstr ""
-
-#: includes/settings/wcj-settings-emails-verification.php:162
-msgid "Email Content"
-msgstr ""
-
-#: includes/settings/wcj-settings-emails-verification.php:173
-#: includes/settings/wcj-settings-offer-price.php:373
-msgid "Email Template"
 msgstr ""
 
 #: includes/settings/wcj-settings-emails-verification.php:174
@@ -18355,15 +18620,6 @@ msgstr ""
 #: includes/settings/wcj-settings-product-custom-info.php:196
 #: includes/settings/wcj-settings-wholesale-price.php:155
 msgid "Product Categories to Include"
-msgstr ""
-
-#: includes/settings/wcj-settings-product-custom-info.php:197
-#: includes/settings/wcj-settings-product-custom-info.php:207
-#: includes/settings/wcj-settings-product-custom-info.php:217
-#: includes/settings/wcj-settings-product-custom-info.php:227
-#: includes/settings/wcj-settings-product-custom-info.php:237
-#: includes/settings/wcj-settings-product-custom-info.php:247
-msgid "Leave blank to disable the option."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-custom-info.php:206

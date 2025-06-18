@@ -1,11 +1,11 @@
-=== Booster for WooCommerce ===
+=== Booster for WooCommerce – PDF Invoices, Bulk Price Editor, Currency Switcher & 100+ Tools ===
 Contributors: pluggabl
 Donate link: https://booster.io/
 Tags: woocommerce, woocommerce pdf invoices, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce bulk price editor, woocommerce variation swatches, woocommerce product feed
 Requires at least: 5.8
 Tested up to: 6.8.1
 Requires PHP: 7.2
-Stable tag: 7.2.6
+Stable tag: 7.2.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -278,6 +278,12 @@ You can find links to documentation for each module within the Booster settings 
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.2.7 18/06/2025 =
+
+* NEW FEATURE - CART & CHECKOUT - Cart Abandonment - Added cart Abandonment option to Recover lost sales by automatically tracking and emailing customers who abandon their cart before checkout.
+* WooCommerce 9.9.4 Tested
+* WordPress 6.8.1 Tested
 
 = 7.2.6 12/05/2025 =
 

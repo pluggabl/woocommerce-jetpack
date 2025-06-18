@@ -1,4 +1,6 @@
 {
-    "0" : "= 7.2.6 12/05/2025 =",
-    "1" : "* FIXED - PRODUCTS - User Products - Resolved an XSS vulnerability by sanitizing input fields"
+    "0" : "= 7.2.7 18/06/2025 =",
+    "1" : "* NEW FEATURE - CART & CHECKOUT - Cart Abandonment - Added cart Abandonment option to Recover lost sales by automatically tracking and emailing customers who abandon their cart before checkout.",
+    "2" : "* WooCommerce 9.9.4 Tested",
+    "3" : "* WordPress 6.8.1 Tested"
 }
