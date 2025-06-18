@@ -1,0 +1,152 @@
+/**
+ * wcj-cart-abandonment.
+ *
+ * @version 7.2.7
+ * @since  1.0.0
+ */
+
+.cart_abandonment_main {
+    width: 100%;
+    padding: 2px;
+}
+
+.wcj-col-4 {
+    width: 30%;
+    float: left;
+    margin: 1%;
+}
+
+.wcj-col-5 {
+    width: 36%;
+    float: left;
+    margin: 1%;
+}
+
+.wcj-col-6 {
+    width: 47%;
+    float: left;
+    margin: 1%;
+}
+
+.wcj-col-8 {
+    width: 60%;
+    float: left;
+    margin: 1%;
+}
+
+.wcj-col-12 {
+    width: 96%;
+    float: left;
+    margin: 1%;
+}
+
+.wcj-info-box {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    padding: 0.5rem;
+    position: relative;
+    width: 100%;
+}
+
+.wcj-info-box .wcj-info-box-icon {
+    border-radius: 0.25rem;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 1.875rem;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    width: 70px;
+}
+
+.wcj-info-box .wcj-info-box-icon .dashicons {
+    font-size: 25px;
+}
+
+.wcj-info-box .wcj-info-box-text {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.wcj-info-box .wcj-info-box-content {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    line-height: 1.8;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 0 10px;
+}
+
+.wcj-info-box .wcj-info-box-number {
+    display: block;
+    margin-top: 0.25rem;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.wcj-info-box .wcj-progress {
+    background-color: rgba(90, 82, 82, 0.28);
+    height: 2px;
+    margin: 5px 0;
+}
+
+.wcj-info-box .wcj-progress .wcj-progress-bar {
+    background-color: #fff;
+}
+
+.wcj-bg-white {
+    background-color: #fff !important;
+}
+
+.wcj-padding-10 {
+    padding: 10px;
+}
+
+.wp-core-ui .normal_btn {
+    border: 1px solid rgba(0, 0, 0, .2);
+    font-family: Inter-Regular;
+    color: #000;
+}
+
+.wp-core-ui .normal_btn:hover,
+.wp-core-ui .normal_btn:focus {
+    border-color: #f46c5e;
+    color: #f46c5e;
+    outline: 0;
+    box-shadow: none;
+}
+
+.wp-core-ui .wcj-setting-jetpack-body.cart_abandonment_main .button-primary {
+    border-radius: 3px !important;
+    border: 1px solid rgba(0, 0, 0, .2) !important;
+    text-decoration: none;
+    font-size: 13px !important;
+    font-family: Inter-Regular;
+    color: #fff;
+    letter-spacing: 0px;
+    text-transform: capitalize;
+    padding: 0px 10px;
+    min-width: auto;
+    text-align: center;
+    text-shadow: none!important;
+    box-shadow: none!important;
+}
