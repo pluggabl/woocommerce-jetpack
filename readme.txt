@@ -15,7 +15,7 @@ PDF Invoices, Dynamic Pricing, Multi‑Currency, Checkout Editor, Product Addo
 
 Supercharge WooCommerce with powerful <strong>PDF Invoices</strong>, smart <strong>Dynamic Pricing</strong>, global <strong>Multi-Currency</strong> support, a flexible <strong>Checkout Field Editor</strong>, versatile <strong>Product Addons</strong>, and over 100+ more essential tools – all in one plugin! Booster offers a comprehensive suite, replacing dozens of individual extensions without the bloat. Activate only the modules you need, keeping your store fast, lean, and feature-rich. Many core features are completely free.
 
-Trusted by more than <strong>100,000 WooCommerce stores worldwide</strong> — including <strong>40,000+ active installations</strong> of the free version on WordPress.org and <strong>tens of thousands of Booster Pro customers</strong>Booster for WooCommerce is the <strong>#1 all‑in‑one toolkit</strong> for your store. Need branded PDF invoices that rival standalone solutions? Automatic multi‑currency with live FX? Advanced dynamic pricing rules and discounts? Or a drag‑and‑drop checkout‑field editor? Booster empowers you with single-click activation for each powerful, speed-optimized module.
+Trusted by more than <strong>100,000 WooCommerce stores worldwide</strong> — including <strong>40,000+ active installations</strong> of the free version on WordPress.org and <strong>tens of thousands of Booster Pro customers</strong> Booster for WooCommerce is the <strong>#1 all‑in‑one toolkit</strong> for your store. Need branded PDF invoices that rival standalone solutions? Automatic multi‑currency with live FX? Advanced dynamic pricing rules and discounts? Or a drag‑and‑drop checkout‑field editor? Booster empowers you with single-click activation for each powerful, speed-optimized module.
 
 == Why Store‑Owners & Agencies Choose Booster's Free & Pro Versions ==
 *   <strong>Comprehensive Toolkit:</strong> One install gives access to 110+ features – stop stacking $79 add‑ons. Many core tools available for free!
@@ -41,6 +41,10 @@ Learn more: <a href="https://booster.io/category/features/prices-currencies/">Pr
 Enhance the shopping cart and checkout experience. Add crucial custom checkout fields (e.g., for EU VAT numbers), manage basic additional fees, add custom buttons, and tailor the checkout flow with our free checkout field editor options to improve conversions.
 <em>Pro Tip: Get advanced conditional logic for checkout fields, file uploads, and more with Booster Pro.</em>
 Learn more: <a href="https://booster.io/category/features/cart-checkout/">Cart and Checkout Customization</a>
+
+=== Basic Abandoned Cart Recovery (Free) ===
+Start recovering lost sales! Our free tool tracks recently abandoned WooCommerce carts and allows you to send **one automated email reminder** after a user-selectable fixed time (e.g., 1, 3, or 24 hours) to encourage customers to complete their purchase. See a simple list of abandoned carts and identify which ones get recovered. A great way to experience the power of cart recovery!
+Learn more: <a href="https://booster.io/features/woocommerce-cart-abandonment/">Abandoned Cart Recovery for WooCommerce</a>
 
 === Product Input Fields & Addons (Free Basic Options) ===
 Add essential custom input fields to your products, either globally or per-product. Offer simple product customizations with basic product addons. Allow customers to provide more information for personalized items.
