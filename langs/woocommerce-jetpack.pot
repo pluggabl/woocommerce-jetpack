@@ -736,17 +736,17 @@ msgid ""
 "Listings, Product Tabs and more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:102
+#: includes/admin/wcj-modules-cats.php:103
 msgid "Cart & Checkout"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:103
+#: includes/admin/wcj-modules-cats.php:104
 msgid ""
 "Cart and Checkout Customization, Empty Cart Button, Mini Cart, Coupons and "
 "more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:125
+#: includes/admin/wcj-modules-cats.php:126
 #: includes/admin/wcj-settings-dashboard.php:184
 #: includes/admin/wcj-welcome-screen-content.php:109
 #: includes/settings/wcj-settings-payment-gateways-by-country.php:26
@@ -766,35 +766,35 @@ msgstr ""
 msgid "Payment Gateways"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:126
+#: includes/admin/wcj-modules-cats.php:127
 msgid ""
 "Custom Payment Gateways, Gateways Currency, Gateways Fees and Discounts and "
 "more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:144
+#: includes/admin/wcj-modules-cats.php:145
 msgid "Shipping & Orders"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:145
+#: includes/admin/wcj-modules-cats.php:146
 msgid ""
 "Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping "
 "Methods and more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:173
+#: includes/admin/wcj-modules-cats.php:174
 msgid "PDF Invoicing & Packing Slips"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:174
+#: includes/admin/wcj-modules-cats.php:175
 msgid "PDF Documents"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:191
+#: includes/admin/wcj-modules-cats.php:192
 msgid "Emails & Misc."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:192
+#: includes/admin/wcj-modules-cats.php:193
 msgid "Emails, Reports, Export, Admin Tools, General Options and more."
 msgstr ""
 
@@ -5423,6 +5423,7 @@ msgstr ""
 #: includes/settings/wcj-settings-admin-orders-list.php:109
 #: includes/settings/wcj-settings-checkout-custom-fields.php:306
 #: includes/settings/wcj-settings-product-addons.php:288
+#: includes/settings/wcj-settings-product-variation-swatches.php:94
 #: includes/settings/wcj-settings-related-products.php:227
 #: includes/widgets/class-wcj-widget-country-switcher.php:100
 msgid "No"
@@ -5462,6 +5463,7 @@ msgstr ""
 #: includes/settings/wcj-settings-eu-vat-number.php:165
 #: includes/settings/wcj-settings-eu-vat-number.php:175
 #: includes/settings/wcj-settings-product-addons.php:287
+#: includes/settings/wcj-settings-product-variation-swatches.php:93
 #: includes/settings/wcj-settings-related-products.php:226
 #: includes/widgets/class-wcj-widget-country-switcher.php:101
 msgid "Yes"
@@ -5482,6 +5484,54 @@ msgstr ""
 #: includes/settings/wcj-settings-product-tabs.php:103
 #: includes/settings/wcj-settings-product-tabs.php:329
 msgid "Custom Product Tab"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches-term-meta.php:190
+msgid "Upload / Add image"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches-term-meta.php:191
+msgid "Remove image"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches.php:29
+#: includes/class-wcj-product-variation-swatches.php:30
+msgid "Product Variation Swatches"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches.php:85
+#: includes/class-wcj-product-variation-swatches.php:114
+#: includes/tools/class-wcj-order-statuses-tool.php:201
+#: includes/tools/class-wcj-order-statuses-tool.php:305
+msgid "Color"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches.php:91
+#: includes/class-wcj-product-variation-swatches.php:123
+#: includes/settings/wcj-settings-product-by-user.php:18
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:232
+#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:495
+msgid "Image"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches.php:115
+msgid "Choose a color"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches.php:124
+msgid "Choose an Image"
+msgstr ""
+
+#: includes/class-wcj-product-variation-swatches.php:303
+#: includes/class-wcj-product-variation-swatches.php:436
+#: includes/class-wcj-product-variation-swatches.php:448
+#: includes/class-wcj-product-variation-swatches.php:510
+#: includes/class-wcj-product-variation-swatches.php:522
+#: includes/class-wcj-product-variation-swatches.php:585
+#: includes/class-wcj-product-variation-swatches.php:597
+#: includes/class-wcj-product-variation-swatches.php:660
+#: includes/class-wcj-product-variation-swatches.php:672
+msgid "Choose an option"
 msgstr ""
 
 #: includes/class-wcj-products-per-page.php:40
@@ -18496,12 +18546,6 @@ msgstr ""
 msgid "Replaceable value:"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-by-user.php:18
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:232
-#: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:495
-msgid "Image"
-msgstr ""
-
 #: includes/settings/wcj-settings-product-by-user.php:21
 msgid "Product URL (for \"External/Affiliate\" product type only)"
 msgstr ""
@@ -19712,6 +19756,70 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-tabs.php:493
 msgid "Reviews Tab"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:23
+msgid "Variation Swatches Options"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:31
+msgid "Variation Swatches"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:36
+msgid "Convert default dropdowns to button"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:37
+msgid ""
+"Want to enable swatches for all your attributes, use button/label swatches, "
+"or automatically convert all dropdowns? Upgrade to <a href=\"https://booster."
+"io/buy-booster/\" target=\"_blank\"> Booster Elite </a> for advanced swatch "
+"control!"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:44
+msgid "Attribute Display Style"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:49
+msgid "Squared"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:50
+msgid "Rounded"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:56
+msgid "Color Variation Item Width"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:64
+msgid "Color Variation Item Height"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:72
+msgid "Image Variation Item Width"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:80
+msgid "Image Variation Item Height"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:88
+msgid "Variation label tooltip"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:98
+msgid "Variation Swatches Style In Archive"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:103
+msgid "Booster Swatches"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:104
+msgid "WooCommerce Default"
 msgstr ""
 
 #: includes/settings/wcj-settings-products-per-page.php:37
@@ -22105,11 +22213,6 @@ msgstr ""
 #: includes/tools/class-wcj-order-statuses-tool.php:200
 #: includes/tools/class-wcj-order-statuses-tool.php:304
 msgid "Icon Code"
-msgstr ""
-
-#: includes/tools/class-wcj-order-statuses-tool.php:201
-#: includes/tools/class-wcj-order-statuses-tool.php:305
-msgid "Color"
 msgstr ""
 
 #: includes/tools/class-wcj-order-statuses-tool.php:202
