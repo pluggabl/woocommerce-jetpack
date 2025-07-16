@@ -1,0 +1,98 @@
+/**
+ * wcj-frontend-pvs-style.
+ *
+ * @version 7.2.8
+ */
+
+.wcj_variable_items_wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0!important;
+	padding: 0;
+	list-style: none;
+}
+
+.wcj_variable_items_wrapper .variable-item {
+	border-radius: 2px;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	box-shadow: 0 0 0 1px black;
+	padding: 2px;
+	margin: 4px 8px 4px 0px;
+}
+
+.wcj_variable_items_wrapper .variable-item.wcj_color-variable-item,
+.variable-item.wcj_image-variable-item {
+	width: 30px;
+	height: 30px;
+}
+
+.wcj_variable_items_wrapper .variable-item.selected,
+.wcj_variable_items_wrapper .variable-item.selected:hover {
+	box-shadow: 0 0 0 2px black;
+}
+
+.wcj_variable_items_wrapper .variable-item .variable-item-contents {
+	display: contents;
+	display: flex;
+	width: 100%;
+	height: 100%;
+}
+
+.wcj_variable_items_wrapper .variable-item.wcj_color-variable-item .variable-item-span-wcj_color {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: block;
+}
+
+.wcj_variable_items_wrapper.rounded .variable-item {
+	border-radius: 100%;
+}
+
+.wcj_variable_items_wrapper.rounded .variable-item span {
+	border-radius: 100%;
+}
+
+.wcj_variable_items_wrapper.rounded .variable-item img {
+	border-radius: 100%;
+}
+
+.wcj_selected_variation_lable {
+	/*display: none;*/
+	/*position: relative;*/
+	/*left: -41px;*/
+	/*top: 40px;*/
+}
+
+.wcj_pvs_tooltip {
+	position: relative;
+	display: inline-block;
+	border-bottom: 1px dotted black;
+}
+
+.wcj_pvs_tooltip .wcj_pvs_tooltiptext {
+	visibility: hidden;
+	width: auto;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 3px 15px;
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+	top: 110%;
+}
+
+.wcj_pvs_tooltip:hover .wcj_pvs_tooltiptext {
+	visibility: visible;
+}
+
+.variable-item-image {
+	width: 100%;
+}

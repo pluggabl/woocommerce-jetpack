@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 7.2.7
+ * @version 7.2.8
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -140,6 +140,7 @@ $wcj_module_files = array(
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-advanced.php',
 	'class-wcj-pdf-invoicing.php',
 	'class-wcj-cart-abandonment.php',
+	'class-wcj-product-variation-swatches.php',
 );
 
 $this->modules   = array();

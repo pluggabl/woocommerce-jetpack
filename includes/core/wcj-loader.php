@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 6.0.3
+ * @version 7.2.8
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -21,7 +21,7 @@ if ( ! defined( 'WCJ_FREE_PLUGIN_PATH' ) ) {
 	/**
 	 * WCJ_FREE_PLUGIN_PATH.
 	 *
-	 * @version 5.6.1
+	 * @version 7.2.8
 	 * @since   3.2.4
 	 */
 	define( 'WCJ_FREE_PLUGIN_PATH', untrailingslashit( realpath( plugin_dir_path( WCJ_FREE_PLUGIN_FILE ) ) ) );
@@ -55,6 +55,7 @@ require_once WCJ_FREE_PLUGIN_PATH . '/includes/classes/class-wcj-module-shipping
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/classes/class-wcj-invoice.php';
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/classes/class-wcj-pdf-invoice.php';
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-welcome.php';
+require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-product-variation-swatches-term-meta.php';
 
 // Mini Plugin.
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/mini-plugin/wcj-mini-plugin.php';

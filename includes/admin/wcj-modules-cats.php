@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 7.2.7
+ * @version 7.2.8
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -94,6 +94,7 @@ return apply_filters(
 				'products_xml',
 				'product_bulk_meta_editor',
 				'product_msrp',
+				'product_variation_swatches',
 			),
 		),
 
