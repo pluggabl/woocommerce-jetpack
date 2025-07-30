@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 6.0.1
+ * @version 7.2.9
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/functions
@@ -343,7 +343,7 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 	/**
 	 * Wcj_get_plus_message.
 	 *
-	 * @version 5.4.8
+	 * @version 7.2.9
 	 * @param   string | array $value defines the value.
 	 * @param   string         $message_type defines the message_type.
 	 * @param   array          $args defines the args.
@@ -358,20 +358,20 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 					'<p><span>' . sprintf(
 						/* translators: %s: translation added */
 						__( 'Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack' ),
-						'<a href="https://booster.io/buy-booster/" target="_blank">Booster for WooCommerce </a>'
+						'<a href="https://booster.io/free-vs-elite/?utm_source=inplugin&utm_medium=upsell&utm_campaign=upgrade_prompt&utm_content=central_function_prompt" target="_blank">Booster for WooCommerce </a>'
 					) . '</span></p>' .
 					'<p>' .
-					'<a href="https://booster.io/buy-booster/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="https://booster.io" target="_blank" class="button">' . __( 'Visit Booster Site', 'woocommerce-jetpack' ) . '</a>' .
+					'<a href="https://booster.io/free-vs-elite/?utm_source=inplugin&utm_medium=upsell&utm_campaign=upgrade_prompt&utm_content=central_function_prompt" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="https://booster.io" target="_blank" class="button">' . __( 'Visit Booster Site', 'woocommerce-jetpack' ) . '</a>' .
 					'</p>' .
 					'</div>';
 
 			case 'desc':
 				/* translators: %s: translation added */
-				return sprintf( __( 'Upgrade <a href="%s" target="_blank">Booster</a> to change value.', 'woocommerce-jetpack' ), 'https://booster.io/buy-booster/' );
+				return sprintf( __( 'Upgrade <a href="%s" target="_blank">Booster</a> to change value.', 'woocommerce-jetpack' ), 'https://booster.io/free-vs-elite/?utm_source=inplugin&utm_medium=upsell&utm_campaign=upgrade_prompt&utm_content=central_function_prompt' );
 
 			case 'desc_advanced':
 				/* translators: %s: translation added */
-				return sprintf( __( 'Upgrade <a href="%1$s" target="_blank">Booster to unlock this feature</a> to enable "%2$s" option.', 'woocommerce-jetpack' ), 'https://booster.io/buy-booster/', $args['option'] );
+				return sprintf( __( 'Upgrade <a href="%1$s" target="_blank">Booster to unlock this feature</a> to enable "%2$s" option.', 'woocommerce-jetpack' ), 'https://booster.io/free-vs-elite/?utm_source=inplugin&utm_medium=upsell&utm_campaign=upgrade_prompt&utm_content=central_function_prompt', $args['option'] );
 
 			case 'desc_advanced_no_link':
 				/* translators: %s: translation added */
@@ -379,11 +379,11 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 
 			case 'desc_below':
 				/* translators: %s: translation added */
-				return sprintf( __( 'Upgrade  <a href="%s" target="_blank">Booster</a> to change values below.', 'woocommerce-jetpack' ), 'https://booster.io/buy-booster/' );
+				return sprintf( __( 'Upgrade  <a href="%s" target="_blank">Booster</a> to change values below.', 'woocommerce-jetpack' ), 'https://booster.io/free-vs-elite/?utm_source=inplugin&utm_medium=upsell&utm_campaign=upgrade_prompt&utm_content=central_function_prompt' );
 
 			case 'desc_above':
 				/* translators: %s: translation added */
-				return sprintf( __( 'Upgrade  <a href="%s" target="_blank">Booster </a> to change values above.', 'woocommerce-jetpack' ), 'https://booster.io/buy-booster/' );
+				return sprintf( __( 'Upgrade  <a href="%s" target="_blank">Booster </a> to change values above.', 'woocommerce-jetpack' ), 'https://booster.io/free-vs-elite/?utm_source=inplugin&utm_medium=upsell&utm_campaign=upgrade_prompt&utm_content=central_function_prompt' );
 
 			case 'desc_no_link':
 				return __( 'Upgrade Booster to change value.', 'woocommerce-jetpack' );

@@ -285,15 +285,21 @@ You can find links to documentation for each module within the Booster settings 
 
 == Changelog ==
 
+= 7.2.9 - 30/07/2025 =
+
+* ENHANCEMENT - Updated and unified all in-plugin "Upgrade to Elite" links for a clearer and more informative user experience.
+* WooCommerce 10.0.4 Tested
+* WordPress 6.8.2 Tested
+
 = 7.2.8 16/07/2025 =
 
-* ADDED - PRODUCTS - Product Variation Swatches Lite - New free module for basic color/image variation swatches for limited attributes.
+* NEW FEATURE - PRODUCTS - Product Variation Swatches Lite - New free module for basic color/image variation swatches for limited attributes.
 * WooCommerce 10.0.2 Tested
 * WordPress 6.8.1 Tested
 
 = 7.2.7 18/06/2025 =
 
-* ADDED - "Abandoned Cart Lite" - New free module to track abandoned carts and send a single automated recovery email.
+* NEW FEATURE - "Abandoned Cart Lite" - New free module to track abandoned carts and send a single automated recovery email.
 * WooCommerce 9.9.4 Tested
 * WordPress 6.8.1 Tested
 

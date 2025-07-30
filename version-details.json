@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.2.8 16/07/2025 =",
-    "1" : "* ADDED - PRODUCTS - Product Variation Swatches Lite - New free module for basic color/image variation swatches for limited attributes.",
-    "2" : "* WooCommerce 10.0.2 Tested",
-    "3" : "* WordPress 6.8.1 Tested"
+    "0" : "= 7.2.9 30/07/2025 =",
+    "1" : "* ENHANCEMENT - Updated and unified all in-plugin 'Upgrade to Elite' links for a clearer and more informative user experience.",
+    "2" : "* WooCommerce 10.0.4 Tested",
+    "3" : "* WordPress 6.8.2 Tested"
 }
