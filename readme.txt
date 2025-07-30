@@ -3,9 +3,9 @@ Contributors: pluggabl, ronyp, gravid7
 Donate link: https://booster.io/
 Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invoices, variation swatches, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce product feed, currency switcher
 Requires at least: 5.8
-Tested up to: 6.8.1
+Tested up to: 6.8.2
 Requires PHP: 7.2
-Stable tag: 7.2.8
+Stable tag: 7.2.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
