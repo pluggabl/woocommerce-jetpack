@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 7.0.0
+ * @version 7.3.0
  * @since   2.8.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
@@ -19,7 +19,7 @@ $autogenerate_buttons_data = array(
 );
 foreach ( $autogenerate_buttons_data as $autogenerate_button_id => $autogenerate_button_desc ) {
 	$autogenerate_buttons[] = ( 0 === apply_filters( 'booster_option', 1, '' ) ?
-	'<a class="button wcj-btn-sm wcj-autogenerate-button" disabled title="' . __( 'Available in Booster Plus only.', 'woocommerce-jetpack' ) . '">' . $autogenerate_button_desc . '</a>' :
+	'<a class="button wcj-btn-sm wcj-autogenerate-button" disabled title="' . __( 'Available in Booster Elite only.', 'woocommerce-jetpack' ) . '">' . $autogenerate_button_desc . '</a>' :
 	'<a class="button wcj-btn-sm wcj-autogenerate-button" href="' .
 		esc_url(
 			add_query_arg(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 7.1.4
+ * @version 7.3.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -23,14 +23,14 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   2.7.0
 		 */
 		public function __construct() {
 
 			$this->id         = 'checkout_customization';
 			$this->short_desc = __( 'Checkout Customization', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP (Plus); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP (Elite); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-checkout-customization';
 			parent::__construct();

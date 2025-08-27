@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 7.2.2
+ * @version 7.3.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -262,7 +262,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.2
+		 * @version 7.3.0
 		 * @since   2.4.8
 		 */
 		public function admin_notices() {
@@ -273,7 +273,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 			?><div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Plus</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
+				. wp_kses_post( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
 				. '</div>';
 			?>
 		</p></div>

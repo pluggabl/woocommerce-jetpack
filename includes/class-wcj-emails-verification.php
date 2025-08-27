@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 6.0.0
+ * @version 7.3.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,14 +21,14 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   2.8.0
 		 */
 		public function __construct() {
 
 			$this->id         = 'emails_verification';
 			$this->short_desc = __( 'Email Verification', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add WooCommerce email verification. Customize verification email subject, content and template (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Add WooCommerce email verification. Customize verification email subject, content and template (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Add WooCommerce email verification.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-email-verification';
 			parent::__construct();

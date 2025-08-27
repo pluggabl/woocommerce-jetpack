@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 5.6.8
+ * @version 7.3.0
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -22,7 +22,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   3.5.3
 		 * @todo    [feature] add pop up box (for `wcj_cross_sells_replace_with_cross_sells`)
 		 */
@@ -38,7 +38,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 				'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=cart_and_checkout&section=checkout_custom_info' ) . '">' .
 				__( 'Checkout Custom Info', 'woocommerce-jetpack' ) . '</a>'
 			);
-			$this->desc      = __( 'Customize cross-sells products display. Global Cross-sells (Plus); Exclude "Not in Stock" Products (Plus); Replace Cart Products with Cross-sells (Plus).', 'woocommerce-jetpack' );
+			$this->desc      = __( 'Customize cross-sells products display. Global Cross-sells (Elite); Exclude "Not in Stock" Products (Elite); Replace Cart Products with Cross-sells (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro  = __( 'Customize cross-sells products display. Global Cross-sells; Exclude "Not in Stock" Products; Replace Cart Products with Cross-sells.', 'woocommerce-jetpack' );
 			$this->link_slug = 'woocommerce-cross-sells';
 			parent::__construct();

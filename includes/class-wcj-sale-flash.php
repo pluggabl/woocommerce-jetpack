@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sale Flash
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   3.2.4
 		 * @todo    add predefined styles
 		 * @todo    (maybe) per product/category/tag: separate "loop" and "single" options
@@ -66,7 +66,7 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 
 			$this->id         = 'sale_flash';
 			$this->short_desc = __( 'Sale Flash', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize products sale flash. Per product (Plus); Per category (Plus); Per tag (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Customize products sale flash. Per product (Elite); Per category (Elite); Per tag (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Customize products sale flash.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-sale-flash';
 			parent::__construct();

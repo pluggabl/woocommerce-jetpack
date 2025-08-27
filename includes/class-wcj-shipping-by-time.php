@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Time
  *
- * @version 5.6.8
+ * @version 7.3.0
  * @since   4.0.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   4.0.0
 		 * @todo    [dev] add more "Valid time input" examples
 		 * @todo    [feature] multiple time values (i.e. `__( 'Otherwise enter time one per line.', 'woocommerce-jetpack' )`)
@@ -33,7 +33,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 
 			$this->id         = 'shipping_by_time';
 			$this->short_desc = __( 'Shipping Methods by Current Date/Time', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Set date and/or time to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-shipping-methods-by-current-date-time';
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -36,13 +36,13 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 */
 		public function __construct() {
 
 			$this->id         = 'sku';
 			$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Plus); Sequential Number Generation (Plus); Variable Products Variations (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Elite); Sequential Number Generation (Elite); Variable Products Variations (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Generate SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-sku';
 			parent::__construct();

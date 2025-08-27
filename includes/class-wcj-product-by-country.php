@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 5.6.8
+ * @version 7.3.0
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,14 +21,14 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   2.5.0
 		 */
 		public function __construct() {
 
 			$this->id         = 'product_by_country';
 			$this->short_desc = __( 'Product Visibility by Country', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display products by customer\'s country. User Country Selection Method (Plus); Admin country list options (Plus); Visibility method options (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Display products by customer\'s country. User Country Selection Method (Elite); Admin country list options (Elite); Visibility method options (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Display products by customer\'s country.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-product-visibility-by-country';
 			$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' );

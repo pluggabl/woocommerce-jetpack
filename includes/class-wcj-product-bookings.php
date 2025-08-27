@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -533,7 +533,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.8
+		 * @version 7.3.0
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
@@ -545,7 +545,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		<div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one bookings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Plus</a> to add unlimited number of bookings products.', 'woocommerce-jetpack' ) )
+				. wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one bookings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of bookings products.', 'woocommerce-jetpack' ) )
 				. '</div>';
 			?>
 		</p></div>

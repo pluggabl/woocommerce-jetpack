@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.2.9 30/07/2025 =",
-    "1" : "* ENHANCEMENT - Updated and unified all in-plugin 'Upgrade to Elite' links for a clearer and more informative user experience.",
-    "2" : "* WooCommerce 10.0.4 Tested",
-    "3" : "* WordPress 6.8.2 Tested"
+    "0" : "= 7.3.0 27/08/2025 =",
+    "1" : "* NEW FEATURE - CART & CHECKOUT - Wishlist - New free module for basic product Wishlist functionality.",
+    "2" : "* FIXED - Fixed the Elementor conflict for Shop Managers when saving edits. Compatibility is now restored.",
+    "3" : "ENHANCEMENT - Updated and unified all in-plugin 'Upgrade to Elite' links for a clearer and more informative user experience"
 }

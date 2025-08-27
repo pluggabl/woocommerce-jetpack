@@ -354,7 +354,7 @@ msgid "My Account"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:932
-msgid "Get Booster Plus"
+msgid "Get Booster Elite"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:939
@@ -376,22 +376,22 @@ msgid "Frequently Asked Questions"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:954
-msgid "Do I need to have coding skills to use Booster Plus?"
+msgid "Do I need to have coding skills to use Booster Elite?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:958
 msgid ""
-"Absolutely not. You can configure pretty much everything Booster Plus has to "
+"Absolutely not. You can configure pretty much everything Booster Elite has to "
 "offer without any coding knowledge."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:963
-msgid "Will Booster Plus slow down my website?"
+msgid "Will Booster Elite slow down my website?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:967
 msgid ""
-"Absolutely not. Booster Plus is carefully built with performance in mind."
+"Absolutely not. Booster Elite is carefully built with performance in mind."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:972
@@ -401,19 +401,19 @@ msgstr ""
 #: includes/admin/class-wc-settings-jetpack.php:976
 #, php-format
 msgid ""
-"If you are not completely satisfied with Booster Plus within the fist 30 "
+"If you are not completely satisfied with Booster Elite within the fist 30 "
 "days, you can request a refund and we will give you 100% of your money back – "
 "no questions asked."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:981
-msgid "Can I use Booster Plus on client sites?"
+msgid "Can I use Booster Elite on client sites?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:985
 msgid ""
-"Yes, you can use Booster Plus on client sites. You can purchase the multiple "
-"sites license of Booster Plus."
+"Yes, you can use Booster Elite on client sites. You can purchase the multiple "
+"sites license of Booster Elite."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:990
@@ -434,23 +434,23 @@ msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:999
 msgid ""
-"Why should I choose the Booster Plus suite over other individual plugins?"
+"Why should I choose the Booster Elite suite over other individual plugins?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1003
 msgid ""
-"Oh, that's an easy one! Implementing just a few modules from the Booster Plus "
-"suite is more cost-effective than using dozens of individual plugins often "
-"priced at $15-$30 each. On top of that, stacking your site with a lot of "
-"different plugins can make it bloated and slow. What's worse, all those "
-"individual plugins don't always play nice together. But Booster Plus is the "
-"solution to all that nonsense. The Booster Plus suite features over 100 "
+"Oh, that's an easy one! Implementing just a few modules from the Booster "
+"Elite suite is more cost-effective than using dozens of individual plugins "
+"often priced at $15-$30 each. On top of that, stacking your site with a lot "
+"of different plugins can make it bloated and slow. What's worse, all those "
+"individual plugins don't always play nice together. But Booster Elite is the "
+"solution to all that nonsense. The Booster Elite suite features over 100 "
 "compatible modules that allow you to add custom features and functionality to "
 "your WooCommerce site easily."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1008
-msgid "What features does Booster Plus have?"
+msgid "What features does Booster Elite have?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1012
@@ -616,7 +616,7 @@ msgid "+ More configuration options for payments and shipping"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:1148
-msgid "Upgrade to Booster Plus"
+msgid "Upgrade to Booster Elite"
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:79
@@ -746,7 +746,7 @@ msgid ""
 "more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:126
+#: includes/admin/wcj-modules-cats.php:127
 #: includes/admin/wcj-settings-dashboard.php:184
 #: includes/admin/wcj-welcome-screen-content.php:109
 #: includes/settings/wcj-settings-payment-gateways-by-country.php:26
@@ -766,35 +766,35 @@ msgstr ""
 msgid "Payment Gateways"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:127
+#: includes/admin/wcj-modules-cats.php:128
 msgid ""
 "Custom Payment Gateways, Gateways Currency, Gateways Fees and Discounts and "
 "more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:145
+#: includes/admin/wcj-modules-cats.php:146
 msgid "Shipping & Orders"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:146
+#: includes/admin/wcj-modules-cats.php:147
 msgid ""
 "Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping "
 "Methods and more."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:174
+#: includes/admin/wcj-modules-cats.php:175
 msgid "PDF Invoicing & Packing Slips"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:175
+#: includes/admin/wcj-modules-cats.php:176
 msgid "PDF Documents"
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:192
+#: includes/admin/wcj-modules-cats.php:193
 msgid "Emails & Misc."
 msgstr ""
 
-#: includes/admin/wcj-modules-cats.php:193
+#: includes/admin/wcj-modules-cats.php:194
 msgid "Emails, Reports, Export, Admin Tools, General Options and more."
 msgstr ""
 
@@ -1297,6 +1297,8 @@ msgstr ""
 #: includes/settings/wcj-settings-wholesale-price.php:99
 #: includes/settings/wcj-settings-wholesale-price.php:149
 #: includes/settings/wcj-settings-wholesale-price.php:174
+#: includes/settings/wcj-settings-wishlist.php:60
+#: includes/settings/wcj-settings-wishlist.php:211
 #: includes/settings/wcj-settings-wpml.php:43
 #: includes/settings/wcj-settings-wpml.php:50
 #: includes/settings/wcj-settings-wpml.php:59
@@ -1440,12 +1442,12 @@ msgstr ""
 
 #: includes/admin/wcj-welcome-screen-content.php:162
 msgid ""
-"Booster Plus customers get access to Premium Support and we respond within 24 "
-"business hours."
+"Booster Elite customers get access to Premium Support and we respond within "
+"24 business hours."
 msgstr ""
 
 #: includes/admin/wcj-welcome-screen-content.php:163
-msgid "Booster Plus Premium Support"
+msgid "Booster Elite Premium Support"
 msgstr ""
 
 #: includes/admin/wcj-welcome-screen-content.php:166
@@ -1553,7 +1555,7 @@ msgid "Quantity"
 msgstr ""
 
 #: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:92
-#: includes/class-wcj-offer-price.php:165
+#: includes/class-wcj-offer-price.php:165 includes/class-wcj-wishlist.php:420
 #: includes/export/class-wcj-export-fields-helper.php:293
 #: includes/reports/class-wcj-reports-stock.php:423
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:71
@@ -1601,7 +1603,7 @@ msgstr ""
 
 #: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:126
 #: includes/class-wcj-general.php:262 includes/class-wcj-general.php:287
-#: includes/class-wcj-offer-price.php:167
+#: includes/class-wcj-offer-price.php:167 includes/class-wcj-wishlist.php:419
 #: includes/export/class-wcj-export-fields-helper.php:287
 #: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:90
 #: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:135
@@ -1869,6 +1871,7 @@ msgid "Customer list"
 msgstr ""
 
 #: includes/class-wcj-admin-bar.php:467 includes/class-wcj-stock.php:98
+#: includes/class-wcj-wishlist.php:421
 #: includes/reports/class-wcj-reports-stock.php:424
 #: includes/settings/wcj-settings-reports.php:192
 #: includes/settings/wcj-settings-reports.php:198
@@ -1942,6 +1945,7 @@ msgstr ""
 #: includes/settings/wcj-settings-price-by-user-role.php:24
 #: includes/settings/wcj-settings-related-products.php:57
 #: includes/settings/wcj-settings-related-products.php:68
+#: includes/settings/wcj-settings-wishlist.php:33
 msgid "General"
 msgstr ""
 
@@ -2106,7 +2110,7 @@ msgstr ""
 #: includes/class-wcj-admin-tools.php:36
 msgid ""
 "Booster for WooCommerce general back-end tools. Enable interface by user "
-"roles (Plus). Custom shop manager editable roles (Plus)."
+"roles (Elite). Custom shop manager editable roles (Elite)."
 msgstr ""
 
 #: includes/class-wcj-admin-tools.php:37
@@ -2176,7 +2180,7 @@ msgid "Breadcrumbs"
 msgstr ""
 
 #: includes/class-wcj-breadcrumbs.php:37
-msgid "Customize WooCommerce breadcrumbs. Hide breadcrumbs (Plus)."
+msgid "Customize WooCommerce breadcrumbs. Hide breadcrumbs (Elite)."
 msgstr ""
 
 #: includes/class-wcj-breadcrumbs.php:38
@@ -2188,7 +2192,7 @@ msgid "Call for Price"
 msgstr ""
 
 #: includes/class-wcj-call-for-price.php:34
-msgid "Create any custom price label for all products with empty price (Plus)."
+msgid "Create any custom price label for all products with empty price (Elite)."
 msgstr ""
 
 #: includes/class-wcj-call-for-price.php:35
@@ -2254,7 +2258,7 @@ msgstr ""
 #: includes/class-wcj-checkout-core-fields.php:52
 msgid ""
 "Customize core checkout fields. Disable/enable fields, set required, change "
-"labels and/or placeholders; Setup fields by category (Plus)"
+"labels and/or placeholders; Setup fields by category (Elite)"
 msgstr ""
 
 #: includes/class-wcj-checkout-core-fields.php:53
@@ -2317,9 +2321,9 @@ msgstr ""
 
 #: includes/class-wcj-checkout-customization.php:33
 msgid ""
-"Customize WooCommerce checkout - restrict countries by customer's IP (Plus); "
+"Customize WooCommerce checkout - restrict countries by customer's IP (Elite); "
 "hide \"Order Again\" button; disable selected fields on checkout for logged "
-"users and more (Custom fields available in Plus)."
+"users and more (Custom fields available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-checkout-customization.php:34
@@ -2483,8 +2487,8 @@ msgstr ""
 
 #: includes/class-wcj-coupon-by-user-role.php:40
 msgid ""
-"Coupons by user roles. Invalidate per Coupon (Plus). Custom coupon invalid "
-"messages (Plus)"
+"Coupons by user roles. Invalidate per Coupon (Elite). Custom coupon invalid "
+"messages (Elite)"
 msgstr ""
 
 #: includes/class-wcj-coupon-by-user-role.php:41
@@ -2505,7 +2509,7 @@ msgstr ""
 
 #: includes/class-wcj-coupon-code-generator.php:34
 msgid ""
-"Coupon code generator (Multiple generation algorithms available in Plus)."
+"Coupon code generator (Multiple generation algorithms available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-coupon-code-generator.php:35
@@ -2531,9 +2535,9 @@ msgstr ""
 
 #: includes/class-wcj-cross-sells.php:41
 msgid ""
-"Customize cross-sells products display. Global Cross-sells (Plus); Exclude "
-"\"Not in Stock\" Products (Plus); Replace Cart Products with Cross-sells "
-"(Plus)."
+"Customize cross-sells products display. Global Cross-sells (Elite); Exclude "
+"\"Not in Stock\" Products (Elite); Replace Cart Products with Cross-sells "
+"(Elite)."
 msgstr ""
 
 #: includes/class-wcj-cross-sells.php:42
@@ -2595,7 +2599,7 @@ msgstr ""
 #: includes/class-wcj-currencies.php:40
 msgid ""
 "Add all world currencies and cryptocurrencies to your store; change currency "
-"symbol (Plus); add custom currencies (1 allowed in free version)."
+"symbol (Elite); add custom currencies (1 allowed in free version)."
 msgstr ""
 
 #: includes/class-wcj-currencies.php:41
@@ -2963,7 +2967,7 @@ msgstr ""
 #: includes/class-wcj-emails-verification.php:31
 msgid ""
 "Add WooCommerce email verification. Customize verification email subject, "
-"content and template (Plus)."
+"content and template (Elite)."
 msgstr ""
 
 #: includes/class-wcj-emails-verification.php:32
@@ -3083,8 +3087,8 @@ msgstr ""
 #: includes/class-wcj-empty-cart-button.php:31
 msgid ""
 "Add (and customize) \"Empty Cart\" button to the cart and checkout pages. "
-"Customize empty cart button text (Plus). Different button positions on the "
-"cart page (Plus)."
+"Customize empty cart button text (Elite). Different button positions on the "
+"cart page (Elite)."
 msgstr ""
 
 #: includes/class-wcj-empty-cart-button.php:32
@@ -3103,8 +3107,8 @@ msgstr ""
 msgid ""
 "Collect and validate EU VAT numbers on the checkout. Automatically disable "
 "VAT for valid numbers. Add all EU countries VAT standard rates to "
-"WooCommerce. Show VAT field for EU countries only (Plus). Check for IP "
-"Location Country  (Plus)"
+"WooCommerce. Show VAT field for EU countries only (Elite). Check for IP "
+"Location Country  (Elite)"
 msgstr ""
 
 #: includes/class-wcj-eu-vat-number.php:38
@@ -3274,7 +3278,7 @@ msgid "Free Price Labels"
 msgstr ""
 
 #: includes/class-wcj-free-price.php:32
-msgid "Set free price labels (Variable products allowed in Plus)."
+msgid "Set free price labels (Variable products allowed in Elite)."
 msgstr ""
 
 #: includes/class-wcj-free-price.php:33
@@ -3507,8 +3511,8 @@ msgstr ""
 
 #: includes/class-wcj-my-account.php:60
 msgid ""
-"WooCommerce \"My Account\" page customization. Customize Menu Order (Plus). "
-"Add Custom Menu Items (Plus). Custom Pages (1 allowed in free version). "
+"WooCommerce \"My Account\" page customization. Customize Menu Order (Elite). "
+"Add Custom Menu Items (Elite). Custom Pages (1 allowed in free version). "
 "Custom Info Blocks (1 allowed in free version)."
 msgstr ""
 
@@ -3778,7 +3782,7 @@ msgstr ""
 #: includes/class-wcj-order-custom-statuses.php:38
 msgid ""
 "Custom statuses for WooCommerce orders. Make Custom Status Orders Editable "
-"(Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus)."
+"(Elite). Add Custom Statuses to Admin Order List Action Buttons (Elite)."
 msgstr ""
 
 #: includes/class-wcj-order-custom-statuses.php:39
@@ -3847,7 +3851,7 @@ msgstr ""
 msgid ""
 "Sequential order numbering, custom order number prefix, suffix and number "
 "width. Prefix Options (Order Number Custom Prefix available in free version). "
-"Suffix options (Plus). "
+"Suffix options (Elite). "
 msgstr ""
 
 #: includes/class-wcj-order-numbers.php:34
@@ -3941,7 +3945,7 @@ msgstr ""
 #: includes/class-wcj-orders.php:32
 msgid ""
 "Orders auto-complete; admin order currency; admin order navigation; bulk "
-"regenerate download permissions for orders (Plus)."
+"regenerate download permissions for orders (Elite)."
 msgstr ""
 
 #: includes/class-wcj-orders.php:33
@@ -4039,7 +4043,7 @@ msgstr ""
 #: includes/class-wcj-payment-gateways-currency.php:39
 msgid ""
 "Currency converter for payment gateways. Update exchange rates automatically "
-"(Plus)."
+"(Elite)."
 msgstr ""
 
 #: includes/class-wcj-payment-gateways-currency.php:40
@@ -4053,7 +4057,7 @@ msgstr ""
 #: includes/class-wcj-payment-gateways-fees.php:38
 msgid ""
 "Enable extra fees or discounts for payment gateways. Force Default Payment "
-"Gateway (Plus). Apply fees depending on specific products (Plus)."
+"Gateway (Elite). Apply fees depending on specific products (Elite)."
 msgstr ""
 
 #: includes/class-wcj-payment-gateways-fees.php:39
@@ -4142,8 +4146,8 @@ msgstr ""
 
 #: includes/class-wcj-pdf-invoicing.php:66
 msgid ""
-"Invoices, Proforma Invoices (Plus), Credit Notes (Plus) and Packing Slips "
-"(Plus)."
+"Invoices, Proforma Invoices (Elite), Credit Notes (Elite) and Packing Slips "
+"(Elite)."
 msgstr ""
 
 #: includes/class-wcj-pdf-invoicing.php:74
@@ -4209,7 +4213,7 @@ msgstr ""
 #: includes/class-wcj-price-by-user-role.php:40
 msgid ""
 "Display products prices by user roles. Price based on User Role by Products "
-"Categories or Tags (Plus)."
+"Categories or Tags (Elite)."
 msgstr ""
 
 #: includes/class-wcj-price-by-user-role.php:41
@@ -4239,8 +4243,8 @@ msgstr ""
 msgid ""
 "Booster: Free plugin's version is limited to only one price by user role per "
 "products settings product enabled at a time. You will need to get <a href="
-"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster Plus</a> to add "
-"unlimited number of price by user role per product settings products."
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster Elite</a> to "
+"add unlimited number of price by user role per product settings products."
 msgstr ""
 
 #: includes/class-wcj-price-formats.php:30
@@ -4339,7 +4343,7 @@ msgid "Automatically add to cart on product visit."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:35
-msgid "Display radio buttons instead of drop box for variable products (Plus)."
+msgid "Display radio buttons instead of drop box for variable products (Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:36
@@ -4359,7 +4363,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:39
-msgid "Customize Add to Cart messages (Plus)."
+msgid "Customize Add to Cart messages (Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:41
@@ -4418,8 +4422,8 @@ msgstr ""
 msgid ""
 "Booster: Free plugin's version is limited to only three products with per "
 "product addons enabled at a time. You will need to get <a href=\"https://"
-"booster.io/buy-booster/\" target=\"_blank\">Booster Plus</a> to add unlimited "
-"number of products with per product addons."
+"booster.io/buy-booster/\" target=\"_blank\">Booster Elite</a> to add "
+"unlimited number of products with per product addons."
 msgstr ""
 
 #: includes/class-wcj-product-bookings.php:37
@@ -4489,7 +4493,7 @@ msgstr ""
 msgid ""
 "Booster: Free plugin's version is limited to only one bookings product "
 "enabled at a time. You will need to get <a href=\"https://booster.io/buy-"
-"booster/\" target=\"_blank\">Booster Plus</a> to add unlimited number of "
+"booster/\" target=\"_blank\">Booster Elite</a> to add unlimited number of "
 "bookings products."
 msgstr ""
 
@@ -4501,7 +4505,7 @@ msgid "Product Bulk Meta Editor"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-meta-editor.php:31
-msgid "Set products meta with bulk editor (Variations available in Plus)."
+msgid "Set products meta with bulk editor (Variations available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-bulk-meta-editor.php:32
@@ -4716,8 +4720,9 @@ msgstr ""
 
 #: includes/class-wcj-product-by-country.php:31
 msgid ""
-"Display products by customer's country. User Country Selection Method (Plus); "
-"Admin country list options (Plus); Visibility method options (Plus)."
+"Display products by customer's country. User Country Selection Method "
+"(Elite); Admin country list options (Elite); Visibility method options "
+"(Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-by-country.php:32
@@ -4820,7 +4825,8 @@ msgstr ""
 
 #: includes/class-wcj-product-by-date.php:56
 msgid ""
-"Set product availability by date (Custom frontend messages available in Plus)."
+"Set product availability by date (Custom frontend messages available in "
+"Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-by-date.php:57
@@ -4850,7 +4856,8 @@ msgstr ""
 
 #: includes/class-wcj-product-by-time.php:62
 msgid ""
-"Set product availability by time (Custom frontend messages available in Plus)."
+"Set product availability by time (Custom frontend messages available in "
+"Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-by-time.php:63
@@ -4878,7 +4885,7 @@ msgstr ""
 
 #: includes/class-wcj-product-by-user-role.php:31
 msgid ""
-"Display products by customer's user role. Visibility method options (Plus)"
+"Display products by customer's user role. Visibility method options (Elite)"
 msgstr ""
 
 #: includes/class-wcj-product-by-user-role.php:32
@@ -4923,7 +4930,7 @@ msgstr ""
 
 #: includes/class-wcj-product-by-user.php:32
 msgid ""
-"Let users add new products from the frontend. Image additional field (Plus). "
+"Let users add new products from the frontend. Image additional field (Elite). "
 "Custom Taxonomies (1 allowed in free version)."
 msgstr ""
 
@@ -4969,6 +4976,7 @@ msgstr ""
 #: includes/settings/wcj-settings-purchase-data.php:111
 #: includes/settings/wcj-settings-related-products.php:36
 #: includes/settings/wcj-settings-upsells.php:60
+#: includes/settings/wcj-settings-wishlist.php:68
 #: includes/shipping/class-wc-shipping-wcj-custom-template.php:156
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:272
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:459
@@ -5002,7 +5010,7 @@ msgid "Product Custom Visibility"
 msgstr ""
 
 #: includes/class-wcj-product-custom-visibility.php:31
-msgid "Display products by custom param (Bulk actions available in Plus)."
+msgid "Display products by custom param (Bulk actions available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-custom-visibility.php:32
@@ -5090,6 +5098,7 @@ msgstr ""
 #: includes/class-wcj-product-info.php:144
 #: includes/settings/wcj-settings-product-add-to-cart.php:432
 #: includes/settings/wcj-settings-product-custom-info.php:180
+#: includes/settings/wcj-settings-wishlist.php:110
 msgid "Before product title"
 msgstr ""
 
@@ -5103,6 +5112,7 @@ msgstr ""
 #: includes/class-wcj-product-info.php:146
 #: includes/settings/wcj-settings-product-add-to-cart.php:434
 #: includes/settings/wcj-settings-product-custom-info.php:182
+#: includes/settings/wcj-settings-wishlist.php:111
 msgid "After product title"
 msgstr ""
 
@@ -5111,6 +5121,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-add-to-cart.php:392
 #: includes/settings/wcj-settings-product-custom-info.php:168
 #: includes/settings/wcj-settings-upsells.php:78
+#: includes/settings/wcj-settings-wishlist.php:103
 msgid "Inside single product summary"
 msgstr ""
 
@@ -5119,6 +5130,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-add-to-cart.php:391
 #: includes/settings/wcj-settings-product-custom-info.php:167
 #: includes/settings/wcj-settings-upsells.php:77
+#: includes/settings/wcj-settings-wishlist.php:102
 msgid "Before single product summary"
 msgstr ""
 
@@ -5127,6 +5139,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-add-to-cart.php:393
 #: includes/settings/wcj-settings-product-custom-info.php:169
 #: includes/settings/wcj-settings-upsells.php:79
+#: includes/settings/wcj-settings-wishlist.php:104
 msgid "After single product summary"
 msgstr ""
 
@@ -5146,6 +5159,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-info.php:92
 #: includes/settings/wcj-settings-product-msrp.php:68
 #: includes/settings/wcj-settings-products-per-page.php:54
+#: includes/settings/wcj-settings-wishlist.php:91
 msgid "Position"
 msgstr ""
 
@@ -5200,7 +5214,7 @@ msgstr ""
 #: includes/class-wcj-product-listings.php:40
 msgid ""
 "Change display options for shop and category pages: show/hide categories "
-"count (Hide subcategories count on category pages allowed in Plus), exclude "
+"count (Hide subcategories count on category pages allowed in Elite), exclude "
 "categories, show/hide empty categories."
 msgstr ""
 
@@ -5232,7 +5246,7 @@ msgstr ""
 #: includes/class-wcj-product-msrp.php:45
 msgid ""
 "Save and display product MSRP in WooCommerce (Custom template available in "
-"Plus)."
+"Elite)."
 msgstr ""
 
 #: includes/class-wcj-product-msrp.php:46
@@ -5541,7 +5555,7 @@ msgstr ""
 #: includes/class-wcj-products-per-page.php:41
 msgid ""
 "Add \"products per page\" selector to WooCommerce (Select options available "
-"in Plus)."
+"in Elite)."
 msgstr ""
 
 #: includes/class-wcj-products-per-page.php:42
@@ -5667,7 +5681,7 @@ msgstr ""
 #: includes/class-wcj-related-products.php:31
 msgid ""
 "Change displayed related products number, columns, order; relate by tag, "
-"category, product attribute or manually on per product basis (Plus). Hide "
+"category, product attribute or manually on per product basis (Elite). Hide "
 "related products completely."
 msgstr ""
 
@@ -5746,8 +5760,8 @@ msgstr ""
 
 #: includes/class-wcj-sale-flash.php:69
 msgid ""
-"Customize products sale flash. Per product (Plus); Per category (Plus); Per "
-"tag (Plus)."
+"Customize products sale flash. Per product (Elite); Per category (Elite); Per "
+"tag (Elite)."
 msgstr ""
 
 #: includes/class-wcj-sale-flash.php:70
@@ -5768,7 +5782,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-cities.php:34
 msgid ""
 "Set shipping cities or postcodes to include/exclude for shipping methods to "
-"show up. (Free shipping available in Plus)."
+"show up. (Free shipping available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-by-cities.php:35
@@ -5809,7 +5823,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-order-amount.php:35
 msgid ""
 "Set minimum and/or maximum order amount for shipping methods to show up "
-"(Local pickup available in Plus)."
+"(Local pickup available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-by-order-amount.php:36
@@ -5824,7 +5838,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-order-qty.php:49
 msgid ""
 "Set minimum and/or maximum order quantity for shipping methods to show up "
-"(Local pickup available in Plus)."
+"(Local pickup available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-by-order-qty.php:50
@@ -5840,7 +5854,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-products.php:34
 msgid ""
 "Set products, product categories, tags or shipping classes to include/exclude "
-"for shipping methods to show up (Free shipping available in Plus)."
+"for shipping methods to show up (Free shipping available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-by-products.php:35
@@ -5967,7 +5981,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-time.php:36
 msgid ""
 "Set date and/or time to include/exclude for shipping methods to show up. "
-"(Free shipping available in Plus)."
+"(Free shipping available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-by-time.php:37
@@ -6023,7 +6037,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-user-role.php:48
 msgid ""
 "Set user roles, users or membership plans to include/exclude for shipping "
-"methods to show up (Free shipping available in Plus)."
+"methods to show up (Free shipping available in Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-by-user-role.php:49
@@ -6064,7 +6078,7 @@ msgstr ""
 #: includes/class-wcj-shipping-calculator.php:31
 msgid ""
 "Customize WooCommerce shipping calculator on cart page. Calculate shipping "
-"label (Plus). Update totals label (Plus)."
+"label (Elite). Update totals label (Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-calculator.php:32
@@ -6078,7 +6092,7 @@ msgstr ""
 #: includes/class-wcj-shipping-descriptions.php:48
 msgid ""
 "Add descriptions to shipping methods on frontend. Description visibility "
-"(Plus). Description position (Plus)."
+"(Elite). Description position (Elite)."
 msgstr ""
 
 #: includes/class-wcj-shipping-descriptions.php:49
@@ -6090,7 +6104,7 @@ msgid "Shipping Icons"
 msgstr ""
 
 #: includes/class-wcj-shipping-icons.php:34
-msgid "Add icons to shipping methods on frontend. Icon Visibility (Plus)"
+msgid "Add icons to shipping methods on frontend. Icon Visibility (Elite)"
 msgstr ""
 
 #: includes/class-wcj-shipping-icons.php:35
@@ -6188,8 +6202,8 @@ msgstr ""
 #: includes/class-wcj-sku.php:45
 msgid ""
 "Generate SKUs automatically. Search by SKU on frontend. Number Generation "
-"Method (Plus); Sequential Number Generation (Plus); Variable Products "
-"Variations (Plus)."
+"Method (Elite); Sequential Number Generation (Elite); Variable Products "
+"Variations (Elite)."
 msgstr ""
 
 #: includes/class-wcj-sku.php:46
@@ -6241,8 +6255,8 @@ msgstr ""
 
 #: includes/class-wcj-sorting.php:30
 msgid ""
-"Add more sorting options; rename or remove default sorting options (Plus); "
-"rearrange sorting options on frontend. Sort SKUs as numbers (Plus)"
+"Add more sorting options; rename or remove default sorting options (Elite); "
+"rearrange sorting options on frontend. Sort SKUs as numbers (Elite)"
 msgstr ""
 
 #: includes/class-wcj-sorting.php:31
@@ -6277,8 +6291,8 @@ msgstr ""
 
 #: includes/class-wcj-stock.php:99
 msgid ""
-"Products stock display management. Custom Stock HTML (Plus). Remove Stock "
-"Display (Plus)."
+"Products stock display management. Custom Stock HTML (Elite). Remove Stock "
+"Display (Elite)."
 msgstr ""
 
 #: includes/class-wcj-stock.php:100
@@ -6306,7 +6320,7 @@ msgid "User Tracking"
 msgstr ""
 
 #: includes/class-wcj-track-users.php:41
-msgid "Track your users in WooCommerce. Track Orders (Plus)."
+msgid "Track your users in WooCommerce. Track Orders (Elite)."
 msgstr ""
 
 #: includes/class-wcj-track-users.php:42
@@ -6372,7 +6386,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-upsells.php:39
-msgid "Customize upsells products display. Global upsells (Plus)."
+msgid "Customize upsells products display. Global upsells (Elite)."
 msgstr ""
 
 #: includes/class-wcj-upsells.php:40
@@ -6384,7 +6398,7 @@ msgid "URL Coupons"
 msgstr ""
 
 #: includes/class-wcj-url-coupons.php:34
-msgid "WooCommerce URL coupons. Redirect after coupon has been applied (Plus)."
+msgid "WooCommerce URL coupons. Redirect after coupon has been applied (Elite)."
 msgstr ""
 
 #: includes/class-wcj-wholesale-price.php:34
@@ -6401,6 +6415,59 @@ msgstr ""
 msgid ""
 "Set wholesale pricing depending on product quantity in cart - buy more pay "
 "less."
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:29 includes/class-wcj-wishlist.php:30
+msgid "Wishlist"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:106 includes/class-wcj-wishlist.php:237
+msgid "Added to wishlist"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:107 includes/class-wcj-wishlist.php:240
+msgid "Removed from wishlist"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:109 includes/class-wcj-wishlist.php:246
+msgid "Browse wishlist"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:110 includes/class-wcj-wishlist.php:474
+#: includes/class-wcj-wishlist.php:541
+msgid "No products added to the wishlist"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:403
+#, php-format
+msgid "%s&quot; product added to cart successfully."
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:440 includes/class-wcj-wishlist.php:507
+msgid "Out Of Stock"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:443 includes/class-wcj-wishlist.php:510
+#: includes/settings/wcj-settings-stock.php:24
+msgid "In Stock"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:448 includes/class-wcj-wishlist.php:515
+#: includes/settings/wcj-settings-add-to-cart.php:166
+#: includes/settings/wcj-settings-add-to-cart.php:225
+#: includes/settings/wcj-settings-add-to-cart.php:232
+#: includes/settings/wcj-settings-add-to-cart.php:239
+#: includes/settings/wcj-settings-add-to-cart.php:246
+#: includes/settings/wcj-settings-add-to-cart.php:270
+#: includes/settings/wcj-settings-add-to-cart.php:271
+#: includes/settings/wcj-settings-add-to-cart.php:279
+#: includes/settings/wcj-settings-add-to-cart.php:280
+msgid "Add to cart"
+msgstr ""
+
+#: includes/class-wcj-wishlist.php:451 includes/class-wcj-wishlist.php:518
+#: includes/settings/wcj-settings-add-to-cart.php:171
+msgid "Select options"
 msgstr ""
 
 #: includes/class-wcj-wpml.php:42
@@ -6450,7 +6517,7 @@ msgstr ""
 msgid ""
 "Booster: Free plugin's version is limited to only one \"%1$s\" product with "
 "settings on per product basis enabled at a time. You will need to get <a href="
-"\"%2$s\" target=\"_blank\">Booster Plus</a> to add unlimited number of \"%1$s"
+"\"%2$s\" target=\"_blank\">Booster Elite</a> to add unlimited number of \"%1$s"
 "\" products."
 msgstr ""
 
@@ -6569,14 +6636,14 @@ msgid "This will reset settings to defaults for all Booster modules."
 msgstr ""
 
 #: includes/core/class-wcj-admin.php:276
-msgid "Please update <strong>Booster Plus for WooCommerce</strong> plugin."
+msgid "Please update <strong>Booster Elite for WooCommerce</strong> plugin."
 msgstr ""
 
 #: includes/core/class-wcj-admin.php:279
 #, php-format
 msgid ""
 "Visit <a target=\"_blank\" href=\"%s\">your account page</a> on booster.io to "
-"download the latest Booster Plus version."
+"download the latest Booster Elite version."
 msgstr ""
 
 #: includes/core/class-wcj-admin.php:284
@@ -6598,7 +6665,7 @@ msgstr ""
 
 #: includes/core/class-wcj-admin.php:526
 msgid ""
-"This section lets you manage site key for paid Booster Plus for WooCommerce "
+"This section lets you manage site key for paid Booster Elite for WooCommerce "
 "plugin."
 msgstr ""
 
@@ -6661,6 +6728,7 @@ msgstr ""
 #: includes/settings/wcj-settings-admin-products-list.php:110
 #: includes/settings/wcj-settings-checkout-custom-fields.php:154
 #: includes/settings/wcj-settings-checkout-fees.php:66
+#: includes/settings/wcj-settings-wishlist.php:59
 #: includes/shipping/class-wc-shipping-wcj-custom-template.php:150
 msgid "Enable/Disable"
 msgstr ""
@@ -8645,6 +8713,7 @@ msgid "Instructions that will be added to the emails."
 msgstr ""
 
 #: includes/gateways/class-wc-gateway-wcj-custom-template.php:162
+#: includes/settings/wcj-settings-wishlist.php:85
 msgid "Icon"
 msgstr ""
 
@@ -10507,24 +10576,8 @@ msgstr ""
 msgid "Simple product"
 msgstr ""
 
-#: includes/settings/wcj-settings-add-to-cart.php:166
-#: includes/settings/wcj-settings-add-to-cart.php:225
-#: includes/settings/wcj-settings-add-to-cart.php:232
-#: includes/settings/wcj-settings-add-to-cart.php:239
-#: includes/settings/wcj-settings-add-to-cart.php:246
-#: includes/settings/wcj-settings-add-to-cart.php:270
-#: includes/settings/wcj-settings-add-to-cart.php:271
-#: includes/settings/wcj-settings-add-to-cart.php:279
-#: includes/settings/wcj-settings-add-to-cart.php:280
-msgid "Add to cart"
-msgstr ""
-
 #: includes/settings/wcj-settings-add-to-cart.php:170
 msgid "Variable product"
-msgstr ""
-
-#: includes/settings/wcj-settings-add-to-cart.php:171
-msgid "Select options"
 msgstr ""
 
 #: includes/settings/wcj-settings-add-to-cart.php:175
@@ -11325,6 +11378,7 @@ msgstr ""
 #: includes/settings/wcj-settings-mini-cart.php:78
 #: includes/settings/wcj-settings-my-account.php:399
 #: includes/settings/wcj-settings-product-custom-info.php:189
+#: includes/settings/wcj-settings-wishlist.php:119
 msgid "Position Order (i.e. Priority)"
 msgstr ""
 
@@ -15083,6 +15137,7 @@ msgid "Enable per product and per product category"
 msgstr ""
 
 #: includes/settings/wcj-settings-offer-price.php:33
+#: includes/settings/wcj-settings-wishlist.php:83
 msgid "Button"
 msgstr ""
 
@@ -15145,11 +15200,13 @@ msgstr ""
 
 #: includes/settings/wcj-settings-offer-price.php:119
 #: includes/settings/wcj-settings-product-custom-info.php:171
+#: includes/settings/wcj-settings-wishlist.php:101
 msgid "Before add to cart form"
 msgstr ""
 
 #: includes/settings/wcj-settings-offer-price.php:120
 #: includes/settings/wcj-settings-product-custom-info.php:174
+#: includes/settings/wcj-settings-wishlist.php:100
 msgid "After add to cart form"
 msgstr ""
 
@@ -17125,7 +17182,7 @@ msgid "PayPal supported currencies only"
 msgstr ""
 
 #: includes/settings/wcj-settings-price-by-country.php:22
-msgid "Available in Booster Plus only."
+msgid "Available in Booster Elite only."
 msgstr ""
 
 #: includes/settings/wcj-settings-price-by-country.php:33
@@ -18079,6 +18136,8 @@ msgstr ""
 #: includes/settings/wcj-settings-product-custom-info.php:172
 #: includes/settings/wcj-settings-product-input-fields.php:265
 #: includes/settings/wcj-settings-product-open-pricing.php:20
+#: includes/settings/wcj-settings-wishlist.php:99
+#: includes/settings/wcj-settings-wishlist.php:108
 msgid "Before add to cart button"
 msgstr ""
 
@@ -18086,6 +18145,8 @@ msgstr ""
 #: includes/settings/wcj-settings-product-custom-info.php:173
 #: includes/settings/wcj-settings-product-input-fields.php:266
 #: includes/settings/wcj-settings-product-open-pricing.php:21
+#: includes/settings/wcj-settings-wishlist.php:98
+#: includes/settings/wcj-settings-wishlist.php:109
 msgid "After add to cart button"
 msgstr ""
 
@@ -18627,6 +18688,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-custom-info.php:35
 #: includes/settings/wcj-settings-product-custom-info.php:69
+#: includes/settings/wcj-settings-wishlist.php:30
+#: includes/settings/wcj-settings-wishlist.php:41
 msgid "Single Product Pages"
 msgstr ""
 
@@ -21244,10 +21307,6 @@ msgstr ""
 msgid "Avada"
 msgstr ""
 
-#: includes/settings/wcj-settings-stock.php:24
-msgid "In Stock"
-msgstr ""
-
 #: includes/settings/wcj-settings-stock.php:25
 msgid "Out of Stock"
 msgstr ""
@@ -21862,6 +21921,75 @@ msgstr ""
 msgid "User Roles Settings"
 msgstr ""
 
+#: includes/settings/wcj-settings-wishlist.php:31
+#: includes/settings/wcj-settings-wishlist.php:41
+msgid "Archives (Products Loop)"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:32
+msgid "Wishlist Page"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:56
+msgid ""
+"Want to customize button text & style, control positions, and add wishlist "
+"buttons to shop/category pages? "
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:64
+msgid "Available in Booster Elite only. "
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:69
+msgid "If You want a text then you can add the text."
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:71
+msgid "Add to wishlist"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:77
+#: includes/widgets/class-wcj-widget-multicurrency.php:124
+msgid "Style"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:82
+msgid "Button with Icon"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:84
+msgid "Text(link)"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:105
+#: includes/settings/wcj-settings-wishlist.php:112
+msgid "Over product Image"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:156
+msgid "Enter wishlist page URL"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:185
+msgid "Add/Remove font awesome icon css"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:186
+msgid "Add/Remove"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:192
+msgid "Add to wishlist icon color"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:201
+msgid "Added to wishlist icon color"
+msgstr ""
+
+#: includes/settings/wcj-settings-wishlist.php:210
+msgid "FadeIn/FadeOut add/remove wishlist message"
+msgstr ""
+
 #: includes/settings/wcj-settings-wpml.php:33
 msgid "Language Config File Options"
 msgstr ""
@@ -22221,7 +22349,7 @@ msgid "Text Color"
 msgstr ""
 
 #: includes/tools/class-wcj-order-statuses-tool.php:229
-msgid "Get Booster Plus to enable."
+msgid "Get Booster Elite to enable."
 msgstr ""
 
 #: includes/tools/class-wcj-order-statuses-tool.php:296
@@ -22305,10 +22433,6 @@ msgstr ""
 
 #: includes/widgets/class-wcj-widget-multicurrency.php:117
 msgid "HTML class for \"Drop down\" type."
-msgstr ""
-
-#: includes/widgets/class-wcj-widget-multicurrency.php:124
-msgid "Style"
 msgstr ""
 
 #: includes/widgets/class-wcj-widget-multicurrency.php:125

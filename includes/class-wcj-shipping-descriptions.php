@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Descriptions
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   3.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -38,14 +38,14 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   3.4.0
 		 */
 		public function __construct() {
 
 			$this->id         = 'shipping_description';
 			$this->short_desc = __( 'Shipping Descriptions', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add descriptions to shipping methods on frontend. Description visibility (Plus). Description position (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Add descriptions to shipping methods on frontend. Description visibility (Elite). Description position (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Add descriptions to shipping methods on frontend.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-shipping-descriptions';
 			parent::__construct();

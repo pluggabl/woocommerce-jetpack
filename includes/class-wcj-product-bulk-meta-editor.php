@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 7.2.5
+ * @version 7.3.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,14 +21,14 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   2.8.0
 		 */
 		public function __construct() {
 
 			$this->id         = 'product_bulk_meta_editor';
 			$this->short_desc = __( 'Product Bulk Meta Editor', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set products meta with bulk editor (Variations available in Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Set products meta with bulk editor (Variations available in Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Set products meta with bulk editor.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-product-bulk-meta-editor';
 			parent::__construct();
