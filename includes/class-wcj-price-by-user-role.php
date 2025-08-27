@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   2.5.0
  * @author  Pluggabl LLC.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -30,14 +30,14 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 6.0.5
+		 * @version 7.3.0
 		 * @since   2.5.0
 		 */
 		public function __construct() {
 
 			$this->id         = 'price_by_user_role';
 			$this->short_desc = __( 'Price based on User Role', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-price-by-user-role';
 			parent::__construct();
@@ -290,7 +290,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.7
+		 * @version 7.3.0
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
@@ -301,7 +301,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			?><div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Plus</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' ) )
+				. wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' ) )
 				. '</div>';
 			?>
 		</p></div>

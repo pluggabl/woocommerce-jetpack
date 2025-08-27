@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -27,7 +27,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.3.6
+		 * @version 7.3.0
 		 * @todo    more descriptions in settings (i.e. Storefront etc.)
 		 * @todo    add deprecated options (which were moved to Storefront)
 		 * @todo    add options to enable/disable each section
@@ -37,7 +37,7 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 		public function __construct() {
 			$this->id         = 'product_listings';
 			$this->short_desc = __( 'Product Listings', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Plus), exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Elite), exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Change display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-product-listings';
 			parent::__construct();

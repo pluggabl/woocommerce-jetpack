@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - URL Coupons
  *
- * @version 5.6.7
+ * @version 7.3.0
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -24,14 +24,14 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   2.9.1
 		 */
 		public function __construct() {
 
 			$this->id         = 'url_coupons';
 			$this->short_desc = __( 'URL Coupons', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce URL coupons. Redirect after coupon has been applied (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'WooCommerce URL coupons. Redirect after coupon has been applied (Elite).', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-url-coupons';
 			parent::__construct();
 

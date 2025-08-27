@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   2.5.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -460,7 +460,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/**
 		 * Admin_notices.
 		 *
-		 * @version 5.6.8
+		 * @version 7.3.0
 		 * @since   2.5.0
 		 */
 		public function admin_notices() {
@@ -471,7 +471,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 			?><div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( 'Booster: Free plugin\'s version is limited to only one price by formula product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Plus</a> to add unlimited number of price by formula products.', 'woocommerce-jetpack' )
+				. wp_kses_post( 'Booster: Free plugin\'s version is limited to only one price by formula product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of price by formula products.', 'woocommerce-jetpack' )
 				. '</div>';
 			?>
 		</p></div>

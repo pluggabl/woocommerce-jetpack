@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -27,7 +27,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.1.4
+		 * @version 7.3.0
 		 * @todo    [feature] add options to change icon and icon's color for all statuses (i.e. not only custom)
 		 * @todo    [dev] maybe rename module to "Custom Order Statuses"
 		 */
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 
 			$this->id         = 'order_custom_statuses';
 			$this->short_desc = __( 'Order Custom Statuses', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Elite). Add Custom Statuses to Admin Order List Action Buttons (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Custom statuses for WooCommerce orders.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-order-custom-statuses';
 			parent::__construct();

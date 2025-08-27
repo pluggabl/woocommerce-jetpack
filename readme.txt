@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.8.2
 Requires PHP: 7.2
-Stable tag: 7.2.9
+Stable tag: 7.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -284,6 +284,14 @@ You can find links to documentation for each module within the Booster settings 
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.3.0 - 27/08/2025 =
+
+* NEW FEATURE - CART & CHECKOUT - Wishlist - New free module for basic product Wishlist functionality.
+* FIXED - Fixed the Elementor conflict for Shop Managers when saving edits. Compatibility is now restored.
+* ENHANCEMENT - Updated and unified all in-plugin "Upgrade to Elite" links for a clearer and more informative user experience.
+* WooCommerce 10.1.1 Tested
+* WordPress 6.8.2 Tested
 
 = 7.2.9 - 30/07/2025 =
 

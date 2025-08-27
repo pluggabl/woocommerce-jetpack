@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.2.5
+ * @version 7.3.0
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1007,12 +1007,21 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 7.2.5
+	 * @version 7.3.0
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
 	 */
 	function wcj_add_allowed_html( $allowed_html, $context ) {
+
+		// If Elementor is running (editor, ajax, REST), bail early.
+		if (
+			( isset( $_REQUEST['action'] ) && strpos( $_REQUEST['action'], 'elementor' ) !== false ) ||
+			( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], '/elementor' ) !== false )
+		) {
+			return $allowed_html; // Don't touch anything.
+		}
+		
 		$allowed_extra_html  = array(
 			'input'    => array(
 				'type'                      => true,

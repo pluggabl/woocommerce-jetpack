@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 7.2.5
+ * @version 7.3.0
  * @since   3.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/tools
@@ -189,7 +189,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 		/**
 		 * Get_custom_statuses_table.
 		 *
-		 * @version 7.2.4
+		 * @version 7.3.0
 		 * @since   3.2.2
 		 */
 		public function get_custom_statuses_table() {
@@ -226,7 +226,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 					) .
 					'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
 					$edit_button     = '<a class="button-primary"' . ( '' !== apply_filters( 'booster_message', '', 'desc' ) ?
-					' disabled title="' . __( 'Get Booster Plus to enable.', 'woocommerce-jetpack' ) . '"' :
+					' disabled title="' . __( 'Get Booster Elite to enable.', 'woocommerce-jetpack' ) . '"' :
 					' href="' . esc_url(
 						add_query_arg(
 							array(

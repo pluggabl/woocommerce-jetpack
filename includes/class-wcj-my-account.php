@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -48,7 +48,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   2.9.0
 		 * @todo    [dev] Custom Menu Pages: add "Type" option with values: "param" (i.e. as it is now) or "endpoint"
 		 * @todo    [dev] Custom Menu Pages: deprecate "Add Custom Menu Items" (and add "link" value in "Type" options)
@@ -57,7 +57,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 
 			$this->id         = 'my_account';
 			$this->short_desc = __( 'My Account', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce "My Account" page customization. Customize Menu Order (Plus). Add Custom Menu Items (Plus). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'WooCommerce "My Account" page customization. Customize Menu Order (Elite). Add Custom Menu Items (Elite). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'WooCommerce "My Account" page customization.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-my-account';
 			parent::__construct();

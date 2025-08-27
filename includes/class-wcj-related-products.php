@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 5.6.8
+ * @version 7.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -23,12 +23,12 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.5.9
+		 * @version 7.3.0
 		 */
 		public function __construct() {
 			$this->id         = 'related_products';
 			$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Plus). Hide related products completely.', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Elite). Hide related products completely.', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-related-products';
 			$this->extra_desc = sprintf(

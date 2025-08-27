@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 7.1.9
+ * @version 7.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -22,7 +22,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.1.9
+		 * @version 7.3.0
 		 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 		 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 		 */
@@ -30,7 +30,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 
 			$this->id         = 'order_numbers';
 			$this->short_desc = __( 'Order Numbers', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Plus). ', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Elite). ', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-custom-order-numbers';
 			parent::__construct();

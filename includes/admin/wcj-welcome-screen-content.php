@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Welcome Screen Content
  *
- * @version 5.6.8
+ * @version 7.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -159,8 +159,8 @@
 				<div class="wcj-welcome-content-inner wcj-welcome-subscribe-email">
 					<h3> <?php esc_html_e( 'Contact Us', 'woocommerce-jetpack' ); ?> </h3>
 					<div class="wcj-support">
-						<p><?php esc_html_e( 'Booster Plus customers get access to Premium Support and we respond within 24 business hours.', 'woocommerce-jetpack' ); ?></p>
-						<a target="_blank" href="https://booster.io/my-account/booster-contact/"><?php esc_html_e( 'Booster Plus Premium Support', 'woocommerce-jetpack' ); ?></a>
+						<p><?php esc_html_e( 'Booster Elite customers get access to Premium Support and we respond within 24 business hours.', 'woocommerce-jetpack' ); ?></p>
+						<a target="_blank" href="https://booster.io/my-account/booster-contact/"><?php esc_html_e( 'Booster Elite Premium Support', 'woocommerce-jetpack' ); ?></a>
 					</div>
 					<div class="wcj-support">
 						<p><?php esc_html_e( 'Free users post on WordPress Plugin Support forum here. We check these threads twice every week Mon and Frid to respond.', 'woocommerce-jetpack' ); ?></p>

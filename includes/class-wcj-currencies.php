@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - currencies
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -27,7 +27,7 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.2.4
+		 * @version 7.3.0
 		 * @todo    [dev] (maybe) update description
 		 * @todo    [dev] (maybe) "add additional currencies" checkbox
 		 * @todo    [dev] (maybe) save settings as array
@@ -37,7 +37,7 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 
 			$this->id         = 'currency';
 			$this->short_desc = __( 'Currencies', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol (Plus); add custom currencies (1 allowed in free version).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol (Elite); add custom currencies (1 allowed in free version).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol; add custom currencies.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-all-currencies';
 			parent::__construct();

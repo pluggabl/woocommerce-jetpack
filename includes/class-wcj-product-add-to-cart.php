@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 5.6.8
+ * @version 7.3.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @todo    (maybe) move "Display radio buttons instead of drop box for variable products" to new module
 		 * @todo    (maybe) rename to "Add to Cart Button (Options)"
 		 */
@@ -32,11 +32,11 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 			// Desc.
 			$this->desc = __( 'Set any local URL to redirect to on Add to Cart (Per product not allowed in free version).', 'woocommerce-jetpack' )
 					. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
-					. ' ' . __( 'Display radio buttons instead of drop box for variable products (Plus).', 'woocommerce-jetpack' )
+					. ' ' . __( 'Display radio buttons instead of drop box for variable products (Elite).', 'woocommerce-jetpack' )
 					. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
 					. ' ' . __( 'Open external products on the add to cart in the new window.', 'woocommerce-jetpack' )
 					. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
-					. ' ' . __( 'Customize Add to Cart messages (Plus).', 'woocommerce-jetpack' );
+					. ' ' . __( 'Customize Add to Cart messages (Elite).', 'woocommerce-jetpack' );
 			// Desc Pro.
 			$this->desc_pro  = __( 'Set any local URL to redirect to on Add to Cart.', 'woocommerce-jetpack' )
 						. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )

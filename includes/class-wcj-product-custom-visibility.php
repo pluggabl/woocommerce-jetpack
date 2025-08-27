@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Custom Visibility
  *
- * @version 5.6.8
+ * @version 7.3.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -21,14 +21,14 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.2
+		 * @version 7.3.0
 		 * @since   3.2.4
 		 */
 		public function __construct() {
 
 			$this->id         = 'product_custom_visibility';
 			$this->short_desc = __( 'Product Custom Visibility', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display products by custom param (Bulk actions available in Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Display products by custom param (Bulk actions available in Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Display products by custom param.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-product-custom-visibility';
 			$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Custom Visibility" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . '<br>' .

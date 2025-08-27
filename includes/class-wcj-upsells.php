@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Upsells
  *
- * @version 5.6.2
+ * @version 7.3.0
  * @since   3.5.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.2.0
+		 * @version 7.3.0
 		 * @since   3.5.3
 		 * @todo    (maybe) use `apply_filters( 'woocommerce_upsell_display_args', array( 'posts_per_page' => $limit, 'orderby' => $orderby, 'columns' => $columns ) );`
 		 * @todo    (maybe) Global Upsells - on per category/tag basis
@@ -36,7 +36,7 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 			$this->id         = 'upsells';
 			$this->short_desc = __( 'Upsells', 'woocommerce-jetpack' );
 			$this->extra_desc = __( 'Upsells are products which you recommend instead of the currently viewed product, for example, products that are more profitable or better quality or more expensive.', 'woocommerce' );
-			$this->desc       = __( 'Customize upsells products display. Global upsells (Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Customize upsells products display. Global upsells (Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Customize upsells products display.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-upsells';
 			parent::__construct();

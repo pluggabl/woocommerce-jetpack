@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Time
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -48,7 +48,7 @@ if ( ! class_exists( 'WCJ_Product_By_Time' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.8
+		 * @version 7.3.0
 		 * @since   2.8.0
 		 * @todo    per category
 		 * @todo    per tag
@@ -59,7 +59,7 @@ if ( ! class_exists( 'WCJ_Product_By_Time' ) ) :
 
 			$this->id         = 'product_by_time';
 			$this->short_desc = __( 'Product Availability by Time', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set product availability by time (Custom frontend messages available in Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Set product availability by time (Custom frontend messages available in Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Set product availability by time.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-product-availability-by-time';
 			parent::__construct();

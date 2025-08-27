@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.2.5
+ * @version 7.3.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -254,7 +254,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Check_plus_version.
 		 *
-		 * @version 7.0.0
+		 * @version 7.3.0
 		 * @since   2.5.9
 		 * @todo    (maybe) use `wcj_is_plugin_active_by_file()`
 		 * @todo    (maybe) expand "Please upgrade ..." message
@@ -273,10 +273,10 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 			}
 			if ( $is_deprecated_plus_active ) {
 				$class   = 'notice notice-error';
-				$message = __( 'Please update <strong>Booster Plus for WooCommerce</strong> plugin.', 'woocommerce-jetpack' ) . ' ' .
+				$message = __( 'Please update <strong>Booster Elite for WooCommerce</strong> plugin.', 'woocommerce-jetpack' ) . ' ' .
 				sprintf(
 				/* translators: %s: search term */
-					__( 'Visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
+					__( 'Visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Elite version.', 'woocommerce-jetpack' ),
 					'https://booster.io/my-account/?utm_source=plus_update'
 				) . ' ' .
 				sprintf(
@@ -512,7 +512,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Get_manager_settings.
 		 *
-		 * @version 7.2.5
+		 * @version 7.3.0
 		 * @since   1.0.0
 		 * @param   string $section defines the section type.
 		 * @return  array
@@ -523,7 +523,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					array(
 						'type'  => 'module_head',
 						'title' => __( 'Site Key Settings', 'woocommerce-jetpack' ),
-						'desc'  => __( 'This section lets you manage site key for paid Booster Plus for WooCommerce plugin.', 'woocommerce-jetpack' ),
+						'desc'  => __( 'This section lets you manage site key for paid Booster Elite for WooCommerce plugin.', 'woocommerce-jetpack' ),
 						'icon'  => 'menu-icn4.png',
 					),
 					array(

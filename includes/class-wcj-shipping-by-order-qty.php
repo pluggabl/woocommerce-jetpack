@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Quantity
  *
- * @version 7.1.6
+ * @version 7.3.0
  * @since   4.3.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -38,7 +38,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Qty' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 4.3.0
+		 * @version 7.3.0
 		 * @since   4.3.0
 		 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 		 */
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Qty' ) ) :
 
 			$this->id         = 'shipping_by_order_qty';
 			$this->short_desc = __( 'Shipping Methods by Min/Max Order Quantity', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set minimum and/or maximum order quantity for shipping methods to show up (Local pickup available in Plus).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'Set minimum and/or maximum order quantity for shipping methods to show up (Local pickup available in Elite).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'Set minimum and/or maximum order quantity for shipping methods to show up.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-shipping-methods-by-min-max-order-quantity';
 			parent::__construct();
