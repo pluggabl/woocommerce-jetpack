@@ -56,6 +56,9 @@ Replace standard WooCommerce dropdowns with basic button swatches. Our free "Swa
 > **Pro Tip:** To unlock powerful **Image Swatches**, **Color Swatches**, and advanced customization options, consider upgrading to **Booster Elite**.
 > *Learn more: [Product Variation Swatches](https://booster.io/features/woocommerce-product-variation-swatches/)*
 
+=== Basic Product Wishlist (Free) ===
+Allow your customers to save their favorite products for later! Our free Wishlist Lite enables users to add items to a personal wishlist from product pages, easily accessible via their "My Account" page. A simple way to boost engagement and encourage return visits. Learn more: Wish List for WooCommerce - https://booster.io/features/woocommerce-wishlist/
+
 === Custom Button and Price Labels (Free) ===
 Take control over your store's calls to action and pricing display. Change default price labels and create custom buttons. The included WooCommerce Free Price Labels module lets you easily set custom labels for products without a price.
 Learn more: <a href="https://booster.io/features/woocommerce-free-price-labels/">Custom Button and Price Labels</a>
@@ -287,7 +290,7 @@ You can find links to documentation for each module within the Booster settings 
 
 = 7.3.0 - 27/08/2025 =
 
-* NEW FEATURE - CART & CHECKOUT - Wishlist - New free module for basic product Wishlist functionality.
+* NEW - "Wishlist Lite" - New free module for basic product wishlist functionality.
 * FIXED - Fixed the Elementor conflict for Shop Managers when saving edits. Compatibility is now restored.
 * ENHANCEMENT - Updated and unified all in-plugin "Upgrade to Elite" links for a clearer and more informative user experience.
 * WooCommerce 10.1.1 Tested
