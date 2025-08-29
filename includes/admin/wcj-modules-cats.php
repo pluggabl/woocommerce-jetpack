@@ -118,6 +118,7 @@ return apply_filters(
 				'checkout_fees',
 				'eu_vat_number',
 				'cart_abandonment',
+				'preorders_lite',
 				'wishlist',
 			),
 		),
