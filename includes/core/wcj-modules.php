@@ -142,6 +142,7 @@ $wcj_module_files = array(
 	'class-wcj-cart-abandonment.php',
 	'class-wcj-product-variation-swatches.php',
 	'class-wcj-wishlist.php',
+	'class-wcj-agent-ready-answers-lite.php',
 );
 
 $this->modules   = array();
