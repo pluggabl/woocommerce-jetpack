@@ -56,6 +56,9 @@ Replace standard WooCommerce dropdowns with basic button swatches. Our free "Swa
 > **Pro Tip:** To unlock powerful **Image Swatches**, **Color Swatches**, and advanced customization options, consider upgrading to **Booster Elite**.
 > *Learn more: [Product Variation Swatches](https://booster.io/features/woocommerce-product-variation-swatches/)*
 
+=== Basic Sales Notifications (Free) ===
+Build social proof and create urgency! Our free "Sales Notifications Lite" displays simple pop-ups for recent completed orders (e.g., "J. from New York bought Sample Product — 15 minutes ago"). Choose from three themes with fixed bottom-left positioning. A great way to show your store is active!
+
 === Basic Product Wishlist (Free) ===
 Allow your customers to save their favorite products for later! Our free Wishlist Lite enables users to add items to a personal wishlist from product pages, easily accessible via their "My Account" page. A simple way to boost engagement and encourage return visits. Learn more: Wish List for WooCommerce - https://booster.io/features/woocommerce-wishlist/
 

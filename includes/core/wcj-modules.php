@@ -140,6 +140,7 @@ $wcj_module_files = array(
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-advanced.php',
 	'class-wcj-pdf-invoicing.php',
 	'class-wcj-cart-abandonment.php',
+	'class-wcj-sales-notifications-lite.php',
 	'class-wcj-product-variation-swatches.php',
 	'class-wcj-wishlist.php',
 );

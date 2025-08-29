@@ -1,0 +1,155 @@
+/**
+ * Sales Notifications Lite - Frontend Styles
+ *
+ * @version 7.3.0
+ */
+
+#wcj-sales-notifications-lite-container {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	z-index: 999999;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	pointer-events: none;
+}
+
+.wcj-sn-lite-notification {
+	background: #ffffff;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	padding: 12px 16px;
+	margin-bottom: 10px;
+	max-width: 320px;
+	min-width: 280px;
+	position: relative;
+	pointer-events: auto;
+	opacity: 0;
+	transform: translateY(20px);
+	transition: all 0.3s ease;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.wcj-sn-lite-notification.wcj-sn-lite-show {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.wcj-sn-lite-notification.wcj-sn-lite-hide {
+	opacity: 0;
+	transform: translateY(-20px);
+}
+
+.wcj-sn-lite-text {
+	display: block;
+	color: #333333;
+	margin-right: 20px;
+}
+
+.wcj-sn-lite-close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background: none;
+	border: none;
+	font-size: 18px;
+	line-height: 1;
+	color: #999999;
+	cursor: pointer;
+	padding: 4px;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: all 0.2s ease;
+}
+
+.wcj-sn-lite-close:hover,
+.wcj-sn-lite-close:focus {
+	background: #f0f0f0;
+	color: #666666;
+	outline: 2px solid #0073aa;
+	outline-offset: 1px;
+}
+
+.wcj-sn-lite-theme-dark .wcj-sn-lite-notification {
+	background: #2c3e50;
+	border-color: #34495e;
+	color: #ffffff;
+}
+
+.wcj-sn-lite-theme-dark .wcj-sn-lite-text {
+	color: #ffffff;
+}
+
+.wcj-sn-lite-theme-dark .wcj-sn-lite-close {
+	color: #bdc3c7;
+}
+
+.wcj-sn-lite-theme-dark .wcj-sn-lite-close:hover,
+.wcj-sn-lite-theme-dark .wcj-sn-lite-close:focus {
+	background: #34495e;
+	color: #ffffff;
+}
+
+.wcj-sn-lite-theme-colorful .wcj-sn-lite-notification {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border: none;
+	color: #ffffff;
+}
+
+.wcj-sn-lite-theme-colorful .wcj-sn-lite-text {
+	color: #ffffff;
+}
+
+.wcj-sn-lite-theme-colorful .wcj-sn-lite-close {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.wcj-sn-lite-theme-colorful .wcj-sn-lite-close:hover,
+.wcj-sn-lite-theme-colorful .wcj-sn-lite-close:focus {
+	background: rgba(255, 255, 255, 0.2);
+	color: #ffffff;
+}
+
+@media (max-width: 768px) {
+	#wcj-sales-notifications-lite-container {
+		left: 10px;
+		right: 10px;
+		bottom: 10px;
+	}
+	
+	.wcj-sn-lite-notification {
+		max-width: none;
+		min-width: auto;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wcj-sn-lite-notification {
+		transition: opacity 0.1s ease;
+		transform: none;
+	}
+	
+	.wcj-sn-lite-notification.wcj-sn-lite-show {
+		transform: none;
+	}
+	
+	.wcj-sn-lite-notification.wcj-sn-lite-hide {
+		transform: none;
+	}
+}
+
+@media (prefers-contrast: high) {
+	.wcj-sn-lite-notification {
+		border-width: 2px;
+		border-color: #000000;
+	}
+	
+	.wcj-sn-lite-close:focus {
+		outline-width: 3px;
+	}
+}
