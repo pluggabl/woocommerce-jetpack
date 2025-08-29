@@ -56,6 +56,11 @@ Replace standard WooCommerce dropdowns with basic button swatches. Our free "Swa
 > **Pro Tip:** To unlock powerful **Image Swatches**, **Color Swatches**, and advanced customization options, consider upgrading to **Booster Elite**.
 > *Learn more: [Product Variation Swatches](https://booster.io/features/woocommerce-product-variation-swatches/)*
 
+=== Basic Pre-Orders (Free) ===
+Enable pre-orders for a limited number of products (default 1) with a fixed button label and simple message. Allow customers to purchase out-of-stock items and mark orders as pre-orders for fulfillment tracking.
+*Pro Tip: Booster Elite unlocks unlimited products, advanced pricing, shipping options, email notifications, and automation.*
+Learn more: [Pre-Orders for WooCommerce](https://booster.io/features/woocommerce-preorders/)
+
 === Basic Product Wishlist (Free) ===
 Allow your customers to save their favorite products for later! Our free Wishlist Lite enables users to add items to a personal wishlist from product pages, easily accessible via their "My Account" page. A simple way to boost engagement and encourage return visits. Learn more: Wish List for WooCommerce - https://booster.io/features/woocommerce-wishlist/
 
