@@ -1,0 +1,377 @@
+/*
+ * Sales Notifications
+ *
+ * @version 7.3.1
+ */
+.wcj_sale_notification{
+	display: none;
+	z-index: 9999999999;
+	width: auto;
+	position: fixed;
+	top: auto !important;
+	bottom: 20px;
+	left: 20px;
+	right: auto !important;
+	border: 0 none;
+	padding: 5px;
+	border-radius: 0;
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
+	text-align: left;
+}
+.wcj_sale_notification.wcj_bottom_right {
+	left: auto !important;
+	right: 20px !important;
+}
+.wcj_sale_notification.wcj_bottom_right {
+	left: auto !important;
+	right: 20px !important;
+}
+.wcj_sale_notification.wcj_top_right {
+	left: auto !important;
+	right: 20px !important;
+	top: 20px !important;
+	bottom: auto !important;
+}
+.wcj_sale_notification.wcj_top_left {
+	left: auto !important;
+	top: 20px !important;
+	bottom: auto !important;
+}
+.wcj_sale_notification img {
+	width: auto;
+	padding: 10px;
+	max-width: 85px;
+	max-height: 85px;
+	float: left;
+	cursor: pointer;
+	align-self: center;
+}
+.wcj_sale_notification p {
+	width: auto;
+	float: left;
+	line-height: 20px;
+	font-size: 13px;
+	padding: 10px 5px 5px 0;
+	margin: 0 0 0 0;
+}
+.wcj_sale_notification a {
+	/*color: #0f0f0f;*/
+}
+.wcj_sale_notification p a, .wcj_sale_notification p span {
+	width: 100%;
+	font-size: 15px;
+	font-weight: 700;
+	/*color: #000;*/
+	display: block;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.wcj_sale_notification p a:hover {
+	/*color: #000;*/
+}
+.wcj_sale_notification_audio {
+	display: none;
+}
+.wcj_sale_notification .wcj_close {
+	width: 16px;
+	height: 16px;
+	right: 10px;
+	top: 10px;
+	position: absolute;
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0) url("../images/close-salse.png") repeat scroll 0 0 / cover;
+}
+
+/*Responsiv*/
+@media screen and (max-width: 767px) {
+	.wcj_sale_notification{
+		width: auto !important;
+	}
+	.wcj_sale_notification.wcj_bottom_right {
+		right: 0 !important;
+	}
+	.wcj_sale_notification img {
+		max-width: 20%;
+	}
+	.wcj_sale_notification a img {
+		max-width: 100%;
+	}
+	.wcj_sale_notification p {
+		font-size: 11px;
+		/*width: 100%;*/
+		width: auto;
+	}
+	.wcj_sale_notification p a {
+		font-size: 13px;
+	}
+}
+
+@keyframes nFadeIn {
+	0% {
+		opacity: 0;
+		transform: translate3d(0px, 100%, 0px);
+	}
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.wcj_sale_notification.fade-in {
+	animation-duration: 1s;
+	animation-fill-mode: both;
+	animation-name: nFadeIn;
+	opacity: 0;
+}
+
+@keyframes nFadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		bottom: 0;
+		opacity: 0;
+		transform: translate3d(0px, 100%, 0px);
+	}
+}
+
+.wcj_sale_notification.fade-out {
+	animation-duration: 1s;
+	animation-fill-mode: both;
+	animation-name: nFadeOut;
+	opacity: 1;
+}
+
+.wcj_sale_notification.bottom_right {
+	right: 10px !important;
+	left: revert;
+}
+.wcj_sale_notification.bottom_left {
+	right: revert;
+	left: 10px !important;
+}
+.wcj_sale_notification.top_right {
+	top: 10px !important;
+	height: max-content;
+	right: 10px !important;
+	left: revert;
+}
+.wcj_sale_notification.top_left {
+	top: 10px !important;
+	height: max-content;
+	right: revert !important;
+	left: 10px;
+}
+.wcj_sale_notification.mobile_view{
+	display:none;
+}
+.wcj_sale_notification.desk_view{
+	display:block;
+}
+.wcj_sale_notification{
+	display:none;
+}
+@media (max-width: 767px){
+	.wcj_sale_notification.mobile_view{
+		display:block;
+	}
+	.wcj_sale_notification.desk_view{
+		display:none;
+	}
+}
+
+
+/* Fade in out start*/
+@keyframes wcj_FadeIn {
+	0% {
+		opacity: 0;
+		transform: translate3d(0px, 100%, 0px);
+	}
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+#wcj_sale_notification.wcj_fadein {
+	animation-duration: 1s;
+	animation-fill-mode: both;
+	animation-name: wcj_FadeIn;
+	opacity: 0;
+}
+
+@keyframes wcj_FadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		bottom: 0;
+		opacity: 0;
+		transform: translate3d(0px, 100%, 0px);
+	}
+}
+
+#wcj_sale_notification.wcj_fadeout {
+	animation-duration: 1s;
+	animation-fill-mode: both;
+	animation-name: wcj_FadeOut;
+	opacity: 1;
+}
+/* Fade in out end*/
+
+/* slide left start*/
+@keyframes wcj_slideInLeft {
+	from {
+		transform: translate3d(-100%, 0, 0);
+		visibility: visible;
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+#wcj_sale_notification.wcj_slideinleft {
+	animation-duration: 1s;
+	animation-name: wcj_slideInLeft;
+}
+
+@keyframes wcj_slideOutLeft {
+	from {
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+
+	to {
+		visibility: hidden;
+		transform: translate3d(-100%, 0, 0);
+		opacity: 0;
+	}
+}
+
+#wcj_sale_notification.wcj_slideoutleft {
+	animation-duration: 1.5s;
+	animation-name: wcj_slideOutLeft;
+	opacity: 0;
+}
+
+/* slide left end*/
+
+/* slide right start*/
+@keyframes wcj_slideInRight {
+	from {
+		transform: translate3d(100%, 0, 0);
+		visibility: visible;
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+#wcj_sale_notification.wcj_slideinright {
+	animation-duration: 1s;
+	animation-name: wcj_slideInRight;
+}
+
+@keyframes wcj_slideOutRight {
+	from {
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+
+	to {
+		visibility: hidden;
+		transform: translate3d(100%, 0, 0);
+		opacity: 0;
+	}
+}
+
+#wcj_sale_notification.wcj_slideoutright {
+	animation-duration: 1.5s;
+	animation-name: wcj_slideOutRight;
+	opacity: 0;
+}
+/* slide right end*/
+
+/* slide up start*/
+@keyframes wcj_slideInUp {
+	from {
+		transform: translate3d(0, 100%, 0);
+		visibility: visible;
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+#wcj_sale_notification.wcj_slideinup {
+	animation-duration: 1s;
+	animation-name: wcj_slideInUp;
+}
+
+@keyframes wcj_slideOutUp {
+	from {
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+
+	to {
+		visibility: hidden;
+		opacity: 0;
+		transform: translate3d(0, -100%, 0);
+	}
+}
+
+#wcj_sale_notification.wcj_slideoutup {
+	animation-duration: 1.5s;
+	animation-name: wcj_slideOutUp;
+	opacity: 0;
+}
+/* slide up end*/
+
+/* slide down start*/
+@keyframes wcj_slideInDown {
+	from {
+		transform: translate3d(0, -100%, 0);
+		visibility: visible;
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+#wcj_sale_notification.wcj_slideindown {
+	animation-duration: 1s;
+	animation-name: wcj_slideInDown;
+}
+
+@keyframes wcj_slideOutDown {
+	from {
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+
+	to {
+		visibility: hidden;
+		transform: translate3d(0, 100%, 0);
+		opacity: 0;
+	}
+}
+
+#wcj_sale_notification.wcj_slideoutdown {
+	animation-duration: 1.5s;
+	animation-name: wcj_slideOutDown;
+	opacity: 0;
+}
+/* slide down end*/
+
+
+img.wcj_sale_notification_close {
+	float: right;
+	width: 40px !important;
+}

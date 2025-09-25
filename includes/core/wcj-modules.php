@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 7.3.0
+ * @version 7.3.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -142,6 +142,8 @@ $wcj_module_files = array(
 	'class-wcj-cart-abandonment.php',
 	'class-wcj-product-variation-swatches.php',
 	'class-wcj-wishlist.php',
+	'class-wcj-sales-notifications.php',
+	'class-wcj-preorders.php',
 );
 
 $this->modules   = array();

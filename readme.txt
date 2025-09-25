@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.8.2
 Requires PHP: 7.2
-Stable tag: 7.3.0
+Stable tag: 7.3.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,7 +57,8 @@ Replace standard WooCommerce dropdowns with basic button swatches. Our free "Swa
 > *Learn more: [Product Variation Swatches](https://booster.io/features/woocommerce-product-variation-swatches/)*
 
 === Basic Product Wishlist (Free) ===
-Allow your customers to save their favorite products for later! Our free Wishlist Lite enables users to add items to a personal wishlist from product pages, easily accessible via their "My Account" page. A simple way to boost engagement and encourage return visits. Learn more: Wish List for WooCommerce - https://booster.io/features/woocommerce-wishlist/
+Allow your customers to save their favorite products for later! Our free Wishlist Lite enables users to add items to a personal wishlist from product pages, easily accessible via their "My Account" page. A simple way to boost engagement and encourage return visits. 
+Learn more: <a href="https://booster.io/features/woocommerce-wishlist/">Wish List for WooCommerce</a> 
 
 === Custom Button and Price Labels (Free) ===
 Take control over your store's calls to action and pricing display. Change default price labels and create custom buttons. The included WooCommerce Free Price Labels module lets you easily set custom labels for products without a price.
@@ -70,6 +71,14 @@ Learn more: <a href="https://booster.io/category/features/payment-gateways/">Pay
 === Emails, Reporting & Admin Tools (Free Core Utilities) ===
 Improve your store administration with essential tools. Add custom emails and additional recipients for WooCommerce notifications. Generate basic sales and customer reports, and utilize user tracking features. Basic WPML support is also included for multilingual sites.
 Learn more: <a href="https://booster.io/category/features/emails-misc/">Emails, Reporting & Admin Tools</a>
+
+=== Basic Sales Notifications (Free) ===
+Show simple “recent purchase” pop-ups from confirmed orders (Completed by default; optional Processing). Fixed template and timing; choose bottom-left or bottom-right. Great for quick social proof.
+Learn more: <a href="https://booster.io/features/woocommerce-sales-notifications/">Sales Notifications</a>
+
+=== Basic Pre-Orders (Free for Limited Products) ===
+Turn on pre-orders for up to 3 selected products (default 1). Fixed button text/message; orders flow through WooCommerce normally. A low-friction way to gauge demand.
+Learn more: <a href="https://booster.io/features/woocommerce-pre-orders/">Pre-Orders</a>
 
 ### Why Upgrade to Booster Elite?
 While the free version of Booster provides a massive toolkit, **Booster Elite** unlocks the full potential of your WooCommerce store, helping you increase sales, improve customer experience, and streamline operations.
@@ -157,7 +166,7 @@ You can find links to documentation for each module within the Booster settings 
 * Subscriptions - Manage subscriptions, allow cancellation, change payment dates, and more. (Paid feature)
 
 **Marketing**
-* Sales Notifications - Increase sales with proof of sales notifications. (Paid feature)
+* Sales Notifications - Display basic recent purchase notifications (fixed template; 2 positions; fixed timing) (Free). Elite unlocks full text/images, multiple statuses, styling, sounds, device rules, and precise timing.
 
 **Prices & Currencies**
 * Best Price - Customers suggest prices. (Paid feature)
@@ -259,6 +268,7 @@ You can find links to documentation for each module within the Booster settings 
 * Shipping Methods by City/Date/Amount/Products/Users - Customize shipping methods visibility.
 * Shipping Options - Hide shipping when free shipping is available.
 * Shipping Time - Add delivery time estimations.
+* Pre-Orders – Enable basic pre-orders on up to 3 products (default 1) (Free). Elite unlocks unlimited products, mixed-cart control, fees/deposits, special shipping, dedicated emails, roles/categories, dates, and custom UI.
 
 **PDF Invoicing & Packing Slips**
 * PDF Invoicing - Generate invoices, credit notes, and packing slips.
@@ -287,6 +297,14 @@ You can find links to documentation for each module within the Booster settings 
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.3.1 - 25/09/2025 =
+
+* NEW – Sales Notifications (Lite): Displays simple “recent purchase” popups from confirmed orders with a fixed template and two positions. Advanced text, images, multiple statuses, styling, sounds, device rules, and full timing are Elite.
+* NEW – Pre-Orders (Lite): Enables basic pre-orders on up to 3 products (default 1) with fixed button text and a standard message. Mixed-cart control, deposits/fees, special shipping, dedicated emails, role/category rules, dates, and UI customization are Elite.
+* ENHANCEMENT – Settings UX: Clear “Lite/Elite” labels and cleaner descriptions across modules. Small accessibility improvements for better navigation.
+* WooCommerce 10.2.1 Tested
+* WordPress 6.8.2 Tested
 
 = 7.3.0 - 27/08/2025 =
 

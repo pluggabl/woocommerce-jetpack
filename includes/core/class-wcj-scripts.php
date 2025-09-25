@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Scripts
  *
- * @version 3.4.0
+ * @version 7.3.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_Scripts' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 3.4.0
+		 * @version 7.3.1
 		 * @since   2.9.0
 		 */
 		public function __construct() {
@@ -38,7 +38,8 @@ if ( ! class_exists( 'WCJ_Scripts' ) ) :
 				wcj_is_module_enabled( 'pdf_invoicing' ) ||
 				wcj_is_module_enabled( 'crowdfunding' ) ||
 				wcj_is_module_enabled( 'reports' ) ||
-				wcj_is_module_enabled( 'product_by_date' )
+				wcj_is_module_enabled( 'product_by_date' ) ||
+				wcj_is_module_enabled( 'preorders' )
 				) {
 					add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_backend_scripts' ) );
 				}
@@ -164,7 +165,6 @@ if ( ! class_exists( 'WCJ_Scripts' ) ) :
 				wp_enqueue_style( 'wcj-timepicker-style', wcj_plugin_url() . '/includes/lib/timepicker/jquery.timepicker.min.css', array(), w_c_j()->version );
 			}
 		}
-
 	}
 
 endif;

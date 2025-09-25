@@ -1,7 +1,7 @@
 /**
  * wcj-admin.
  *
- * @version 5.6.8
+ * @version 7.3.1
  * @since   2.5.3
  */
 
@@ -351,3 +351,13 @@ img.wcj-rocket-icon:hover {
 }
 
 /* Booster : Reports - End */
+
+/* Inactive menu (wp-not-current-submenu) */
+#toplevel_page_wcj-dashboard .wp-menu-image img {
+	width: 20px !important;
+}
+
+/* Active menu (wp-has-current-submenu) */
+#toplevel_page_wcj-dashboard.wp-has-current-submenu .wp-menu-image img {
+	filter: brightness(0) invert(1); /* White icon */
+}
