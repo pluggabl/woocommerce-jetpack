@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 7.3.0
+ * @version 7.3.1
  * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  * @package Booster_For_WooCommerce/functions
@@ -1003,11 +1003,73 @@ if ( ! function_exists( 'wcj_add_wpml_terms_filters' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_is_frontend_request' ) ) {
+	/**
+	 * Determines if the current request is for the frontend.
+	 *
+	 * The logic in this function is based off WooCommerce::is_request( 'frontend' )
+	 *
+	 * @version 6.0.0
+	 */
+	function wcj_is_frontend_request() {
+		return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) && ! wcj_is_rest_api_request();
+	}
+}
+
+if ( ! function_exists( 'wcj_is_rest_api_request' ) ) {
+	/**
+	 * Returns true if the request is a non-legacy REST API request.
+	 *
+	 * This function is a compatibility wrapper for WC()->is_rest_api_request() which was introduced in WC 3.6.
+	 *
+	 * @version 7.3.1
+	 */
+	function wcj_is_rest_api_request() {
+
+		if ( is_callable( array( WC(), 'is_rest_api_request' ) ) ) {
+			return WC()->is_rest_api_request();
+		}
+
+		if ( empty( getenv( 'REQUEST_URI' ) ) ) {
+			return false;
+		}
+
+		$rest_prefix         = trailingslashit( rest_get_url_prefix() );
+		$is_rest_api_request = ( false !== strpos( getenv( 'REQUEST_URI' ), $rest_prefix ) );
+
+		return apply_filters( 'woocommerce_is_rest_api_request', $is_rest_api_request );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_variation_parent_id' ) ) {
+	/**
+	 * Wcj_get_variation_parent_id
+	 *
+	 * @version 6.0.0
+	 * @param array $product defines the product.
+	 */
+	function wcj_get_variation_parent_id( $product ) {
+		$product = $product instanceof WC_Product ? $product : wc_get_product( $product );
+
+		if ( ! $product->is_type( 'variation' ) ) {
+			$parent = false;
+		} elseif ( is_callable( array( $product, 'get_parent_id' ) ) ) {
+			$parent = $product->get_parent_id();
+		} elseif ( ! empty( $product->parent ) && $product->parent instanceof WC_Product_Variable ) {
+			$parent = $product->parent->get_id();
+		} else {
+			$parent = wp_get_post_parent_id( $product->get_id() );
+		}
+
+		return $parent;
+	}
+}
+
 if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	/**
 	 * Wcj_add_allowed_html.
 	 *
-	 * @version 7.3.0
+	 * @version 7.3.1
 	 * @since   5.6.0
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
@@ -1015,13 +1077,14 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	function wcj_add_allowed_html( $allowed_html, $context ) {
 
 		// If Elementor is running (editor, ajax, REST), bail early.
+		$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
 		if (
-			( isset( $_REQUEST['action'] ) && strpos( $_REQUEST['action'], 'elementor' ) !== false ) ||
-			( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], '/elementor' ) !== false )
+			( isset( $_REQUEST['action'] ) && strpos( sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ), 'elementor' ) !== false ) ||
+			( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/elementor' ) !== false )
 		) {
 			return $allowed_html; // Don't touch anything.
 		}
-		
+
 		$allowed_extra_html  = array(
 			'input'    => array(
 				'type'                      => true,
@@ -1144,7 +1207,6 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 				'start_date'    => true,
 				'end_date'      => true,
 				'input_id'      => true,
-				'start_date'    => true,
 				'is_variable'   => true,
 				'image_url'     => true,
 				'style'         => true,
@@ -1182,8 +1244,39 @@ if ( ! function_exists( 'wcj_admin_tab_url' ) ) {
 	}
 }
 
-
-
+if ( ! function_exists( 'wcj_get_pages' ) ) {
+	/**
+	 * Wcj_get_pages.
+	 *
+	 * @version 7.3.1
+	 * @param array  $pages set pages.
+	 * @param string $post_status set post status.
+	 * @param int    $block_size set block size.
+	 */
+	function wcj_get_pages( $pages = array(), $post_status = 'any', $block_size = 256 ) {
+		$offset = 0;
+		while ( true ) {
+			$args = array(
+				'post_type'      => 'page',
+				'post_status'    => $post_status,
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'fields'         => 'ids',
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $post_id ) {
+				$pages[ $post_id ] = get_the_title( $post_id ) . ' (ID:' . $post_id . ')';
+			}
+			$offset += $block_size;
+		}
+		return $pages;
+	}
+}
 
 if ( ! function_exists( 'wcj_sanitize_input_attribute_values' ) ) {
 	/**
@@ -1232,7 +1325,6 @@ if ( ! function_exists( 'wcj_sanitize_input_attribute_values' ) ) {
 
 		}
 		return $sanitize_field;
-
 	}
 }
 
@@ -1250,6 +1342,5 @@ if ( ! function_exists( 'wcj_is_hpos_enabled' ) ) {
 		} else {
 			return false;
 		}
-
 	}
 }

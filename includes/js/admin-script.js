@@ -1,11 +1,54 @@
 /**
  * New admin js
  *
- * @version 7.0.0
+ * @version 7.3.1
  */
 
 jQuery( document ).ready(
   function ($) {
+    // GTM/GA4 click tracking using stable data attributes
+    $(document).on('click keydown', '.wcj-btn-chip', function(e){
+      var isKeyboard = (e.type === 'keydown' && (e.key === 'Enter' || e.key === ' '));
+      if (e.type === 'click' || isKeyboard) {
+        var $chips = $(this).closest('#wcj-promo-chips');
+        var eventName = $(this).attr('data-gtm') || $(this).attr('data-ga') || 'promo_click';
+        var payload = {
+          event: eventName,
+          placement: $(this).attr('data-placement') || '',
+          page: $chips.attr('data-page') || '',
+          section: $chips.attr('data-section') || ''
+        };
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(payload);
+        if (isKeyboard) {
+          // Space key should activate link navigation
+          if (e.key === ' ') {
+            e.preventDefault();
+            var href = $(this).attr('href');
+            if (href) { window.location.href = href; }
+          }
+        }
+      }
+    });
+
+    // Educator link tracking
+    $(document).on('click', '.wcj-educator-link', function(){
+      var context = $(this).data('context') || '';
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'educator_link', context: context });
+    });
+
+    // Sidebar click tracking
+    $(document).on('click', '.wcj-menubar a, #wcj-sidebar a', function(){
+      var $wrap = $(this).closest('.wcj-menubar');
+      if (!$wrap.length) { $wrap = $(this).closest('#wcj-sidebar'); }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: $wrap.data('gtm') || 'booster_click_sidebar',
+        page: $wrap.data('page') || '',
+        section: $wrap.data('section') || ''
+      });
+    });
 
     $( '.wcj-setting-color-picker' ).wpColorPicker();
     $( 'select.wcj_setting_multiselect' ).select2();

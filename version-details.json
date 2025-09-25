@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.3.0 27/08/2025 =",
-    "1" : "* NEW FEATURE - CART & CHECKOUT - Wishlist - New free module for basic product Wishlist functionality.",
-    "2" : "* FIXED - Fixed the Elementor conflict for Shop Managers when saving edits. Compatibility is now restored.",
-    "3" : "ENHANCEMENT - Updated and unified all in-plugin 'Upgrade to Elite' links for a clearer and more informative user experience"
+    "0" : "= 7.3.1 25/09/2025 =",
+    "1" : "* NEW – Sales Notifications (Lite): Displays simple “recent purchase” popups from confirmed orders with a fixed template and two positions. Advanced text, images, multiple statuses, styling, sounds, device rules, and full timing are Elite.",
+    "2" : "* NEW – Pre-Orders (Lite): Enables basic pre-orders on up to 3 products (default 1) with fixed button text and a standard message. Mixed-cart control, deposits/fees, special shipping, dedicated emails, role/category rules, dates, and UI customization are Elite.",
+    "3" : "* ENHANCEMENT – Settings UX: Clear “Lite/Elite” labels and cleaner descriptions across modules. Small accessibility improvements for better navigation."
 }

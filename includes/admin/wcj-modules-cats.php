@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 7.3.0
+ * @version 7.3.1
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -167,6 +167,16 @@ return apply_filters(
 				'order_custom_statuses',
 				'order_quantities',
 				'max_products_per_user',
+				'preorders',
+			),
+		),
+
+		'marketings'            => array(
+			'icon'        => 'side-menu-icn9.png',
+			'label'       => __( 'Marketing', 'woocommerce-jetpack' ),
+			'desc'        => __( 'Marketing.', 'woocommerce-jetpack' ),
+			'all_cat_ids' => array(
+				'sales_notifications',
 			),
 		),
 

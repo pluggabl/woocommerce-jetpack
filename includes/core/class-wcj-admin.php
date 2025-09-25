@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.3.0
+ * @version 7.3.1
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -323,7 +323,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Add menu item
 		 *
-		 * @version 7.0.0
+		 * @version 7.3.1
 		 */
 		public function booster_menu() {
 			add_menu_page(
@@ -332,7 +332,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				( 'yes' === wcj_get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
 				'wcj-dashboard',
 				'',
-				'dashicons-admin-settings',
+				wcj_plugin_url() . '/assets/images/wcj-booster-icon.svg',
 				26
 			);
 
@@ -711,7 +711,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 * Output_modules.
 		 *
 		 * @param   string $skip_section defines the skip section.
-		 * @version 7.0.0
+		 * @version 7.3.1
 		 */
 		public function output_modules( $skip_section = '' ) {
 			$html            = '';
@@ -770,33 +770,44 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 
 				$total_modules++;
 
+				if ( in_array( $the_feature['id'], array( 'wcj_cart_abandonment_enabled', 'wcj_wishlist_enabled' ), true ) ) {
+					$lite_tooltip_text = __( 'Want more? Elite unlocks automation & unlimited items.', 'woocommerce-jetpack' );
+					$lite_ribbon       = '<span class="wcj-lite-ribbon wcj-lite-ribbon-modulelist" data-tooltip="' . esc_attr( $lite_tooltip_text ) . '" data-link="' . esc_url( $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation' ) . '">' . __( 'Lite', 'woocommerce-jetpack' ) . '</span>';
+				} else {
+					$lite_ribbon = '';
+				}
+
 				if ( 'pdf_invoicing' !== $cat_id ) {
-					$html .= '
-						<div class="wcj-plugins-sing-acc-box-head">
-							<div class="wcj-plugins-sing-head-lf">
-								<span class="wcj_admin_span">
-									<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pr-sm-icn.png">
-								</span>
-								<div class="wcj-plugins-sing-head-rh">
-									<a href="' . admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . sanitize_title( $cat_id ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=' . $section ) . '"><h5>' . $the_feature['title'] . '</h5></a>
-									<p>' . ( ( isset( $the_feature['wcj_desc'] ) ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . '</p>
-								</div>
-							</div>
-							<div class="wcj-plugins-sing-head-right">
-								<div class="wcj-plugins-border-sm-btn">
-									<a target="_blank" href="' . $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation"><img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pdw-download.png"></a>
-								</div>
-								<div class="wcj-plugins-button-tp">
-									<button id="disable_' . $the_feature['id'] . '" data-type="disable" data-id="' . $the_feature['id'] . '" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( $the_feature['id'] ) ) ? 'wcj-disable' : '' ) . '">' . __( 'Disable', 'woocommerce-jetpack' ) . '</button>
-									<button id="enable_' . $the_feature['id'] . '" data-type="enable" data-id="' . $the_feature['id'] . '" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( $the_feature['id'] ) ) ? '' : 'wcj-disable' ) . '">' . __( 'Enable', 'woocommerce-jetpack' ) . '</button>
-									<input id="' . $the_feature['id'] . '" type="hidden" name="' . $the_feature['id'] . '" value="' . ( 'yes' === ( wcj_get_option( $the_feature['id'] ) ) ? 'yes' : 'no' ) . '">
-								</div>
-								<div class="wcj-plugins-acc-arw">
-									<a href="' . admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . $this->get_cat_by_section( $section ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=' . $section ) . '"><img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/down-arw2.png"></a>
-								</div>
+					$html .= '<div class="wcj-plugins-sing-acc-box-head">
+						<div class="wcj-plugins-sing-head-lf">
+							<span class="wcj_admin_span">
+								<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pr-sm-icn.png" alt="">
+							</span>
+							<div class="wcj-plugins-sing-head-rh">
+								<a href="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . sanitize_title( $cat_id ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=' . $section ) ) . '">
+									<h5>' . esc_html( $the_feature['title'] ) . ' ' . $lite_ribbon . '</h5>
+								</a>
+								<p>' . esc_html( isset( $the_feature['wcj_desc'] ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . '</p>
 							</div>
 						</div>
-					';
+						<div class="wcj-plugins-sing-head-right">
+							<div class="wcj-plugins-border-sm-btn">
+								<a target="_blank" href="' . esc_url( $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation' ) . '">
+									<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pdw-download.png" alt="">
+								</a>
+							</div>
+							<div class="wcj-plugins-button-tp">
+								<button id="disable_' . esc_attr( $the_feature['id'] ) . '" data-type="disable" data-id="' . esc_attr( $the_feature['id'] ) . '" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === wcj_get_option( $the_feature['id'] ) ? 'wcj-disable' : '' ) . '">' . esc_html__( 'Disable', 'woocommerce-jetpack' ) . '</button>
+								<button id="enable_' . esc_attr( $the_feature['id'] ) . '" data-type="enable" data-id="' . esc_attr( $the_feature['id'] ) . '" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === wcj_get_option( $the_feature['id'] ) ? '' : 'wcj-disable' ) . '">' . esc_html__( 'Enable', 'woocommerce-jetpack' ) . '</button>
+								<input id="' . esc_attr( $the_feature['id'] ) . '" type="hidden" name="' . esc_attr( $the_feature['id'] ) . '" value="' . ( 'yes' === wcj_get_option( $the_feature['id'] ) ? 'yes' : 'no' ) . '">
+							</div>
+							<div class="wcj-plugins-acc-arw">
+								<a href="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . $this->get_cat_by_section( $section ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=' . $section ) ) . '">
+									<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/down-arw2.png" alt="">
+								</a>
+							</div>
+						</div>
+					</div>';
 				}
 			}
 
@@ -844,7 +855,6 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 			} elseif ( 0 === $total_modules && '' === $setting_section ) {
 				echo wp_kses_post( '<div id="message" class="updated inline wcj_setting_updated wcj_setting_updated_cat" bis_skin_checked="1"><p><strong>' . __( 'No Modules available.', 'woocommerce-jetpack' ) . '</strong></p></div>' );
 			}
-
 		}
 
 		/**

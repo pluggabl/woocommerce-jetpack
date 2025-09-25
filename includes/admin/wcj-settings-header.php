@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - HTML of booster setting header
  *
- * @version 7.0.0
+ * @version 7.3.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -17,11 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="wcj-new-header-main">
 				<div class="wcj-logo">
 					<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-dashboard' ) ); ?>">
-						<img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/wcj-logo.png'; ?>">
+						<?php
+						echo file_get_contents( wcj_plugin_url() . '/assets/images/booster-header-logo.svg' ); // phpcs:ignore
+						?>
+						<div class="wcj-tagline"><?php esc_html_e( 'Commerce, Super-Powered', 'woocommerce-jetpack' ); ?></div>
 					</a>
 				</div>
-				<div class="wcj-menubar">
-					<nav>
+				<div class="wcj-menubar" data-ga="sidebar-main" data-gtm="booster_click_sidebar" data-gtm-container="sidebar" data-page="<?php echo esc_attr( isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '' ); ?>" data-section="<?php echo esc_attr( isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '' ); ?>">
+					<nav aria-label="Booster admin primary menu">
 						<ul>
 							<?php
 								$wpnonce     = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
@@ -32,8 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-dashboard' ) ); ?>" class="
 													<?php
 													if ( 'wcj-dashboard' === $active_page ) {
-														echo 'active';
-													}
+														echo 'active'; }
 													?>
 								">
 									<img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/menu-icn1.png'; ?>">
@@ -44,8 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) ); ?>" class="
 													<?php
 													if ( 'wcj-plugins' === $active_page ) {
-														echo 'active';
-													}
+														echo 'active';}
 													?>
 								">
 									<img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/new-menu-icn2.png'; ?>">
@@ -56,8 +57,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-general-settings' ) ); ?>" class="
 													<?php
 													if ( 'wcj-general-settings' === $active_page && 'site_key' !== $section ) {
-														echo 'active';
-													}
+														echo 'active'; }
 													?>
 								">
 									<img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/new-menu-icn3.png'; ?>">
@@ -65,11 +65,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</a>
 							</li>
 							<li>
-								<a target="_blank" href="https://booster.io/my-account/booster-contact/" class="
+								<a target="_blank" href="https://booster.io/contact-support/" class="
 								<?php
 								if ( 'wcj-support' === $active_page ) {
-									echo 'active';
-								}
+									echo 'active'; }
 								?>
 								">
 									<img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/new-menu-icn5.png'; ?>">
