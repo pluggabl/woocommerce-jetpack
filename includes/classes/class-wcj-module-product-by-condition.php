@@ -282,7 +282,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 			if ( 'invisible' !== apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 				?><br class="clear" />
 			<label>
-				<span class="title"><?php echo wp_kses_post( $this->title ) . ': ' . esc_html_e( 'Visible', 'woocommerce-jetpack' ); ?></span>
+				<span class="title"><?php echo wp_kses_post( $this->title ) . ': ' . esc_html__( 'Visible', 'woocommerce-jetpack' ); ?></span>
 				<select multiple id="wcj_<?php echo wp_kses_post( $this->id ); ?>_visible" name="wcj_<?php echo wp_kses_post( $this->id ); ?>_visible[]">
 					<?php echo wp_kses_post( $all_options ); ?>
 				</select>
@@ -293,7 +293,7 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 				?>
 			<br class="clear" />
 			<label>
-				<span class="title"><?php echo wp_kses_post( $this->title ) . ': ' . esc_html_e( 'Invisible', 'woocommerce-jetpack' ); ?></span>
+				<span class="title"><?php echo wp_kses_post( $this->title ) . ': ' . esc_html__( 'Invisible', 'woocommerce-jetpack' ); ?></span>
 				<select multiple id="wcj_<?php echo wp_kses_post( $this->id ); ?>_invisible" name="wcj_<?php echo wp_kses_post( $this->id ); ?>_invisible[]">
 					<?php echo wp_kses_post( $all_options ); ?>
 				</select>
