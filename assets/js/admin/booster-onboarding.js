@@ -40,6 +40,30 @@
 			);
 
 			$( document ).on(
+				'keydown',
+				'.booster-goal-tile',
+				function(e) {
+					if (e.keyCode === 13 || e.keyCode === 32) {
+						e.preventDefault();
+						var goalId = $( this ).data( 'goal' );
+						self.selectGoal( goalId );
+					} else if (e.keyCode === 37 || e.keyCode === 38) {
+						e.preventDefault();
+						var prev = $( this ).prev( '.booster-goal-tile' );
+						if (prev.length) {
+							prev.focus();
+						}
+					} else if (e.keyCode === 39 || e.keyCode === 40) {
+						e.preventDefault();
+						var next = $( this ).next( '.booster-goal-tile' );
+						if (next.length) {
+							next.focus();
+						}
+					}
+				}
+			);
+
+			$( document ).on(
 				'click',
 				'.back-button',
 				function() {
@@ -68,6 +92,14 @@
 				'.close-button',
 				function() {
 					self.closeModal();
+				}
+			);
+
+			$( document ).on(
+				'click',
+				'#pick-another-goal',
+				function() {
+					self.showGoalsScreen();
 				}
 			);
 
@@ -134,24 +166,52 @@
 			this.currentGoal = null;
 		},
 
+		updateProgress: function(step) {
+			$('.progress-steps .step').removeClass('active completed');
+			
+			var stepMapping = {
+				'goals': 1,
+				'review': 2,
+				'applying': 2,
+				'success': 3
+			};
+			
+			var currentStep = stepMapping[step] || 1;
+			var progressPercent = (currentStep / 3) * 100;
+			
+			$('.progress-fill').css('width', progressPercent + '%');
+			
+			$('.progress-steps .step').each(function(index) {
+				if (index < currentStep - 1) {
+					$(this).addClass('completed');
+				} else if (index === currentStep - 1) {
+					$(this).addClass('active');
+				}
+			});
+		},
+
 		showGoalsScreen: function() {
 			this.modal.find( '.booster-goals-screen' ).addClass( 'active' );
 			this.modal.find( '.booster-review-screen, .booster-success-screen, .booster-loading-screen' ).removeClass( 'active' );
+			this.updateProgress('goals');
 		},
 
 		showReviewScreen: function() {
 			this.modal.find( '.booster-review-screen' ).addClass( 'active' );
 			this.modal.find( '.booster-goals-screen, .booster-success-screen, .booster-loading-screen' ).removeClass( 'active' );
+			this.updateProgress('review');
 		},
 
 		showSuccessScreen: function() {
 			this.modal.find( '.booster-success-screen' ).addClass( 'active' );
 			this.modal.find( '.booster-goals-screen, .booster-review-screen, .booster-loading-screen' ).removeClass( 'active' );
+			this.updateProgress('success');
 		},
 
 		showLoadingScreen: function() {
 			this.modal.find( '.booster-loading-screen' ).addClass( 'active' );
 			this.modal.find( '.booster-goals-screen, .booster-review-screen, .booster-success-screen' ).removeClass( 'active' );
+			this.updateProgress('applying');
 		},
 
 		selectGoal: function(goalId) {
@@ -161,6 +221,9 @@
 
 			this.currentGoal = goalId;
 			var goal         = boosterOnboarding.goals[goalId];
+
+			$( '.booster-goal-tile' ).attr( 'aria-checked', 'false' );
+			$( '.booster-goal-tile[data-goal="' + goalId + '"]' ).attr( 'aria-checked', 'true' );
 
 			$( '#review-goal-title' ).text( goal.title );
 
@@ -228,19 +291,21 @@
 						if (response.success) {
 							$( '#success-message' ).text( response.data.message );
 
+							if (response.data.next_steps && response.data.next_steps.length > 0) {
+								var stepsList = $('#next-steps-list');
+								stepsList.empty();
+								response.data.next_steps.forEach(function(step) {
+									stepsList.append('<li>' + step + '</li>');
+								});
+							}
+
 							if (response.data.next_step_text && response.data.next_step_link) {
 								$( '#next-step-text' ).text( response.data.next_step_text );
-								$( '.next-step-button' ).attr( 'href', response.data.next_step_link ).show();
+								$( '#next-step-link' ).attr( 'href', response.data.next_step_link ).show();
 							}
 
 							self.showSuccessScreen();
 
-							setTimeout(
-								function() {
-									window.location.reload();
-								},
-								3000
-							);
 						} else {
 							alert( response.data.message || boosterOnboarding.strings.error );
 							self.showReviewScreen();
