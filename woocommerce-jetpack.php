@@ -4,13 +4,13 @@
  * Requires Plugins: woocommerce
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules.All in one WooCommerce plugin.
- * Version: 7.3.1
+ * Version: 7.3.2
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
  * Copyright: © 2020 Pluggabl LLC.
- * WC tested up to: 10.2.1
+ * WC tested up to: 10.3.3
  * License: GNU General Public License v3.0
  * php version 7.2
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 * @var   string
 		 * @since 2.4.7
 		 */
-		public $version = '7.3.1';
+		public $version = '7.3.2';
 
 		/**
 		 * The single instance of the class
@@ -237,14 +237,71 @@ if ( ! function_exists( 'woocommerce_jetpack_start_plugin_tracking' ) ) {
 
 add_action( 'plugins_loaded', 'w_c_j' );
 
+// 1. Plugin activate hone par flag set karo
+register_activation_hook( __FILE__, 'wcj_set_activation_redirect_free' );
 
 /**
- * Wc jetpack activation hook.
+ * Set redirect flag after plugin activation.
  *
- * @version 5.4.1
+ * This function runs on plugin activation and stores an option
+ * that triggers a redirect to the onboarding/setup page.
+ *
+ * @return void
  */
-function wcj_activation_hook() {
-	// Add transient to trigger redirect.
-	set_transient( '_wcj_activation_redirect', 1, 30 );
+function wcj_set_activation_redirect_free() {
+	add_option( 'wcj_do_redirect', true );
 }
-register_activation_hook( __FILE__, 'wcj_activation_hook' );
+
+// 2. Plugin update hone par flag set karo
+add_action( 'upgrader_process_complete', 'wcj_set_update_redirect_free', 10, 2 );
+
+/**
+ * Set redirect flag after plugin update.
+ *
+ * This function checks if the current process is a plugin update
+ * and, if this plugin was updated, it sets an option that triggers
+ * a redirect to the onboarding/setup page.
+ *
+ * @param WP_Upgrader $upgrader_object The upgrader object.
+ * @param array       $options         Array of bulk item update data.
+ *
+ * @return void
+ */
+function wcj_set_update_redirect_free( $upgrader_object, $options ) {
+	// Yoda conditions used below ('literal' === $var).
+	if ( isset( $options['action'], $options['type'] ) && 'update' === $options['action'] && 'plugin' === $options['type'] ) {
+		if ( isset( $options['plugins'] ) && is_array( $options['plugins'] ) ) {
+			foreach ( $options['plugins'] as $plugin ) {
+				if ( plugin_basename( __FILE__ ) === $plugin ) {
+					add_option( 'wcj_do_redirect', true );
+					// stop looping once found.
+					break;
+				}
+			}
+		}
+	}
+}
+
+// Redirect to Getting Started page after plugin activation/update.
+add_action( 'admin_init', 'wcj_redirect_after_activation_or_update_free' );
+
+/**
+ * Redirects admin to the Getting Started page after plugin activation or update.
+ *
+ * Checks for the `wcj_do_redirect` option set during activation/update.
+ * Prevents redirect in network admin or multi-site bulk activation cases.
+ *
+ * @return void
+ */
+function wcj_redirect_after_activation_or_update_free() {
+	if ( get_option( 'wcj_do_redirect', false ) ) {
+		delete_option( 'wcj_do_redirect' );
+
+		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+			return;
+		}
+
+		wp_safe_redirect( admin_url( 'admin.php?page=wcj-getting-started&modal=onboarding#launch-onboarding-modal' ) );
+		exit;
+	}
+}
