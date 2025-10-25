@@ -16,25 +16,51 @@ $onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map
 
 <div id="booster-onboarding-modal" class="wrap booster-admin booster-modal" style="display: none;">
 	<div class="booster-modal-overlay"></div>
-	<div class="booster-modal-content">
+	<div class="booster-modal-content" role="dialog" aria-labelledby="onboarding-modal-title" aria-describedby="onboarding-modal-description" aria-modal="true">
 		<div class="booster-modal-header">
-			<h2><?php esc_html_e( 'Get set up fast.', 'woocommerce-jetpack' ); ?></h2>
-			<p><?php esc_html_e( 'Pick a goal. We\'ll apply safe defaults you can undo anytime.', 'woocommerce-jetpack' ); ?></p>
+			<h2 id="onboarding-modal-title"><?php esc_html_e( 'Get set up fast.', 'woocommerce-jetpack' ); ?></h2>
+			<p id="onboarding-modal-description"><?php esc_html_e( 'Pick a goal. We\'ll apply safe defaults you can undo anytime.', 'woocommerce-jetpack' ); ?></p>
 			<button type="button" class="booster-modal-close" aria-label="<?php esc_attr_e( 'Close', 'woocommerce-jetpack' ); ?>">
 				<span class="dashicons dashicons-no-alt"></span>
 			</button>
 		</div>
 
+		<div class="booster-modal-progress">
+			<div class="progress-steps">
+				<div class="step active" data-step="goals">
+					<span class="step-number">1</span>
+					<span class="step-label"><?php esc_html_e( 'Choose Goal', 'woocommerce-jetpack' ); ?></span>
+				</div>
+				<div class="step" data-step="review">
+					<span class="step-number">2</span>
+					<span class="step-label"><?php esc_html_e( 'Review', 'woocommerce-jetpack' ); ?></span>
+				</div>
+				<div class="step" data-step="complete">
+					<span class="step-number">3</span>
+					<span class="step-label"><?php esc_html_e( 'Complete', 'woocommerce-jetpack' ); ?></span>
+				</div>
+			</div>
+			<div class="progress-bar">
+				<div class="progress-fill" style="width: 33%;"></div>
+			</div>
+		</div>
+
 		<div class="booster-modal-body">
 			<div class="booster-goals-screen active">
-				<div class="booster-goals-grid">
+				<div class="booster-goals-grid" role="radiogroup" aria-labelledby="onboarding-modal-title">
 					<?php foreach ( $onboarding_map as $goal_id => $goal ) : ?>
-						<div class="booster-goal-tile booster-tile" data-goal="<?php echo esc_attr( $goal_id ); ?>">
-							<div class="goal-icon tile-icon">
+						<div class="booster-goal-tile booster-tile" 
+							 data-goal="<?php echo esc_attr( $goal_id ); ?>"
+							 role="radio"
+							 aria-checked="false"
+							 tabindex="0"
+							 aria-labelledby="goal-title-<?php echo esc_attr( $goal_id ); ?>"
+							 aria-describedby="goal-desc-<?php echo esc_attr( $goal_id ); ?>">
+							<div class="goal-icon tile-icon" aria-hidden="true">
 								<?php echo wp_kses_post( $goal['svg_icon'] ); ?>
 							</div>
-							<h3><?php echo esc_html( $goal['title'] ); ?></h3>
-							<p><?php echo esc_html( $goal['subtitle'] ); ?></p>
+							<h3 id="goal-title-<?php echo esc_attr( $goal_id ); ?>"><?php echo esc_html( $goal['title'] ); ?></h3>
+							<p id="goal-desc-<?php echo esc_attr( $goal_id ); ?>"><?php echo esc_html( $goal['subtitle'] ); ?></p>
 							<div class="goal-modules">
 								<?php
 								$module_names = array(
@@ -102,15 +128,24 @@ $onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map
 				<div class="success-icon">
 					<span class="dashicons dashicons-yes-alt"></span>
 				</div>
-				<h3><?php esc_html_e( 'All set.', 'woocommerce-jetpack' ); ?></h3>
-				<p id="success-message"><?php esc_html_e( 'Changes applied.', 'woocommerce-jetpack' ); ?></p>
+				<h3><?php esc_html_e( 'Goal Applied Successfully!', 'woocommerce-jetpack' ); ?></h3>
+				<p id="success-message"><?php esc_html_e( 'Your selected modules have been enabled and configured.', 'woocommerce-jetpack' ); ?></p>
+			
+				<div class="success-quick-wins">
+					<h4><?php esc_html_e( 'What happens next?', 'woocommerce-jetpack' ); ?></h4>
+					<ul id="next-steps-list"></ul>
+				</div>
+			
 				<div class="success-actions">
-					<button type="button" class="button booster-btn-secondary close-button">
-						<?php esc_html_e( 'Back to goals', 'woocommerce-jetpack' ); ?>
-					</button>
-					<a href="#" class="button booster-btn-primary booster-link next-step-button" style="display: none;">
+					<a href="#" id="next-step-link" class="button button-primary next-step-button" style="display:none;">
 						<span id="next-step-text"></span>
 					</a>
+					<button type="button" class="button close-button">
+						<?php esc_html_e( 'Close', 'woocommerce-jetpack' ); ?>
+					</button>
+					<button type="button" class="button button-secondary" id="pick-another-goal">
+						<?php esc_html_e( 'Pick Another Goal', 'woocommerce-jetpack' ); ?>
+					</button>
 				</div>
 			</div>
 
