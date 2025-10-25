@@ -610,3 +610,374 @@
 		animation: none;
 	}
 }
+
+/* Phase 3: Segmented Control */
+.booster-segmented-control {
+	display: flex;
+	background: #f1f1f1;
+	border-radius: 8px;
+	padding: 4px;
+	margin: 20px 0;
+	gap: 4px;
+}
+
+.segment-button {
+	flex: 1;
+	background: transparent;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--booster-muted);
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.segment-button.active {
+	background: var(--booster-white);
+	color: var(--booster-blue);
+	box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.segment-button:hover:not(.active) {
+	color: var(--booster-text);
+}
+
+.segment-button:focus {
+	outline: 2px solid var(--booster-blue-light);
+	outline-offset: 2px;
+}
+
+/* Phase 3: Progress Indicator */
+.booster-progress-indicator {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+	padding: 20px 0;
+}
+
+.progress-step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	position: relative;
+}
+
+.step-number {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: #f1f1f1;
+	color: var(--booster-muted);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 14px;
+	transition: all 0.3s ease;
+}
+
+.progress-step.active .step-number {
+	background: var(--booster-blue);
+	color: var(--booster-white);
+}
+
+.progress-step.completed .step-number {
+	background: var(--booster-success);
+	color: var(--booster-white);
+}
+
+.step-label {
+	font-size: 12px;
+	color: var(--booster-muted);
+	font-weight: 500;
+}
+
+.progress-step.active .step-label {
+	color: var(--booster-blue);
+	font-weight: 600;
+}
+
+.progress-step.completed .step-label {
+	color: var(--booster-success);
+}
+
+.progress-connector {
+	width: 60px;
+	height: 2px;
+	background: #e5e5e5;
+	margin: 0 10px;
+	align-self: flex-start;
+	margin-top: 17px;
+}
+
+/* Phase 3: Blueprints Screen */
+.booster-blueprints-screen {
+	display: none;
+}
+
+.booster-blueprints-screen.active {
+	display: block;
+}
+
+.booster-blueprints-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 16px;
+	margin-bottom: 20px;
+}
+
+.booster-blueprint-tile {
+	border: 1px solid var(--booster-border);
+	border-radius: 12px;
+	padding: 24px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	background: var(--booster-panel);
+	position: relative;
+	box-shadow: 0 1px 2px rgba(0,0,0,.06);
+}
+
+.booster-blueprint-tile:hover,
+.booster-blueprint-tile:focus {
+	border-color: var(--booster-blue);
+	box-shadow: 0 2px 6px rgba(0,0,0,.10);
+	transform: translateY(-2px);
+}
+
+.blueprint-icon {
+	margin-bottom: 15px;
+	color: var(--booster-blue);
+}
+
+.booster-blueprint-tile h3 {
+	margin: 0 0 10px;
+	font-size: 18px;
+	color: var(--booster-text);
+	font-weight: 600;
+}
+
+.booster-blueprint-tile p {
+	margin: 0 0 15px;
+	color: var(--booster-muted);
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.blueprint-includes {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px solid var(--booster-border);
+}
+
+.blueprint-includes strong {
+	display: block;
+	font-size: 13px;
+	color: var(--booster-text);
+	margin-bottom: 8px;
+}
+
+.blueprint-includes ul {
+	margin: 0;
+	padding-left: 20px;
+	list-style: disc;
+}
+
+.blueprint-includes li {
+	font-size: 13px;
+	color: var(--booster-muted);
+	margin-bottom: 4px;
+}
+
+/* Phase 3: Applied Badge */
+.applied-badge {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	background: var(--booster-success);
+	color: var(--booster-white);
+	padding: 4px 10px;
+	border-radius: 12px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Phase 3: Enhanced Success Screen */
+#next-steps-container {
+	margin: 20px 0;
+	padding: 20px;
+	background: #f9f9f9;
+	border-radius: 8px;
+	text-align: left;
+}
+
+#next-steps-container h4 {
+	margin: 0 0 12px;
+	font-size: 16px;
+	color: var(--booster-text);
+	font-weight: 600;
+}
+
+#next-steps-list {
+	margin: 0;
+	padding-left: 20px;
+	list-style: decimal;
+}
+
+#next-steps-list li {
+	margin-bottom: 8px;
+	font-size: 14px;
+	color: var(--booster-muted);
+}
+
+#next-steps-list a {
+	color: var(--booster-blue);
+	text-decoration: none;
+}
+
+#next-steps-list a:hover {
+	text-decoration: underline;
+}
+
+#pro-note-container {
+	margin: 20px 0;
+	padding: 15px;
+	background: #fff8e1;
+	border: 1px solid #ffd54f;
+	border-radius: 8px;
+}
+
+.pro-note {
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+	color: var(--booster-text);
+}
+
+.pro-note .dashicons {
+	color: #ff9800;
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+
+.pro-note a {
+	color: var(--booster-blue);
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.pro-note a:hover {
+	text-decoration: underline;
+}
+
+/* Phase 3: Mobile Improvements */
+@media (max-width: 768px) {
+	.booster-segmented-control {
+		flex-direction: row;
+	}
+
+	.segment-button {
+		padding: 12px 16px;
+		font-size: 15px;
+	}
+
+	.booster-progress-indicator {
+		padding: 15px 0;
+	}
+
+	.progress-step {
+		gap: 6px;
+	}
+
+	.step-number {
+		width: 32px;
+		height: 32px;
+		font-size: 13px;
+	}
+
+	.step-label {
+		font-size: 11px;
+	}
+
+	.progress-connector {
+		width: 40px;
+		margin: 0 5px;
+		margin-top: 15px;
+	}
+
+	.booster-blueprints-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.booster-goal-tile,
+	.booster-blueprint-tile {
+		padding: 20px;
+		min-height: 48px;
+	}
+
+	.booster-goal-tile h3,
+	.booster-blueprint-tile h3 {
+		font-size: 16px;
+	}
+
+	.review-actions,
+	.success-actions {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.review-actions button,
+	.success-actions button,
+	.success-actions a {
+		width: 100%;
+		padding: 12px 20px;
+		font-size: 15px;
+	}
+
+	#next-steps-container {
+		padding: 15px;
+	}
+
+	#pro-note-container {
+		padding: 12px;
+	}
+}
+
+/* Phase 3: Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+	.segment-button,
+	.progress-step,
+	.booster-blueprint-tile {
+		transition: none;
+	}
+}
+
+.booster-modal [role="tablist"] button:focus {
+	outline: 2px solid var(--booster-blue-light);
+	outline-offset: 2px;
+}
+
+.booster-modal [role="tabpanel"] {
+	outline: none;
+}
+
+/* ARIA live region for screen readers */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	white-space: nowrap;
+	border-width: 0;
+}
