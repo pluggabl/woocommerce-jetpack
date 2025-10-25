@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.3.1
+ * @version 7.3.2
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -49,13 +49,18 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.2.5
+		 * @version 7.3.2
 		 * @since   3.2.4
 		 */
 		public function __construct() {
 
 			$this->cats                     = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php';
 			$this->custom_dashboard_modules = apply_filters( 'wcj_custom_dashboard_modules', array() );
+
+			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
+				require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-booster-onboarding.php';
+				new Booster_Onboarding();
+			}
 
 			if ( is_admin() ) {
 				add_filter( 'booster_message', 'wcj_get_plus_message', 100, 3 );
@@ -320,6 +325,17 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 			}
 			return $footer_text;
 		}
+
+		/**
+		 * Getting Started page
+		 */
+		public function wcj_getting_started_page() {
+			if ( class_exists( 'Booster_Onboarding' ) ) {
+				$onboarding = new Booster_Onboarding();
+				$onboarding->getting_started_page();
+			}
+		}
+
 		/**
 		 * Add menu item
 		 *

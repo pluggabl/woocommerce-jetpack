@@ -3,9 +3,9 @@ Contributors: pluggabl, ronyp, gravid7
 Donate link: https://booster.io/
 Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invoices, variation swatches, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce product feed, currency switcher
 Requires at least: 5.8
-Tested up to: 6.8.2
+Tested up to: 6.8.3
 Requires PHP: 7.2
-Stable tag: 7.3.1
+Stable tag: 7.3.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -297,6 +297,11 @@ You can find links to documentation for each module within the Booster settings 
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.3.2 - 25/10/2025 =
+* NEW FEATURE - Onboarding appears right after you activate the plugin, allowing you to set up modules with a single click.
+* WooCommerce 10.3.3 Tested
+* WordPress 6.8.3 Tested
 
 = 7.3.1 - 25/09/2025 =
 
