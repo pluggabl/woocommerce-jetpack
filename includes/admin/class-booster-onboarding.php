@@ -196,6 +196,65 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				echo '</div>';
 			}
 
+			$analytics = get_option( 'wcj_onboarding_analytics', array() );
+			if ( ! empty( $analytics ) ) {
+				$goal_apply_counts = array();
+				$goal_undo_counts = array();
+				$blueprint_apply_counts = array();
+
+				foreach ( $analytics as $event ) {
+					if ( isset( $event['type'] ) && 'goal_apply_success' === $event['type'] ) {
+						$goal_id = isset( $event['data']['goal_id'] ) ? $event['data']['goal_id'] : '';
+						if ( $goal_id ) {
+							$goal_apply_counts[ $goal_id ] = isset( $goal_apply_counts[ $goal_id ] ) ? $goal_apply_counts[ $goal_id ] + 1 : 1;
+						}
+					} elseif ( isset( $event['type'] ) && 'goal_undo_success' === $event['type'] ) {
+						$goal_id = isset( $event['data']['goal_id'] ) ? $event['data']['goal_id'] : '';
+						if ( $goal_id ) {
+							$goal_undo_counts[ $goal_id ] = isset( $goal_undo_counts[ $goal_id ] ) ? $goal_undo_counts[ $goal_id ] + 1 : 1;
+						}
+					} elseif ( isset( $event['type'] ) && 'blueprint_apply_success' === $event['type'] ) {
+						$blueprint_id = isset( $event['data']['blueprint_id'] ) ? $event['data']['blueprint_id'] : '';
+						if ( $blueprint_id ) {
+							$blueprint_apply_counts[ $blueprint_id ] = isset( $blueprint_apply_counts[ $blueprint_id ] ) ? $blueprint_apply_counts[ $blueprint_id ] + 1 : 1;
+						}
+					}
+				}
+
+				if ( ! empty( $goal_apply_counts ) || ! empty( $blueprint_apply_counts ) ) {
+					echo '<h2>' . esc_html__( 'Onboarding Analytics (Last 500 Events)', 'woocommerce-jetpack' ) . '</h2>';
+					
+					if ( ! empty( $goal_apply_counts ) ) {
+						echo '<h3>' . esc_html__( 'Goals', 'woocommerce-jetpack' ) . '</h3>';
+						echo '<table class="wp-list-table widefat fixed striped">';
+						echo '<thead><tr><th>' . esc_html__( 'Goal', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Applied', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Undone', 'woocommerce-jetpack' ) . '</th></tr></thead>';
+						echo '<tbody>';
+						foreach ( $goal_apply_counts as $goal_id => $count ) {
+							$goal_title = isset( $this->onboarding_map[ $goal_id ] ) ? $this->onboarding_map[ $goal_id ]['title'] : $goal_id;
+							$undo_count = isset( $goal_undo_counts[ $goal_id ] ) ? $goal_undo_counts[ $goal_id ] : 0;
+							echo '<tr><td>' . esc_html( $goal_title ) . '</td><td>' . esc_html( $count ) . '</td><td>' . esc_html( $undo_count ) . '</td></tr>';
+						}
+						echo '</tbody></table>';
+					}
+
+					if ( ! empty( $blueprint_apply_counts ) ) {
+						echo '<h3>' . esc_html__( 'Blueprints', 'woocommerce-jetpack' ) . '</h3>';
+						echo '<table class="wp-list-table widefat fixed striped">';
+						echo '<thead><tr><th>' . esc_html__( 'Blueprint', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Applied', 'woocommerce-jetpack' ) . '</th></tr></thead>';
+						echo '<tbody>';
+						
+						if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php' ) ) {
+							$blueprints = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php';
+							foreach ( $blueprint_apply_counts as $blueprint_id => $count ) {
+								$blueprint_title = isset( $blueprints[ $blueprint_id ] ) ? $blueprints[ $blueprint_id ]['title'] : $blueprint_id;
+								echo '<tr><td>' . esc_html( $blueprint_title ) . '</td><td>' . esc_html( $count ) . '</td></tr>';
+							}
+						}
+						echo '</tbody></table>';
+					}
+				}
+			}
+
 			echo '</div>';
 			echo '</div>';
 
