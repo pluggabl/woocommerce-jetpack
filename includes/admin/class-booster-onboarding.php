@@ -315,6 +315,15 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 
 			update_option( $this->option_key, $onboarding_state );
 
+			$this->log_analytics_event(
+				'goal_applied',
+				$goal_id,
+				array(
+					'snapshot_created' => $create_snapshot,
+					'modules_enabled'  => array_column( $goal['modules'], 'id' ),
+				)
+			);
+
 			$next_step_link = '';
 			if ( isset( $goal['next_step_link'] ) ) {
 				$next_step_link = admin_url( $goal['next_step_link'] . wp_create_nonce( 'wcj-cat-nonce' ) );
@@ -325,7 +334,81 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				'message'        => __( 'Goal applied successfully!', 'woocommerce-jetpack' ),
 				'next_step_text' => isset( $goal['next_step_text'] ) ? $goal['next_step_text'] : '',
 				'next_step_link' => $next_step_link,
+				'next_steps'     => $this->get_goal_next_steps( $goal_id ),
 			);
+		}
+
+		/**
+		 * Get goal-specific next steps for the success screen
+		 *
+		 * @param string $goal_id The goal ID.
+		 *
+		 * @return array Array of next step strings.
+		 */
+		private function get_goal_next_steps( $goal_id ) {
+			$steps = array(
+				'grow_sales'        => array(
+					__( 'Visit your store frontend to see the enabled modules in action', 'woocommerce-jetpack' ),
+					__( 'Customize notification messages in the module settings', 'woocommerce-jetpack' ),
+					__( 'Add more modules to enhance customer engagement', 'woocommerce-jetpack' ),
+				),
+				'work_smarter'      => array(
+					__( 'Your orders now have sequential numbers for easier tracking', 'woocommerce-jetpack' ),
+					__( 'Check your orders list to see the enhanced admin features', 'woocommerce-jetpack' ),
+					__( 'Customize the order number format in settings', 'woocommerce-jetpack' ),
+				),
+				'go_global'         => array(
+					__( 'Your store now supports multiple currencies', 'woocommerce-jetpack' ),
+					__( 'Add exchange rates and enable the currency switcher', 'woocommerce-jetpack' ),
+					__( 'Test the frontend to see your currency options', 'woocommerce-jetpack' ),
+				),
+				'professional_docs' => array(
+					__( 'PDF invoices will now be automatically generated for new orders', 'woocommerce-jetpack' ),
+					__( 'Customize your invoice template with your logo and branding', 'woocommerce-jetpack' ),
+					__( 'Test by placing a sample order', 'woocommerce-jetpack' ),
+				),
+				'boost_conversions' => array(
+					__( 'Related products are now enabled by category—check a product page', 'woocommerce-jetpack' ),
+					__( 'Optionally configure a simple product add-on from the settings page', 'woocommerce-jetpack' ),
+					__( 'Review analytics to see if product engagement improves', 'woocommerce-jetpack' ),
+				),
+				'better_checkout'   => array(
+					__( 'Checkout button text has been updated for clarity', 'woocommerce-jetpack' ),
+					__( 'Verify core fields look right (e.g., Company hidden if configured)', 'woocommerce-jetpack' ),
+					__( 'Place a test order to confirm the flow', 'woocommerce-jetpack' ),
+				),
+				'store_essentials'  => array(
+					__( 'Order numbers will now be sequential', 'woocommerce-jetpack' ),
+					__( 'Open a recent order to verify numbering', 'woocommerce-jetpack' ),
+					__( 'Add one product tab with FAQs or sizing info', 'woocommerce-jetpack' ),
+				),
+			);
+
+			return isset( $steps[ $goal_id ] ) ? $steps[ $goal_id ] : array();
+		}
+
+		/**
+		 * Log onboarding analytics event
+		 *
+		 * @param string $event_type Event type (goal_viewed, goal_applied, goal_undone).
+		 * @param string $goal_id    Goal identifier.
+		 * @param array  $metadata   Additional event data.
+		 */
+		private function log_analytics_event( $event_type, $goal_id, $metadata = array() ) {
+			$events = get_option( 'wcj_onboarding_analytics', array() );
+
+			if ( count( $events ) >= 100 ) {
+				array_shift( $events );
+			}
+
+			$events[] = array(
+				'timestamp' => current_time( 'timestamp' ),
+				'event'     => $event_type,
+				'goal'      => $goal_id,
+				'metadata'  => $metadata,
+			);
+
+			update_option( 'wcj_onboarding_analytics', $events );
 		}
 
 		/**
@@ -631,6 +714,14 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 			unset( $onboarding_state['snapshots'][ $goal_id ] );
 
 			update_option( $this->option_key, $onboarding_state );
+
+			$this->log_analytics_event(
+				'goal_undone',
+				$goal_id,
+				array(
+					'snapshot_restored' => true,
+				)
+			);
 
 			return array(
 				'success' => true,
