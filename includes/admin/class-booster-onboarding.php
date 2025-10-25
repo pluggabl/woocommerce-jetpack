@@ -773,6 +773,15 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 					return ( 'EUR' !== $current_currency && get_option( 'wcj_currency_EUR' ) ) ||
 							( 'USD' !== $current_currency && get_option( 'wcj_currency_USD' ) );
 
+				case 'wcj_invoicing_invoice_enabled':
+					return 'yes' === get_option( 'wcj_invoicing_invoice_enabled', 'no' );
+
+				case 'wcj_product_addons_enabled':
+					return 'yes' === get_option( 'wcj_product_addons_enabled', 'no' );
+
+				case 'wcj_checkout_core_fields_enabled':
+					return 'yes' === get_option( 'wcj_checkout_core_fields_enabled', 'no' );
+
 				default:
 					return false;
 			}
