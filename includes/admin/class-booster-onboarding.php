@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Onboarding Controller
  *
- * @version 7.3.2
+ * @version 7.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -184,6 +184,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 			echo '</div>';
 
 			include WCJ_FREE_PLUGIN_PATH . '/includes/admin/views/onboarding-modal.php';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( isset( $_GET['modal'] ) && 'onboarding' === $_GET['modal'] ) : ?>
 		<script>
 		window.addEventListener("load", function() {
@@ -215,7 +216,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				wp_die( esc_html__( 'Insufficient permissions.', 'woocommerce-jetpack' ) );
 			}
 
-			$goal_id         = sanitize_text_field( wp_unslash( $_POST['goal_id'] ) );
+			$goal_id         = isset( $_POST['goal_id'] ) ? sanitize_text_field( wp_unslash( $_POST['goal_id'] ) ) : '';
 			$create_snapshot = isset( $_POST['create_snapshot'] ) && 'true' === $_POST['create_snapshot'];
 
 			if ( ! isset( $this->onboarding_map[ $goal_id ] ) ) {
@@ -244,7 +245,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				wp_die( esc_html__( 'Insufficient permissions.', 'woocommerce-jetpack' ) );
 			}
 
-			$goal_id = sanitize_text_field( wp_unslash( $_POST['goal_id'] ) );
+			$goal_id = isset( $_POST['goal_id'] ) ? sanitize_text_field( wp_unslash( $_POST['goal_id'] ) ) : '';
 
 			if ( ! isset( $this->onboarding_map[ $goal_id ] ) ) {
 				wp_send_json_error( array( 'message' => __( 'Invalid goal ID.', 'woocommerce-jetpack' ) ) );
@@ -315,6 +316,15 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 
 			update_option( $this->option_key, $onboarding_state );
 
+			$this->log_analytics_event(
+				'goal_applied',
+				$goal_id,
+				array(
+					'snapshot_created' => $create_snapshot,
+					'modules_enabled'  => array_column( $goal['modules'], 'id' ),
+				)
+			);
+
 			$next_step_link = '';
 			if ( isset( $goal['next_step_link'] ) ) {
 				$next_step_link = admin_url( $goal['next_step_link'] . wp_create_nonce( 'wcj-cat-nonce' ) );
@@ -325,7 +335,81 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				'message'        => __( 'Goal applied successfully!', 'woocommerce-jetpack' ),
 				'next_step_text' => isset( $goal['next_step_text'] ) ? $goal['next_step_text'] : '',
 				'next_step_link' => $next_step_link,
+				'next_steps'     => $this->get_goal_next_steps( $goal_id ),
 			);
+		}
+
+		/**
+		 * Get goal-specific next steps for the success screen
+		 *
+		 * @param string $goal_id The goal ID.
+		 *
+		 * @return array Array of next step strings.
+		 */
+		private function get_goal_next_steps( $goal_id ) {
+			$steps = array(
+				'grow_sales'        => array(
+					__( 'Visit your store frontend to see the enabled modules in action', 'woocommerce-jetpack' ),
+					__( 'Customize notification messages in the module settings', 'woocommerce-jetpack' ),
+					__( 'Add more modules to enhance customer engagement', 'woocommerce-jetpack' ),
+				),
+				'work_smarter'      => array(
+					__( 'Your orders now have sequential numbers for easier tracking', 'woocommerce-jetpack' ),
+					__( 'Check your orders list to see the enhanced admin features', 'woocommerce-jetpack' ),
+					__( 'Customize the order number format in settings', 'woocommerce-jetpack' ),
+				),
+				'go_global'         => array(
+					__( 'Your store now supports multiple currencies', 'woocommerce-jetpack' ),
+					__( 'Add exchange rates and enable the currency switcher', 'woocommerce-jetpack' ),
+					__( 'Test the frontend to see your currency options', 'woocommerce-jetpack' ),
+				),
+				'professional_docs' => array(
+					__( 'PDF invoices will now be automatically generated for new orders', 'woocommerce-jetpack' ),
+					__( 'Customize your invoice template with your logo and branding', 'woocommerce-jetpack' ),
+					__( 'Test by placing a sample order', 'woocommerce-jetpack' ),
+				),
+				'boost_conversions' => array(
+					__( 'Related products are now enabled by category—check a product page', 'woocommerce-jetpack' ),
+					__( 'Optionally configure a simple product add-on from the settings page', 'woocommerce-jetpack' ),
+					__( 'Review analytics to see if product engagement improves', 'woocommerce-jetpack' ),
+				),
+				'better_checkout'   => array(
+					__( 'Checkout button text has been updated for clarity', 'woocommerce-jetpack' ),
+					__( 'Verify core fields look right (e.g., Company hidden if configured)', 'woocommerce-jetpack' ),
+					__( 'Place a test order to confirm the flow', 'woocommerce-jetpack' ),
+				),
+				'store_essentials'  => array(
+					__( 'Order numbers will now be sequential', 'woocommerce-jetpack' ),
+					__( 'Open a recent order to verify numbering', 'woocommerce-jetpack' ),
+					__( 'Add one product tab with FAQs or sizing info', 'woocommerce-jetpack' ),
+				),
+			);
+
+			return isset( $steps[ $goal_id ] ) ? $steps[ $goal_id ] : array();
+		}
+
+		/**
+		 * Log onboarding analytics event
+		 *
+		 * @param string $event_type Event type (goal_viewed, goal_applied, goal_undone).
+		 * @param string $goal_id    Goal identifier.
+		 * @param array  $metadata   Additional event data.
+		 */
+		private function log_analytics_event( $event_type, $goal_id, $metadata = array() ) {
+			$events = get_option( 'wcj_onboarding_analytics', array() );
+
+			if ( count( $events ) >= 100 ) {
+				array_shift( $events );
+			}
+
+			$events[] = array(
+				'timestamp' => current_time( 'mysql' ),
+				'event'     => $event_type,
+				'goal'      => $goal_id,
+				'metadata'  => $metadata,
+			);
+
+			update_option( 'wcj_onboarding_analytics', $events );
 		}
 
 		/**
@@ -632,6 +716,14 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 
 			update_option( $this->option_key, $onboarding_state );
 
+			$this->log_analytics_event(
+				'goal_undone',
+				$goal_id,
+				array(
+					'snapshot_restored' => true,
+				)
+			);
+
 			return array(
 				'success' => true,
 				'message' => __( 'Goal undone successfully!', 'woocommerce-jetpack' ),
@@ -681,6 +773,15 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 					$current_currency = get_woocommerce_currency();
 					return ( 'EUR' !== $current_currency && get_option( 'wcj_currency_EUR' ) ) ||
 							( 'USD' !== $current_currency && get_option( 'wcj_currency_USD' ) );
+
+				case 'wcj_invoicing_invoice_enabled':
+					return 'yes' === get_option( 'wcj_invoicing_invoice_enabled', 'no' );
+
+				case 'wcj_product_addons_enabled':
+					return 'yes' === get_option( 'wcj_product_addons_enabled', 'no' );
+
+				case 'wcj_checkout_core_fields_enabled':
+					return 'yes' === get_option( 'wcj_checkout_core_fields_enabled', 'no' );
 
 				default:
 					return false;

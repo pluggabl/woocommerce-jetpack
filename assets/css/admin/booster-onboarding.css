@@ -15,6 +15,110 @@
   --booster-success: #46b450;      /* Success color */
 }
 
+/* Progress Indicator Styles */
+.booster-modal-progress {
+    padding: 20px 30px;
+    border-bottom: 1px solid var(--booster-border);
+    background: #f9fafb;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.progress-steps .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.progress-steps .step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.progress-steps .step.active .step-number {
+    background: var(--booster-blue);
+    color: white;
+}
+
+.progress-steps .step.completed .step-number {
+    background: var(--booster-success);
+    color: white;
+}
+
+.progress-steps .step-label {
+    font-size: 13px;
+    color: var(--booster-muted);
+    font-weight: 500;
+}
+
+.progress-steps .step.active .step-label {
+    color: var(--booster-blue);
+    font-weight: 600;
+}
+
+.progress-bar {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--booster-blue);
+    transition: width 0.4s ease;
+    border-radius: 2px;
+}
+
+/* Success Quick Wins Section */
+.success-quick-wins {
+    background: #f9fafb;
+    border: 1px solid var(--booster-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.success-quick-wins h4 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    color: var(--booster-text);
+    font-weight: 600;
+}
+
+.success-quick-wins ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+}
+
+.success-quick-wins li {
+    margin-bottom: 8px;
+    color: var(--booster-muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
 /* Base admin typography */
 .booster-admin {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -572,6 +676,56 @@
 
 	.back-button {
 		margin-right: 0;
+	}
+
+	.progress-steps .step-label {
+		display: none;
+	}
+	
+	.progress-steps .step-number {
+		width: 28px;
+		height: 28px;
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 640px) {
+	.booster-goals-grid {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+	
+	.booster-goal-tile {
+		padding: 16px;
+	}
+	
+	.goal-icon .dashicons {
+		font-size: 36px;
+		width: 36px;
+		height: 36px;
+	}
+	
+	.booster-goal-tile h3 {
+		font-size: 16px;
+	}
+	
+	.booster-goal-tile p {
+		font-size: 13px;
+	}
+	
+	.booster-modal-header h2 {
+		font-size: 22px;
+	}
+	
+	.review-actions,
+	.success-actions {
+		flex-direction: column;
+		gap: 10px;
+	}
+	
+	.review-actions .button,
+	.success-actions .button {
+		width: 100%;
 	}
 }
 
