@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.3.2 25/10/2025 =",
-    "1" : "* NEW FEATURE - Onboarding appears right after you activate the plugin, allowing you to set up modules with a single click.",
-    "2" : "* WooCommerce 10.3.3 Tested",
-    "3" : "* WordPress 6.8.3 Tested"
+    "0" : "= 7.4.0 30/10/2025 =",
+    "1" : "* UPDATED FEATURE - Added additional modules to the onboarding flow for easier activation, and introduced a step-based progress bar to guide users through the module activation process.",
+    "2" : "* FIXED - Resolved an XSS vulnerability in the shortcode functionality.",
+    "3" : "* WooCommerce 10.3.3 Tested"
 }

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 7.1.8
+ * @version 7.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/classes
  */
@@ -125,7 +125,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		/**
 		 * Wcj_shortcode.
 		 *
-		 * @version 7.1.8
+		 * @version 7.4.0
 		 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 		 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 		 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -211,7 +211,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 			// Check for module enabled.
 			if ( '' !== $atts['module'] && ! wcj_is_module_enabled( $atts['module'] ) ) {
 				/* translators: %s: search term */
-				return '<p>' . sprintf( __( '"%s" module is not enabled!', 'woocommerce-jetpack' ), $atts['module_name'] ) . '</p>';
+				return '<p>' . sprintf( __( '"%s" module is not enabled!', 'woocommerce-jetpack' ), esc_html( $atts['module_name'] ) ) . '</p>';
 			}
 
 			// Check if time is ok.
@@ -254,9 +254,9 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 						if ( false !== strpos( $atts['wrong_user_text_not_logged_in'], '%login_url%' ) ) {
 							$login_url = wp_login_url( get_permalink() );
 						}
-						return str_replace( array( '%login_form%', '%login_url%' ), array( $login_form, $login_url ), $atts['wrong_user_text_not_logged_in'] );
+						return wp_kses_post( str_replace( array( '%login_form%', '%login_url%' ), array( $login_form, $login_url ), $atts['wrong_user_text_not_logged_in'] ) );
 					} else {
-						return $atts['wrong_user_text'];
+						return wp_kses_post( $atts['wrong_user_text'] );
 					}
 				}
 			}
@@ -398,9 +398,12 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 				if ( 1 !== $atts['multiply'] ) {
 					$result = $result * $atts['multiply'];
 				}
-				return $atts['before'] . apply_filters( 'wcj_shortcode_result', $result, $atts, $content, $shortcode ) . $atts['after'];
+				$before = wp_kses_post( $atts['before'] );
+				$after  = wp_kses_post( $atts['after'] );
+				$result = ( is_string( $result ) ? wp_kses_post( $result ) : $result );
+				return $before . apply_filters( 'wcj_shortcode_result', $result, $atts, $content, $shortcode ) . $after;
 			}
-			return $atts['on_empty'];
+			return wp_kses_post( $atts['on_empty'] );
 		}
 
 

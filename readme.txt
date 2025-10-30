@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.8.3
 Requires PHP: 7.2
-Stable tag: 7.3.2
+Stable tag: 7.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,6 +22,17 @@ Trusted by more than **100,000 WooCommerce stores worldwide** — including **40
 * **Zero Coding Needed:** Clean UI, granular toggles, ready in minutes for everyone.
 * **Modular & Performant:** Disabled modules never load, ensuring your site stays fast. (We encourage you to check out performance benchmarks on Booster.io!)
 * **Reliable & Supported:** Regular updates & < 24 hr WordPress.org support forum replies.
+
+### New in 7.4.0 – Guided onboarding for faster wins
+
+Spin up common store setups in minutes with **4 new one-click goals** (Professional invoices • Boost conversions • Better checkout • Store essentials). A clear **3-step progress bar** guides you, and the **success screen** points you to the next best action—no hunting through settings. It’s fully keyboard accessible and mobile friendly. 
+
+**What the new goals do (free tier):**
+
+* **Professional invoices (starter):** turns on PDF **Invoice** generation (invoice only).
+* **Boost conversions:** enables **Product Add-ons (single)** and **Related Products**.
+* **Better checkout (basics):** enables **Checkout Core Fields** and **More Button Labels**.
+* **Store essentials:** enables **Sequential Order Numbers** and **Product Tabs (single)**.
 
 == Key Free Features You Can Use Today ==
 
@@ -157,6 +168,16 @@ To unlock all Booster Elite features, please <a href="https://booster.io/buy-boo
 
 = Where can I find documentation for a specific module, like PDF Invoicing or Dynamic Pricing? =
 You can find links to documentation for each module within the Booster settings dashboard in your WordPress admin (WooCommerce > Booster Settings). Each module typically has a "Module Documentation" link. You can also visit our main documentation hub at <a href="https://booster.io/docs/">booster.io/docs/</a> for comprehensive guides on all features, including <strong>PDF Invoicing</strong>, <strong>Dynamic Pricing</strong>, <strong>Multi-Currency</strong>, and more.
+
+= Will onboarding overwrite my settings? =
+When you apply a goal, Booster uses safe defaults scoped to that goal. You can review changes first and adjust later from each module’s settings. You can also apply another goal after completion. 
+
+= Can I apply more than one goal? =
+Yes. Use <strong>Pick another goal</strong> on the success screen to stack quick wins.
+
+= Are you tracking my site externally? =
+No. Onboarding logs <strong>basic, local-only</strong> events (e.g., goal applied/undone) to help improve the experience. No external services are called. 
+
 
 == Detailed List of Features ==
 
@@ -298,8 +319,20 @@ You can find links to documentation for each module within the Booster settings 
 
 == Changelog ==
 
+= 7.4.0 - 30/10/2025 =
+* **Onboarding Phase 2 – faster first win**. Added **4 new one-click goals** you can apply right after activation:
+  - **Professional invoices (starter), Boost conversions, Better checkout (basics), Store essentials**. Each goal enables a small set of free modules with sensible defaults so you see value immediately. 
+  - **Clear progress bar**. New 3-step progress indicator (Choose Goal → Review → Complete) so setup feels guided, not guessing.
+  - **Actionable success screen**. After applying a goal you’ll see a concise “what happens next” checklist and a primary link to the most relevant settings page. 
+  - **Pick another goal**. You can apply a goal, then bounce back to choose another—great for stacking quick wins.  
+  - **Accessibility & mobile polish**. Improved ARIA labels, focus trapping, and compact mobile layout for small screens.   
+  - **Lightweight, local analytics**. We now log basic “goal applied/undone” events locally to help us improve onboarding over time (no external services). A simple stats summary appears on Getting Started.   
+* FIXED - Resolved an XSS vulnerability in the shortcode functionality.
+* WooCommerce 10.3.3 Tested
+* WordPress 6.8.3 Tested
+
 = 7.3.2 - 25/10/2025 =
-* NEW FEATURE - Onboarding appears right after you activate the plugin, allowing you to set up modules with a single click.
+* New: Instant 1-Click Onboarding — Right after activation, Booster guides you to the right modules and enables them in one click, so you launch faster, skip the settings maze, and start selling sooner.
 * WooCommerce 10.3.3 Tested
 * WordPress 6.8.3 Tested
 
@@ -4175,6 +4208,9 @@ You can find links to documentation for each module within the Booster settings 
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 7.4.0 = 
+Onboarding Phase 2: four new one-click goals, a guided progress bar, an actionable success screen, and accessibility/mobile improvements for a faster path to first value.
 
 = 1.0.0 =
 This is the first release of the plugin.
