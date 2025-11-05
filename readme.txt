@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.8.3
 Requires PHP: 7.2
-Stable tag: 7.4.0
+Stable tag: 7.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,6 +33,23 @@ Spin up common store setups in minutes with **4 new one-click goals** (Professio
 * **Boost conversions:** enables **Product Add-ons (single)** and **Related Products**.
 * **Better checkout (basics):** enables **Checkout Core Fields** and **More Button Labels**.
 * **Store essentials:** enables **Sequential Order Numbers** and **Product Tabs (single)**.
+
+### New in 7.5.0 – Blueprints: real outcomes, faster
+
+Skip the guesswork. **Blueprints** apply a sensible, free-tier setup in one click, then point you to the next best action:
+
+* **Recover Lost Sales:** turn on Cart Abandonment (Lite: single email) and send a test; suggested next step—add a 10% coupon.
+* **Boost AOV:** enable Product Add-ons (single) and tune Related Products to increase basket size.
+* **Sell Internationally:** prep your store with essentials + checkout basics, then guided steps to add EU/UK shipping, taxes, and payments.
+
+What you’ll notice:
+
+* **Quick Setup ⇄ Blueprints** switcher in onboarding.
+* A clear **Choose → Review → Complete** path with **Next Steps** and **deep-link** buttons.
+* **“Applied”** badges and a dedicated **Undo** that only reverts what was changed.
+* Smoother mobile and keyboard navigation with accessible status announcements.
+
+All changes stay within Free limits; no paid features are toggled.
 
 == Key Free Features You Can Use Today ==
 
@@ -178,6 +195,17 @@ Yes. Use <strong>Pick another goal</strong> on the success screen to stack quick
 = Are you tracking my site externally? =
 No. Onboarding logs <strong>basic, local-only</strong> events (e.g., goal applied/undone) to help improve the experience. No external services are called. 
 
+= What’s the difference between a Goal and a Blueprint? =
+Goals enable a small set of features for a quick win. Blueprints bundle goals into an outcome (e.g., Recover Lost Sales) and guide your next steps. 
+
+= Will this overwrite my existing settings? =
+No. Each apply uses safe defaults scoped to the goal/blueprint. You can review changes first and Undo restores only what we changed.
+
+= Can I stack multiple blueprints/goals? =
+Yes. Apply one, then use Pick another to layer more quick wins. 
+
+= Are you sending any data off my site? =
+No. Onboarding analytics are local-only (apply/undo/mode views) to improve the experience. No external services are called.
 
 == Detailed List of Features ==
 
@@ -319,7 +347,20 @@ No. Onboarding logs <strong>basic, local-only</strong> events (e.g., goal applie
 
 == Changelog ==
 
+= 7.5.0 - 05/11/2025 =
+
+* **Onboarding Phase 3 – Blueprints for faster outcomes.** Added **one-click Blueprints** that bundle the right free modules so new stores get real results in under a minute: **Recover Lost Sales, Boost AOV, Sell Internationally.**
+* **Scoped Undo + “Applied” badges.** See what’s live at a glance and roll back just the changes made by a goal/blueprint.
+* **Quick Setup ⇄ Blueprints switcher.** A simple toggle in the onboarding modal lets you choose “quick wins” (goals) or “outcomes” (blueprints).
+* **Smarter success screen.** Clear **Next Steps** with **deep-link** CTAs that jump straight to the setting you just enabled (e.g., invoice template, cart-abandonment sender/test).
+* **Accessibility & mobile polish (more).** Single-column tiles on phones, larger tap targets, improved keyboard/focus, and ARIA status for screen readers.
+* **Lightweight, local analytics (extended).** We now record **blueprint apply/undo + mode views (stored locally only) and show a simple summary on Getting Started.
+* FIXED - Resolved a security vulnerability in the coupon code generation feature.
+* WooCommerce 10.3.3 Tested
+* WordPress 6.8.3 Tested
+
 = 7.4.0 - 30/10/2025 =
+
 * **Onboarding Phase 2 – faster first win**. Added **4 new one-click goals** you can apply right after activation:
   - **Professional invoices (starter), Boost conversions, Better checkout (basics), Store essentials**. Each goal enables a small set of free modules with sensible defaults so you see value immediately. 
   - **Clear progress bar**. New 3-step progress indicator (Choose Goal → Review → Complete) so setup feels guided, not guessing.
@@ -332,6 +373,7 @@ No. Onboarding logs <strong>basic, local-only</strong> events (e.g., goal applie
 * WordPress 6.8.3 Tested
 
 = 7.3.2 - 25/10/2025 =
+
 * New: Instant 1-Click Onboarding — Right after activation, Booster guides you to the right modules and enables them in one click, so you launch faster, skip the settings maze, and start selling sooner.
 * WooCommerce 10.3.3 Tested
 * WordPress 6.8.3 Tested
@@ -4208,6 +4250,10 @@ No. Onboarding logs <strong>basic, local-only</strong> events (e.g., goal applie
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 7.5.0 = 
+
+Onboarding Phase 3: Blueprints (Recover Lost Sales, Boost AOV, Sell Internationally), scoped Undo with Applied badges, deeper Next Steps with direct links, plus more accessibility/mobile polish and local-only analytics.
 
 = 7.4.0 = 
 Onboarding Phase 2: four new one-click goals, a guided progress bar, an actionable success screen, and accessibility/mobile improvements for a faster path to first value.

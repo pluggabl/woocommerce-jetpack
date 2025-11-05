@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Onboarding Controller
  *
- * @version 7.4.0
+ * @version 7.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -42,6 +42,9 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_ajax_booster_apply_goal', array( $this, 'ajax_apply_goal' ) );
 			add_action( 'wp_ajax_booster_undo_goal', array( $this, 'ajax_undo_goal' ) );
+			add_action( 'wp_ajax_booster_apply_blueprint', array( $this, 'ajax_apply_blueprint' ) );
+			add_action( 'wp_ajax_booster_undo_blueprint', array( $this, 'ajax_undo_blueprint' ) );
+			add_action( 'wp_ajax_booster_log_onboarding_event', array( $this, 'ajax_log_onboarding_event' ) );
 
 			add_action( 'admin_notices', array( $this, 'maybe_show_onboarding_modal' ) );
 		}
@@ -92,14 +95,26 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 					true
 				);
 
+				$applied_goals    = array();
+				$onboarding_state = get_option( $this->option_key, array() );
+				if ( isset( $onboarding_state['completed_goals'] ) ) {
+					$applied_goals = $onboarding_state['completed_goals'];
+				}
+
+				$blueprints = file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php' )
+					? include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php'
+					: array();
+
 				wp_localize_script(
 					'booster-onboarding',
 					'boosterOnboarding',
 					array(
-						'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-						'nonce'   => wp_create_nonce( 'booster_onboarding_nonce' ),
-						'goals'   => $this->onboarding_map,
-						'strings' => array(
+						'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+						'nonce'        => wp_create_nonce( 'booster_onboarding_nonce' ),
+						'goals'        => $this->onboarding_map,
+						'blueprints'   => $blueprints,
+						'appliedGoals' => $applied_goals,
+						'strings'      => array(
 							'applying'          => __( 'Applying...', 'woocommerce-jetpack' ),
 							'undoing'           => __( 'Undoing...', 'woocommerce-jetpack' ),
 							'success'           => __( 'Success!', 'woocommerce-jetpack' ),
@@ -107,6 +122,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 							'close'             => __( 'Close', 'woocommerce-jetpack' ),
 							'create_demo_draft' => __( 'Create a demo draft page', 'woocommerce-jetpack' ),
 							'add_one_extra'     => __( 'Add one extra currency', 'woocommerce-jetpack' ),
+							'confirmUndo'       => __( 'Are you sure you want to undo this goal?', 'woocommerce-jetpack' ),
 						),
 					)
 				);
@@ -178,6 +194,65 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 					}
 				}
 				echo '</div>';
+			}
+
+			$analytics = get_option( 'wcj_onboarding_analytics', array() );
+			if ( ! empty( $analytics ) ) {
+				$goal_apply_counts      = array();
+				$goal_undo_counts       = array();
+				$blueprint_apply_counts = array();
+
+				foreach ( $analytics as $event ) {
+					if ( isset( $event['type'] ) && 'goal_apply_success' === $event['type'] ) {
+						$goal_id = isset( $event['data']['goal_id'] ) ? $event['data']['goal_id'] : '';
+						if ( $goal_id ) {
+							$goal_apply_counts[ $goal_id ] = isset( $goal_apply_counts[ $goal_id ] ) ? $goal_apply_counts[ $goal_id ] + 1 : 1;
+						}
+					} elseif ( isset( $event['type'] ) && 'goal_undo_success' === $event['type'] ) {
+						$goal_id = isset( $event['data']['goal_id'] ) ? $event['data']['goal_id'] : '';
+						if ( $goal_id ) {
+							$goal_undo_counts[ $goal_id ] = isset( $goal_undo_counts[ $goal_id ] ) ? $goal_undo_counts[ $goal_id ] + 1 : 1;
+						}
+					} elseif ( isset( $event['type'] ) && 'blueprint_apply_success' === $event['type'] ) {
+						$blueprint_id = isset( $event['data']['blueprint_id'] ) ? $event['data']['blueprint_id'] : '';
+						if ( $blueprint_id ) {
+							$blueprint_apply_counts[ $blueprint_id ] = isset( $blueprint_apply_counts[ $blueprint_id ] ) ? $blueprint_apply_counts[ $blueprint_id ] + 1 : 1;
+						}
+					}
+				}
+
+				if ( ! empty( $goal_apply_counts ) || ! empty( $blueprint_apply_counts ) ) {
+					echo '<h2>' . esc_html__( 'Onboarding Analytics (Last 500 Events)', 'woocommerce-jetpack' ) . '</h2>';
+
+					if ( ! empty( $goal_apply_counts ) ) {
+						echo '<h3>' . esc_html__( 'Goals', 'woocommerce-jetpack' ) . '</h3>';
+						echo '<table class="wp-list-table widefat fixed striped">';
+						echo '<thead><tr><th>' . esc_html__( 'Goal', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Applied', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Undone', 'woocommerce-jetpack' ) . '</th></tr></thead>';
+						echo '<tbody>';
+						foreach ( $goal_apply_counts as $goal_id => $count ) {
+							$goal_title = isset( $this->onboarding_map[ $goal_id ] ) ? $this->onboarding_map[ $goal_id ]['title'] : $goal_id;
+							$undo_count = isset( $goal_undo_counts[ $goal_id ] ) ? $goal_undo_counts[ $goal_id ] : 0;
+							echo '<tr><td>' . esc_html( $goal_title ) . '</td><td>' . esc_html( $count ) . '</td><td>' . esc_html( $undo_count ) . '</td></tr>';
+						}
+						echo '</tbody></table>';
+					}
+
+					if ( ! empty( $blueprint_apply_counts ) ) {
+						echo '<h3>' . esc_html__( 'Blueprints', 'woocommerce-jetpack' ) . '</h3>';
+						echo '<table class="wp-list-table widefat fixed striped">';
+						echo '<thead><tr><th>' . esc_html__( 'Blueprint', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Applied', 'woocommerce-jetpack' ) . '</th></tr></thead>';
+						echo '<tbody>';
+
+						if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php' ) ) {
+							$blueprints = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php';
+							foreach ( $blueprint_apply_counts as $blueprint_id => $count ) {
+								$blueprint_title = isset( $blueprints[ $blueprint_id ] ) ? $blueprints[ $blueprint_id ]['title'] : $blueprint_id;
+								echo '<tr><td>' . esc_html( $blueprint_title ) . '</td><td>' . esc_html( $count ) . '</td></tr>';
+							}
+						}
+						echo '</tbody></table>';
+					}
+				}
 			}
 
 			echo '</div>';
@@ -316,15 +391,6 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 
 			update_option( $this->option_key, $onboarding_state );
 
-			$this->log_analytics_event(
-				'goal_applied',
-				$goal_id,
-				array(
-					'snapshot_created' => $create_snapshot,
-					'modules_enabled'  => array_column( $goal['modules'], 'id' ),
-				)
-			);
-
 			$next_step_link = '';
 			if ( isset( $goal['next_step_link'] ) ) {
 				$next_step_link = admin_url( $goal['next_step_link'] . wp_create_nonce( 'wcj-cat-nonce' ) );
@@ -335,81 +401,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				'message'        => __( 'Goal applied successfully!', 'woocommerce-jetpack' ),
 				'next_step_text' => isset( $goal['next_step_text'] ) ? $goal['next_step_text'] : '',
 				'next_step_link' => $next_step_link,
-				'next_steps'     => $this->get_goal_next_steps( $goal_id ),
 			);
-		}
-
-		/**
-		 * Get goal-specific next steps for the success screen
-		 *
-		 * @param string $goal_id The goal ID.
-		 *
-		 * @return array Array of next step strings.
-		 */
-		private function get_goal_next_steps( $goal_id ) {
-			$steps = array(
-				'grow_sales'        => array(
-					__( 'Visit your store frontend to see the enabled modules in action', 'woocommerce-jetpack' ),
-					__( 'Customize notification messages in the module settings', 'woocommerce-jetpack' ),
-					__( 'Add more modules to enhance customer engagement', 'woocommerce-jetpack' ),
-				),
-				'work_smarter'      => array(
-					__( 'Your orders now have sequential numbers for easier tracking', 'woocommerce-jetpack' ),
-					__( 'Check your orders list to see the enhanced admin features', 'woocommerce-jetpack' ),
-					__( 'Customize the order number format in settings', 'woocommerce-jetpack' ),
-				),
-				'go_global'         => array(
-					__( 'Your store now supports multiple currencies', 'woocommerce-jetpack' ),
-					__( 'Add exchange rates and enable the currency switcher', 'woocommerce-jetpack' ),
-					__( 'Test the frontend to see your currency options', 'woocommerce-jetpack' ),
-				),
-				'professional_docs' => array(
-					__( 'PDF invoices will now be automatically generated for new orders', 'woocommerce-jetpack' ),
-					__( 'Customize your invoice template with your logo and branding', 'woocommerce-jetpack' ),
-					__( 'Test by placing a sample order', 'woocommerce-jetpack' ),
-				),
-				'boost_conversions' => array(
-					__( 'Related products are now enabled by category—check a product page', 'woocommerce-jetpack' ),
-					__( 'Optionally configure a simple product add-on from the settings page', 'woocommerce-jetpack' ),
-					__( 'Review analytics to see if product engagement improves', 'woocommerce-jetpack' ),
-				),
-				'better_checkout'   => array(
-					__( 'Checkout button text has been updated for clarity', 'woocommerce-jetpack' ),
-					__( 'Verify core fields look right (e.g., Company hidden if configured)', 'woocommerce-jetpack' ),
-					__( 'Place a test order to confirm the flow', 'woocommerce-jetpack' ),
-				),
-				'store_essentials'  => array(
-					__( 'Order numbers will now be sequential', 'woocommerce-jetpack' ),
-					__( 'Open a recent order to verify numbering', 'woocommerce-jetpack' ),
-					__( 'Add one product tab with FAQs or sizing info', 'woocommerce-jetpack' ),
-				),
-			);
-
-			return isset( $steps[ $goal_id ] ) ? $steps[ $goal_id ] : array();
-		}
-
-		/**
-		 * Log onboarding analytics event
-		 *
-		 * @param string $event_type Event type (goal_viewed, goal_applied, goal_undone).
-		 * @param string $goal_id    Goal identifier.
-		 * @param array  $metadata   Additional event data.
-		 */
-		private function log_analytics_event( $event_type, $goal_id, $metadata = array() ) {
-			$events = get_option( 'wcj_onboarding_analytics', array() );
-
-			if ( count( $events ) >= 100 ) {
-				array_shift( $events );
-			}
-
-			$events[] = array(
-				'timestamp' => current_time( 'mysql' ),
-				'event'     => $event_type,
-				'goal'      => $goal_id,
-				'metadata'  => $metadata,
-			);
-
-			update_option( 'wcj_onboarding_analytics', $events );
 		}
 
 		/**
@@ -716,14 +708,6 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 
 			update_option( $this->option_key, $onboarding_state );
 
-			$this->log_analytics_event(
-				'goal_undone',
-				$goal_id,
-				array(
-					'snapshot_restored' => true,
-				)
-			);
-
 			return array(
 				'success' => true,
 				'message' => __( 'Goal undone successfully!', 'woocommerce-jetpack' ),
@@ -786,6 +770,210 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				default:
 					return false;
 			}
+		}
+
+		/**
+		 * AJAX handler: Apply blueprint
+		 */
+		public function ajax_apply_blueprint() {
+			check_ajax_referer( 'booster_onboarding_nonce', 'nonce' );
+
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				wp_send_json_error( array( 'message' => __( 'Permission denied.', 'woocommerce-jetpack' ) ) );
+			}
+
+			$blueprint_id    = isset( $_POST['blueprint_id'] ) ? sanitize_key( $_POST['blueprint_id'] ) : '';
+			$create_snapshot = isset( $_POST['create_snapshot'] ) && 'true' === $_POST['create_snapshot'];
+
+			if ( ! file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php' ) ) {
+				wp_send_json_error( array( 'message' => __( 'Blueprints not available.', 'woocommerce-jetpack' ) ) );
+			}
+
+			$blueprints = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php';
+
+			if ( ! isset( $blueprints[ $blueprint_id ] ) ) {
+				wp_send_json_error( array( 'message' => __( 'Invalid blueprint.', 'woocommerce-jetpack' ) ) );
+			}
+
+			$blueprint = $blueprints[ $blueprint_id ];
+
+			if ( $create_snapshot ) {
+				$this->create_blueprint_snapshot( $blueprint_id, $blueprint );
+			}
+
+			foreach ( $blueprint['goal_keys'] as $goal_key ) {
+				if ( isset( $this->onboarding_map[ $goal_key ] ) ) {
+					$this->apply_goal_silently( $goal_key, $this->onboarding_map[ $goal_key ] );
+				}
+			}
+
+			set_transient( "wcj_onboarding_blueprint_{$blueprint_id}_applied", true, YEAR_IN_SECONDS );
+
+			$this->log_onboarding_event(
+				'blueprint_apply',
+				array(
+					'blueprint_id' => $blueprint_id,
+					'goal_keys'    => $blueprint['goal_keys'],
+				)
+			);
+
+			wp_send_json_success(
+				array(
+					// Translators: %s is the name of the blueprint applied.
+					'message'     => isset( $blueprint['success_message'] ) ? $blueprint['success_message'] : sprintf( __( '%s blueprint applied successfully!', 'woocommerce-jetpack' ), $blueprint['title'] ),
+					'next_steps'  => isset( $blueprint['next_steps'] ) ? $blueprint['next_steps'] : array(),
+					'primary_cta' => isset( $blueprint['primary_cta'] ) ? $blueprint['primary_cta'] : null,
+					'pro_note'    => isset( $blueprint['pro_note'] ) ? $blueprint['pro_note'] : null,
+				)
+			);
+		}
+
+		/**
+		 * Apply a goal silently (no AJAX response)
+		 *
+		 * @param string $goal_id Goal ID.
+		 * @param array  $goal    Goal config.
+		 */
+		private function apply_goal_silently( $goal_id, $goal ) {
+			foreach ( $goal['modules'] as $module_config ) {
+				$module_id = $module_config['id'];
+
+				foreach ( $module_config['settings'] as $setting_key => $setting_value ) {
+					if ( in_array( $setting_key, array( 'create_demo_draft', 'add_one_extra' ), true ) ) {
+						continue;
+					}
+					update_option( $setting_key, $setting_value );
+				}
+			}
+
+			$onboarding_state = get_option( $this->option_key, array() );
+			if ( ! isset( $onboarding_state['completed_goals'] ) ) {
+				$onboarding_state['completed_goals'] = array();
+			}
+			if ( ! in_array( $goal_id, $onboarding_state['completed_goals'], true ) ) {
+				$onboarding_state['completed_goals'][] = $goal_id;
+			}
+			update_option( $this->option_key, $onboarding_state );
+		}
+
+		/**
+		 * Create a snapshot for blueprint
+		 *
+		 * @param string $blueprint_id Blueprint ID.
+		 * @param array  $blueprint    Blueprint config.
+		 */
+		private function create_blueprint_snapshot( $blueprint_id, $blueprint ) {
+			$snapshot = array();
+
+			foreach ( $blueprint['goal_keys'] as $goal_key ) {
+				if ( isset( $this->onboarding_map[ $goal_key ] ) ) {
+					$goal = $this->onboarding_map[ $goal_key ];
+					foreach ( $goal['modules'] as $module ) {
+						foreach ( $module['settings'] as $option_key => $value ) {
+							if ( 'create_demo_draft' === $option_key || 'add_one_extra' === $option_key ) {
+								continue;
+							}
+							$snapshot[ $option_key ] = get_option( $option_key, null );
+						}
+					}
+				}
+			}
+
+			$onboarding_state = get_option( $this->option_key, array() );
+			$onboarding_state['blueprint_snapshots'][ $blueprint_id ] = array(
+				'before'     => $snapshot,
+				'created_at' => current_time( 'c' ),
+			);
+			update_option( $this->option_key, $onboarding_state );
+		}
+
+		/**
+		 * AJAX handler: Undo blueprint
+		 */
+		public function ajax_undo_blueprint() {
+			check_ajax_referer( 'booster_onboarding_nonce', 'nonce' );
+
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				wp_send_json_error( array( 'message' => __( 'Permission denied.', 'woocommerce-jetpack' ) ) );
+			}
+
+			$blueprint_id = isset( $_POST['blueprint_id'] ) ? sanitize_key( $_POST['blueprint_id'] ) : '';
+
+			$onboarding_state = get_option( $this->option_key, array() );
+
+			if ( ! isset( $onboarding_state['blueprint_snapshots'][ $blueprint_id ] ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'No snapshot found for this blueprint.', 'woocommerce-jetpack' ),
+					)
+				);
+			}
+
+			$snapshot        = $onboarding_state['blueprint_snapshots'][ $blueprint_id ];
+			$before_settings = $snapshot['before'];
+
+			foreach ( $before_settings as $option_key => $value ) {
+				if ( null === $value ) {
+					delete_option( $option_key );
+				} else {
+					update_option( $option_key, $value );
+				}
+			}
+
+			delete_transient( "wcj_onboarding_blueprint_{$blueprint_id}_applied" );
+			unset( $onboarding_state['blueprint_snapshots'][ $blueprint_id ] );
+			update_option( $this->option_key, $onboarding_state );
+
+			$this->log_onboarding_event(
+				'blueprint_undo',
+				array(
+					'blueprint_id' => $blueprint_id,
+				)
+			);
+
+			wp_send_json_success(
+				array(
+					'message' => __( 'Blueprint reverted successfully.', 'woocommerce-jetpack' ),
+				)
+			);
+		}
+
+		/**
+		 * Log onboarding event
+		 *
+		 * @param string $event_type Event type.
+		 * @param array  $event_data Event data.
+		 */
+		private function log_onboarding_event( $event_type, $event_data ) {
+			$events = get_option( 'wcj_onboarding_analytics', array() );
+
+			$event = array(
+				'type'      => $event_type,
+				'data'      => $event_data,
+				'timestamp' => current_time( 'mysql' ),
+			);
+
+			$events[] = $event;
+
+			if ( count( $events ) > 500 ) {
+				$events = array_slice( $events, -500 );
+			}
+
+			update_option( 'wcj_onboarding_analytics', $events );
+		}
+
+		/**
+		 * AJAX handler: Log onboarding event
+		 */
+		public function ajax_log_onboarding_event() {
+			check_ajax_referer( 'booster_onboarding_nonce', 'nonce' );
+
+			$event_type = isset( $_POST['event_type'] ) ? sanitize_text_field( wp_unslash( $_POST['event_type'] ) ) : '';
+			$event_data = isset( $_POST['event_data'] ) ? sanitize_text_field( wp_unslash( $_POST['event_data'] ) ) : '';
+
+			$this->log_onboarding_event( $event_type, $event_data );
+
+			wp_send_json_success();
 		}
 	}
 

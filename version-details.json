@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.4.0 30/10/2025 =",
-    "1" : "* UPDATED FEATURE - Added additional modules to the onboarding flow for easier activation, and introduced a step-based progress bar to guide users through the module activation process.",
-    "2" : "* FIXED - Resolved an XSS vulnerability in the shortcode functionality.",
+    "0" : "= 7.5.0 05/11/2025 =",
+    "1" : "* Onboarding Phase 3 – Blueprints for faster outcomes.** Added **one-click Blueprints** that bundle the right free modules so new stores get real results in under a minute: **Recover Lost Sales, Boost AOV, Sell Internationally.",
+    "2" : "* FIXED - Resolved a security vulnerability in the coupon code generation feature.",
     "3" : "* WooCommerce 10.3.3 Tested"
 }

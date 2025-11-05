@@ -33,172 +33,147 @@ msgstr ""
 msgid "Product category (archive) view"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:59
-#: includes/admin/class-booster-onboarding.php:60
+#: includes/admin/class-booster-onboarding.php:62
+#: includes/admin/class-booster-onboarding.php:63
 #: includes/admin/class-wc-settings-jetpack.php:939
 #: includes/admin/wcj-settings-dashboard.php:52
 msgid "Getting Started"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:103
+#: includes/admin/class-booster-onboarding.php:118
 msgid "Applying..."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:104
+#: includes/admin/class-booster-onboarding.php:119
 msgid "Undoing..."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:105
+#: includes/admin/class-booster-onboarding.php:120
 msgid "Success!"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:106
+#: includes/admin/class-booster-onboarding.php:121
 msgid "Error occurred. Please try again."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:107
-#: includes/admin/views/onboarding-modal.php:23
-#: includes/admin/views/onboarding-modal.php:144
+#: includes/admin/class-booster-onboarding.php:122
+#: includes/admin/views/onboarding-modal.php:50
 msgid "Close"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:108
+#: includes/admin/class-booster-onboarding.php:123
 msgid "Create a demo draft page"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:109
+#: includes/admin/class-booster-onboarding.php:124
 msgid "Add one extra currency"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:146
+#: includes/admin/class-booster-onboarding.php:125
+msgid "Are you sure you want to undo this goal?"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:162
 msgid "Getting Started with Booster"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:149
+#: includes/admin/class-booster-onboarding.php:165
 msgid "Welcome to Booster! Get started quickly by choosing one of these goals:"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:152
+#: includes/admin/class-booster-onboarding.php:168
 msgid "Open onboarding"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:156
+#: includes/admin/class-booster-onboarding.php:172
 msgid "Completed Goals"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:171
+#: includes/admin/class-booster-onboarding.php:187
+#: includes/admin/class-booster-onboarding.php:230
+#: includes/admin/class-booster-onboarding.php:243
+#: includes/admin/views/onboarding-modal.php:88
+#: includes/admin/views/onboarding-modal.php:119
 msgid "Applied"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:173
+#: includes/admin/class-booster-onboarding.php:189
 msgid "Undo"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:215
-#: includes/admin/class-booster-onboarding.php:244
+#: includes/admin/class-booster-onboarding.php:225
+msgid "Onboarding Analytics (Last 500 Events)"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:228
+msgid "Goals"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:230
+#: includes/settings/meta-box/wcj-settings-meta-box-crowdfunding.php:20
+msgid "Goal"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:230
+msgid "Undone"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:241
+#: includes/admin/views/onboarding-modal.php:29
+msgid "Blueprints"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:243
+msgid "Blueprint"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:291
+#: includes/admin/class-booster-onboarding.php:320
 msgid "Insufficient permissions."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:222
-#: includes/admin/class-booster-onboarding.php:250
-#: includes/admin/class-booster-onboarding.php:275
+#: includes/admin/class-booster-onboarding.php:298
+#: includes/admin/class-booster-onboarding.php:326
+#: includes/admin/class-booster-onboarding.php:351
 msgid "Invalid goal ID."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:334
+#: includes/admin/class-booster-onboarding.php:401
 msgid "Goal applied successfully!"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:351
-msgid "Visit your store frontend to see the enabled modules in action"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:352
-msgid "Customize notification messages in the module settings"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:353
-msgid "Add more modules to enhance customer engagement"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:356
-msgid "Your orders now have sequential numbers for easier tracking"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:357
-msgid "Check your orders list to see the enhanced admin features"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:358
-msgid "Customize the order number format in settings"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:361
-msgid "Your store now supports multiple currencies"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:362
-msgid "Add exchange rates and enable the currency switcher"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:363
-msgid "Test the frontend to see your currency options"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:366
-msgid "PDF invoices will now be automatically generated for new orders"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:367
-msgid "Customize your invoice template with your logo and branding"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:368
-msgid "Test by placing a sample order"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:371
-msgid "Related products are now enabled by category—check a product page"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:372
-msgid "Optionally configure a simple product add-on from the settings page"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:373
-msgid "Review analytics to see if product engagement improves"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:376
-msgid "Checkout button text has been updated for clarity"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:377
-msgid "Verify core fields look right (e.g., Company hidden if configured)"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:378
-msgid "Place a test order to confirm the flow"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:381
-msgid "Order numbers will now be sequential"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:382
-msgid "Open a recent order to verify numbering"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:383
-msgid "Add one product tab with FAQs or sizing info"
-msgstr ""
-
-#: includes/admin/class-booster-onboarding.php:691
+#: includes/admin/class-booster-onboarding.php:684
 msgid "No snapshot found for this goal."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:728
+#: includes/admin/class-booster-onboarding.php:713
 msgid "Goal undone successfully!"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:782
+#: includes/admin/class-booster-onboarding.php:891
+msgid "Permission denied."
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:789
+msgid "Blueprints not available."
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:795
+msgid "Invalid blueprint."
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:818
+#, php-format
+msgid "%s blueprint applied successfully!"
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:900
+msgid "No snapshot found for this blueprint."
+msgstr ""
+
+#: includes/admin/class-booster-onboarding.php:924
+msgid "Blueprint reverted successfully."
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:33
@@ -857,6 +832,99 @@ msgstr ""
 msgid "Welcome to Booster"
 msgstr ""
 
+#: includes/admin/onboarding-blueprints.php:17
+msgid "Recover Lost Sales"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:18
+msgid "Set up automated cart abandonment recovery to win back customers."
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:25
+msgid "Set sender details"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:29
+#, php-format
+msgid "Create a 10% coupon"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:33
+msgid "Send a test email"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:38
+msgid "Configure Cart Recovery"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:42
+msgid "Sequences & coupon automation available in Elite — Compare →"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:45
+msgid "Great! Cart abandonment recovery is now active."
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:49
+msgid "Boost Average Order Value"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:50
+msgid "Enable add-ons and related products to increase cart size."
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:57
+msgid "Add an add-on to your top product"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:61
+msgid "Confirm related items are showing"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:66
+msgid "Add Your First Add-On"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:70
+msgid "Conditional add-ons & fees in Elite — Compare →"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:73
+msgid "Nice! Your store can now offer add-ons and show related products."
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:77
+msgid "Sell Internationally"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:78
+msgid "Set up your store to accept international orders."
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:85
+msgid "Add EU/UK shipping zones"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:89
+msgid "Enable taxes"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:93
+msgid "Connect payments (Stripe/PayPal)"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:98
+msgid "Set Up Shipping"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:102
+msgid "Geo-price & currency controls in Elite — Compare →"
+msgstr ""
+
+#: includes/admin/onboarding-blueprints.php:105
+msgid "Perfect! Your store is now ready for international customers."
+msgstr ""
+
 #: includes/admin/onboarding-map.php:17
 msgid "Grow sales now"
 msgstr ""
@@ -873,7 +941,7 @@ msgstr ""
 msgid "Enable sequential order numbers and admin enhancements"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:63 includes/admin/onboarding-map.php:171
+#: includes/admin/onboarding-map.php:63 includes/admin/onboarding-map.php:175
 msgid "Configure order numbers"
 msgstr ""
 
@@ -894,11 +962,11 @@ msgid "Professional invoices (starter)"
 msgstr ""
 
 #: includes/admin/onboarding-map.php:86
-msgid "Auto-generate PDF invoices (free tier)"
+msgid "Auto-generate PDF invoices (free tier: Invoice only)"
 msgstr ""
 
 #: includes/admin/onboarding-map.php:100
-msgid "Customize your invoice template"
+msgid "Customize invoice template"
 msgstr ""
 
 #: includes/admin/onboarding-map.php:104
@@ -909,28 +977,36 @@ msgstr ""
 msgid "Enable product add-ons and related products"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:124
-msgid "Configure product add-ons"
+#: includes/admin/onboarding-map.php:126
+msgid "Add your first product add-on"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:128
+#: includes/admin/onboarding-map.php:130
 msgid "Better checkout (basics)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:129
-msgid "Customize checkout fields and order button label"
+#: includes/admin/onboarding-map.php:131
+msgid "Customize checkout fields and button labels"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:147
-msgid "Tweak checkout field order/labels"
+#: includes/admin/onboarding-map.php:150
+msgid "Customize checkout fields"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:151
+#: includes/admin/onboarding-map.php:154
 msgid "Store essentials (quick setup)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:152
-msgid "Enable sequential order numbers and a custom product tab"
+#: includes/admin/onboarding-map.php:155
+msgid "Enable sequential order numbers and product tabs"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:179
+msgid "Recover Lost Sale"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:180
+msgid "Enable sequential Cart Abandonment"
 msgstr ""
 
 #: includes/admin/views/onboarding-modal.php:21
@@ -941,61 +1017,73 @@ msgstr ""
 msgid "Pick a goal. We'll apply safe defaults you can undo anytime."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:32
-msgid "Choose Goal"
+#: includes/admin/views/onboarding-modal.php:26
+msgid "Quick Setup"
+msgstr ""
+
+#: includes/admin/views/onboarding-modal.php:33
+msgid "Progress"
 msgstr ""
 
 #: includes/admin/views/onboarding-modal.php:36
+msgid "Choose"
+msgstr ""
+
+#: includes/admin/views/onboarding-modal.php:41
 msgid "Review"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:40
+#: includes/admin/views/onboarding-modal.php:46
 #: includes/class-wcj-order-custom-statuses.php:261
 msgid "Complete"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:90
-#: includes/admin/views/onboarding-modal.php:119
+#: includes/admin/views/onboarding-modal.php:110
+msgid "Includes:"
+msgstr ""
+
+#: includes/admin/views/onboarding-modal.php:129
+#: includes/admin/views/onboarding-modal.php:158
 msgid "Back"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:97
+#: includes/admin/views/onboarding-modal.php:136
 msgid "We will turn on:"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:102
+#: includes/admin/views/onboarding-modal.php:141
 msgid "We will set:"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:109
+#: includes/admin/views/onboarding-modal.php:148
 msgid "Save an undo snapshot"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:112
+#: includes/admin/views/onboarding-modal.php:151
 msgid "Lets you undo these changes later."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:122
+#: includes/admin/views/onboarding-modal.php:161
 msgid "Apply changes"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:131
-msgid "Goal Applied Successfully!"
+#: includes/admin/views/onboarding-modal.php:170
+msgid "All set."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:132
-msgid "Your selected modules have been enabled and configured."
+#: includes/admin/views/onboarding-modal.php:171
+msgid "Changes applied."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:135
-msgid "What happens next?"
+#: includes/admin/views/onboarding-modal.php:174
+msgid "Next steps:"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:147
+#: includes/admin/views/onboarding-modal.php:187
 msgid "Pick Another Goal"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:156
+#: includes/admin/views/onboarding-modal.php:199
 msgid "Applying…"
 msgstr ""
 
@@ -10389,10 +10477,6 @@ msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-coupon-by-user-role.php:18
 msgid "Invalidate coupon for selected user roles."
-msgstr ""
-
-#: includes/settings/meta-box/wcj-settings-meta-box-crowdfunding.php:20
-msgid "Goal"
 msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-crowdfunding.php:32

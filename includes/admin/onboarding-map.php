@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Onboarding Map
  * Data-driven configuration for onboarding goals
  *
- * @version 7.4.0
+ * @version 7.5.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
-	'grow_sales'        => array(
+	'grow_sales'              => array(
 		'title'           => __( 'Grow sales now', 'woocommerce-jetpack' ),
 		'subtitle'        => __( 'Enable sales notifications', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-chart-line',
@@ -36,7 +36,7 @@ return array(
 		),
 		'first_win_check' => 'sales_notifications_enabled',
 	),
-	'work_smarter'      => array(
+	'work_smarter'            => array(
 		'title'           => __( 'Work smarter (backend)', 'woocommerce-jetpack' ),
 		'subtitle'        => __( 'Enable sequential order numbers and admin enhancements', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-admin-tools',
@@ -63,7 +63,7 @@ return array(
 		'next_step_text'  => __( 'Configure order numbers', 'woocommerce-jetpack' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=shipping_and_orders&section=order_numbers&wcj-cat-nonce=',
 	),
-	'go_global'         => array(
+	'go_global'               => array(
 		'title'           => __( 'Go global (starter)', 'woocommerce-jetpack' ),
 		'subtitle'        => __( 'Add additional currency support', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-admin-site',
@@ -81,26 +81,27 @@ return array(
 		'next_step_text'  => __( 'Configure currencies', 'woocommerce-jetpack' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=prices_and_currencies&section=currency&wcj-cat-nonce=',
 	),
-	'professional_docs' => array(
+	'professional_invoices'   => array(
 		'title'           => __( 'Professional invoices (starter)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Auto-generate PDF invoices (free tier)', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Auto-generate PDF invoices (free tier: Invoice only)', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-media-document',
-		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>',
+		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
 		'modules'         => array(
 			array(
 				'id'       => 'pdf_invoicing',
 				'settings' => array(
 					'wcj_pdf_invoicing_enabled'     => 'yes',
 					'wcj_invoicing_invoice_enabled' => 'yes',
+					'wcj_invoicing_invoice_create_on'     => array( 'woocommerce_new_order' ),
 					'wcj_invoicing_invoice_attach_to_email_enabled' => 'yes',
 				),
 			),
 		),
 		'first_win_check' => 'wcj_invoicing_invoice_enabled',
-		'next_step_text'  => __( 'Customize your invoice template', 'woocommerce-jetpack' ),
+		'next_step_text'  => __( 'Customize invoice template', 'woocommerce-jetpack' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing&wcj-cat-nonce=',
 	),
-	'boost_conversions' => array(
+	'boost_conversions_free'  => array(
 		'title'           => __( 'Boost conversions (free tools)', 'woocommerce-jetpack' ),
 		'subtitle'        => __( 'Enable product add-ons and related products', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-star-filled',
@@ -115,18 +116,20 @@ return array(
 			array(
 				'id'       => 'related_products',
 				'settings' => array(
-					'wcj_related_products_enabled' => 'yes',
+					'wcj_related_products_enabled'  => 'yes',
 					'wcj_related_products_relate_by_category_enabled' => 'yes',
+					'wcj_related_products_columns'  => 3,
+					'wcj_related_products_per_page' => 3,
 				),
 			),
 		),
 		'first_win_check' => 'wcj_product_addons_enabled',
-		'next_step_text'  => __( 'Configure product add-ons', 'woocommerce-jetpack' ),
+		'next_step_text'  => __( 'Add your first product add-on', 'woocommerce-jetpack' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=products&section=product_addons&wcj-cat-nonce=',
 	),
-	'better_checkout'   => array(
+	'better_checkout_basics'  => array(
 		'title'           => __( 'Better checkout (basics)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Customize checkout fields and order button label', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Customize checkout fields and button labels', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-cart',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>',
 		'modules'         => array(
@@ -139,17 +142,18 @@ return array(
 			array(
 				'id'       => 'more_button_labels',
 				'settings' => array(
-					'wcj_more_button_labels_enabled' => 'yes',
+					'wcj_more_button_labels_enabled'       => 'yes',
+					'wcj_checkout_place_order_button_text' => 'Pay now',
 				),
 			),
 		),
 		'first_win_check' => 'wcj_checkout_core_fields_enabled',
-		'next_step_text'  => __( 'Tweak checkout field order/labels', 'woocommerce-jetpack' ),
+		'next_step_text'  => __( 'Customize checkout fields', 'woocommerce-jetpack' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=cart_and_checkout&section=checkout_core_fields&wcj-cat-nonce=',
 	),
-	'store_essentials'  => array(
+	'store_essentials_quick'  => array(
 		'title'           => __( 'Store essentials (quick setup)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Enable sequential order numbers and a custom product tab', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Enable sequential order numbers and product tabs', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-admin-tools',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -158,6 +162,7 @@ return array(
 				'settings' => array(
 					'wcj_order_numbers_enabled'           => 'yes',
 					'wcj_order_number_sequential_enabled' => 'yes',
+					'wcj_order_number_counter'            => 1,
 				),
 			),
 			array(
@@ -170,5 +175,20 @@ return array(
 		'first_win_check' => 'wcj_order_numbers_enabled',
 		'next_step_text'  => __( 'Configure order numbers', 'woocommerce-jetpack' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=shipping_and_orders&section=order_numbers&wcj-cat-nonce=',
+	),
+	'recover_lost_sales_goal' => array(
+		'title'           => __( 'Recover Lost Sale', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Enable sequential Cart Abandonment', 'woocommerce-jetpack' ),
+		'icon'            => 'dashicons-admin-tools',
+		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
+		'modules'         => array(
+			array(
+				'id'       => 'cart_abandonment',
+				'settings' => array(
+					'wcj_cart_abandonment_enabled' => 'yes',
+				),
+			),
+		),
+		'first_win_check' => 'wcj_cart_abandonment_enabled',
 	),
 );
