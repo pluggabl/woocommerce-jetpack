@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Coupon Code Generator
  *
- * @version 7.3.0
+ * @version 7.5.0
  * @since   3.2.3
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -47,7 +47,7 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		/**
 		 * Enqueue_generate_coupon_code_script.
 		 *
-		 * @version 5.6.8
+		 * @version 7.5.0
 		 * @since   3.1.3
 		 */
 		public function enqueue_generate_coupon_code_script() {
@@ -55,7 +55,14 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 			// phpcs:disable WordPress.Security.NonceVerification
 			if ( ! empty( $_GET ) && 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_coupon' === $_GET['post_type'] ) {
 				wp_enqueue_script( 'wcj-coupons-code-generator', wcj_plugin_url() . '/includes/js/wcj-coupons-code-generator.js', array( 'jquery' ), w_c_j()->version, true );
-				wp_localize_script( 'wcj-coupons-code-generator', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+				wp_localize_script(
+					'wcj-coupons-code-generator',
+					'ajax_object',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'nonce'    => wp_create_nonce( 'wcj_generate_coupon_nonce' ),
+					)
+				);
 			}
 			// phpcs:enable WordPress.Security.NonceVerification
 		}
@@ -127,11 +134,21 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		/**
 		 * Ajax_generate_coupon_code.
 		 *
-		 * @version 3.1.3
+		 * @version 7.5.0
 		 * @since   3.1.3
 		 * @todo    (maybe) optionally generate some description for coupon (e.g. "Automatically generated coupon [YYYY-MM-DD]")
 		 */
 		public function ajax_generate_coupon_code() {
+			// Nonce verification.
+			if ( ! isset( $_POST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['security'] ) ), 'wcj_generate_coupon_nonce' ) ) {
+				wp_die();
+			}
+
+			// Authorization check (only admin or shop manager).
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				wp_die();
+			}
+
 			$attempts = 0;
 			while ( true ) {
 				$coupon_code = $this->generate_coupon_code();
