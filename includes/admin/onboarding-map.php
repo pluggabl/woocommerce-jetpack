@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Onboarding Map
  * Data-driven configuration for onboarding goals
  *
- * @version 7.5.0
+ * @version 7.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -190,5 +190,283 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_cart_abandonment_enabled',
+	),
+	'b2b_store' => array(
+		'title'           => __( 'B2B Store', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Coupon by user role, Gateways by User Role, Shipping Methods by Users, and Business tools', 'woocommerce-jetpack' ),
+		'icon'            => 'dashicons-store',
+		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
+		'modules'         => array(
+			array(
+				'id'       => 'coupon_by_user_role',
+				'settings' => array(
+					'wcj_coupon_by_user_role_enabled'  => 'yes',
+					'wcj_coupon_by_user_role_invalid'  => array('guest'),
+					
+				),
+			),
+			array(
+				'id'       => 'payment_gateways_by_user_role',
+				'settings' => array(
+					'wcj_payment_gateways_by_user_role_enabled'  => 'yes',
+					'wcj_gateways_user_roles_include_bacs'  => array( 'administrator' ),
+				),
+			),
+			array(
+				'id'       => 'shipping_by_user_role',
+				'settings' => array(
+					'wcj_shipping_by_user_role_enabled'  => 'yes',
+					'wcj_shipping_user_roles_include_flat_rate'  =>  array( 'administrator' ),
+					'wcj_shipping_user_roles_include_local_pickup'  =>  array( 'guest' ),
+				),
+			),
+			array(
+				'id'       => 'price_by_user_role',
+				'settings' => array(
+					'wcj_price_by_user_role_enabled'  => 'yes',
+					'wcj_price_by_user_role_guest' => 1.5,
+				),
+			),
+			array(
+				'id'       => 'product_by_user_role',
+				'settings' => array(
+					'wcj_product_by_user_role_enabled'  => 'yes',
+				),
+			),
+			array(
+				'id'       => 'my_account',
+				'settings' => array(
+					'wcj_my_account_enabled'  => 'yes',
+					'wcj_my_account_registration_extra_fields_user_role_enabled' => 'yes',
+				),
+			),
+			array(
+				'id'       => 'wholesale_price',
+				'settings' => array(
+					'wcj_wholesale_price_enabled'  => 'yes',
+					'wcj_wholesale_price_show_info_on_cart' => 'yes',
+					'wcj_wholesale_price_level_min_qty_1' => 2, 
+					'wcj_wholesale_price_level_discount_percent_1' => 10, 
+				),
+			),
+			array(
+				'id'       => 'tax_display',
+				'settings' => array(
+					'wcj_tax_display_enabled'  => 'yes',
+					'wcj_tax_display_toggle_enabled' => 'yes',
+				),
+			),
+			array(
+				'id'       => 'offer_price',
+				'settings' => array(
+					'wcj_offer_price_enabled'  => 'yes',
+					'wcj_offer_price_price_step'  => 2,
+				),
+			),
+			array(
+				'id'       => 'order_min_amount',
+				'settings' => array(
+					'wcj_order_min_amount_enabled'  => 'yes',
+					'wcj_order_minimum_amount_cart_notice_enabled'  => 'yes',
+					'wcj_order_minimum_amount_stop_from_seeing_checkout'  => 'yes',
+					'wcj_order_minimum_amount_by_user_role_administrator'  => 100,
+					'wcj_order_minimum_amount_by_user_role_guest'  => 150,
+				),
+			),
+			array(
+				'id'       => 'eu_vat_number',
+				'settings' => array(
+					'wcj_eu_vat_number_enabled'  => 'yes',
+				),
+			),
+		),
+		'first_win_check' => 'wcj_coupon_by_user_role_enabled',
+		'next_step_text'  => __( 'Configure Coupon by User Role', 'woocommerce-jetpack' ),
+		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=coupon_by_user_role&wcj-cat-nonce=feca9b5418',
+	),
+	'intl_Store' => array(
+		'title'           => __( 'INTL Store', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Currency Exchange Rates, Prices and Currencies by Country, Multicurrency Product Base Price, and International currency tools', 'woocommerce-jetpack' ),
+		'icon'            => 'dashicons-store',
+		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
+		'modules'         => array(
+			array(
+				'id'       => 'currency_exchange_rates',
+				'settings' => array(
+					'wcj_currency_exchange_rates_enabled'  => 'yes',
+				),
+			),
+			array(
+				'id'       => 'price_by_country',
+				'settings' => array(
+					'wcj_price_by_country_enabled'  => 'yes',
+					'wcj_price_by_country_customer_country_detection_method' => 'by_user_selection',
+				),
+			),
+			array(
+				'id'       => 'multicurrency_base_price',
+				'settings' => array(
+					'wcj_multicurrency_base_price_enabled'  => 'yes',
+				),
+			),
+		),
+		'first_win_check' => 'wcj_currency_exchange_rates_enabled',
+		'next_step_text'  => __( 'Configure Exchange Rates', 'woocommerce-jetpack' ),
+		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=prices_and_currencies&section=currency_exchange_rates&wcj-cat-nonce=feca9b5418',
+	),
+	'merchant_getting_started' => array(
+		'title'           => __( 'Merchant getting started', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Product input fields, Checkout Custom Info, Product Variation Swatches, and other product tools', 'woocommerce-jetpack' ),
+		'icon'            => 'dashicons-products',
+		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
+		'modules'         => array(
+			array(
+				'id'       => 'product_input_fields',
+				'settings' => array(
+					'wcj_product_input_fields_enabled'  => 'yes',
+					'wcj_product_input_fields_global_enabled' => 'yes',
+					'wcj_product_input_fields_enabled_global_1'       => 'yes',
+					'wcj_product_input_fields_title_global_1'       => 'Additional Information',
+					'wcj_product_input_fields_placeholder_global_1'       => ' Add Additional Information',
+					'wcj_product_input_fields_required_global_1'       => 'yes',
+					'wcj_product_input_fields_required_message_global_1'       => 'Additional Information can\'t be empty.', 
+				),
+			),
+			array(
+				'id'       => 'checkout_custom_info',
+				'settings' => array(
+					'wcj_checkout_custom_info_enabled'  => 'yes',
+				),
+			),
+			array(
+				'id'       => 'product_variation_swatches',
+				'settings' => array(
+					'wcj_product_variation_swatches_enabled'  => 'yes',
+				),
+			),
+			array(
+				'id'       => 'product_tabs',
+				'settings' => array(
+					'wcj_product_tabs_enabled'  => 'yes',
+					'wcj_custom_product_tabs_global_enabled'  => 'yes',
+					'wcj_custom_product_tabs_title_global_1'  => 'Custom Tab',
+					'wcj_custom_product_tabs_content_global_1'  => 'Product ID : [wcj_product_id]',
+				),
+			),
+			array(
+				'id'       => 'checkout_files_upload',
+				'settings' => array(
+					'wcj_checkout_files_upload_enabled'  => 'yes',
+					'wcj_checkout_files_upload_add_to_thankyou_1'  => 'yes',
+				),
+			),
+			array(
+				'id'       => 'checkout_fees',
+				'settings' => array(
+					'wcj_checkout_fees_enabled'  => 'yes',
+				),
+			),
+		),
+		'first_win_check' => 'wcj_product_input_fields_enabled',
+		'next_step_text'  => __( 'Configure Product Input Fields', 'woocommerce-jetpack' ),
+		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=products&section=product_input_fields&wcj-cat-nonce=feca9b5418',
+	),
+	'merchant_aov_increase' => array(
+		'title'           => __( 'Merchant AOV increase', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Coupon Code Generator, URL Coupon, and Sale Flash', 'woocommerce-jetpack' ),
+		'icon'            => 'dashicons-admin-links',
+		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
+		'modules'         => array(
+			array(
+				'id'       => 'coupon_code_generator',
+				'settings' => array(
+					'wcj_coupon_code_generator_enabled'  => 'yes',
+					'wcj_coupons_code_generator_enabled' => 'yes',
+				),
+			),
+			array(
+				'id'       => 'url_coupons',
+				'settings' => array(
+					'wcj_url_coupons_enabled'  => 'yes',
+				),
+			),
+			array(
+				'id'       => 'sale_flash',
+				'settings' => array(
+					'wcj_sale_flash_enabled'  => 'yes',
+				),
+			),
+		),
+		'first_win_check' => 'wcj_coupon_code_generator_enabled',
+		'next_step_text'  => __( 'Configure Coupon Code', 'woocommerce-jetpack' ),
+		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=coupon_code_generator&wcj-cat-nonce=feca9b5418',
+	),
+	'merchant_run_their_store_efficiently' => array(
+		'title'           => __( 'Merchant run their store efficiently', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Export, Admin product List, and Purchase data', 'woocommerce-jetpack' ),
+		'icon'            => 'dashicons-admin-tools',
+		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
+		'modules'         => array(
+			array(
+				'id'       => 'export',
+				'settings' => array(
+					'wcj_export_enabled'  => 'yes',
+				),
+			),
+			array(
+				'id'       => 'admin_products_list',
+				'settings' => array(
+					'wcj_admin_products_list_enabled'  => 'yes',
+					'wcj_products_admin_list_custom_columns_enabled' => 'yes',
+					'wcj_products_admin_list_custom_columns_enabled_1' => 'yes',
+					'wcj_products_admin_list_custom_columns_label_1' => 'Sale price',
+					'wcj_products_admin_list_custom_columns_value_1' => '[wcj_product_sale_price]',
+					'wcj_products_admin_list_columns_order_enabled' => 'yes',
+				),
+			),
+			array(
+				'id'       => 'purchase_data',
+				'settings' => array(
+					'wcj_purchase_data_enabled'  => 'yes',
+					'wcj_purchase_price_affiliate_commission_enabled' => 'yes',
+					'wcj_purchase_data_custom_columns_purchase_cost' => 'yes', 
+				),
+			),
+			array(
+				'id'       => 'order_custom_statuses',
+				'settings' => array(
+					'wcj_order_custom_statuses_enabled'  => 'yes',
+					'wcj_orders_custom_statuses_default_status' => 'processing',
+				),
+			),
+			array(
+				'id'       => 'products_xml',
+				'settings' => array(
+					'wcj_products_xml_enabled'  => 'yes',
+					'wcj_products_xml_file_path_1' => 'Click on URL to view xml file.', 
+					'wcj_products_xml_orderby_1' => 'ID', 
+					'wcj_products_xml_order_1' => 'ASC', 
+					
+				),
+			),
+			array(
+				'id'       => 'product_bulk_meta_editor',
+				'settings' => array(
+					'wcj_product_bulk_meta_editor_enabled'  => 'yes',
+					'wcj_product_bulk_meta_editor_additional_columns' => array('product_id' , 'product_status'),
+				),
+			),
+			array(
+				'id'       => 'admin_tools',
+				'settings' => array(
+					'wcj_admin_tools_enabled'  => 'yes',
+					'wcj_admin_tools_show_order_meta_enabled' => 'yes', 
+					'wcj_admin_tools_show_product_meta_enabled' => 'yes', 
+				),
+			),
+		),
+		'first_win_check' => 'wcj_export_enabled',
+		'next_step_text'  => __( 'Configure Export Tool', 'woocommerce-jetpack' ),
+		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=emails_and_misc&section=export&wcj-cat-nonce=feca9b5418',
 	),
 );

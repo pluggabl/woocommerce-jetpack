@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.5.0 05/11/2025 =",
-    "1" : "* Onboarding Phase 3 – Blueprints for faster outcomes.** Added **one-click Blueprints** that bundle the right free modules so new stores get real results in under a minute: **Recover Lost Sales, Boost AOV, Sell Internationally.",
-    "2" : "* FIXED - Resolved a security vulnerability in the coupon code generation feature.",
-    "3" : "* WooCommerce 10.3.3 Tested"
+    "0" : "= 7.6.0 17/11/2025 =",
+    "1" : "* Onboarding Phase 4 - Added five new goals to enhance performance and streamline integration.",
+    "2" : "* WooCommerce 10.3.5 Tested",
+    "3" : "* WordPress 6.8.3 Tested"
 }

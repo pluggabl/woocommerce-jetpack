@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.8.3
 Requires PHP: 7.2
-Stable tag: 7.5.0
+Stable tag: 7.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,17 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.6.0 - 17/11/2025 =
+
+* **Onboarding Phase 4**: Added **five new goals** to enhance performance and streamline integration.
+  - **B2B Store**: Enable wholesale pricing, role-based control, and flexible tax settings.
+  - **INTL Store**: Set up multicurrency and country-based pricing for global sales.
+  - **Merchant getting started**: Simplify setup with custom product and checkout options.
+  - **Merchant AOV increase**: Boost sales with smart coupons and promotional tools.
+  - **Merchant run their store efficiently**: Streamline store management with admin and reporting tools.
+* WooCommerce 10.3.5 Tested
+* WordPress 6.8.3 Tested
 
 = 7.5.0 - 05/11/2025 =
 
