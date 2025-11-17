@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Onboarding Controller
  *
- * @version 7.5.0
+ * @version 7.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -766,6 +766,21 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 
 				case 'wcj_checkout_core_fields_enabled':
 					return 'yes' === get_option( 'wcj_checkout_core_fields_enabled', 'no' );
+
+				case 'wcj_coupon_by_user_role_enabled':
+					return 'yes' === get_option( 'wcj_coupon_by_user_role_enabled', 'no' );
+
+				case 'wcj_currency_exchange_rates_enabled':
+					return 'yes' === get_option( 'wcj_currency_exchange_rates_enabled', 'no' );
+
+				case 'wcj_product_input_fields_enabled':
+					return 'yes' === get_option( 'wcj_product_input_fields_enabled', 'no' );
+
+				case 'wcj_coupon_code_generator_enabled':
+					return 'yes' === get_option( 'wcj_coupon_code_generator_enabled', 'no' );
+
+				case 'wcj_export_enabled':
+					return 'yes' === get_option( 'wcj_export_enabled', 'no' );
 
 				default:
 					return false;

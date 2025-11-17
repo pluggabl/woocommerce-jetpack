@@ -57,7 +57,7 @@ msgid "Error occurred. Please try again."
 msgstr ""
 
 #: includes/admin/class-booster-onboarding.php:122
-#: includes/admin/views/onboarding-modal.php:50
+#: includes/admin/views/onboarding-modal.php:49
 msgid "Close"
 msgstr ""
 
@@ -92,8 +92,8 @@ msgstr ""
 #: includes/admin/class-booster-onboarding.php:187
 #: includes/admin/class-booster-onboarding.php:230
 #: includes/admin/class-booster-onboarding.php:243
-#: includes/admin/views/onboarding-modal.php:88
-#: includes/admin/views/onboarding-modal.php:119
+#: includes/admin/views/onboarding-modal.php:87
+#: includes/admin/views/onboarding-modal.php:118
 msgid "Applied"
 msgstr ""
 
@@ -119,7 +119,7 @@ msgid "Undone"
 msgstr ""
 
 #: includes/admin/class-booster-onboarding.php:241
-#: includes/admin/views/onboarding-modal.php:29
+#: includes/admin/views/onboarding-modal.php:28
 msgid "Blueprints"
 msgstr ""
 
@@ -150,29 +150,29 @@ msgstr ""
 msgid "Goal undone successfully!"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:782
-#: includes/admin/class-booster-onboarding.php:891
+#: includes/admin/class-booster-onboarding.php:797
+#: includes/admin/class-booster-onboarding.php:912
 msgid "Permission denied."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:789
+#: includes/admin/class-booster-onboarding.php:804
 msgid "Blueprints not available."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:795
+#: includes/admin/class-booster-onboarding.php:810
 msgid "Invalid blueprint."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:818
+#: includes/admin/class-booster-onboarding.php:838
 #, php-format
 msgid "%s blueprint applied successfully!"
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:900
+#: includes/admin/class-booster-onboarding.php:922
 msgid "No snapshot found for this blueprint."
 msgstr ""
 
-#: includes/admin/class-booster-onboarding.php:924
+#: includes/admin/class-booster-onboarding.php:951
 msgid "Blueprint reverted successfully."
 msgstr ""
 
@@ -941,7 +941,7 @@ msgstr ""
 msgid "Enable sequential order numbers and admin enhancements"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:63 includes/admin/onboarding-map.php:175
+#: includes/admin/onboarding-map.php:63 includes/admin/onboarding-map.php:176
 msgid "Configure order numbers"
 msgstr ""
 
@@ -965,48 +965,114 @@ msgstr ""
 msgid "Auto-generate PDF invoices (free tier: Invoice only)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:100
+#: includes/admin/onboarding-map.php:101
 msgid "Customize invoice template"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:104
+#: includes/admin/onboarding-map.php:105
 msgid "Boost conversions (free tools)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:105
+#: includes/admin/onboarding-map.php:106
 msgid "Enable product add-ons and related products"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:126
+#: includes/admin/onboarding-map.php:127
 msgid "Add your first product add-on"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:130
+#: includes/admin/onboarding-map.php:131
 msgid "Better checkout (basics)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:131
+#: includes/admin/onboarding-map.php:132
 msgid "Customize checkout fields and button labels"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:150
+#: includes/admin/onboarding-map.php:151
 msgid "Customize checkout fields"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:154
+#: includes/admin/onboarding-map.php:155
 msgid "Store essentials (quick setup)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:155
+#: includes/admin/onboarding-map.php:156
 msgid "Enable sequential order numbers and product tabs"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:179
+#: includes/admin/onboarding-map.php:180
 msgid "Recover Lost Sale"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:180
+#: includes/admin/onboarding-map.php:181
 msgid "Enable sequential Cart Abandonment"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:195
+msgid "B2B Store"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:196
+msgid ""
+"Coupon by user role, Gateways by User Role, Shipping Methods by Users, and "
+"Business tools"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:284
+msgid "Configure Coupon by User Role"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:288
+msgid "INTL Store"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:289
+msgid ""
+"Currency Exchange Rates, Prices and Currencies by Country, Multicurrency "
+"Product Base Price, and International currency tools"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:314
+msgid "Configure Exchange Rates"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:318
+msgid "Merchant getting started"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:319
+msgid ""
+"Product input fields, Checkout Custom Info, Product Variation Swatches, and "
+"other product tools"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:371
+msgid "Configure Product Input Fields"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:375
+msgid "Merchant AOV increase"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:376
+msgid "Coupon Code Generator, URL Coupon, and Sale Flash"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:401
+msgid "Configure Coupon Code"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:405
+msgid "Merchant run their store efficiently"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:406
+msgid "Export, Admin product List, and Purchase data"
+msgstr ""
+
+#: includes/admin/onboarding-map.php:469
+msgid "Configure Export Tool"
 msgstr ""
 
 #: includes/admin/views/onboarding-modal.php:21
@@ -1017,73 +1083,73 @@ msgstr ""
 msgid "Pick a goal. We'll apply safe defaults you can undo anytime."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:26
+#: includes/admin/views/onboarding-modal.php:25
 msgid "Quick Setup"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:33
+#: includes/admin/views/onboarding-modal.php:32
 msgid "Progress"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:36
+#: includes/admin/views/onboarding-modal.php:35
 msgid "Choose"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:41
+#: includes/admin/views/onboarding-modal.php:40
 msgid "Review"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:46
+#: includes/admin/views/onboarding-modal.php:45
 #: includes/class-wcj-order-custom-statuses.php:261
 msgid "Complete"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:110
+#: includes/admin/views/onboarding-modal.php:109
 msgid "Includes:"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:129
-#: includes/admin/views/onboarding-modal.php:158
+#: includes/admin/views/onboarding-modal.php:128
+#: includes/admin/views/onboarding-modal.php:157
 msgid "Back"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:136
+#: includes/admin/views/onboarding-modal.php:135
 msgid "We will turn on:"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:141
+#: includes/admin/views/onboarding-modal.php:140
 msgid "We will set:"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:148
+#: includes/admin/views/onboarding-modal.php:147
 msgid "Save an undo snapshot"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:151
+#: includes/admin/views/onboarding-modal.php:150
 msgid "Lets you undo these changes later."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:161
+#: includes/admin/views/onboarding-modal.php:160
 msgid "Apply changes"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:170
+#: includes/admin/views/onboarding-modal.php:169
 msgid "All set."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:171
+#: includes/admin/views/onboarding-modal.php:170
 msgid "Changes applied."
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:174
+#: includes/admin/views/onboarding-modal.php:172
 msgid "Next steps:"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:187
+#: includes/admin/views/onboarding-modal.php:185
 msgid "Pick Another Goal"
 msgstr ""
 
-#: includes/admin/views/onboarding-modal.php:199
+#: includes/admin/views/onboarding-modal.php:197
 msgid "Applying…"
 msgstr ""
 
