@@ -281,12 +281,7 @@
 			modulesList.empty();
 			goal.modules.forEach(
 				function(module) {
-					var moduleName = module.id.replace( /_/g, ' ' ).replace(
-						/\b\w/g,
-						function(l) {
-							return l.toUpperCase();
-						}
-					);
+					var moduleName = module.name;
 					modulesList.append( '<li>' + moduleName + '</li>' );
 				}
 			);

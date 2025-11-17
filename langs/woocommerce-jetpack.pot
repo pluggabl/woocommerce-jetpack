@@ -933,145 +933,145 @@ msgstr ""
 msgid "Enable sales notifications"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:40
+#: includes/admin/onboarding-map.php:41
 msgid "Work smarter (backend)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:41
+#: includes/admin/onboarding-map.php:42
 msgid "Enable sequential order numbers and admin enhancements"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:63 includes/admin/onboarding-map.php:176
+#: includes/admin/onboarding-map.php:66 includes/admin/onboarding-map.php:181
 msgid "Configure order numbers"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:67
+#: includes/admin/onboarding-map.php:70
 msgid "Go global (starter)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:68
+#: includes/admin/onboarding-map.php:71
 msgid "Add additional currency support"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:81
+#: includes/admin/onboarding-map.php:85
 msgid "Configure currencies"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:85
+#: includes/admin/onboarding-map.php:89
 msgid "Professional invoices (starter)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:86
+#: includes/admin/onboarding-map.php:90
 msgid "Auto-generate PDF invoices (free tier: Invoice only)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:101
+#: includes/admin/onboarding-map.php:106
 msgid "Customize invoice template"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:105
+#: includes/admin/onboarding-map.php:110
 msgid "Boost conversions (free tools)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:106
+#: includes/admin/onboarding-map.php:111
 msgid "Enable product add-ons and related products"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:127
+#: includes/admin/onboarding-map.php:134
 msgid "Add your first product add-on"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:131
+#: includes/admin/onboarding-map.php:138
 msgid "Better checkout (basics)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:132
+#: includes/admin/onboarding-map.php:139
 msgid "Customize checkout fields and button labels"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:151
+#: includes/admin/onboarding-map.php:160
 msgid "Customize checkout fields"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:155
+#: includes/admin/onboarding-map.php:164
 msgid "Store essentials (quick setup)"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:156
+#: includes/admin/onboarding-map.php:165
 msgid "Enable sequential order numbers and product tabs"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:180
+#: includes/admin/onboarding-map.php:185
 msgid "Recover Lost Sale"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:181
+#: includes/admin/onboarding-map.php:186
 msgid "Enable sequential Cart Abandonment"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:195
+#: includes/admin/onboarding-map.php:201
 msgid "B2B Store"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:196
+#: includes/admin/onboarding-map.php:202
 msgid ""
 "Coupon by user role, Gateways by User Role, Shipping Methods by Users, and "
 "Business tools"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:284
+#: includes/admin/onboarding-map.php:301
 msgid "Configure Coupon by User Role"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:288
+#: includes/admin/onboarding-map.php:305
 msgid "INTL Store"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:289
+#: includes/admin/onboarding-map.php:306
 msgid ""
 "Currency Exchange Rates, Prices and Currencies by Country, Multicurrency "
 "Product Base Price, and International currency tools"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:314
+#: includes/admin/onboarding-map.php:334
 msgid "Configure Exchange Rates"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:318
+#: includes/admin/onboarding-map.php:338
 msgid "Merchant getting started"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:319
+#: includes/admin/onboarding-map.php:339
 msgid ""
 "Product input fields, Checkout Custom Info, Product Variation Swatches, and "
 "other product tools"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:371
+#: includes/admin/onboarding-map.php:387
 msgid "Configure Product Input Fields"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:375
+#: includes/admin/onboarding-map.php:391
 msgid "Merchant AOV increase"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:376
+#: includes/admin/onboarding-map.php:392
 msgid "Coupon Code Generator, URL Coupon, and Sale Flash"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:401
+#: includes/admin/onboarding-map.php:420
 msgid "Configure Coupon Code"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:405
+#: includes/admin/onboarding-map.php:424
 msgid "Merchant run their store efficiently"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:406
+#: includes/admin/onboarding-map.php:425
 msgid "Export, Admin product List, and Purchase data"
 msgstr ""
 
-#: includes/admin/onboarding-map.php:469
+#: includes/admin/onboarding-map.php:495
 msgid "Configure Export Tool"
 msgstr ""
 
@@ -7062,16 +7062,6 @@ msgstr ""
 msgid "— No change —"
 msgstr ""
 
-#: includes/classes/class-wcj-module-product-by-condition.php:285
-#: includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php:35
-msgid "Visible"
-msgstr ""
-
-#: includes/classes/class-wcj-module-product-by-condition.php:296
-#: includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php:53
-msgid "Invisible"
-msgstr ""
-
 #: includes/classes/class-wcj-module.php:305
 msgid "WPML: Get Terms in All Languages"
 msgstr ""
@@ -10875,6 +10865,14 @@ msgstr ""
 msgid ""
 "Use \"Control\" key to select/deselect multiple options. Hold \"Control\" and "
 "\"A\" to select all options. Leave empty to disable."
+msgstr ""
+
+#: includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php:35
+msgid "Visible"
+msgstr ""
+
+#: includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php:53
+msgid "Invisible"
 msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-product-by-date.php:20
