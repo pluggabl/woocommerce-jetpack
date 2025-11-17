@@ -355,6 +355,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
   - **Merchant getting started**: Simplify setup with custom product and checkout options.
   - **Merchant AOV increase**: Boost sales with smart coupons and promotional tools.
   - **Merchant run their store efficiently**: Streamline store management with admin and reporting tools.
+* FIXED- Fixed text-domain issues in Bulk and Quick Edit visibility labels to ensure proper localization. (PR #96)
 * WooCommerce 10.3.5 Tested
 * WordPress 6.8.3 Tested
 

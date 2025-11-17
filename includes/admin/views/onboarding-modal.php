@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Onboarding Modal View
  *
- * @version 7.5.0
+ * @version 7.6.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/admin
  */
@@ -79,7 +79,7 @@ $onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map
 									'product_tabs'         => 'Product Tabs',
 								);
 								foreach ( $goal['modules'] as $module ) :
-									$module_name = isset( $module_names[ $module['id'] ] ) ? $module_names[ $module['id'] ] : ucwords( str_replace( '_', ' ', $module['id'] ) );
+									$module_name = $module['name'];
 									?>
 									<span class="module-tag"><?php echo esc_html( $module_name ); ?></span>
 								<?php endforeach; ?>

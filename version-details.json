@@ -1,6 +1,6 @@
 {
     "0" : "= 7.6.0 17/11/2025 =",
     "1" : "* Onboarding Phase 4 - Added five new goals to enhance performance and streamline integration.",
-    "2" : "* WooCommerce 10.3.5 Tested",
-    "3" : "* WordPress 6.8.3 Tested"
+    "2" : "* FIXED- Fixed text-domain issues in Bulk and Quick Edit visibility labels to ensure proper localization. (PR #96)",
+    "3" : "* WooCommerce 10.3.5 Tested"
 }
