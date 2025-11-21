@@ -59,6 +59,7 @@ $settings     = array(
 		'css'               => 'width:100%;height:200px;',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Customize notification text, add buyer names, country, product prices, images, and time ago etc details. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock.', 'woocommerce-jetpack' ),
+		'help_text'         => __( 'The message displayed in sales notifications. Use placeholders like %customer_city% and %product_title% to show real purchase details and build social proof.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'             => __( 'Image', 'woocommerce-jetpack' ),
@@ -67,6 +68,8 @@ $settings     = array(
 		'type'              => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Enable or disable product image display in notifications. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this option.', 'woocommerce-jetpack' ),
+		'help_text'         => __( 'Show product images in notifications to make them more eye-catching and credible. Images help visitors recognize products and increase engagement.', 'woocommerce-jetpack' ),
+		'friendly_label'    => __( 'Show Product Images', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'             => __( 'Display Screen', 'woocommerce-jetpack' ),
@@ -80,6 +83,7 @@ $settings     = array(
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Choose whether notifications appear on desktop, mobile, or both. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock screen selection.', 'woocommerce-jetpack' ),
+		'help_text'         => __( 'Control which devices show sales notifications. Choose "Both" for maximum reach, or limit to desktop/mobile based on your audience behavior.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'             => __( 'Display Position', 'woocommerce-jetpack' ),
@@ -92,6 +96,7 @@ $settings     = array(
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Choose where notifications appear on screen. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock Top Right and Top Left positions.', 'woocommerce-jetpack' ),
+		'help_text'         => __( 'Choose where notifications pop up on the screen. Bottom right is most common and least intrusive, while bottom left works well for RTL languages.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'id'   => 'wcj_sales_template_tab',
@@ -171,6 +176,8 @@ $settings     = array(
 		'step'              => '1',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Set how long each notification stays visible (in seconds). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock duration control.', 'woocommerce-jetpack' ),
+		'help_text'         => __( 'How long each notification stays visible before disappearing. Most stores use 4-6 seconds - long enough to read but not annoying.', 'woocommerce-jetpack' ),
+		'friendly_label'    => __( 'Display Duration', 'woocommerce-jetpack' ),
 	),
 	array(
 		'title'             => __( 'Next time display (seconds)', 'woocommerce-jetpack' ),
@@ -180,6 +187,8 @@ $settings     = array(
 		'step'              => '1',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Set delay before the next notification appears (in seconds). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock timing options.', 'woocommerce-jetpack' ),
+		'help_text'         => __( 'Time to wait before showing the next notification. Use 8-15 seconds to avoid overwhelming visitors with too many popups.', 'woocommerce-jetpack' ),
+		'friendly_label'    => __( 'Delay Between Notifications', 'woocommerce-jetpack' ),
 	),
 	array(
 		'id'   => 'wcj_sales_time_tab',
@@ -196,6 +205,7 @@ $settings     = array(
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Want to show notifications for various order statuses like "Shipped" or "Refunded" to build trust and keep customers informed? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock all order statuses.', 'woocommerce-jetpack' ),
+		'help_text'         => __( 'Which order statuses to show in notifications. Use "processing, completed" to show confirmed purchases. Avoid showing pending or failed orders.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'id'   => 'wcj_sales_general_tab',
