@@ -54,6 +54,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
 			add_action( 'admin_footer', array( $this, 'update_booster_tab_link' ), PHP_INT_MAX );
 			require_once 'class-wcj-settings-custom-fields.php';
+			require_once 'class-wcj-settings-help-tooltips.php';
 		}
 
 		/**

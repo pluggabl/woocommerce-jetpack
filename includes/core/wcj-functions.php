@@ -35,6 +35,7 @@ $wcj_function_files = array(
 	'wcj-functions-invoicing.php',
 	'wcj-functions-reports.php',
 	'wcj-functions-settings.php',
+	'wcj-functions-admin-ui.php',
 );
 
 $wcj_functions_dir = WCJ_FREE_PLUGIN_PATH . '/includes/functions/';
