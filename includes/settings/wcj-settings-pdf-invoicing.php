@@ -82,6 +82,7 @@ foreach ( $invoice_types as $k => $invoice_type ) {
 						'min' => '1',
 						'max' => '100',
 					),
+					'help_text'         => __( 'Create custom PDF documents beyond standard invoices. Use this for packing slips, proforma invoices, delivery notes, or other order documents your business needs.', 'woocommerce-jetpack' ),
 				),
 			)
 		);
@@ -99,6 +100,7 @@ foreach ( $invoice_types as $k => $invoice_type ) {
 				'options'           => $create_on_array,
 				'desc'              => ( 0 === $k ) ? '' : apply_filters( 'booster_message', '', 'desc' ),
 				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_message', '', 'disabled' ),
+				'help_text'         => __( 'When to automatically generate this document. Most stores create invoices on "Processing" or "Completed" status. Select "Manually" to generate documents only when needed.', 'woocommerce-jetpack' ),
 			),
 			array(
 				'id'                => 'wcj_invoicing_' . $invoice_type['id'] . '_skip_zero_total',
@@ -106,6 +108,7 @@ foreach ( $invoice_types as $k => $invoice_type ) {
 				'type'              => 'checkbox',
 				'desc'              => __( 'Do not create if order total equals zero', 'woocommerce-jetpack' ),
 				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_message', '', 'disabled' ),
+				'help_text'         => __( 'Skip document generation for free orders. Useful for sample orders, test orders, or promotional giveaways where no invoice is needed.', 'woocommerce-jetpack' ),
 			),
 		)
 	);
