@@ -436,6 +436,10 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				$settings = $this->get_settings( $current_section );
 
 				if ( ! $is_dashboard ) {
+					// Render Quick Start box if presets exist for this module
+					if ( function_exists( 'wcj_quick_start_render_box' ) ) {
+						wcj_quick_start_render_box( $current_section );
+					}
 					WC_Admin_Settings::output_fields( $settings );
 				} else {
 					$this->output_dashboard( $current_section );
