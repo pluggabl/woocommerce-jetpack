@@ -19,6 +19,11 @@ if ( $email_from_email ) {
 	$email_from_name     = ( $email_from_name_arr[0] ) ? $email_from_name_arr[0] : '';
 }
 
+// Render upgrade block for Cart Abandonment Lite.
+if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'cart_abandonment' ) ) {
+	wcj_render_upgrade_block( 'cart_abandonment' );
+}
+
 $settings = array(
 	array(
 		'id'   => 'wcj_cart_abandonment_options',

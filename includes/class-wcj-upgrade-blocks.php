@@ -27,10 +27,10 @@ if ( ! function_exists( 'wcj_get_upgrade_blocks_config' ) ) {
 	 */
 	function wcj_get_upgrade_blocks_config() {
 		$config = array(
-			// Example stub entry for Abandoned Cart Lite.
-			'abandoned_cart_lite' => array(
+			// Abandoned Cart Lite.
+			'cart_abandonment' => array(
 				'enabled'        => true,
-				'module_id'      => 'abandoned_cart_lite',
+				'module_id'      => 'cart_abandonment',
 				'lite_label'     => __( 'Abandoned Cart Lite', 'woocommerce-jetpack' ),
 				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
 				'benefits'       => array(
@@ -39,10 +39,37 @@ if ( ! function_exists( 'wcj_get_upgrade_blocks_config' ) ) {
 					__( 'Exclude certain user roles (e.g., wholesalers)', 'woocommerce-jetpack' ),
 					__( 'See more detailed recovery stats', 'woocommerce-jetpack' ),
 				),
-				'comparison_url' => 'https://booster.io/docs/',
+				'comparison_url' => 'https://booster.io/docs/cart-abandonment/',
 				'upgrade_url'    => 'https://booster.io/buy-booster/',
 			),
-			// Additional Lite modules will be added in Unit 3.2.
+			// Wishlist Lite.
+			'wishlist' => array(
+				'enabled'        => true,
+				'module_id'      => 'wishlist',
+				'lite_label'     => __( 'Wishlist Lite', 'woocommerce-jetpack' ),
+				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
+				'benefits'       => array(
+					__( 'Multiple wishlists per customer', 'woocommerce-jetpack' ),
+					__( 'Email reminders for saved items', 'woocommerce-jetpack' ),
+					__( 'More styling and placement options', 'woocommerce-jetpack' ),
+				),
+				'comparison_url' => 'https://booster.io/docs/wishlist/',
+				'upgrade_url'    => 'https://booster.io/buy-booster/',
+			),
+			// Variation Swatches Lite.
+			'product_variation_swatches' => array(
+				'enabled'        => true,
+				'module_id'      => 'product_variation_swatches',
+				'lite_label'     => __( 'Variation Swatches Lite', 'woocommerce-jetpack' ),
+				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
+				'benefits'       => array(
+					__( 'More swatch types (images, labels, advanced styles)', 'woocommerce-jetpack' ),
+					__( 'Per-product customizations', 'woocommerce-jetpack' ),
+					__( 'Extra display and tooltip options', 'woocommerce-jetpack' ),
+				),
+				'comparison_url' => 'https://booster.io/docs/product-variation-swatches/',
+				'upgrade_url'    => 'https://booster.io/buy-booster/',
+			),
 		);
 
 		/**
