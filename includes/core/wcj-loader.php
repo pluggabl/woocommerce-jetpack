@@ -57,6 +57,9 @@ require_once WCJ_FREE_PLUGIN_PATH . '/includes/classes/class-wcj-pdf-invoice.php
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-welcome.php';
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-product-variation-swatches-term-meta.php';
 
+// Upgrade Blocks.
+require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-upgrade-blocks.php';
+
 // Mini Plugin.
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/mini-plugin/wcj-mini-plugin.php';
 
