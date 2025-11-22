@@ -60,14 +60,102 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return  array Complete Quick Start presets configuration
  */
 function wcj_quick_start_get_all_presets() {
-	// Base presets array - currently empty, will be populated in Unit 2.3
-	// For now, this serves as the foundation for the schema
-	$presets = array();
+	// Base presets array with pilot configurations for three key modules
+	$presets = array(
+		// Cart Abandonment - Send gentle reminder emails to recover abandoned carts
+		'cart_abandonment' => array(
+			'module_id'   => 'cart_abandonment',
+			'module_name' => __( 'Cart Abandonment', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Send one gentle reminder email to recover abandoned carts.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Safe starting point for most stores - one reminder after 1 hour.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Enable the first email template', 'woocommerce-jetpack' ),
+						__( 'Send reminder 1 hour after cart is abandoned', 'woocommerce-jetpack' ),
+						__( 'Use a gentle, helpful message', 'woocommerce-jetpack' ),
+						__( 'No discount coupon (keeps it simple)', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_ca_email_template_enabled_1'    => 'yes',
+						'wcj_ca_email_trigger_time_1'        => '1',
+						'wcj_ca_email_trigger_time_type_1'   => 'hour',
+						'wcj_ca_email_discount_type_1'       => 'no',
+					),
+				),
+			),
+		),
+
+		// Sales Notifications - Show social proof without annoying customers
+		'sales_notifications' => array(
+			'module_id'   => 'sales_notifications',
+			'module_name' => __( 'Sales Notifications', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Show social proof with recent purchase notifications.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Reasonable timing that builds trust without being intrusive.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Display notifications for 6 seconds', 'woocommerce-jetpack' ),
+						__( 'Wait 30 seconds before showing next notification', 'woocommerce-jetpack' ),
+						__( 'Show in bottom right corner', 'woocommerce-jetpack' ),
+						__( 'Display real recent orders', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_sale_msg_duration' => '6',
+						'wcj_sale_msg_next'     => '30',
+						'wcj_sale_msg_position' => 'wcj_bottom_right',
+					),
+				),
+			),
+		),
+
+		// Product Add-ons - Simple gift wrapping example
+		'product_addons' => array(
+			'module_id'   => 'product_addons',
+			'module_name' => __( 'Product Add-ons', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Add simple upsells like gift wrapping to all products.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Simple gift wrapping option that works for most stores.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Enable global add-ons for all products', 'woocommerce-jetpack' ),
+						__( 'Add a "Gift Wrapping" checkbox option', 'woocommerce-jetpack' ),
+						__( 'Set a small additional fee', 'woocommerce-jetpack' ),
+						__( 'Customers can opt-in at checkout', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_product_addons_all_products_enabled'   => 'yes',
+						'wcj_product_addons_all_products_enabled_1' => 'yes',
+						'wcj_product_addons_all_products_type_1'    => 'checkbox',
+						'wcj_product_addons_all_products_title_1'   => __( 'Gift Wrapping', 'woocommerce-jetpack' ),
+						'wcj_product_addons_all_products_label_1'   => __( 'Add gift wrapping', 'woocommerce-jetpack' ),
+						'wcj_product_addons_all_products_price_1'   => '5',
+					),
+				),
+			),
+		),
+	);
 
 	/**
 	 * Filter the Quick Start presets array.
 	 *
 	 * This filter allows third-party developers to add, modify, or remove Quick Start presets.
+	 *
+	 * Example: Add a custom preset for a module
+	 * add_filter( 'wcj_quick_start_presets', function( $presets ) {
+	 *     $presets['my_module']['presets']['custom'] = array(
+	 *         'id'       => 'custom',
+	 *         'label'    => 'My Custom Preset',
+	 *         'settings' => array( 'setting_key' => 'value' ),
+	 *     );
+	 *     return $presets;
+	 * } );
 	 *
 	 * @since 7.6.0
 	 * @param array $presets The complete Quick Start presets configuration array
