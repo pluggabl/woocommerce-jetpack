@@ -16,6 +16,11 @@ $desc_advanced_message   = apply_filters( 'booster_message', '', 'desc_below' );
 $settings                = array();
 $single_or_archive_array = array( 'archive', 'single' );
 
+// Render upgrade block for Wishlist Lite.
+if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'wishlist' ) ) {
+	wcj_render_upgrade_block( 'wishlist' );
+}
+
 $settings                = array_merge(
 	$settings,
 	array(
