@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 5.6.8
+ * @version 7.7.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -176,13 +176,13 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		/**
 		 * Create_offer_price_history_meta_box.
 		 *
-		 * @version 5.6.8
+		 * @version 7.7.0
 		 * @since   2.9.0
 		 */
 		public function create_offer_price_history_meta_box() {
 			$price_offers = get_post_meta( get_the_ID(), '_wcj_price_offers', true );
 			if ( '' === ( $price_offers ) ) {
-				echo '<em>' . wp_kses_post( _e( 'No price offers yet.', 'woocommerce-jetpack' ) ) . '</em>';
+				echo '<em>' . wp_kses_post( __( 'No price offers yet.', 'woocommerce-jetpack' ) ) . '</em>';
 			} else {
 				$average_offers   = array();
 				$all_columns      = $this->get_admin_meta_box_columns();

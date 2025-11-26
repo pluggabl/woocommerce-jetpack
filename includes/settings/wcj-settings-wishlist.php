@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wishlist
  *
- * @version 7.3.0
+ * @version 7.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$elite_message        	 = apply_filters( 'booster_message', '', 'desc' );
+$elite_message           = apply_filters( 'booster_message', '', 'desc' );
 $desc_advanced_message   = apply_filters( 'booster_message', '', 'desc_below' );
 $settings                = array();
 $single_or_archive_array = array( 'archive', 'single' );
 
-$settings                = array_merge(
+$settings = array_merge(
 	$settings,
 	array(
 		array(
@@ -53,32 +53,35 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'title' => $single_or_archive_desc,
 				'type'  => 'title',
 				'id'    => 'wcj_wishlist_options_' . $single_or_archive,
-				'desc' 	=> __( 'Want to customize button text & style, control positions, and add wishlist buttons to shop/category pages? '.$desc_advanced_message.' ', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Want to customize button text & style, control positions, and add wishlist buttons to shop/category pages? ' . $desc_advanced_message . ' ', 'woocommerce-jetpack' ),
 			),
 			array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-jetpack' ),
-				'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_wishlist_enabled_' . $single_or_archive,
-				'default' => $is_single ? 'yes' : 'no',
+				'title'             => __( 'Enable/Disable', 'woocommerce-jetpack' ),
+				'desc'              => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_wishlist_enabled_' . $single_or_archive,
+				'default'           => $is_single ? 'yes' : 'no',
 				'custom_attributes' => $is_single ? '' : apply_filters( 'booster_message', '', 'disabled' ),
-				'desc_tip' => $is_single ? '' : __( 'Available in Booster Elite only. '.$elite_message.' ', 'woocommerce-jetpack' ),
-				'type'    => 'checkbox',
+				'desc_tip'          => $is_single ? '' : __( 'Available in Booster Elite only. ' . $elite_message . ' ', 'woocommerce-jetpack' ),
+				'type'              => 'checkbox',
+				'help_text'         => $is_single ? __( 'Show wishlist buttons on individual product pages. Customers can save products to view or purchase later.', 'woocommerce-jetpack' ) : __( 'Show wishlist buttons on shop and category pages. Makes it easy for customers to save multiple products while browsing.', 'woocommerce-jetpack' ),
 			),
 			array(
-				'title'    => __( 'Title', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'If You want a text then you can add the text.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_wishlist_title_' . $single_or_archive,
-				'default'  => __( 'Add to wishlist', 'woocommerce-jetpack' ),
-				'type'     => 'text',
+				'title'             => __( 'Title', 'woocommerce-jetpack' ),
+				'desc_tip'          => __( 'If You want a text then you can add the text.', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_wishlist_title_' . $single_or_archive,
+				'default'           => __( 'Add to wishlist', 'woocommerce-jetpack' ),
+				'type'              => 'text',
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+				'help_text'         => __( 'The text displayed on the wishlist button. Use clear action words like "Add to wishlist" or "Save for later".', 'woocommerce-jetpack' ),
+				'friendly_label'    => __( 'Button Text', 'woocommerce-jetpack' ),
 			),
 			array(
-				'title'   => __( 'Style', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_wishlist_style_' . $single_or_archive,
-				'default' => 'button_icon',
-				'type'    => 'select',
-				'options' => array(
+				'title'             => __( 'Style', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_wishlist_style_' . $single_or_archive,
+				'default'           => 'button_icon',
+				'type'              => 'select',
+				'options'           => array(
 					'button_icon' => __( 'Button with Icon', 'woocommerce-jetpack' ),
 					'button'      => __( 'Button', 'woocommerce-jetpack' ),
 					'text'        => __( 'Text(link)', 'woocommerce-jetpack' ),
@@ -86,13 +89,14 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				),
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+				'help_text'         => __( 'How the wishlist button appears. Button with icon is most recognizable, while icon-only saves space on mobile devices.', 'woocommerce-jetpack' ),
 			),
 			array(
-				'title'   => __( 'Position', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_wishlist_hook_' . $single_or_archive,
-				'default' => ( 'single' === $single_or_archive ) ? 'woocommerce_after_add_to_cart_button' : 'woocommerce_after_shop_loop_item',
-				'type'    => 'select',
-				'options' => array_merge(
+				'title'             => __( 'Position', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_wishlist_hook_' . $single_or_archive,
+				'default'           => ( 'single' === $single_or_archive ) ? 'woocommerce_after_add_to_cart_button' : 'woocommerce_after_shop_loop_item',
+				'type'              => 'select',
+				'options'           => array_merge(
 					( 'single' === $single_or_archive ?
 					array(
 						'woocommerce_after_add_to_cart_button' => __( 'After add to cart button', 'woocommerce-jetpack' ),
@@ -114,12 +118,13 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				),
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+				'help_text'         => __( 'Where the wishlist button appears on the page. After add to cart button is most common and keeps related actions together.', 'woocommerce-jetpack' ),
 			),
 			array(
-				'title'   => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_wishlist_priority_' . $single_or_archive,
-				'default' => 15,
-				'type'    => 'number',
+				'title'             => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
+				'id'                => 'wcj_wishlist_priority_' . $single_or_archive,
+				'default'           => 15,
+				'type'              => 'number',
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 				'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 			),
@@ -153,10 +158,11 @@ $settings = array_merge(
 			'id'   => 'wcj_wishlist_shortcode',
 		),
 		array(
-			'title'   => __( 'Enter wishlist page URL', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_wishlist_page_url',
-			'default' => '',
-			'type'    => 'text',
+			'title'     => __( 'Enter wishlist page URL', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_wishlist_page_url',
+			'default'   => '',
+			'type'      => 'text',
+			'help_text' => __( 'The URL of the page where customers view their saved wishlist items. Create a page with the [wcj_wishlist] shortcode and enter its URL here.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'id'   => 'wcj_wishlist_general_options',
@@ -189,29 +195,29 @@ $settings = array_merge(
 			'type'    => 'checkbox',
 		),
 		array(
-			'title'   => __( 'Add to wishlist icon color', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_add_wishlist_icon_color',
-			'default' => '#000000',
-			'type'    => 'color',
-			'css'     => 'width:6em;',
+			'title'             => __( 'Add to wishlist icon color', 'woocommerce-jetpack' ),
+			'id'                => 'wcj_add_wishlist_icon_color',
+			'default'           => '#000000',
+			'type'              => 'color',
+			'css'               => 'width:6em;',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		),
 		array(
-			'title'   => __( 'Added to wishlist icon color', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_added_wishlist_icon_color',
-			'default' => '#f46c5e',
-			'type'    => 'color',
-			'css'     => 'width:6em;',
+			'title'             => __( 'Added to wishlist icon color', 'woocommerce-jetpack' ),
+			'id'                => 'wcj_added_wishlist_icon_color',
+			'default'           => '#f46c5e',
+			'type'              => 'color',
+			'css'               => 'width:6em;',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		),
 		array(
-			'title'   => __( 'FadeIn/FadeOut add/remove wishlist message', 'woocommerce-jetpack' ),
-			'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_wishlist_enabled_msg_fadeinout',
-			'default' => 'no',
-			'type'    => 'checkbox',
+			'title'             => __( 'FadeIn/FadeOut add/remove wishlist message', 'woocommerce-jetpack' ),
+			'desc'              => __( 'Enable', 'woocommerce-jetpack' ),
+			'id'                => 'wcj_wishlist_enabled_msg_fadeinout',
+			'default'           => 'no',
+			'type'              => 'checkbox',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		),

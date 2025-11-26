@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.8.3
 Requires PHP: 7.2
-Stable tag: 7.6.0
+Stable tag: 7.7.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,18 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.7.0 - 26/11/2025 =
+
+* **Onboarding Phase 5 – contextual inline help**. Introduced a new help-text and tooltip system across Booster settings so you can see what each option does, when to change it, and safe defaults without leaving the page.
+  - **Help tooltips (ⓘ)** next to supported settings show short, plain-English explanations right where you’re working.
+  - **Friendly labels** make technical options easier to understand while keeping existing behavior unchanged.
+  - **7 key modules enhanced first**: Abandoned Cart / Abandoned Cart Lite, One Page Checkout, PDF Invoices, Sales Notifications, Product Add-ons, Wishlist, and Multi Currency now include guided help for their most important settings.
+  - **Continuous onboarding**: Help is now built into the settings screens themselves, reducing guesswork, setup friction, and support requests.
+  - **Fully backward compatible**: If no help text is defined, the settings pages look and behave exactly as before. More modules will be added over time.
+* FIXED-  Corrected translation call by replacing _e() with __() inside price-offers message to avoid immediate echo (PR#113).
+* WooCommerce 10.3.5 Tested
+* WordPress 6.8.3 Tested
 
 = 7.6.0 - 17/11/2025 =
 

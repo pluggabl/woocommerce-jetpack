@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 7.1.6
+ * @version 7.7.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -49,12 +49,13 @@ $settings     = array_merge(
 			'type' => 'tab_start',
 		),
 		array(
-			'title'    => __( 'Enable per Product Addons', 'woocommerce-jetpack' ),
-			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'When enabled, this will add new "Booster: Product Addons" meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_product_addons_per_product_enabled',
-			'default'  => 'no',
-			'type'     => 'checkbox',
+			'title'     => __( 'Enable per Product Addons', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip'  => __( 'When enabled, this will add new "Booster: Product Addons" meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_product_addons_per_product_enabled',
+			'default'   => 'no',
+			'type'      => 'checkbox',
+			'help_text' => __( 'Allow different addons for each product. Enable this to add custom options like gift wrapping, engraving, or extra services on a per-product basis.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'id'   => 'wcj_product_addons_per_product_options',
@@ -74,12 +75,13 @@ $settings     = array_merge(
 	$settings,
 	array(
 		array(
-			'title'    => __( 'Enable All Products Addons', 'woocommerce-jetpack' ),
-			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'When enabled, this will add addons below to all products.', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_product_addons_all_products_enabled',
-			'default'  => 'no',
-			'type'     => 'checkbox',
+			'title'     => __( 'Enable All Products Addons', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip'  => __( 'When enabled, this will add addons below to all products.', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_product_addons_all_products_enabled',
+			'default'   => 'no',
+			'type'      => 'checkbox',
+			'help_text' => __( 'Apply the same addons to all products in your store. Use this for universal options like gift messages or express shipping that apply to everything.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'title'             => __( 'Product Addons Total Number', 'woocommerce-jetpack' ),
@@ -95,6 +97,8 @@ $settings     = array_merge(
 					'min'  => '0',
 				)
 			),
+			'help_text'         => __( 'How many global addon fields to create. Each addon can be a checkbox, text field, or dropdown with its own pricing.', 'woocommerce-jetpack' ),
+			'friendly_label'    => __( 'Number of Global Addons', 'woocommerce-jetpack' ),
 		),
 	)
 );
@@ -111,16 +115,17 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'type'    => 'checkbox',
 			),
 			array(
-				'desc'    => __( 'Type', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_addons_all_products_type_' . $i,
-				'default' => 'checkbox',
-				'type'    => 'select',
-				'options' => array(
+				'desc'      => __( 'Type', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_product_addons_all_products_type_' . $i,
+				'default'   => 'checkbox',
+				'type'      => 'select',
+				'options'   => array(
 					'checkbox' => __( 'Checkbox', 'woocommerce-jetpack' ),
 					'radio'    => __( 'Radio Buttons', 'woocommerce-jetpack' ),
 					'select'   => __( 'Select Box', 'woocommerce-jetpack' ),
 					'text'     => __( 'Text', 'woocommerce-jetpack' ),
 				),
+				'help_text' => __( 'The input type for this addon. Use checkbox for yes/no options, radio/select for multiple choices, or text for custom input like names or messages.', 'woocommerce-jetpack' ),
 			),
 			array(
 				'desc'    => __( 'Title', 'woocommerce-jetpack' ),
@@ -144,6 +149,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'type'              => 'textarea',
 				'css'               => 'height:100px;',
 				'custom_attributes' => array( 'step' => '0.0001' ),
+				'help_text'         => __( 'Additional cost for this addon. Enter a fixed amount (like 5.00) or percentage (like 10%) of the product price. For multiple options, enter one price per line.', 'woocommerce-jetpack' ),
 			),
 			array(
 				'desc'     => __( 'Tooltip(s)', 'woocommerce-jetpack' ),
@@ -174,10 +180,11 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'type'    => 'text',
 			),
 			array(
-				'desc'    => __( 'Is Required', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_addons_all_products_required_' . $i,
-				'default' => 'no',
-				'type'    => 'checkbox',
+				'desc'      => __( 'Is Required', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_product_addons_all_products_required_' . $i,
+				'default'   => 'no',
+				'type'      => 'checkbox',
+				'help_text' => __( 'Make this addon mandatory. Customers must select or fill in this option before adding the product to cart.', 'woocommerce-jetpack' ),
 			),
 			array(
 				'desc'    => __( 'Exclude Products', 'woocommerce-jetpack' ),
@@ -218,11 +225,12 @@ $settings = array_merge(
 	$settings,
 	array(
 		array(
-			'title'   => __( 'Enable AJAX on Single Product Page', 'woocommerce-jetpack' ),
-			'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_product_addons_ajax_enabled',
-			'default' => 'no',
-			'type'    => 'checkbox',
+			'title'     => __( 'Enable AJAX on Single Product Page', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_product_addons_ajax_enabled',
+			'default'   => 'no',
+			'type'      => 'checkbox',
+			'help_text' => __( 'Update product price instantly when customers select addons, without refreshing the page. Improves user experience by showing the total price immediately.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'title'    => __( 'Ignore Strikethrough Price', 'woocommerce-jetpack' ),
@@ -249,14 +257,15 @@ $settings = array_merge(
 			'type'    => 'checkbox',
 		),
 		array(
-			'title'   => __( 'Position on Frontend', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_product_addons_position',
-			'default' => 'woocommerce_before_add_to_cart_button',
-			'type'    => 'select',
-			'options' => array(
+			'title'     => __( 'Position on Frontend', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_product_addons_position',
+			'default'   => 'woocommerce_before_add_to_cart_button',
+			'type'      => 'select',
+			'options'   => array(
 				'woocommerce_before_add_to_cart_button' => __( 'Before add to cart button', 'woocommerce-jetpack' ),
 				'woocommerce_after_add_to_cart_button'  => __( 'After add to cart button', 'woocommerce-jetpack' ),
 			),
+			'help_text' => __( 'Where addon options appear on product pages. Before add to cart button ensures customers see all options before purchasing.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'title'    => __( 'Position Priority on Frontend', 'woocommerce-jetpack' ),

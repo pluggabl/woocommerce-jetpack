@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.6.0 17/11/2025 =",
-    "1" : "* Onboarding Phase 4 - Added five new goals to enhance performance and streamline integration.",
-    "2" : "* FIXED- Fixed text-domain issues in Bulk and Quick Edit visibility labels to ensure proper localization. (PR #96)",
+    "0" : "= 7.7.0 26/11/2025 =",
+    "1" : "* **Onboarding Phase 5 - contextual inline help**. Introduced a new help-text and tooltip system across Booster settings so you can see what each option does, when to change it, and safe defaults without leaving the page.",
+    "2" : "* FIXED-  Corrected translation call by replacing _e() with __() inside price-offers message to avoid immediate echo (PR #113).",
     "3" : "* WooCommerce 10.3.5 Tested"
 }

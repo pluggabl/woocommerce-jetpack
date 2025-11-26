@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.3.2
+ * @version 7.7.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -82,6 +82,51 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'maybe_unclean_field' ), PHP_INT_MAX, 3 );
 				add_action( 'admin_post_wcj_save_module_settings', array( $this, 'wcj_save_module_settings' ) );
 			}
+		}
+
+		/**
+		 * Enhance settings array for a given module with help tooltips.
+		 *
+		 * @version 7.7.0
+		 * @since   1.0.0
+		 * @param array  $settings  Settings array for the module.
+		 * @param string $module_id Module id (without wcj_ prefix).
+		 * @return array Enhanced settings array.
+		 */
+		public function enhance_settings_for_module( $settings, $module_id ) {
+			if ( empty( $module_id ) ) {
+				return $settings;
+			}
+			if ( ! is_array( $settings ) || empty( $settings ) ) {
+				return $settings;
+			}
+
+			foreach ( $settings as $key => $setting ) {
+				if ( ! is_array( $setting ) || empty( $setting['id'] ) ) {
+					continue;
+				}
+
+				if ( 0 !== strpos( $setting['id'], 'wcj_' ) ) {
+					continue;
+				}
+
+				$help_text      = isset( $setting['help_text'] ) ? $setting['help_text'] : '';
+				$friendly_label = isset( $setting['friendly_label'] ) ? $setting['friendly_label'] : '';
+
+				if ( ! empty( $friendly_label ) && isset( $setting['title'] ) ) {
+					$settings[ $key ]['title'] = $friendly_label;
+				}
+
+				if ( ! empty( $help_text ) ) {
+					if ( ! empty( $setting['desc_tip'] ) ) {
+						$settings[ $key ]['desc_tip'] = $setting['desc_tip'] . ' ' . $help_text;
+					} else {
+						$settings[ $key ]['desc_tip'] = $help_text;
+					}
+				}
+			}
+
+			return $settings;
 		}
 
 		/**
@@ -876,12 +921,16 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Output_settings.
 		 *
-		 * @version 7.1.8
+		 * @version 7.7.0
 		 * @param   array $current_section defines the current section.
 		 */
 		public function output_settings( $current_section = '' ) {
 
-			$settings          = $this->get_settings( $current_section );
+			$settings = $this->get_settings( $current_section );
+
+			if ( ! $this->is_dashboard_section( $current_section ) ) {
+				$settings = $this->enhance_settings_for_module( $settings, $current_section );
+			}
 			$final_html        = '';
 			$tab_ids_key       = '';
 			$active_tab        = '';
