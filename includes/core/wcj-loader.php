@@ -48,6 +48,14 @@ require_once 'wcj-constants.php';
 // Functions.
 require_once 'wcj-functions.php';
 
+// Quick Start Presets.
+require_once WCJ_FREE_PLUGIN_PATH . '/includes/wcj-quick-start-presets.php';
+
+// Quick Start Admin UI.
+if ( is_admin() ) {
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-quick-start-admin.php';
+}
+
 // Classes.
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/classes/class-wcj-module.php';
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/classes/class-wcj-module-product-by-condition.php';
