@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.7.0 26/11/2025 =",
-    "1" : "* **Onboarding Phase 5 - contextual inline help**. Introduced a new help-text and tooltip system across Booster settings so you can see what each option does, when to change it, and safe defaults without leaving the page.",
-    "2" : "* FIXED-  Corrected translation call by replacing _e() with __() inside price-offers message to avoid immediate echo (PR #113).",
-    "3" : "* WooCommerce 10.3.5 Tested"
+    "0" : "= 7.8.0 03/12/2025 =",
+    "1" : "* **Onboarding Phase 6 - Quick Start presets (Phase 5 EPIC 2)**. Introduced a reusable “Quick Start” box at the top of selected module settings so you can get to a working setup in one click.",
+    "2" : "* WooCommerce 10.3.5 Tested",
+    "3" : "* WordPress 6.8.3 Tested"
 }
