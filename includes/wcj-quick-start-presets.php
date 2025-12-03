@@ -1,0 +1,255 @@
+<?php
+/**
+ * Booster for WooCommerce - Quick Start Presets
+ *
+ * This file contains the central configuration and helper functions for Quick Start presets.
+ * Quick Start presets allow modules to define pre-configured settings that users can apply
+ * with a single click to get started quickly with common use cases.
+ *
+ * @version 7.8.0
+ * @since   7.8.0
+ * @author  Pluggabl LLC.
+ * @package Booster_For_WooCommerce/includes
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Get all Quick Start presets for all modules.
+ *
+ * This function returns the complete Quick Start presets configuration array.
+ * The array is keyed by module ID and contains preset definitions for each module.
+ *
+ * Schema structure:
+ * array(
+ *     'module_id' => array(
+ *         'module_id'   => 'cart_abandonment',                    // Must match the module's canonical ID
+ *         'module_name' => 'Abandoned Cart',                      // Human-readable module name
+ *         'headline'    => 'Send reminder emails...',             // Short description of module's main use
+ *         'presets'     => array(
+ *             'preset_id' => array(
+ *                 'id'       => 'balanced',                       // Unique ID within this module
+ *                 'label'    => 'Balanced (recommended)',         // Button label text
+ *                 'tagline'  => 'Safe starting point...',         // Optional short description
+ *                 'steps'    => array(                            // Optional array of step descriptions
+ *                     'Turn on cart tracking',
+ *                     'Send 1 reminder email after 1 hour',
+ *                 ),
+ *                 'settings' => array(                            // Map of setting key => value
+ *                     'wcj_cart_abandonment_enabled' => 'yes',
+ *                     'wcj_cart_abandonment_email_interval' => 60,
+ *                 ),
+ *             ),
+ *         ),
+ *     ),
+ * )
+ *
+ * How to add a new preset:
+ * 1. Identify the module's canonical ID (e.g., 'cart_abandonment', 'sales_notifications')
+ * 2. Add an entry to the $presets array below, keyed by the module ID
+ * 3. Define module-level metadata: module_id, module_name, headline
+ * 4. Add one or more presets under the 'presets' key
+ * 5. For each preset, specify: id, label, optional tagline, optional steps, and settings map
+ * 6. Ensure all setting keys match the actual setting IDs used in the module's settings array
+ * 7. Wrap all user-facing strings in translation functions using 'woocommerce-jetpack' text domain
+ *
+ * @version 1.0.0
+ * @since   7.8.0
+ * @return  array Complete Quick Start presets configuration
+ */
+function wcj_quick_start_get_all_presets() {
+	// Base presets array with pilot configurations for three key modules.
+	$presets = array(
+		// Cart Abandonment - Send gentle reminder emails to recover abandoned carts.
+		'cart_abandonment'    => array(
+			'module_id'   => 'cart_abandonment',
+			'module_name' => __( 'Cart Abandonment', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Send one gentle reminder email to recover abandoned carts.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Safe starting point for most stores - one reminder after 1 hour.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Enable the first email template', 'woocommerce-jetpack' ),
+						__( 'Send reminder 1 hour after cart is abandoned', 'woocommerce-jetpack' ),
+						__( 'Use a gentle, helpful message', 'woocommerce-jetpack' ),
+						__( 'No discount coupon (keeps it simple)', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_ca_email_template_enabled_1'  => 'yes',
+						'wcj_ca_email_trigger_time_1'      => '1',
+						'wcj_ca_email_trigger_time_type_1' => 'hour',
+						'wcj_ca_email_discount_type_1'     => 'no',
+					),
+				),
+			),
+		),
+
+		// Sales Notifications - Show social proof without annoying customers.
+		'sales_notifications' => array(
+			'module_id'   => 'sales_notifications',
+			'module_name' => __( 'Sales Notifications', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Show social proof with recent purchase notifications.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Reasonable timing that builds trust without being intrusive.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Display notifications for 6 seconds', 'woocommerce-jetpack' ),
+						__( 'Wait 30 seconds before showing next notification', 'woocommerce-jetpack' ),
+						__( 'Show in bottom right corner', 'woocommerce-jetpack' ),
+						__( 'Display real recent orders', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_sale_msg_duration' => '6',
+						'wcj_sale_msg_next'     => '30',
+						'wcj_sale_msg_position' => 'wcj_bottom_right',
+					),
+				),
+			),
+		),
+
+		// Product Add-ons - Simple gift wrapping example.
+		'product_addons'      => array(
+			'module_id'   => 'product_addons',
+			'module_name' => __( 'Product Add-ons', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Add simple upsells like gift wrapping to all products.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Simple gift wrapping option that works for most stores.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Enable global add-ons for all products', 'woocommerce-jetpack' ),
+						__( 'Add a "Gift Wrapping" checkbox option', 'woocommerce-jetpack' ),
+						__( 'Set a small additional fee', 'woocommerce-jetpack' ),
+						__( 'Customers can opt-in at checkout', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_product_addons_all_products_enabled'   => 'yes',
+						'wcj_product_addons_all_products_enabled_1' => 'yes',
+						'wcj_product_addons_all_products_type_1'    => 'checkbox',
+						'wcj_product_addons_all_products_title_1'   => __( 'Gift Wrapping', 'woocommerce-jetpack' ),
+						'wcj_product_addons_all_products_label_1'   => __( 'Add gift wrapping', 'woocommerce-jetpack' ),
+						'wcj_product_addons_all_products_price_1'   => '5',
+					),
+				),
+			),
+		),
+	);
+
+	/**
+	 * Filter the Quick Start presets array.
+	 *
+	 * This filter allows third-party developers to add, modify, or remove Quick Start presets.
+	 *
+	 * Example: Add a custom preset for a module
+	 * add_filter( 'wcj_quick_start_presets', function( $presets ) {
+	 *     $presets['my_module']['presets']['custom'] = array(
+	 *         'id'       => 'custom',
+	 *         'label'    => 'My Custom Preset',
+	 *         'settings' => array( 'setting_key' => 'value' ),
+	 *     );
+	 *     return $presets;
+	 * } );
+	 *
+	 * @since 7.8.0
+	 * @param array $presets The complete Quick Start presets configuration array
+	 */
+	return apply_filters( 'wcj_quick_start_presets', $presets );
+}
+
+/**
+ * Get Quick Start presets for a specific module.
+ *
+ * Returns an array of presets defined for the given module ID.
+ * If no presets are defined for the module, returns an empty array.
+ *
+ * @version 1.0.0
+ * @since   7.6.0
+ * @param   string $module_id The module's canonical ID (e.g., 'cart_abandonment').
+ * @return  array Array of presets for the module, or empty array if none exist
+ */
+function wcj_quick_start_get_presets_for_module( $module_id ) {
+	if ( empty( $module_id ) || ! is_string( $module_id ) ) {
+		return array();
+	}
+
+	$all_presets = wcj_quick_start_get_all_presets();
+
+	if ( ! isset( $all_presets[ $module_id ] ) ) {
+		return array();
+	}
+
+	$module_config = $all_presets[ $module_id ];
+
+	// Return the presets array if it exists, otherwise empty array.
+	return isset( $module_config['presets'] ) && is_array( $module_config['presets'] )
+		? $module_config['presets']
+		: array();
+}
+
+/**
+ * Get a specific preset for a module.
+ *
+ * Returns the preset configuration array for the given module ID and preset ID.
+ * If the preset is not found, returns null.
+ *
+ * @version 1.0.0
+ * @since   7.8.0
+ * @param   string $module_id The module's canonical ID (e.g., 'cart_abandonment').
+ * @param   string $preset_id The preset's ID within the module (e.g., 'balanced').
+ * @return  array|null Preset configuration array, or null if not found
+ */
+function wcj_quick_start_get_preset( $module_id, $preset_id ) {
+	if ( empty( $module_id ) || ! is_string( $module_id ) || empty( $preset_id ) || ! is_string( $preset_id ) ) {
+		return null;
+	}
+
+	$module_presets = wcj_quick_start_get_presets_for_module( $module_id );
+
+	if ( empty( $module_presets ) ) {
+		return null;
+	}
+
+	return isset( $module_presets[ $preset_id ] ) ? $module_presets[ $preset_id ] : null;
+}
+
+/**
+ * Get module-level metadata for Quick Start.
+ *
+ * Returns module-level information such as module_name and headline.
+ * If the module has no Quick Start configuration, returns an empty array.
+ *
+ * @version 1.0.0
+ * @since   7.8.0
+ * @param   string $module_id The module's canonical ID (e.g., 'cart_abandonment').
+ * @return  array Module metadata array with keys like 'module_name', 'headline', or empty array
+ */
+function wcj_quick_start_get_module_meta( $module_id ) {
+	if ( empty( $module_id ) || ! is_string( $module_id ) ) {
+		return array();
+	}
+
+	$all_presets = wcj_quick_start_get_all_presets();
+
+	if ( ! isset( $all_presets[ $module_id ] ) ) {
+		return array();
+	}
+
+	$module_config = $all_presets[ $module_id ];
+
+	// Extract only the metadata fields, excluding the 'presets' array.
+	$metadata = array();
+	foreach ( $module_config as $key => $value ) {
+		if ( 'presets' !== $key ) {
+			$metadata[ $key ] = $value;
+		}
+	}
+
+	return $metadata;
+}

@@ -1,7 +1,7 @@
 /**
  * wcj-admin.
  *
- * @version 7.3.1
+ * @version 7.8.0
  * @since   2.5.3
  */
 
@@ -360,4 +360,16 @@ img.wcj-rocket-icon:hover {
 /* Active menu (wp-has-current-submenu) */
 #toplevel_page_wcj-dashboard.wp-has-current-submenu .wp-menu-image img {
 	filter: brightness(0) invert(1); /* White icon */
+}
+
+/* Quick box button styling */
+
+button.wcj-quick-start-apply {
+	background-color: #2271b1;
+	border-radius: 4px;
+	font-family: 'Inter-SemiBold';
+	border: 0;
+	cursor: pointer;
+	padding: 10px;
+	color: #fff;
 }

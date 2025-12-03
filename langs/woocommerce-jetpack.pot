@@ -755,18 +755,18 @@ msgid "Upgrade to Booster Elite"
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:79
-#: includes/core/class-wcj-admin.php:1261
+#: includes/core/class-wcj-admin.php:1265
 #, php-format
 msgid "Grab raw %1$s rate from %2$s."
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:80
-#: includes/core/class-wcj-admin.php:1262
+#: includes/core/class-wcj-admin.php:1266
 msgid "Doesn't apply rounding, offset etc."
 msgstr ""
 
 #: includes/admin/class-wcj-settings-custom-fields.php:350
-#: includes/core/class-wcj-admin.php:1199
+#: includes/core/class-wcj-admin.php:1203
 msgid "Save changes"
 msgstr ""
 
@@ -1261,6 +1261,19 @@ msgstr ""
 msgid "Emails, Reports, Export, Admin Tools, General Options and more."
 msgstr ""
 
+#: includes/admin/wcj-quick-start-admin.php:60
+#, php-format
+msgid "Quick Start: %s"
+msgstr ""
+
+#: includes/admin/wcj-quick-start-admin.php:121
+msgid "See advanced options →"
+msgstr ""
+
+#: includes/admin/wcj-quick-start-admin.php:156
+msgid "Preset applied! Review the settings below and click \"Save changes\"."
+msgstr ""
+
 #: includes/admin/wcj-settings-dashboard.php:24
 msgid "Welcome to Booster!"
 msgstr ""
@@ -1434,7 +1447,7 @@ msgid "Search"
 msgstr ""
 
 #: includes/admin/wcj-settings-plugins.php:67
-#: includes/core/class-wcj-admin.php:1055 includes/core/class-wcj-admin.php:1418
+#: includes/core/class-wcj-admin.php:1059 includes/core/class-wcj-admin.php:1422
 msgid "Save Changes"
 msgstr ""
 
@@ -1450,7 +1463,7 @@ msgid "Invoices, Proforma Invoices, Credit Notes and Packing Slips."
 msgstr ""
 
 #: includes/admin/wcj-settings-plugins.php:101
-#: includes/core/class-wcj-admin.php:861 includes/core/class-wcj-admin.php:1014
+#: includes/core/class-wcj-admin.php:861 includes/core/class-wcj-admin.php:1018
 #: includes/settings/meta-box/wcj-settings-meta-box-product-add-to-cart.php:81
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:45
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:71
@@ -1479,7 +1492,7 @@ msgstr ""
 #: includes/class-wcj-shipping-options.php:191
 #: includes/classes/class-wcj-module.php:306
 #: includes/classes/class-wcj-module.php:327
-#: includes/core/class-wcj-admin.php:862 includes/core/class-wcj-admin.php:1015
+#: includes/core/class-wcj-admin.php:862 includes/core/class-wcj-admin.php:1019
 #: includes/settings/meta-box/wcj-settings-meta-box-product-add-to-cart.php:82
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:81
 #: includes/settings/meta-box/wcj-settings-meta-box-related-products.php:22
@@ -2676,6 +2689,7 @@ msgid "Create any custom price label for all products with empty price."
 msgstr ""
 
 #: includes/class-wcj-cart-abandonment.php:31
+#: includes/wcj-quick-start-presets.php:68
 msgid "Cart Abandonment"
 msgstr ""
 
@@ -6303,6 +6317,7 @@ msgid "Sale!"
 msgstr ""
 
 #: includes/class-wcj-sales-notifications.php:47
+#: includes/wcj-quick-start-presets.php:94
 msgid "Sales Notifications"
 msgstr ""
 
@@ -23971,6 +23986,96 @@ msgstr ""
 
 #: includes/tools/class-wcj-order-statuses-tool.php:385
 msgid "Delete All Custom Statuses"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:69
+msgid "Send one gentle reminder email to recover abandoned carts."
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:73
+#: includes/wcj-quick-start-presets.php:99
+#: includes/wcj-quick-start-presets.php:124
+msgid "Balanced (recommended)"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:74
+msgid "Safe starting point for most stores - one reminder after 1 hour."
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:76
+msgid "Enable the first email template"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:77
+msgid "Send reminder 1 hour after cart is abandoned"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:78
+msgid "Use a gentle, helpful message"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:79
+msgid "No discount coupon (keeps it simple)"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:95
+msgid "Show social proof with recent purchase notifications."
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:100
+msgid "Reasonable timing that builds trust without being intrusive."
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:102
+msgid "Display notifications for 6 seconds"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:103
+msgid "Wait 30 seconds before showing next notification"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:104
+msgid "Show in bottom right corner"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:105
+msgid "Display real recent orders"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:119
+msgid "Product Add-ons"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:120
+msgid "Add simple upsells like gift wrapping to all products."
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:125
+msgid "Simple gift wrapping option that works for most stores."
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:127
+msgid "Enable global add-ons for all products"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:128
+msgid "Add a \"Gift Wrapping\" checkbox option"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:129
+msgid "Set a small additional fee"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:130
+msgid "Customers can opt-in at checkout"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:136
+msgid "Gift Wrapping"
+msgstr ""
+
+#: includes/wcj-quick-start-presets.php:137
+msgid "Add gift wrapping"
 msgstr ""
 
 #: includes/widgets/class-wcj-widget-country-switcher.php:37

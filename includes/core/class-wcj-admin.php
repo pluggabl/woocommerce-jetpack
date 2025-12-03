@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 7.7.0
+ * @version 7.8.0
  * @since   3.2.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/core
@@ -921,7 +921,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		/**
 		 * Output_settings.
 		 *
-		 * @version 7.7.0
+		 * @version 7.8.0
 		 * @param   array $current_section defines the current section.
 		 */
 		public function output_settings( $current_section = '' ) {
@@ -929,6 +929,10 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 			$settings = $this->get_settings( $current_section );
 
 			if ( ! $this->is_dashboard_section( $current_section ) ) {
+				// Quick Start Box Rendering (Before module settings).
+				if ( function_exists( 'wcj_quick_start_render_box' ) ) {
+					wcj_quick_start_render_box( $current_section );
+				}
 				$settings = $this->enhance_settings_for_module( $settings, $current_section );
 			}
 			$final_html        = '';
