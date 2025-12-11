@@ -1,7 +1,7 @@
 /**
  * wcj-admin.
  *
- * @version 7.8.0
+ * @version 7.9.0
  * @since   2.5.3
  */
 
@@ -362,8 +362,7 @@ img.wcj-rocket-icon:hover {
 	filter: brightness(0) invert(1); /* White icon */
 }
 
-/* Quick box button styling */
-
+/* Quick box button styling - Start */
 button.wcj-quick-start-apply {
 	background-color: #2271b1;
 	border-radius: 4px;
@@ -373,3 +372,60 @@ button.wcj-quick-start-apply {
 	padding: 10px;
 	color: #fff;
 }
+/* Quick box button styling - End */
+
+/* Upgrade Blocks - Start */
+a.btn-view-comparison{
+  border: 1px solid #2271b1;
+  border-radius: 4px;
+  font-family: 'Inter-SemiBold';
+  cursor: pointer;
+  padding: 10px;
+  color: #2271b1;
+  margin: 0px 10px 0px 0px;
+}
+a.btn-upgrade-to-booster-elite{
+  background-color: #2271b1;
+  border-radius: 4px;
+  font-family: 'Inter-SemiBold';
+  border: 0;
+  cursor: pointer;
+  padding: 10px;
+  color: #fff;
+}
+
+.wcj-upgrade-block {
+  margin: 20px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.wcj-upgrade-block__intro {
+	margin: 0 0 10px 0;
+	font-size: 14px;
+}
+
+.wcj-upgrade-block__headline {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.wcj-upgrade-block__benefits {
+	list-style: disc;
+	margin-left: 20px;
+	margin-bottom: 15px;
+}
+
+.wcj-upgrade-block__benefits li {
+	margin-bottom: 5px;
+}
+
+.wcj-upgrade-block__actions {
+	margin: 0;
+}
+
+.wcj-upgrade-block__actions .button {
+	margin-right: 10px;
+}
+/* Upgrade Blocks - End */

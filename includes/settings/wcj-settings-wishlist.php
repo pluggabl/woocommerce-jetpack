@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wishlist
  *
- * @version 7.7.0
+ * @version 7.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
@@ -15,6 +15,11 @@ $elite_message           = apply_filters( 'booster_message', '', 'desc' );
 $desc_advanced_message   = apply_filters( 'booster_message', '', 'desc_below' );
 $settings                = array();
 $single_or_archive_array = array( 'archive', 'single' );
+
+// Render upgrade block for Wishlist Lite.
+if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'wishlist' ) ) {
+	wcj_render_upgrade_block( 'wishlist' );
+}
 
 $settings = array_merge(
 	$settings,
@@ -53,7 +58,8 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'title' => $single_or_archive_desc,
 				'type'  => 'title',
 				'id'    => 'wcj_wishlist_options_' . $single_or_archive,
-				'desc'  => __( 'Want to customize button text & style, control positions, and add wishlist buttons to shop/category pages? ' . $desc_advanced_message . ' ', 'woocommerce-jetpack' ),
+				// translators: %s: elite message.
+				'desc'  => sprintf( __( 'Want to customize button text & style, control positions, and add wishlist buttons to shop/category pages? %s', 'woocommerce-jetpack' ), $desc_advanced_message ),
 			),
 			array(
 				'title'             => __( 'Enable/Disable', 'woocommerce-jetpack' ),
@@ -61,7 +67,8 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'id'                => 'wcj_wishlist_enabled_' . $single_or_archive,
 				'default'           => $is_single ? 'yes' : 'no',
 				'custom_attributes' => $is_single ? '' : apply_filters( 'booster_message', '', 'disabled' ),
-				'desc_tip'          => $is_single ? '' : __( 'Available in Booster Elite only. ' . $elite_message . ' ', 'woocommerce-jetpack' ),
+				// translators: %s: elite message.
+				'desc_tip'          => $is_single ? '' : sprintf( __( 'Available in Booster Elite only. %s ', 'woocommerce-jetpack' ), $elite_message ),
 				'type'              => 'checkbox',
 				'help_text'         => $is_single ? __( 'Show wishlist buttons on individual product pages. Customers can save products to view or purchase later.', 'woocommerce-jetpack' ) : __( 'Show wishlist buttons on shop and category pages. Makes it easy for customers to save multiple products while browsing.', 'woocommerce-jetpack' ),
 			),
@@ -219,7 +226,7 @@ $settings = array_merge(
 			'default'           => 'no',
 			'type'              => 'checkbox',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+			'desc_tip'          => apply_filters( 'booster_message', '', 'desc' ),
 		),
 		array(
 			'id'   => 'wcj_wishlist_general_options',

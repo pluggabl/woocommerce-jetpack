@@ -3,9 +3,9 @@ Contributors: pluggabl, ronyp, gravid7
 Donate link: https://booster.io/
 Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invoices, variation swatches, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce product feed, currency switcher
 Requires at least: 5.8
-Tested up to: 6.8.3
+Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 7.8.0
+Stable tag: 7.9.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,18 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.9.0 - 10/12/2025 =
+
+* **Onboarding Phase 7 – Lite → Elite upgrade blocks (Phase 5 EPIC 3)**. Added contextual “Upgrade to Booster Elite” panels inside key Lite modules so you can see exactly what you get if you decide to upgrade.
+  - **Clear Lite vs Elite side-by-side**: Abandoned Cart Lite, Wishlist Lite, and Variation Swatches Lite now show what’s included today and what extra power you unlock with Booster Elite.
+  - **Inline, in-context upsells**: Upgrade blocks live directly on the module settings screens, with short, plain-English benefit lists and links to learn more or go to the pricing page.
+  - **Config-driven and reusable**: A central config now defines copy, benefits, and URLs per module so we can add or adjust upgrade messaging without touching core module logic.
+  - **WordPress.org-friendly**: No full-screen takeovers or blocked settings—everything stays fully usable even if you ignore the upgrade panel.
+  - **Fully backward compatible**: Modules without an upgrade config look and behave exactly as before. If no upgrade block is defined, nothing new is shown.
+
+* WooCommerce 10.3.6 Tested  
+* WordPress 6.9 Tested
 
 = 7.8.0 - 03/12/2025 =
 

@@ -10,10 +10,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: "
-"__;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;eschtml_e;esc_html_x:1,2c;esc_html_e\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;eschtml_e;esc_html_x:1,2c;"
+"esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: assets\n"
 "X-Poedit-SearchPathExcluded-1: .idea\n"
@@ -215,9 +217,9 @@ msgstr ""
 #: includes/admin/class-wc-settings-jetpack.php:192
 #, php-format
 msgid ""
-"Please rate <strong>Booster for WooCommerce</strong> %1$s on  <a "
-"href=\"%2$s\" target=\"_blank\">WordPress.org</a> to help us spread the word. "
-"Thank you from Booster team!"
+"Please rate <strong>Booster for WooCommerce</strong> %1$s on  <a href=\"%2$s"
+"\" target=\"_blank\">WordPress.org</a> to help us spread the word. Thank you "
+"from Booster team!"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:267
@@ -535,6 +537,7 @@ msgid "Do you offer refunds?"
 msgstr ""
 
 #: includes/admin/class-wc-settings-jetpack.php:976
+#, php-format
 msgid ""
 "If you are not completely satisfied with Booster Elite within the fist 30 "
 "days, you can request a refund and we will give you 100% of your money back – "
@@ -842,6 +845,7 @@ msgid "Set sender details"
 msgstr ""
 
 #: includes/admin/onboarding-blueprints.php:29
+#, php-format
 msgid "Create a 10% coupon"
 msgstr ""
 
@@ -1152,9 +1156,9 @@ msgstr ""
 #: includes/admin/wcj-modules-cats.php:18
 msgid ""
 "This dashboard lets you enable/disable any Booster's module. Each checkbox "
-"comes with short module's description. Please visit <a href=\"https://"
-"booster.io\" target=\"_blank\">https://booster.io</a> for detailed info on "
-"each feature."
+"comes with short module's description. Please visit <a href=\"https://booster."
+"io\" target=\"_blank\">https://booster.io</a> for detailed info on each "
+"feature."
 msgstr ""
 
 #: includes/admin/wcj-modules-cats.php:29
@@ -1511,8 +1515,8 @@ msgstr ""
 #: includes/settings/wcj-settings-admin-tools.php:130
 #: includes/settings/wcj-settings-breadcrumbs.php:38
 #: includes/settings/wcj-settings-call-for-price.php:97
-#: includes/settings/wcj-settings-cart-abandonment.php:137
-#: includes/settings/wcj-settings-cart-abandonment.php:138
+#: includes/settings/wcj-settings-cart-abandonment.php:142
+#: includes/settings/wcj-settings-cart-abandonment.php:143
 #: includes/settings/wcj-settings-cart-customization.php:52
 #: includes/settings/wcj-settings-cart-customization.php:75
 #: includes/settings/wcj-settings-checkout-core-fields.php:63
@@ -1757,8 +1761,8 @@ msgstr ""
 #: includes/settings/wcj-settings-wholesale-price.php:99
 #: includes/settings/wcj-settings-wholesale-price.php:149
 #: includes/settings/wcj-settings-wholesale-price.php:174
-#: includes/settings/wcj-settings-wishlist.php:60
-#: includes/settings/wcj-settings-wishlist.php:217
+#: includes/settings/wcj-settings-wishlist.php:66
+#: includes/settings/wcj-settings-wishlist.php:224
 #: includes/settings/wcj-settings-wpml.php:43
 #: includes/settings/wcj-settings-wpml.php:50
 #: includes/settings/wcj-settings-wpml.php:59
@@ -2171,6 +2175,7 @@ msgid "Status"
 msgstr ""
 
 #: includes/cart-abandonment/wcj-cart-abandonment-orders-detail.php:168
+#: includes/class-wcj-upgrade-blocks.php:291
 msgid "Time"
 msgstr ""
 
@@ -2251,7 +2256,7 @@ msgstr ""
 #: includes/classes/class-wcj-module.php:1116
 #: includes/settings/wcj-settings-admin-tools.php:28
 #: includes/settings/wcj-settings-bulk-price-converter.php:23
-#: includes/settings/wcj-settings-cart-abandonment.php:34
+#: includes/settings/wcj-settings-cart-abandonment.php:39
 #: includes/settings/wcj-settings-debug-tools.php:25
 #: includes/settings/wcj-settings-eu-vat-number.php:28
 #: includes/settings/wcj-settings-export.php:31
@@ -2432,7 +2437,7 @@ msgstr ""
 #: includes/settings/wcj-settings-price-by-user-role.php:24
 #: includes/settings/wcj-settings-related-products.php:57
 #: includes/settings/wcj-settings-related-products.php:68
-#: includes/settings/wcj-settings-wishlist.php:33
+#: includes/settings/wcj-settings-wishlist.php:38
 msgid "General"
 msgstr ""
 
@@ -2699,8 +2704,8 @@ msgid "Stop Cart Abandonments and Recover Your Lost Amount!"
 msgstr ""
 
 #: includes/class-wcj-cart-abandonment.php:39
-#: includes/settings/wcj-settings-cart-abandonment.php:238
-#: includes/settings/wcj-settings-cart-abandonment.php:239
+#: includes/settings/wcj-settings-cart-abandonment.php:244
+#: includes/settings/wcj-settings-cart-abandonment.php:245
 msgid "Cart Abandonment Report"
 msgstr ""
 
@@ -3053,8 +3058,8 @@ msgstr ""
 #: includes/settings/wcj-settings-crowdfunding.php:35
 #, php-format
 msgid ""
-"To add crowdfunding info to the product, use <a href=\"%s\" "
-"target=\"_blank\">Booster's crowdfunding shortcodes</a>."
+"To add crowdfunding info to the product, use <a href=\"%s\" target=\"_blank"
+"\">Booster's crowdfunding shortcodes</a>."
 msgstr ""
 
 #: includes/class-wcj-crowdfunding.php:45
@@ -3077,8 +3082,8 @@ msgstr ""
 #: includes/settings/wcj-settings-crowdfunding.php:56
 #, php-format
 msgid ""
-"If you want to allow customers to choose dynamic price, Use <a "
-"href=\"%s\">Product Open Pricing (Name Your Price) module</a>."
+"If you want to allow customers to choose dynamic price, Use <a href=\"%s"
+"\">Product Open Pricing (Name Your Price) module</a>."
 msgstr ""
 
 #: includes/class-wcj-currencies.php:39
@@ -3396,7 +3401,7 @@ msgstr ""
 
 #: includes/class-wcj-email-options.php:31
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-emails.php:31
-#: includes/settings/wcj-settings-cart-abandonment.php:32
+#: includes/settings/wcj-settings-cart-abandonment.php:37
 #: includes/settings/wcj-settings-emails-verification.php:26
 #: includes/settings/wcj-settings-emails-verification.php:148
 #: includes/settings/wcj-settings-pdf-invoicing-emails.php:36
@@ -3488,8 +3493,8 @@ msgstr ""
 #: includes/class-wcj-emails-verification.php:223
 #: includes/settings/wcj-settings-emails-verification.php:167
 msgid ""
-"Please click the following link to verify your email:<br><br><a "
-"href=\"%verification_url%\">%verification_url%</a>"
+"Please click the following link to verify your email:<br><br><a href="
+"\"%verification_url%\">%verification_url%</a>"
 msgstr ""
 
 #: includes/class-wcj-emails-verification.php:231
@@ -3512,8 +3517,8 @@ msgstr ""
 #: includes/settings/wcj-settings-emails-verification.php:111
 msgid ""
 "<strong>Error:</strong> Activation failed, please contact our administrator. "
-"You can resend email with verification link by clicking <a "
-"href=\"%resend_verification_url%\">here</a>."
+"You can resend email with verification link by clicking <a href="
+"\"%resend_verification_url%\">here</a>."
 msgstr ""
 
 #: includes/class-wcj-emails-verification.php:295
@@ -3857,7 +3862,7 @@ msgstr ""
 #: includes/settings/wcj-settings-left-to-free-shipping.php:92
 #: includes/settings/wcj-settings-left-to-free-shipping.php:126
 #: includes/widgets/class-wcj-widget-left-to-free-shipping.php:75
-#, no-php-format
+#, php-format
 msgid "%left_to_free% left to free shipping"
 msgstr ""
 
@@ -3904,6 +3909,7 @@ msgid "Maximum Products per User: Sales Data"
 msgstr ""
 
 #: includes/class-wcj-max-products-per-user.php:266
+#: includes/class-wcj-upgrade-blocks.php:294
 msgid "User ID"
 msgstr ""
 
@@ -4779,9 +4785,9 @@ msgstr ""
 #: includes/class-wcj-price-by-user-role.php:304
 msgid ""
 "Booster: Free plugin's version is limited to only one price by user role per "
-"products settings product enabled at a time. You will need to get <a "
-"href=\"https://booster.io/buy-booster/\" target=\"_blank\">Booster Elite</a> "
-"to add unlimited number of price by user role per product settings products."
+"products settings product enabled at a time. You will need to get <a href="
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster Elite</a> to "
+"add unlimited number of price by user role per product settings products."
 msgstr ""
 
 #: includes/class-wcj-price-formats.php:30
@@ -5432,8 +5438,8 @@ msgstr ""
 
 #: includes/class-wcj-product-by-user-role.php:34
 msgid ""
-"When enabled, module will add new \"Booster: Product Visibility by User "
-"Role\" meta box to each product's edit page."
+"When enabled, module will add new \"Booster: Product Visibility by User Role"
+"\" meta box to each product's edit page."
 msgstr ""
 
 #: includes/class-wcj-product-by-user-role.php:36
@@ -5514,7 +5520,7 @@ msgstr ""
 #: includes/settings/wcj-settings-purchase-data.php:111
 #: includes/settings/wcj-settings-related-products.php:36
 #: includes/settings/wcj-settings-upsells.php:60
-#: includes/settings/wcj-settings-wishlist.php:69
+#: includes/settings/wcj-settings-wishlist.php:76
 #: includes/shipping/class-wc-shipping-wcj-custom-template.php:156
 #: includes/shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php:272
 #: includes/shortcodes/class-wcj-products-add-form-shortcodes.php:459
@@ -5636,7 +5642,7 @@ msgstr ""
 #: includes/class-wcj-product-info.php:144
 #: includes/settings/wcj-settings-product-add-to-cart.php:432
 #: includes/settings/wcj-settings-product-custom-info.php:180
-#: includes/settings/wcj-settings-wishlist.php:114
+#: includes/settings/wcj-settings-wishlist.php:121
 msgid "Before product title"
 msgstr ""
 
@@ -5650,7 +5656,7 @@ msgstr ""
 #: includes/class-wcj-product-info.php:146
 #: includes/settings/wcj-settings-product-add-to-cart.php:434
 #: includes/settings/wcj-settings-product-custom-info.php:182
-#: includes/settings/wcj-settings-wishlist.php:115
+#: includes/settings/wcj-settings-wishlist.php:122
 msgid "After product title"
 msgstr ""
 
@@ -5659,7 +5665,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-add-to-cart.php:392
 #: includes/settings/wcj-settings-product-custom-info.php:168
 #: includes/settings/wcj-settings-upsells.php:78
-#: includes/settings/wcj-settings-wishlist.php:107
+#: includes/settings/wcj-settings-wishlist.php:114
 msgid "Inside single product summary"
 msgstr ""
 
@@ -5668,7 +5674,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-add-to-cart.php:391
 #: includes/settings/wcj-settings-product-custom-info.php:167
 #: includes/settings/wcj-settings-upsells.php:77
-#: includes/settings/wcj-settings-wishlist.php:106
+#: includes/settings/wcj-settings-wishlist.php:113
 msgid "Before single product summary"
 msgstr ""
 
@@ -5677,7 +5683,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-add-to-cart.php:393
 #: includes/settings/wcj-settings-product-custom-info.php:169
 #: includes/settings/wcj-settings-upsells.php:79
-#: includes/settings/wcj-settings-wishlist.php:108
+#: includes/settings/wcj-settings-wishlist.php:115
 msgid "After single product summary"
 msgstr ""
 
@@ -5697,7 +5703,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-info.php:92
 #: includes/settings/wcj-settings-product-msrp.php:68
 #: includes/settings/wcj-settings-products-per-page.php:54
-#: includes/settings/wcj-settings-wishlist.php:95
+#: includes/settings/wcj-settings-wishlist.php:102
 msgid "Position"
 msgstr ""
 
@@ -5721,8 +5727,8 @@ msgstr ""
 #: includes/class-wcj-product-info.php:324
 msgid ""
 "[wcj_product_you_save before=\"You save: <strong>\" hide_if_zero=\"yes\" "
-"after=\"</strong>\"][wcj_product_you_save_percent hide_if_zero=\"yes\" "
-"before=\" (\" after=\"%)\"]"
+"after=\"</strong>\"][wcj_product_you_save_percent hide_if_zero=\"yes\" before="
+"\" (\" after=\"%)\"]"
 msgstr ""
 
 #: includes/class-wcj-product-info.php:327
@@ -5976,7 +5982,7 @@ msgstr ""
 #: includes/settings/wcj-settings-admin-orders-list.php:109
 #: includes/settings/wcj-settings-checkout-custom-fields.php:306
 #: includes/settings/wcj-settings-product-addons.php:297
-#: includes/settings/wcj-settings-product-variation-swatches.php:94
+#: includes/settings/wcj-settings-product-variation-swatches.php:99
 #: includes/settings/wcj-settings-related-products.php:227
 #: includes/widgets/class-wcj-widget-country-switcher.php:100
 msgid "No"
@@ -6017,7 +6023,7 @@ msgstr ""
 #: includes/settings/wcj-settings-eu-vat-number.php:165
 #: includes/settings/wcj-settings-eu-vat-number.php:175
 #: includes/settings/wcj-settings-product-addons.php:296
-#: includes/settings/wcj-settings-product-variation-swatches.php:93
+#: includes/settings/wcj-settings-product-variation-swatches.php:98
 #: includes/settings/wcj-settings-related-products.php:226
 #: includes/widgets/class-wcj-widget-country-switcher.php:101
 msgid "Yes"
@@ -6961,6 +6967,111 @@ msgstr ""
 msgid "Update now"
 msgstr ""
 
+#: includes/class-wcj-upgrade-blocks.php:34
+msgid "Cart Abandoned Lite"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:35
+#: includes/class-wcj-upgrade-blocks.php:50
+#: includes/class-wcj-upgrade-blocks.php:64
+msgid "Unlock the full power in Booster Elite"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:37
+msgid "Send up to 3 recovery emails (Lite: 1)"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:38
+msgid "Add automatic discount coupons"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:39
+msgid "Exclude certain user roles (e.g., wholesalers)"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:40
+msgid "See more detailed recovery stats"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:49
+msgid "Wishlist Lite"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:52
+msgid "Multiple wishlists per customer"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:53
+msgid "Email reminders for saved items"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:54
+msgid "More styling and placement options"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:63
+msgid "Variation Swatches Lite"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:66
+msgid "More swatch types (images, labels, advanced styles)"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:67
+msgid "Per-product customizations"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:68
+msgid "Extra display and tooltip options"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:186
+msgid "You are not allowed to perform this action."
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:242
+#: includes/class-wcj-upgrade-blocks.php:243
+#: includes/class-wcj-upgrade-blocks.php:281
+msgid "Upgrade Clicks Log"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:271
+msgid "You are not allowed to view this page."
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:283
+msgid ""
+"This table shows recent clicks on Lite → Elite upgrade blocks inside Booster "
+"free."
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:286
+msgid "No clicks logged yet."
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:292
+msgid "Module ID"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:293
+#: includes/settings/wcj-settings-offer-price.php:33
+#: includes/settings/wcj-settings-wishlist.php:93
+msgid "Button"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:374
+#, php-format
+msgid "You're using: %s"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:402
+msgid "See full comparison →"
+msgstr ""
+
+#: includes/class-wcj-upgrade-blocks.php:413
+msgid "Upgrade to Booster Elite →"
+msgstr ""
+
 #: includes/class-wcj-upsells.php:37
 msgid "Upsells"
 msgstr ""
@@ -7103,9 +7214,9 @@ msgstr ""
 #, php-format
 msgid ""
 "Booster: Free plugin's version is limited to only one \"%1$s\" product with "
-"settings on per product basis enabled at a time. You will need to get <a "
-"href=\"%2$s\" target=\"_blank\">Booster Elite</a> to add unlimited number of "
-"\"%1$s\" products."
+"settings on per product basis enabled at a time. You will need to get <a href="
+"\"%2$s\" target=\"_blank\">Booster Elite</a> to add unlimited number of \"%1$s"
+"\" products."
 msgstr ""
 
 #: includes/classes/class-wcj-module.php:920
@@ -7121,7 +7232,7 @@ msgstr ""
 #: includes/classes/class-wcj-module.php:1122
 #: includes/settings/wcj-settings-admin-tools.php:180
 #: includes/settings/wcj-settings-bulk-price-converter.php:31
-#: includes/settings/wcj-settings-cart-abandonment.php:232
+#: includes/settings/wcj-settings-cart-abandonment.php:238
 #: includes/settings/wcj-settings-debug-tools.php:88
 #: includes/settings/wcj-settings-eu-vat-number.php:320
 #: includes/settings/wcj-settings-export.php:370
@@ -7317,7 +7428,7 @@ msgstr ""
 #: includes/settings/wcj-settings-admin-products-list.php:110
 #: includes/settings/wcj-settings-checkout-custom-fields.php:154
 #: includes/settings/wcj-settings-checkout-fees.php:66
-#: includes/settings/wcj-settings-wishlist.php:59
+#: includes/settings/wcj-settings-wishlist.php:65
 #: includes/shipping/class-wc-shipping-wcj-custom-template.php:150
 msgid "Enable/Disable"
 msgstr ""
@@ -9400,7 +9511,7 @@ msgid "Instructions that will be added to the emails."
 msgstr ""
 
 #: includes/gateways/class-wc-gateway-wcj-custom-template.php:162
-#: includes/settings/wcj-settings-wishlist.php:88
+#: includes/settings/wcj-settings-wishlist.php:95
 msgid "Icon"
 msgstr ""
 
@@ -9691,9 +9802,9 @@ msgstr ""
 
 #: includes/input-fields/wcj-product-input-fields-options.php:118
 msgid ""
-"Visit <a href=\"https://www.w3schools.com/tags/att_input_accept.asp\" "
-"target=\"_blank\">documentation on input accept attribute</a> for valid "
-"option formats"
+"Visit <a href=\"https://www.w3schools.com/tags/att_input_accept.asp\" target="
+"\"_blank\">documentation on input accept attribute</a> for valid option "
+"formats"
 msgstr ""
 
 #: includes/input-fields/wcj-product-input-fields-options.php:119
@@ -9715,10 +9826,9 @@ msgstr ""
 
 #: includes/input-fields/wcj-product-input-fields-options.php:132
 msgid ""
-"If datepicker/weekpicker is selected, set date format here. Visit <a "
-"href=\"https://codex.wordpress.org/Formatting_Date_and_Time\" "
-"target=\"_blank\">documentation on date and time formatting</a> for valid "
-"date formats"
+"If datepicker/weekpicker is selected, set date format here. Visit <a href="
+"\"https://codex.wordpress.org/Formatting_Date_and_Time\" target=\"_blank"
+"\">documentation on date and time formatting</a> for valid date formats"
 msgstr ""
 
 #: includes/input-fields/wcj-product-input-fields-options.php:133
@@ -11060,7 +11170,7 @@ msgid "Enable per Product Levels"
 msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:44
-#: includes/settings/wcj-settings-cart-abandonment.php:182
+#: includes/settings/wcj-settings-cart-abandonment.php:188
 #: includes/settings/wcj-settings-wholesale-price.php:120
 msgid "Discount Type"
 msgstr ""
@@ -11755,7 +11865,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-admin-tools.php:181
 #: includes/settings/wcj-settings-bulk-price-converter.php:32
-#: includes/settings/wcj-settings-cart-abandonment.php:233
+#: includes/settings/wcj-settings-cart-abandonment.php:239
 #: includes/settings/wcj-settings-debug-tools.php:89
 #: includes/settings/wcj-settings-eu-vat-number.php:321
 #: includes/settings/wcj-settings-export.php:371
@@ -11843,7 +11953,7 @@ msgid ""
 "prices go back to normal."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:31
+#: includes/settings/wcj-settings-cart-abandonment.php:36
 #: includes/settings/wcj-settings-cart-customization.php:24
 #: includes/settings/wcj-settings-checkout-core-fields.php:26
 #: includes/settings/wcj-settings-checkout-core-fields.php:35
@@ -11906,16 +12016,16 @@ msgstr ""
 msgid "General Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:33
-#: includes/settings/wcj-settings-cart-abandonment.php:103
+#: includes/settings/wcj-settings-cart-abandonment.php:38
+#: includes/settings/wcj-settings-cart-abandonment.php:108
 msgid "Email Templates"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:42
+#: includes/settings/wcj-settings-cart-abandonment.php:47
 msgid "Exclude - User Roles"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:43
+#: includes/settings/wcj-settings-cart-abandonment.php:48
 #: includes/settings/wcj-settings-product-custom-info.php:197
 #: includes/settings/wcj-settings-product-custom-info.php:207
 #: includes/settings/wcj-settings-product-custom-info.php:217
@@ -11925,57 +12035,57 @@ msgstr ""
 msgid "Leave blank to disable the option."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:50
+#: includes/settings/wcj-settings-cart-abandonment.php:55
 msgid ""
 "Need to restrict access to abandoned cart settings and data based on user "
-"roles? <br> Upgrade <a href=\"https://booster.io/buy-booster/\" "
-"target=\"_blank\">Booster</a> to set user roles."
+"roles? <br> Upgrade <a href=\"https://booster.io/buy-booster/\" target="
+"\"_blank\">Booster</a> to set user roles."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:51
+#: includes/settings/wcj-settings-cart-abandonment.php:56
 msgid ""
 "Select user roles that should be excluded from abandoned cart tracking. For "
 "example, exclude administrators or shop managers to avoid tracking internal "
 "test orders."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:66
+#: includes/settings/wcj-settings-cart-abandonment.php:71
 msgid "Email options"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:71
+#: includes/settings/wcj-settings-cart-abandonment.php:76
 msgid "From Name"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:77
+#: includes/settings/wcj-settings-cart-abandonment.php:82
 msgid ""
 "The name that appears in the \"From\" field of abandoned cart reminder "
 "emails. Use your store name or a friendly sender name to build trust."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:78
+#: includes/settings/wcj-settings-cart-abandonment.php:83
 msgid "Email Sender Name"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:81
+#: includes/settings/wcj-settings-cart-abandonment.php:86
 msgid "From Email"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:87
+#: includes/settings/wcj-settings-cart-abandonment.php:92
 msgid ""
 "The email address that abandoned cart reminders are sent from. Use a "
 "monitored email address in case customers reply with questions."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:88
+#: includes/settings/wcj-settings-cart-abandonment.php:93
 msgid "Email Sender Address"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:108
+#: includes/settings/wcj-settings-cart-abandonment.php:113
 msgid "Total Email Template"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:112
+#: includes/settings/wcj-settings-cart-abandonment.php:117
 msgid ""
 "Need to send a sequence of emails at custom intervals? Want to customize "
 "sender details or use advanced email templates? Upgrade to <a href=\"https://"
@@ -11983,51 +12093,51 @@ msgid ""
 "control!"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:114
+#: includes/settings/wcj-settings-cart-abandonment.php:119
 msgid ""
 "Set the number of reminder emails to send for each abandoned cart. Most "
 "stores use 2-3 emails: one after 1 hour, another after 24 hours, and "
 "optionally a final reminder after 3 days."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:115
+#: includes/settings/wcj-settings-cart-abandonment.php:120
 msgid "Number of Reminder Emails"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:132
+#: includes/settings/wcj-settings-cart-abandonment.php:137
 #: includes/settings/wcj-settings-emails-verification.php:173
 #: includes/settings/wcj-settings-offer-price.php:373
 msgid "Email Template"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:142
+#: includes/settings/wcj-settings-cart-abandonment.php:147
 msgid ""
 "Enable or disable this reminder email. You can turn off specific reminders "
 "while keeping others active."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:145
+#: includes/settings/wcj-settings-cart-abandonment.php:150
 #: includes/settings/wcj-settings-emails-verification.php:153
 #: includes/settings/wcj-settings-offer-price.php:366
 msgid "Email Subject"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:147
+#: includes/settings/wcj-settings-cart-abandonment.php:152
 msgid "Is there anything we can help you?"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:149
+#: includes/settings/wcj-settings-cart-abandonment.php:154
 msgid ""
 "The subject line for this reminder email. Make it friendly and helpful to "
 "encourage customers to complete their purchase."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:153
+#: includes/settings/wcj-settings-cart-abandonment.php:158
 #: includes/settings/wcj-settings-emails-verification.php:162
 msgid "Email Content"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:157
+#: includes/settings/wcj-settings-cart-abandonment.php:162
 #, php-format
 msgid ""
 "Hi %1$s <p> we just noticed that you tried to make a order, but "
@@ -12035,95 +12145,96 @@ msgid ""
 "p><p> Here is a link to continue where you left off : <br> %s </p>"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:159
+#: includes/settings/wcj-settings-cart-abandonment.php:165
 msgid ""
 "The email message sent to customers. Use placeholders like %1$customer_name% "
 "and %2$checkout_link% to personalize the message. Keep it friendly and "
 "include a clear call-to-action."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:162
+#: includes/settings/wcj-settings-cart-abandonment.php:168
 msgid "Email Trigger Time"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:166
+#: includes/settings/wcj-settings-cart-abandonment.php:172
 msgid ""
 "How long to wait after cart abandonment before sending this reminder. First "
 "emails typically go out after 1 hour, follow-ups after 24 hours or more."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:167
+#: includes/settings/wcj-settings-cart-abandonment.php:173
 msgid "Send After"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:170
+#: includes/settings/wcj-settings-cart-abandonment.php:176
 msgid "Trigger this email after cart is abandoned"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:175
+#: includes/settings/wcj-settings-cart-abandonment.php:181
 msgid "Day"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:176
+#: includes/settings/wcj-settings-cart-abandonment.php:182
 msgid "Minutes"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:177
+#: includes/settings/wcj-settings-cart-abandonment.php:183
 msgid "Hours"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:179
+#: includes/settings/wcj-settings-cart-abandonment.php:185
 msgid ""
 "Choose the time unit for the trigger delay. Use minutes for quick follow-ups, "
 "hours for same-day reminders, or days for longer-term recovery campaigns."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:183
+#: includes/settings/wcj-settings-cart-abandonment.php:189
 msgid ""
 "Want to supercharge recovery by offering a discount coupon in your reminder "
 "emails? This powerful feature is available in <a href=\"https://booster.io/"
 "buy-booster/\" target=\"_blank\"> Booster Elite! </a> "
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:188
+#: includes/settings/wcj-settings-cart-abandonment.php:194
 msgid "No Discount"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:189
+#: includes/settings/wcj-settings-cart-abandonment.php:195
 msgid "Percentage discount"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:190
+#: includes/settings/wcj-settings-cart-abandonment.php:196
 msgid "Fixed cart discount"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:193
+#: includes/settings/wcj-settings-cart-abandonment.php:199
 msgid ""
 "Offer a discount coupon to encourage customers to complete their purchase. "
 "Percentage discounts work well for higher-value carts, while fixed amounts "
 "work better for lower-value carts."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:196
+#: includes/settings/wcj-settings-cart-abandonment.php:202
 msgid "Coupon Amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:202
+#: includes/settings/wcj-settings-cart-abandonment.php:208
+#, php-format
 msgid ""
 "The discount value for the coupon. For percentage discounts, enter a number "
 "like 10 for 10% off. For fixed discounts, enter the amount in your store "
 "currency."
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:205
+#: includes/settings/wcj-settings-cart-abandonment.php:211
 msgid "Auto Apply Coupon"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:206
+#: includes/settings/wcj-settings-cart-abandonment.php:212
 msgid "Automatically add the coupon to the cart at the checkout"
 msgstr ""
 
-#: includes/settings/wcj-settings-cart-abandonment.php:211
+#: includes/settings/wcj-settings-cart-abandonment.php:217
 msgid ""
 "When enabled, the coupon is automatically applied when customers click the "
 "recovery link. This removes friction and increases conversion rates."
@@ -12203,7 +12314,7 @@ msgstr ""
 #: includes/settings/wcj-settings-mini-cart.php:78
 #: includes/settings/wcj-settings-my-account.php:399
 #: includes/settings/wcj-settings-product-custom-info.php:189
-#: includes/settings/wcj-settings-wishlist.php:124
+#: includes/settings/wcj-settings-wishlist.php:131
 msgid "Position Order (i.e. Priority)"
 msgstr ""
 
@@ -12527,9 +12638,9 @@ msgstr ""
 
 #: includes/settings/wcj-settings-checkout-custom-fields.php:320
 msgid ""
-"Visit <a href=\"https://codex.wordpress.org/Formatting_Date_and_Time\" "
-"target=\"_blank\">documentation on date and time formatting</a> for valid "
-"date formats"
+"Visit <a href=\"https://codex.wordpress.org/Formatting_Date_and_Time\" target="
+"\"_blank\">documentation on date and time formatting</a> for valid date "
+"formats"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-custom-fields.php:321
@@ -12565,11 +12676,10 @@ msgstr ""
 #: includes/settings/wcj-settings-checkout-custom-fields.php:356
 msgid ""
 "The range of years displayed in the year drop-down: either relative to "
-"today's year (\"-nn:+nn\"), relative to the currently selected year (\"c-"
-"nn:c+nn\"), absolute (\"nnnn:nnnn\"), or combinations of these formats "
-"(\"nnnn:-nn\"). Note that this option only affects what appears in the drop-"
-"down, to restrict which dates may be selected use the minDate and/or maxDate "
-"options."
+"today's year (\"-nn:+nn\"), relative to the currently selected year (\"c-nn:c"
+"+nn\"), absolute (\"nnnn:nnnn\"), or combinations of these formats (\"nnnn:-nn"
+"\"). Note that this option only affects what appears in the drop-down, to "
+"restrict which dates may be selected use the minDate and/or maxDate options."
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-custom-fields.php:362
@@ -13709,10 +13819,10 @@ msgstr ""
 
 #: includes/settings/wcj-settings-currency-exchange-rates.php:77
 msgid ""
-"If rates are not updated then re-enable the cron system open your wp-"
-"config.php file located in the base root of your WordPress directory and look "
-"for a PHP Constant named define(\"ALTERNATE_WP_CRON\", true);and set it’s "
-"value to true.."
+"If rates are not updated then re-enable the cron system open your wp-config."
+"php file located in the base root of your WordPress directory and look for a "
+"PHP Constant named define(\"ALTERNATE_WP_CRON\", true);and set it’s value to "
+"true.."
 msgstr ""
 
 #: includes/settings/wcj-settings-currency-exchange-rates.php:82
@@ -15998,11 +16108,6 @@ msgstr ""
 msgid "Enable per product and per product category"
 msgstr ""
 
-#: includes/settings/wcj-settings-offer-price.php:33
-#: includes/settings/wcj-settings-wishlist.php:86
-msgid "Button"
-msgstr ""
-
 #: includes/settings/wcj-settings-offer-price.php:34
 msgid "Form and Notice"
 msgstr ""
@@ -16062,13 +16167,13 @@ msgstr ""
 
 #: includes/settings/wcj-settings-offer-price.php:119
 #: includes/settings/wcj-settings-product-custom-info.php:171
-#: includes/settings/wcj-settings-wishlist.php:105
+#: includes/settings/wcj-settings-wishlist.php:112
 msgid "Before add to cart form"
 msgstr ""
 
 #: includes/settings/wcj-settings-offer-price.php:120
 #: includes/settings/wcj-settings-product-custom-info.php:174
-#: includes/settings/wcj-settings-wishlist.php:104
+#: includes/settings/wcj-settings-wishlist.php:111
 msgid "After add to cart form"
 msgstr ""
 
@@ -17922,8 +18027,8 @@ msgstr ""
 #: includes/settings/wcj-settings-pdf-invoicing-page.php:122
 #, php-format
 msgid ""
-"Enter a local URL to an image. Upload your image using the <a "
-"href=\"%s\">media uploader</a>."
+"Enter a local URL to an image. Upload your image using the <a href=\"%s"
+"\">media uploader</a>."
 msgstr ""
 
 #: includes/settings/wcj-settings-pdf-invoicing-page.php:128
@@ -18119,15 +18224,15 @@ msgstr ""
 #: includes/settings/wcj-settings-preorders.php:62
 msgid ""
 "Control who can place pre-orders (all users, logged-in users, or specific "
-"roles). Upgrade to <a href=\"https://booster.io/buy-booster/\" "
-"target=\"_blank\">Booster</a> to unlock role-based access."
+"roles). Upgrade to <a href=\"https://booster.io/buy-booster/\" target=\"_blank"
+"\">Booster</a> to unlock role-based access."
 msgstr ""
 
 #: includes/settings/wcj-settings-preorders.php:71
 msgid ""
-"Select specific user roles allowed to place pre-orders. Upgrade to <a "
-"href=\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to "
-"unlock role-based restrictions."
+"Select specific user roles allowed to place pre-orders. Upgrade to <a href="
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to unlock "
+"role-based restrictions."
 msgstr ""
 
 #: includes/settings/wcj-settings-preorders.php:82
@@ -18168,9 +18273,9 @@ msgstr ""
 
 #: includes/settings/wcj-settings-preorders.php:120
 msgid ""
-"Auto-enable pre-orders only for selected products. Upgrade to <a "
-"href=\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to "
-"unlock product-level control."
+"Auto-enable pre-orders only for selected products. Upgrade to <a href="
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to unlock "
+"product-level control."
 msgstr ""
 
 #: includes/settings/wcj-settings-preorders.php:129
@@ -18311,8 +18416,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-preorders.php:254
 msgid ""
-"Choose custom text color for messages. Upgrade to <a href=\"https://"
-"booster.io/buy-booster/\" target=\"_blank\">Booster</a> for message styling."
+"Choose custom text color for messages. Upgrade to <a href=\"https://booster."
+"io/buy-booster/\" target=\"_blank\">Booster</a> for message styling."
 msgstr ""
 
 #: includes/settings/wcj-settings-preorders.php:265
@@ -18377,8 +18482,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-preorders.php:316
 msgid ""
-"Fee Title shown in cart/checkout for pre-order fee. Upgrade to <a "
-"href=\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> for "
+"Fee Title shown in cart/checkout for pre-order fee. Upgrade to <a href="
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> for "
 "customizable labels."
 msgstr ""
 
@@ -18404,8 +18509,8 @@ msgstr ""
 msgid ""
 "Keep customers and admins fully informed with dedicated pre-order "
 "confirmations, product release updates, and more advanced email options. "
-"<br>Upgrade to <a href=\"https://booster.io/buy-booster/\" "
-"target=\"_blank\">Booster</a> to unlock advanced email notifications."
+"<br>Upgrade to <a href=\"https://booster.io/buy-booster/\" target=\"_blank"
+"\">Booster</a> to unlock advanced email notifications."
 msgstr ""
 
 #: includes/settings/wcj-settings-price-by-country.php:17
@@ -18726,8 +18831,8 @@ msgstr ""
 #: includes/settings/wcj-settings-price-by-country.php:405
 msgid ""
 "Countries. List of comma separated country codes.<br>For country codes and "
-"predefined sets visit <a href=\"https://booster.io/country-codes/\" "
-"target=\"_blank\">https://booster.io/country-codes/</a>"
+"predefined sets visit <a href=\"https://booster.io/country-codes/\" target="
+"\"_blank\">https://booster.io/country-codes/</a>"
 msgstr ""
 
 #: includes/settings/wcj-settings-price-by-country.php:509
@@ -18860,8 +18965,8 @@ msgstr ""
 #: includes/settings/wcj-settings-price-by-user-role.php:183
 #, php-format
 msgid ""
-"Enable this option if there is compatibility with <a href=\"%s\" "
-"target=\"_blank\">WooCommerce Product Bundles</a> plugin."
+"Enable this option if there is compatibility with <a href=\"%s\" target="
+"\"_blank\">WooCommerce Product Bundles</a> plugin."
 msgstr ""
 
 #: includes/settings/wcj-settings-price-by-user-role.php:189
@@ -19419,8 +19524,8 @@ msgstr ""
 #: includes/settings/wcj-settings-product-custom-info.php:172
 #: includes/settings/wcj-settings-product-input-fields.php:265
 #: includes/settings/wcj-settings-product-open-pricing.php:20
-#: includes/settings/wcj-settings-wishlist.php:103
-#: includes/settings/wcj-settings-wishlist.php:112
+#: includes/settings/wcj-settings-wishlist.php:110
+#: includes/settings/wcj-settings-wishlist.php:119
 msgid "Before add to cart button"
 msgstr ""
 
@@ -19428,8 +19533,8 @@ msgstr ""
 #: includes/settings/wcj-settings-product-custom-info.php:173
 #: includes/settings/wcj-settings-product-input-fields.php:266
 #: includes/settings/wcj-settings-product-open-pricing.php:21
-#: includes/settings/wcj-settings-wishlist.php:102
-#: includes/settings/wcj-settings-wishlist.php:113
+#: includes/settings/wcj-settings-wishlist.php:109
+#: includes/settings/wcj-settings-wishlist.php:120
 msgid "After add to cart button"
 msgstr ""
 
@@ -19977,8 +20082,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-custom-info.php:35
 #: includes/settings/wcj-settings-product-custom-info.php:69
-#: includes/settings/wcj-settings-wishlist.php:30
-#: includes/settings/wcj-settings-wishlist.php:41
+#: includes/settings/wcj-settings-wishlist.php:35
+#: includes/settings/wcj-settings-wishlist.php:46
 msgid "Single Product Pages"
 msgstr ""
 
@@ -20176,8 +20281,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-info.php:19
 msgid ""
-"For full list of short codes, please visit <a target=\"_blank\" "
-"href=\"https://booster.io/shortcodes/\">https://booster.io/shortcodes/</a>."
+"For full list of short codes, please visit <a target=\"_blank\" href="
+"\"https://booster.io/shortcodes/\">https://booster.io/shortcodes/</a>."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-info.php:23
@@ -20450,9 +20555,8 @@ msgstr ""
 #: includes/settings/wcj-settings-product-listings.php:55
 #, php-format
 msgid ""
-"You can control what is shown on the product archive in <a "
-"href=\"%s\">WooCommerce > Settings > Products > Display > Shop page display</"
-"a>."
+"You can control what is shown on the product archive in <a href=\"%s"
+"\">WooCommerce > Settings > Products > Display > Shop page display</a>."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-listings.php:61
@@ -20499,9 +20603,8 @@ msgstr ""
 #: includes/settings/wcj-settings-product-listings.php:118
 #, php-format
 msgid ""
-"You can control what is shown on category archives in <a "
-"href=\"%s\">WooCommerce > Settings > Products > Display > Default category "
-"display</a>."
+"You can control what is shown on category archives in <a href=\"%s"
+"\">WooCommerce > Settings > Products > Display > Default category display</a>."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-listings.php:124
@@ -20731,9 +20834,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-product-open-pricing.php:134
 msgid ""
-"Product price info in archives template. Replaceable values: "
-"<code>%default_price%</code>, <code>%min_price%</code>, <code>%max_price%</"
-"code>."
+"Product price info in archives template. Replaceable values: <code>"
+"%default_price%</code>, <code>%min_price%</code>, <code>%max_price%</code>."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-open-pricing.php:141
@@ -20764,8 +20866,8 @@ msgstr ""
 #: includes/settings/wcj-settings-product-open-pricing.php:188
 #, php-format
 msgid ""
-"Change below settings if there are compatibility issues with <a "
-"href=\"%s\">\"WPC Product Bundles for WooCommerce\"</a> plugin."
+"Change below settings if there are compatibility issues with <a href=\"%s\">"
+"\"WPC Product Bundles for WooCommerce\"</a> plugin."
 msgstr ""
 
 #: includes/settings/wcj-settings-product-open-pricing.php:193
@@ -21113,67 +21215,67 @@ msgstr ""
 msgid "Reviews Tab"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:23
+#: includes/settings/wcj-settings-product-variation-swatches.php:28
 msgid "Variation Swatches Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:31
+#: includes/settings/wcj-settings-product-variation-swatches.php:36
 msgid "Variation Swatches"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:36
+#: includes/settings/wcj-settings-product-variation-swatches.php:41
 msgid "Convert default dropdowns to button"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:37
+#: includes/settings/wcj-settings-product-variation-swatches.php:42
 msgid ""
 "Want to enable swatches for all your attributes, use button/label swatches, "
-"or automatically convert all dropdowns? Upgrade to <a href=\"https://"
-"booster.io/buy-booster/\" target=\"_blank\"> Booster Elite </a> for advanced "
-"swatch control!"
-msgstr ""
-
-#: includes/settings/wcj-settings-product-variation-swatches.php:44
-msgid "Attribute Display Style"
+"or automatically convert all dropdowns? Upgrade to <a href=\"https://booster."
+"io/buy-booster/\" target=\"_blank\"> Booster Elite </a> for advanced swatch "
+"control!"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-variation-swatches.php:49
+msgid "Attribute Display Style"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-variation-swatches.php:54
 msgid "Squared"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:50
+#: includes/settings/wcj-settings-product-variation-swatches.php:55
 msgid "Rounded"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:56
+#: includes/settings/wcj-settings-product-variation-swatches.php:61
 msgid "Color Variation Item Width"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:64
+#: includes/settings/wcj-settings-product-variation-swatches.php:69
 msgid "Color Variation Item Height"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:72
+#: includes/settings/wcj-settings-product-variation-swatches.php:77
 msgid "Image Variation Item Width"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:80
+#: includes/settings/wcj-settings-product-variation-swatches.php:85
 msgid "Image Variation Item Height"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:88
+#: includes/settings/wcj-settings-product-variation-swatches.php:93
 msgid "Variation label tooltip"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:98
+#: includes/settings/wcj-settings-product-variation-swatches.php:103
 msgid "Variation Swatches Style In Archive"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:103
+#: includes/settings/wcj-settings-product-variation-swatches.php:108
 msgid "Booster Swatches"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-variation-swatches.php:104
+#: includes/settings/wcj-settings-product-variation-swatches.php:109
 msgid "WooCommerce Default"
 msgstr ""
 
@@ -21288,8 +21390,8 @@ msgstr ""
 #: includes/settings/wcj-settings-products-xml.php:132
 #, php-format
 msgid ""
-"You can use shortcodes here. Please take a look at <a target=\"_blank\" "
-"href=\"%s\">Booster's products shortcodes</a>."
+"You can use shortcodes here. Please take a look at <a target=\"_blank\" href="
+"\"%s\">Booster's products shortcodes</a>."
 msgstr ""
 
 #: includes/settings/wcj-settings-products-xml.php:149
@@ -21855,9 +21957,9 @@ msgstr ""
 
 #: includes/settings/wcj-settings-sales-notifications.php:70
 msgid ""
-"Enable or disable product image display in notifications. Upgrade to <a "
-"href=\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to "
-"unlock this option."
+"Enable or disable product image display in notifications. Upgrade to <a href="
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to unlock "
+"this option."
 msgstr ""
 
 #: includes/settings/wcj-settings-sales-notifications.php:71
@@ -22016,9 +22118,9 @@ msgstr ""
 
 #: includes/settings/wcj-settings-sales-notifications.php:178
 msgid ""
-"Set how long each notification stays visible (in seconds). Upgrade to <a "
-"href=\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to "
-"unlock duration control."
+"Set how long each notification stays visible (in seconds). Upgrade to <a href="
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to unlock "
+"duration control."
 msgstr ""
 
 #: includes/settings/wcj-settings-sales-notifications.php:179
@@ -22059,9 +22161,9 @@ msgstr ""
 #: includes/settings/wcj-settings-sales-notifications.php:207
 msgid ""
 "Want to show notifications for various order statuses like \"Shipped\" or "
-"\"Refunded\" to build trust and keep customers informed? Upgrade to <a "
-"href=\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to "
-"unlock all order statuses."
+"\"Refunded\" to build trust and keep customers informed? Upgrade to <a href="
+"\"https://booster.io/buy-booster/\" target=\"_blank\">Booster</a> to unlock "
+"all order statuses."
 msgstr ""
 
 #: includes/settings/wcj-settings-sales-notifications.php:208
@@ -22073,8 +22175,8 @@ msgstr ""
 #: includes/settings/wcj-settings-sales-notifications.php:224
 msgid ""
 "Play a sound when a sales notification appears like Beep, Doublebeep etc. "
-"Upgrade to <a href=\"https://booster.io/buy-booster/\" "
-"target=\"_blank\">Booster</a> to unlock sound effects."
+"Upgrade to <a href=\"https://booster.io/buy-booster/\" target=\"_blank"
+"\">Booster</a> to unlock sound effects."
 msgstr ""
 
 #: includes/settings/wcj-settings-sales-notifications.php:227
@@ -23244,8 +23346,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-upsells.php:85
 msgid ""
-"Ignored if \"Upsells Position\" option above is set to \"No changes (default)"
-"\"."
+"Ignored if \"Upsells Position\" option above is set to \"No changes "
+"(default)\"."
 msgstr ""
 
 #: includes/settings/wcj-settings-upsells.php:91
@@ -23506,112 +23608,114 @@ msgstr ""
 msgid "User Roles Settings"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:31
-#: includes/settings/wcj-settings-wishlist.php:41
+#: includes/settings/wcj-settings-wishlist.php:36
+#: includes/settings/wcj-settings-wishlist.php:46
 msgid "Archives (Products Loop)"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:32
+#: includes/settings/wcj-settings-wishlist.php:37
 msgid "Wishlist Page"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:56
+#: includes/settings/wcj-settings-wishlist.php:62
+#, php-format
 msgid ""
 "Want to customize button text & style, control positions, and add wishlist "
-"buttons to shop/category pages? "
+"buttons to shop/category pages? %s"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:64
-msgid "Available in Booster Elite only. "
+#: includes/settings/wcj-settings-wishlist.php:71
+#, php-format
+msgid "Available in Booster Elite only. %s "
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:66
+#: includes/settings/wcj-settings-wishlist.php:73
 msgid ""
 "Show wishlist buttons on individual product pages. Customers can save "
 "products to view or purchase later."
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:66
+#: includes/settings/wcj-settings-wishlist.php:73
 msgid ""
 "Show wishlist buttons on shop and category pages. Makes it easy for customers "
 "to save multiple products while browsing."
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:70
+#: includes/settings/wcj-settings-wishlist.php:77
 msgid "If You want a text then you can add the text."
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:72
+#: includes/settings/wcj-settings-wishlist.php:79
 msgid "Add to wishlist"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:76
+#: includes/settings/wcj-settings-wishlist.php:83
 msgid ""
 "The text displayed on the wishlist button. Use clear action words like \"Add "
 "to wishlist\" or \"Save for later\"."
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:77
+#: includes/settings/wcj-settings-wishlist.php:84
 msgid "Button Text"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:80
+#: includes/settings/wcj-settings-wishlist.php:87
 #: includes/widgets/class-wcj-widget-multicurrency.php:124
 msgid "Style"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:85
+#: includes/settings/wcj-settings-wishlist.php:92
 msgid "Button with Icon"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:87
+#: includes/settings/wcj-settings-wishlist.php:94
 msgid "Text(link)"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:92
+#: includes/settings/wcj-settings-wishlist.php:99
 msgid ""
 "How the wishlist button appears. Button with icon is most recognizable, while "
 "icon-only saves space on mobile devices."
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:109
 #: includes/settings/wcj-settings-wishlist.php:116
+#: includes/settings/wcj-settings-wishlist.php:123
 msgid "Over product Image"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:121
+#: includes/settings/wcj-settings-wishlist.php:128
 msgid ""
 "Where the wishlist button appears on the page. After add to cart button is "
 "most common and keeps related actions together."
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:161
+#: includes/settings/wcj-settings-wishlist.php:168
 msgid "Enter wishlist page URL"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:165
+#: includes/settings/wcj-settings-wishlist.php:172
 msgid ""
 "The URL of the page where customers view their saved wishlist items. Create a "
 "page with the [wcj_wishlist] shortcode and enter its URL here."
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:191
+#: includes/settings/wcj-settings-wishlist.php:198
 msgid "Add/Remove font awesome icon css"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:192
+#: includes/settings/wcj-settings-wishlist.php:199
 msgid "Add/Remove"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:198
+#: includes/settings/wcj-settings-wishlist.php:205
 msgid "Add to wishlist icon color"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:207
+#: includes/settings/wcj-settings-wishlist.php:214
 msgid "Added to wishlist icon color"
 msgstr ""
 
-#: includes/settings/wcj-settings-wishlist.php:216
+#: includes/settings/wcj-settings-wishlist.php:223
 msgid "FadeIn/FadeOut add/remove wishlist message"
 msgstr ""
 
