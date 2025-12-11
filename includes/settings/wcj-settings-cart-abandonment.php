@@ -2,7 +2,7 @@
 /**
  * Booster Elite for WooCommerce - Settings - Cart Abandonment
  *
- * @version 7.7.0
+ * @version 7.9.0
  * @author  Pluggabl LLC.
  * @package Booster_Elite_For_WooCommerce/settings
  */
@@ -17,6 +17,11 @@ $email_from_name  = '';
 if ( $email_from_email ) {
 	$email_from_name_arr = explode( '@', $email_from_email );
 	$email_from_name     = ( $email_from_name_arr[0] ) ? $email_from_name_arr[0] : '';
+}
+
+// Render upgrade block for Cart Abandonment Lite.
+if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'cart_abandonment' ) ) {
+	wcj_render_upgrade_block( 'cart_abandonment' );
 }
 
 $settings = array(
@@ -156,6 +161,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				/* translators: %s: search term */
 				'default'   => sprintf( __( "Hi %1\$s <p> we just noticed that you tried to make a order, but unfortunately, you haven't complete. Is there anything we can help you? </p><p> Here is a link to continue where you left off : <br> %s </p>", 'woocommerce-jetpack' ), '%customer_name%', '%checkout_link%' ),
 				'css'       => 'width:100%;height:150px',
+				/* translators: %s: search term */
 				'help_text' => __( 'The email message sent to customers. Use placeholders like %1$customer_name% and %2$checkout_link% to personalize the message. Keep it friendly and include a clear call-to-action.', 'woocommerce-jetpack' ),
 			),
 			array(

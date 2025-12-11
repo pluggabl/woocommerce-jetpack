@@ -2,13 +2,18 @@
 /**
  * Booster for WooCommerce - Settings - Product Variation Swatches
  *
- * @version 7.2.8
+ * @version 7.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/settings
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
+}
+
+// Render upgrade block for Variation Swatches Lite.
+if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'product_variation_swatches' ) ) {
+	wcj_render_upgrade_block( 'product_variation_swatches' );
 }
 
 $settings = array(
