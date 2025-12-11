@@ -347,7 +347,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
-= 7.9.0 - 10/12/2025 =
+= 7.9.0 - 11/12/2025 =
 
 * **Onboarding Phase 7 – Lite → Elite upgrade blocks (Phase 5 EPIC 3)**. Added contextual “Upgrade to Booster Elite” panels inside key Lite modules so you can see exactly what you get if you decide to upgrade.
   - **Clear Lite vs Elite side-by-side**: Abandoned Cart Lite, Wishlist Lite, and Variation Swatches Lite now show what’s included today and what extra power you unlock with Booster Elite.
