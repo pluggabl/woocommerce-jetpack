@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Render Quick Start box for PDF Invoicing.
+if ( function_exists( 'wcj_quick_start_render_box' ) ) {
+	wcj_quick_start_render_box( 'pdf_invoicing' );
+}
+
 $settings = array(
 	array(
 		'id'   => 'pdf_invoicing_options',

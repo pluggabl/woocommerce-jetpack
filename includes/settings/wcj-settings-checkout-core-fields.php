@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Render Quick Start box for Checkout Core Fields.
+if ( function_exists( 'wcj_quick_start_render_box' ) ) {
+	wcj_quick_start_render_box( 'checkout_core_fields' );
+}
+
 $product_cats = wcj_get_terms( 'product_cat' );
 
 $settings = array(

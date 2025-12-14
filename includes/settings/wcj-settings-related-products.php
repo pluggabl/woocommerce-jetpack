@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Render Quick Start box for Related Products.
+if ( function_exists( 'wcj_quick_start_render_box' ) ) {
+	wcj_quick_start_render_box( 'related_products' );
+}
+
 $is_multiselect_products = ( 'yes' === wcj_get_option( 'wcj_list_for_products', 'yes' ) );
 $products                = ( $is_multiselect_products ? wcj_get_products() : false );
 $product_cats            = wcj_get_terms( 'product_cat' );
