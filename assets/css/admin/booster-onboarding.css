@@ -981,3 +981,89 @@
 		white-space: nowrap;
 		border-width: 0;
 	}
+
+	/* B4: Modal Search Box */
+	.booster-search-box {
+		position: relative;
+		margin-bottom: 20px;
+	}
+
+	.booster-goal-search {
+		width: 100%;
+		padding: 12px 40px 12px 40px;
+		border: 1px solid var(--booster-border);
+		border-radius: 8px;
+		font-size: 14px;
+		color: var(--booster-text);
+		background: var(--booster-white);
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.booster-goal-search:focus {
+		outline: none;
+		border-color: var(--booster-blue);
+		box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.15);
+	}
+
+	.booster-goal-search::placeholder {
+		color: var(--booster-muted);
+	}
+
+	.booster-search-icon {
+		position: absolute;
+		left: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--booster-muted);
+		pointer-events: none;
+	}
+
+	.booster-search-icon .dashicons {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+	}
+
+	.booster-search-clear {
+		position: absolute;
+		right: 8px;
+		top: 50%;
+		transform: translateY(-50%);
+		background: none;
+		border: none;
+		padding: 4px;
+		cursor: pointer;
+		color: var(--booster-muted);
+		border-radius: 4px;
+		transition: color 0.2s ease, background 0.2s ease;
+	}
+
+	.booster-search-clear:hover {
+		color: var(--booster-text);
+		background: #f1f1f1;
+	}
+
+	.booster-search-clear .dashicons {
+		font-size: 16px;
+		width: 16px;
+		height: 16px;
+	}
+
+	.booster-no-results {
+		text-align: center;
+		padding: 40px 20px;
+		color: var(--booster-muted);
+	}
+
+	.booster-no-results p {
+		margin: 0;
+		font-size: 14px;
+	}
+
+	/* Mobile responsive for search */
+	@media (max-width: 768px) {
+		.booster-goal-search {
+			padding: 14px 40px 14px 40px;
+			font-size: 16px; /* Prevents iOS zoom on focus */
+		}
+	}

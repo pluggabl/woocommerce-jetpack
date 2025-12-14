@@ -13,6 +13,7 @@
 			this.setupAccessibility();
 			this.loadModePreference();
 			this.updateAppliedBadges();
+			this.initSearch();
 		},
 
 		bindEvents: function() {
@@ -549,6 +550,101 @@
 					}
 				}
 			);
+		},
+
+		initSearch: function() {
+			var self = this;
+			var searchInput = $( '#booster-goal-search' );
+			var clearButton = $( '.booster-search-clear' );
+			var noResults = $( '.booster-no-results' );
+			var debounceTimer = null;
+
+			searchInput.on(
+				'input',
+				function() {
+					var query = $( this ).val().toLowerCase().trim();
+
+					// Show/hide clear button.
+					if (query.length > 0) {
+						clearButton.show();
+					} else {
+						clearButton.hide();
+					}
+
+					// Debounce the search.
+					clearTimeout( debounceTimer );
+					debounceTimer = setTimeout(
+						function() {
+							self.filterGoals( query );
+						},
+						150
+					);
+				}
+			);
+
+			clearButton.on(
+				'click',
+				function() {
+					searchInput.val( '' ).trigger( 'input' ).focus();
+				}
+			);
+
+			// Clear search when switching modes or closing modal.
+			$( document ).on(
+				'click',
+				'.segment-button, .booster-modal-close, .booster-modal-overlay',
+				function() {
+					searchInput.val( '' );
+					clearButton.hide();
+					noResults.hide();
+					$( '.booster-goal-tile' ).show();
+				}
+			);
+		},
+
+		filterGoals: function(query) {
+			var goalTiles = $( '.booster-goal-tile' );
+			var noResults = $( '.booster-no-results' );
+			var visibleCount = 0;
+
+			if (query === '') {
+				goalTiles.show();
+				noResults.hide();
+				return;
+			}
+
+			goalTiles.each(
+				function() {
+					var tile = $( this );
+					var title = tile.find( 'h3' ).text().toLowerCase();
+					var subtitle = tile.find( 'p' ).text().toLowerCase();
+					var modules = [];
+
+					tile.find( '.module-tag' ).each(
+						function() {
+							modules.push( $( this ).text().toLowerCase() );
+						}
+					);
+
+					var modulesText = modules.join( ' ' );
+					var searchText = title + ' ' + subtitle + ' ' + modulesText;
+
+					if (searchText.indexOf( query ) !== -1) {
+						tile.show();
+						visibleCount++;
+					} else {
+						tile.hide();
+					}
+				}
+			);
+
+			if (visibleCount === 0) {
+				noResults.show();
+			} else {
+				noResults.hide();
+			}
+
+			this.logEvent( 'goal_search', { query: query, results_count: visibleCount } );
 		}
 	};
 
