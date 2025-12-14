@@ -189,9 +189,17 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 			echo '<div class="booster-getting-started">';
 			echo '<p>' . esc_html__( 'Welcome to Booster! Get started quickly by choosing one of these goals:', 'woocommerce-jetpack' ) . '</p>';
 
-			echo '<button type="button" class="button button-primary" id="launch-onboarding-modal">';
-			echo esc_html__( 'Open onboarding', 'woocommerce-jetpack' );
+			// Re-open onboarding button (G1) - prominent button to launch setup guide.
+			echo '<div class="booster-setup-guide-box" style="background: #f0f6fc; border: 1px solid #c3c4c7; border-left: 4px solid #2271b1; padding: 16px 20px; margin: 20px 0; border-radius: 4px;">';
+			echo '<p style="margin: 0 0 12px 0; font-size: 14px;">';
+			echo '<strong>' . esc_html__( 'New to Booster?', 'woocommerce-jetpack' ) . '</strong> ';
+			echo esc_html__( 'Use our interactive setup guide to quickly configure the features you need.', 'woocommerce-jetpack' );
+			echo '</p>';
+			echo '<button type="button" class="button button-primary button-hero" id="launch-onboarding-modal" style="font-size: 14px;">';
+			echo '<span class="dashicons dashicons-welcome-learn-more" style="margin-right: 6px; line-height: 1.4;"></span>';
+			echo esc_html__( 'Open Setup Guide', 'woocommerce-jetpack' );
 			echo '</button>';
+			echo '</div>';
 
 			if ( ! empty( $completed_goals ) ) {
 				echo '<h2>' . esc_html__( 'Completed Goals', 'woocommerce-jetpack' ) . '</h2>';
