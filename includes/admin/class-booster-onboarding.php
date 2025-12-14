@@ -123,6 +123,8 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 							'create_demo_draft' => __( 'Create a demo draft page', 'woocommerce-jetpack' ),
 							'add_one_extra'     => __( 'Add one extra currency', 'woocommerce-jetpack' ),
 							'confirmUndo'       => __( 'Are you sure you want to undo this goal?', 'woocommerce-jetpack' ),
+							'firstWinTitle'     => __( 'You did it!', 'woocommerce-jetpack' ),
+							'firstWinMessage'   => __( 'Your first Booster feature is now active. Keep exploring to unlock more powerful features for your store!', 'woocommerce-jetpack' ),
 						),
 					)
 				);
@@ -402,6 +404,13 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				$snapshot_after = array_merge( $snapshot_after, $apply_result['settings'] );
 			}
 
+			// Check if this is the first-ever goal applied (E4: First Win).
+			$is_first_win = ! get_option( 'wcj_first_goal_applied', false );
+			if ( $is_first_win ) {
+				// Mark that first goal has been applied (one-time only).
+				update_option( 'wcj_first_goal_applied', true );
+			}
+
 			$onboarding_state = get_option( $this->option_key, array() );
 
 			if ( ! isset( $onboarding_state['completed_goals'] ) ) {
@@ -434,6 +443,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				'message'        => __( 'Goal applied successfully!', 'woocommerce-jetpack' ),
 				'next_step_text' => isset( $goal['next_step_text'] ) ? $goal['next_step_text'] : '',
 				'next_step_link' => $next_step_link,
+				'first_win'      => $is_first_win,
 			);
 		}
 

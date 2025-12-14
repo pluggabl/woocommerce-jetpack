@@ -423,7 +423,19 @@
 		},
 
 		showGoalSuccessScreen: function(data) {
-			$( '#success-message' ).text( data.message );
+			// E4: First Win Celebration - show special message on first-ever goal apply.
+			if (data.first_win) {
+				$( '#success-message' ).html(
+					'<div class="first-win-celebration" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 20px; border-radius: 8px; margin-bottom: 16px; text-align: center;">' +
+					'<span style="font-size: 32px; display: block; margin-bottom: 8px;">🎉</span>' +
+					'<strong style="font-size: 18px; display: block; margin-bottom: 4px;">' + boosterOnboarding.strings.firstWinTitle + '</strong>' +
+					'<span style="opacity: 0.9;">' + boosterOnboarding.strings.firstWinMessage + '</span>' +
+					'</div>'
+				);
+				this.logEvent( 'first_win_celebration', { goal_id: this.currentGoal } );
+			} else {
+				$( '#success-message' ).text( data.message );
+			}
 
 			$( '#next-steps-container' ).hide();
 			$( '#pro-note-container' ).hide();
