@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Render Lite → Elite upgrade block.
+if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'pdf_invoicing' ) ) {
+	wcj_render_upgrade_block( 'pdf_invoicing' );
+}
+
 // Render Quick Start box for PDF Invoicing.
 if ( function_exists( 'wcj_quick_start_render_box' ) ) {
 	wcj_quick_start_render_box( 'pdf_invoicing' );

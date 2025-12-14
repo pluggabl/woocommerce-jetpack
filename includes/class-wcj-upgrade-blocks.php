@@ -70,6 +70,81 @@ if ( ! function_exists( 'wcj_get_upgrade_blocks_config' ) ) {
 				'comparison_url' => 'https://booster.io/docs/woocommerce-product-variation-swatches/',
 				'upgrade_url'    => 'https://booster.io/buy-booster/',
 			),
+			// Multicurrency (Currency Switcher).
+			'multicurrency'              => array(
+				'enabled'        => true,
+				'module_id'      => 'multicurrency',
+				'lite_label'     => __( 'Multicurrency Lite', 'woocommerce-jetpack' ),
+				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
+				'benefits'       => array(
+					__( 'Unlimited currencies (Lite: limited)', 'woocommerce-jetpack' ),
+					__( 'Automatic exchange rate updates', 'woocommerce-jetpack' ),
+					__( 'Currency by user role or country', 'woocommerce-jetpack' ),
+					__( 'Advanced rounding and pricing rules', 'woocommerce-jetpack' ),
+				),
+				'comparison_url' => 'https://booster.io/docs/woocommerce-multicurrency/',
+				'upgrade_url'    => 'https://booster.io/buy-booster/',
+			),
+			// PDF Invoicing.
+			'pdf_invoicing'              => array(
+				'enabled'        => true,
+				'module_id'      => 'pdf_invoicing',
+				'lite_label'     => __( 'PDF Invoicing Lite', 'woocommerce-jetpack' ),
+				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
+				'benefits'       => array(
+					__( 'Proforma invoices and credit notes', 'woocommerce-jetpack' ),
+					__( 'Advanced custom templates', 'woocommerce-jetpack' ),
+					__( 'Bulk PDF generation and download', 'woocommerce-jetpack' ),
+					__( 'More numbering format options', 'woocommerce-jetpack' ),
+				),
+				'comparison_url' => 'https://booster.io/docs/woocommerce-pdf-invoicing/',
+				'upgrade_url'    => 'https://booster.io/buy-booster/',
+			),
+			// Product Addons.
+			'product_addons'             => array(
+				'enabled'        => true,
+				'module_id'      => 'product_addons',
+				'lite_label'     => __( 'Product Addons Lite', 'woocommerce-jetpack' ),
+				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
+				'benefits'       => array(
+					__( 'Unlimited addon groups', 'woocommerce-jetpack' ),
+					__( 'Conditional logic for addons', 'woocommerce-jetpack' ),
+					__( 'More field types and options', 'woocommerce-jetpack' ),
+					__( 'Advanced pricing formulas', 'woocommerce-jetpack' ),
+				),
+				'comparison_url' => 'https://booster.io/docs/woocommerce-product-addons/',
+				'upgrade_url'    => 'https://booster.io/buy-booster/',
+			),
+			// Pre-orders.
+			'preorders'                  => array(
+				'enabled'        => true,
+				'module_id'      => 'preorders',
+				'lite_label'     => __( 'Pre-orders Lite', 'woocommerce-jetpack' ),
+				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
+				'benefits'       => array(
+					__( 'Automatic release notifications', 'woocommerce-jetpack' ),
+					__( 'Partial payment options', 'woocommerce-jetpack' ),
+					__( 'Prevent mixed cart (pre-order + regular)', 'woocommerce-jetpack' ),
+					__( 'Custom release date formats', 'woocommerce-jetpack' ),
+				),
+				'comparison_url' => 'https://booster.io/docs/woocommerce-preorders/',
+				'upgrade_url'    => 'https://booster.io/buy-booster/',
+			),
+			// Sales Notifications.
+			'sales_notifications'        => array(
+				'enabled'        => true,
+				'module_id'      => 'sales_notifications',
+				'lite_label'     => __( 'Sales Notifications Lite', 'woocommerce-jetpack' ),
+				'headline'       => __( 'Unlock the full power in Booster Elite', 'woocommerce-jetpack' ),
+				'benefits'       => array(
+					__( 'Advanced custom styling options', 'woocommerce-jetpack' ),
+					__( 'Page and product targeting rules', 'woocommerce-jetpack' ),
+					__( 'More notification templates', 'woocommerce-jetpack' ),
+					__( 'Detailed analytics and reporting', 'woocommerce-jetpack' ),
+				),
+				'comparison_url' => 'https://booster.io/docs/woocommerce-sales-notifications/',
+				'upgrade_url'    => 'https://booster.io/buy-booster/',
+			),
 		);
 
 		/**
