@@ -138,10 +138,35 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		}
 
 		/**
+		 * Check if current page is a Booster admin page.
+		 *
+		 * @return bool True if on a Booster page (page=wcj-*), false otherwise.
+		 */
+		private function is_booster_admin_page() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! isset( $_GET['page'] ) ) {
+				return false;
+			}
+
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
+
+			// Check if page starts with 'wcj-'.
+			return ( strpos( $page, 'wcj-' ) === 0 );
+		}
+
+		/**
 		 * Maybe show onboarding modal on first run
+		 *
+		 * Modal only appears on Booster admin pages (wcj-*) to be less intrusive.
 		 */
 		public function maybe_show_onboarding_modal() {
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				return;
+			}
+
+			// Only show modal on Booster pages (not on Posts, Pages, Dashboard, etc.).
+			if ( ! $this->is_booster_admin_page() ) {
 				return;
 			}
 
