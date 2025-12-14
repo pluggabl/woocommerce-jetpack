@@ -4,7 +4,7 @@
  *
  * Central configuration and rendering for Lite → Elite upgrade blocks.
  *
- * @version 7.9.0
+ * @version 7.10.0
  * @since   7.9.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce
@@ -21,7 +21,7 @@ if ( ! function_exists( 'wcj_get_upgrade_blocks_config' ) ) {
 	 * Returns an array of upgrade block configurations for modules that have
 	 * Lite versions in the free plugin and enhanced features in Elite.
 	 *
-	 * @version 7.9.0
+	 * @version 7.10.0
 	 * @since   7.9.0
 	 * @return  array Upgrade block configurations keyed by module_id.
 	 */

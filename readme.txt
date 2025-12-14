@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 7.9.0
+Stable tag: 7.10.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,17 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.10.0 - 14/12/2025 =
+* Added - Activation redirect to Getting Started page for new installs
+* Added - Search box in onboarding modal for quick goal discovery
+* Added - "Re-open Onboarding" button on Getting Started page
+* Added - First-win celebration message after applying first goal
+* Added - Success toast notification after saving module settings
+* Added - Quick Start presets for PDF Invoicing, Order Numbers, Wishlist, Checkout Fields, Related Products
+* Added - Help text tooltips for 20+ settings across key modules
+* Added - Upgrade comparison blocks for Multicurrency, PDF Invoicing, Product Add-ons, Pre-orders, Sales Notifications
+* Improved - Onboarding modal now only appears on Booster admin pages
 
 = 7.9.0 - 11/12/2025 =
 
