@@ -237,71 +237,58 @@ if ( ! function_exists( 'woocommerce_jetpack_start_plugin_tracking' ) ) {
 
 add_action( 'plugins_loaded', 'w_c_j' );
 
-// 1. Plugin activate hone par flag set karo
+// Activation redirect - only on FIRST ever activation (not reactivations or updates).
 register_activation_hook( __FILE__, 'wcj_set_activation_redirect_free' );
 
 /**
- * Set redirect flag after plugin activation.
+ * Set redirect flag after FIRST plugin activation only.
  *
- * This function runs on plugin activation and stores an option
- * that triggers a redirect to the onboarding/setup page.
+ * This function runs on plugin activation and sets a transient
+ * to trigger a redirect to the Getting Started page.
+ * Only triggers on first-ever activation, not reactivations.
  *
  * @return void
  */
 function wcj_set_activation_redirect_free() {
-	add_option( 'wcj_do_redirect', true );
-}
-
-// 2. Plugin update hone par flag set karo
-add_action( 'upgrader_process_complete', 'wcj_set_update_redirect_free', 10, 2 );
-
-/**
- * Set redirect flag after plugin update.
- *
- * This function checks if the current process is a plugin update
- * and, if this plugin was updated, it sets an option that triggers
- * a redirect to the onboarding/setup page.
- *
- * @param WP_Upgrader $upgrader_object The upgrader object.
- * @param array       $options         Array of bulk item update data.
- *
- * @return void
- */
-function wcj_set_update_redirect_free( $upgrader_object, $options ) {
-	// Yoda conditions used below ('literal' === $var).
-	if ( isset( $options['action'], $options['type'] ) && 'update' === $options['action'] && 'plugin' === $options['type'] ) {
-		if ( isset( $options['plugins'] ) && is_array( $options['plugins'] ) ) {
-			foreach ( $options['plugins'] as $plugin ) {
-				if ( plugin_basename( __FILE__ ) === $plugin ) {
-					add_option( 'wcj_do_redirect', true );
-					// stop looping once found.
-					break;
-				}
-			}
-		}
+	// Check if plugin was ever activated before.
+	if ( get_option( 'wcj_plugin_activated_once', false ) ) {
+		// This is a reactivation, do not redirect.
+		return;
 	}
+
+	// Mark that plugin has been activated at least once.
+	add_option( 'wcj_plugin_activated_once', true );
+
+	// Set transient to trigger redirect (expires in 60 seconds as a safety measure).
+	set_transient( 'wcj_activation_redirect', true, 60 );
 }
 
-// Redirect to Getting Started page after plugin activation/update.
-add_action( 'admin_init', 'wcj_redirect_after_activation_or_update_free' );
+// Redirect to Getting Started page after first plugin activation.
+add_action( 'admin_init', 'wcj_redirect_after_first_activation_free' );
 
 /**
- * Redirects admin to the Getting Started page after plugin activation or update.
+ * Redirects admin to the Getting Started page after first plugin activation.
  *
- * Checks for the `wcj_do_redirect` option set during activation/update.
+ * Checks for the `wcj_activation_redirect` transient set during activation.
  * Prevents redirect in network admin or multi-site bulk activation cases.
  *
  * @return void
  */
-function wcj_redirect_after_activation_or_update_free() {
-	if ( get_option( 'wcj_do_redirect', false ) ) {
-		delete_option( 'wcj_do_redirect' );
-
-		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
-			return;
-		}
-
-		wp_safe_redirect( admin_url( 'admin.php?page=wcj-getting-started&modal=onboarding#launch-onboarding-modal' ) );
-		exit;
+function wcj_redirect_after_first_activation_free() {
+	// Check for the redirect transient.
+	if ( ! get_transient( 'wcj_activation_redirect' ) ) {
+		return;
 	}
+
+	// Delete the transient immediately (one-time only).
+	delete_transient( 'wcj_activation_redirect' );
+
+	// Don't redirect in network admin or bulk activation.
+	if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return;
+	}
+
+	// Redirect to Getting Started page with modal param.
+	wp_safe_redirect( admin_url( 'admin.php?page=wcj-getting-started&modal=onboarding' ) );
+	exit;
 }
