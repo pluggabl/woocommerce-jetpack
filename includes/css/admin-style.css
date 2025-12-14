@@ -2010,3 +2010,85 @@ input.exchage_rate_button{ border: 1px solid rgba(0,0,0,.2);height: 38px;border-
 	font-size: 14px !important;
 	margin-left: 2px;
 }
+
+/* D4: Success Toast Notification */
+.wcj-success-toast {
+	position: fixed;
+	top: 50px;
+	right: 20px;
+	z-index: 100001;
+	background: #46b450;
+	color: #fff;
+	padding: 14px 20px;
+	border-radius: 6px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	font-weight: 500;
+	max-width: 320px;
+	animation: wcjToastSlideIn 0.3s ease-out;
+}
+
+.wcj-success-toast.wcj-toast-hiding {
+	animation: wcjToastSlideOut 0.3s ease-in forwards;
+}
+
+.wcj-success-toast .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+.wcj-success-toast-close {
+	background: none;
+	border: none;
+	color: rgba(255, 255, 255, 0.8);
+	cursor: pointer;
+	padding: 4px;
+	margin-left: auto;
+	border-radius: 4px;
+	transition: color 0.2s ease, background 0.2s ease;
+}
+
+.wcj-success-toast-close:hover {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.wcj-success-toast-close .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+@keyframes wcjToastSlideIn {
+	from {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes wcjToastSlideOut {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+}
+
+@media (max-width: 768px) {
+	.wcj-success-toast {
+		right: 10px;
+		left: 10px;
+		max-width: none;
+	}
+}

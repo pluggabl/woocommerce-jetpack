@@ -6,6 +6,48 @@
 
 jQuery( document ).ready(
   function ($) {
+    // D4: Success Toast after settings save
+    (function() {
+      var urlParams = new URLSearchParams( window.location.search );
+      if ( urlParams.get( 'success' ) === '1' ) {
+        // Create toast element
+        var toast = $( '<div class="wcj-success-toast">' +
+          '<span class="dashicons dashicons-yes-alt"></span>' +
+          '<span>Settings saved successfully</span>' +
+          '<button type="button" class="wcj-success-toast-close" aria-label="Dismiss">' +
+            '<span class="dashicons dashicons-no-alt"></span>' +
+          '</button>' +
+        '</div>' );
+
+        $( 'body' ).append( toast );
+
+        // Auto-dismiss after 5 seconds
+        var dismissTimeout = setTimeout( function() {
+          dismissToast( toast );
+        }, 5000 );
+
+        // Manual dismiss on click
+        toast.find( '.wcj-success-toast-close' ).on( 'click', function() {
+          clearTimeout( dismissTimeout );
+          dismissToast( toast );
+        } );
+
+        function dismissToast( toastEl ) {
+          toastEl.addClass( 'wcj-toast-hiding' );
+          setTimeout( function() {
+            toastEl.remove();
+          }, 300 );
+        }
+
+        // Remove success param from URL without reload (clean URL)
+        if ( window.history.replaceState ) {
+          urlParams.delete( 'success' );
+          var newUrl = window.location.pathname + '?' + urlParams.toString() + window.location.hash;
+          window.history.replaceState( {}, '', newUrl );
+        }
+      }
+    })();
+
     // GTM/GA4 click tracking using stable data attributes
     $(document).on('click keydown', '.wcj-btn-chip', function(e){
       var isKeyboard = (e.type === 'keydown' && (e.key === 'Enter' || e.key === ' '));
