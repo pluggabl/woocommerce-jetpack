@@ -980,6 +980,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					$checked          = ( 'yes' === $option_value ) ? 'checked' : '';
 					$custom_link_link = isset( $setting['link'] ) ? $setting['link'] : '';
 					$desc_tip_str     = isset( $setting['desc_tip'] ) ? $setting['desc_tip'] : '';
+					$help_text_str     = isset( $setting['help_text'] ) ? $setting['help_text'] : '';
 
 					if ( '' !== $desc_tip_str ) {
 						$desc_tip = isset( $setting['desc_tip'] ) && '' !== $setting['desc_tip'] ? "<div class='wcj_help_tooltip_main'><div class='wcj_help_tooltip'><p class=''>" . $setting['desc_tip'] . '</p></div></div>' : '';
@@ -1089,6 +1090,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 							$final_html .= '<div class="wcj-tab-plugins-form-inp">
                                 <div class="wcj-plugins-form-inp-lf">
                                     <div class="wcj_help_tooltip_label"><label for="' . $id . '"> ' . $title . '</label></div>
+									' . $desc_tip . '
                                 </div>
                                 <div class="wcj-plugins-form-inp-rh">
                                     <label for="' . $id . '">

@@ -123,6 +123,8 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 							'create_demo_draft' => __( 'Create a demo draft page', 'woocommerce-jetpack' ),
 							'add_one_extra'     => __( 'Add one extra currency', 'woocommerce-jetpack' ),
 							'confirmUndo'       => __( 'Are you sure you want to undo this goal?', 'woocommerce-jetpack' ),
+							'firstWinTitle'     => __( 'You did it!', 'woocommerce-jetpack' ),
+							'firstWinMessage'   => __( 'Your first Booster feature is now active. Keep exploring to unlock more powerful features for your store!', 'woocommerce-jetpack' ),
 						),
 					)
 				);
@@ -138,10 +140,35 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		}
 
 		/**
+		 * Check if current page is a Booster admin page.
+		 *
+		 * @return bool True if on a Booster page (page=wcj-*), false otherwise.
+		 */
+		private function is_booster_admin_page() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! isset( $_GET['page'] ) ) {
+				return false;
+			}
+
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
+
+			// Check if page starts with 'wcj-'.
+			return ( strpos( $page, 'wcj-' ) === 0 );
+		}
+
+		/**
 		 * Maybe show onboarding modal on first run
+		 *
+		 * Modal only appears on Booster admin pages (wcj-*) to be less intrusive.
 		 */
 		public function maybe_show_onboarding_modal() {
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				return;
+			}
+
+			// Only show modal on Booster pages (not on Posts, Pages, Dashboard, etc.).
+			if ( ! $this->is_booster_admin_page() ) {
 				return;
 			}
 
@@ -164,9 +191,17 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 			echo '<div class="booster-getting-started">';
 			echo '<p>' . esc_html__( 'Welcome to Booster! Get started quickly by choosing one of these goals:', 'woocommerce-jetpack' ) . '</p>';
 
-			echo '<button type="button" class="button button-primary" id="launch-onboarding-modal">';
-			echo esc_html__( 'Open onboarding', 'woocommerce-jetpack' );
+			// Re-open onboarding button (G1) - prominent button to launch setup guide.
+			echo '<div class="booster-setup-guide-box" style="background: #f0f6fc; border: 1px solid #c3c4c7; border-left: 4px solid #2271b1; padding: 16px 20px; margin: 20px 0; border-radius: 4px;">';
+			echo '<p style="margin: 0 0 12px 0; font-size: 14px;">';
+			echo '<strong>' . esc_html__( 'New to Booster?', 'woocommerce-jetpack' ) . '</strong> ';
+			echo esc_html__( 'Use our interactive setup guide to quickly configure the features you need.', 'woocommerce-jetpack' );
+			echo '</p>';
+			echo '<button type="button" class="button button-primary button-hero" id="launch-onboarding-modal" style="font-size: 14px;">';
+			echo '<span class="dashicons dashicons-welcome-learn-more" style="margin-right: 6px; line-height: 1.4;"></span>';
+			echo esc_html__( 'Open Setup Guide', 'woocommerce-jetpack' );
 			echo '</button>';
+			echo '</div>';
 
 			if ( ! empty( $completed_goals ) ) {
 				echo '<h2>' . esc_html__( 'Completed Goals', 'woocommerce-jetpack' ) . '</h2>';
@@ -369,6 +404,13 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				$snapshot_after = array_merge( $snapshot_after, $apply_result['settings'] );
 			}
 
+			// Check if this is the first-ever goal applied (E4: First Win).
+			$is_first_win = ! get_option( 'wcj_first_goal_applied', false );
+			if ( $is_first_win ) {
+				// Mark that first goal has been applied (one-time only).
+				update_option( 'wcj_first_goal_applied', true );
+			}
+
 			$onboarding_state = get_option( $this->option_key, array() );
 
 			if ( ! isset( $onboarding_state['completed_goals'] ) ) {
@@ -401,6 +443,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				'message'        => __( 'Goal applied successfully!', 'woocommerce-jetpack' ),
 				'next_step_text' => isset( $goal['next_step_text'] ) ? $goal['next_step_text'] : '',
 				'next_step_link' => $next_step_link,
+				'first_win'      => $is_first_win,
 			);
 		}
 

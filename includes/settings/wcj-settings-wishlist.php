@@ -195,11 +195,12 @@ $settings = array_merge(
 			'id'    => 'wcj_wishlist_general_options',
 		),
 		array(
-			'title'   => __( 'Add/Remove font awesome icon css', 'woocommerce-jetpack' ),
-			'desc'    => __( 'Add/Remove', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_wishlist_enabled_font_awesome',
-			'default' => 'yes',
-			'type'    => 'checkbox',
+			'title'     => __( 'Add/Remove font awesome icon css', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Add/Remove', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_wishlist_enabled_font_awesome',
+			'default'   => 'yes',
+			'type'      => 'checkbox',
+			'help_text' => __( 'Load Font Awesome icons for wishlist buttons. Disable if your theme already includes Font Awesome to avoid loading it twice.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'title'             => __( 'Add to wishlist icon color', 'woocommerce-jetpack' ),
@@ -209,6 +210,7 @@ $settings = array_merge(
 			'css'               => 'width:6em;',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+			'help_text'         => __( 'Color of the heart icon before a product is added to wishlist. Choose a color that fits your theme but is visible.', 'woocommerce-jetpack' ),
 		),
 		array(
 			'title'             => __( 'Added to wishlist icon color', 'woocommerce-jetpack' ),

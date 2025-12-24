@@ -63,7 +63,7 @@ function wcj_quick_start_get_all_presets() {
 	// Base presets array with pilot configurations for three key modules.
 	$presets = array(
 		// Cart Abandonment - Send gentle reminder emails to recover abandoned carts.
-		'cart_abandonment'    => array(
+		'cart_abandonment'     => array(
 			'module_id'   => 'cart_abandonment',
 			'module_name' => __( 'Cart Abandonment', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Send one gentle reminder email to recover abandoned carts.', 'woocommerce-jetpack' ),
@@ -89,7 +89,7 @@ function wcj_quick_start_get_all_presets() {
 		),
 
 		// Sales Notifications - Show social proof without annoying customers.
-		'sales_notifications' => array(
+		'sales_notifications'  => array(
 			'module_id'   => 'sales_notifications',
 			'module_name' => __( 'Sales Notifications', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Show social proof with recent purchase notifications.', 'woocommerce-jetpack' ),
@@ -114,7 +114,7 @@ function wcj_quick_start_get_all_presets() {
 		),
 
 		// Product Add-ons - Simple gift wrapping example.
-		'product_addons'      => array(
+		'product_addons'       => array(
 			'module_id'   => 'product_addons',
 			'module_name' => __( 'Product Add-ons', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Add simple upsells like gift wrapping to all products.', 'woocommerce-jetpack' ),
@@ -136,6 +136,138 @@ function wcj_quick_start_get_all_presets() {
 						'wcj_product_addons_all_products_title_1'   => __( 'Gift Wrapping', 'woocommerce-jetpack' ),
 						'wcj_product_addons_all_products_label_1'   => __( 'Add gift wrapping', 'woocommerce-jetpack' ),
 						'wcj_product_addons_all_products_price_1'   => '5',
+					),
+				),
+			),
+		),
+
+		// PDF Invoicing - Auto-generate invoices on order completion.
+		'pdf_invoicing'        => array(
+			'module_id'   => 'pdf_invoicing',
+			'module_name' => __( 'PDF Invoicing', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Auto-generate professional PDF invoices when orders are completed.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Generate invoices automatically when orders complete.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Create invoice when order status is "Completed"', 'woocommerce-jetpack' ),
+						__( 'Skip invoice generation for free orders', 'woocommerce-jetpack' ),
+						__( 'Invoice attached to customer email automatically', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_invoicing_invoice_create_on' => array( 'woocommerce_order_status_completed' ),
+						'wcj_invoicing_invoice_skip_zero_total' => 'yes',
+					),
+				),
+			),
+		),
+
+		// Order Numbers - Sequential numbering with professional format.
+		'order_numbers'        => array(
+			'module_id'   => 'order_numbers',
+			'module_name' => __( 'Order Numbers', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Replace WooCommerce order IDs with professional sequential numbers.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Clean sequential numbers starting from 1001.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Enable sequential order numbering', 'woocommerce-jetpack' ),
+						__( 'Start from order number 1001', 'woocommerce-jetpack' ),
+						__( 'Enable order search by custom number', 'woocommerce-jetpack' ),
+						__( 'Use MySQL transactions for reliability', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_order_number_sequential_enabled' => 'yes',
+						'wcj_order_number_counter' => '1001',
+						'wcj_order_number_search_by_custom_number_enabled' => 'yes',
+						'wcj_order_number_order_tracking_enabled' => 'yes',
+						'wcj_order_number_use_mysql_transaction_enabled' => 'yes',
+					),
+				),
+			),
+		),
+
+		// Wishlist - Enable wishlist on product pages.
+		'wishlist'             => array(
+			'module_id'   => 'wishlist',
+			'module_name' => __( 'Wishlist', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Let customers save products to purchase later.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Simple wishlist button on product pages.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Enable wishlist on single product pages', 'woocommerce-jetpack' ),
+						__( 'Show as button with heart icon', 'woocommerce-jetpack' ),
+						__( 'Position after add to cart button', 'woocommerce-jetpack' ),
+						__( 'Include Font Awesome icons', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_wishlist_enabled_single' => 'yes',
+						'wcj_wishlist_title_single'   => __( 'Add to wishlist', 'woocommerce-jetpack' ),
+						'wcj_wishlist_style_single'   => 'button_icon',
+						'wcj_wishlist_hook_single'    => 'woocommerce_after_add_to_cart_button',
+						'wcj_wishlist_enabled_font_awesome' => 'yes',
+					),
+				),
+			),
+		),
+
+		// Checkout Core Fields - Streamline checkout by hiding optional fields.
+		'checkout_core_fields' => array(
+			'module_id'   => 'checkout_core_fields',
+			'module_name' => __( 'Checkout Core Fields', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Simplify checkout by controlling which fields are shown or required.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Streamlined checkout with essential fields only.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Keep essential address fields enabled', 'woocommerce-jetpack' ),
+						__( 'Make phone number optional instead of required', 'woocommerce-jetpack' ),
+						__( 'Hide company name field (optional for most stores)', 'woocommerce-jetpack' ),
+						__( 'Hide address line 2 to simplify form', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_checkout_fields_billing_company_is_enabled'   => 'no',
+						'wcj_checkout_fields_billing_address_2_is_enabled' => 'no',
+						'wcj_checkout_fields_billing_phone_is_required'    => 'no',
+						'wcj_checkout_fields_shipping_company_is_enabled'  => 'no',
+						'wcj_checkout_fields_shipping_address_2_is_enabled' => 'no',
+					),
+				),
+			),
+		),
+
+		// Related Products - Show more relevant product recommendations.
+		'related_products'     => array(
+			'module_id'   => 'related_products',
+			'module_name' => __( 'Related Products', 'woocommerce-jetpack' ),
+			'headline'    => __( 'Show relevant product recommendations to boost sales.', 'woocommerce-jetpack' ),
+			'presets'     => array(
+				'balanced' => array(
+					'id'       => 'balanced',
+					'label'    => __( 'Balanced (recommended)', 'woocommerce-jetpack' ),
+					'tagline'  => __( 'Show 4 related products based on category.', 'woocommerce-jetpack' ),
+					'steps'    => array(
+						__( 'Display 4 related products', 'woocommerce-jetpack' ),
+						__( 'Show in 4 columns for clean grid layout', 'woocommerce-jetpack' ),
+						__( 'Relate products by category', 'woocommerce-jetpack' ),
+						__( 'Randomize order for variety', 'woocommerce-jetpack' ),
+					),
+					'settings' => array(
+						'wcj_product_info_related_products_num'                => '4',
+						'wcj_product_info_related_products_columns'            => '4',
+						'wcj_product_info_related_products_relate_by_category' => 'yes',
+						'wcj_product_info_related_products_relate_by_tag'      => 'no',
+						'wcj_product_info_related_products_orderby'            => 'rand',
+						'wcj_product_info_related_products_hide'               => 'no',
 					),
 				),
 			),

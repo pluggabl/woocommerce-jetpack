@@ -53,6 +53,18 @@ $onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map
 
 		<div class="booster-modal-body">
 			<div class="booster-goals-screen active" id="goals-panel" role="tabpanel">
+				<div class="booster-search-box">
+					<input type="text" id="booster-goal-search" class="booster-goal-search" placeholder="<?php esc_attr_e( 'Search goals...', 'woocommerce-jetpack' ); ?>" autocomplete="off">
+					<span class="booster-search-icon">
+						<span class="dashicons dashicons-search"></span>
+					</span>
+					<button type="button" class="booster-search-clear" style="display: none;" aria-label="<?php esc_attr_e( 'Clear search', 'woocommerce-jetpack' ); ?>">
+						<span class="dashicons dashicons-no-alt"></span>
+					</button>
+				</div>
+				<div class="booster-no-results" style="display: none;">
+					<p><?php esc_html_e( 'No goals match your search.', 'woocommerce-jetpack' ); ?></p>
+				</div>
 				<div class="booster-goals-grid">
 					<?php foreach ( $onboarding_map as $goal_id => $goal ) : ?>
 						<div class="booster-goal-tile booster-tile" data-goal="<?php echo esc_attr( $goal_id ); ?>">

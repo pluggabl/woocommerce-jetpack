@@ -13,6 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Render Lite → Elite upgrade block.
+if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'product_addons' ) ) {
+	wcj_render_upgrade_block( 'product_addons' );
+}
+
 $products = wcj_get_products();
 
 $qty_triggers                          = array();
