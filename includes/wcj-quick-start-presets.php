@@ -63,7 +63,7 @@ function wcj_quick_start_get_all_presets() {
 	// Base presets array with pilot configurations for three key modules.
 	$presets = array(
 		// Cart Abandonment - Send gentle reminder emails to recover abandoned carts.
-		'cart_abandonment'    => array(
+		'cart_abandonment'     => array(
 			'module_id'   => 'cart_abandonment',
 			'module_name' => __( 'Cart Abandonment', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Send one gentle reminder email to recover abandoned carts.', 'woocommerce-jetpack' ),
@@ -89,7 +89,7 @@ function wcj_quick_start_get_all_presets() {
 		),
 
 		// Sales Notifications - Show social proof without annoying customers.
-		'sales_notifications' => array(
+		'sales_notifications'  => array(
 			'module_id'   => 'sales_notifications',
 			'module_name' => __( 'Sales Notifications', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Show social proof with recent purchase notifications.', 'woocommerce-jetpack' ),
@@ -114,7 +114,7 @@ function wcj_quick_start_get_all_presets() {
 		),
 
 		// Product Add-ons - Simple gift wrapping example.
-		'product_addons'      => array(
+		'product_addons'       => array(
 			'module_id'   => 'product_addons',
 			'module_name' => __( 'Product Add-ons', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Add simple upsells like gift wrapping to all products.', 'woocommerce-jetpack' ),
@@ -142,7 +142,7 @@ function wcj_quick_start_get_all_presets() {
 		),
 
 		// PDF Invoicing - Auto-generate invoices on order completion.
-		'pdf_invoicing'       => array(
+		'pdf_invoicing'        => array(
 			'module_id'   => 'pdf_invoicing',
 			'module_name' => __( 'PDF Invoicing', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Auto-generate professional PDF invoices when orders are completed.', 'woocommerce-jetpack' ),
@@ -157,15 +157,15 @@ function wcj_quick_start_get_all_presets() {
 						__( 'Invoice attached to customer email automatically', 'woocommerce-jetpack' ),
 					),
 					'settings' => array(
-						'wcj_invoicing_invoice_create_on'         => array( 'woocommerce_order_status_completed' ),
-						'wcj_invoicing_invoice_skip_zero_total'   => 'yes',
+						'wcj_invoicing_invoice_create_on' => array( 'woocommerce_order_status_completed' ),
+						'wcj_invoicing_invoice_skip_zero_total' => 'yes',
 					),
 				),
 			),
 		),
 
 		// Order Numbers - Sequential numbering with professional format.
-		'order_numbers'       => array(
+		'order_numbers'        => array(
 			'module_id'   => 'order_numbers',
 			'module_name' => __( 'Order Numbers', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Replace WooCommerce order IDs with professional sequential numbers.', 'woocommerce-jetpack' ),
@@ -181,18 +181,18 @@ function wcj_quick_start_get_all_presets() {
 						__( 'Use MySQL transactions for reliability', 'woocommerce-jetpack' ),
 					),
 					'settings' => array(
-						'wcj_order_number_sequential_enabled'             => 'yes',
-						'wcj_order_number_counter'                        => '1001',
+						'wcj_order_number_sequential_enabled' => 'yes',
+						'wcj_order_number_counter' => '1001',
 						'wcj_order_number_search_by_custom_number_enabled' => 'yes',
-						'wcj_order_number_order_tracking_enabled'         => 'yes',
-						'wcj_order_number_use_mysql_transaction_enabled'  => 'yes',
+						'wcj_order_number_order_tracking_enabled' => 'yes',
+						'wcj_order_number_use_mysql_transaction_enabled' => 'yes',
 					),
 				),
 			),
 		),
 
 		// Wishlist - Enable wishlist on product pages.
-		'wishlist'            => array(
+		'wishlist'             => array(
 			'module_id'   => 'wishlist',
 			'module_name' => __( 'Wishlist', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Let customers save products to purchase later.', 'woocommerce-jetpack' ),
@@ -208,10 +208,10 @@ function wcj_quick_start_get_all_presets() {
 						__( 'Include Font Awesome icons', 'woocommerce-jetpack' ),
 					),
 					'settings' => array(
-						'wcj_wishlist_enabled_single'       => 'yes',
-						'wcj_wishlist_title_single'         => __( 'Add to wishlist', 'woocommerce-jetpack' ),
-						'wcj_wishlist_style_single'         => 'button_icon',
-						'wcj_wishlist_hook_single'          => 'woocommerce_after_add_to_cart_button',
+						'wcj_wishlist_enabled_single' => 'yes',
+						'wcj_wishlist_title_single'   => __( 'Add to wishlist', 'woocommerce-jetpack' ),
+						'wcj_wishlist_style_single'   => 'button_icon',
+						'wcj_wishlist_hook_single'    => 'woocommerce_after_add_to_cart_button',
 						'wcj_wishlist_enabled_font_awesome' => 'yes',
 					),
 				),
@@ -246,7 +246,7 @@ function wcj_quick_start_get_all_presets() {
 		),
 
 		// Related Products - Show more relevant product recommendations.
-		'related_products'    => array(
+		'related_products'     => array(
 			'module_id'   => 'related_products',
 			'module_name' => __( 'Related Products', 'woocommerce-jetpack' ),
 			'headline'    => __( 'Show relevant product recommendations to boost sales.', 'woocommerce-jetpack' ),

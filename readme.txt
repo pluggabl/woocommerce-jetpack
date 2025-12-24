@@ -347,7 +347,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
-= 7.10.0 - 14/12/2025 =
+= 7.10.0 - 24/12/2025 =
 * Added - Activation redirect to Getting Started page for new installs
 * Added - Search box in onboarding modal for quick goal discovery
 * Added - "Re-open Onboarding" button on Getting Started page

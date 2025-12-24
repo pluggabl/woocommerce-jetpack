@@ -10,7 +10,7 @@
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
  * Copyright: © 2020 Pluggabl LLC.
- * WC tested up to: 10.3.6
+ * WC tested up to: 10.4.3
  * License: GNU General Public License v3.0
  * php version 7.2
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html

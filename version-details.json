@@ -1,6 +1,6 @@
 {
-    "0" : "= 7.9.0 11/12/2025 =",
-    "1" : "* ** Onboarding Phase 7 - Lite → Elite upgrade blocks (Phase 5 EPIC 3)**. Added contextual “Upgrade to Booster Elite” panels inside key Lite modules so you can see exactly what you get if you decide to upgrade.",
-    "2" : "* WooCommerce 10.3.6 Tested",
+    "0" : "= 7.10.0 24/12/2025 =",
+    "1": "* **Onboarding Phase 8 – UX & conversion improvements**. Enhanced onboarding flow with activation redirects, searchable goals, re-open onboarding controls, success feedback (celebrations, toasts), Quick Start presets, inline help tooltips, upgrade comparison blocks, and improved admin-page-only visibility.",
+    "2" : "* WooCommerce 10.4.3 Tested",
     "3" : "* WordPress 6.9 Tested"
 }

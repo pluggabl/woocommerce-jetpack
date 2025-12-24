@@ -64,6 +64,7 @@ $settings     = array(
 		'css'               => 'width:100%;height:200px;',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => __( 'Customize notification text, add buyer names, country, product prices, images, and time ago etc details. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock.', 'woocommerce-jetpack' ),
+		/* translators: %s: product title */
 		'help_text'         => __( 'The message displayed in sales notifications. Use placeholders like %customer_city% and %product_title% to show real purchase details and build social proof.', 'woocommerce-jetpack' ),
 	),
 	array(

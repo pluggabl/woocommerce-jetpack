@@ -13,11 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// Render Quick Start box for Order Numbers.
-if ( function_exists( 'wcj_quick_start_render_box' ) ) {
-	wcj_quick_start_render_box( 'order_numbers' );
-}
-
 $message = apply_filters( 'booster_message', '', 'desc' );
 return array(
 	array(

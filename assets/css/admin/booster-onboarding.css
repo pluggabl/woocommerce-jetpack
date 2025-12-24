@@ -1060,6 +1060,10 @@
 		font-size: 14px;
 	}
 
+	#booster-goal-search{
+		padding-left: 30px;
+	}
+
 	/* Mobile responsive for search */
 	@media (max-width: 768px) {
 		.booster-goal-search {

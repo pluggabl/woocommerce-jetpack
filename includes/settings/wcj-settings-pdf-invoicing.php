@@ -17,11 +17,6 @@ if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'pd
 	wcj_render_upgrade_block( 'pdf_invoicing' );
 }
 
-// Render Quick Start box for PDF Invoicing.
-if ( function_exists( 'wcj_quick_start_render_box' ) ) {
-	wcj_quick_start_render_box( 'pdf_invoicing' );
-}
-
 $settings = array(
 	array(
 		'id'   => 'pdf_invoicing_options',

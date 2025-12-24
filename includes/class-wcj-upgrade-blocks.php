@@ -299,8 +299,8 @@ if ( ! function_exists( 'wcj_handle_upgrade_block_click' ) ) {
  * @return array Modified allowed redirect hosts.
  */
 function allow_booster_site_redirect_host( $hosts ) {
- $hosts[] = 'booster.io';
- return $hosts;
+	$hosts[] = 'booster.io';
+	return $hosts;
 }
 add_filter( 'allowed_redirect_hosts', 'allow_booster_site_redirect_host' );
 
