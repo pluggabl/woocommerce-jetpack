@@ -93,7 +93,7 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 			<div class="wcj-col-lg-6">
 				<div class="wcj-dash-sing-box">
 					<h3><?php esc_html_e( 'Getting Started', 'woocommerce-jetpack' ); ?></h3>
-					<h6><?php esc_html_e( 'Let's get you set up with Booster', 'woocommerce-jetpack' ); ?></h6>
+					<h6><?php esc_html_e( 'Let\'s get you set up with Booster', 'woocommerce-jetpack' ); ?></h6>
 					<div class="wcj-dash-sing-icn-list">
 						<div class="wcj-dash-sing-part">
 							<div class="wcj-dash-sing-icon">
