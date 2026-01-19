@@ -327,6 +327,14 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		public function enqueue_script() {
 			$_product = wc_get_product();
 			if ( $_product && $_product->is_type( 'variable' ) ) {
+				// Memory guard: skip loading variations for products with 100+ variations.
+				$variation_ids   = $_product->get_children();
+				$variation_count = count( $variation_ids );
+				if ( $variation_count >= 100 ) {
+					// Too many variations - skip per-variation JS to prevent memory exhaustion.
+					return;
+				}
+
 				$quantities_options = array(
 					'reset_to_min'         => ( 'reset_to_min' === wcj_get_option( 'wcj_order_quantities_variable_variation_change', 'do_nothing' ) ),
 					'reset_to_max'         => ( 'reset_to_max' === wcj_get_option( 'wcj_order_quantities_variable_variation_change', 'do_nothing' ) ),
