@@ -44,13 +44,31 @@ require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 		</div>
 	</div>
 </div>
+
+<!-- Quick Setup Presets Section -->
+<div class="wcj-presets-section">
+	<div class="wcj-container">
+		<div class="wcj-row">
+			<div class="wcj-presets-header">
+				<h2><?php esc_html_e( 'Quick Setup', 'woocommerce-jetpack' ); ?></h2>
+				<p class="description"><?php esc_html_e( 'Get started quickly by applying a preset configuration for common use cases:', 'woocommerce-jetpack' ); ?></p>
+			</div>
+			<?php
+			if ( class_exists( 'WCJ_Presets' ) ) {
+				WCJ_Presets::render_preset_cards();
+			}
+			?>
+		</div>
+	</div>
+</div>
+
 <div class="wcj-dashboard-box">
 	<div class="wcj-container">
 		<div class="wcj-row wcj-dashboard-box-listing wcj-row-flex">
 			<div class="wcj-col-lg-6">
 				<div class="wcj-dash-sing-box">
 					<h3><?php esc_html_e( 'Getting Started', 'woocommerce-jetpack' ); ?></h3>
-					<h6><?php esc_html_e( 'Let’s get you set up with Booster', 'woocommerce-jetpack' ); ?></h6>
+					<h6><?php esc_html_e( 'Let's get you set up with Booster', 'woocommerce-jetpack' ); ?></h6>
 					<div class="wcj-dash-sing-icn-list">
 						<div class="wcj-dash-sing-part">
 							<div class="wcj-dash-sing-icon">

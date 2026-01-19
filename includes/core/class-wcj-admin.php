@@ -62,6 +62,9 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				new Booster_Onboarding();
 			}
 
+			// Load presets system for dashboard quick setup.
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/presets/class-wcj-presets.php';
+
 			if ( is_admin() ) {
 				add_filter( 'booster_message', 'wcj_get_plus_message', 100, 3 );
 
