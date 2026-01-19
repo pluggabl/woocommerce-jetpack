@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:\\Users\\krish\\Dropbox\\Freedom Number\\Booster.io\\workspace\\repos\\woocommerce-jetpack\" log -1 --format=\"%H %s\")",
+      "Bash(git -C \"C:\\Users\\krish\\Dropbox\\Freedom Number\\Booster.io\\workspace\\repos\\woocommerce-jetpack\" branch:*)",
+      "Bash(git tag:*)",
+      "Bash(git log:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
