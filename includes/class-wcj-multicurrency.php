@@ -1067,7 +1067,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 */
 		public function get_default_currency() {
 			$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
-			if ( ! empty( $module_roles ) ) {
+			if ( ! empty( $module_roles ) && is_array( $module_roles ) ) {
 				$current_user_role = wcj_get_current_user_first_role();
 				if ( in_array( $current_user_role, $module_roles, true ) ) {
 					$currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
@@ -1328,6 +1328,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 
 			// Per product.
 			$regular_price_per_product = get_post_meta( $_product_id, '_wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true );
+			$additional_price_filters  = is_array( $this->additional_price_filters ) ? $this->additional_price_filters : array();
 			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) && null !== $_product ) {
 				if (
 				'yes' === wcj_get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) &&
@@ -1341,7 +1342,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 						$price = wcj_get_product_display_price( $_product );
 						$this->save_price( $price, $_product_id, $_current_filter );
 						return $price;
-					} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER === $_current_filter || 'woocommerce_variation_prices_price' === $_current_filter || 'woocommerce_product_variation_get_price' === $_current_filter || in_array( $_current_filter, $this->additional_price_filters, true ) ) {
+					} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER === $_current_filter || 'woocommerce_variation_prices_price' === $_current_filter || 'woocommerce_product_variation_get_price' === $_current_filter || in_array( $_current_filter, $additional_price_filters, true ) ) {
 						if ( $_product->is_on_sale() ) {
 							$sale_price_per_product = get_post_meta( $_product_id, '_wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
 							$price                  = ( null !== $sale_price_per_product && '' !== $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
@@ -1399,7 +1400,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 				return $session_value;
 			} else {
 				$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
-				if ( ! empty( $module_roles ) ) {
+				if ( ! empty( $module_roles ) && is_array( $module_roles ) ) {
 					$current_user_role = wcj_get_current_user_first_role();
 					if ( in_array( $current_user_role, $module_roles, true ) ) {
 						$roles_default_currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
