@@ -62,6 +62,17 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				new Booster_Onboarding();
 			}
 
+			// Load presets system for dashboard quick setup.
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/presets/class-wcj-presets.php';
+
+			// Load Getting Started hub (P6).
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-getting-started-hub.php';
+			$GLOBALS['wcj_getting_started_hub'] = new WCJ_Getting_Started_Hub();
+
+			// Load Module Filters (P7).
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-module-filters.php';
+			$GLOBALS['wcj_module_filters'] = new WCJ_Module_Filters();
+
 			if ( is_admin() ) {
 				add_filter( 'booster_message', 'wcj_get_plus_message', 100, 3 );
 
@@ -831,6 +842,12 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 
 				$total_modules++;
 
+				// Get data attributes for module filters (P7).
+				$module_data_attrs = '';
+				if ( isset( $GLOBALS['wcj_module_filters'] ) ) {
+					$module_data_attrs = $GLOBALS['wcj_module_filters']->get_module_data_attributes( $section );
+				}
+
 				if ( in_array( $the_feature['id'], array( 'wcj_cart_abandonment_enabled', 'wcj_wishlist_enabled' ), true ) ) {
 					$lite_tooltip_text = __( 'Want more? Elite unlocks automation & unlimited items.', 'woocommerce-jetpack' );
 					$lite_ribbon       = '<span class="wcj-lite-ribbon wcj-lite-ribbon-modulelist" data-tooltip="' . esc_attr( $lite_tooltip_text ) . '" data-link="' . esc_url( $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation' ) . '">' . __( 'Lite', 'woocommerce-jetpack' ) . '</span>';
@@ -839,7 +856,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				}
 
 				if ( 'pdf_invoicing' !== $cat_id ) {
-					$html .= '<div class="wcj-plugins-sing-acc-box-head">
+					$html .= '<div class="wcj-plugins-sing-acc-box-head"' . $module_data_attrs . '>
 						<div class="wcj-plugins-sing-head-lf">
 							<span class="wcj_admin_span">
 								<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pr-sm-icn.png" alt="">

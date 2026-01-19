@@ -83,6 +83,13 @@ require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 
 						$section = ( isset( $_REQUEST['section'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) : '' );
 
+						// Render Module Filters (P7) above module list when showing all modules.
+						if ( '' === $section || 'active' === $section ) {
+							if ( isset( $GLOBALS['wcj_module_filters'] ) ) {
+								$GLOBALS['wcj_module_filters']->render_filter_buttons();
+							}
+						}
+
 						$pdf_header = '<div class="wcj-plugins-sing-acc-box-head">
 							<div class="wcj-plugins-sing-head-lf">
 								<span class="wcj_admin_span">
