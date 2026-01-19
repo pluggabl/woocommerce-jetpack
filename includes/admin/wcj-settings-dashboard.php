@@ -11,7 +11,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
+require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php';
+
+// Handle preset application from hub cards.
+if ( isset( $_GET['apply_preset'] ) && ! empty( $_GET['apply_preset'] ) ) {
+	// Verify nonce.
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'wcj_apply_preset' ) ) {
+		wp_die( esc_html__( 'Security check failed.', 'woocommerce-jetpack' ) );
+	}
+	// Verify capability.
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		wp_die( esc_html__( 'Permission denied.', 'woocommerce-jetpack' ) );
+	}
+	$preset_id = sanitize_key( wp_unslash( $_GET['apply_preset'] ) );
+	if ( class_exists( 'WCJ_Presets' ) ) {
+		WCJ_Presets::apply_preset( $preset_id );
+	}
+	// Redirect to remove query params.
+	wp_safe_redirect( remove_query_arg( array( 'apply_preset', '_wpnonce' ) ) );
+	exit;
+}
+
+// Render Getting Started Hub (P6) at top of dashboard.
+if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
+	$GLOBALS['wcj_getting_started_hub']->render();
+}
+?>
 
 <div class="wcj-welcome-booster">
 	<div class="wcj-container">
