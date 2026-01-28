@@ -20,10 +20,22 @@ if ( ! $_product ) {
 }
 $products = array();
 if ( $_product->is_type( 'variable' ) ) {
-	$available_variations = $_product->get_available_variations();
-	foreach ( $available_variations as $variation ) {
-		$variation_product                      = wc_get_product( $variation['variation_id'] );
-		$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
+	// Memory guard: skip loading variations for products with 100+ variations.
+	$variation_ids   = $_product->get_children();
+	$variation_count = count( $variation_ids );
+	if ( $variation_count >= 100 ) {
+		// Too many variations - use parent product only to prevent memory exhaustion.
+		$products[ $main_product_id ] = ' (' . sprintf(
+			/* translators: %d: variation count */
+			__( 'All %d variations - per-variation settings disabled for performance', 'woocommerce-jetpack' ),
+			$variation_count
+		) . ')';
+	} else {
+		$available_variations = $_product->get_available_variations();
+		foreach ( $available_variations as $variation ) {
+			$variation_product                      = wc_get_product( $variation['variation_id'] );
+			$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
+		}
 	}
 } else {
 	$products[ $main_product_id ] = '';

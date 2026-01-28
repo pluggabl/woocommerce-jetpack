@@ -192,7 +192,6 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			// Free Shipping.
 			add_filter( 'woocommerce_shipping_free_shipping_instance_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
 			add_filter( 'woocommerce_shipping_free_shipping_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
-
 		}
 
 		/**
@@ -314,7 +313,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 */
 		public function wc_tree_table_rate_shipping_compatibility() {
 			$shipping_instance_max = apply_filters( 'wcj_multicurrency_compatibility_wc_ttrs_instances', 90 );
-			for ( $i = 1; $i <= $shipping_instance_max; $i ++ ) {
+			for ( $i = 1; $i <= $shipping_instance_max; $i++ ) {
 				add_filter( 'option_woocommerce_tree_table_rate_' . $i . '_settings', array( $this, 'convert_wc_tree_table_rate_settings' ) );
 			}
 		}
@@ -356,12 +355,12 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.6.2
 		 * @since   4.9.0
 		 *
-		 * @param array $array defines the array.
+		 * @param array $settings_array defines the array.
 		 * @param null  $args defines the args.
 		 *
 		 * @return array
 		 */
-		public function recursively_convert_wc_tree_settings( $array, $args = null ) {
+		public function recursively_convert_wc_tree_settings( $settings_array, $args = null ) {
 			$args          = wp_parse_args(
 				$args,
 				array(
@@ -371,31 +370,31 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			);
 			$change_keys   = $args['change_keys'];
 			$exchange_rate = $args['exchange_rate'];
-			foreach ( $array as $key => $value ) {
+			foreach ( $settings_array as $key => $value ) {
 				if ( in_array( $key, $change_keys, true ) ) {
 					if (
-						is_array( $array ) &&
-						isset( $array['condition'] ) &&
-						'price' === $array['condition'] &&
+						is_array( $settings_array ) &&
+						isset( $settings_array['condition'] ) &&
+						'price' === $settings_array['condition'] &&
 						! empty( $value ) &&
 						is_numeric( $value )
 					) {
-						$array[ $key ] = $value * $exchange_rate;
+						$settings_array[ $key ] = $value * $exchange_rate;
 					} elseif (
-					is_a( $array, 'stdClass' ) &&
-					property_exists( $array, 'condition' ) &&
-					'price' === $array->condition &&
+					is_a( $settings_array, 'stdClass' ) &&
+					property_exists( $settings_array, 'condition' ) &&
+					'price' === $settings_array->condition &&
 					! empty( $value ) &&
 					is_numeric( $value )
 					) {
-						$array->$key = $value * $exchange_rate;
+						$settings_array->$key = $value * $exchange_rate;
 					}
 				}
 				if ( is_array( $value ) || is_a( $value, 'stdClass' ) ) {
 					$this->recursively_convert_wc_tree_settings( $value, $args );
 				}
 			}
-			return $array;
+			return $settings_array;
 		}
 
 		/**
@@ -437,13 +436,13 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 5.6.2
 		 * @since   5.2.0
 		 *
-		 * @param bool           $false defines the false.
+		 * @param bool           $is_false defines the false.
 		 * @param string | array $data defines the data.
 		 * @param string | array $coupon defines the coupon.
 		 *
 		 * @return mixed
 		 */
-		public function fix_wc_coupon_discount_amount( $false, $data, $coupon ) {
+		public function fix_wc_coupon_discount_amount( $is_false, $data, $coupon ) {
 			$coupon_id = wc_get_coupon_id_by_code( $data );
 			if (
 			'yes' !== wcj_get_option( 'wcj_multicurrency_compatibility_wc_coupons', 'no' ) ||
@@ -451,7 +450,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			empty( $coupon_id ) ||
 			'fixed_cart' !== get_post_meta( $coupon_id, 'discount_type', true )
 			) {
-				return $false;
+				return $is_false;
 			}
 			$current_coupon_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
 			$coupon->set_amount( $this->change_price( $current_coupon_amount, null ) );
@@ -982,7 +981,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			}
 
 			$per_product_prices = array();
-			for ( $i = 1; $i <= $total_number; $i ++ ) {
+			for ( $i = 1; $i <= $total_number; $i++ ) {
 				$currency_code = empty( $currency_code_param ) ? wcj_get_option( 'wcj_multicurrency_currency_' . $i ) : $currency_code_param;
 				$exchange_rate = $this->get_currency_exchange_rate( $currency_code );
 				foreach ( $products as $product_id => $original_price ) {
@@ -1067,7 +1066,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 */
 		public function get_default_currency() {
 			$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
-			if ( ! empty( $module_roles ) ) {
+			if ( ! empty( $module_roles ) && is_array( $module_roles ) ) {
 				$current_user_role = wcj_get_current_user_first_role();
 				if ( in_array( $current_user_role, $module_roles, true ) ) {
 					$currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
@@ -1328,6 +1327,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 
 			// Per product.
 			$regular_price_per_product = get_post_meta( $_product_id, '_wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true );
+			$additional_price_filters  = is_array( $this->additional_price_filters ) ? $this->additional_price_filters : array();
 			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) && null !== $_product ) {
 				if (
 				'yes' === wcj_get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) &&
@@ -1341,7 +1341,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 						$price = wcj_get_product_display_price( $_product );
 						$this->save_price( $price, $_product_id, $_current_filter );
 						return $price;
-					} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER === $_current_filter || 'woocommerce_variation_prices_price' === $_current_filter || 'woocommerce_product_variation_get_price' === $_current_filter || in_array( $_current_filter, $this->additional_price_filters, true ) ) {
+					} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER === $_current_filter || 'woocommerce_variation_prices_price' === $_current_filter || 'woocommerce_product_variation_get_price' === $_current_filter || in_array( $_current_filter, $additional_price_filters, true ) ) {
 						if ( $_product->is_on_sale() ) {
 							$sale_price_per_product = get_post_meta( $_product_id, '_wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
 							$price                  = ( null !== $sale_price_per_product && '' !== $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
@@ -1399,7 +1399,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 				return $session_value;
 			} else {
 				$module_roles = wcj_get_option( 'wcj_multicurrency_role_defaults_roles', '' );
-				if ( ! empty( $module_roles ) ) {
+				if ( ! empty( $module_roles ) && is_array( $module_roles ) ) {
 					$current_user_role = wcj_get_current_user_first_role();
 					if ( in_array( $current_user_role, $module_roles, true ) ) {
 						$roles_default_currency = wcj_get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
@@ -1442,7 +1442,6 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			$currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
 			return wcj_change_price_shipping_package_rates( $package_rates, $currency_exchange_rate );
 		}
-
 	}
 
 endif;

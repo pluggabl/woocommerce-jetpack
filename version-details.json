@@ -1,6 +1,7 @@
 {
-    "0" : "= 7.10.0 24/12/2025 =",
-    "1": "* **Onboarding Phase 8 – UX & conversion improvements**. Enhanced onboarding flow with activation redirects, searchable goals, re-open onboarding controls, success feedback (celebrations, toasts), Quick Start presets, inline help tooltips, upgrade comparison blocks, and improved admin-page-only visibility.",
-    "2" : "* WooCommerce 10.4.3 Tested",
-    "3" : "* WordPress 6.9 Tested"
+    "0": "= 7.11.0 28/01/2026 =",
+    "1": "* **One-Click Presets & Onboarding**. Added one-click presets for PDF Invoicing, Multicurrency, Product Addons, and Checkout, along with a new Getting Started Hub and smart module filters.",
+    "2": "* **Bug Fixes & Performance Improvements**. Fixed Multicurrency price filter PHP errors, resolved memory issues with 100+ variations, and optimized admin asset loading.",
+    "3": "* WooCommerce 10.4.3 Tested",
+    "4": "* WordPress 6.9 Tested"
 }

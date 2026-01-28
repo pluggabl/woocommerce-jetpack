@@ -1,0 +1,238 @@
+/**
+ * Booster for WooCommerce - Getting Started Hub & Module Filters Styles
+ *
+ * Part of Session C: Navigation (P6, P7)
+ *
+ * @version 7.9.0
+ */
+
+/* ----------------------------------------
+   Getting Started Hub (P6)
+   ---------------------------------------- */
+
+.wcj-getting-started-hub {
+	margin: 20px 0 30px 0;
+}
+
+.wcj-hub-wrapper {
+	background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
+	border-radius: 8px;
+	padding: 30px;
+	position: relative;
+	color: #fff;
+}
+
+.wcj-hub-header {
+	margin-bottom: 25px;
+	position: relative;
+}
+
+.wcj-hub-header h2 {
+	color: #fff;
+	font-size: 24px;
+	margin: 0 0 8px 0;
+	font-weight: 600;
+}
+
+.wcj-hub-header p {
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 14px;
+	margin: 0;
+}
+
+.wcj-hub-dismiss {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: rgba(255, 255, 255, 0.2);
+	border: none;
+	color: #fff;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wcj-hub-dismiss:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.wcj-hub-cards {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+}
+
+@media (max-width: 1200px) {
+	.wcj-hub-cards {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	.wcj-hub-cards {
+		grid-template-columns: 1fr;
+	}
+}
+
+.wcj-hub-card {
+	background: #fff;
+	border-radius: 6px;
+	padding: 20px;
+	text-align: center;
+	text-decoration: none;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	display: block;
+}
+
+.wcj-hub-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wcj-hub-card .dashicons {
+	font-size: 40px;
+	width: 40px;
+	height: 40px;
+	color: #2271b1;
+	margin-bottom: 12px;
+}
+
+.wcj-hub-card h3 {
+	color: #1d2327;
+	font-size: 16px;
+	margin: 0 0 8px 0;
+	font-weight: 600;
+}
+
+.wcj-hub-card p {
+	color: #50575e;
+	font-size: 13px;
+	margin: 0;
+	line-height: 1.4;
+}
+
+/* ----------------------------------------
+   Module Filters (P7)
+   ---------------------------------------- */
+
+.wcj-module-filters {
+	display: flex;
+	gap: 10px;
+	margin: 20px 0;
+	padding: 15px;
+	background: #f6f7f7;
+	border-radius: 6px;
+	flex-wrap: wrap;
+}
+
+.wcj-filter-btn {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 8px 16px;
+	font-size: 13px;
+	color: #50575e;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-weight: 500;
+}
+
+.wcj-filter-btn:hover {
+	border-color: #2271b1;
+	color: #2271b1;
+}
+
+.wcj-filter-btn.active {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+
+/* Empty state for filters */
+.wcj-module-empty-state {
+	padding: 40px 20px;
+	text-align: center;
+	background: #f6f7f7;
+	border-radius: 6px;
+	margin: 20px 0;
+}
+
+.wcj-module-empty-state p {
+	color: #50575e;
+	font-size: 14px;
+	margin: 0;
+}
+
+/* Module card with data attributes - visual indicators */
+.wcj-plugins-sing-acc-box-head[data-recommended="yes"] {
+	position: relative;
+}
+
+.wcj-plugins-sing-acc-box-head[data-recommended="yes"]::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 4px;
+	background: #2271b1;
+	border-radius: 4px 0 0 4px;
+}
+
+/* Filter count badges (optional enhancement) */
+.wcj-filter-btn .count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	min-width: 20px;
+	height: 20px;
+	font-size: 11px;
+	margin-left: 6px;
+	padding: 0 6px;
+}
+
+.wcj-filter-btn.active .count {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+/* Hide filtered modules */
+.wcj-plugins-sing-acc-box-head.wcj-filtered-out {
+	display: none !important;
+}
+
+/* Transition for filtering */
+.wcj-plugins-sing-acc-box-head {
+	transition: opacity 0.2s ease;
+}
+
+/* ----------------------------------------
+   Responsive adjustments
+   ---------------------------------------- */
+
+@media (max-width: 782px) {
+	.wcj-hub-wrapper {
+		padding: 20px;
+	}
+
+	.wcj-hub-header h2 {
+		font-size: 20px;
+	}
+
+	.wcj-module-filters {
+		padding: 10px;
+	}
+
+	.wcj-filter-btn {
+		padding: 6px 12px;
+		font-size: 12px;
+	}
+}

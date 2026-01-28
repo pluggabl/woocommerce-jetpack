@@ -11,7 +11,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
+require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php';
+
+// Handle preset application from hub cards.
+if ( isset( $_GET['apply_preset'] ) && ! empty( $_GET['apply_preset'] ) ) {
+	// Verify nonce.
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'wcj_apply_preset' ) ) {
+		wp_die( esc_html__( 'Security check failed.', 'woocommerce-jetpack' ) );
+	}
+	// Verify capability.
+	// phpcs:ignore WordPress.WP.Capabilities.Unknown
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		wp_die( esc_html__( 'Permission denied.', 'woocommerce-jetpack' ) );
+	}
+	$preset_id = sanitize_key( wp_unslash( $_GET['apply_preset'] ) );
+	if ( class_exists( 'WCJ_Presets' ) ) {
+		WCJ_Presets::apply_preset( $preset_id );
+	}
+	// Redirect to remove query params.
+	wp_safe_redirect( remove_query_arg( array( 'apply_preset', '_wpnonce' ) ) );
+	exit;
+}
+
+// Render Getting Started Hub (P6) at top of dashboard.
+if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
+	$GLOBALS['wcj_getting_started_hub']->render();
+}
+?>
 
 <div class="wcj-welcome-booster">
 	<div class="wcj-container">
@@ -44,13 +70,31 @@ require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 		</div>
 	</div>
 </div>
+
+<!-- Quick Setup Presets Section -->
+<div class="wcj-presets-section">
+	<div class="wcj-container">
+		<div class="wcj-row">
+			<div class="wcj-presets-header">
+				<h2><?php esc_html_e( 'Quick Setup', 'woocommerce-jetpack' ); ?></h2>
+				<p class="description"><?php esc_html_e( 'Get started quickly by applying a preset configuration for common use cases:', 'woocommerce-jetpack' ); ?></p>
+			</div>
+			<?php
+			if ( class_exists( 'WCJ_Presets' ) ) {
+				WCJ_Presets::render_preset_cards();
+			}
+			?>
+		</div>
+	</div>
+</div>
+
 <div class="wcj-dashboard-box">
 	<div class="wcj-container">
 		<div class="wcj-row wcj-dashboard-box-listing wcj-row-flex">
 			<div class="wcj-col-lg-6">
 				<div class="wcj-dash-sing-box">
 					<h3><?php esc_html_e( 'Getting Started', 'woocommerce-jetpack' ); ?></h3>
-					<h6><?php esc_html_e( 'Let’s get you set up with Booster', 'woocommerce-jetpack' ); ?></h6>
+					<h6><?php esc_html_e( 'Let\'s get you set up with Booster', 'woocommerce-jetpack' ); ?></h6>
 					<div class="wcj-dash-sing-icn-list">
 						<div class="wcj-dash-sing-part">
 							<div class="wcj-dash-sing-icon">
@@ -197,7 +241,7 @@ require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 								if ( $count >= 8 ) {
 									break;
 								}
-								$count++;
+								++$count;
 
 								echo '<li>';
 									echo '<div class="wcj-feature-top">';
