@@ -429,19 +429,33 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		/**
 		 * Set_quantity_input_max.
 		 *
-		 * @version 3.2.2
+		 * @version 7.11.0
 		 * @since   3.2.2
 		 * @param int   $qty defines the qty.
 		 * @param array $_product defines the _product.
 		 */
 		public function set_quantity_input_max( $qty, $_product ) {
-			if ( ! $_product->is_type( 'variable' ) ) {
-				$max  = $this->get_product_quantity( 'max', $_product, $qty );
-				$_max = $_product->get_max_purchase_quantity();
-				return ( -1 === $_max || $max < $_max ? $max : $_max );
-			} else {
+			// Reentrancy guard to prevent infinite loops.
+			static $depth = 0;
+			if ( $depth > 0 ) {
 				return $qty;
 			}
+
+			$depth++;
+
+			// If product is variable, let WC handle it.
+			if ( $_product->is_type( 'variable' ) ) {
+				$depth--;
+				return $qty;
+			}
+
+			// Apply Booster logic.
+			$plugin_max = $this->get_product_quantity( 'max', $_product, $qty );
+			$wc_max     = $_product->get_max_purchase_quantity();
+			$depth--;
+
+			// Return the more restrictive limit if applicable.
+			return ( -1 === $wc_max || $plugin_max < $wc_max ) ? $plugin_max : $wc_max;
 		}
 
 		/**

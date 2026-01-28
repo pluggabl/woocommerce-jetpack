@@ -234,6 +234,7 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 		public function ajax_apply_preset() {
 			check_ajax_referer( 'wcj-preset-nonce', 'nonce' );
 
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_send_json_error( __( 'Permission denied.', 'woocommerce-jetpack' ) );
 			}
@@ -267,11 +268,9 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 		}
 
 		/**
-		 * Enqueue scripts and styles for preset cards.
-		 *
-		 * @param string $hook The current admin page hook.
+		 * Enqueue scripts for the presets system.
 		 */
-		public function enqueue_scripts( $hook ) {
+		public function enqueue_scripts() {
 			// Only load on Booster pages.
 			$screen = get_current_screen();
 			if ( ! $screen || strpos( $screen->id, 'wcj' ) === false ) {
@@ -300,11 +299,11 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'nonce'    => wp_create_nonce( 'wcj-preset-nonce' ),
 					'strings'  => array(
-						'applying'      => __( 'Applying...', 'woocommerce-jetpack' ),
-						'apply_preset'  => __( 'Apply Preset', 'woocommerce-jetpack' ),
-						'error'         => __( 'Error occurred. Please try again.', 'woocommerce-jetpack' ),
-						'go_there_now'  => __( 'Go there now', 'woocommerce-jetpack' ),
-						'first_win'     => __( 'First win:', 'woocommerce-jetpack' ),
+						'applying'     => __( 'Applying...', 'woocommerce-jetpack' ),
+						'apply_preset' => __( 'Apply Preset', 'woocommerce-jetpack' ),
+						'error'        => __( 'Error occurred. Please try again.', 'woocommerce-jetpack' ),
+						'go_there_now' => __( 'Go there now', 'woocommerce-jetpack' ),
+						'first_win'    => __( 'First win:', 'woocommerce-jetpack' ),
 					),
 				)
 			);

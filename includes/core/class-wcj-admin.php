@@ -840,7 +840,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					}
 				}
 
-				$total_modules++;
+				++$total_modules;
 
 				// Get data attributes for module filters (P7).
 				$module_data_attrs = '';
@@ -902,7 +902,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 						continue;
 					}
 
-					$total_modules++;
+					++$total_modules;
 					$url      = admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . sanitize_title( $cat_id ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=' . $id );
 					$sub_desc = __( 'PDF Invoicing', 'woocommerce-jetpack' ) . ': ' . $label . ' ' . __( 'Settings', 'woocommerce-jetpack' );
 					$html    .= '
@@ -997,7 +997,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					$checked          = ( 'yes' === $option_value ) ? 'checked' : '';
 					$custom_link_link = isset( $setting['link'] ) ? $setting['link'] : '';
 					$desc_tip_str     = isset( $setting['desc_tip'] ) ? $setting['desc_tip'] : '';
-					$help_text_str     = isset( $setting['help_text'] ) ? $setting['help_text'] : '';
+					$help_text_str    = isset( $setting['help_text'] ) ? $setting['help_text'] : '';
 
 					if ( '' !== $desc_tip_str ) {
 						$desc_tip = isset( $setting['desc_tip'] ) && '' !== $setting['desc_tip'] ? "<div class='wcj_help_tooltip_main'><div class='wcj_help_tooltip'><p class=''>" . $setting['desc_tip'] . '</p></div></div>' : '';
@@ -1262,14 +1262,13 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 								foreach ( $setting['custom_attributes'] as $attribute => $attribute_value ) {
 									$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
 								}
-							} else {
-								if ( ! w_c_j()->all_modules['currency_exchange_rates']->is_enabled()
+							} elseif ( ! w_c_j()->all_modules['currency_exchange_rates']->is_enabled()
 								|| 'yes' !== wcj_get_option( 'wcj_currency_exchange_rates_point_decimal_separator', 'no' )
 								) {
+
 									$custom_attributes = array( 'step="' . sprintf( '%.12f', 1 / pow( 10, 12 ) ) . '"', 'min="0"' );
-								} else {
-									$custom_attributes = array( 'step="0.00000001"', 'min="0"' );
-								}
+							} else {
+								$custom_attributes = array( 'step="0.00000001"', 'min="0"' );
 							}
 							$custom_attributes_button = array();
 							if ( ! empty( $setting['custom_attributes_button'] ) && is_array( $setting['custom_attributes_button'] ) ) {

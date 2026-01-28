@@ -115,8 +115,10 @@ if ( ! class_exists( 'WCJ_Module_Filters' ) ) :
 				return;
 			}
 
-			$page    = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-			$section = isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$module = isset( $_GET['module'] ) ? sanitize_text_field( wp_unslash( $_GET['module'] ) ) : '';
 
 			// Track when viewing module settings on the plugins page.
 			if ( 'wcj-plugins' === $page && ! empty( $section ) && 'active' !== $section ) {

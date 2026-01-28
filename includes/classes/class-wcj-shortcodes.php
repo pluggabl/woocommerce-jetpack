@@ -400,7 +400,6 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 				}
 				$before = wp_kses_post( $atts['before'] );
 				$after  = wp_kses_post( $atts['after'] );
-				$result = ( is_string( $result ) ? wp_kses_post( $result ) : $result );
 				return $before . apply_filters( 'wcj_shortcode_result', $result, $atts, $content, $shortcode ) . $after;
 			}
 			return wp_kses_post( $atts['on_empty'] );

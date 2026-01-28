@@ -347,7 +347,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
-= 7.11.0 - 18/01/2026 =
+= 7.11.0 - 28/01/2026 =
 * **New - One-Click Presets**: Set up your store in seconds, not hours. Choose what you want to accomplish and we configure everything for you:
   - **PDF Invoicing**: Start generating professional invoices immediately
   - **Multicurrency**: Let customers shop in their local currency
@@ -358,6 +358,8 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Fixed - Multicurrency no longer shows PHP error when price filters are empty
 * Fixed - Variable products with 100+ variations no longer cause memory issues with Order Quantities
 * Improved - Better admin performance by only loading onboarding assets on Booster pages
+* WooCommerce 10.4.3 Tested
+* WordPress 6.9 Tested
 
 = 7.10.0 - 24/12/2025 =
 * Added - Activation redirect to Getting Started page for new installs

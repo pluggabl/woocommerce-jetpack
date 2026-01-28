@@ -20,6 +20,7 @@ if ( isset( $_GET['apply_preset'] ) && ! empty( $_GET['apply_preset'] ) ) {
 		wp_die( esc_html__( 'Security check failed.', 'woocommerce-jetpack' ) );
 	}
 	// Verify capability.
+	// phpcs:ignore WordPress.WP.Capabilities.Unknown
 	if ( ! current_user_can( 'manage_woocommerce' ) ) {
 		wp_die( esc_html__( 'Permission denied.', 'woocommerce-jetpack' ) );
 	}
@@ -240,7 +241,7 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 								if ( $count >= 8 ) {
 									break;
 								}
-								$count++;
+								++$count;
 
 								echo '<li>';
 									echo '<div class="wcj-feature-top">';

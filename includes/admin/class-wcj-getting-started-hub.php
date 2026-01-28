@@ -137,6 +137,7 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 		public function ajax_dismiss_getting_started() {
 			check_ajax_referer( 'wcj-hub-nonce', 'nonce' );
 
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_send_json_error( 'Permission denied.' );
 			}
@@ -152,21 +153,25 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 		 * @since   7.9.0
 		 */
 		public function enqueue_assets() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$active_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 			if ( 'wcj-dashboard' === $active_page || 'wcj-plugins' === $active_page ) {
+
+				$version = defined( 'WCJ_VERSION' );
+
 				wp_enqueue_style(
 					'wcj-hub-css',
 					wcj_plugin_url() . '/assets/css/wcj-hub.css',
 					array(),
-					WCJ()->version
+					$version
 				);
 
 				wp_enqueue_script(
 					'wcj-module-filters',
 					wcj_plugin_url() . '/assets/js/wcj-module-filters.js',
 					array( 'jquery' ),
-					WCJ()->version,
+					$version,
 					true
 				);
 

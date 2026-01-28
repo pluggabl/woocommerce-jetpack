@@ -121,11 +121,17 @@
             var $emptyState = $container.find('.wcj-module-empty-state');
 
             if (visibleCount === 0 && filter !== 'all') {
+                var message = this.getEmptyStateMessage(filter);
+                
                 if ($emptyState.length === 0) {
-                    var message = this.getEmptyStateMessage(filter);
+                    // Agar message box nahi hai, toh naya add karein
                     $container.append('<div class="wcj-module-empty-state"><p>' + message + '</p></div>');
+                } else {
+                    // Agar message box pehle se hai (par galat message ke saath), toh sirf text update karein
+                    $emptyState.find('p').text(message);
                 }
             } else {
+                // Agar modules mil gaye hain, toh empty state hata dein
                 $emptyState.remove();
             }
         },

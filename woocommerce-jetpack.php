@@ -3,23 +3,20 @@
  * Plugin Name: Booster for WooCommerce
  * Requires Plugins: woocommerce
  * Plugin URI: https://booster.io
- * Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules.All in one WooCommerce plugin.
+ * Description: Supercharge your WooCommerce site with these awesome powerful features.
  * Version: 7.11.0
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
- * Copyright: © 2020 Pluggabl LLC.
  * WC tested up to: 10.4.3
  * License: GNU General Public License v3.0
- * php version 7.2
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
  * @package Booster_For_WooCommerce
- **/
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;
 }
 
 // Core functions.
@@ -35,112 +32,94 @@ add_action(
 	'before_woocommerce_init',
 	function () {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+				'custom_order_tables',
+				__FILE__,
+				true
+			);
 		}
 	}
 );
 
-// Check if Plus is active.
-if ( 'woocommerce-jetpack.php' === basename( __FILE__ ) &&
-	( wcj_is_plugin_activated( 'booster-plus-for-woocommerce', 'booster-plus-for-woocommerce.php' ) ||
-	wcj_is_plugin_activated( 'booster-elite-for-woocommerce', 'booster-elite-for-woocommerce.php' ) ||
-	wcj_is_plugin_activated( 'booster-basic-for-woocommerce', 'booster-basic-for-woocommerce.php' ) ||
-	wcj_is_plugin_activated( 'booster-pro-for-woocommerce', 'booster-pro-for-woocommerce.php' ) )
+// Prevent loading if paid versions are active.
+if (
+	'woocommerce-jetpack.php' === basename( __FILE__ ) &&
+	(
+		wcj_is_plugin_activated( 'booster-plus-for-woocommerce', 'booster-plus-for-woocommerce.php' ) ||
+		wcj_is_plugin_activated( 'booster-elite-for-woocommerce', 'booster-elite-for-woocommerce.php' ) ||
+		wcj_is_plugin_activated( 'booster-basic-for-woocommerce', 'booster-basic-for-woocommerce.php' ) ||
+		wcj_is_plugin_activated( 'booster-pro-for-woocommerce', 'booster-pro-for-woocommerce.php' )
+	)
 ) {
 	return;
 }
 
 if ( ! defined( 'WCJ_FREE_PLUGIN_FILE' ) ) {
-	/**
-	 * WCJ_FREE_PLUGIN_FILE.
-	 *
-	 * @since 5.6.1
-	 */
 	define( 'WCJ_FREE_PLUGIN_FILE', __FILE__ );
 }
 
 if ( ! class_exists( 'WC_Jetpack' ) ) :
 
 	/**
-	 * Main WC_Jetpack Class
+	 * Main Booster for WooCommerce class.
 	 *
-	 * @class   WC_Jetpack
-	 * @version 5.6.0
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 */
 	final class WC_Jetpack {
 
 		/**
-		 * Booster for WooCommerce version.
+		 * Plugin version.
 		 *
-		 * @var   string
-		 * @since 2.4.7
+		 * @var string
 		 */
-		public $version = '7.9.0';
+		public $version = '7.11.0';
 
 		/**
-		 * The single instance of the class
+		 * Singleton instance.
 		 *
-		 * @var WC_Jetpack The single instance of the class
+		 * @var WC_Jetpack|null
 		 */
 		protected static $instances = null;
 
 		/**
-		 * WC Jetpack
-		 *
-		 * @version 5.3.3
-		 * @since   5.3.3
+		 * Plugin options.
 		 *
 		 * @var array
 		 */
 		public $options = array();
 
 		/**
-		 * WC Jetpack
-		 *
-		 * @version 7.1.6
+		 * Registered shortcodes.
 		 *
 		 * @var array
 		 */
 		public $shortcodes = array();
 
 		/**
-		 * WC Jetpack
-		 *
-		 * @version 7.1.6
+		 * Active modules.
 		 *
 		 * @var array
 		 */
 		public $modules = array();
 
 		/**
-		 * WC Jetpack
-		 *
-		 * @version 7.1.6
+		 * All available modules.
 		 *
 		 * @var array
 		 */
 		public $all_modules = array();
 
 		/**
-		 * WC Jetpack
-		 *
-		 * @version 7.1.6
+		 * Module statuses.
 		 *
 		 * @var array
 		 */
 		public $module_statuses = array();
 
 		/**
-		 * Main WC_Jetpack Instance.
+		 * Get main instance (Singleton).
 		 *
-		 * Ensures only one instance of WC_Jetpack is loaded or can be loaded.
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 * @static
-		 * @see     w_c_j()
-		 * @return  WC_Jetpack - Main instance
+		 * @return WC_Jetpack
 		 */
 		public static function instance() {
 			if ( is_null( self::$instances ) ) {
@@ -150,11 +129,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		}
 
 		/**
-		 * WC_Jetpack Constructor.
-		 *
-		 * @version 3.2.4
-		 * @since   1.0.0
-		 * @access  public
+		 * Class constructor.
 		 */
 		public function __construct() {
 			include_once 'includes/core/wcj-loader.php';
@@ -163,132 +138,19 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 
 endif;
 
-if ( ! function_exists( 'w_c_j' ) ) {
-	/**
-	 * Returns the main instance of WC_Jetpack to prevent the need to use globals.
-	 *
-	 * @version 2.5.7
-	 * @since   1.0.0
-	 * @return  WC_Jetpack
-	 */
-	function w_c_j() {
-		return WC_Jetpack::instance();
-	}
-}
+// Load procedural functions.
+require_once __DIR__ . '/includes/wcj-free-functions.php';
 
-	/**
-	 * Wcj_delete_plugin_database_option
-	 *
-	 * @version 6.0.3
-	 * @since   6.0.3
-	 */
-function wcj_delete_free_plugin_database_option() {
-	global $wpdb;
-
-	$plugin_options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%' OR option_name LIKE '_transient_timeout_wcj%' OR option_name LIKE '_transient_wcj%' OR option_name LIKE 'woocommerce_wcj_%' OR option_name LIKE 'widget_wcj_widget_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	foreach ( $plugin_options as $option ) {
-		delete_option( $option->option_name );
-		delete_site_option( $option->option_name );
-	}
-
-	$plugin_meta = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	foreach ( $plugin_meta as $meta ) {
-		delete_post_meta( $meta->post_id, $meta->meta_key );
-	}
-}
-
-	register_uninstall_hook( __FILE__, 'wcj_delete_free_plugin_database_option' );
-
-
-	/**
-	 * Booster Pro
-	 *
-	 * @version 5.5.8
-	 * @since   1.0.0
-	 * @return  Booster_Pro
-	 */
-/**
- * This function allows you to track usage of your plugin
- * Place in your main plugin file
- * Refer to https://wisdomplugin.com/support for help
- */
+// Plugin usage tracking.
 if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
-	include_once dirname( __FILE__ ) . '/tracking/class-plugin-usage-tracker.php';
-}
-if ( ! function_exists( 'woocommerce_jetpack_start_plugin_tracking' ) ) {
-	/**
-	 * Woocommerce jetpack start plugin tracking
-	 *
-	 * @version 5.5.8
-	 * @since   1.0.0
-	 */
-	function woocommerce_jetpack_start_plugin_tracking() {
-		$wisdom = new Plugin_Usage_Tracker(
-			__FILE__,
-			'https://boosterio.bigscoots-staging.com',
-			array(),
-			true,
-			true,
-			1
-		);
-	}
-	woocommerce_jetpack_start_plugin_tracking();
+	include_once __DIR__ . '/tracking/class-plugin-usage-tracker.php';
 }
 
+// Hooks.
 add_action( 'plugins_loaded', 'w_c_j' );
-
-// Activation redirect - only on FIRST ever activation (not reactivations or updates).
+register_uninstall_hook( __FILE__, 'wcj_delete_free_plugin_database_option' );
 register_activation_hook( __FILE__, 'wcj_set_activation_redirect_free' );
-
-/**
- * Set redirect flag after FIRST plugin activation only.
- *
- * This function runs on plugin activation and sets a transient
- * to trigger a redirect to the Getting Started page.
- * Only triggers on first-ever activation, not reactivations.
- *
- * @return void
- */
-function wcj_set_activation_redirect_free() {
-	// Check if plugin was ever activated before.
-	if ( get_option( 'wcj_plugin_activated_once', false ) ) {
-		// This is a reactivation, do not redirect.
-		return;
-	}
-
-	// Mark that plugin has been activated at least once.
-	add_option( 'wcj_plugin_activated_once', true );
-
-	// Set transient to trigger redirect (expires in 60 seconds as a safety measure).
-	set_transient( 'wcj_activation_redirect', true, 60 );
-}
-
-// Redirect to Getting Started page after first plugin activation.
 add_action( 'admin_init', 'wcj_redirect_after_first_activation_free' );
 
-/**
- * Redirects admin to the Getting Started page after first plugin activation.
- *
- * Checks for the `wcj_activation_redirect` transient set during activation.
- * Prevents redirect in network admin or multi-site bulk activation cases.
- *
- * @return void
- */
-function wcj_redirect_after_first_activation_free() {
-	// Check for the redirect transient.
-	if ( ! get_transient( 'wcj_activation_redirect' ) ) {
-		return;
-	}
-
-	// Delete the transient immediately (one-time only).
-	delete_transient( 'wcj_activation_redirect' );
-
-	// Don't redirect in network admin or bulk activation.
-	if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return;
-	}
-
-	// Redirect to Getting Started page with modal param.
-	wp_safe_redirect( admin_url( 'admin.php?page=wcj-getting-started&modal=onboarding' ) );
-	exit;
-}
+// Start tracking.
+woocommerce_jetpack_start_plugin_tracking();
