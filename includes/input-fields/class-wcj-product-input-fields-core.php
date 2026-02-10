@@ -99,6 +99,51 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		}
 
 		/**
+		 * Wcj_safe_unserialize.
+		 *
+		 * @version 7.2.6
+		 * @since   7.2.6
+		 * @param mixed $value Value.
+		 * @return mixed
+		 */
+		private function wcj_safe_unserialize( $value ) {
+			if ( ! is_string( $value ) || ! is_serialized( $value ) ) {
+				return $value;
+			}
+
+			$unserialized = @unserialize( trim( $value ), array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
+			if ( false === $unserialized && 'b:0;' !== $value ) {
+				return $value;
+			}
+
+			return $unserialized;
+		}
+
+		/**
+		 * Is_valid_input_fields_upload_file_path.
+		 *
+		 * @version 7.2.6
+		 * @since   7.2.6
+		 * @param string $file_path File path.
+		 * @return bool
+		 */
+		private function is_valid_input_fields_upload_file_path( $file_path ) {
+			if ( ! is_string( $file_path ) || '' === $file_path ) {
+				return false;
+			}
+
+			$real_file_path = realpath( $file_path );
+			$real_base_path = realpath( wcj_get_wcj_uploads_dir( 'input_fields_uploads' ) );
+			if ( false === $real_file_path || false === $real_base_path ) {
+				return false;
+			}
+
+			$real_base_path = trailingslashit( wp_normalize_path( $real_base_path ) );
+			$real_file_path = wp_normalize_path( $real_file_path );
+			return ( 0 === strpos( $real_file_path, $real_base_path ) );
+		}
+
+		/**
 		 * Adds input fields to YITH Quote plugin when Add to Quote button is pressed
 		 *
 		 * @version 4.2.0
@@ -386,10 +431,17 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						$meta_exists = ( WCJ_IS_WC_VERSION_BELOW_3 ? isset( $item[ $meta_key ] ) : $item->meta_exists( $meta_key ) );
 						if ( $meta_exists ) {
 							$_value = ( WCJ_IS_WC_VERSION_BELOW_3 ? $item[ $meta_key ] : $item->get_meta( $meta_key ) );
-							$_value = maybe_unserialize( $_value );
-							if ( isset( $_value['wcj_type'] ) && 'file' === $_value['wcj_type'] && isset( $_value['tmp_name'] ) ) {
-								$file_path     = $_value['tmp_name'];
-								$attachments[] = $file_path;
+							$_value = $this->wcj_safe_unserialize( $_value );
+							if (
+								is_array( $_value ) &&
+								isset( $_value['wcj_type'], $_value['tmp_name'] ) &&
+								'file' === $_value['wcj_type'] &&
+								is_string( $_value['tmp_name'] )
+							) {
+								$file_path = wp_unslash( $_value['tmp_name'] );
+								if ( $this->is_valid_input_fields_upload_file_path( $file_path ) && file_exists( $file_path ) ) {
+									$attachments[] = $file_path;
+								}
 							}
 						}
 					}
@@ -439,7 +491,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				$value = isset( $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] ) ? $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] : '';
 				$type  = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $_product_id, '' );
 				if ( 'file' === $type ) {
-					$value = maybe_unserialize( $value );
+					$value = $this->wcj_safe_unserialize( $value );
 					if ( isset( $value['name'] ) ) {
 						if ( isset( $value['wcj_uniqid'] ) ) {
 							$value = '<a href="' . esc_url(
@@ -933,7 +985,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						$value = ( 'on' === $value ) ? $yes_value : $no_value;
 					}
 					if ( 'file' === $type ) {
-						$value = maybe_unserialize( $value );
+						$value = $this->wcj_safe_unserialize( $value );
 						$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
 					}
 					if ( '' !== $value && is_string( $value ) ) {
@@ -993,7 +1045,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						$value = ( 'on' === $value ) ? $yes_value : $no_value;
 					}
 					if ( 'file' === $type ) {
-						$value = maybe_unserialize( $value );
+						$value = $this->wcj_safe_unserialize( $value );
 						$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
 					}
 					if ( '' !== $value ) {
