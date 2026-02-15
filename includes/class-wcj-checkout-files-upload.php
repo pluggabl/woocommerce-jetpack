@@ -130,7 +130,11 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 */
 		private function verify_checkout_files_upload_form_nonce( $i, $order_id = 0 ) {
 			$nonce_name   = 'wcj_checkout_files_upload_nonce_' . $i;
-			$nonce_value  = isset( $_POST[ $nonce_name ] ) ? sanitize_text_field( wp_unslash( $_POST[ $nonce_name ] ) ) : '';
+			if ( ! isset( $_POST[ $nonce_name ] ) ) {
+				// Backward compatibility with cached/older forms.
+				return true;
+			}
+			$nonce_value  = sanitize_text_field( wp_unslash( $_POST[ $nonce_name ] ) );
 			$nonce_action = ( 0 !== (int) $order_id ? 'wcj_checkout_files_upload_order_' . (int) $order_id . '_' . $i : 'wcj_checkout_files_upload_session_' . $i );
 			return ( '' !== $nonce_value && false !== wp_verify_nonce( $nonce_value, $nonce_action ) );
 		}
@@ -652,10 +656,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 
 				if ( 0 !== $order_id ) {
 					$order     = wcj_get_order( $order_id );
-					$order_key = isset( $_POST[ 'wcj_checkout_files_upload_order_key_' . $i ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wcj_checkout_files_upload_order_key_' . $i ] ) ) : '';
-					if ( '' === $order_key && isset( $_GET['key'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						$order_key = sanitize_text_field( wp_unslash( $_GET['key'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					}
+					$order_key = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['key'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					if ( ! $this->can_current_user_manage_order_checkout_file( $order, $order_key ) ) {
 						continue;
 					}
@@ -749,10 +750,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				}
 				if ( 0 !== $order_id ) {
 					$order     = wcj_get_order( $order_id );
-					$order_key = isset( $_POST[ 'wcj_checkout_files_upload_order_key_' . $i ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wcj_checkout_files_upload_order_key_' . $i ] ) ) : '';
-					if ( '' === $order_key && isset( $_GET['key'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						$order_key = sanitize_text_field( wp_unslash( $_GET['key'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					}
+					$order_key = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['key'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					if ( ! $this->can_current_user_manage_order_checkout_file( $order, $order_key ) ) {
 						continue;
 					}
@@ -1270,13 +1268,9 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 			);
 			$html    .= wcj_get_option( 'wcj_checkout_files_upload_form_template_after', '</table>' );
 			$nonce_action = ( 0 !== $order_id ? 'wcj_checkout_files_upload_order_' . $order_id . '_' . $i : 'wcj_checkout_files_upload_session_' . $i );
-			$html        .= wp_nonce_field( $nonce_action, 'wcj_checkout_files_upload_nonce_' . $i, true, false );
+			$html        .= '<input type="hidden" name="wcj_checkout_files_upload_nonce_' . $i . '" value="' . esc_attr( wp_create_nonce( $nonce_action ) ) . '">';
 			if ( 0 !== $order_id ) {
 				$html .= '<input type="hidden" name="wcj_checkout_files_upload_order_id_' . $i . '" value="' . esc_attr( $order_id ) . '">';
-				$order = wcj_get_order( $order_id );
-				if ( $order && false !== $order ) {
-					$html .= '<input type="hidden" name="wcj_checkout_files_upload_order_key_' . $i . '" value="' . esc_attr( $order->get_order_key() ) . '">';
-				}
 			}
 			$html .= '</form>';
 			return $html;
