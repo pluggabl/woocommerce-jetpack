@@ -160,7 +160,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 				return $value;
 			}
 
-			$unserialized = @unserialize( trim( $value ), array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
+			$unserialized = @unserialize( trim( $value ), array( 'allowed_classes' => false ) ); // phpcs:ignore 
 			if ( false === $unserialized && 'b:0;' !== $value ) {
 				return $value;
 			}
@@ -219,7 +219,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 
 					$tmp_name = wp_unslash( $item_field['tmp_name'] );
 					if ( $this->is_valid_input_fields_upload_file_path( $tmp_name ) && file_exists( $tmp_name ) ) {
-						unlink( $tmp_name );
+						wp_delete_file( $tmp_name );
 					}
 				}
 			}
@@ -277,7 +277,6 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 			}
 			wp_enqueue_script( 'wcj-product-input-fields' );
 		}
-
 	}
 
 endif;

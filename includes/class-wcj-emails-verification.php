@@ -172,8 +172,8 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 
 			return add_query_arg(
 				array(
-					'wcj_user_id'                       => $user_id,
-					'wcj_resend_verification_nonce'     => wp_create_nonce( 'wcj_resend_verification_' . $user_id ),
+					'wcj_user_id'                   => $user_id,
+					'wcj_resend_verification_nonce' => wp_create_nonce( 'wcj_resend_verification_' . $user_id ),
 				),
 				wc_get_page_permalink( 'myaccount' )
 			);
@@ -220,8 +220,8 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		 * @param int $user_id defines the user_id.
 		 */
 		public function reset_and_mail_activation_link( $user_id ) {
-			$user_id       = absint( $user_id );
-			$user_info     = get_userdata( $user_id );
+			$user_id   = absint( $user_id );
+			$user_info = get_userdata( $user_id );
 			if ( ! $user_info || empty( $user_info->user_email ) ) {
 				return false;
 			}
@@ -359,7 +359,6 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;
