@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 7.11.1
+Stable tag: 7.11.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -347,19 +347,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
-= 7.11.1 - 28/01/2026 =
-* **New - One-Click Presets**: Set up your store in seconds, not hours. Choose what you want to accomplish and we configure everything for you:
-  - **PDF Invoicing**: Start generating professional invoices immediately
-  - **Multicurrency**: Let customers shop in their local currency
-  - **Product Addons**: Add gift wrapping, engraving, and custom options to products
-  - **Checkout Customization**: Streamline your checkout experience
-* **New - Getting Started Hub**: A friendly welcome panel on your dashboard pointing you to the most popular features
-* **New - Smart Module Filters**: Find modules faster with All, Recommended, Active, and Recently Used filters
-* Fixed - Multicurrency no longer shows PHP error when price filters are empty
-* Fixed - Variable products with 100+ variations no longer cause memory issues with Order Quantities
-* Improved - Better admin performance by only loading onboarding assets on Booster pages
-* WooCommerce 10.4.3 Tested
+= 7.11.2 - 27/02/2026 =
+* Security hardening update across key request and file-handling flows.
+* Improved authorization and validation checks in checkout-related file actions.
+* Improved data-handling safeguards for product input processing.
+* Improved verification-flow safeguards and internal hardening in core free functions.
+* WooCommerce 10.5.2 Tested
 * WordPress 6.9 Tested
+
+= 7.11.1 - 28/01/2026 =
+* Fixed - wcj-free-functions file not loading issue
 
 = 7.11.0 - 28/01/2026 =
 * **New - One-Click Presets**: Set up your store in seconds, not hours. Choose what you want to accomplish and we configure everything for you:

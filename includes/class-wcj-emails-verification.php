@@ -157,6 +157,29 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		}
 
 		/**
+		 * Get_resend_verification_url.
+		 *
+		 * @version 7.2.6
+		 * @since   7.2.6
+		 * @param int $user_id User ID.
+		 * @return string
+		 */
+		private function get_resend_verification_url( $user_id ) {
+			$user_id = absint( $user_id );
+			if ( 0 === $user_id ) {
+				return wc_get_page_permalink( 'myaccount' );
+			}
+
+			return add_query_arg(
+				array(
+					'wcj_user_id'                   => $user_id,
+					'wcj_resend_verification_nonce' => wp_create_nonce( 'wcj_resend_verification_' . $user_id ),
+				),
+				wc_get_page_permalink( 'myaccount' )
+			);
+		}
+
+		/**
 		 * Check_if_user_email_is_verified.
 		 *
 		 * @version 5.5.9
@@ -182,7 +205,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 						__( 'Your account has to be activated before you can login. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' )
 					)
 				);
-				$error_message = str_replace( '%resend_verification_url%', esc_url( add_query_arg( 'wcj_user_id', $userdata->ID, wc_get_page_permalink( 'myaccount' ) ) ), $error_message );
+				$error_message = str_replace( '%resend_verification_url%', esc_url( $this->get_resend_verification_url( $userdata->ID ) ), $error_message );
 				$userdata      = new WP_Error( 'booster_email_verified_error', $error_message );
 			}
 			return $userdata;
@@ -197,7 +220,11 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		 * @param int $user_id defines the user_id.
 		 */
 		public function reset_and_mail_activation_link( $user_id ) {
-			$user_info     = get_userdata( $user_id );
+			$user_id   = absint( $user_id );
+			$user_info = get_userdata( $user_id );
+			if ( ! $user_info || empty( $user_info->user_email ) ) {
+				return false;
+			}
 			$code          = mb_strtoupper( strval( bin2hex( openssl_random_pseudo_bytes( 16 ) ) ) );
 			$url           = wp_nonce_url(
 				add_query_arg(
@@ -244,6 +271,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 				);
 			}
 			wc_mail( $user_info->user_email, $email_subject, $email_content );
+			return true;
 		}
 
 		/**
@@ -287,7 +315,7 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 							__( '<strong>Error:</strong> Activation failed, please contact our administrator. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' )
 						)
 					);
-					$_notice = str_replace( '%resend_verification_url%', esc_url( add_query_arg( 'wcj_user_id', $data['id'], wc_get_page_permalink( 'myaccount' ) ) ), $_notice );
+					$_notice = str_replace( '%resend_verification_url%', esc_url( $this->get_resend_verification_url( $data['id'] ) ), $_notice );
 					wc_add_notice( $_notice, 'error' );
 				} else {
 					$_notice = wcj_get_option(
@@ -306,18 +334,31 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 					)
 				);
 			} elseif ( isset( $_GET['wcj_user_id'] ) ) {
-				$this->reset_and_mail_activation_link( sanitize_text_field( wp_unslash( $_GET['wcj_user_id'] ) ) );
-				wc_add_notice(
-					do_shortcode(
-						wcj_get_option(
-							'wcj_emails_verification_email_resend_message',
-							__( '<strong>Success:</strong> Your activation email has been resent. Please check your email.', 'woocommerce-jetpack' )
+				$user_id = absint( wp_unslash( $_GET['wcj_user_id'] ) );
+				$nonce   = isset( $_GET['wcj_resend_verification_nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['wcj_resend_verification_nonce'] ) ) : '';
+				$is_auth = ( 0 !== $user_id && '' !== $nonce && false !== wp_verify_nonce( $nonce, 'wcj_resend_verification_' . $user_id ) );
+				if ( $is_auth && $this->reset_and_mail_activation_link( $user_id ) ) {
+					wc_add_notice(
+						do_shortcode(
+							wcj_get_option(
+								'wcj_emails_verification_email_resend_message',
+								__( '<strong>Success:</strong> Your activation email has been resent. Please check your email.', 'woocommerce-jetpack' )
+							)
 						)
-					)
-				);
+					);
+				} else {
+					wc_add_notice(
+						do_shortcode(
+							wcj_get_option(
+								'wcj_emails_verification_failed_message_no_user_id',
+								__( '<strong>Error:</strong> Activation failed, please contact our administrator.', 'woocommerce-jetpack' )
+							)
+						),
+						'error'
+					);
+				}
 			}
 		}
-
 	}
 
 endif;

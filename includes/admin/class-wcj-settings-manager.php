@@ -13,10 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
-		/**
-		 * WCJ_Settings_Manager.
-		 */
+	/**
+	 * WCJ_Settings_Manager.
+	 */
 	class WCJ_Settings_Manager {
+
 
 		/**
 		 * Constructor.
@@ -138,8 +139,32 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 				require_once ABSPATH . '/wp-admin/includes/file.php';
 				global $wp_filesystem;
 				WP_Filesystem();
-				$import_counter  = 0;
-				$import_settings = $wp_filesystem->get_contents( sanitize_text_field( wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] ) ) );
+				$import_counter = 0;
+				if (
+					isset( $_POST['booster_import_nonce'] ) &&
+					wp_verify_nonce(
+						sanitize_text_field( wp_unslash( $_POST['booster_import_nonce'] ) ),
+						'booster_import_action'
+					) &&
+					isset( $_FILES['booster_import_settings_file'] ) &&
+					isset(
+						$_FILES['booster_import_settings_file']['error'],
+						$_FILES['booster_import_settings_file']['tmp_name']
+					)
+				) {
+
+					if ( UPLOAD_ERR_OK !== $_FILES['booster_import_settings_file']['error'] ) {
+						$wcj_notice .= __( 'Upload failed!', 'woocommerce-jetpack' );
+						return $wcj_notice;
+					}
+
+					$tmp_name = sanitize_text_field(
+						wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] )
+					);
+
+					$import_settings = $wp_filesystem->get_contents( $tmp_name );
+
+				}
 				$bom             = pack( 'H*', 'EFBBBF' );
 				$import_settings = preg_replace( "/^$bom/", '', $import_settings );
 				$import_settings = explode( PHP_EOL, preg_replace( '~(*BSR_ANYCRLF)\R~', PHP_EOL, $import_settings ) );
@@ -157,7 +182,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 						foreach ( $import_settings as $import_key => $import_setting ) {
 							if ( strlen( $import_key ) > 4 && 'wcj_' === substr( $import_key, 0, 4 ) ) {
 								update_option( $import_key, $import_setting );
-								$import_counter++;
+								++$import_counter;
 							}
 						}
 						/* translators: %d: translation added */
@@ -191,7 +216,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 							if ( ! isset( $export_counter[ $module->short_desc ] ) ) {
 								$export_counter[ $module->short_desc ] = 0;
 							}
-							$export_counter[ $module->short_desc ]++;
+							++$export_counter[ $module->short_desc ];
 						}
 					}
 				}
@@ -219,7 +244,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 			$plugin_meta         = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			foreach ( $plugin_meta as $meta ) {
 				delete_post_meta( $meta->post_id, $meta->meta_key );
-				$delete_counter_meta++;
+				++$delete_counter_meta;
 			}
 			/* translators: %d: translation added */
 			$wcj_notice .= sprintf( __( '%d meta successfully deleted.', 'woocommerce-jetpack' ), $delete_counter_meta );
@@ -239,13 +264,12 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 			foreach ( $plugin_options as $option ) {
 				delete_option( $option->option_name );
 				delete_site_option( $option->option_name );
-				$delete_counter_options++;
+				++$delete_counter_options;
 			}
 			/* translators: %d: translation added */
 			$wcj_notice .= sprintf( __( '%d options successfully deleted.', 'woocommerce-jetpack' ), $delete_counter_options );
 			return $wcj_notice;
 		}
-
 	}
 
 endif;

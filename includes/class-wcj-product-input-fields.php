@@ -148,6 +148,51 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		}
 
 		/**
+		 * Wcj_safe_unserialize.
+		 *
+		 * @version 7.2.6
+		 * @since   7.2.6
+		 * @param mixed $value Value.
+		 * @return mixed
+		 */
+		private function wcj_safe_unserialize( $value ) {
+			if ( ! is_string( $value ) || ! is_serialized( $value ) ) {
+				return $value;
+			}
+
+			$unserialized = @unserialize( trim( $value ), array( 'allowed_classes' => false ) ); // phpcs:ignore 
+			if ( false === $unserialized && 'b:0;' !== $value ) {
+				return $value;
+			}
+
+			return $unserialized;
+		}
+
+		/**
+		 * Is_valid_input_fields_upload_file_path.
+		 *
+		 * @version 7.2.6
+		 * @since   7.2.6
+		 * @param string $file_path File path.
+		 * @return bool
+		 */
+		private function is_valid_input_fields_upload_file_path( $file_path ) {
+			if ( ! is_string( $file_path ) || '' === $file_path ) {
+				return false;
+			}
+
+			$real_file_path = realpath( $file_path );
+			$real_base_path = realpath( wcj_get_wcj_uploads_dir( 'input_fields_uploads' ) );
+			if ( false === $real_file_path || false === $real_base_path ) {
+				return false;
+			}
+
+			$real_base_path = trailingslashit( wp_normalize_path( $real_base_path ) );
+			$real_file_path = wp_normalize_path( $real_file_path );
+			return ( 0 === strpos( $real_file_path, $real_base_path ) );
+		}
+
+		/**
 		 * Delete_file_uploads.
 		 *
 		 * @version 2.2.2
@@ -156,12 +201,25 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		 */
 		public function delete_file_uploads( $postid ) {
 			$the_order = wc_get_order( $postid );
+			if ( ! $the_order ) {
+				return;
+			}
 			$the_items = $the_order->get_items();
 			foreach ( $the_items as $item ) {
 				foreach ( $item as $item_field ) {
-					$item_field = maybe_unserialize( $item_field );
-					if ( is_array( $item_field ) && isset( $item_field['wcj_type'] ) && 'file' === $item_field['wcj_type'] ) {
-						unlink( $item_field['tmp_name'] );
+					$item_field = $this->wcj_safe_unserialize( $item_field );
+					if (
+						! is_array( $item_field ) ||
+						! isset( $item_field['wcj_type'], $item_field['tmp_name'] ) ||
+						'file' !== $item_field['wcj_type'] ||
+						! is_string( $item_field['tmp_name'] )
+					) {
+						continue;
+					}
+
+					$tmp_name = wp_unslash( $item_field['tmp_name'] );
+					if ( $this->is_valid_input_fields_upload_file_path( $tmp_name ) && file_exists( $tmp_name ) ) {
+						wp_delete_file( $tmp_name );
 					}
 				}
 			}
@@ -219,7 +277,6 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 			}
 			wp_enqueue_script( 'wcj-product-input-fields' );
 		}
-
 	}
 
 endif;

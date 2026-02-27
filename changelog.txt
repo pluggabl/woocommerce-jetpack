@@ -1,5 +1,14 @@
 == Changelog ==
 
+= 7.11.2 27/02/2026 =
+
+* Security hardening update across key request and file-handling flows.
+* Improved authorization and validation checks in checkout-related file actions.
+* Improved data-handling safeguards for product input processing.
+* Improved verification-flow safeguards and internal hardening in core free functions.
+* WooCommerce 10.5.2 Tested
+* WordPress 6.9 Tested
+
 = 7.2.4 13/11/2024 =
 
 * FIXED - Uncaught Error: round(): Argument #2 ($precision) must be of type int, string given in includes/shortcodes/class-wcj-orders-shortcodes.php...

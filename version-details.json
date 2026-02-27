@@ -1,7 +1,7 @@
 {
-    "0": "= 7.11.1 28/01/2026 =",
-    "1": "* **One-Click Presets & Onboarding**. Added one-click presets for PDF Invoicing, Multicurrency, Product Addons, and Checkout, along with a new Getting Started Hub and smart module filters.",
-    "2": "* **Bug Fixes & Performance Improvements**. Fixed Multicurrency price filter PHP errors, resolved memory issues with 100+ variations, and optimized admin asset loading.",
-    "3": "* WooCommerce 10.4.3 Tested",
+    "0": "= 7.11.2 27/02/2026 =",
+    "1": "* **Security hardening update** across key request, file handling, and verification flows.",
+    "2": "* **Improved safeguards** for checkout file actions, product input processing, and internal core free-function validation paths.",
+    "3": "* WooCommerce 10.5.2 Tested",
     "4": "* WordPress 6.9 Tested"
 }
