@@ -1,7 +1,7 @@
 {
-    "0": "= 7.11.2 10/02/2026 =",
+    "0": "= 7.11.2 27/02/2026 =",
     "1": "* **Security hardening update** across key request, file handling, and verification flows.",
     "2": "* **Improved safeguards** for checkout file actions, product input processing, and internal core free-function validation paths.",
-    "3": "* WooCommerce 10.4.3 Tested",
+    "3": "* WooCommerce 10.5.2 Tested",
     "4": "* WordPress 6.9 Tested"
 }
