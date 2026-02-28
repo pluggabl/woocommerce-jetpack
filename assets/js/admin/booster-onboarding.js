@@ -54,6 +54,14 @@
 			);
 
 			$( document ).on(
+				'keydown',
+				'.booster-goal-tile, .booster-blueprint-tile',
+				function(e) {
+					self.handleTileKeyboardNav( e, $( this ) );
+				}
+			);
+
+			$( document ).on(
 				'click',
 				'.booster-blueprint-tile',
 				function() {
@@ -125,6 +133,37 @@
 			);
 		},
 
+		handleTileKeyboardNav: function(e, tile) {
+			var keyCode = e.keyCode || e.which;
+
+			if (keyCode === 13 || keyCode === 32) {
+				e.preventDefault();
+				tile.trigger( 'click' );
+				return;
+			}
+
+			if (keyCode !== 37 && keyCode !== 38 && keyCode !== 39 && keyCode !== 40) {
+				return;
+			}
+
+			e.preventDefault();
+
+			var selector = tile.hasClass( 'booster-blueprint-tile' ) ? '.booster-blueprint-tile:visible' : '.booster-goal-tile:visible';
+			var visibleTiles = this.modal.find( selector );
+			var currentIndex = visibleTiles.index( tile );
+			var nextIndex = currentIndex;
+
+			if (keyCode === 37 || keyCode === 38) {
+				nextIndex = currentIndex - 1;
+			} else if (keyCode === 39 || keyCode === 40) {
+				nextIndex = currentIndex + 1;
+			}
+
+			if (nextIndex >= 0 && nextIndex < visibleTiles.length) {
+				visibleTiles.eq( nextIndex ).focus();
+			}
+		},
+
 		setupAccessibility: function() {
 			var self = this;
 
@@ -189,14 +228,61 @@
 			if (typeof boosterOnboarding.appliedGoals !== 'undefined') {
 				boosterOnboarding.appliedGoals.forEach(
 					function(goalId) {
-						$( '.booster-goal-tile[data-goal="' + goalId + '"] .applied-badge' ).show();
+						$( '.booster-goal-tile[data-goal="' + goalId + '"]' )
+							.attr( 'aria-pressed', 'true' )
+							.find( '.applied-badge' )
+							.show();
 					}
+				);
+			}
+		},
+
+		markGoalApplied: function(goalId) {
+			if ( ! goalId) {
+				return;
+			}
+
+			if (typeof boosterOnboarding.appliedGoals === 'undefined' || ! Array.isArray( boosterOnboarding.appliedGoals )) {
+				boosterOnboarding.appliedGoals = [];
+			}
+
+			if (boosterOnboarding.appliedGoals.indexOf( goalId ) === -1) {
+				boosterOnboarding.appliedGoals.push( goalId );
+			}
+
+			$( '.booster-goal-tile[data-goal="' + goalId + '"]' )
+				.attr( 'aria-pressed', 'true' )
+				.find( '.applied-badge' )
+				.show();
+		},
+
+		markBlueprintApplied: function(blueprintId) {
+			if ( ! blueprintId) {
+				return;
+			}
+
+			$( '.booster-blueprint-tile[data-blueprint="' + blueprintId + '"]' )
+				.attr( 'aria-pressed', 'true' )
+				.find( '.applied-badge' )
+				.show();
+
+			if (boosterOnboarding.blueprints && boosterOnboarding.blueprints[blueprintId] && boosterOnboarding.blueprints[blueprintId].goal_keys) {
+				boosterOnboarding.blueprints[blueprintId].goal_keys.forEach(
+					function(goalId) {
+						this.markGoalApplied( goalId );
+					}.bind( this )
 				);
 			}
 		},
 
 		updateProgressIndicator: function(step) {
 			$( '.progress-step' ).removeClass( 'active completed' );
+			var stepMap = {
+				choose: 1,
+				review: 2,
+				complete: 3
+			};
+			this.modal.find( '.booster-progress-indicator' ).attr( 'aria-valuenow', stepMap[step] || 1 );
 
 			if (step === 'choose') {
 				$( '.progress-step[data-step="choose"]' ).addClass( 'active' );
@@ -275,6 +361,8 @@
 			this.currentGoal = goalId;
 			this.currentBlueprint = null;
 			var goal         = boosterOnboarding.goals[goalId];
+			$( '.booster-goal-tile' ).attr( 'aria-pressed', 'false' );
+			$( '.booster-goal-tile[data-goal="' + goalId + '"]' ).attr( 'aria-pressed', 'true' );
 
 			$( '#review-goal-title' ).text( goal.title );
 
@@ -321,6 +409,8 @@
 			this.currentBlueprint = blueprintId;
 			this.currentGoal = null;
 			var blueprint = boosterOnboarding.blueprints[blueprintId];
+			$( '.booster-blueprint-tile' ).attr( 'aria-pressed', 'false' );
+			$( '.booster-blueprint-tile[data-blueprint="' + blueprintId + '"]' ).attr( 'aria-pressed', 'true' );
 
 			$( '#review-goal-title' ).text( blueprint.title );
 
@@ -442,19 +532,29 @@
 			$( '#pro-note-container' ).hide();
 			$( '.primary-cta-button' ).hide();
 
+			if (data.next_steps && data.next_steps.length > 0) {
+				var nextStepsList = $( '#next-steps-list' );
+				nextStepsList.empty();
+				data.next_steps.forEach(
+					function(step) {
+						if (typeof step === 'object' && step.href && step.label) {
+							nextStepsList.append( '<li><a href="' + step.href + '">' + step.label + '</a></li>' );
+						} else {
+							nextStepsList.append( '<li>' + step + '</li>' );
+						}
+					}
+				);
+				$( '#next-steps-container' ).show();
+			}
+
 			if (data.next_step_text && data.next_step_link) {
 				$( '#primary-cta-text' ).text( data.next_step_text );
 				$( '.primary-cta-button' ).attr( 'href', data.next_step_link ).show();
 			}
 
 			this.showSuccessScreen();
-
-			setTimeout(
-				function() {
-					window.location.reload();
-				},
-				3000
-			);
+			this.markGoalApplied( this.currentGoal );
+			this.logEvent( 'goal_completed', { goal_id: this.currentGoal } );
 		},
 
 		showBlueprintSuccessScreen: function(data) {
@@ -465,7 +565,11 @@
 				nextStepsList.empty();
 				data.next_steps.forEach(
 					function(step) {
-						nextStepsList.append( '<li><a href="' + step.href + '">' + step.label + '</a></li>' );
+						if (step.href && step.label) {
+							nextStepsList.append( '<li><a href="' + step.href + '">' + step.label + '</a></li>' );
+						} else {
+							nextStepsList.append( '<li>' + step + '</li>' );
+						}
 					}
 				);
 				$( '#next-steps-container' ).show();
@@ -488,13 +592,7 @@
 			}
 
 			this.showSuccessScreen();
-
-			setTimeout(
-				function() {
-					window.location.reload();
-				},
-				3000
-			);
+			this.markBlueprintApplied( this.currentBlueprint );
 		},
 
 		undoGoal: function(goalId) {
@@ -592,7 +690,7 @@
 			// Clear search when switching modes or closing modal.
 			$( document ).on(
 				'click',
-				'.segment-button, .booster-modal-close, .booster-modal-overlay',
+				'.segment-button, .booster-modal-close, .booster-modal-overlay, .pick-another-button, .back-button',
 				function() {
 					searchInput.val( '' );
 					clearButton.hide();
