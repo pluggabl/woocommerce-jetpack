@@ -205,6 +205,8 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_cart_abandonment_enabled',
+		'next_step_text'  => __( 'Configure cart recovery emails', 'woocommerce-jetpack' ),
+		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=cart_and_checkout&section=cart_abandonment&wcj-cat-nonce=',
 	),
 	'b2b_store'                            => array(
 		'title'           => __( 'B2B Store', 'woocommerce-jetpack' ),
