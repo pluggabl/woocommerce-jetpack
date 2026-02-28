@@ -347,6 +347,13 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
+= March 2026 Onboarding Release (Upcoming) =
+* Easier first-time setup: goal discovery and selection flow is clearer and easier to navigate.
+* Better accessibility: improved keyboard navigation and progress feedback in onboarding modal screens.
+* Clearer success guidance: after applying a goal, store owners now see practical next steps to keep momentum.
+* Better onboarding quality signals: expanded local-only onboarding event tracking for internal product decisions.
+* Reliability improvement: completed first-win mapping coverage for onboarding goal outcomes.
+
 = 7.11.2 - 27/02/2026 =
 * Security hardening update across key request and file-handling flows.
 * Improved authorization and validation checks in checkout-related file actions.

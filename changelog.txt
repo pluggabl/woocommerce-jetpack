@@ -1,5 +1,13 @@
 == Changelog ==
 
+= March 2026 Onboarding Release (Upcoming) =
+
+* Improved onboarding discoverability so store owners can find the right setup goal faster.
+* Improved keyboard accessibility and modal navigation for a smoother setup experience.
+* Improved completion flow with clearer success states and practical next-step guidance.
+* Added richer local onboarding event tracking (goal selected/applied/completed/undone) for product decision-making.
+* Improved first-win coverage checks for key onboarding goal paths.
+
 = 7.11.2 27/02/2026 =
 
 * Security hardening update across key request and file-handling flows.
