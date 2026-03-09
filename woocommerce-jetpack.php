@@ -72,7 +72,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '7.11.2';
+		public $version = '7.11.3';
 
 		/**
 		 * Singleton instance.
