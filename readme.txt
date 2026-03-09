@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 7.11.2
+Stable tag: 7.11.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -353,6 +353,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Clearer success guidance: after applying a goal, store owners now see practical next steps to keep momentum.
 * Better onboarding quality signals: expanded local-only onboarding event tracking for internal product decisions.
 * Reliability improvement: completed first-win mapping coverage for onboarding goal outcomes.
+
+
+= 7.11.3 - 09/03/2026 =
+* Improved goal discovery and blueprint selection flow for a faster setup experience.
+* Added clearer next-step instructions and goal-specific metadata for cart recovery and completion states.
+* Improved keyboard navigation and ARIA semantics for onboarding modals and interactive tiles.
+* Added enhanced lifecycle event logging and metadata payloads for better local product-quality analysis.
+* Refined modal interaction behavior, focus handling, and state restoration during apply/undo transitions.
+* WooCommerce 10.6.0 Tested
+* WordPress 6.9.1 Tested
 
 = 7.11.2 - 27/02/2026 =
 * Security hardening update across key request and file-handling flows.

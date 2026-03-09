@@ -163,6 +163,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * Modal only appears on Booster admin pages (wcj-*) to be less intrusive.
 		 */
 		public function maybe_show_onboarding_modal() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return;
 			}
@@ -322,6 +323,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		public function ajax_apply_goal() {
 			check_ajax_referer( 'booster_onboarding_nonce', 'nonce' );
 
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_die( esc_html__( 'Insufficient permissions.', 'woocommerce-jetpack' ) );
 			}
@@ -351,6 +353,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		public function ajax_undo_goal() {
 			check_ajax_referer( 'booster_onboarding_nonce', 'nonce' );
 
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_die( esc_html__( 'Insufficient permissions.', 'woocommerce-jetpack' ) );
 			}
@@ -475,51 +478,51 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 */
 		private function get_goal_next_steps( $goal_id ) {
 			$steps = array(
-				'grow_sales'               => array(
+				'grow_sales'                           => array(
 					__( 'Visit a product page to verify live sales notifications are visible.', 'woocommerce-jetpack' ),
 					__( 'Adjust notification timing and styling to match your brand.', 'woocommerce-jetpack' ),
 				),
-				'work_smarter'             => array(
+				'work_smarter'                         => array(
 					__( 'Open your orders list to confirm sequential numbering is enabled.', 'woocommerce-jetpack' ),
 					__( 'Set your preferred order number format and prefix.', 'woocommerce-jetpack' ),
 				),
-				'go_global'                => array(
+				'go_global'                            => array(
 					__( 'Add exchange rates for your target markets.', 'woocommerce-jetpack' ),
 					__( 'Test currency switching on storefront pages.', 'woocommerce-jetpack' ),
 				),
-				'professional_invoices'    => array(
+				'professional_invoices'                => array(
 					__( 'Generate a test order to confirm PDF invoices are attached.', 'woocommerce-jetpack' ),
 					__( 'Customize invoice logo and footer text for your store.', 'woocommerce-jetpack' ),
 				),
-				'boost_conversions_free'   => array(
+				'boost_conversions_free'               => array(
 					__( 'Enable add-ons on a top-selling product first.', 'woocommerce-jetpack' ),
 					__( 'Verify related products are showing on product pages.', 'woocommerce-jetpack' ),
 				),
-				'better_checkout_basics'   => array(
+				'better_checkout_basics'               => array(
 					__( 'Review checkout field labels and ordering for clarity.', 'woocommerce-jetpack' ),
 					__( 'Run a test checkout to confirm the updated flow.', 'woocommerce-jetpack' ),
 				),
-				'store_essentials_quick'   => array(
+				'store_essentials_quick'               => array(
 					__( 'Confirm new orders are using sequential numbering.', 'woocommerce-jetpack' ),
 					__( 'Add one global product tab with key purchase info.', 'woocommerce-jetpack' ),
 				),
-				'recover_lost_sales_goal'  => array(
+				'recover_lost_sales_goal'              => array(
 					__( 'Review abandonment timing and email trigger settings.', 'woocommerce-jetpack' ),
 					__( 'Send a test recovery email and validate links.', 'woocommerce-jetpack' ),
 				),
-				'b2b_store'                => array(
+				'b2b_store'                            => array(
 					__( 'Validate role-based pricing and gateway rules with a test user.', 'woocommerce-jetpack' ),
 					__( 'Configure a first B2B-only coupon to confirm restrictions.', 'woocommerce-jetpack' ),
 				),
-				'intl_Store'               => array(
+				'intl_Store'                           => array(
 					__( 'Verify currency display by country selection in storefront.', 'woocommerce-jetpack' ),
 					__( 'Check exchange rates and update any market-specific values.', 'woocommerce-jetpack' ),
 				),
-				'merchant_getting_started' => array(
+				'merchant_getting_started'             => array(
 					__( 'Add one required product input field to a sample product.', 'woocommerce-jetpack' ),
 					__( 'Confirm checkout custom info appears as expected.', 'woocommerce-jetpack' ),
 				),
-				'merchant_aov_increase'    => array(
+				'merchant_aov_increase'                => array(
 					__( 'Generate a sample coupon and test URL coupon behavior.', 'woocommerce-jetpack' ),
 					__( 'Preview sale flash badges on discounted products.', 'woocommerce-jetpack' ),
 				),
@@ -659,8 +662,17 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * Create draft page for one page checkout
 		 */
 		private function create_one_page_checkout_draft() {
-			$existing_page = get_page_by_title( 'Quick Checkout (Draft)', OBJECT, 'page' );
-			if ( $existing_page ) {
+			$query = new WP_Query(
+				array(
+					'post_type'      => 'page',
+					'title'          => 'Quick Checkout (Draft)',
+					'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+					'posts_per_page' => 1,
+					'fields'         => 'ids',
+				)
+			);
+
+			if ( ! empty( $query->posts ) ) {
 				return;
 			}
 
@@ -854,7 +866,19 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * Remove one page checkout draft page
 		 */
 		private function remove_one_page_checkout_draft() {
-			$page = get_page_by_title( 'Quick Checkout (Draft)', OBJECT, 'page' );
+			$page = new WP_Query(
+				array(
+					'post_type'      => 'page',
+					'title'          => 'Quick Checkout (Draft)',
+					'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+					'posts_per_page' => 1,
+					'fields'         => 'ids',
+				)
+			);
+
+			if ( ! empty( $page->posts ) ) {
+				return;
+			}
 			if ( $page && 'draft' === $page->post_status ) {
 				wp_delete_post( $page->ID, true );
 			}
@@ -880,7 +904,19 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 					return 'yes' === get_option( 'wcj_sales_notifications_enabled', 'no' );
 
 				case 'one_page_checkout_draft_page_exists':
-					$page = get_page_by_title( 'Quick Checkout (Draft)', OBJECT, 'page' );
+					$page = new WP_Query(
+						array(
+							'post_type'      => 'page',
+							'title'          => 'Quick Checkout (Draft)',
+							'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+							'posts_per_page' => 1,
+							'fields'         => 'ids',
+						)
+					);
+
+					if ( ! empty( $page->posts ) ) {
+						return;
+					}
 					return $page && 'draft' === $page->post_status;
 
 				case 'reviews_enabled':
@@ -936,6 +972,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		public function ajax_apply_blueprint() {
 			check_ajax_referer( 'booster_onboarding_nonce', 'nonce' );
 
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_send_json_error( array( 'message' => __( 'Permission denied.', 'woocommerce-jetpack' ) ) );
 			}
@@ -1051,6 +1088,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		public function ajax_undo_blueprint() {
 			check_ajax_referer( 'booster_onboarding_nonce', 'nonce' );
 
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_send_json_error( array( 'message' => __( 'Permission denied.', 'woocommerce-jetpack' ) ) );
 			}

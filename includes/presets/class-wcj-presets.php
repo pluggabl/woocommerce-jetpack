@@ -70,7 +70,8 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 						'pdf_invoicing' => true,
 					),
 					'settings'    => array(
-						'wcj_pdf_invoicing_enabled' => 'yes',
+						'wcj_pdf_invoicing_enabled'       => 'yes',
+						'wcj_invoicing_invoice_create_on' => array( 'woocommerce_order_status_processing' ),
 					),
 					'first_win'   => array(
 						'action' => __( 'View an order and click "Create Invoice"', 'woocommerce-jetpack' ),
@@ -94,7 +95,7 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 					),
 					'first_win'   => array(
 						'action' => __( 'Add a second currency and view your shop', 'woocommerce-jetpack' ),
-						'link'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_currencies&section=multicurrency' ),
+						'link'   => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=prices_and_currencies&section=multicurrency' ),
 					),
 					'next_step'   => array(
 						'label' => __( 'Configure exchange rates', 'woocommerce-jetpack' ),
@@ -111,6 +112,7 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 					),
 					'settings'    => array(
 						'wcj_product_addons_enabled' => 'yes',
+						'wcj_product_addons_per_product_enabled' => 'yes',
 					),
 					'first_win'   => array(
 						'action' => __( 'Edit a product and add your first addon', 'woocommerce-jetpack' ),
@@ -189,7 +191,7 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 			// This prevents overwriting user's existing configurations.
 			foreach ( $preset['settings'] as $option => $value ) {
 				$existing = get_option( $option, '' );
-				if ( empty( $existing ) ) {
+				if ( empty( $existing ) || 'no' === $existing ) {
 					update_option( $option, $value );
 				}
 			}
