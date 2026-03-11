@@ -29,7 +29,7 @@ $onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map
 				</button>
 			</div>
 
-			<div class="booster-progress-indicator" aria-label="<?php esc_attr_e( 'Progress', 'woocommerce-jetpack' ); ?>">
+			<div class="booster-progress-indicator" role="progressbar" aria-label="<?php esc_attr_e( 'Progress', 'woocommerce-jetpack' ); ?>" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3">
 				<div class="progress-step active" data-step="choose">
 					<span class="step-number">1</span>
 					<span class="step-label"><?php esc_html_e( 'Choose', 'woocommerce-jetpack' ); ?></span>
@@ -67,7 +67,7 @@ $onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map
 				</div>
 				<div class="booster-goals-grid">
 					<?php foreach ( $onboarding_map as $goal_id => $goal ) : ?>
-						<div class="booster-goal-tile booster-tile" data-goal="<?php echo esc_attr( $goal_id ); ?>">
+						<div class="booster-goal-tile booster-tile" data-goal="<?php echo esc_attr( $goal_id ); ?>" role="button" tabindex="0" aria-pressed="false" aria-label="<?php echo esc_attr( $goal['title'] ); ?>">
 							<div class="goal-icon tile-icon">
 								<?php echo wp_kses_post( $goal['svg_icon'] ); ?>
 							</div>
@@ -111,7 +111,7 @@ $onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map
 
 					foreach ( $blueprints as $blueprint_id => $blueprint ) :
 						?>
-						<div class="booster-blueprint-tile booster-tile" data-blueprint="<?php echo esc_attr( $blueprint_id ); ?>">
+						<div class="booster-blueprint-tile booster-tile" data-blueprint="<?php echo esc_attr( $blueprint_id ); ?>" role="button" tabindex="0" aria-pressed="false" aria-label="<?php echo esc_attr( $blueprint['title'] ); ?>">
 							<div class="blueprint-icon tile-icon">
 								<?php echo wp_kses_post( $blueprint['svg_icon'] ); ?>
 							</div>

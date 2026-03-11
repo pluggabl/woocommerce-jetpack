@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 7.11.2
+Stable tag: 7.11.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,15 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.11.3 - 11/03/2026 =
+* Improved goal discovery and blueprint selection flow for a faster setup experience.
+* Added clearer next-step instructions and goal-specific metadata for cart recovery and completion states.
+* Improved keyboard navigation and ARIA semantics for onboarding modals and interactive tiles.
+* Added enhanced lifecycle event logging and metadata payloads for better local product-quality analysis.
+* Refined modal interaction behavior, focus handling, and state restoration during apply/undo transitions.
+* WooCommerce 10.5.3 Tested
+* WordPress 6.9.1 Tested
 
 = 7.11.2 - 27/02/2026 =
 * Security hardening update across key request and file-handling flows.

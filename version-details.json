@@ -1,7 +1,9 @@
 {
-    "0": "= 7.11.2 27/02/2026 =",
-    "1": "* **Security hardening update** across key request, file handling, and verification flows.",
-    "2": "* **Improved safeguards** for checkout file actions, product input processing, and internal core free-function validation paths.",
-    "3": "* WooCommerce 10.5.2 Tested",
-    "4": "* WordPress 6.9 Tested"
+    "0": "= 7.11.3 - 11/03/2026 =",
+    "1": "* **Improved onboarding flow** with faster goal discovery and refined blueprint selection for quicker setup.",
+    "2": "* **Enhanced success guidance** and goal-specific next-step metadata for cart recovery and completion states.",
+    "3": "* **Improved accessibility and UX** featuring better keyboard navigation, ARIA semantics, and modal focus handling.",
+    "4": "* **Internal telemetry updates** for lifecycle event logging and improved metadata payloads in local environments.",
+    "5": "* WooCommerce 10.5.3 Tested",
+    "6": "* WordPress 6.9.1 Tested"
 }

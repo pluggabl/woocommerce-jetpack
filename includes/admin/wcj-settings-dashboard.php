@@ -29,8 +29,22 @@ if ( isset( $_GET['apply_preset'] ) && ! empty( $_GET['apply_preset'] ) ) {
 		WCJ_Presets::apply_preset( $preset_id );
 	}
 	// Redirect to remove query params.
-	wp_safe_redirect( remove_query_arg( array( 'apply_preset', '_wpnonce' ) ) );
+	// wp_safe_redirect( remove_query_arg( array( 'apply_preset', '_wpnonce' ) ) );
+	// Redirect to remove query params.
+	wp_safe_redirect( add_query_arg( 'wcj_preset_applied', $preset_id, remove_query_arg( array( 'apply_preset', '_wpnonce' ) ) ) );
 	exit;
+}
+
+// Display success notice if a preset was applied.
+if ( isset( $_GET['wcj_preset_applied'] ) && ! empty( $_GET['wcj_preset_applied'] ) ) {
+	$preset_id    = sanitize_key( $_GET['wcj_preset_applied'] );
+	$preset_title = '';
+	if ( class_exists( 'WCJ_Presets' ) ) {
+		$presets      = WCJ_Presets::get_presets();
+		$preset_title = isset( $presets[ $preset_id ] ) ? $presets[ $preset_id ]['title'] : $preset_id;
+	}
+	/* translators: %s: Preset title */
+	echo wp_kses_post( '<div id="message" class="updated notice is-dismissible" style="margin: 20px 0;"><p><strong>' . sprintf( esc_html__( '%s preset applied successfully!', 'woocommerce-jetpack' ), $preset_title ) . '</strong></p></div>' );
 }
 
 // Render Getting Started Hub (P6) at top of dashboard.
