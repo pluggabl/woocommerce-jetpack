@@ -21,7 +21,7 @@ if ( ! function_exists( 'wcj_get_upgrade_blocks_config' ) ) {
 	 * Returns an array of upgrade block configurations for modules that have
 	 * Lite versions in the free plugin and enhanced features in Elite.
 	 *
-	 * @version 7.10.0
+	 * @version 7.11.4
 	 * @since   7.9.0
 	 * @return  array Upgrade block configurations keyed by module_id.
 	 */
@@ -146,6 +146,31 @@ if ( ! function_exists( 'wcj_get_upgrade_blocks_config' ) ) {
 				'upgrade_url'    => 'https://booster.io/buy-booster/',
 			),
 		);
+
+		foreach ( $config as $module_id => &$module_config ) {
+			if ( ! empty( $module_config['comparison_url'] ) ) {
+				$module_config['comparison_url'] = wcj_build_commercial_url(
+					'assist',
+					array(
+						'campaign' => 'module_upgrade_block',
+						'content'  => sanitize_key( $module_id ) . '__assist',
+						'url'      => $module_config['comparison_url'],
+					)
+				);
+			}
+
+			if ( ! empty( $module_config['upgrade_url'] ) ) {
+				$module_config['upgrade_url'] = wcj_build_commercial_url(
+					'buy',
+					array(
+						'campaign' => 'module_upgrade_block',
+						'content'  => sanitize_key( $module_id ) . '__buy',
+						'url'      => $module_config['upgrade_url'],
+					)
+				);
+			}
+		}
+		unset( $module_config );
 
 		/**
 		 * Filter upgrade block configurations.

@@ -24,6 +24,16 @@ if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'ca
 	wcj_render_upgrade_block( 'cart_abandonment' );
 }
 
+$wcj_cart_abandonment_compare_url = function ( $content ) {
+	return wcj_build_commercial_url(
+		'compare',
+		array(
+			'campaign' => 'locked_setting',
+			'content'  => $content,
+		)
+	);
+};
+
 $settings = array(
 	array(
 		'id'   => 'wcj_cart_abandonment_options',
@@ -52,7 +62,7 @@ $settings = array(
 		'class'             => 'chosen_select',
 		'options'           => $user_roles,
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Need to restrict access to abandoned cart settings and data based on user roles? <br> Upgrade <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to set user roles.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Need to restrict access to abandoned cart settings and data based on user roles? <br> Upgrade <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to set user roles.', 'woocommerce-jetpack' ), $wcj_cart_abandonment_compare_url( 'cart_abandonment_roles__compare' ) ),
 		'help_text'         => __( 'Select user roles that should be excluded from abandoned cart tracking. For example, exclude administrators or shop managers to avoid tracking internal test orders.', 'woocommerce-jetpack' ),
 	),
 	array(
@@ -114,7 +124,7 @@ $settings = array(
 		'id'                => 'wcj_ca_email_template_total_number',
 		'default'           => 1,
 		'type'              => 'custom_number',
-		'desc'              => __( 'Need to send a sequence of emails at custom intervals? Want to customize sender details or use advanced email templates? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster </a> for full automation control!', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Need to send a sequence of emails at custom intervals? Want to customize sender details or use advanced email templates? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster </a> for full automation control!', 'woocommerce-jetpack' ), $wcj_cart_abandonment_compare_url( 'cart_abandonment_automation__compare' ) ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'help_text'         => __( 'Set the number of reminder emails to send for each abandoned cart. Most stores use 2-3 emails: one after 1 hour, another after 24 hours, and optionally a final reminder after 3 days.', 'woocommerce-jetpack' ),
 		'friendly_label'    => __( 'Number of Reminder Emails', 'woocommerce-jetpack' ),
@@ -186,7 +196,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			),
 			array(
 				'title'             => __( 'Discount Type', 'woocommerce-jetpack' ),
-				'desc'              => __( 'Want to supercharge recovery by offering a discount coupon in your reminder emails? This powerful feature is available in <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite! </a> ', 'woocommerce-jetpack' ),
+				'desc'              => wcj_replace_booster_url( __( 'Want to supercharge recovery by offering a discount coupon in your reminder emails? This powerful feature is available in <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite! </a> ', 'woocommerce-jetpack' ), $wcj_cart_abandonment_compare_url( 'cart_abandonment_coupons__compare' ) ),
 				'id'                => 'wcj_ca_email_discount_type_' . $i,
 				'default'           => 'No Discount',
 				'type'              => 'select',
