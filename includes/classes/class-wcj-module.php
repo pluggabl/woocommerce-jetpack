@@ -188,11 +188,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 				add_action( 'init', array( $this, 'add_settings' ) );
 				add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
-			} else {
-				if ( 'init' === current_filter() || 'plugins_loaded' === current_filter() ) {
+			} elseif ( 'init' === current_filter() || 'plugins_loaded' === current_filter() ) {
 					$this->add_settings();
 					$this->reset_settings();
-				}
 			}
 
 			// Handle WPML hooks.
@@ -836,7 +834,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$priority
 				);
 			}
-
 		}
 
 		/**

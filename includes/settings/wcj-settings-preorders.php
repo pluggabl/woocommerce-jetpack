@@ -16,9 +16,9 @@ if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'pr
 	wcj_render_upgrade_block( 'preorders' );
 }
 
-$user_roles   = wcj_get_user_roles_options();
-$product_cats = wcj_get_terms( 'product_cat' );
-$products     = wcj_get_products();
+$user_roles                = wcj_get_user_roles_options();
+$product_cats              = wcj_get_terms( 'product_cat' );
+$products                  = wcj_get_products();
 $wcj_preorders_compare_url = function ( $content ) {
 	return wcj_build_commercial_url(
 		'compare',

@@ -495,9 +495,26 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				'<a href="' . esc_url( 'https://booster.io/' ) . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 			);
 			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
-				$custom_links[] = '<a target="_blank" href="' . esc_url( wcj_build_commercial_url( 'buy', array( 'campaign' => 'dashboard_header', 'content' => 'plugin_action_unlock_all__buy' ) ) ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
+				$custom_links[] = '<a target="_blank" href="' . esc_url(
+					wcj_build_commercial_url(
+						'buy',
+						array(
+							'campaign' => 'dashboard_header',
+							'content'  => 'plugin_action_unlock_all__buy',
+						)
+					)
+				) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
 			} else {
-				$custom_links[] = '<a target="_blank" href="' . esc_url( wcj_build_commercial_url( 'account', array( 'path' => 'my-account/booster-contact/', 'campaign' => 'account', 'content' => 'plugin_action_support__account' ) ) ) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
+				$custom_links[] = '<a target="_blank" href="' . esc_url(
+					wcj_build_commercial_url(
+						'account',
+						array(
+							'path'     => 'my-account/booster-contact/',
+							'campaign' => 'account',
+							'content'  => 'plugin_action_support__account',
+						)
+					)
+				) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
 			}
 			return array_merge( $custom_links, $links );
 		}

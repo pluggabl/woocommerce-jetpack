@@ -144,7 +144,7 @@ if ( ! function_exists( 'wcj_admin_notices_version_updated' ) ) {
 			$class = 'notice notice-success is-dismissible';
 			/* translators: %s: translation added */
 			$message = sprintf( __( '<strong>Booster for WooCommerce</strong> plugin was successfully updated to version <strong>%s</strong>.', 'woocommerce-jetpack' ), w_c_j()->version );
-			echo sprintf( '<div class="%1$s"><p>%2$s</p></div>', wp_kses_post( $class ), wp_kses_post( $message ) );
+			printf( '<div class="%1$s"><p>%2$s</p></div>', wp_kses_post( $class ), wp_kses_post( $message ) );
 		}
 	}
 }
@@ -285,11 +285,9 @@ if ( ! function_exists( 'wcj_maybe_convert_and_update_option_value' ) ) {
 					$value = implode( ',', $value );
 					update_option( $option['id'], $value );
 				}
-			} else {
-				if ( is_string( $value ) ) {
+			} elseif ( is_string( $value ) ) {
 					$value = wcj_convert_string_to_array( $value );
 					update_option( $option['id'], $value );
-				}
 			}
 		}
 	}
@@ -356,16 +354,16 @@ if ( ! function_exists( 'wcj_build_commercial_url' ) ) {
 		$context = wp_parse_args(
 			$context,
 			array(
-				'url'       => '',
-				'path'      => '',
-				'source'    => 'booster',
-				'medium'    => 'inplugin',
-				'campaign'  => '',
-				'content'   => '',
-				'surface'   => '',
-				'module_id' => '',
-				'cta_id'    => '',
-				'fragment'  => '',
+				'url'        => '',
+				'path'       => '',
+				'source'     => 'booster',
+				'medium'     => 'inplugin',
+				'campaign'   => '',
+				'content'    => '',
+				'surface'    => '',
+				'module_id'  => '',
+				'cta_id'     => '',
+				'fragment'   => '',
 				'query_args' => array(),
 			)
 		);
@@ -514,8 +512,8 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 					'</div>';
 
 			case 'desc':
-				/* translators: %s: translation added */
 				return sprintf(
+					/* translators: %s: translation added */
 					__( 'Upgrade <a href="%s" target="_blank">Booster</a> to change value.', 'woocommerce-jetpack' ),
 					esc_url(
 						wcj_build_commercial_url(
@@ -529,8 +527,8 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 				);
 
 			case 'desc_advanced':
-				/* translators: %s: translation added */
 				return sprintf(
+					/* translators: %s: translation added */
 					__( 'Upgrade <a href="%1$s" target="_blank">Booster to unlock this feature</a> to enable "%2$s" option.', 'woocommerce-jetpack' ),
 					esc_url(
 						wcj_build_commercial_url(
@@ -549,8 +547,8 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 				return sprintf( __( 'Upgrade Booster to to enable "%s" option.', 'woocommerce-jetpack' ), $args['option'] );
 
 			case 'desc_below':
-				/* translators: %s: translation added */
 				return sprintf(
+					/* translators: %s: translation added */
 					__( 'Upgrade  <a href="%s" target="_blank">Booster</a> to change values below.', 'woocommerce-jetpack' ),
 					esc_url(
 						wcj_build_commercial_url(
@@ -564,8 +562,8 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 				);
 
 			case 'desc_above':
-				/* translators: %s: translation added */
 				return sprintf(
+					/* translators: %s: translation added */
 					__( 'Upgrade  <a href="%s" target="_blank">Booster </a> to change values above.', 'woocommerce-jetpack' ),
 					esc_url(
 						wcj_build_commercial_url(

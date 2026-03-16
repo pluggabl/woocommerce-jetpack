@@ -16,9 +16,9 @@ if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'sa
 	wcj_render_upgrade_block( 'sales_notifications' );
 }
 
-$products     = wcj_get_products();
-$get_pages    = wcj_get_pages();
-$product_cats = wcj_get_terms( 'product_cat' );
+$products                            = wcj_get_products();
+$get_pages                           = wcj_get_pages();
+$product_cats                        = wcj_get_terms( 'product_cat' );
 $wcj_sales_notifications_compare_url = function ( $content ) {
 	return wcj_build_commercial_url(
 		'compare',
@@ -29,7 +29,7 @@ $wcj_sales_notifications_compare_url = function ( $content ) {
 	);
 };
 
-$settings     = array(
+$settings = array(
 	array(
 		'id'      => 'wcj_sales_general_options',
 		'type'    => 'tab_ids',
