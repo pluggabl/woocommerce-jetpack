@@ -338,14 +338,32 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				sprintf(
 				/* translators: %s: search term */
 					__( 'Visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Elite version.', 'woocommerce-jetpack' ),
-					'https://booster.io/my-account/?utm_source=plus_update'
+					esc_url(
+						wcj_build_commercial_url(
+							'renewal',
+							array(
+								'path'     => 'my-account/',
+								'campaign' => 'renewal',
+								'content'  => 'deprecated_plus_update_notice__account',
+							)
+						)
+					)
 				) . ' ' .
 				sprintf(
 				/* translators: %s: search term */
 					__( 'Click <a target="_blank" href="%s">here</a> for more info.', 'woocommerce-jetpack' ),
-					'https://booster.io/booster-elite-for-woocommerce-update/'
+					esc_url(
+						wcj_build_commercial_url(
+							'renewal',
+							array(
+								'path'     => 'booster-elite-for-woocommerce-update/',
+								'campaign' => 'renewal',
+								'content'  => 'deprecated_plus_update_notice__update_info',
+							)
+						)
+					)
 				);
-				echo '<div class="' . esc_html( $class ) . '"><p>' . esc_html( $message ) . '</p></div>';
+				echo '<div class="' . esc_attr( $class ) . '"><p>' . wp_kses_post( $message ) . '</p></div>';
 			}
 		}
 
@@ -477,9 +495,26 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				'<a href="' . esc_url( 'https://booster.io/' ) . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 			);
 			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
-				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/buy-booster/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
+				$custom_links[] = '<a target="_blank" href="' . esc_url(
+					wcj_build_commercial_url(
+						'buy',
+						array(
+							'campaign' => 'dashboard_header',
+							'content'  => 'plugin_action_unlock_all__buy',
+						)
+					)
+				) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
 			} else {
-				$custom_links[] = '<a target="_blank" href="' . esc_url( 'https://booster.io/my-account/booster-contact/' ) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
+				$custom_links[] = '<a target="_blank" href="' . esc_url(
+					wcj_build_commercial_url(
+						'account',
+						array(
+							'path'     => 'my-account/booster-contact/',
+							'campaign' => 'account',
+							'content'  => 'plugin_action_support__account',
+						)
+					)
+				) . '">' . __( 'Support', 'woocommerce-jetpack' ) . '</a>';
 			}
 			return array_merge( $custom_links, $links );
 		}

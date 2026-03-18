@@ -4,12 +4,12 @@
  * Requires Plugins: woocommerce
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features.
- * Version: 7.11.3
+ * Version: 7.11.4
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
- * WC tested up to: 10.5.3
+ * WC tested up to: 10.6.1
  * License: GNU General Public License v3.0
  *
  * @package Booster_For_WooCommerce
@@ -72,7 +72,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '7.11.3';
+		public $version = '7.11.4';
 
 		/**
 		 * Singleton instance.

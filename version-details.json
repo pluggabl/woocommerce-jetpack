@@ -1,9 +1,9 @@
 {
-    "0": "= 7.11.3 - 11/03/2026 =",
-    "1": "* **Improved onboarding flow** with faster goal discovery and refined blueprint selection for quicker setup.",
-    "2": "* **Enhanced success guidance** and goal-specific next-step metadata for cart recovery and completion states.",
-    "3": "* **Improved accessibility and UX** featuring better keyboard navigation, ARIA semantics, and modal focus handling.",
-    "4": "* **Internal telemetry updates** for lifecycle event logging and improved metadata payloads in local environments.",
-    "5": "* WooCommerce 10.5.3 Tested",
+    "0": "= 7.11.4 - 18/03/2026 =",
+    "1": "* Normalized in-plugin upsell routing so generic compare-first prompts route to /free-vs-elite/ while explicit buy/pricing CTAs stay on /buy-booster/.",
+    "2": "* Kept upgrade-block comparison buttons and other ambiguous/tag-first docs/features/about assists on their current destinations while separating account, support, update, and download routes from generic sales flows.",
+    "3": "* Normalized Booster in-plugin source and UTM tagging across the scoped admin surfaces.",
+    "4": "* Confirmed no direct-checkout plugin CTA was introduced in this release candidate.",
+    "5": "* WooCommerce 10.6.1 Tested",
     "6": "* WordPress 6.9.1 Tested"
 }

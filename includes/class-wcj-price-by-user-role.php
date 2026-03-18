@@ -301,7 +301,18 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			?><div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' ) )
+				. wp_kses_post(
+					wcj_replace_booster_url(
+						__( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' ),
+						wcj_build_commercial_url(
+							'compare',
+							array(
+								'campaign' => 'module_feature_upsell',
+								'content'  => 'price_by_user_role_limit__compare',
+							)
+						)
+					)
+				)
 				. '</div>';
 			?>
 		</p></div>
@@ -589,7 +600,6 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			}
 			return $price_hash;
 		}
-
 	}
 
 endif;

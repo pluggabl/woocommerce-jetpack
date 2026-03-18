@@ -188,11 +188,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
 				add_action( 'init', array( $this, 'add_settings' ) );
 				add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
-			} else {
-				if ( 'init' === current_filter() || 'plugins_loaded' === current_filter() ) {
+			} elseif ( 'init' === current_filter() || 'plugins_loaded' === current_filter() ) {
 					$this->add_settings();
 					$this->reset_settings();
-				}
 			}
 
 			// Handle WPML hooks.
@@ -476,7 +474,15 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				/* translators: %1$s,%2$s: translators Added */
 				wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Elite</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ) ),
 				wp_kses_post( $this->short_desc ),
-				'https://booster.io/buy-booster/'
+				esc_url(
+					wcj_build_commercial_url(
+						'compare',
+						array(
+							'campaign' => 'module_feature_upsell',
+							'content'  => sanitize_key( $this->id ) . '_limit__compare',
+						)
+					)
+				)
 			) .
 			'</div></p></div>';
 		}
@@ -828,7 +834,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$priority
 				);
 			}
-
 		}
 
 		/**

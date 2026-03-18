@@ -16,10 +16,20 @@ if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'sa
 	wcj_render_upgrade_block( 'sales_notifications' );
 }
 
-$products     = wcj_get_products();
-$get_pages    = wcj_get_pages();
-$product_cats = wcj_get_terms( 'product_cat' );
-$settings     = array(
+$products                            = wcj_get_products();
+$get_pages                           = wcj_get_pages();
+$product_cats                        = wcj_get_terms( 'product_cat' );
+$wcj_sales_notifications_compare_url = function ( $content ) {
+	return wcj_build_commercial_url(
+		'compare',
+		array(
+			'campaign' => 'locked_setting',
+			'content'  => $content,
+		)
+	);
+};
+
+$settings = array(
 	array(
 		'id'      => 'wcj_sales_general_options',
 		'type'    => 'tab_ids',
@@ -63,7 +73,7 @@ $settings     = array(
 			),
 		'css'               => 'width:100%;height:200px;',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Customize notification text, add buyer names, country, product prices, images, and time ago etc details. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Customize notification text, add buyer names, country, product prices, images, and time ago etc details. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_text__compare' ) ),
 		/* translators: %s: product title */
 		'help_text'         => __( 'The message displayed in sales notifications. Use placeholders like %customer_city% and %product_title% to show real purchase details and build social proof.', 'woocommerce-jetpack' ),
 	),
@@ -73,7 +83,7 @@ $settings     = array(
 		'default'           => 'no',
 		'type'              => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Enable or disable product image display in notifications. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this option.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Enable or disable product image display in notifications. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this option.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_images__compare' ) ),
 		'help_text'         => __( 'Show product images in notifications to make them more eye-catching and credible. Images help visitors recognize products and increase engagement.', 'woocommerce-jetpack' ),
 		'friendly_label'    => __( 'Show Product Images', 'woocommerce-jetpack' ),
 	),
@@ -88,7 +98,7 @@ $settings     = array(
 			'wcj_both'    => __( 'Both', 'woocommerce-jetpack' ),
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose whether notifications appear on desktop, mobile, or both. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock screen selection.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose whether notifications appear on desktop, mobile, or both. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock screen selection.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_device_targeting__compare' ) ),
 		'help_text'         => __( 'Control which devices show sales notifications. Choose "Both" for maximum reach, or limit to desktop/mobile based on your audience behavior.', 'woocommerce-jetpack' ),
 	),
 	array(
@@ -101,7 +111,7 @@ $settings     = array(
 			'wcj_bottom_left'  => __( 'Bottom Left', 'woocommerce-jetpack' ),
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose where notifications appear on screen. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock Top Right and Top Left positions.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose where notifications appear on screen. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock Top Right and Top Left positions.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_positions__compare' ) ),
 		'help_text'         => __( 'Choose where notifications pop up on the screen. Bottom right is most common and least intrusive, while bottom left works well for RTL languages.', 'woocommerce-jetpack' ),
 	),
 	array(
@@ -126,7 +136,7 @@ $settings     = array(
 		'type'              => 'text',
 		'default'           => '#ffffff',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose a background color for notifications. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock background color customization.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose a background color for notifications. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock background color customization.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_bg_color__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Text Color', 'woocommerce-jetpack' ),
@@ -134,7 +144,7 @@ $settings     = array(
 		'type'              => 'text',
 		'default'           => '#000000',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Customize the text color of your notifications. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock text color customization.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Customize the text color of your notifications. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock text color customization.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_text_color__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Display Effect', 'woocommerce-jetpack' ),
@@ -149,7 +159,7 @@ $settings     = array(
 			'wcj_slideindown'  => __( 'SlideInDown', 'woocommerce-jetpack' ),
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Select how notifications should appear (fade, slide, etc.). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock animation effects.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Select how notifications should appear (fade, slide, etc.). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock animation effects.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_show_effect__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Hidden Effect', 'woocommerce-jetpack' ),
@@ -164,7 +174,7 @@ $settings     = array(
 			'wcj_slideoutdown'  => __( 'SlideOutDown', 'woocommerce-jetpack' ),
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Select how notifications should disappear (fade, slide, etc.). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock hiding effects.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Select how notifications should disappear (fade, slide, etc.). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock hiding effects.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_hide_effect__compare' ) ),
 	),
 	array(
 		'id'   => 'wcj_sales_styling_tab',
@@ -181,7 +191,7 @@ $settings     = array(
 		'default'           => '4',
 		'step'              => '1',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Set how long each notification stays visible (in seconds). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock duration control.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set how long each notification stays visible (in seconds). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock duration control.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_duration__compare' ) ),
 		'help_text'         => __( 'How long each notification stays visible before disappearing. Most stores use 4-6 seconds - long enough to read but not annoying.', 'woocommerce-jetpack' ),
 		'friendly_label'    => __( 'Display Duration', 'woocommerce-jetpack' ),
 	),
@@ -192,7 +202,7 @@ $settings     = array(
 		'default'           => '8',
 		'step'              => '1',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Set delay before the next notification appears (in seconds). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock timing options.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set delay before the next notification appears (in seconds). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock timing options.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_delay__compare' ) ),
 		'help_text'         => __( 'Time to wait before showing the next notification. Use 8-15 seconds to avoid overwhelming visitors with too many popups.', 'woocommerce-jetpack' ),
 		'friendly_label'    => __( 'Delay Between Notifications', 'woocommerce-jetpack' ),
 	),
@@ -210,7 +220,7 @@ $settings     = array(
 		'default'           => 'processing, completed',
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Want to show notifications for various order statuses like "Shipped" or "Refunded" to build trust and keep customers informed? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock all order statuses.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Want to show notifications for various order statuses like "Shipped" or "Refunded" to build trust and keep customers informed? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock all order statuses.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_statuses__compare' ) ),
 		'help_text'         => __( 'Which order statuses to show in notifications. Use "processing, completed" to show confirmed purchases. Avoid showing pending or failed orders.', 'woocommerce-jetpack' ),
 	),
 	array(
@@ -227,7 +237,7 @@ $settings     = array(
 		'default'           => 'no',
 		'type'              => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Play a sound when a sales notification appears like Beep, Doublebeep etc. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock sound effects.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Play a sound when a sales notification appears like Beep, Doublebeep etc. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock sound effects.', 'woocommerce-jetpack' ), $wcj_sales_notifications_compare_url( 'sales_notifications_sound__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Sound', 'woocommerce-jetpack' ),

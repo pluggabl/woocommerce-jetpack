@@ -103,9 +103,20 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 			if ( 'woocommerce-jetpack.php' !== basename( WCJ_FREE_PLUGIN_FILE ) ) {
 				return;
 			}
-			$class = 'notice notice-info';
-			/* translators: %s: search term */
-			$message      = sprintf( __( 'You\'re using Booster free version. To unlock more features please consider <a target="_blank" href="%s">Upgrade Booster to unlock this feature</a>.', 'woocommerce-jetpack' ), 'https://booster.io/buy-booster/' );
+			$class   = 'notice notice-info';
+			$message = sprintf(
+				/* translators: %s: URL to Booster upgrade page */
+				__( 'You\'re using Booster free version. To unlock more features please consider <a target="_blank" href="%s">Upgrade Booster to unlock this feature</a>.', 'woocommerce-jetpack' ),
+				esc_url(
+					wcj_build_commercial_url(
+						'compare',
+						array(
+							'campaign' => 'generic_upsell',
+							'content'  => 'free_version_notice__compare',
+						)
+					)
+				)
+			);
 			$booster_icon = '<span class="wcj-booster-logo"></span>';
 			?>
 				<style>
@@ -171,7 +182,20 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 							</a>
 						</div>
 						<div class="sub-circle">
-							<a href="https://booster.io/my-account/booster-contact/" target="_blank">
+							<a href="
+							<?php
+							echo esc_url(
+								wcj_build_commercial_url(
+									'account',
+									array(
+										'path'     => 'my-account/booster-contact/',
+										'campaign' => 'account',
+										'content'  => 'premium_support_circle__account',
+									)
+								)
+							);
+							?>
+										" target="_blank">
 								<div class="form_label">
 									<label>Booster Elite Premium Support (4 hours - 24 hours response)</label>
 									<div class="ic_list"><img src="<?php echo esc_url( $sec_link ); ?>/assets/images/support-24-h-w.png"></div>
@@ -256,11 +280,11 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				foreach ( $this->module_statuses as $module_status ) {
 					if ( isset( $module_status['id'] ) && isset( $module_status['default'] ) ) {
 						if ( 'yes' === wcj_get_option( $module_status['id'], $module_status['default'] ) ) {
-							$active++;
+							++$active;
 						} elseif ( wcj_is_module_deprecated( $module_status['id'], true ) ) {
 							continue;
 						}
-						$all++;
+						++$all;
 					}
 				}
 
@@ -629,7 +653,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 							continue;
 						}
 					}
-					$total_modules++;
+					++$total_modules;
 					$html .= '<tr id="' . $the_feature['id'] . '" class="' . $this->active( wcj_get_option( $the_feature['id'] ) ) . '">';
 					$html .= '<th scope="row" class="check-column">';
 					$html .= '<label class="screen-reader-text" for="' . $the_feature['id'] . '">' . $the_feature['desc'] . '</label>';
@@ -865,7 +889,6 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					echo wp_kses_post( $lines . '<br>' );
 				}
 			}
-
 		}
 
 		/**
@@ -929,7 +952,20 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 						</div>
 					</div>
 					<div class="wcj-btn-main">
-						<a href="https://booster.io/buy-booster/" class="wcj-button" target="_blank"><?php esc_html_e( 'Get Booster Elite', 'woocommerce-jetpack' ); ?></a>
+						<a href="
+						<?php
+						echo esc_url(
+							wcj_build_commercial_url(
+								'account',
+								array(
+									'path'     => 'my-account/',
+									'campaign' => 'account',
+									'content'  => 'my_account_header__account',
+								)
+							)
+						);
+						?>
+									" class="wcj-button" target="_blank"><?php esc_html_e( 'Get Booster Elite', 'woocommerce-jetpack' ); ?></a>
 					</div>
 				</div>
 				<div class="wcj-body-sec-part-main">
@@ -1009,7 +1045,20 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 										<span><img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/down-arw.png'; ?>"></span>
 									</div>
 									<div class="wcj-panel">
-										<p><?php esc_html_e( 'You can see all the features at ', 'woocommerce-jetpack' ); ?><a href="https://booster.io/about/" target="_blank"><?php esc_html_e( 'About Booster', 'woocommerce-jetpack' ); ?></a><?php esc_html_e( ' page.', 'woocommerce-jetpack' ); ?></p>
+										<p><?php esc_html_e( 'You can see all the features at ', 'woocommerce-jetpack' ); ?><a href="
+										<?php
+										echo esc_url(
+											wcj_build_commercial_url(
+												'assist',
+												array(
+													'path' => 'about/',
+													'campaign' => 'generic_upsell',
+													'content' => 'my_account_faq_features__assist',
+												)
+											)
+										);
+										?>
+											" target="_blank"><?php esc_html_e( 'About Booster', 'woocommerce-jetpack' ); ?></a><?php esc_html_e( ' page.', 'woocommerce-jetpack' ); ?></p>
 									</div>
 								</div>
 								<div class="wcj-additional-que">
@@ -1145,7 +1194,19 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				<li><?php esc_html_e( '+ More configuration options for payments and shipping', 'woocommerce-jetpack' ); ?></li>
 			</ul>
 			<div class="wcj-btn-main">
-				<a href="https://booster.io/buy-booster/" class="wcj-button" target="_blank"><?php esc_html_e( 'Upgrade to Booster Elite', 'woocommerce-jetpack' ); ?></a>
+				<a href="
+					<?php
+					echo esc_url(
+						wcj_build_commercial_url(
+							'buy',
+							array(
+								'campaign' => 'dashboard_header',
+								'content'  => 'feature_promo_box__buy',
+							)
+						)
+					);
+					?>
+				" class="wcj-button" target="_blank"><?php esc_html_e( 'Upgrade to Booster Elite', 'woocommerce-jetpack' ); ?></a>
 			</div>
 		</div>
 	</div>
@@ -1153,7 +1214,6 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					<?php
 				}
 		}
-
 	}
 
 endif;

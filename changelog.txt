@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 7.11.4 - 18/03/2026 =
+* Normalized in-plugin upsell routing so generic compare-first prompts route to /free-vs-elite/ while explicit buy/pricing CTAs stay on /buy-booster/.
+* Kept upgrade-block comparison buttons and other ambiguous/tag-first docs/features/about assists on their current destinations while separating account, support, update, and download routes from generic sales flows.
+* Normalized Booster in-plugin source and UTM tagging across the scoped admin surfaces.
+* Confirmed no direct-checkout plugin CTA was introduced in this release candidate.
+* WooCommerce 10.6.1 Tested
+* WordPress 6.9.1 Tested
+
 = 7.11.3 - 11/03/2026 =
 * Improved goal discovery and blueprint selection flow for a faster setup experience.
 * Added clearer next-step instructions and goal-specific metadata for cart recovery and completion states.

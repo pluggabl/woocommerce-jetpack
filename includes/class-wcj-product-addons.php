@@ -336,7 +336,16 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @since   2.5.3
 		 */
 		public function get_the_notice() {
-			return __( 'Booster: Free plugin\'s version is limited to only three products with per product addons enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of products with per product addons.', 'woocommerce-jetpack' );
+			return wcj_replace_booster_url(
+				__( 'Booster: Free plugin\'s version is limited to only three products with per product addons enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of products with per product addons.', 'woocommerce-jetpack' ),
+				wcj_build_commercial_url(
+					'compare',
+					array(
+						'campaign' => 'module_feature_upsell',
+						'content'  => 'product_addons_limit__compare',
+					)
+				)
+			);
 		}
 
 		/**
@@ -982,7 +991,6 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				return wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $price, $_product ) ) );
 			}
 		}
-
 	}
 
 endif;

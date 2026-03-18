@@ -251,7 +251,20 @@ if ( ! class_exists( 'WCJ_Product_Variation_Swatches' ) ) :
 					<?php echo wp_kses_post( "Determines how this attribute's values are displayed like Color Box or As Image", 'woocommerce-jetpack' ); ?>
 				</p>
 				<p class="description">
-					<?php echo wp_kses_post( 'Want to enable swatches for all your attributes, use button/label swatches, or automatically convert all dropdowns? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite </a> for advanced swatch control!', 'woocommerce-jetpack' ); ?>
+					<?php
+					echo wp_kses_post(
+						wcj_replace_booster_url(
+							__( 'Want to enable swatches for all your attributes, use button/label swatches, or automatically convert all dropdowns? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite </a> for advanced swatch control!', 'woocommerce-jetpack' ),
+							wcj_build_commercial_url(
+								'compare',
+								array(
+									'campaign' => 'module_feature_upsell',
+									'content'  => 'variation_swatches_notice__compare',
+								)
+							)
+						)
+					);
+					?>
 				</p>
 			</div>
 				<?php

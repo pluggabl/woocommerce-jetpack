@@ -116,7 +116,20 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 							</div>
 							<div class="wcj-dash-sing-icon-dtl">
 								<h4><?php esc_html_e( 'Generate Site Key', 'woocommerce-jetpack' ); ?></h4>
-								<p><?php esc_html_e( 'Add Booster to your website - ', 'woocommerce-jetpack' ); ?><a target="_blank" href="https://booster.io/my-account/downloads/"><?php esc_html_e( 'Generate Key', 'woocommerce-jetpack' ); ?></a></p>
+								<p><?php esc_html_e( 'Add Booster to your website - ', 'woocommerce-jetpack' ); ?><a target="_blank" href="
+								<?php
+								echo esc_url(
+									wcj_build_commercial_url(
+										'account',
+										array(
+											'path'     => 'my-account/downloads/',
+											'campaign' => 'account',
+											'content'  => 'dashboard_generate_key__account',
+										)
+									)
+								);
+								?>
+								"><?php esc_html_e( 'Generate Key', 'woocommerce-jetpack' ); ?></a></p>
 							</div>
 						</div>
 						<div class="wcj-dash-sing-part">
@@ -235,7 +248,19 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 					</div>
 					<!-- Promo Chips -->
 					<div id="wcj-promo-chips" class="wcj-promo-chips" role="navigation" aria-label="Primary Booster actions" data-gtm-container="promo_chips">
-						<a href="https://booster.io/buy-booster/" class="wcj-btn-chip" data-gtm="upgrade_click_elite" data-placement="dashboard_header" aria-label="Upgrade to Elite">
+						<a href="
+						<?php
+						echo esc_url(
+							wcj_build_commercial_url(
+								'buy',
+								array(
+									'campaign' => 'dashboard_header',
+									'content'  => 'dashboard_header_upgrade_chip__buy',
+								)
+							)
+						);
+						?>
+						" class="wcj-btn-chip" data-gtm="upgrade_click_elite" data-placement="dashboard_header" aria-label="Upgrade to Elite">
 							<?php esc_html_e( '⚡ Upgrade to Elite', 'woocommerce-jetpack' ); ?>
 						</a>
 						<a href="https://booster.io/changelog/" class="wcj-btn-chip" data-gtm="see_whats_new" data-placement="dashboard_header" aria-label="See What’s New">
@@ -297,7 +322,19 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 					</ul>
 					<div class="wcj-upgrade-btn-part">
 						<div class="wcj-btn-main">
-							<a target="_blank" href="https://booster.io/free-vs-elite/" class="wcj-btn-sm wcj-btn-gray">
+							<a target="_blank" href="
+							<?php
+							echo esc_url(
+								wcj_build_commercial_url(
+									'compare',
+									array(
+										'campaign' => 'dashboard_header',
+										'content'  => 'dashboard_header_compare_chip__compare',
+									)
+								)
+							);
+							?>
+							" class="wcj-btn-sm wcj-btn-gray">
 								<?php esc_html_e( 'Free vs Elite (What’s included?)', 'woocommerce-jetpack' ); ?>
 							</a>
 						</div>

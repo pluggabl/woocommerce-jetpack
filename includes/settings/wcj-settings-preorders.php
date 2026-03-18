@@ -16,9 +16,18 @@ if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'pr
 	wcj_render_upgrade_block( 'preorders' );
 }
 
-$user_roles   = wcj_get_user_roles_options();
-$product_cats = wcj_get_terms( 'product_cat' );
-$products     = wcj_get_products();
+$user_roles                = wcj_get_user_roles_options();
+$product_cats              = wcj_get_terms( 'product_cat' );
+$products                  = wcj_get_products();
+$wcj_preorders_compare_url = function ( $content ) {
+	return wcj_build_commercial_url(
+		'compare',
+		array(
+			'campaign' => 'locked_setting',
+			'content'  => $content,
+		)
+	);
+};
 
 $settings = array(
 	array(
@@ -39,7 +48,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Prevent Mixed Cart', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Want to ensure pre-order items are purchased separately from regular stock for easier management? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this feature.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Want to ensure pre-order items are purchased separately from regular stock for easier management? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this feature.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_separate_cart__compare' ) ),
 		'id'                => 'wcj_preorders_prevent_mixed_cart',
 		'default'           => 'no',
 		'type'              => 'checkbox',
@@ -51,7 +60,7 @@ $settings = array(
 		'default'           => 'm/d/Y',
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose the input format for release dates. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to customize release date formats.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose the input format for release dates. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to customize release date formats.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_release_date_format__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Pre-order Access', 'woocommerce-jetpack' ),
@@ -64,7 +73,7 @@ $settings = array(
 			'roles'      => __( 'Specific User Roles', 'woocommerce-jetpack' ),
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Control who can place pre-orders (all users, logged-in users, or specific roles). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock role-based access.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Control who can place pre-orders (all users, logged-in users, or specific roles). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock role-based access.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_role_access__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Allowed User Roles', 'woocommerce-jetpack' ),
@@ -73,7 +82,7 @@ $settings = array(
 		'type'              => 'multiselect',
 		'options'           => $user_roles,
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Select specific user roles allowed to place pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock role-based restrictions.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Select specific user roles allowed to place pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock role-based restrictions.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_role_selection__compare' ) ),
 	),
 	array(
 		'id'   => 'wcj_preorders_general_tab',
@@ -89,14 +98,14 @@ $settings = array(
 		'default'           => array(),
 		'type'              => 'multiselect',
 		'options'           => $products,
-		'desc'              => __( 'Select up to 3 products to enable pre-orders. Want to enable pre-orders for unlimited products? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this feature.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Select up to 3 products to enable pre-orders. Want to enable pre-orders for unlimited products? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this feature.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_unlimited_products__compare' ) ),
 		'custom_attributes' => array(
 			'data-max-selected' => 3,
 		),
 	),
 	array(
 		'title'             => __( 'Auto-enable Pre-orders', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Want to enable pre-orders automatically for all out-of-stock items? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this feature.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Want to enable pre-orders automatically for all out-of-stock items? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock this feature.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_auto_enable__compare' ) ),
 		'id'                => 'wcj_preorders_auto_enable_outofstock',
 		'default'           => 'no',
 		'type'              => 'checkbox',
@@ -104,7 +113,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Product Categories - Include', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Auto-enable pre-orders only for products in these categories. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock category-based pre-orders.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Auto-enable pre-orders only for products in these categories. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock category-based pre-orders.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_category_include__compare' ) ),
 		'id'                => 'wcj_preorders_auto_enable_categories_include',
 		'default'           => array(),
 		'type'              => 'multiselect',
@@ -113,7 +122,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Product Categories - Exclude', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Exclude categories from auto-enabled pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to manage category exclusions.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Exclude categories from auto-enabled pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to manage category exclusions.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_category_exclude__compare' ) ),
 		'id'                => 'wcj_preorders_auto_enable_categories_exclude',
 		'default'           => array(),
 		'type'              => 'multiselect',
@@ -122,7 +131,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Products - Include', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Auto-enable pre-orders only for selected products. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock product-level control.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Auto-enable pre-orders only for selected products. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock product-level control.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_product_include__compare' ) ),
 		'id'                => 'wcj_preorders_auto_enable_products_include',
 		'default'           => array(),
 		'type'              => 'multiselect',
@@ -131,7 +140,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Products - Exclude', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Exclude specific products from pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock product exclusions.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Exclude specific products from pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock product exclusions.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_product_exclude__compare' ) ),
 		'id'                => 'wcj_preorders_auto_enable_products_exclude',
 		'default'           => array(),
 		'type'              => 'multiselect',
@@ -140,7 +149,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Default Availability Days', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Set default number of days until release date. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for customizable availability periods.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set default number of days until release date. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for customizable availability periods.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_default_days__compare' ) ),
 		'id'                => 'wcj_preorders_default_availability_days',
 		'default'           => '30',
 		'type'              => 'number',
@@ -148,7 +157,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Default Price Type', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Set pricing type when auto-enabling pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock discount/increase options.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set pricing type when auto-enabling pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock discount/increase options.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_pricing_type__compare' ) ),
 		'id'                => 'wcj_preorders_default_price_type',
 		'default'           => 'default',
 		'type'              => 'select',
@@ -161,7 +170,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Default Price Adjustment', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Set default discount or markup for pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock flexible pricing.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set default discount or markup for pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock flexible pricing.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_pricing_value__compare' ) ),
 		'id'                => 'wcj_preorders_default_price_adjustment',
 		'default'           => '0',
 		'type'              => 'number',
@@ -182,7 +191,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Pre-order Button Text', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Set custom text for the pre-order button. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock button customization.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set custom text for the pre-order button. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock button customization.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_button_text__compare' ) ),
 		'id'                => 'wcj_preorders_button_text',
 		'default'           => __( 'Pre-order Now', 'woocommerce-jetpack' ),
 		'type'              => 'text',
@@ -194,7 +203,7 @@ $settings = array(
 		'default'           => '#007cba',
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose a background color for pre-order buttons. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock button styling.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose a background color for pre-order buttons. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock button styling.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_button_bg__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Button Text Color', 'woocommerce-jetpack' ),
@@ -202,7 +211,7 @@ $settings = array(
 		'default'           => '#ffffff',
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose a text color for the pre-order button. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock button text styling.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose a text color for the pre-order button. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock button text styling.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_button_text_color__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Button Hover Background Color', 'woocommerce-jetpack' ),
@@ -210,7 +219,7 @@ $settings = array(
 		'default'           => '#0073aa',
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Set background color on button hover. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for full hover styling.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set background color on button hover. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for full hover styling.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_button_hover_bg__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Button Hover Text Color', 'woocommerce-jetpack' ),
@@ -218,7 +227,7 @@ $settings = array(
 		'default'           => '#ffffff',
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Set text color on button hover. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock hover text styling.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set text color on button hover. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock hover text styling.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_button_hover_text__compare' ) ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -231,7 +240,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Pre-order Message', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Message shown for pre-order products. Use %release_date% shortcode. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to customize messages.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Message shown for pre-order products. Use %release_date% shortcode. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to customize messages.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_message_text__compare' ) ),
 		'id'                => 'wcj_preorders_message',
 		'default'           => __( 'This item is available for pre-order and will be released on %release_date%.', 'woocommerce-jetpack' ),
 		'type'              => 'text',
@@ -248,7 +257,7 @@ $settings = array(
 			'success' => __( 'Success', 'woocommerce-jetpack' ),
 		),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose style for pre-order messages (custom, notice, success). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock style options.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose style for pre-order messages (custom, notice, success). Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock style options.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_message_style__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Custom Message Text Color', 'woocommerce-jetpack' ),
@@ -256,7 +265,7 @@ $settings = array(
 		'default'           => '#515151',
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Choose custom text color for messages. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for message styling.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Choose custom text color for messages. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for message styling.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_message_color__compare' ) ),
 	),
 	array(
 		'id'   => 'wcj_preorders_buttons_tab',
@@ -274,7 +283,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Enable Free Shipping', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Enable free shipping for pre-order products. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock free shipping rules.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Enable free shipping for pre-order products. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock free shipping rules.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_free_shipping__compare' ) ),
 		'id'                => 'wcj_preorders_free_shipping',
 		'default'           => 'no',
 		'type'              => 'checkbox',
@@ -282,7 +291,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Free Shipping Label', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Text shown for free shipping. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to customize shipping labels.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Text shown for free shipping. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to customize shipping labels.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_free_shipping_text__compare' ) ),
 		'id'                => 'wcj_preorders_free_shipping_label',
 		'default'           => __( 'Free Shipping (Pre-order)', 'woocommerce-jetpack' ),
 		'type'              => 'text',
@@ -290,7 +299,7 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Force Free Shipping Only', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Remove other shipping methods when free shipping is active. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for shipping control.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Remove other shipping methods when free shipping is active. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for shipping control.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_shipping_control__compare' ) ),
 		'id'                => 'wcj_preorders_free_shipping_only',
 		'default'           => 'no',
 		'type'              => 'checkbox',
@@ -310,7 +319,7 @@ $settings = array(
 		'default'           => 'no',
 		'type'              => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Charge a fee for pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock fee management.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Charge a fee for pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock fee management.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_fee_enable__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Fee Title', 'woocommerce-jetpack' ),
@@ -318,7 +327,7 @@ $settings = array(
 		'default'           => __( 'Pre-order Fee', 'woocommerce-jetpack' ),
 		'type'              => 'text',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Fee Title shown in cart/checkout for pre-order fee. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for customizable labels.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Fee Title shown in cart/checkout for pre-order fee. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> for customizable labels.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_fee_title__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Fee Amount', 'woocommerce-jetpack' ),
@@ -326,7 +335,7 @@ $settings = array(
 		'default'           => '',
 		'type'              => 'number',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-		'desc'              => __( 'Set global fee amount for pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock flexible fee amounts.', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url( __( 'Set global fee amount for pre-orders. Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock flexible fee amounts.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_fee_amount__compare' ) ),
 	),
 	array(
 		'title'             => __( 'Include Categories', 'woocommerce-jetpack' ),
@@ -381,7 +390,7 @@ $settings = array(
 			'admin_purchase'   => __( 'Admin: New Pre-order Purchase', 'woocommerce-jetpack' ),
 			'customer_confirm' => __( 'Customer: Pre-order Confirmation', 'woocommerce-jetpack' ),
 		),
-		'desc'    => __( 'Keep customers and admins fully informed with dedicated pre-order confirmations, product release updates, and more advanced email options. <br>Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock advanced email notifications.', 'woocommerce-jetpack' ),
+		'desc'    => wcj_replace_booster_url( __( 'Keep customers and admins fully informed with dedicated pre-order confirmations, product release updates, and more advanced email options. <br>Upgrade to <a href="https://booster.io/buy-booster/" target="_blank">Booster</a> to unlock advanced email notifications.', 'woocommerce-jetpack' ), $wcj_preorders_compare_url( 'preorders_email_notifications__compare' ) ),
 	),
 	array(
 		'id'   => 'wcj_preorders_email_tab',

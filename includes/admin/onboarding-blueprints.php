@@ -40,7 +40,13 @@ return array(
 		),
 		'pro_note'        => array(
 			'label' => __( 'Sequences & coupon automation available in Elite — Compare →', 'woocommerce-jetpack' ),
-			'href'  => 'https://booster.io/buy-booster/#compare',
+			'href'  => wcj_build_commercial_url(
+				'compare',
+				array(
+					'campaign' => 'onboarding_blueprint',
+					'content'  => 'recover_lost_sales__compare',
+				)
+			),
 		),
 		'success_message' => __( 'Great! Cart abandonment recovery is now active.', 'woocommerce-jetpack' ),
 	),
@@ -68,7 +74,13 @@ return array(
 		),
 		'pro_note'        => array(
 			'label' => __( 'Conditional add-ons & fees in Elite — Compare →', 'woocommerce-jetpack' ),
-			'href'  => 'https://booster.io/buy-booster/#compare',
+			'href'  => wcj_build_commercial_url(
+				'compare',
+				array(
+					'campaign' => 'onboarding_blueprint',
+					'content'  => 'boost_aov__compare',
+				)
+			),
 		),
 		'success_message' => __( 'Nice! Your store can now offer add-ons and show related products.', 'woocommerce-jetpack' ),
 	),
@@ -100,7 +112,13 @@ return array(
 		),
 		'pro_note'        => array(
 			'label' => __( 'Geo-price & currency controls in Elite — Compare →', 'woocommerce-jetpack' ),
-			'href'  => 'https://booster.io/buy-booster/#compare',
+			'href'  => wcj_build_commercial_url(
+				'compare',
+				array(
+					'campaign' => 'onboarding_blueprint',
+					'content'  => 'sell_internationally__compare',
+				)
+			),
 		),
 		'success_message' => __( 'Perfect! Your store is now ready for international customers.', 'woocommerce-jetpack' ),
 	),

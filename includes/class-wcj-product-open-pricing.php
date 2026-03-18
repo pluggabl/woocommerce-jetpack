@@ -273,7 +273,18 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 			?><div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
+				. wp_kses_post(
+					wcj_replace_booster_url(
+						__( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' ),
+						wcj_build_commercial_url(
+							'compare',
+							array(
+								'campaign' => 'module_feature_upsell',
+								'content'  => 'open_pricing_limit__compare',
+							)
+						)
+					)
+				)
 				. '</div>';
 			?>
 		</p></div>
@@ -596,7 +607,6 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 				$this->is_open_price_input_field_displayed = true;
 			}
 		}
-
 	}
 
 endif;

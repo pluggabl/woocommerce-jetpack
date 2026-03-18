@@ -24,7 +24,19 @@
 		<div class="wcj-welcome-content-main wcj-welcome-padding-top-0">
 			<div class="wcj-welcome-content-inner">
 				<div class="wcj-buy-puls-btn-main">
-					<a target="_blank" href="https://booster.io/buy-booster/" class="wcj-buy-puls-btn"> <?php esc_html_e( 'Upgrade Booster to unlock this feature.', 'woocommerce-jetpack' ); ?> </a>
+					<a target="_blank" href="
+					<?php
+					echo esc_url(
+						wcj_build_commercial_url(
+							'buy',
+							array(
+								'campaign' => 'dashboard_header',
+								'content'  => 'welcome_screen_hero__buy',
+							)
+						)
+					);
+					?>
+					" class="wcj-buy-puls-btn"> <?php esc_html_e( 'Upgrade Booster to unlock this feature.', 'woocommerce-jetpack' ); ?> </a>
 				</div>
 				<div class="wcj-welcome-content-inner wcj-buy-puls-content-row">
 					<div class="wcj-buy-puls-content-col-4">
@@ -129,7 +141,20 @@
 						</div>
 					</div>
 					<div class="wcj-buy-puls-btn-main">
-						<a target="_blank" href="https://booster.io/category/features/" class="wcj-buy-puls-btn"> <?php esc_html_e( 'See All Features', 'woocommerce-jetpack' ); ?> </a>
+						<a target="_blank" href="
+						<?php
+						echo esc_url(
+							wcj_build_commercial_url(
+								'assist',
+								array(
+									'path'     => 'category/features/',
+									'campaign' => 'generic_upsell',
+									'content'  => 'welcome_features_cta__assist',
+								)
+							)
+						);
+						?>
+						" class="wcj-buy-puls-btn"> <?php esc_html_e( 'See All Features', 'woocommerce-jetpack' ); ?> </a>
 					</div>
 				</div>
 				<div id="subscribe-email" class="wcj-welcome-content-inner wcj-welcome-subscribe-email">
@@ -160,7 +185,20 @@
 					<h3> <?php esc_html_e( 'Contact Us', 'woocommerce-jetpack' ); ?> </h3>
 					<div class="wcj-support">
 						<p><?php esc_html_e( 'Booster Elite customers get access to Premium Support and we respond within 24 business hours.', 'woocommerce-jetpack' ); ?></p>
-						<a target="_blank" href="https://booster.io/my-account/booster-contact/"><?php esc_html_e( 'Booster Elite Premium Support', 'woocommerce-jetpack' ); ?></a>
+						<a target="_blank" href="
+						<?php
+						echo esc_url(
+							wcj_build_commercial_url(
+								'account',
+								array(
+									'path'     => 'my-account/booster-contact/',
+									'campaign' => 'account',
+									'content'  => 'welcome_premium_support__account',
+								)
+							)
+						);
+						?>
+						"><?php esc_html_e( 'Booster Elite Premium Support', 'woocommerce-jetpack' ); ?></a>
 					</div>
 					<div class="wcj-support">
 						<p><?php esc_html_e( 'Free users post on WordPress Plugin Support forum here. We check these threads twice every week Mon and Frid to respond.', 'woocommerce-jetpack' ); ?></p>

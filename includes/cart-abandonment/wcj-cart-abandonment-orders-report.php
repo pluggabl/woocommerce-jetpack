@@ -15,7 +15,20 @@ $order_filter                    = filter_input( INPUT_GET, 'order_filter', FILT
 <div class="wcj-setting-jetpack-body cart_abandonment_main">	
 	<div class="wcj-col-12">
 	<?php echo wp_kses_post( $this->get_tool_header_html( 'cart_abandonment' ) ); ?>
-	<?php echo wp_kses_post( __( 'Want detailed reports, filtering, and to see recoverable vs. lost revenue? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite! </a>', 'woocommerce-jetpack' ) ); ?>
+	<?php
+	echo wp_kses_post(
+		wcj_replace_booster_url(
+			__( 'Want detailed reports, filtering, and to see recoverable vs. lost revenue? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite! </a>', 'woocommerce-jetpack' ),
+			wcj_build_commercial_url(
+				'compare',
+				array(
+					'campaign' => 'module_feature_upsell',
+					'content'  => 'cart_abandonment_reports__compare',
+				)
+			)
+		)
+	);
+	?>
 	</div>
 	<div class="wcj-col-12">
 		<?php

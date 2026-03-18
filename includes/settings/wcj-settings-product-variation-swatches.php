@@ -39,7 +39,16 @@ $settings = array(
 	),
 	array(
 		'title'             => __( 'Convert default dropdowns to button', 'woocommerce-jetpack' ),
-		'desc'              => __( 'Want to enable swatches for all your attributes, use button/label swatches, or automatically convert all dropdowns? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite </a> for advanced swatch control!', 'woocommerce-jetpack' ),
+		'desc'              => wcj_replace_booster_url(
+			__( 'Want to enable swatches for all your attributes, use button/label swatches, or automatically convert all dropdowns? Upgrade to <a href="https://booster.io/buy-booster/" target="_blank"> Booster Elite </a> for advanced swatch control!', 'woocommerce-jetpack' ),
+			wcj_build_commercial_url(
+				'compare',
+				array(
+					'campaign' => 'locked_setting',
+					'content'  => 'variation_swatches_settings__compare',
+				)
+			)
+		),
 		'type'              => 'checkbox',
 		'id'                => 'wcj_product_variation_defualt_to_button',
 		'default'           => 'no',

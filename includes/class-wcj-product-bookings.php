@@ -545,7 +545,18 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		<div class="error"><p>
 			<?php
 			echo '<div class="message">'
-				. wp_kses_post( __( 'Booster: Free plugin\'s version is limited to only one bookings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of bookings products.', 'woocommerce-jetpack' ) )
+				. wp_kses_post(
+					wcj_replace_booster_url(
+						__( 'Booster: Free plugin\'s version is limited to only one bookings product enabled at a time. You will need to get <a href="https://booster.io/buy-booster/" target="_blank">Booster Elite</a> to add unlimited number of bookings products.', 'woocommerce-jetpack' ),
+						wcj_build_commercial_url(
+							'compare',
+							array(
+								'campaign' => 'module_feature_upsell',
+								'content'  => 'product_bookings_limit__compare',
+							)
+						)
+					)
+				)
 				. '</div>';
 			?>
 		</p></div>
@@ -562,7 +573,6 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		public function is_bookings_product( $_product ) {
 			return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_wcj_product_bookings_enabled', true ) );
 		}
-
 	}
 
 endif;
