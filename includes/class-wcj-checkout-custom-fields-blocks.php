@@ -172,6 +172,38 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		}
 
 		/**
+		 * Reverse-map a Blocks select slug back to the raw Booster option label.
+		 *
+		 * During registration, raw Booster option labels are converted to slugs
+		 * via sanitize_title(). This reverses that mapping so the bridged meta
+		 * stores the same raw label that the classic checkout path would store.
+		 *
+		 * @version 7.12.0
+		 * @since   7.12.0
+		 * @param int    $field_index Booster field index.
+		 * @param string $slug        The sanitized slug submitted by Blocks checkout.
+		 * @return string The raw Booster option label, or the slug if no match found.
+		 */
+		private function reverse_map_select_value( $field_index, $slug ) {
+			$options_raw = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $field_index, '' );
+			if ( '' === $options_raw ) {
+				return $slug;
+			}
+
+			$lines = array_map( 'trim', explode( PHP_EOL, $options_raw ) );
+			foreach ( $lines as $line ) {
+				if ( '' === $line ) {
+					continue;
+				}
+				if ( urldecode( sanitize_title( $line ) ) === $slug ) {
+					return $line;
+				}
+			}
+
+			return $slug;
+		}
+
+		/**
 		 * Bridge WC Blocks meta to Booster meta format after a Blocks checkout.
 		 *
 		 * When a customer checks out via WooCommerce Blocks, field data is saved
@@ -217,6 +249,13 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 				// Normalize checkbox values: WC Blocks stores true/false, Booster stores 1/0.
 				if ( 'checkbox' === $booster_type ) {
 					$blocks_value = ! empty( $blocks_value ) ? 1 : 0;
+				}
+
+				// Reverse-map select slug back to the raw Booster option label.
+				// Blocks submits the sanitized slug (e.g. "express-delivery") but
+				// Booster's classic path stores the raw option text ("Express Delivery").
+				if ( 'select' === $booster_type ) {
+					$blocks_value = $this->reverse_map_select_value( $i, $blocks_value );
 				}
 
 				$order->update_meta_data( $booster_key, $blocks_value );
