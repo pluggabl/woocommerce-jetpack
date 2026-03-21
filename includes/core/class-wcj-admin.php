@@ -301,6 +301,10 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 * @since  1.0.0
 		 */
 		public function enqueue_admin_script() {
+			$screen = get_current_screen();
+			if ( $screen && false === strpos( $screen->id, 'wcj' ) && false === strpos( $screen->id, 'woocommerce' ) && false === strpos( $screen->id, 'booster' ) && 'shop_order' !== $screen->id && 'woocommerce_page_wc-orders' !== $screen->id ) {
+				return;
+			}
 			wp_enqueue_script( 'wcj-admin-js', trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-admin.js', array( 'jquery' ), w_c_j()->version, true );
 			wp_localize_script(
 				'wcj-admin-js',
