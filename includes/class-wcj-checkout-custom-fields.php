@@ -223,7 +223,8 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 							if ( false !== strpos( $key, '_label_' ) ) {
 								continue;
 							}
-							$order->$key = $meta_data_array['value'];
+							$meta_value  = $meta_data_array['value'];
+							$order->$key = is_array( $meta_value ) && isset( $meta_value['value'] ) ? $meta_value['value'] : $meta_value;
 						}
 					}
 				}
