@@ -98,6 +98,10 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 
 				// Update checkout fields from admin on a subscription order.
 				add_action( 'save_post_shop_subscription', array( $this, 'update_custom_checkout_fields_order_meta' ) );
+
+				// WooCommerce Blocks checkout integration.
+				require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-checkout-custom-fields-blocks.php';
+				new WCJ_Checkout_Custom_Fields_Blocks( $this->wcj_checkout_custom_fields_total_number );
 			}
 		}
 
