@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		 *
 		 * Only registers fields with supported types (text, select, checkbox).
 		 * All fields use the 'order' location so they appear in the
-		 * "Additional Information" section on the Blocks checkout.
+		 * order/additional-information area of the Checkout block.
 		 *
 		 * @version 7.12.0
 		 * @since   7.12.0
@@ -125,16 +125,12 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 				);
 
 				if ( 'select' === $booster_type ) {
-					$options_raw            = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i, '' );
-					$field_args['options']  = $this->format_select_options_for_blocks( $options_raw );
+					$options_raw           = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i, '' );
+					$field_args['options'] = $this->format_select_options_for_blocks( $options_raw );
 				}
 
-				if ( 'text' === $booster_type ) {
-					$placeholder = wcj_get_option( 'wcj_checkout_custom_field_placeholder_' . $i, '' );
-					if ( '' !== $placeholder ) {
-						$field_args['attributes'] = array( 'placeholder' => $placeholder );
-					}
-				}
+				// Note: WC Blocks API does not support 'placeholder' for text fields.
+				// Select 'placeholder' is a top-level param but is optional.
 
 				woocommerce_register_additional_checkout_field( $field_args );
 			}
@@ -204,11 +200,31 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		}
 
 		/**
+		 * Get the WC Blocks CheckoutFields service instance.
+		 *
+		 * @version 7.12.0
+		 * @since   7.12.0
+		 * @return object|false The CheckoutFields service or false if unavailable.
+		 */
+		private function get_checkout_fields_service() {
+			if ( ! class_exists( 'Automattic\WooCommerce\Blocks\Package' ) ) {
+				return false;
+			}
+			try {
+				$container = \Automattic\WooCommerce\Blocks\Package::container();
+				return $container->get( \Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields::class );
+			} catch ( \Exception $e ) {
+				return false;
+			}
+		}
+
+		/**
 		 * Bridge WC Blocks meta to Booster meta format after a Blocks checkout.
 		 *
 		 * When a customer checks out via WooCommerce Blocks, field data is saved
-		 * using the Blocks meta key format (_wc_other/booster-wcj/checkout-field-N).
-		 * This method copies that data into Booster's expected meta key format
+		 * by the Store API using the Blocks meta key format. This method reads
+		 * that data using the WC CheckoutFields service (the recommended access
+		 * path) and copies it into Booster's expected meta key format
 		 * (_SECTION_wcj_checkout_field_N) so that existing admin order display,
 		 * emails, shortcodes, and store exporters continue to work.
 		 *
@@ -217,7 +233,8 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		 * @param \WC_Order $order The order object.
 		 */
 		public function bridge_blocks_meta_to_booster_format( $order ) {
-			$bridged_any = false;
+			$checkout_fields_service = $this->get_checkout_fields_service();
+			$bridged_any             = false;
 
 			for ( $i = 1; $i <= $this->total_fields; $i++ ) {
 				if ( 'yes' !== wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
@@ -229,14 +246,26 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 					continue;
 				}
 
-				$field_id       = $this->get_blocks_field_id( $i );
-				$blocks_meta_key = '_wc_other/' . $field_id;
-				$blocks_value    = $order->get_meta( $blocks_meta_key );
+				$field_id     = $this->get_blocks_field_id( $i );
+				$blocks_value = '';
 
-				if ( '' === $blocks_value ) {
+				// Use the WC CheckoutFields service (recommended) to read the value.
+				if ( $checkout_fields_service && method_exists( $checkout_fields_service, 'get_field_from_object' ) ) {
+					$blocks_value = $checkout_fields_service->get_field_from_object( $field_id, $order, 'other' );
+				}
+
+				// Fallback: try direct meta read if the service returned empty.
+				if ( '' === $blocks_value || false === $blocks_value || null === $blocks_value ) {
+					$blocks_meta_key = '_wc_other/' . $field_id;
+					$blocks_value    = $order->get_meta( $blocks_meta_key );
+				}
+
+				// Skip fields with no value (except checkboxes which can be unchecked).
+				if ( '' === $blocks_value || false === $blocks_value || null === $blocks_value ) {
 					if ( 'checkbox' !== $booster_type ) {
 						continue;
 					}
+					$blocks_value = '';
 				}
 
 				$section = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' );
@@ -246,14 +275,12 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 				$booster_key_label = '_' . $section . '_wcj_checkout_field_label_' . $i;
 				$booster_key_type  = '_' . $section . '_wcj_checkout_field_type_' . $i;
 
-				// Normalize checkbox values: WC Blocks stores true/false, Booster stores 1/0.
+				// Normalize checkbox values: WC Blocks stores "true"/"false" or "1"/"0", Booster stores 1/0.
 				if ( 'checkbox' === $booster_type ) {
-					$blocks_value = ! empty( $blocks_value ) ? 1 : 0;
+					$blocks_value = ( ! empty( $blocks_value ) && 'false' !== $blocks_value && '0' !== $blocks_value ) ? 1 : 0;
 				}
 
 				// Reverse-map select slug back to the raw Booster option label.
-				// Blocks submits the sanitized slug (e.g. "express-delivery") but
-				// Booster's classic path stores the raw option text ("Express Delivery").
 				if ( 'select' === $booster_type ) {
 					$blocks_value = $this->reverse_map_select_value( $i, $blocks_value );
 				}
