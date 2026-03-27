@@ -961,7 +961,6 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			}
 				return $value;
 		}
-
 	}
 
 endif;

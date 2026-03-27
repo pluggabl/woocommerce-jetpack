@@ -3,9 +3,9 @@ Contributors: pluggabl, ronyp, gravid7
 Donate link: https://booster.io/
 Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invoices, variation swatches, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce product feed, currency switcher
 Requires at least: 5.8
-Tested up to: 6.9
+Tested up to: 6.9.4
 Requires PHP: 7.2
-Stable tag: 7.11.4
+Stable tag: 7.11.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,15 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 7.11.5 - 01/04/2026 =
+* Feature - WooCommerce Blocks: Added support for Checkout Custom Fields (Text, Select, and Checkbox) via the WC Additional Checkout Fields API.
+* Enhancement - Performance: Optimized Admin JS loading; wcj-admin.js is now scoped strictly to Booster and WooCommerce Order pages.
+* Fix - HPOS Compatibility: Updated Store Exporter and Order Display to use WC CRUD API for custom fields when High-Performance Order Storage is enabled.
+* Fix - Blocks Integration: Implemented a meta bridge to ensure Block-based checkout data is correctly mapped to Booster's legacy format (label-based storage).
+* Fix - HPOS: Removed redundant legacy get_post_meta calls when viewing orders in HPOS mode.
+* WooCommerce 10.6.1 Tested
+* WordPress 6.9.4 Tested
 
 = 7.11.4 - 18/03/2026 =
 * Normalized in-plugin upsell routing so generic compare-first prompts route to /free-vs-elite/ while explicit buy/pricing CTAs stay on /buy-booster/.
