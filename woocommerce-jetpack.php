@@ -4,7 +4,7 @@
  * Requires Plugins: woocommerce
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features.
- * Version: 7.11.5
+ * Version: 8.0.0
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack

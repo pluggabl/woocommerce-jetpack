@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 7.2.5
+ * @version 8.0.0
  * @since   2.4.5
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -14,12 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 	/**
-	 * WCJ_Checkout_Customization.
+	 * WCJ_Checkout_Files_Upload.
 	 *
-	 * @version 7.1.6
+	 * @version 8.0.0
 	 */
 	class WCJ_Checkout_Files_Upload extends WCJ_Module {
-
 
 		/**
 		 * The module checkout_files_upload_notice_type
@@ -76,6 +75,8 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					}
 				}
 				add_action( 'woocommerce_checkout_order_processed', array( $this, 'add_files_to_order' ), PHP_INT_MAX, 2 );
+				// Handle file-to-order copy for Blocks checkout (Store API).
+				add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'add_files_to_order_from_blocks' ) );
 				add_action( 'woocommerce_after_checkout_validation', array( $this, 'validate_on_checkout' ) );
 				add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_files_to_order_display' ), PHP_INT_MAX );
 				add_action( 'woocommerce_email_after_order_table', array( $this, 'add_files_to_order_display' ), PHP_INT_MAX );
@@ -118,6 +119,105 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				)
 			);
 			$this->checkout_files_upload_notice_type = wcj_get_option( 'wcj_checkout_files_upload_notice_type', 'wc_add_notice' );
+		}
+
+		/**
+		 * Get order meta with HPOS compatibility.
+		 *
+		 * Consolidates the repeated if/else HPOS pattern into a single method.
+		 *
+		 * @version 8.0.0
+		 * @since   8.0.0
+		 * @param int|WC_Order $order_or_id Order object or order ID.
+		 * @param string       $meta_key    Meta key to retrieve.
+		 * @return mixed
+		 */
+		private function get_order_file_meta( $order_or_id, $meta_key ) {
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = is_numeric( $order_or_id ) ? wcj_get_order( $order_or_id ) : $order_or_id;
+				if ( $order && false !== $order ) {
+					return $order->get_meta( $meta_key );
+				}
+				return '';
+			}
+			$order_id = is_numeric( $order_or_id ) ? $order_or_id : wcj_get_order_id( $order_or_id );
+			return get_post_meta( $order_id, $meta_key, true );
+		}
+
+		/**
+		 * Update order meta with HPOS compatibility.
+		 *
+		 * @version 8.0.0
+		 * @since   8.0.0
+		 * @param int|WC_Order $order_or_id Order object or order ID.
+		 * @param string       $meta_key    Meta key to update.
+		 * @param mixed        $meta_value  Meta value.
+		 */
+		private function update_order_file_meta( $order_or_id, $meta_key, $meta_value ) {
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = is_numeric( $order_or_id ) ? wcj_get_order( $order_or_id ) : $order_or_id;
+				if ( $order && false !== $order ) {
+					$order->update_meta_data( $meta_key, $meta_value );
+				}
+			} else {
+				$order_id = is_numeric( $order_or_id ) ? $order_or_id : wcj_get_order_id( $order_or_id );
+				update_post_meta( $order_id, $meta_key, $meta_value );
+			}
+		}
+
+		/**
+		 * Delete order meta with HPOS compatibility.
+		 *
+		 * @version 8.0.0
+		 * @since   8.0.0
+		 * @param int|WC_Order $order_or_id Order object or order ID.
+		 * @param string       $meta_key    Meta key to delete.
+		 */
+		private function delete_order_file_meta( $order_or_id, $meta_key ) {
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = is_numeric( $order_or_id ) ? wcj_get_order( $order_or_id ) : $order_or_id;
+				if ( $order && false !== $order ) {
+					$order->delete_meta_data( $meta_key );
+				}
+			} else {
+				$order_id = is_numeric( $order_or_id ) ? $order_or_id : wcj_get_order_id( $order_or_id );
+				delete_post_meta( $order_id, $meta_key );
+			}
+		}
+
+		/**
+		 * Save order after HPOS meta operations if needed.
+		 *
+		 * @version 8.0.0
+		 * @since   8.0.0
+		 * @param int|WC_Order $order_or_id Order object or order ID.
+		 */
+		private function save_order_if_hpos( $order_or_id ) {
+			if ( true === wcj_is_hpos_enabled() ) {
+				$order = is_numeric( $order_or_id ) ? wcj_get_order( $order_or_id ) : $order_or_id;
+				if ( $order && false !== $order ) {
+					$order->save();
+				}
+			}
+		}
+
+		/**
+		 * Handle file-to-order copy for Blocks checkout (Store API).
+		 *
+		 * This is the Blocks-checkout equivalent of add_files_to_order().
+		 * Called via woocommerce_store_api_checkout_order_processed which receives
+		 * the WC_Order object directly.
+		 *
+		 * @version 8.0.0
+		 * @since   8.0.0
+		 * @param \WC_Order $order The order object.
+		 */
+		public function add_files_to_order_from_blocks( $order ) {
+			if ( ! $order || false === $order ) {
+				return;
+			}
+			$order_id = $order->get_id();
+			$this->add_files_to_order( $order_id, null );
 		}
 
 		/**

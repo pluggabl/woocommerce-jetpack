@@ -1,10 +1,11 @@
 {
-    "0": "= 7.11.5 - 01/04/2026 =",
-    "1": "* Feature - WooCommerce Blocks: Added support for Checkout Custom Fields (Text, Select, and Checkbox) via the WC Additional Checkout Fields API.",
-    "2": "* Enhancement - Performance: Optimized Admin JS loading; wcj-admin.js is now scoped strictly to Booster and WooCommerce Order pages.",
-    "3": "* Fix - HPOS Compatibility: Updated Store Exporter and Order Display to use WC CRUD API for custom fields when High-Performance Order Storage is enabled.",
-    "4": "* Fix - Blocks Integration: Implemented a meta bridge to ensure Block-based checkout data is correctly mapped to Booster's legacy format (label-based storage).",
-    "5": "* Fix - HPOS: Removed redundant legacy get_post_meta calls when viewing orders in HPOS mode.",
-    "6": "* WooCommerce 10.6.1 Tested",
-    "7": "* WordPress 6.9.4 Tested"
+    "0": "= 8.0.0 - 15/04/2026 =",
+    "1": "* Feature - WooCommerce Blocks: Checkout Custom Fields phase 2 — visibility conditions (product/category/cart amount), radio-to-select conversion, and section-to-location mapping now work on Blocks checkout.",
+    "2": "* Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees on Blocks checkout via Store API integration.",
+    "3": "* Enhancement - HPOS: Checkout Files Upload module now includes consolidated HPOS helper methods and Store API hook for Blocks-placed orders.",
+    "4": "* Enhancement - Performance: Batch-loaded checkout field options in Blocks integration to eliminate N+1 option queries.",
+    "5": "* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups.",
+    "6": "* Enhancement - Performance: Added cart product/category ID caching in checkout custom fields visibility checks.",
+    "7": "* WooCommerce 10.6.1 Tested",
+    "8": "* WordPress 6.9.4 Tested"
 }

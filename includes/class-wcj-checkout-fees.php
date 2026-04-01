@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 7.1.6
+ * @version 8.0.0
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 	/**
-	 * WCJ_Checkout_Customization.
+	 * WCJ_Checkout_Fees.
 	 *
-	 * @version 7.1.6
+	 * @version 8.0.0
 	 */
 	class WCJ_Checkout_Fees extends WCJ_Module {
 
@@ -28,11 +28,17 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		public $checkout_fields;
 
 		/**
+		 * Cached fee configuration to avoid repeated option lookups.
+		 *
+		 * @var array|null
+		 */
+		private $cached_fees_config = null;
+
+		/**
 		 * Constructor.
 		 *
-		 * @version 5.6.7
+		 * @version 8.0.0
 		 * @since   3.7.0
-		 * @todo    (maybe) rename module to "Cart & Checkout Fees"
 		 */
 		public function __construct() {
 
@@ -44,7 +50,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
-				// Core function.
+				// Core function — fires on both classic and Blocks checkout.
 				add_action( 'woocommerce_review_order_after_submit', array( $this, 'wcj_add_nonce_checkout_fees' ), PHP_INT_MAX );
 				add_action( 'woocommerce_cart_calculate_fees', array( $this, 'add_fees' ), PHP_INT_MAX );
 				// Checkout fields.
@@ -54,6 +60,21 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 					add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 				}
 			}
+		}
+
+		/**
+		 * Check if the current request is a WC Store API request (Blocks checkout).
+		 *
+		 * @version 8.0.0
+		 * @since   8.0.0
+		 * @return bool
+		 */
+		private function is_store_api_request() {
+			if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
+				return false;
+			}
+			$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+			return false !== strpos( $uri, '/wc/store/' );
 		}
 
 		/**
@@ -78,7 +99,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Validate fee without considering overlapping.
 		 *
-		 * @version 5.6.7
+		 * @version 8.0.0
 		 * @since   4.5.0
 		 *
 		 * @param int                    $fee_id  defines the fee_id.
@@ -88,8 +109,8 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 */
 		public function is_fee_valid( $fee_id, \WC_Cart $cart ) {
 			$fees    = $this->get_fees();
-			$enabled = wcj_get_option( 'wcj_checkout_fees_data_enabled', array() );
-			$values  = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
+			$enabled = $this->get_fee_option( 'wcj_checkout_fees_data_enabled' );
+			$values  = $this->get_fee_option( 'wcj_checkout_fees_data_values' );
 
 			// Check if is active and empty value.
 			$value = ( isset( $values[ $fee_id ] ) ? $values[ $fee_id ] : 0 );
@@ -116,8 +137,13 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				return false;
 			}
 
-			// Check checkout fields.
+			// Check checkout fields — only works on classic checkout (POST data).
+			// On Blocks checkout (Store API), checkout-field-conditional fees are skipped.
 			if ( ! empty( $this->checkout_fields[ $fee_id ] ) ) {
+				if ( $this->is_store_api_request() ) {
+					// Checkout-field-conditional fees are not supported on Blocks checkout.
+					return false;
+				}
 				if ( isset( $post_data ) || isset( $_REQUEST['post_data'] ) ) {
 					if ( ! isset( $post_data ) ) {
 						$post_data = array();
@@ -156,30 +182,51 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		}
 
 		/**
+		 * Get a fee-related option with request-scope caching.
+		 *
+		 * Avoids repeated identical wcj_get_option calls within the same request
+		 * for fee configuration arrays.
+		 *
+		 * @version 8.0.0
+		 * @since   8.0.0
+		 * @param string $option_name The option key.
+		 * @return mixed
+		 */
+		private function get_fee_option( $option_name ) {
+			if ( null === $this->cached_fees_config ) {
+				$this->cached_fees_config = array();
+			}
+			if ( ! isset( $this->cached_fees_config[ $option_name ] ) ) {
+				$this->cached_fees_config[ $option_name ] = wcj_get_option( $option_name, array() );
+			}
+			return $this->cached_fees_config[ $option_name ];
+		}
+
+		/**
 		 * Get Fees.
 		 *
-		 * @version 4.6.1
+		 * @version 8.0.0
 		 * @since   4.5.0
 		 *
-		 * @param bool $only_enabled check enalbed.
+		 * @param bool $only_enabled check enabled.
 		 * @param bool $adjust_priority check adjust_priority.
 		 *
 		 * @return array
 		 */
 		public function get_fees( $only_enabled = true, $adjust_priority = true ) {
 			$total_number    = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_fees_total_number', 1 ) );
-			$titles          = wcj_get_option( 'wcj_checkout_fees_data_titles', array() );
-			$types           = wcj_get_option( 'wcj_checkout_fees_data_types', array() );
-			$values          = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
-			$cart_min        = wcj_get_option( 'wcj_checkout_fees_cart_min_amount', array() );
-			$cart_min_total  = wcj_get_option( 'wcj_checkout_fees_cart_min_total_amount', array() );
-			$cart_max        = wcj_get_option( 'wcj_checkout_fees_cart_max_amount', array() );
-			$cart_max_total  = wcj_get_option( 'wcj_checkout_fees_cart_max_total_amount', array() );
-			$taxable         = wcj_get_option( 'wcj_checkout_fees_data_taxable', array() );
-			$checkout_fields = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
-			$enabled         = wcj_get_option( 'wcj_checkout_fees_data_enabled', array() );
-			$overlap_opt     = wcj_get_option( 'wcj_checkout_fees_overlap', array() );
-			$priorities      = wcj_get_option( 'wcj_checkout_fees_priority', array() );
+			$titles          = $this->get_fee_option( 'wcj_checkout_fees_data_titles' );
+			$types           = $this->get_fee_option( 'wcj_checkout_fees_data_types' );
+			$values          = $this->get_fee_option( 'wcj_checkout_fees_data_values' );
+			$cart_min        = $this->get_fee_option( 'wcj_checkout_fees_cart_min_amount' );
+			$cart_min_total  = $this->get_fee_option( 'wcj_checkout_fees_cart_min_total_amount' );
+			$cart_max        = $this->get_fee_option( 'wcj_checkout_fees_cart_max_amount' );
+			$cart_max_total  = $this->get_fee_option( 'wcj_checkout_fees_cart_max_total_amount' );
+			$taxable         = $this->get_fee_option( 'wcj_checkout_fees_data_taxable' );
+			$checkout_fields = $this->get_fee_option( 'wcj_checkout_fees_data_values' );
+			$enabled         = $this->get_fee_option( 'wcj_checkout_fees_data_enabled' );
+			$overlap_opt     = $this->get_fee_option( 'wcj_checkout_fees_overlap' );
+			$priorities      = $this->get_fee_option( 'wcj_checkout_fees_priority' );
 
 			$fees = array();
 			for ( $i = 1; $i <= $total_number; $i ++ ) {
@@ -219,7 +266,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Get valid fees.
 		 *
-		 * @version 4.5.0
+		 * @version 8.0.0
 		 * @since   4.5.0
 		 *
 		 * @param string | array $cart define cart details.
@@ -228,10 +275,10 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @return array
 		 */
 		public function get_valid_fees( $cart, $ignore_overlapped = true ) {
-			$titles  = wcj_get_option( 'wcj_checkout_fees_data_titles', array() );
-			$types   = wcj_get_option( 'wcj_checkout_fees_data_types', array() );
-			$values  = wcj_get_option( 'wcj_checkout_fees_data_values', array() );
-			$taxable = wcj_get_option( 'wcj_checkout_fees_data_taxable', array() );
+			$titles  = $this->get_fee_option( 'wcj_checkout_fees_data_titles' );
+			$types   = $this->get_fee_option( 'wcj_checkout_fees_data_types' );
+			$values  = $this->get_fee_option( 'wcj_checkout_fees_data_values' );
+			$taxable = $this->get_fee_option( 'wcj_checkout_fees_data_taxable' );
 
 			$fees = $this->get_fees();
 
@@ -273,21 +320,16 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Add_fees.
 		 *
-		 * @version 4.5.0
+		 * Fires on both classic checkout and WooCommerce Blocks checkout (via Store API).
+		 * Simple fees (without checkout field conditions) work on both.
+		 * Checkout-field-conditional fees only work on classic checkout.
+		 *
+		 * @version 8.0.0
 		 * @since   3.7.0
-		 * @todo    fees with same title
-		 * @todo    options: `tax_class`
-		 * @todo    options: `cart total` (for percent) - include/exclude shipping etc. - https://docs.woocommerce.com/wc-apidocs/class-WC_Cart.html
-		 * @todo    options: `rounding` (for percent)
-		 * @todo    options: `min/max cart amount`
-		 * @todo    options: `products, cats, tags to include/exclude`
-		 * @todo    options: `countries to include/exclude`
-		 * @todo    options: `user roles to include/exclude`
-		 * @todo    see https://wcbooster.zendesk.com/agent/tickets/446
 		 * @param string | array $cart defines the cart.
 		 */
 		public function add_fees( $cart ) {
-			if ( ! wcj_is_frontend() ) {
+			if ( ! wcj_is_frontend() && ! $this->is_store_api_request() ) {
 				return;
 			}
 
