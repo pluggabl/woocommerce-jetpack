@@ -10,11 +10,17 @@
  * Unsupported types (textarea, datepicker, weekpicker, timepicker, number) are
  * silently skipped and continue to work only on classic checkout.
  *
- * Visibility conditions (product/category include/exclude, min/max cart amount)
- * are evaluated server-side during field registration.
- *
  * Radio fields are automatically converted to select dropdowns on Blocks checkout
  * since the WC Blocks API does not support native radio inputs.
+ *
+ * Note: Visibility conditions (product/category/cart-amount show/hide) are NOT
+ * enforced on Blocks checkout. The WC Blocks additional checkout fields API
+ * registers fields globally at plugin init, before cart context is available.
+ * Visibility conditions continue to work on classic checkout only.
+ *
+ * All fields use the 'order' location (additional-information area) on Blocks.
+ * The WC Blocks 'address' location duplicates fields across both billing and
+ * shipping address groups, which is not the intended Booster section behavior.
  *
  * @version 8.0.0
  * @since   7.12.0
@@ -135,133 +141,10 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 					'required'       => ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_required_' . $i, 'no' ) ),
 					'section'        => wcj_get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ),
 					'select_options' => wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i, '' ),
-					'categories_in'  => wcj_get_option( 'wcj_checkout_custom_field_categories_in_' . $i ),
-					'categories_ex'  => wcj_get_option( 'wcj_checkout_custom_field_categories_ex_' . $i ),
-					'products_in'    => wcj_get_option( 'wcj_checkout_custom_field_products_in_' . $i ),
-					'products_ex'    => wcj_get_option( 'wcj_checkout_custom_field_products_ex_' . $i ),
-					'min_cart'       => wcj_get_option( 'wcj_checkout_custom_field_min_cart_amount_' . $i, 0 ),
-					'max_cart'       => wcj_get_option( 'wcj_checkout_custom_field_max_cart_amount_' . $i, 0 ),
 				);
 			}
 
 			return $this->field_config_cache;
-		}
-
-		/**
-		 * Check if a field should be visible based on product/category/cart conditions.
-		 *
-		 * Evaluates the same visibility conditions as classic checkout so that
-		 * Blocks checkout respects show/hide rules for products, categories, and
-		 * cart amount thresholds.
-		 *
-		 * @version 8.0.0
-		 * @since   8.0.0
-		 * @param array $config Field configuration array.
-		 * @return bool
-		 */
-		private function is_field_visible( $config ) {
-			// Cart must be available for visibility checks.
-			if ( ! function_exists( 'WC' ) || null === WC()->cart ) {
-				return true;
-			}
-
-			$cart = WC()->cart;
-
-			// Category exclusion.
-			if ( ! empty( $config['categories_ex'] ) ) {
-				foreach ( $cart->get_cart() as $values ) {
-					$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
-					if ( empty( $product_categories ) ) {
-						continue;
-					}
-					foreach ( $product_categories as $product_category ) {
-						if ( in_array( (string) $product_category->term_id, $config['categories_ex'], true ) ) {
-							return false;
-						}
-					}
-				}
-			}
-
-			// Category inclusion.
-			if ( ! empty( $config['categories_in'] ) ) {
-				$categories_in_cart = array();
-				foreach ( $cart->get_cart() as $values ) {
-					$product_categories = wp_get_post_terms( $values['product_id'], 'product_cat', array( 'fields' => 'ids' ) );
-					$categories_in_cart = array_merge( $product_categories, $categories_in_cart );
-				}
-				if ( count( array_intersect( $config['categories_in'], $categories_in_cart ) ) === 0 ) {
-					return false;
-				}
-			}
-
-			// Product exclusion.
-			if ( ! empty( $config['products_ex'] ) ) {
-				foreach ( $cart->get_cart() as $values ) {
-					if ( in_array( (string) $values['product_id'], $config['products_ex'], true ) ) {
-						return false;
-					}
-				}
-			}
-
-			// Product inclusion.
-			if ( ! empty( $config['products_in'] ) ) {
-				foreach ( $cart->get_cart() as $values ) {
-					if ( in_array( (string) $values['product_id'], $config['products_in'], true ) ) {
-						return true;
-					}
-				}
-				return false;
-			}
-
-			// Min cart amount.
-			$min_cart = (float) $config['min_cart'];
-			if ( $min_cart > 0 ) {
-				$cart->calculate_totals();
-				if ( (float) $cart->total < $min_cart ) {
-					return false;
-				}
-			}
-
-			// Max cart amount.
-			$max_cart = (float) $config['max_cart'];
-			if ( $max_cart > 0 ) {
-				if ( ! $min_cart ) {
-					$cart->calculate_totals();
-				}
-				if ( (float) $cart->total > $max_cart ) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		/**
-		 * Map Booster field section to WC Blocks location.
-		 *
-		 * WC Blocks supports 'contact', 'address', and 'order' locations.
-		 * Booster sections are mapped as follows:
-		 *   billing  → address
-		 *   shipping → address
-		 *   account  → contact
-		 *   order    → order (default)
-		 *
-		 * @version 8.0.0
-		 * @since   8.0.0
-		 * @param string $section Booster field section.
-		 * @return string WC Blocks location.
-		 */
-		private function map_section_to_blocks_location( $section ) {
-			switch ( $section ) {
-				case 'billing':
-				case 'shipping':
-					return 'address';
-				case 'account':
-					return 'contact';
-				case 'order':
-				default:
-					return 'order';
-			}
 		}
 
 		/**
@@ -271,8 +154,12 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		 * Radio fields are converted to select dropdowns since the Blocks API does
 		 * not support native radio inputs.
 		 *
-		 * Visibility conditions are evaluated before registration so that fields
-		 * hidden by product/category/cart-amount rules are not shown on Blocks.
+		 * All fields use the 'order' location so they appear in the
+		 * order/additional-information area of the Checkout block.
+		 *
+		 * Visibility conditions (product/category/cart-amount) are NOT evaluated
+		 * here because the WC Blocks API registers fields at plugin init, before
+		 * cart context is available. Visibility remains classic-checkout-only.
 		 *
 		 * @version 8.0.0
 		 * @since   7.12.0
@@ -285,11 +172,6 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 			$configs = $this->get_all_field_configs();
 
 			foreach ( $configs as $i => $config ) {
-				// Evaluate visibility conditions.
-				if ( ! $this->is_field_visible( $config ) ) {
-					continue;
-				}
-
 				$blocks_type = $config['type'];
 
 				// Convert radio to select for Blocks (no native radio support).
@@ -297,12 +179,10 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 					$blocks_type = 'select';
 				}
 
-				$location = $this->map_section_to_blocks_location( $config['section'] );
-
 				$field_args = array(
 					'id'       => $this->get_blocks_field_id( $i ),
 					'label'    => $config['label'],
-					'location' => $location,
+					'location' => 'order',
 					'type'     => $blocks_type,
 					'required' => $config['required'],
 				);
@@ -368,12 +248,11 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		 * @return string The raw Booster option label, or the slug if no match found.
 		 */
 		private function reverse_map_select_value( $field_index, $slug ) {
-			$configs = $this->get_all_field_configs();
+			$configs     = $this->get_all_field_configs();
 			$options_raw = '';
 
 			if ( isset( $configs[ $field_index ] ) ) {
 				$options_raw = $configs[ $field_index ]['select_options'];
-				// For radio fields, fall back to select_options key.
 				if ( 'radio' === $configs[ $field_index ]['type'] && '' === $options_raw ) {
 					$options_raw = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $field_index, '' );
 				}
@@ -440,41 +319,18 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 
 			foreach ( $configs as $i => $config ) {
 				$booster_type = $config['type'];
-				$blocks_type  = $booster_type;
-
-				// Radio was registered as select on Blocks.
-				if ( 'radio' === $blocks_type ) {
-					$blocks_type = 'select';
-				}
 
 				$field_id     = $this->get_blocks_field_id( $i );
 				$blocks_value = '';
-				$location     = $this->map_section_to_blocks_location( $config['section'] );
 
-				// Map Blocks location to the service group name.
-				$service_group = 'other';
-				if ( 'address' === $location ) {
-					$service_group = 'address';
-				} elseif ( 'contact' === $location ) {
-					$service_group = 'contact';
-				}
-
-				// Use the WC CheckoutFields service (recommended) to read the value.
+				// All fields use 'order' location → 'other' service group.
 				if ( $checkout_fields_service && method_exists( $checkout_fields_service, 'get_field_from_object' ) ) {
-					$blocks_value = $checkout_fields_service->get_field_from_object( $field_id, $order, $service_group );
+					$blocks_value = $checkout_fields_service->get_field_from_object( $field_id, $order, 'other' );
 				}
 
 				// Fallback: try direct meta read if the service returned empty.
 				if ( '' === $blocks_value || false === $blocks_value || null === $blocks_value ) {
-					$blocks_meta_key = '_wc_' . $service_group . '/' . $field_id;
-					$blocks_value    = $order->get_meta( $blocks_meta_key );
-				}
-
-				// Second fallback: try 'other' group (backward compat with prior version).
-				if ( '' === $blocks_value || false === $blocks_value || null === $blocks_value ) {
-					if ( 'other' !== $service_group ) {
-						$blocks_value = $order->get_meta( '_wc_other/' . $field_id );
-					}
+					$blocks_value = $order->get_meta( '_wc_other/' . $field_id );
 				}
 
 				// Skip fields with no value (except checkboxes which can be unchecked).
@@ -492,7 +348,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 				$booster_key_label = '_' . $section . '_wcj_checkout_field_label_' . $i;
 				$booster_key_type  = '_' . $section . '_wcj_checkout_field_type_' . $i;
 
-				// Normalize checkbox values: WC Blocks stores "true"/"false" or "1"/"0", Booster stores 1/0.
+				// Normalize checkbox values.
 				if ( 'checkbox' === $booster_type ) {
 					$blocks_value = ( ! empty( $blocks_value ) && 'false' !== $blocks_value && '0' !== $blocks_value ) ? 1 : 0;
 				}

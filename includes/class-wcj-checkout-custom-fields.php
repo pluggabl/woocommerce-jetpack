@@ -812,29 +812,22 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 				return true;
 			}
 
+			// Use cached cart data to avoid re-iterating cart for each field.
+			$cart_product_ids  = $this->get_cart_product_ids();
+			$cart_category_ids = $this->get_cart_category_ids();
+
 			// Checking categories.
 			$categories_ex = wcj_get_option( 'wcj_checkout_custom_field_categories_ex_' . $i );
 			if ( ! empty( $categories_ex ) ) {
-				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
-					if ( empty( $product_categories ) ) {
-						continue;
-					}
-					foreach ( $product_categories as $product_category ) {
-						if ( in_array( (string) $product_category->term_id, $categories_ex, true ) ) {
-							return false;
-						}
+				foreach ( $cart_category_ids as $cat_id ) {
+					if ( in_array( (string) $cat_id, $categories_ex, true ) ) {
+						return false;
 					}
 				}
 			}
 			$categories_in = wcj_get_option( 'wcj_checkout_custom_field_categories_in_' . $i );
 			if ( ! empty( $categories_in ) ) {
-				$categories_in_cart = array();
-				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					$product_categories = wp_get_post_terms( $values['product_id'], 'product_cat', array( 'fields' => 'ids' ) );
-					$categories_in_cart = array_merge( $product_categories, $categories_in_cart );
-				}
-				if ( count( array_intersect( $categories_in, $categories_in_cart ) ) === 0 ) {
+				if ( count( array_intersect( $categories_in, array_map( 'strval', $cart_category_ids ) ) ) === 0 ) {
 					return false;
 				}
 			}
@@ -842,16 +835,16 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			// Checking products.
 			$products_ex = wcj_get_option( 'wcj_checkout_custom_field_products_ex_' . $i );
 			if ( ! empty( $products_ex ) ) {
-				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( (string) $values['product_id'], $products_ex, true ) ) {
+				foreach ( $cart_product_ids as $product_id ) {
+					if ( in_array( $product_id, $products_ex, true ) ) {
 						return false;
 					}
 				}
 			}
 			$products_in = wcj_get_option( 'wcj_checkout_custom_field_products_in_' . $i );
 			if ( ! empty( $products_in ) ) {
-				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( (string) $values['product_id'], $products_in, true ) ) {
+				foreach ( $cart_product_ids as $product_id ) {
+					if ( in_array( $product_id, $products_in, true ) ) {
 						return true;
 					}
 				}

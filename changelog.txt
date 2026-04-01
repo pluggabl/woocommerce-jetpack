@@ -1,12 +1,12 @@
 == Changelog ==
 
 = 8.0.0 - 15/04/2026 =
-* Feature - WooCommerce Blocks: Checkout Custom Fields phase 2 — visibility conditions (product/category/cart amount), radio-to-select conversion, and section-to-location mapping now work on Blocks checkout.
-* Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees on Blocks checkout via Store API integration.
-* Enhancement - HPOS: Checkout Files Upload module now includes consolidated HPOS helper methods and Store API hook for Blocks-placed orders.
-* Enhancement - Performance: Batch-loaded checkout field options in Blocks integration to eliminate N+1 option queries.
-* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups.
-* Enhancement - Performance: Added cart product/category ID caching in checkout custom fields visibility checks.
+* Feature - WooCommerce Blocks: Checkout Custom Fields — radio fields automatically converted to select dropdowns on Blocks checkout. Batch option loading eliminates N+1 queries during field registration.
+* Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees (fixed and percentage) on Blocks checkout via Store API. Checkout-field-conditional fees remain classic-only.
+* Enhancement - HPOS: Checkout Files Upload module refactored to use consolidated HPOS helper methods in email attachments, order display, and file-to-order paths. Store API hook added for Blocks-placed orders.
+* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups during cart calculation.
+* Enhancement - Performance: Added cart product and category ID caching in checkout custom fields visibility checks, reducing redundant cart iteration on classic checkout.
+* Note - Visibility conditions (product/category/cart-amount show/hide) and placement sections remain classic-checkout-only. WC Blocks API does not support cart-conditional field registration.
 * WooCommerce 10.6.1 Tested
 * WordPress 6.9.4 Tested
 
