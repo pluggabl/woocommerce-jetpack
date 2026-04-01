@@ -98,6 +98,10 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 
 				// Update checkout fields from admin on a subscription order.
 				add_action( 'save_post_shop_subscription', array( $this, 'update_custom_checkout_fields_order_meta' ) );
+
+				// WooCommerce Blocks checkout integration.
+				require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-checkout-custom-fields-blocks.php';
+				new WCJ_Checkout_Custom_Fields_Blocks( $this->wcj_checkout_custom_fields_total_number );
 			}
 		}
 
@@ -213,13 +217,30 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $order_id defines the order_id.
 		 */
 		public function add_custom_fields_to_store_exporter_order( $order, $order_id ) {
-			$post_meta = get_post_meta( $order_id );
-			foreach ( $post_meta as $key => $values ) {
-				if ( false !== strpos( $key, 'wcj_checkout_field_' ) && isset( $values[0] ) ) {
-					if ( false !== strpos( $key, '_label_' ) ) {
-						continue;
+			if ( true === wcj_is_hpos_enabled() ) {
+				$wc_order = wcj_get_order( $order_id );
+				if ( $wc_order && false !== $wc_order ) {
+					foreach ( $wc_order->get_meta_data() as $meta_data_obj ) {
+						$meta_data_array = $meta_data_obj->get_data();
+						$key             = $meta_data_array['key'];
+						if ( false !== strpos( $key, 'wcj_checkout_field_' ) ) {
+							if ( false !== strpos( $key, '_label_' ) ) {
+								continue;
+							}
+							$meta_value  = $meta_data_array['value'];
+							$order->$key = is_array( $meta_value ) && isset( $meta_value['value'] ) ? $meta_value['value'] : $meta_value;
+						}
 					}
-					$order->$key = isset( $values[0]['value'] ) ? $values[0]['value'] : $values[0];
+				}
+			} else {
+				$post_meta = get_post_meta( $order_id );
+				foreach ( $post_meta as $key => $values ) {
+					if ( false !== strpos( $key, 'wcj_checkout_field_' ) && isset( $values[0] ) ) {
+						if ( false !== strpos( $key, '_label_' ) ) {
+							continue;
+						}
+						$order->$key = isset( $values[0]['value'] ) ? $values[0]['value'] : $values[0];
+					}
 				}
 			}
 
@@ -371,13 +392,14 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $templates defines the templates.
 		 */
 		public function add_custom_fields_to_order_display( $order, string $section = null, $templates ) {
-			$post_meta = get_post_meta( wcj_get_order_id( $order ) );
 			if ( true === wcj_is_hpos_enabled() ) {
 				$post_meta = array();
 				foreach ( $order->get_meta_data() as $meta_data_obj ) {
 					$meta_data_array                      = $meta_data_obj->get_data();
 					$post_meta[ $meta_data_array['key'] ] = array( $meta_data_array['value'] );
 				}
+			} else {
+				$post_meta = get_post_meta( wcj_get_order_id( $order ) );
 			}
 			$final_output = '';
 			foreach ( $post_meta as $key => $values ) {
@@ -939,7 +961,6 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			}
 				return $value;
 		}
-
 	}
 
 endif;

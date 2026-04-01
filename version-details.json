@@ -1,9 +1,10 @@
 {
-    "0": "= 7.11.4 - 18/03/2026 =",
-    "1": "* Normalized in-plugin upsell routing so generic compare-first prompts route to /free-vs-elite/ while explicit buy/pricing CTAs stay on /buy-booster/.",
-    "2": "* Kept upgrade-block comparison buttons and other ambiguous/tag-first docs/features/about assists on their current destinations while separating account, support, update, and download routes from generic sales flows.",
-    "3": "* Normalized Booster in-plugin source and UTM tagging across the scoped admin surfaces.",
-    "4": "* Confirmed no direct-checkout plugin CTA was introduced in this release candidate.",
-    "5": "* WooCommerce 10.6.1 Tested",
-    "6": "* WordPress 6.9.1 Tested"
+    "0": "= 7.11.5 - 01/04/2026 =",
+    "1": "* Feature - WooCommerce Blocks: Added support for Checkout Custom Fields (Text, Select, and Checkbox) via the WC Additional Checkout Fields API.",
+    "2": "* Enhancement - Performance: Optimized Admin JS loading; wcj-admin.js is now scoped strictly to Booster and WooCommerce Order pages.",
+    "3": "* Fix - HPOS Compatibility: Updated Store Exporter and Order Display to use WC CRUD API for custom fields when High-Performance Order Storage is enabled.",
+    "4": "* Fix - Blocks Integration: Implemented a meta bridge to ensure Block-based checkout data is correctly mapped to Booster's legacy format (label-based storage).",
+    "5": "* Fix - HPOS: Removed redundant legacy get_post_meta calls when viewing orders in HPOS mode.",
+    "6": "* WooCommerce 10.6.1 Tested",
+    "7": "* WordPress 6.9.4 Tested"
 }
