@@ -354,6 +354,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups during cart calculation.
 * Enhancement - Performance: Added cart product and category ID caching in checkout custom fields visibility checks, reducing redundant cart iteration on classic checkout.
 * Note - Visibility conditions (product/category/cart-amount show/hide) and placement sections remain classic-checkout-only. WC Blocks API does not support cart-conditional field registration.
+* Security - Hardening: Strengthened Sales Notifications AJAX validation and access control.
 * WooCommerce 10.6.2 Tested
 * WordPress 6.9.4 Tested
 
