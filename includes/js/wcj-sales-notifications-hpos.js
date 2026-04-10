@@ -16,7 +16,8 @@ jQuery( document ).ready(
 				var wcj_order_data_str = wcj_getCookie( 'wcj_order_data' );
 				var data               = {
 					action: 'wcj_sale_not_product_html_hpos',
-					pageid: wcj_sn_ajax_object.pageid
+					pageid: wcj_sn_ajax_object.pageid,
+					nonce: wcj_sn_ajax_object.nonce
 				};
 				jQuery.post(
 					wcj_sn_ajax_object.ajax_url,
