@@ -9,7 +9,7 @@
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
- * WC tested up to: 10.6.1
+ * WC tested up to: 10.6.2
  * License: GNU General Public License v3.0
  *
  * @package Booster_For_WooCommerce
@@ -72,7 +72,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '7.11.5';
+		public $version = '8.0.0';
 
 		/**
 		 * Singleton instance.

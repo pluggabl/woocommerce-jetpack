@@ -229,7 +229,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 			$priorities      = $this->get_fee_option( 'wcj_checkout_fees_priority' );
 
 			$fees = array();
-			for ( $i = 1; $i <= $total_number; $i ++ ) {
+			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( ! isset( $priorities[ $i ] ) || empty( $priorities[ $i ] ) ) {
 					$priorities[ $i ] = 0;
 				}
@@ -351,7 +351,6 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		public function wcj_add_nonce_checkout_fees() {
 			return wp_nonce_field( 'wcj-process_checkout', 'wcj-process-checkout-nonce' );
 		}
-
 	}
 
 endif;

@@ -6,6 +6,6 @@
     "4": "* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups during cart calculation.",
     "5": "* Enhancement - Performance: Added cart product and category ID caching in checkout custom fields visibility checks, reducing redundant cart iteration on classic checkout.",
     "6": "* Note - Visibility conditions (product/category/cart-amount show/hide) and placement sections remain classic-checkout-only. WC Blocks API does not support cart-conditional field registration.",
-    "7": "* WooCommerce 10.6.1 Tested",
+    "7": "* WooCommerce 10.6.2 Tested",
     "8": "* WordPress 6.9.4 Tested"
 }
