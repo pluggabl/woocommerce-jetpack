@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.9.4
 Requires PHP: 7.2
-Stable tag: 7.11.5
+Stable tag: 8.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,17 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.0.0 - 15/04/2026 =
+* Feature - WooCommerce Blocks: Checkout Custom Fields — radio fields automatically converted to select dropdowns on Blocks checkout. Batch option loading eliminates N+1 queries during field registration.
+* Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees (fixed and percentage) on Blocks checkout via Store API. Checkout-field-conditional fees remain classic-only.
+* Enhancement - HPOS: Checkout Files Upload module refactored to use consolidated HPOS helper methods in email attachments, order display, and file-to-order paths. Store API hook added for Blocks-placed orders.
+* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups during cart calculation.
+* Enhancement - Performance: Added cart product and category ID caching in checkout custom fields visibility checks, reducing redundant cart iteration on classic checkout.
+* Note - Visibility conditions (product/category/cart-amount show/hide) and placement sections remain classic-checkout-only. WC Blocks API does not support cart-conditional field registration.
+* Security - Hardening: Strengthened Sales Notifications AJAX validation and access control.
+* WooCommerce 10.6.2 Tested
+* WordPress 6.9.4 Tested
 
 = 7.11.5 - 01/04/2026 =
 * Feature - WooCommerce Blocks: Added support for Checkout Custom Fields (Text, Select, and Checkbox) via the WC Additional Checkout Fields API.

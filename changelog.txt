@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 8.0.0 - 15/04/2026 =
+* Feature - WooCommerce Blocks: Checkout Custom Fields — radio fields automatically converted to select dropdowns on Blocks checkout. Batch option loading eliminates N+1 queries during field registration.
+* Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees (fixed and percentage) on Blocks checkout via Store API. Checkout-field-conditional fees remain classic-only.
+* Enhancement - HPOS: Checkout Files Upload module refactored to use consolidated HPOS helper methods in email attachments, order display, and file-to-order paths. Store API hook added for Blocks-placed orders.
+* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups during cart calculation.
+* Enhancement - Performance: Added cart product and category ID caching in checkout custom fields visibility checks, reducing redundant cart iteration on classic checkout.
+* Note - Visibility conditions (product/category/cart-amount show/hide) and placement sections remain classic-checkout-only. WC Blocks API does not support cart-conditional field registration.
+* WooCommerce 10.6.2 Tested
+* WordPress 6.9.4 Tested
+
 = 7.11.5 - 01/04/2026 =
 * Feature - WooCommerce Blocks: Added support for Checkout Custom Fields (Text, Select, and Checkbox) via the WC Additional Checkout Fields API.
 * Enhancement - Performance: Optimized Admin JS loading; wcj-admin.js is now scoped strictly to Booster and WooCommerce Order pages.

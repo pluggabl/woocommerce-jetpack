@@ -109,7 +109,9 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 		 * @version 1.0.0
 		 */
 		public function wcj_sale_not_product_html() {
-			$wpnonce                    = isset( $_REQUEST['wcj-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-nonce'] ), 'wcj-nonce' ) : false;
+			if ( ! check_ajax_referer( 'wcj_sales_notifications', 'nonce', false ) ) {
+				wp_send_json_error( array( 'message' => 'Invalid request.' ), 403 );
+			}
 			$pageid                     = isset( $_REQUEST['pageid'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['pageid'] ) ) : '';
 			$no_exists_value            = wcj_get_option( 'no_exists_value' );
 			$wcj_sale_msg_ajax          = wcj_get_option( 'wcj_sale_msg_ajax', 'yes' );
@@ -591,7 +593,9 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 		 * @version 1.0.0
 		 */
 		public function wcj_sale_not_product_html_hpos() {
-			$wpnonce                    = isset( $_REQUEST['wcj-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-nonce'] ), 'wcj-nonce' ) : false;
+			if ( ! check_ajax_referer( 'wcj_sales_notifications', 'nonce', false ) ) {
+				wp_send_json_error( array( 'message' => 'Invalid request.' ), 403 );
+			}
 			$pageid                     = isset( $_REQUEST['pageid'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['pageid'] ) ) : '';
 			$no_exists_value            = wcj_get_option( 'no_exists_value' );
 			$wcj_sale_msg_ajax          = wcj_get_option( 'wcj_sale_msg_ajax', 'yes' );
@@ -1194,6 +1198,7 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 				'wcj_sn_ajax_object',
 				array(
 					'ajax_url'          => admin_url( 'admin-ajax.php' ),
+					'nonce'             => wp_create_nonce( 'wcj_sales_notifications' ),
 					'animation'         => $styling_options['animation'],
 					'hidden_animation'  => $styling_options['hidden_animation'],
 					'pageid'            => $pageid,
