@@ -1,11 +1,11 @@
 {
     "0": "= 8.0.1 - 07/05/2026 =",
-    "1": "* Security - Hardened public AJAX request validation and handling.",
-    "2": "* Enhancement - Performance: Sales Notifications now caches the polling response for a short window, reducing repeated recent-order queries on busy storefronts.",
-    "3": "* Enhancement - Performance: Checkout Fees configuration is memoized per request, reducing duplicate option lookups during cart and checkout calculations.",
-    "4": "* Enhancement - Performance: Checkout Custom Fields reuses the cart total across visibility checks during a single checkout cycle.",
-    "5": "* Fix - Checkout Fees: Corrected a variable scope issue that could affect evaluation of fees beyond the first when multiple fees are configured.",
-    "6": "* Fix - Checkout Fees: Aligned the priority sort comparator with PHP 8.x expectations.",
+    "1": "* Faster Sales Notifications - The recent-purchase popup is now noticeably lighter on busy stores. Booster reuses the most recent result for a short window instead of querying your orders on every popup cycle.",
+    "2": "* Faster checkout - Checkout Fees now calculate once per request instead of rebuilding the fee list every time WooCommerce recalculates the cart.",
+    "3": "* Smoother Checkout Custom Fields - Cart-amount visibility rules no longer recalculate the cart for each field; the total is reused across all visibility checks in a single page load.",
+    "4": "* Fix - Multiple checkout fees: fees beyond the first now respect their own enabled/disabled setting when several fees are configured.",
+    "5": "* Fix - PHP 8.x compatibility: Checkout Fees priority sorting now uses a strict integer comparator that works correctly on modern PHP.",
+    "6": "* Security - Hardened a public AJAX endpoint in the Price by User Role module to require a valid security token.",
     "7": "* WooCommerce 10.6.2 Tested",
     "8": "* WordPress 6.9.4 Tested"
 }
