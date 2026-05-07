@@ -92,10 +92,14 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/**
 		 * Wcj_remove_order_customer_user_id.
 		 *
-		 * @version 6.0.5
+		 * @version 8.0.1
 		 * @since  1.0.0
 		 */
 		public function wcj_remove_order_customer_user_id() {
+			$wpnonce = isset( $_REQUEST['wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wpnonce'] ), 'wcj-order-users' ) : false;
+			if ( ! $wpnonce ) {
+				return;
+			}
 			WC()->session->__unset( 'wcj_order_user_id' );
 		}
 

@@ -1,12 +1,11 @@
 {
-    "0": "= 8.0.0 - 15/04/2026 =",
-    "1": "* Feature - WooCommerce Blocks: Checkout Custom Fields — radio fields are now automatically converted to select dropdowns on Blocks checkout. Batch option loading eliminates N+1 queries during field registration.",
-    "2": "* Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees (fixed and percentage) on Blocks checkout via Store API. Checkout-field-conditional fees remain classic-only.",
-    "3": "* Enhancement - HPOS: Checkout Files Upload module refactored to use consolidated HPOS helper methods in email attachments, order display, and file-to-order paths. Store API hook added for Blocks-placed orders.",
-    "4": "* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups during cart calculation.",
-    "5": "* Enhancement - Performance: Added cart product and category ID caching in checkout custom fields visibility checks, reducing redundant cart iteration on classic checkout.",
-    "6": "* Note - Visibility conditions (product/category/cart-amount show/hide) and placement sections remain classic-checkout-only. WC Blocks API does not support cart-conditional field registration.",
-    "7": "* Security - Hardening: Strengthened Sales Notifications AJAX validation and access control.",
-    "8": "* WooCommerce 10.6.2 Tested",
-    "9": "* WordPress 6.9.4 Tested"
+    "0": "= 8.0.1 - 07/05/2026 =",
+    "1": "* Security - Hardened public AJAX request validation and handling.",
+    "2": "* Enhancement - Performance: Sales Notifications now caches the polling response for a short window, reducing repeated recent-order queries on busy storefronts.",
+    "3": "* Enhancement - Performance: Checkout Fees configuration is memoized per request, reducing duplicate option lookups during cart and checkout calculations.",
+    "4": "* Enhancement - Performance: Checkout Custom Fields reuses the cart total across visibility checks during a single checkout cycle.",
+    "5": "* Fix - Checkout Fees: Corrected a variable scope issue that could affect evaluation of fees beyond the first when multiple fees are configured.",
+    "6": "* Fix - Checkout Fees: Aligned the priority sort comparator with PHP 8.x expectations.",
+    "7": "* WooCommerce 10.6.2 Tested",
+    "8": "* WordPress 6.9.4 Tested"
 }

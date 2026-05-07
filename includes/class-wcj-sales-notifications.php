@@ -113,6 +113,20 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 				wp_send_json_error( array( 'message' => 'Invalid request.' ), 403 );
 			}
 			$pageid                     = isset( $_REQUEST['pageid'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['pageid'] ) ) : '';
+
+			$wcj_sn_cache_ttl = (int) apply_filters( 'wcj_sales_notifications_cache_ttl', 30 );
+			$wcj_sn_cache_key = '';
+			if ( $wcj_sn_cache_ttl > 0 ) {
+				$wcj_sn_cookie    = isset( $_COOKIE['wcj_order_data'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wcj_order_data'] ) ) : '';
+				$wcj_sn_cache_key = 'wcj_sn_v1_' . md5( 'legacy|' . $pageid . '|' . $wcj_sn_cookie );
+				$wcj_sn_cached    = get_transient( $wcj_sn_cache_key );
+				if ( false !== $wcj_sn_cached && is_array( $wcj_sn_cached ) ) {
+					header( 'Content-type: application/json' );
+					echo wp_json_encode( $wcj_sn_cached );
+					wp_die();
+				}
+			}
+
 			$no_exists_value            = wcj_get_option( 'no_exists_value' );
 			$wcj_sale_msg_ajax          = wcj_get_option( 'wcj_sale_msg_ajax', 'yes' );
 			$wcj_sale_msg_msg           = wcj_get_option( 'wcj_sale_msg_msg', '' );
@@ -581,8 +595,12 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 				$response_data['site_url']              = site_url();
 			}
 
-			header( 'Content-type: application/json' );
 			$response_data['success'] = 1;
+			if ( ! empty( $wcj_sn_cache_key ) && $wcj_sn_cache_ttl > 0 ) {
+				set_transient( $wcj_sn_cache_key, $response_data, $wcj_sn_cache_ttl );
+			}
+
+			header( 'Content-type: application/json' );
 			echo wp_json_encode( $response_data );
 			wp_die();
 		}
@@ -597,6 +615,20 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 				wp_send_json_error( array( 'message' => 'Invalid request.' ), 403 );
 			}
 			$pageid                     = isset( $_REQUEST['pageid'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['pageid'] ) ) : '';
+
+			$wcj_sn_cache_ttl = (int) apply_filters( 'wcj_sales_notifications_cache_ttl', 30 );
+			$wcj_sn_cache_key = '';
+			if ( $wcj_sn_cache_ttl > 0 ) {
+				$wcj_sn_cookie    = isset( $_COOKIE['wcj_order_data'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wcj_order_data'] ) ) : '';
+				$wcj_sn_cache_key = 'wcj_sn_v1_' . md5( 'hpos|' . $pageid . '|' . $wcj_sn_cookie );
+				$wcj_sn_cached    = get_transient( $wcj_sn_cache_key );
+				if ( false !== $wcj_sn_cached && is_array( $wcj_sn_cached ) ) {
+					header( 'Content-type: application/json' );
+					echo wp_json_encode( $wcj_sn_cached );
+					wp_die();
+				}
+			}
+
 			$no_exists_value            = wcj_get_option( 'no_exists_value' );
 			$wcj_sale_msg_ajax          = wcj_get_option( 'wcj_sale_msg_ajax', 'yes' );
 			$wcj_sale_msg_msg           = wcj_get_option( 'wcj_sale_msg_msg', '' );
@@ -1069,8 +1101,12 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 				$response_data['site_url']              = site_url();
 			}
 
-			header( 'Content-type: application/json' );
 			$response_data['success'] = 1;
+			if ( ! empty( $wcj_sn_cache_key ) && $wcj_sn_cache_ttl > 0 ) {
+				set_transient( $wcj_sn_cache_key, $response_data, $wcj_sn_cache_ttl );
+			}
+
+			header( 'Content-type: application/json' );
 			echo wp_json_encode( $response_data );
 			wp_die();
 		}

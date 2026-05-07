@@ -40,6 +40,13 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @var array|null
 		 */
 		private $cart_category_ids_cache = null;
+
+		/**
+		 * Request-scope cache for cart total to avoid recomputing during repeated visibility checks.
+		 *
+		 * @var float|null
+		 */
+		private $cart_total_cache = null;
 		/**
 		 * Constructor.
 		 *
@@ -852,22 +859,17 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			}
 
 			// Checking min/max cart amount.
-			$cart_total      = false;
 			$min_cart_amount = wcj_get_option( 'wcj_checkout_custom_field_min_cart_amount_' . $i, 0 );
-			if ( ( $min_cart_amount ) > 0 ) {
-				WC()->cart->calculate_totals();
-				$cart_total = WC()->cart->total;
-				if ( $cart_total < $min_cart_amount ) {
+			$max_cart_amount = wcj_get_option( 'wcj_checkout_custom_field_max_cart_amount_' . $i, 0 );
+			if ( $min_cart_amount > 0 || $max_cart_amount > 0 ) {
+				if ( null === $this->cart_total_cache ) {
+					WC()->cart->calculate_totals();
+					$this->cart_total_cache = (float) WC()->cart->total;
+				}
+				if ( $min_cart_amount > 0 && $this->cart_total_cache < $min_cart_amount ) {
 					return false;
 				}
-			}
-			$max_cart_amount = wcj_get_option( 'wcj_checkout_custom_field_max_cart_amount_' . $i, 0 );
-			if ( ( $max_cart_amount ) > 0 ) {
-				if ( false === $cart_total ) {
-					WC()->cart->calculate_totals();
-					$cart_total = WC()->cart->total;
-				}
-				if ( $cart_total > $max_cart_amount ) {
+				if ( $max_cart_amount > 0 && $this->cart_total_cache > $max_cart_amount ) {
 					return false;
 				}
 			}

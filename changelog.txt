@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 8.0.1 - 07/05/2026 =
+* Security - Hardened public AJAX request validation and handling.
+* Enhancement - Performance: Sales Notifications now caches the polling response for a short window, reducing repeated recent-order queries on busy storefronts.
+* Enhancement - Performance: Checkout Fees configuration is memoized per request, reducing duplicate option lookups during cart and checkout calculations.
+* Enhancement - Performance: Checkout Custom Fields reuses the cart total across visibility checks during a single checkout cycle.
+* Fix - Checkout Fees: Corrected a variable scope issue that could affect evaluation of fees beyond the first when multiple fees are configured.
+* Fix - Checkout Fees: Aligned the priority sort comparator with PHP 8.x expectations.
+* WooCommerce 10.6.2 Tested
+* WordPress 6.9.4 Tested
+
 = 8.0.0 - 15/04/2026 =
 * Feature - WooCommerce Blocks: Checkout Custom Fields — radio fields automatically converted to select dropdowns on Blocks checkout. Batch option loading eliminates N+1 queries during field registration.
 * Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees (fixed and percentage) on Blocks checkout via Store API. Checkout-field-conditional fees remain classic-only.

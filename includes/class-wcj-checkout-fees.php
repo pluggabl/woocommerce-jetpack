@@ -35,6 +35,15 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		private $cached_fees_config = null;
 
 		/**
+		 * Memoized get_fees() results for the current request.
+		 *
+		 * Keyed by "$only_enabled-$adjust_priority". Cleared by clear_request_cache().
+		 *
+		 * @var array
+		 */
+		private $cached_fees_results = array();
+
+		/**
 		 * Constructor.
 		 *
 		 * @version 8.0.0
@@ -214,7 +223,15 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @return array
 		 */
 		public function get_fees( $only_enabled = true, $adjust_priority = true ) {
-			$total_number    = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_fees_total_number', 1 ) );
+			$cache_key = ( $only_enabled ? '1' : '0' ) . '-' . ( $adjust_priority ? '1' : '0' );
+			if ( isset( $this->cached_fees_results[ $cache_key ] ) ) {
+				return $this->cached_fees_results[ $cache_key ];
+			}
+
+			$total_number    = (int) apply_filters( 'booster_option', 1, $this->get_fee_option( 'wcj_checkout_fees_total_number' ) );
+			if ( $total_number < 1 ) {
+				$total_number = 1;
+			}
 			$titles          = $this->get_fee_option( 'wcj_checkout_fees_data_titles' );
 			$types           = $this->get_fee_option( 'wcj_checkout_fees_data_types' );
 			$values          = $this->get_fee_option( 'wcj_checkout_fees_data_values' );
@@ -233,12 +250,12 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				if ( ! isset( $priorities[ $i ] ) || empty( $priorities[ $i ] ) ) {
 					$priorities[ $i ] = 0;
 				}
-				$enabled = isset( $enabled[ $i ] ) ? $enabled[ $i ] : 'yes';
-				if ( $only_enabled && 'no' === $enabled ) {
+				$fee_enabled = ( is_array( $enabled ) && isset( $enabled[ $i ] ) ) ? $enabled[ $i ] : 'yes';
+				if ( $only_enabled && 'no' === $fee_enabled ) {
 					continue;
 				}
 				$fees[ $i ] = array(
-					'enabled'        => $enabled,
+					'enabled'        => $fee_enabled,
 					'cart_min'       => isset( $cart_min[ $i ] ) ? $cart_min[ $i ] : 1,
 					'cart_min_total' => isset( $cart_min_total[ $i ] ) ? $cart_min_total[ $i ] : 0,
 					'cart_max'       => isset( $cart_max[ $i ] ) ? $cart_max[ $i ] : 0,
@@ -256,10 +273,12 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				uksort(
 					$fees,
 					function ( $a, $b ) use ( $fees, $priorities ) {
-						return $priorities[ $a ] < $priorities[ $b ];
+						return $priorities[ $b ] <=> $priorities[ $a ];
 					}
 				);
 			}
+
+			$this->cached_fees_results[ $cache_key ] = $fees;
 			return $fees;
 		}
 
