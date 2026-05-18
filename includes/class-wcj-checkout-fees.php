@@ -228,7 +228,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				return $this->cached_fees_results[ $cache_key ];
 			}
 
-			$total_number    = (int) apply_filters( 'booster_option', 1, $this->get_fee_option( 'wcj_checkout_fees_total_number' ) );
+			$total_number = (int) apply_filters( 'booster_option', 1, $this->get_fee_option( 'wcj_checkout_fees_total_number' ) );
 			if ( $total_number < 1 ) {
 				$total_number = 1;
 			}

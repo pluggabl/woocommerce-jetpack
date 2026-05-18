@@ -1,11 +1,11 @@
 {
-    "0": "= 8.0.1 - 07/05/2026 =",
+    "0": "= 8.0.1 - 20/05/2026 =",
     "1": "* Faster Sales Notifications - The recent-purchase popup is now noticeably lighter on busy stores. Booster reuses the most recent result for a short window instead of querying your orders on every popup cycle.",
     "2": "* Faster checkout - Checkout Fees now calculate once per request instead of rebuilding the fee list every time WooCommerce recalculates the cart.",
     "3": "* Smoother Checkout Custom Fields - Cart-amount visibility rules no longer recalculate the cart for each field; the total is reused across all visibility checks in a single page load.",
     "4": "* Fix - Multiple checkout fees: fees beyond the first now respect their own enabled/disabled setting when several fees are configured.",
     "5": "* Fix - PHP 8.x compatibility: Checkout Fees priority sorting now uses a strict integer comparator that works correctly on modern PHP.",
     "6": "* Security - Hardened a public AJAX endpoint in the Price by User Role module to require a valid security token.",
-    "7": "* WooCommerce 10.6.2 Tested",
+    "7": "* WooCommerce 10.7.0 Tested",
     "8": "* WordPress 6.9.4 Tested"
 }

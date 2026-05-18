@@ -9,7 +9,7 @@
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
- * WC tested up to: 10.6.2
+ * WC tested up to: 10.7.0
  * License: GNU General Public License v3.0
  *
  * @package Booster_For_WooCommerce
