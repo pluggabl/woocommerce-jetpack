@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 6.9.4
 Requires PHP: 7.2
-Stable tag: 8.0.0
+Stable tag: 8.0.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -346,6 +346,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.0.1 - 20/05/2026 =
+* Faster Sales Notifications - The recent-purchase popup is now noticeably lighter on busy stores. Booster reuses the most recent result for a short window instead of querying your orders on every popup cycle, cutting database load by roughly 5 in 6 polls.
+* Faster checkout - Checkout Fees now calculate once per request instead of rebuilding the fee list every time WooCommerce recalculates the cart. Most stores will feel this on the Blocks checkout where the cart can update multiple times per page.
+* Smoother Checkout Custom Fields - Cart-amount visibility rules ("show this field only if the cart total is over $50") no longer recalculate the cart for each field; the total is reused across all visibility checks in a single page load.
+* Fix - Multiple checkout fees - When two or more checkout fees were configured, fees beyond the first could be incorrectly evaluated. They now respect their own enabled/disabled setting.
+* Fix - PHP 8.x compatibility - Checkout Fees priority sorting now uses a strict integer comparator that works correctly on PHP 8.0 and later.
+* Security - Hardened a public AJAX endpoint in the Price by User Role module to require a valid security token, matching the protection already in place on its companion endpoint.
+* WooCommerce 10.7.0 Tested
+* WordPress 6.9.4 Tested
 
 = 8.0.0 - 15/04/2026 =
 * Feature - WooCommerce Blocks: Checkout Custom Fields — radio fields automatically converted to select dropdowns on Blocks checkout. Batch option loading eliminates N+1 queries during field registration.

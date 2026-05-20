@@ -1,12 +1,11 @@
 {
-    "0": "= 8.0.0 - 15/04/2026 =",
-    "1": "* Feature - WooCommerce Blocks: Checkout Custom Fields — radio fields are now automatically converted to select dropdowns on Blocks checkout. Batch option loading eliminates N+1 queries during field registration.",
-    "2": "* Feature - WooCommerce Blocks: Checkout Fees module now applies simple fees (fixed and percentage) on Blocks checkout via Store API. Checkout-field-conditional fees remain classic-only.",
-    "3": "* Enhancement - HPOS: Checkout Files Upload module refactored to use consolidated HPOS helper methods in email attachments, order display, and file-to-order paths. Store API hook added for Blocks-placed orders.",
-    "4": "* Enhancement - Performance: Added request-scope caching for checkout fee configuration to reduce repeated option lookups during cart calculation.",
-    "5": "* Enhancement - Performance: Added cart product and category ID caching in checkout custom fields visibility checks, reducing redundant cart iteration on classic checkout.",
-    "6": "* Note - Visibility conditions (product/category/cart-amount show/hide) and placement sections remain classic-checkout-only. WC Blocks API does not support cart-conditional field registration.",
-    "7": "* Security - Hardening: Strengthened Sales Notifications AJAX validation and access control.",
-    "8": "* WooCommerce 10.6.2 Tested",
-    "9": "* WordPress 6.9.4 Tested"
+    "0": "= 8.0.1 - 20/05/2026 =",
+    "1": "* Faster Sales Notifications - The recent-purchase popup is now noticeably lighter on busy stores. Booster reuses the most recent result for a short window instead of querying your orders on every popup cycle.",
+    "2": "* Faster checkout - Checkout Fees now calculate once per request instead of rebuilding the fee list every time WooCommerce recalculates the cart.",
+    "3": "* Smoother Checkout Custom Fields - Cart-amount visibility rules no longer recalculate the cart for each field; the total is reused across all visibility checks in a single page load.",
+    "4": "* Fix - Multiple checkout fees: fees beyond the first now respect their own enabled/disabled setting when several fees are configured.",
+    "5": "* Fix - PHP 8.x compatibility: Checkout Fees priority sorting now uses a strict integer comparator that works correctly on modern PHP.",
+    "6": "* Security - Hardened a public AJAX endpoint in the Price by User Role module to require a valid security token.",
+    "7": "* WooCommerce 10.7.0 Tested",
+    "8": "* WordPress 6.9.4 Tested"
 }
