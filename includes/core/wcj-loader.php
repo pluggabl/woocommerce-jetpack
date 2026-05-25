@@ -54,6 +54,8 @@ require_once WCJ_FREE_PLUGIN_PATH . '/includes/wcj-quick-start-presets.php';
 // Quick Start Admin UI.
 if ( is_admin() ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-quick-start-admin.php';
+	// Compatibility Status.
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-compatibility-status.php';
 }
 
 // Classes.
