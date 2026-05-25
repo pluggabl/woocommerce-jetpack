@@ -33,6 +33,17 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 */
 		public $are_addons_displayed;
 
+
+		/**
+		 * Request-scope Product Addons configuration cache.
+		 *
+		 * Keeps repeated cart/checkout calls from rebuilding the same addon map
+		 * without persisting potentially stale per-product settings across requests.
+		 *
+		 * @var array
+		 */
+		protected $product_addons_cache = array();
+
 		/**
 		 * Constructor.
 		 *
@@ -488,6 +499,114 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 			return true;
 		}
 
+
+		/**
+		 * Returns a safe, stable submitted value for radio/select addon choices.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param string $label defines the label.
+		 * @param int    $index defines the index.
+		 * @return string
+		 */
+		protected function get_addon_choice_value( $label, $index ) {
+			$plain_label = html_entity_decode( wp_strip_all_tags( (string) $label ), ENT_QUOTES, get_bloginfo( 'charset' ) );
+			$slug        = sanitize_title( $plain_label );
+
+			if ( '' === $slug ) {
+				$slug = 'choice';
+			}
+
+			return 'wcj-pa-' . absint( $index ) . '-' . $slug;
+		}
+
+		/**
+		 * Returns the legacy submitted value used before 8.0.2.
+		 *
+		 * Kept so add-to-cart remains tolerant of older cached forms.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param string $label defines the label.
+		 * @return string
+		 */
+		protected function get_legacy_addon_choice_value( $label ) {
+			return wp_kses_post( str_replace( ' ', '-', (string) $label ) );
+		}
+
+		/**
+		 * Checks a posted radio/select value against current and legacy choice formats.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param string $posted_value defines the posted value.
+		 * @param string $label defines the label.
+		 * @param int    $index defines the index.
+		 * @return bool
+		 */
+		protected function is_addon_choice_match( $posted_value, $label, $index ) {
+			$posted_value = (string) $posted_value;
+			$plain_label  = html_entity_decode( wp_strip_all_tags( (string) $label ), ENT_QUOTES, get_bloginfo( 'charset' ) );
+			$choices      = array(
+				$this->get_addon_choice_value( $label, $index ),
+				$this->get_legacy_addon_choice_value( $label ),
+				sanitize_title( $plain_label ),
+				(string) $label,
+			);
+
+			return in_array( $posted_value, $choices, true );
+		}
+
+		/**
+		 * Stores selected addon data in both legacy and structured cart-item formats.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param array  $cart_item_data defines the cart item data.
+		 * @param array  $addon defines the addon configuration.
+		 * @param string $price_value defines the selected addon price.
+		 * @param string $label_value defines the selected addon label.
+		 * @param string $submitted_value defines the submitted value.
+		 */
+		protected function set_cart_item_addon_selection( &$cart_item_data, $addon, $price_value, $label_value, $submitted_value = '' ) {
+			$cart_item_data[ $addon['price_key'] ] = $price_value;
+			$cart_item_data[ $addon['label_key'] ] = $label_value;
+
+			if ( ! isset( $cart_item_data['wcj_pa_selected_addons'] ) || ! is_array( $cart_item_data['wcj_pa_selected_addons'] ) ) {
+				$cart_item_data['wcj_pa_selected_addons'] = array();
+			}
+
+			$cart_item_data['wcj_pa_selected_addons'][ $addon['price_key'] ] = array(
+				'price_key' => $addon['price_key'],
+				'label_key' => $addon['label_key'],
+				'price'     => $price_value,
+				'label'     => wp_kses_post( $label_value ),
+				'title'     => isset( $addon['title'] ) ? wp_kses_post( $addon['title'] ) : '',
+				'type'      => isset( $addon['type'] ) ? sanitize_key( $addon['type'] ) : '',
+				'value'     => sanitize_text_field( $submitted_value ),
+			);
+		}
+
+		/**
+		 * Reads the selected addon label from structured cart data with legacy fallback.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param array $item defines the cart/order item data.
+		 * @param array $addon defines the addon configuration.
+		 * @return string
+		 */
+		protected function get_cart_addon_label( $item, $addon ) {
+			if (
+				is_array( $item ) &&
+				isset( $item['wcj_pa_selected_addons'][ $addon['price_key'] ]['label'] )
+			) {
+				return $item['wcj_pa_selected_addons'][ $addon['price_key'] ]['label'];
+			}
+
+			return ( is_array( $item ) && isset( $item[ $addon['label_key'] ] ) ) ? $item[ $addon['label_key'] ] : '';
+		}
+
 		/**
 		 * Get_product_addons.
 		 *
@@ -497,6 +616,13 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @param int $product_id defines the product_id.
 		 */
 		public function get_product_addons( $product_id ) {
+			$product_id = absint( $product_id );
+			$cache_key  = (string) $product_id;
+
+			if ( isset( $this->product_addons_cache[ $cache_key ] ) ) {
+				return $this->product_addons_cache[ $cache_key ];
+			}
+
 			$addons = array();
 			// All Products.
 			$var = get_post_meta( $product_id, 'wcj_product_addons_per_product_qty_' );
@@ -560,6 +686,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					}
 				}
 			}
+			$this->product_addons_cache[ $cache_key ] = $addons;
+
 			return $addons;
 		}
 
@@ -622,7 +750,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 			foreach ( $addons as $addon ) {
 				if ( isset( $values[ $addon['price_key'] ] ) ) {
 					wc_add_order_item_meta( $item_id, '_' . $addon['price_key'], $this->maybe_convert_currency( $values[ $addon['price_key'] ], $product ) );
-					wc_add_order_item_meta( $item_id, '_' . $addon['label_key'], $values[ $addon['label_key'] ] );
+					wc_add_order_item_meta( $item_id, '_' . $addon['label_key'], $this->get_cart_addon_label( $values, $addon ) );
 				}
 			}
 		}
@@ -654,7 +782,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					$addon_price  = ( $is_cart ) ? $this->maybe_convert_currency( $item[ $addon['price_key'] ], $_product ) : $item[ $addon['price_key'] ];
 					$addons_info .= str_replace(
 						array( '%addon_label%', '%addon_price%', '%addon_title%' ),
-						array( $item[ $addon['label_key'] ], wc_price( wcj_get_product_display_price( $_product, $addon_price ) ), $addon['title'] ),
+						array( $this->get_cart_addon_label( $item, $addon ), wc_price( wcj_get_product_display_price( $_product, $addon_price ) ), $addon['title'] ),
 						$item_format
 					);
 				}
@@ -779,19 +907,18 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 				) {
 					$checkbox_key = isset( $_POST[ $addon['checkbox_key'] ] ) ? sanitize_text_field( wp_unslash( $_POST[ $addon['checkbox_key'] ] ) ) : ( ! empty( $addon['default'] ) ? sanitize_text_field( wp_unslash( $addon['default'] ) ) : null );
 					if ( ( 'checkbox' === $addon['type'] || '' === $addon['type'] ) || ( 'text' === $addon['type'] && '' !== $checkbox_key ) ) {
-						$cart_item_data[ $addon['price_key'] ] = $price_value;
-						$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
+						$label_value = $addon['label_value'];
 						if ( 'text' === $addon['type'] ) {
-							$cart_item_data[ $addon['label_key'] ] .= ' (' . $checkbox_key . ')';
+							$label_value .= ' (' . $checkbox_key . ')';
 						}
+						$this->set_cart_item_addon_selection( $cart_item_data, $addon, $price_value, $label_value, $checkbox_key );
 					} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 						$prices = $this->clean_and_explode( PHP_EOL, $price_value );
 						$labels = $this->clean_and_explode( PHP_EOL, $addon['label_value'] );
 						if ( count( $labels ) === count( $prices ) ) {
 							foreach ( $labels as $i => $label ) {
-								if ( wp_kses_post( str_replace( ' ', '-', $label ) ) === $checkbox_key ) {
-									$cart_item_data[ $addon['price_key'] ] = $prices[ $i ];
-									$cart_item_data[ $addon['label_key'] ] = $labels[ $i ];
+								if ( $this->is_addon_choice_match( $checkbox_key, $label, $i ) ) {
+									$this->set_cart_item_addon_selection( $cart_item_data, $addon, $prices[ $i ], $labels[ $i ], $checkbox_key );
 									break;
 								}
 							}
@@ -879,13 +1006,15 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 							$select_options = '';
 						}
 						foreach ( $labels as $i => $label ) {
-							$label               = wp_kses_post( str_replace( ' ', '-', $label ) );
+							$choice_value        = $this->get_addon_choice_value( $label, $i );
+							$choice_id           = sanitize_html_class( $choice_value );
 							$is_checked          = '';
 							$checked_or_selected = ( 'radio' === $addon['type'] ? ' checked' : ' selected' );
 							if ( $wpnonce && isset( $_POST[ $addon['checkbox_key'] ] ) ) {
-								$is_checked = ( $label === $_POST[ $addon['checkbox_key'] ] ) ? $checked_or_selected : '';
+								$posted_choice = sanitize_text_field( wp_unslash( $_POST[ $addon['checkbox_key'] ] ) );
+								$is_checked    = $this->is_addon_choice_match( $posted_choice, $label, $i ) ? $checked_or_selected : '';
 							} elseif ( '' !== $addon['default'] ) {
-								$is_checked = ( sanitize_title( $addon['default'] ) === $label ) ? $checked_or_selected : '';
+								$is_checked = $this->is_addon_choice_match( $addon['default'], $label, $i ) ? $checked_or_selected : '';
 							}
 							if ( 'radio' === $addon['type'] ) {
 								$maybe_tooltip = ( isset( $tooltips[ $i ] ) && '' !== $tooltips[ $i ] ) ?
@@ -893,8 +1022,8 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 								'';
 								$html         .= wcj_handle_replacements(
 									array(
-										'%addon_input%'   => '<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>',
-										'%addon_id%'      => $addon['checkbox_key'] . '-' . $label,
+										'%addon_input%'   => '<input type="radio" id="' . esc_attr( $addon['checkbox_key'] . '-' . $choice_id ) . '" class="' . esc_attr( $addon['class'] ) . '" name="' . esc_attr( $addon['checkbox_key'] ) . '" value="' . esc_attr( $choice_value ) . '"' . $is_checked . $is_required . '>',
+										'%addon_id%'      => $addon['checkbox_key'] . '-' . $choice_id,
 										'%addon_label%'   => $labels[ $i ],
 										'%addon_price%'   => $this->format_addon_price( $prices[ $i ], $_product ),
 										'%addon_tooltip%' => $maybe_tooltip,
@@ -912,7 +1041,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 									),
 									wcj_get_option( 'wcj_product_addons_template_type_select_option', '%addon_label% (%addon_price%)' )
 								);
-								$select_options .= '<option value="' . $label . '"' . $is_checked . '>' . $select_option . '</option>';
+								$select_options .= '<option value="' . esc_attr( $choice_value ) . '"' . $is_checked . '>' . $select_option . '</option>';
 							}
 						}
 						if ( 'select' === $addon['type'] ) {

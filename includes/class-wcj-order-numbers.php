@@ -165,6 +165,47 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			return $tracking_links;
 		}
 
+
+		/**
+		 * Reads Booster order meta through WooCommerce order APIs when available.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param int    $order_id defines the order ID.
+		 * @param string $meta_key defines the meta key.
+		 * @return mixed
+		 */
+		protected function get_booster_order_meta( $order_id, $meta_key ) {
+			$order = wcj_get_order( $order_id );
+
+			if ( $order && false !== $order && is_callable( array( $order, 'get_meta' ) ) ) {
+				return $order->get_meta( $meta_key, true );
+			}
+
+			return get_post_meta( $order_id, $meta_key, true );
+		}
+
+		/**
+		 * Writes Booster order meta through WooCommerce order APIs when available.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param int    $order_id defines the order ID.
+		 * @param string $meta_key defines the meta key.
+		 * @param mixed  $meta_value defines the meta value.
+		 */
+		protected function update_booster_order_meta( $order_id, $meta_key, $meta_value ) {
+			$order = wcj_get_order( $order_id );
+
+			if ( $order && false !== $order && is_callable( array( $order, 'update_meta_data' ) ) ) {
+				$order->update_meta_data( $meta_key, $meta_value );
+				$order->save();
+				return;
+			}
+
+			update_post_meta( $order_id, $meta_key, $meta_value );
+		}
+
 		/**
 		 * Maybe_add_meta_box.
 		 *
@@ -180,7 +221,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			if ( true === wcj_is_hpos_enabled() && $wcj_order_number ) {
 				parent::add_meta_box();
 			} else {
-				if ( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) ) {
+				if ( '' !== $this->get_booster_order_meta( $post->ID, '_wcj_order_number' ) ) {
 					parent::add_meta_box();
 				}
 			}
@@ -492,7 +533,9 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				return;
 			}
 
-			if ( true === $do_overwrite || 0 === get_post_meta( $order_id, '_wcj_order_number', true ) || '' === get_post_meta( $order_id, '_wcj_order_number', true ) ) {
+			$existing_order_number = $this->get_booster_order_meta( $order_id, '_wcj_order_number' );
+
+			if ( true === $do_overwrite || 0 === $existing_order_number || '' === $existing_order_number ) {
 				if ( $order_id < wcj_get_option( 'wcj_order_numbers_min_order_id', 0 ) ) {
 					return;
 				}
@@ -507,7 +550,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 						$result_update        = $wpdb->update( $wp_options_table, array( 'option_value' => ( $current_order_number + 1 ) ), array( 'option_name' => 'wcj_order_number_counter' ) );
 						if ( null !== $result_update || ( $current_order_number + 1 ) === $result_select->option_value ) {
 							$wpdb->query( 'COMMIT' ); // all ok.
-							update_post_meta( $order_id, '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
+							$this->update_booster_order_meta( $order_id, '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
 						} else {
 							$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback.
 						}
@@ -524,7 +567,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					} else { // 'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) // order ID.
 						$current_order_number = '';
 					}
-					update_post_meta( $order_id, '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
+					$this->update_booster_order_meta( $order_id, '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
 				}
 			}
 		}
@@ -563,7 +606,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 							$result_update        = $wpdb->update( $wp_options_table, array( 'option_value' => ( $current_order_number + 1 ) ), array( 'option_name' => 'wcj_order_number_counter' ) );
 							if ( null !== $result_update || ( $current_order_number + 1 ) === $result_select->option_value ) {
 								$wpdb->query( 'COMMIT' ); // all ok.
-								$order->update_meta_data('_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
+								$order->update_meta_data( '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
 							} else {
 								$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback.
 							}
@@ -622,7 +665,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					$i = 0;
 					foreach ( $order as $order_id ) {
 
-						$this->add_order_number_meta_hpos( $order[ $i ]->id, true );
+						$this->add_order_number_meta_hpos( $order_id, true );
 						$i++;
 					}
 				} else {
