@@ -3,7 +3,7 @@ Contributors: pluggabl, ronyp, gravid7
 Donate link: https://booster.io/
 Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invoices, variation swatches, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce product feed, currency switcher
 Requires at least: 5.8
-Tested up to: 6.9.4
+Tested up to: 7.0
 Requires PHP: 7.2
 Stable tag: 8.0.2
 License: GNU General Public License v3.0
@@ -348,6 +348,8 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 == Changelog ==
 
 = 8.0.2 - 15/06/2026 =
+* Security - Hardened Product by User image uploads so customer-submitted product images are validated as real allowed image files before they can be moved into uploads.
+* Security hardening - Strengthened related customer upload validation in Checkout Files Upload and Product Input Fields.
 * Continuous improvement - Free stores get safer Product Addons selection handling: radio/select choices now use stable submitted values while older cached forms remain compatible.
 * Checkout confidence - Booster now shows admin-only compatibility status when active checkout modules need Classic Checkout, Checkout Blocks staging, or HPOS review.
 * Reliability - Order Numbers and PDF Invoicing now prefer WooCommerce order APIs for maintained order meta reads/writes, with legacy fallbacks for older stores.

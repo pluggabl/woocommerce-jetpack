@@ -1,8 +1,11 @@
 {
     "0": "= 8.0.2 - 15/06/2026 =",
-    "1": "* Continuous improvement - Free stores get safer Product Addons selection handling with stable submitted values and compatibility for older cached forms.",
-    "2": "* Checkout confidence - Added admin-only compatibility status for active checkout modules that need Classic Checkout, Checkout Blocks staging, or HPOS review.",
-    "3": "* Reliability - Order Numbers and PDF Invoicing now prefer WooCommerce order APIs for maintained order meta reads/writes, with legacy fallbacks.",
-    "4": "* Performance - Product Addons settings are cached for the current request to reduce repeated option reads during cart and checkout calculations.",
-    "5": "* Value - The Free feature set keeps its documented limits while receiving maintenance hardening on shared module paths."
+    "1": "* Security - Hardened Product by User image uploads so customer-submitted product images are validated as real allowed image files before they can be moved into uploads.",
+    "2": "* Security hardening - Strengthened related customer upload validation in Checkout Files Upload and Product Input Fields.",
+    "3": "* Continuous improvement - Free stores get safer Product Addons selection handling with stable submitted values and compatibility for older cached forms.",
+    "4": "* Checkout confidence - Added admin-only compatibility status for active checkout modules that need Classic Checkout, Checkout Blocks staging, or HPOS review.",
+    "5": "* Reliability - Order Numbers and PDF Invoicing now prefer WooCommerce order APIs for maintained order meta reads/writes, with legacy fallbacks.",
+    "6": "* Performance - Product Addons settings are cached for the current request to reduce repeated option reads during cart and checkout calculations.",
+    "7": "* Value - The Free feature set keeps its documented limits while receiving maintenance hardening on shared module paths.",
+    "8": "* WordPress 7.0 Tested"
 }
