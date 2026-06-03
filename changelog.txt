@@ -1,7 +1,7 @@
 == Changelog ==
 
 = 8.0.2 - 15/06/2026 =
-* Security - Hardened Product by User image uploads so customer-submitted product images are validated as real allowed image files before they can be moved into uploads.
+* Security - Hardened Product by User image uploads so customer-submitted product images are validated as real allowed image files before they can be moved into uploads, and Free keeps paid image upload fields disabled even if a request is manually crafted.
 * Security hardening - Strengthened related customer upload validation in Checkout Files Upload and Product Input Fields.
 * Continuous improvement - Free stores get safer Product Addons selection handling: radio/select choices now use stable submitted values while older cached forms remain compatible.
 * Checkout confidence - Booster now shows admin-only compatibility status when active checkout modules need Classic Checkout, Checkout Blocks staging, or HPOS review.

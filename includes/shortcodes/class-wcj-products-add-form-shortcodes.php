@@ -194,6 +194,33 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		}
 
 		/**
+		 * Checks whether a Product by User file field contains a real upload attempt.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param string $field_name defines the file input name.
+		 * @return bool
+		 */
+		protected function has_product_by_user_uploaded_file( $field_name ) {
+			if ( empty( $_FILES ) || ! isset( $_FILES[ $field_name ] ) || ! is_array( $_FILES[ $field_name ] ) ) {
+				return false;
+			}
+
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- File arrays are only inspected for upload presence here.
+			$files = $this->normalize_product_by_user_uploads( $_FILES[ $field_name ] );
+			foreach ( $files as $file ) {
+				$error_code = isset( $file['error'] ) ? (int) $file['error'] : UPLOAD_ERR_NO_FILE;
+				$file_name  = isset( $file['name'] ) ? sanitize_file_name( wp_unslash( $file['name'] ) ) : '';
+
+				if ( UPLOAD_ERR_NO_FILE !== $error_code || '' !== $file_name ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/**
 		 * Validates a Product by User image upload before it can be moved to uploads.
 		 *
 		 * @version 8.0.2
@@ -587,13 +614,21 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			$is_submitting_product       = $wpnonce && isset( $_REQUEST['wcj_add_new_product'] );
 
 			if ( $is_submitting_product ) {
-				$product_image_upload = $this->get_validated_product_by_user_image_uploads( 'wcj_add_new_product_image' );
-				$image                = ! empty( $product_image_upload['files'] ) ? reset( $product_image_upload['files'] ) : '';
-				$image_upload_errors  = $product_image_upload['errors'];
+				if ( 'yes' === $atts['image_enabled'] ) {
+					$product_image_upload = $this->get_validated_product_by_user_image_uploads( 'wcj_add_new_product_image' );
+					$image                = ! empty( $product_image_upload['files'] ) ? reset( $product_image_upload['files'] ) : '';
+					$image_upload_errors  = $product_image_upload['errors'];
+				} elseif ( $this->has_product_by_user_uploaded_file( 'wcj_add_new_product_image' ) ) {
+					$image_upload_errors[] = __( 'Image uploads are not enabled for this form.', 'woocommerce-jetpack' );
+				}
 
-				$gallery_image_upload         = $this->get_validated_product_by_user_image_uploads( 'wcj_add_new_product_gallery_image' );
-				$image_gallery                = $gallery_image_upload['files'];
-				$image_gallery_upload_errors = $gallery_image_upload['errors'];
+				if ( 'yes' === $atts['image_gallery_enabled'] ) {
+					$gallery_image_upload         = $this->get_validated_product_by_user_image_uploads( 'wcj_add_new_product_gallery_image' );
+					$image_gallery                = $gallery_image_upload['files'];
+					$image_gallery_upload_errors = $gallery_image_upload['errors'];
+				} elseif ( $this->has_product_by_user_uploaded_file( 'wcj_add_new_product_gallery_image' ) ) {
+					$image_gallery_upload_errors[] = __( 'Image gallery uploads are not enabled for this form.', 'woocommerce-jetpack' );
+				}
 			}
 
 			$args = array(
