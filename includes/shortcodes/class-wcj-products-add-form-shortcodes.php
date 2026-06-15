@@ -332,8 +332,8 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 			require_once ABSPATH . 'wp-admin/includes/media.php';
 
-			$had_original_file = isset( $_FILES[ $field_name ] );
-			$original_file     = $had_original_file ? $_FILES[ $field_name ] : null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$had_original_file     = isset( $_FILES[ $field_name ] );
+			$original_file         = $had_original_file ? $_FILES[ $field_name ] : null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$_FILES[ $field_name ] = $validated_file;
 
 			$attachment_id = media_handle_upload(
@@ -623,8 +623,8 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				}
 
 				if ( 'yes' === $atts['image_gallery_enabled'] ) {
-					$gallery_image_upload         = $this->get_validated_product_by_user_image_uploads( 'wcj_add_new_product_gallery_image' );
-					$image_gallery                = $gallery_image_upload['files'];
+					$gallery_image_upload        = $this->get_validated_product_by_user_image_uploads( 'wcj_add_new_product_gallery_image' );
+					$image_gallery               = $gallery_image_upload['files'];
 					$image_gallery_upload_errors = $gallery_image_upload['errors'];
 				} elseif ( $this->has_product_by_user_uploaded_file( 'wcj_add_new_product_gallery_image' ) ) {
 					$image_gallery_upload_errors[] = __( 'Image gallery uploads are not enabled for this form.', 'woocommerce-jetpack' );
@@ -632,20 +632,20 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			}
 
 			$args = array(
-				'title'         => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) ) : '',
-				'desc'          => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_desc'] ) ) ) : '',
-				'short_desc'    => isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_short_desc'] ) ) ) : '',
-				'regular_price' => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_regular_price'] ) ) ) : '',
-				'sale_price'    => isset( $_REQUEST['wcj_add_new_product_sale_price'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_sale_price'] ) ) ) : '',
-				'external_url'  => isset( $_REQUEST['wcj_add_new_product_external_url'] ) ? esc_url( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_external_url'] ) ) ) : '',
-				'cats'          => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['wcj_add_new_product_cats'] ) ) : array(),
-				'image'         => $image,
-				'image_upload_errors' => $image_upload_errors,
-				'image_gallery' => $image_gallery,
+				'title'                       => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) ) : '',
+				'desc'                        => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_desc'] ) ) ) : '',
+				'short_desc'                  => isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_short_desc'] ) ) ) : '',
+				'regular_price'               => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_regular_price'] ) ) ) : '',
+				'sale_price'                  => isset( $_REQUEST['wcj_add_new_product_sale_price'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_sale_price'] ) ) ) : '',
+				'external_url'                => isset( $_REQUEST['wcj_add_new_product_external_url'] ) ? esc_url( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_external_url'] ) ) ) : '',
+				'cats'                        => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['wcj_add_new_product_cats'] ) ) : array(),
+				'image'                       => $image,
+				'image_upload_errors'         => $image_upload_errors,
+				'image_gallery'               => $image_gallery,
 				'image_gallery_upload_errors' => $image_gallery_upload_errors,
-				'category'      => isset( $_POST['wcj_add_new_product_category'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_add_new_product_category'] ) ) : '',
-				'tags'          => isset( $_POST['wcj_add_new_product_tags'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_add_new_product_tags'] ) ) : '',
-				'type'          => isset( $_POST['wcj_add_new_product_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_add_new_product_type'] ) ) : 'simple',
+				'category'                    => isset( $_POST['wcj_add_new_product_category'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_add_new_product_category'] ) ) : '',
+				'tags'                        => isset( $_POST['wcj_add_new_product_tags'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_add_new_product_tags'] ) ) : '',
+				'type'                        => isset( $_POST['wcj_add_new_product_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_add_new_product_type'] ) ) : 'simple',
 			);
 			for ( $i = 1; $i <= $this->the_atts['custom_taxonomies_total']; $i++ ) {
 				$param_id                        = 'wcj_add_new_product_custom_taxonomy_' . $i;

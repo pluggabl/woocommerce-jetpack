@@ -220,10 +220,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			$wcj_order_number = ( isset( $order ) && false !== $order ? $order->get_meta( '_wcj_order_number' ) : '' );
 			if ( true === wcj_is_hpos_enabled() && $wcj_order_number ) {
 				parent::add_meta_box();
-			} else {
-				if ( '' !== $this->get_booster_order_meta( $post->ID, '_wcj_order_number' ) ) {
+			} elseif ( '' !== $this->get_booster_order_meta( $post->ID, '_wcj_order_number' ) ) {
 					parent::add_meta_box();
-				}
 			}
 		}
 
@@ -429,14 +427,12 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			if ( $wpnonce && isset( $_POST['renumerate_orders'] ) ) {
 				$this->renumerate_orders();
 				$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
-			} else {
-				if ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+			} elseif ( 'yes' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 					$result_message .= '<p>' . sprintf(
 						/* translators: %s: translation added */
 						__( 'Sequential number generation is enabled. Next order number will be %s.', 'woocommerce-jetpack' ),
 						'<code>' . wcj_get_option( 'wcj_order_number_counter', 1 ) . '</code>'
 					) . '</p>';
-				}
 			}
 			$html  = '';
 			$html .= '<div class="wcj-setting-jetpack-body wcj_tools_cnt_main">';
@@ -666,7 +662,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 					foreach ( $order as $order_id ) {
 
 						$this->add_order_number_meta_hpos( $order_id, true );
-						$i++;
+						++$i;
 					}
 				} else {
 
@@ -691,7 +687,6 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 				$offset += $block_size;
 			}
 		}
-
 	}
 
 endif;

@@ -347,7 +347,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
-= 8.0.2 - 15/06/2026 =
+= 8.0.2 - 17/06/2026 =
 * Security - Hardened Product by User media upload handling and Free tier upload boundaries.
 * Security hardening - Strengthened related customer upload validation in Checkout Files Upload and Product Input Fields.
 * Continuous improvement - Free stores get safer Product Addons selection handling: radio/select choices now use stable submitted values while older cached forms remain compatible.
@@ -355,6 +355,8 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Reliability - Order Numbers and PDF Invoicing now prefer WooCommerce order APIs for maintained order meta reads/writes, with legacy fallbacks for older stores.
 * Performance - Product Addons settings are cached for the current request to reduce repeated option reads during cart and checkout calculations.
 * Value - The Free feature set keeps its documented limits while receiving maintenance hardening on shared module paths.
+* WooCommerce 10.8.1 Tested
+* WordPress 7.0 Tested
 
 = 8.0.1 - 20/05/2026 =
 * Faster Sales Notifications - The recent-purchase popup is now noticeably lighter on busy stores. Booster reuses the most recent result for a short window instead of querying your orders on every popup cycle, cutting database load by roughly 5 in 6 polls.

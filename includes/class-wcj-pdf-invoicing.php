@@ -265,7 +265,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 						$invoice_num = array_reverse( $post_ids );
 						foreach ( $invoice_num as $post_id ) {
 							if ( $this->create_document( $post_id, $the_type ) ) {
-								$generated++;
+								++$generated;
 							}
 						}
 						// Build the redirect url.
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 
 					foreach ( $post_ids as $post_id ) {
 						if ( $this->create_document( $post_id, $the_type ) ) {
-							$generated++;
+							++$generated;
 						}
 					}
 					// Build the redirect url.
@@ -610,7 +610,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			}
 			die();
 		}
-
 	}
 
 endif;
