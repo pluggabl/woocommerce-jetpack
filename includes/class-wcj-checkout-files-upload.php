@@ -860,12 +860,12 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					}
 
 					// Extra security check: Restrict for malicious file types.
-					$validate = wp_check_filetype( $real_file_name );
+					$validate = wp_check_filetype_and_ext( $temp_file_name, $real_file_name );
 					if ( false === $validate['type'] ) {
 						$this->add_notice(
 							sprintf(
 								// translators: %s is the file type that is not allowed.
-								__( 'File type is not allowed: "%s".', 'plugin-slug' ),
+								__( 'File type is not allowed: "%s".', 'woocommerce-jetpack' ),
 								$real_file_name
 							),
 							'error'

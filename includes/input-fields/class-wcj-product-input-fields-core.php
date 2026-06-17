@@ -582,9 +582,10 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				}
 
 				if ( 'file' === $type && isset( $_FILES[ $field_name ] ) && '' !== $_FILES[ $field_name ]['name'] ) {
-					$file_name = sanitize_file_name( wp_unslash( $_FILES[ $field_name ]['name'] ) );
-					$validate  = wp_check_filetype( $file_name );
-					if ( empty( $validate['type'] ) ) {
+					$file_name      = sanitize_file_name( wp_unslash( $_FILES[ $field_name ]['name'] ) );
+					$temp_file_name = isset( $_FILES[ $field_name ]['tmp_name'] ) ? sanitize_text_field( wp_unslash( $_FILES[ $field_name ]['tmp_name'] ) ) : '';
+					$validate       = wp_check_filetype_and_ext( $temp_file_name, $file_name );
+					if ( empty( $validate['type'] ) || empty( $validate['ext'] ) ) {
 						$passed = false;
 						wc_add_notice( __( 'File type is not allowed.', 'woocommerce-jetpack' ), 'error' );
 					}
@@ -911,7 +912,12 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 						isset( $_FILES[ $value_name ]['error'], $_FILES[ $value_name ]['tmp_name'] ) &&
 						UPLOAD_ERR_OK === $_FILES[ $value_name ]['error']
 					) {
-						$temp_file_name                = sanitize_text_field( wp_unslash( $_FILES[ $value_name ]['tmp_name'] ) );
+						$temp_file_name = sanitize_text_field( wp_unslash( $_FILES[ $value_name ]['tmp_name'] ) );
+						$file_name      = isset( $_FILES[ $value_name ]['name'] ) ? sanitize_file_name( wp_unslash( $_FILES[ $value_name ]['name'] ) ) : '';
+						$validate       = wp_check_filetype_and_ext( $temp_file_name, $file_name );
+						if ( empty( $validate['type'] ) || empty( $validate['ext'] ) ) {
+							continue;
+						}
 						$cart_item_data[ $value_name ] = array_map( 'sanitize_text_field', wp_unslash( $_FILES[ $value_name ] ) );
 						$tmp_dest_file                 = tempnam( wcj_get_wcj_uploads_dir( 'temp' ), 'wcj' );
 						if ( $tmp_dest_file && move_uploaded_file( $temp_file_name, $tmp_dest_file ) ) {

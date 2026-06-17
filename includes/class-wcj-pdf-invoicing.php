@@ -265,7 +265,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 						$invoice_num = array_reverse( $post_ids );
 						foreach ( $invoice_num as $post_id ) {
 							if ( $this->create_document( $post_id, $the_type ) ) {
-								$generated++;
+								++$generated;
 							}
 						}
 						// Build the redirect url.
@@ -286,7 +286,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 
 					foreach ( $post_ids as $post_id ) {
 						if ( $this->create_document( $post_id, $the_type ) ) {
-							$generated++;
+							++$generated;
 						}
 					}
 					// Build the redirect url.
@@ -531,6 +531,25 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			}
 		}
 
+
+		/**
+		 * Gets an order customer ID through WooCommerce order APIs when available.
+		 *
+		 * @version 8.0.2
+		 * @since   8.0.2
+		 * @param int $order_id defines the order ID.
+		 * @return int
+		 */
+		protected function get_order_customer_id( $order_id ) {
+			$order = wc_get_order( $order_id );
+
+			if ( $order && is_callable( array( $order, 'get_customer_id' ) ) ) {
+				return (int) $order->get_customer_id();
+			}
+
+			return (int) get_post_meta( $order_id, '_customer_user', true );
+		}
+
 		/**
 		 * Check_user_roles.
 		 *
@@ -540,7 +559,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @param  bool $allow_order_owner defines the allow_order_owner.
 		 */
 		public function check_user_roles( $allow_order_owner = true ) {
-			if ( is_user_logged_in() && $allow_order_owner && get_current_user_id() === intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {
+			if ( is_user_logged_in() && $allow_order_owner && get_current_user_id() === $this->get_order_customer_id( $this->order_id ) ) {
 				return true;
 			}
 			$allowed_user_roles = wcj_get_option( 'wcj_invoicing_' . $this->invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
@@ -591,7 +610,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			}
 			die();
 		}
-
 	}
 
 endif;
