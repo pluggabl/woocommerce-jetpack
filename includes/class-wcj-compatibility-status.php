@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Compatibility Status
  *
- * @version 8.0.2
+ * @version 8.1.0
  * @since   8.0.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -118,65 +118,104 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 		 * @return array
 		 */
 		protected function get_active_checkout_modules() {
+			$conditional_fields_note = defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '9.9.0', '>=' )
+				? __( 'Text, select, checkbox, and radio-as-select fields support cart-aware visibility. Other types and Classic placement sections remain Classic-only.', 'woocommerce-jetpack' )
+				: __( 'Conditioned fields require WooCommerce 9.9 or later and are skipped in Blocks on this WooCommerce version. Unconditioned supported types remain available.', 'woocommerce-jetpack' );
 			$modules = array(
 				array(
 					'id'    => 'checkout_fees',
 					'label' => __( 'Checkout Fees', 'woocommerce-jetpack' ),
+					'status' => __( 'Partial', 'woocommerce-jetpack' ),
 					'note'  => __( 'Simple fixed and percentage fees are maintained for Blocks; checkout-field-conditional fees remain a Classic Checkout/staging item.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'checkout_custom_fields',
 					'label' => __( 'Checkout Custom Fields', 'woocommerce-jetpack' ),
-					'note'  => __( 'Basic fields are Blocks-aware; richer visibility and placement rules should be confirmed on Classic Checkout or in staging.', 'woocommerce-jetpack' ),
+					'status' => __( 'Supported types', 'woocommerce-jetpack' ),
+					'note'  => $conditional_fields_note,
 				),
 				array(
 					'id'    => 'checkout_files_upload',
 					'label' => __( 'Checkout Files Upload', 'woocommerce-jetpack' ),
-					'note'  => __( 'Store API order attachment paths are maintained; file upload placement and validation should be tested with the exact checkout flow.', 'woocommerce-jetpack' ),
+					'status' => __( 'Classic-only input', 'woocommerce-jetpack' ),
+					'note'  => __( 'Checkout file inputs require Classic Checkout. Existing post-order account and order-association paths remain available where configured.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'product_addons',
 					'label' => __( 'Product Addons', 'woocommerce-jetpack' ),
-					'note'  => __( 'Addon choices now use safer submitted values and structured cart data; test add-to-cart, checkout, and order meta with your enabled tier limits.', 'woocommerce-jetpack' ),
+					'status' => __( 'Cart and order supported', 'woocommerce-jetpack' ),
+					'note'  => __( 'Addon inputs render on product pages and their cart data is persisted through Classic and Blocks checkout. They are not checkout form fields.', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'     => 'product_input_fields',
+					'label'  => __( 'Product Input Fields', 'woocommerce-jetpack' ),
+					'status' => __( 'Cart and order supported', 'woocommerce-jetpack' ),
+					'note'   => __( 'Product-page values, including supported files, travel with cart items through Classic and Blocks checkout. They are not checkout form fields.', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'     => 'payment_gateways_fees',
+					'label'  => __( 'Gateway Fees and Discounts', 'woocommerce-jetpack' ),
+					'status' => __( 'Supported', 'woocommerce-jetpack' ),
+					'note'   => __( 'Uses the WooCommerce chosen-payment session and cart fee API. Test guest and signed-in gateway switching with every configured rule.', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'     => 'checkout_custom_info',
+					'label'  => __( 'Checkout Custom Info', 'woocommerce-jetpack' ),
+					'status' => __( 'Classic-only', 'woocommerce-jetpack' ),
+					'note'   => __( 'Shortcode checkout placement hooks do not have equivalent supported Checkout block positions.', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'     => 'more_button_labels',
+					'label'  => __( 'Checkout button labels', 'woocommerce-jetpack' ),
+					'status' => __( 'Classic-only', 'woocommerce-jetpack' ),
+					'note'   => __( 'Classic button-label filters do not change the Checkout block submit button.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'eu_vat_number',
 					'label' => __( 'EU VAT Number', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'VAT capture and validation remain checkout-flow sensitive; Classic Checkout is recommended unless the exact Blocks flow has been staged.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'payment_gateways',
 					'label' => __( 'Custom Payment Gateways', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'Gateway visibility and order data should be checked with the active checkout architecture before release.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'payment_gateways_by_country',
 					'label' => __( 'Payment Gateways by Country', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'Gateway filters depend on checkout customer data; test the live shipping/billing scenario in staging.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'payment_gateways_by_currency',
 					'label' => __( 'Payment Gateways by Currency', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'Gateway filters depend on the active currency; test the currency switcher and checkout together.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'payment_gateways_by_shipping',
 					'label' => __( 'Payment Gateways by Shipping', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'Gateway filters depend on selected shipping methods; test after shipping rates are available in the checkout flow.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'payment_gateways_by_user_role',
 					'label' => __( 'Payment Gateways by User Role', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'Gateway filters depend on customer session state; test guest and signed-in roles separately.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'payment_gateways_min_max',
 					'label' => __( 'Gateways Min/Max Amounts', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'Gateway filters depend on recalculated cart totals; test below, inside, and above each configured threshold.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'payment_gateways_per_category',
 					'label' => __( 'Gateways by Product or Category', 'woocommerce-jetpack' ),
+					'status' => __( 'Needs exact-flow testing', 'woocommerce-jetpack' ),
 					'note'  => __( 'Gateway filters depend on cart contents; test carts with matching and non-matching products/categories.', 'woocommerce-jetpack' ),
 				),
 			);
@@ -196,17 +235,38 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 				array(
 					'id'    => 'order_numbers',
 					'label' => __( 'Order Numbers', 'woocommerce-jetpack' ),
-					'note'  => __( 'Order-number reads and writes now prefer WooCommerce order meta APIs with a legacy fallback.', 'woocommerce-jetpack' ),
+					'status' => __( 'Order CRUD', 'woocommerce-jetpack' ),
+					'note'  => __( 'Creation, display, search, and renumeration use maintained WooCommerce order paths in the audited workflows.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'pdf_invoicing',
 					'label' => __( 'PDF Invoicing', 'woocommerce-jetpack' ),
-					'note'  => __( 'Order-owner checks now read the customer through WooCommerce order APIs with a legacy fallback.', 'woocommerce-jetpack' ),
+					'status' => __( 'Order CRUD', 'woocommerce-jetpack' ),
+					'note'  => __( 'Invoice document metadata, order-owner checks, admin numbering, and audited report fields use WooCommerce order APIs.', 'woocommerce-jetpack' ),
 				),
 				array(
 					'id'    => 'checkout_files_upload',
 					'label' => __( 'Checkout Files Upload', 'woocommerce-jetpack' ),
-					'note'  => __( 'Order attachment paths should be checked against the store\'s upload hooks and order emails.', 'woocommerce-jetpack' ),
+					'status' => __( 'Order CRUD', 'woocommerce-jetpack' ),
+					'note'  => __( 'Order attachment, admin, download, deletion, email, and account metadata use WooCommerce order APIs in audited paths.', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'     => 'checkout_custom_fields',
+					'label'  => __( 'Checkout Custom Fields', 'woocommerce-jetpack' ),
+					'status' => __( 'Order CRUD', 'woocommerce-jetpack' ),
+					'note'   => __( 'Classic and Blocks field updates are batched on the order object and saved once per logical update.', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'     => 'product_addons',
+					'label'  => __( 'Product Addons', 'woocommerce-jetpack' ),
+					'status' => __( 'Order-item CRUD', 'woocommerce-jetpack' ),
+					'note'   => __( 'Addon values are persisted while WooCommerce creates the order line item, without legacy item properties or extra saves.', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'     => 'product_input_fields',
+					'label'  => __( 'Product Input Fields', 'woocommerce-jetpack' ),
+					'status' => __( 'Order-item CRUD', 'woocommerce-jetpack' ),
+					'note'   => __( 'Input values and file references use WooCommerce order-item APIs in maintained checkout paths.', 'woocommerce-jetpack' ),
 				),
 			);
 
@@ -216,7 +276,7 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 		/**
 		 * Filters module definitions to active modules only.
 		 *
-		 * @version 8.0.2
+		 * @version 8.1.0
 		 * @since   8.0.2
 		 * @param array $modules defines module definitions.
 		 * @return array
@@ -265,13 +325,14 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 			echo '<div class="notice ' . esc_attr( $notice_class ) . ' wcj-compatibility-status">';
 			echo '<p><strong>' . esc_html( $title ) . '</strong></p>';
 			echo '<p>' . esc_html( $intro ) . '</p>';
-			echo '<ul style="list-style:disc;margin-left:20px;">';
+			echo '<table class="widefat striped" style="margin:8px 0 12px;max-width:1100px;">';
+			echo '<thead><tr><th>' . esc_html__( 'Module', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Status', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Guidance', 'woocommerce-jetpack' ) . '</th></tr></thead><tbody>';
 
 			foreach ( $modules as $module ) {
-				echo '<li><strong>' . esc_html( $module['label'] ) . ':</strong> ' . esc_html( $module['note'] ) . '</li>';
+				echo '<tr><td><strong>' . esc_html( $module['label'] ) . '</strong></td><td>' . esc_html( isset( $module['status'] ) ? $module['status'] : __( 'Review', 'woocommerce-jetpack' ) ) . '</td><td>' . esc_html( $module['note'] ) . '</td></tr>';
 			}
 
-			echo '</ul>';
+			echo '</tbody></table>';
 			echo '<p>' . esc_html( $this->get_tier_note() ) . '</p>';
 			echo '</div>';
 		}

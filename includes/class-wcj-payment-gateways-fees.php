@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 7.3.0
+ * @version 8.1.0
  * @since   2.2.2
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -25,6 +25,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @var array
 		 */
 		public $defaults = array();
+
+		/**
+		 * Request-scoped cart product and variation IDs.
+		 *
+		 * @var array|null
+		 */
+		private $cart_product_ids = null;
 
 		/**
 		 * Constructor.
@@ -150,20 +157,23 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		/**
 		 * Get_current_gateway.
 		 *
-		 * @version 5.6.8
+		 * @version 8.1.0
 		 * @since   3.3.0
 		 */
 		public function get_current_gateway() {
 			$gateway = '';
 			// phpcs:disable WordPress.Security.NonceVerification
-			if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) {
+			$wc_api        = isset( $_GET['wc-api'] ) ? sanitize_text_field( wp_unslash( $_GET['wc-api'] ) ) : '';
+			$wc_ajax       = isset( $_GET['wc-ajax'] ) ? sanitize_text_field( wp_unslash( $_GET['wc-ajax'] ) ) : '';
+			$startcheckout = isset( $_GET['startcheckout'] ) ? sanitize_text_field( wp_unslash( $_GET['startcheckout'] ) ) : '';
+			if ( 'WC_Gateway_PayPal_Express_AngellEYE' === $wc_api ) {
 				$gateway = 'paypal_express'; // PayPal for WooCommerce (By Angell EYE).
 			} elseif (
-				( isset( $_GET['wc-ajax'] ) && 'wc_ppec_generate_cart' === $_GET['wc-ajax'] ) ||
-				( isset( $_GET['startcheckout'] ) && 'true' === $_GET['startcheckout'] )
+				'wc_ppec_generate_cart' === $wc_ajax ||
+				'true' === $startcheckout
 			) {
 				$gateway = 'ppec_paypal'; // WooCommerce PayPal Express Checkout Payment Gateway (By WooCommerce).
-			} else {
+			} elseif ( function_exists( 'WC' ) && WC()->session ) {
 				$gateway = WC()->session->get( 'chosen_payment_method' );
 			}
 			// phpcs:enable WordPress.Security.NonceVerification
@@ -176,49 +186,62 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 			) {
 				$gateways = WC()->payment_gateways->get_available_payment_gateways();
 				if ( $gateways ) {
-					foreach ( $gateways as $gateway ) {
-						if ( 'yes' === $gateway->enabled ) {
-							WC()->session->set( 'chosen_payment_method', $gateway->id );
+					foreach ( $gateways as $available_gateway ) {
+						if ( 'yes' === $available_gateway->enabled ) {
+							WC()->session->set( 'chosen_payment_method', $available_gateway->id );
 							$gateway = WC()->session->get( 'chosen_payment_method' );
 							break;
 						}
 					}
 				}
 			}
-			return $gateway;
+			return is_string( $gateway ) ? $gateway : '';
+		}
+
+		/**
+		 * Get product and variation IDs from the cart once per request.
+		 *
+		 * @param WC_Cart $cart Cart object.
+		 * @return array
+		 */
+		private function get_cart_product_ids( $cart ) {
+			if ( null !== $this->cart_product_ids ) {
+				return $this->cart_product_ids;
+			}
+			$this->cart_product_ids = array();
+			foreach ( $cart->get_cart() as $item ) {
+				if ( ! empty( $item['product_id'] ) ) {
+					$this->cart_product_ids[] = (string) $item['product_id'];
+				}
+				if ( ! empty( $item['variation_id'] ) ) {
+					$this->cart_product_ids[] = (string) $item['variation_id'];
+				}
+			}
+			$this->cart_product_ids = array_values( array_unique( $this->cart_product_ids ) );
+			return $this->cart_product_ids;
 		}
 
 		/**
 		 * Check_cart_products.
 		 *
-		 * @version 3.8.0
+		 * @version 8.1.0
 		 * @since   3.7.0
 		 * @todo    add WPML support
-		 * @todo    add product variations
 		 * @todo    add product cats and tags
-		 * @param string $gateway defines the gateway.
+		 * @param string  $gateway Gateway ID.
+		 * @param WC_Cart $cart    Cart object.
 		 */
-		public function check_cart_products( $gateway ) {
-			$include_products = $this->wcj_get_option( 'include_products', $gateway );
+		public function check_cart_products( $gateway, $cart ) {
+			$product_ids      = $this->get_cart_product_ids( $cart );
+			$include_products = array_map( 'strval', (array) $this->wcj_get_option( 'include_products', $gateway ) );
 			if ( ! empty( $include_products ) ) {
-				$passed = false;
-				foreach ( WC()->cart->get_cart() as $item ) {
-					if ( in_array( $item['product_id'], $include_products, true ) ) {
-						$passed = true;
-						break;
-					}
-				}
-				if ( ! $passed ) {
+				if ( empty( array_intersect( $product_ids, $include_products ) ) ) {
 					return false;
 				}
 			}
-			$exclude_products = $this->wcj_get_option( 'exclude_products', $gateway );
-			if ( ! empty( $exclude_products ) ) {
-				foreach ( WC()->cart->get_cart() as $item ) {
-					if ( in_array( $item['product_id'], $exclude_products, true ) ) {
-						return false;
-					}
-				}
+			$exclude_products = array_map( 'strval', (array) $this->wcj_get_option( 'exclude_products', $gateway ) );
+			if ( ! empty( $exclude_products ) && ! empty( array_intersect( $product_ids, $exclude_products ) ) ) {
+				return false;
 			}
 			return true;
 		}
@@ -226,71 +249,84 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		/**
 		 * Gateways_fees.
 		 *
-		 * @version 6.0.1
+		 * @version 8.1.0
+		 * @param WC_Cart|null $cart Cart passed by WooCommerce.
 		 */
-		public function gateways_fees() {
-			global $woocommerce;
-			$current_gateway = $this->get_current_gateway();
-			if ( strpos( $current_gateway, 'klarna' ) !== false && 'yes' === wcj_get_option( 'wcj_enable_payment_gateway_charge_discount', 'no' ) ) {
-				$current_gateway = 'klarna_payments';
-				$fee_value       = $this->wcj_get_option( 'value', $current_gateway );
+		public function gateways_fees( $cart = null ) {
+			$cart = $cart instanceof WC_Cart ? $cart : ( function_exists( 'WC' ) ? WC()->cart : null );
+			if ( ! $cart || ! function_exists( 'WC' ) || ! WC()->session ) {
+				return;
 			}
-			if ( '' !== $current_gateway ) {
-				$fee_text        = do_shortcode( $this->wcj_get_option( 'text', $current_gateway ) );
-				$min_cart_amount = $this->wcj_get_option( 'min_cart_amount', $current_gateway );
-				$max_cart_amount = $this->wcj_get_option( 'max_cart_amount', $current_gateway );
-				// Multicurrency (Currency Switcher) module.
-				if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
-					$min_cart_amount = w_c_j()->all_modules['multicurrency']->change_price( $min_cart_amount, null );
-					$max_cart_amount = w_c_j()->all_modules['multicurrency']->change_price( $max_cart_amount, null );
-				}
-				$total_in_cart  = ( 'no' === $this->wcj_get_option( 'exclude_shipping', $current_gateway ) ?
-					$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total :
-					$woocommerce->cart->cart_contents_total );
-				$total_in_cart += 'no' === $this->wcj_get_option( 'include_taxes', $current_gateway ) ? 0 : $woocommerce->cart->get_subtotal_tax() + $woocommerce->cart->get_shipping_tax();
-				if ( '' !== $fee_text && $total_in_cart >= $min_cart_amount && ( '0' === $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway ) ) {
-					$enable_user_wise_charge_discount = wcj_get_option( 'wcj_enable_payment_gateway_charge_discount_userwise' )[ $current_gateway ];
-					if ( 'yes' === $enable_user_wise_charge_discount ) {
-						if ( is_user_logged_in() ) {
-							global $current_user;
-							$user_role = $current_user->roles[0];
-						} else {
-							$user_role = 'guest';
-						}
-						$additional_discountby_user = wcj_get_option( 'wcj_gateways_fees_' . $user_role )[ $current_gateway ];
-						if ( $additional_discountby_user ) {
-							$fee_value = $additional_discountby_user;
-						}
+			if ( empty( $this->options ) || empty( $this->defaults ) ) {
+				$this->init_options();
+			}
+
+			$current_gateway = $this->get_current_gateway();
+			if ( '' === $current_gateway ) {
+				return;
+			}
+			if ( false !== strpos( $current_gateway, 'klarna' ) && 'yes' === wcj_get_option( 'wcj_enable_payment_gateway_charge_discount', 'no' ) ) {
+				$current_gateway = 'klarna_payments';
+			}
+
+			$fee_text        = do_shortcode( $this->wcj_get_option( 'text', $current_gateway ) );
+			$min_cart_amount = (float) $this->wcj_get_option( 'min_cart_amount', $current_gateway );
+			$max_cart_amount = (float) $this->wcj_get_option( 'max_cart_amount', $current_gateway );
+			if ( '' === $fee_text ) {
+				return;
+			}
+
+			// Multicurrency (Currency Switcher) module.
+			$multicurrency_enabled = isset( w_c_j()->all_modules['multicurrency'] ) && w_c_j()->all_modules['multicurrency']->is_enabled();
+			if ( $multicurrency_enabled ) {
+				$min_cart_amount = w_c_j()->all_modules['multicurrency']->change_price( $min_cart_amount, null );
+				$max_cart_amount = w_c_j()->all_modules['multicurrency']->change_price( $max_cart_amount, null );
+			}
+			$total_in_cart  = ( 'no' === $this->wcj_get_option( 'exclude_shipping', $current_gateway ) ?
+				$cart->get_cart_contents_total() + $cart->get_shipping_total() :
+				$cart->get_cart_contents_total() );
+			$total_in_cart += 'no' === $this->wcj_get_option( 'include_taxes', $current_gateway ) ? 0 : $cart->get_subtotal_tax() + $cart->get_shipping_tax();
+			if ( $total_in_cart >= $min_cart_amount && ( 0.0 === $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway, $cart ) ) {
+				$userwise_options                  = (array) wcj_get_option( 'wcj_enable_payment_gateway_charge_discount_userwise', array() );
+				$enable_user_wise_charge_discount = isset( $userwise_options[ $current_gateway ] ) ? $userwise_options[ $current_gateway ] : 'no';
+				if ( 'yes' === $enable_user_wise_charge_discount ) {
+					if ( is_user_logged_in() ) {
+						$user      = wp_get_current_user();
+						$user_role = isset( $user->roles[0] ) ? $user->roles[0] : 'guest';
 					} else {
-						$fee_value = $this->wcj_get_option( 'value', $current_gateway );
+						$user_role = 'guest';
 					}
-					$fee_type         = $this->wcj_get_option( 'type', $current_gateway );
-					$final_fee_to_add = 0;
-					switch ( $fee_type ) {
-						case 'fixed':
-							// Multicurrency (Currency Switcher) module.
-							if ( w_c_j()->all_modules['multicurrency']->is_enabled() ) {
-								$fee_value = w_c_j()->all_modules['multicurrency']->change_price( $fee_value, null );
-							}
-							$final_fee_to_add = $fee_value;
-							break;
-						case 'percent':
-							$final_fee_to_add = ( $fee_value / 100 ) * $total_in_cart;
-							if ( 'yes' === $this->wcj_get_option( 'round', $current_gateway ) ) {
-								$final_fee_to_add = round( $final_fee_to_add, $this->wcj_get_option( 'round_precision', $current_gateway ) );
-							}
-							break;
-					}
-					if ( 0 !== $final_fee_to_add ) {
-						$taxable        = ( 'yes' === $this->wcj_get_option( 'is_taxable', $current_gateway ) );
-						$tax_class_name = '';
-						if ( $taxable ) {
-							$tax_class_id    = $this->wcj_get_option( 'tax_class_id', $current_gateway );
-							$tax_class_names = array_merge( array( '' ), WC_Tax::get_tax_classes() );
-							$tax_class_name  = $tax_class_names[ $tax_class_id ];
+					$role_values                = (array) wcj_get_option( 'wcj_gateways_fees_' . $user_role, array() );
+					$additional_discountby_user = isset( $role_values[ $current_gateway ] ) ? $role_values[ $current_gateway ] : '';
+					$fee_value                  = $additional_discountby_user ? $additional_discountby_user : $this->wcj_get_option( 'value', $current_gateway );
+				} else {
+					$fee_value = $this->wcj_get_option( 'value', $current_gateway );
+				}
+				$fee_type         = $this->wcj_get_option( 'type', $current_gateway );
+				$final_fee_to_add = 0;
+				switch ( $fee_type ) {
+					case 'fixed':
+						if ( $multicurrency_enabled ) {
+							$fee_value = w_c_j()->all_modules['multicurrency']->change_price( $fee_value, null );
 						}
-						$woocommerce->cart->add_fee( $fee_text, $final_fee_to_add, $taxable, $tax_class_name );
+						$final_fee_to_add = $fee_value;
+						break;
+					case 'percent':
+						$final_fee_to_add = ( $fee_value / 100 ) * $total_in_cart;
+						if ( 'yes' === $this->wcj_get_option( 'round', $current_gateway ) ) {
+							$final_fee_to_add = round( $final_fee_to_add, $this->wcj_get_option( 'round_precision', $current_gateway ) );
+						}
+						break;
+				}
+				if ( 0.0 !== (float) $final_fee_to_add ) {
+					$taxable        = ( 'yes' === $this->wcj_get_option( 'is_taxable', $current_gateway ) );
+					$tax_class_name = '';
+					if ( $taxable ) {
+						$tax_class_id    = $this->wcj_get_option( 'tax_class_id', $current_gateway );
+						$tax_class_names = array_merge( array( '' ), WC_Tax::get_tax_classes() );
+						$tax_class_name  = isset( $tax_class_names[ $tax_class_id ] ) ? $tax_class_names[ $tax_class_id ] : '';
 					}
+					$cart->add_fee( $fee_text, $final_fee_to_add, $taxable, $tax_class_name );
 				}
 			}
 		}

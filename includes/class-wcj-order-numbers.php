@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 7.3.0
+ * @version 8.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -22,9 +22,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.3.0
+		 * @version 8.1.0
 		 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
-		 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 		 */
 		public function __construct() {
 
@@ -46,10 +45,10 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 
 			if ( $this->is_enabled() ) {
 				// Add & display custom order number.
-				if ( true === wcj_is_hpos_enabled() ) {
-					add_action( 'woocommerce_new_order', array( $this, 'add_new_order_number' ), PHP_INT_MAX );
-				} else {
+				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 					add_action( 'wp_insert_post', array( $this, 'add_new_order_number' ), PHP_INT_MAX );
+				} else {
+					add_action( 'woocommerce_new_order', array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 				}
 				add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
 				// Order tracking.
@@ -209,19 +208,16 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Maybe_add_meta_box.
 		 *
-		 * @version 7.1.4
+		 * @version 8.1.0
 		 * @since   3.5.0
 		 * @todo    re-think if setting number for yet not-numbered order should be allowed (i.e. do not check for `( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) )`)
 		 * @param string         $post_type defines the post_type.
 		 * @param string | array $post defines the post.
 		 */
 		public function maybe_add_meta_box( $post_type, $post ) {
-			$order            = wcj_get_order( $post->ID );
-			$wcj_order_number = ( isset( $order ) && false !== $order ? $order->get_meta( '_wcj_order_number' ) : '' );
-			if ( true === wcj_is_hpos_enabled() && $wcj_order_number ) {
+			$order = $post instanceof WC_Order ? $post : wc_get_order( isset( $post->ID ) ? $post->ID : 0 );
+			if ( $order && '' !== $order->get_meta( '_wcj_order_number' ) ) {
 				parent::add_meta_box();
-			} elseif ( '' !== $this->get_booster_order_meta( $post->ID, '_wcj_order_number' ) ) {
-					parent::add_meta_box();
 			}
 		}
 
@@ -353,20 +349,36 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			$offset     = 0;
 			$block_size = 512;
 			while ( true ) {
-				$args = array(
-					'post_type'      => 'shop_order',
-					'post_status'    => 'any',
-					'posts_per_page' => $block_size,
-					'orderby'        => 'ID',
-					'order'          => 'DESC',
-					'offset'         => $offset,
-					'fields'         => 'ids',
-				);
-				$loop = new WP_Query( $args );
-				if ( ! $loop->have_posts() ) {
+				if ( function_exists( 'wc_get_orders' ) ) {
+					$order_ids = wc_get_orders(
+						array(
+							'type'    => array( 'shop_order' ),
+							'status'  => 'any',
+							'limit'   => $block_size,
+							'orderby' => 'id',
+							'order'   => 'DESC',
+							'offset'  => $offset,
+							'return'  => 'ids',
+						)
+					);
+				} else {
+					$loop = new WP_Query(
+						array(
+							'post_type'      => 'shop_order',
+							'post_status'    => 'any',
+							'posts_per_page' => $block_size,
+							'orderby'        => 'ID',
+							'order'          => 'DESC',
+							'offset'         => $offset,
+							'fields'         => 'ids',
+						)
+					);
+					$order_ids = $loop->posts;
+				}
+				if ( empty( $order_ids ) ) {
 					break;
 				}
-				foreach ( $loop->posts as $_order_id ) {
+				foreach ( $order_ids as $_order_id ) {
 					$_order        = wc_get_order( $_order_id );
 					$_order_number = $this->display_order_number( $_order_id, $_order );
 					if ( $_order_number === $order_number ) {
@@ -381,17 +393,13 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Display order number.
 		 *
-		 * @version 7.1.4
+		 * @version 8.1.0
 		 * @param int            $order_number defines the order_number.
 		 * @param string | array $order defines the order.
 		 */
 		public function display_order_number( $order_number, $order ) {
 			$order_id = wcj_get_order_id( $order );
-			if ( true === wcj_is_hpos_enabled() ) {
-				$order_number_meta = $order->get_meta( '_wcj_order_number' );
-			} else {
-				$order_number_meta = get_post_meta( $order_id, '_wcj_order_number', true );
-			}
+			$order_number_meta = is_callable( array( $order, 'get_meta' ) ) ? $order->get_meta( '_wcj_order_number' ) : $this->get_booster_order_meta( $order_id, '_wcj_order_number' );
 			if ( '' === $order_number_meta || 'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 				$order_number_meta = $order_id;
 			}
@@ -464,10 +472,10 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @param int $order_id defines the order_id.
 		 */
 		public function add_new_order_number( $order_id ) {
-			if ( true === wcj_is_hpos_enabled() ) {
-				$this->add_order_number_meta_hpos( $order_id, false );
-			} else {
+			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 				$this->add_order_number_meta( $order_id, false );
+			} else {
+				$this->add_order_number_meta_hpos( $order_id, false );
 			}
 		}
 
@@ -570,9 +578,9 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 
 
 		/**
-		 * Add/update order_number meta to order HPOS.
+		 * Add/update order number meta through WooCommerce order CRUD.
 		 *
-		 * @version 7.1.9
+		 * @version 8.1.0
 		 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 		 * @param int  $order_id defines the order_id.
 		 * @param bool $do_overwrite defines the do_overwrite.
@@ -582,7 +590,8 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 
 			if ( $order && false !== $order ) {
 
-				if ( 'shop_order' !== OrderUtil::get_order_type( $order_id ) || 'auto-draft' === $order->get_status() ) {
+				$order_type = class_exists( 'Automattic\\WooCommerce\\Utilities\\OrderUtil' ) ? OrderUtil::get_order_type( $order_id ) : $order->get_type();
+				if ( 'shop_order' !== $order_type || 'auto-draft' === $order->get_status() ) {
 					return;
 				}
 
@@ -630,7 +639,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		/**
 		 * Renumerate orders function.
 		 *
-		 * @version 7.1.4
+		 * @version 8.1.0
 		 * @todo    renumerate in date range only
 		 * @todo    (maybe) selectable `post_status`
 		 * @todo    (maybe) set default value for `wcj_order_numbers_renumerate_tool_orderby` to `ID` (instead of `date`)
@@ -643,26 +652,22 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			$block_size = 512;
 			while ( true ) {
 
-				if ( true === wcj_is_hpos_enabled() ) {
-
+				if ( function_exists( 'wc_get_orders' ) ) {
 					$args  = array(
-						'type'           => 'shop_order',
+						'type'           => array( 'shop_order' ),
 						'status'         => 'any',
-						'posts_per_page' => $block_size,
+						'limit'          => $block_size,
 						'orderby'        => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
 						'order'          => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order', 'ASC' ),
 						'offset'         => $offset,
 						'fields'         => 'ids',
 					);
-					$order = wc_get_orders( $args );
-					if ( ! $order ) {
+					$order_ids = wc_get_orders( $args );
+					if ( ! $order_ids ) {
 						break;
 					}
-					$i = 0;
-					foreach ( $order as $order_id ) {
-
+					foreach ( $order_ids as $order_id ) {
 						$this->add_order_number_meta_hpos( $order_id, true );
-						++$i;
 					}
 				} else {
 

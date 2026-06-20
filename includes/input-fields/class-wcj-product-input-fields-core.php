@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 7.2.5
+ * @version 8.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -15,7 +15,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 	/**
 	 * WCJ_Product_Input_Fields_Core
 	 *
-	 * @version 7.1.6
+	 * @version 8.1.0
 	 * @since   4.2.0
 	 */
 	class WCJ_Product_Input_Fields_Core {
@@ -34,6 +34,20 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @var varchar $are_product_input_fields_displayed Module are_product_input_fields_displayed.
 		 */
 		public $are_product_input_fields_displayed;
+
+		/**
+		 * Request-scoped option values keyed by product and option name.
+		 *
+		 * @var array
+		 */
+		private $value_cache = array();
+
+		/**
+		 * Request-scoped local configuration arrays keyed by product ID.
+		 *
+		 * @var array
+		 */
+		private $local_options_cache = array();
 
 		/**
 		 * Constructor.
@@ -205,14 +219,14 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Save product input fields on Product Edit.
 		 *
-		 * @version 5.6.3
+	 * @version 8.1.0
 		 * @param int         $post_id Get post ID.
 		 * @param obj | Array $post Get post.
 		 */
 		public function save_local_product_input_fields_on_product_edit( $post_id, $post ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 			$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : '' ), 'woocommerce_save_data' );
 			// Check that we are saving with input fields displayed.
-			if ( ! $wpnonce || ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) ) {
+			if ( ! $wpnonce || ! current_user_can( 'edit_post', $post_id ) || ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) ) {
 				return;
 			}
 			// Save values.
@@ -234,6 +248,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 				}
 			}
 			update_post_meta( $post_id, '_wcj_product_input_fields', $values );
+			unset( $this->local_options_cache[ (int) $post_id ] );
+			$this->value_cache = array();
 		}
 
 		/**
@@ -521,24 +537,37 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Get_value.
 		 *
-		 * @version 5.6.2
+	 * @version 8.1.0
 		 * @todo    `wcj_get_product_input_field_value()` is almost identical
 		 * @param string $option_name Get option name.
 		 * @param int    $product_id Get product id.
 		 * @param string $default Get default value.
 		 */
 		public function get_value( $option_name, $product_id, $default ) {
+			$cache_key = (int) $product_id . '|' . $option_name . '|' . md5( maybe_serialize( $default ) );
+			if ( array_key_exists( $cache_key, $this->value_cache ) ) {
+				return $this->value_cache[ $cache_key ];
+			}
+
 			if ( 'global' === $this->scope ) {
-				return wcj_get_option( $option_name, $default );
+				$value = wcj_get_option( $option_name, $default );
 			} else { // local.
-				$options = get_post_meta( $product_id, '_wcj_product_input_fields', true );
+				$product_id = (int) $product_id;
+				if ( ! array_key_exists( $product_id, $this->local_options_cache ) ) {
+					$this->local_options_cache[ $product_id ] = get_post_meta( $product_id, '_wcj_product_input_fields', true );
+				}
+				$options = $this->local_options_cache[ $product_id ];
 				if ( '' !== ( $options ) ) {
-					$option_name = str_replace( 'wcj_product_input_fields_', '', $option_name );
-					return ( isset( $options[ $option_name ] ) ? $options[ $option_name ] : $default );
+					$local_key = str_replace( 'wcj_product_input_fields_', '', $option_name );
+					$value     = is_array( $options ) && isset( $options[ $local_key ] ) ? $options[ $local_key ] : $default;
 				} else { // Booster version  < 3.5.0.
-					return get_post_meta( $product_id, '_' . $option_name, true );
+					$legacy_value = get_post_meta( $product_id, '_' . $option_name, true );
+					$value        = '' !== $legacy_value ? $legacy_value : $default;
 				}
 			}
+
+			$this->value_cache[ $cache_key ] = $value;
+			return $value;
 		}
 
 		/**
@@ -889,13 +918,14 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * From `$_POST` to `$cart_item_data`
 		 *
-		 * @version 5.6.8
+	 * @version 8.1.0
 		 * @param Array $cart_item_data Get cart items.
 		 * @param int   $product_id Get product id.
 		 * @param int   $variation_id Get variation id.
 		 */
 		public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-			$wpnonce = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_product_input_fields-nonce'] ), 'wcj_product_input_fields' ) : false;
+			$nonce   = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_product_input_fields-nonce'] ) ) : '';
+			$wpnonce = wp_verify_nonce( $nonce, 'wcj_product_input_fields' );
 			if ( ! $wpnonce ) {
 				return $cart_item_data;
 			}

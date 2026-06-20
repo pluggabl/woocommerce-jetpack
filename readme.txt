@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.0.2
+Stable tag: 8.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -172,7 +172,7 @@ Yes, definitely! Because Booster is modular, you can activate only the specific 
 In many cases, yes! Booster's free core modules for features like <strong>PDF Invoicing</strong>, <strong>Currency Switching</strong>, and <strong>Checkout Field Editing</strong> are very robust and often provide comparable or even more functionality than many standalone free plugins. For advanced needs, <strong>Booster Elite</strong> frequently offers more comprehensive features than specialized premium plugins, all at a fraction of the total cost. We recommend trying the free module first and checking our feature comparison for Elite capabilities.
 
 = Is Booster compatible with the latest WooCommerce, WordPress, and features like HPOS? =
-Yes, Booster is <strong>regularly updated and fully compatible</strong> with the latest WordPress and WooCommerce versions. This includes seamless integration with modern WooCommerce architecture like <strong>High-Performance Order Storage (HPOS)</strong> for improved scalability, as well as <strong>WooCommerce Blocks</strong>, ensuring our toolkit stays current and performs optimally with all platform advancements.
+Booster is regularly updated and tested with current WordPress and WooCommerce releases. <strong>HPOS and Checkout Blocks compatibility is module-specific</strong>: supported workflows use modern WooCommerce APIs, while Booster's Compatibility Status guidance and release notes identify partial or Classic Checkout-only features.
 
 = Why should I choose Booster Elite over other individual premium plugins? =
 Implementing just a few premium modules from the Booster Elite suite is typically more **cost-effective** than buying multiple individual plugins (often priced at $49-$99 each). Stacking your WooCommerce site with many different plugins can also lead to slower performance and compatibility conflicts. **Booster Elite** solves these problems with over 110 compatible modules in a single, optimized package, simplifying your plugin management and saving you money.
@@ -346,6 +346,17 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.1.0 - 15/07/2026 =
+* Checkout Blocks compatibility - Added supported Checkout Custom Fields to Blocks checkout with server-side validation, order saving, and module-specific product, category, and cart visibility on supported WooCommerce versions.
+* Checkout Blocks compatibility - Kept textarea fields, checkout-field-conditional fees, and checkout file collection on their safe Classic Checkout or post-order paths instead of overstating Blocks support.
+* HPOS compatibility - Modernized Order Numbers, Checkout Files Upload, PDF Invoicing, Checkout Custom Fields, Product Addons, and Product Input Fields to use WooCommerce order and order-item APIs in active order workflows.
+* Performance - Reused normalized fee, gateway, input-field, invoice, product, and category configuration within each request to reduce repeated work in cart, checkout, order, and PDF paths.
+* Reliability - Preserved conditional fees when a guest creates an account during Classic Checkout, prevented duplicate order-item writes, and strengthened fallbacks around checkout and order data.
+* Admin experience - Expanded module-level Checkout Blocks and HPOS status guidance with clear supported, partial, and Classic-only boundaries.
+* Tier-specific value - Improved the existing Free field, fee, upload, order-number, invoice, add-on, and input-field capabilities without enabling paid counts or premium controls.
+* Security hardening - Strengthened validation and request handling in selected customer-facing workflows.
+
 
 = 8.0.2 - 17/06/2026 =
 * Security - Hardened Product by User media upload handling and Free tier upload boundaries.
