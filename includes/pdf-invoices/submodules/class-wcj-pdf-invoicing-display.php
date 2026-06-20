@@ -22,7 +22,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.1.4
+		 * @version 8.1.0
 		 */
 		public function __construct() {
 
@@ -442,21 +442,12 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 						if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
 							$number_option = 'wcj_invoicing_' . $invoice_type['id'] . '_number_id';
 							$date_option   = 'wcj_invoicing_' . $invoice_type['id'] . '_date';
-							if ( true === wcj_is_hpos_enabled() ) {
-								$number_input = '<br>' .
-								'<input style="width:100%;" type="number"' .
-									' id="' . $number_option . '" name="' . $number_option . '" value="' . $_order->get_meta( '_' . $number_option ) . '">' .
-								'<input style="width:100%;" type="text"' .
-									' id="' . $date_option . '" name="' . $date_option . '" value="' . gmdate( 'Y-m-d H:i:s', $_order->get_meta( '_' . $date_option ) ) . '">' .
-								'<input type="hidden" name="woojetpack_pdf_invoicing_save_post" value="woojetpack_pdf_invoicing_save_post">';
-							} else {
-								$number_input = '<br>' .
-								'<input style="width:100%;" type="number"' .
-									' id="' . $number_option . '" name="' . $number_option . '" value="' . get_post_meta( $order_id, '_' . $number_option, true ) . '">' .
-								'<input style="width:100%;" type="text"' .
-									' id="' . $date_option . '" name="' . $date_option . '" value="' . gmdate( 'Y-m-d H:i:s', get_post_meta( $order_id, '_' . $date_option, true ) ) . '">' .
-								'<input type="hidden" name="woojetpack_pdf_invoicing_save_post" value="woojetpack_pdf_invoicing_save_post">';
-							}
+							$number_input = '<br>' .
+							'<input style="width:100%;" type="number"' .
+								' id="' . $number_option . '" name="' . $number_option . '" value="' . esc_attr( $_order->get_meta( '_' . $number_option ) ) . '">' .
+							'<input style="width:100%;" type="text"' .
+								' id="' . $date_option . '" name="' . $date_option . '" value="' . esc_attr( gmdate( 'Y-m-d H:i:s', (int) $_order->get_meta( '_' . $date_option ) ) ) . '">' .
+							'<input type="hidden" name="woojetpack_pdf_invoicing_save_post" value="woojetpack_pdf_invoicing_save_post">';
 						}
 						// Actions.
 						$actions = array( $view_link . ' | ' . $delete_link . $number_input );

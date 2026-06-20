@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 8.0.0
+ * @version 8.1.0
  * @since   3.7.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 8.0.0
+		 * @version 8.1.0
 		 * @since   3.7.0
 		 */
 		public function __construct() {
@@ -81,6 +81,15 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		private function is_store_api_request() {
 			if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
 				return false;
+			}
+			$route = '';
+			if ( isset( $GLOBALS['wp']->query_vars['rest_route'] ) ) {
+				$route = sanitize_text_field( wp_unslash( $GLOBALS['wp']->query_vars['rest_route'] ) );
+			} elseif ( isset( $_GET['rest_route'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$route = sanitize_text_field( wp_unslash( $_GET['rest_route'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			}
+			if ( 0 === strpos( ltrim( $route, '/' ), 'wc/store/' ) ) {
+				return true;
 			}
 			$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 			return false !== strpos( $uri, '/wc/store/' );
@@ -153,16 +162,22 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 					// Checkout-field-conditional fees are not supported on Blocks checkout.
 					return false;
 				}
-				if ( isset( $post_data ) || isset( $_REQUEST['post_data'] ) ) {
-					if ( ! isset( $post_data ) ) {
-						$post_data = array();
-						parse_str( sanitize_text_field( wp_unslash( $_REQUEST['post_data'] ) ), $post_data );
-						$wpnonce = isset( $post_data['wcj-process-checkout-nonce'] ) ? wp_verify_nonce( sanitize_key( $post_data['wcj-process-checkout-nonce'] ), 'wcj-process_checkout' ) : false;
-					}
-					if ( ! $wpnonce || empty( $post_data[ $this->checkout_fields[ $fee_id ] ] ) ) {
-						return false;
-					}
-				} elseif ( empty( $_REQUEST[ $this->checkout_fields[ $fee_id ] ] ) ) {
+				$post_data = array();
+				if ( isset( $_REQUEST['post_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					parse_str( wp_unslash( $_REQUEST['post_data'] ), $post_data ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				} else {
+					$post_data = wp_unslash( $_REQUEST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				}
+				$nonce       = isset( $post_data['wcj-process-checkout-nonce'] ) ? sanitize_text_field( $post_data['wcj-process-checkout-nonce'] ) : '';
+				$nonce_valid = wp_verify_nonce( $nonce, 'wcj-process_checkout' );
+				if ( ! $nonce_valid && isset( $_REQUEST['wc-ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$ajax_action = sanitize_key( wp_unslash( $_REQUEST['wc-ajax'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					// WooCommerce verifies its checkout nonce before this action. A customer
+					// account created during checkout changes the user session and invalidates
+					// Booster's earlier guest nonce before the final cart recalculation.
+					$nonce_valid = ( 'checkout' === $ajax_action && did_action( 'woocommerce_checkout_process' ) );
+				}
+				if ( ! $nonce_valid || empty( $post_data[ $this->checkout_fields[ $fee_id ] ] ) ) {
 					return false;
 				}
 			}
@@ -240,7 +255,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 			$cart_max        = $this->get_fee_option( 'wcj_checkout_fees_cart_max_amount' );
 			$cart_max_total  = $this->get_fee_option( 'wcj_checkout_fees_cart_max_total_amount' );
 			$taxable         = $this->get_fee_option( 'wcj_checkout_fees_data_taxable' );
-			$checkout_fields = $this->get_fee_option( 'wcj_checkout_fees_data_values' );
+			$checkout_fields = $this->get_fee_option( 'wcj_checkout_fees_data_checkout_fields' );
 			$enabled         = $this->get_fee_option( 'wcj_checkout_fees_data_enabled' );
 			$overlap_opt     = $this->get_fee_option( 'wcj_checkout_fees_overlap' );
 			$priorities      = $this->get_fee_option( 'wcj_checkout_fees_priority' );
@@ -285,7 +300,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Get valid fees.
 		 *
-		 * @version 8.0.0
+		 * @version 8.1.0
 		 * @since   4.5.0
 		 *
 		 * @param string | array $cart define cart details.
@@ -294,11 +309,6 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 * @return array
 		 */
 		public function get_valid_fees( $cart, $ignore_overlapped = true ) {
-			$titles  = $this->get_fee_option( 'wcj_checkout_fees_data_titles' );
-			$types   = $this->get_fee_option( 'wcj_checkout_fees_data_types' );
-			$values  = $this->get_fee_option( 'wcj_checkout_fees_data_values' );
-			$taxable = $this->get_fee_option( 'wcj_checkout_fees_data_taxable' );
-
 			$fees = $this->get_fees();
 
 			$fees_to_add = array();
@@ -319,16 +329,19 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 			}
 
 			foreach ( $valid_fees as $fee_id ) {
+				if ( ! isset( $fees[ $fee_id ] ) ) {
+					continue;
+				}
 				// Adding the fee.
-				$title = ( isset( $titles[ $fee_id ] ) ? $titles[ $fee_id ] : __( 'Fee', 'woocommerce-jetpack' ) . ' #' . $fee_id );
-				$value = isset( $values[ $fee_id ] ) ? $values[ $fee_id ] : 0;
-				if ( isset( $types[ $fee_id ] ) && 'percent' === $types[ $fee_id ] ) {
+				$title = '' !== $fees[ $fee_id ]['title'] ? $fees[ $fee_id ]['title'] : __( 'Fee', 'woocommerce-jetpack' ) . ' #' . $fee_id;
+				$value = $fees[ $fee_id ]['value'];
+				if ( 'percent' === $fees[ $fee_id ]['type'] ) {
 					$value = $cart->get_cart_contents_total() * $value / 100;
 				}
 				$fees_to_add[ $fee_id ] = array(
 					'name'      => $title,
 					'amount'    => $value,
-					'taxable'   => ( isset( $taxable[ $fee_id ] ) ? ( 'yes' === $taxable[ $fee_id ] ) : true ),
+					'taxable'   => 'yes' === $fees[ $fee_id ]['taxable'],
 					'tax_class' => 'standard',
 				);
 			}

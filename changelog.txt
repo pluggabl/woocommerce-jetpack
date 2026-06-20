@@ -1,5 +1,16 @@
 == Changelog ==
 
+= 8.1.0 - 15/07/2026 =
+* Checkout Blocks compatibility - Added supported Checkout Custom Fields to Blocks checkout with server-side validation, order saving, and module-specific product, category, and cart visibility on supported WooCommerce versions.
+* Checkout Blocks compatibility - Kept textarea fields, checkout-field-conditional fees, and checkout file collection on their safe Classic Checkout or post-order paths instead of overstating Blocks support.
+* HPOS compatibility - Modernized Order Numbers, Checkout Files Upload, PDF Invoicing, Checkout Custom Fields, Product Addons, and Product Input Fields to use WooCommerce order and order-item APIs in active order workflows.
+* Performance - Reused normalized fee, gateway, input-field, invoice, product, and category configuration within each request to reduce repeated work in cart, checkout, order, and PDF paths.
+* Reliability - Preserved conditional fees when a guest creates an account during Classic Checkout, prevented duplicate order-item writes, and strengthened fallbacks around checkout and order data.
+* Admin experience - Expanded module-level Checkout Blocks and HPOS status guidance with clear supported, partial, and Classic-only boundaries.
+* Tier-specific value - Improved the existing Free field, fee, upload, order-number, invoice, add-on, and input-field capabilities without enabling paid counts or premium controls.
+* Security hardening - Strengthened validation and request handling in selected customer-facing workflows.
+
+
 = 8.0.2 - 17/06/2026 =
 * Security - Hardened Product by User media upload handling and Free tier upload boundaries.
 * Security hardening - Strengthened related customer upload validation in Checkout Files Upload and Product Input Fields.

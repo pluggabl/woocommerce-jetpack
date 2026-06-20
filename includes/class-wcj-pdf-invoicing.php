@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 7.3.0
+ * @version 8.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
@@ -53,6 +53,25 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @var varchar $the_pdf_invoicing_report_tool Module.
 		 */
 		public $the_pdf_invoicing_report_tool;
+
+		/**
+		 * Enabled invoice types cached for the current request.
+		 *
+		 * @var array|null
+		 */
+		private $enabled_invoice_types = null;
+
+		/**
+		 * Get enabled invoice types once per request.
+		 *
+		 * @return array
+		 */
+		private function get_enabled_invoice_types() {
+			if ( null === $this->enabled_invoice_types ) {
+				$this->enabled_invoice_types = wcj_get_enabled_invoice_types();
+			}
+			return $this->enabled_invoice_types;
+		}
 		/**
 		 * Constructor.
 		 *
@@ -99,7 +118,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 
 				$this->the_pdf_invoicing_report_tool = include_once 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php';
 
-				$invoice_types = wcj_get_enabled_invoice_types();
+				$invoice_types = $this->get_enabled_invoice_types();
 				foreach ( $invoice_types as $invoice_type ) {
 					$the_hooks = wcj_get_invoice_create_on( $invoice_type['id'] );
 					foreach ( $the_hooks as $the_hook ) {
@@ -137,7 +156,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 * @return array
 		 */
 		public function bulk_actions_register( $actions ) {
-			$invoice_types      = wcj_get_enabled_invoice_types();
+			$invoice_types      = $this->get_enabled_invoice_types();
 			$new_actions_source = array(
 				'generate' => __( 'Generate', 'woocommerce-jetpack' ),
 				'download' => __( 'Download (Zip)', 'woocommerce-jetpack' ),
@@ -467,7 +486,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			) {
 				$current_filter = 'woocommerce_new_order';
 			}
-			$invoice_types = wcj_get_enabled_invoice_types();
+			$invoice_types = $this->get_enabled_invoice_types();
 			foreach ( $invoice_types as $invoice_type ) {
 				$the_hooks = wcj_get_invoice_create_on( $invoice_type['id'] );
 				foreach ( $the_hooks as $the_hook ) {
@@ -535,7 +554,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		/**
 		 * Gets an order customer ID through WooCommerce order APIs when available.
 		 *
-		 * @version 8.0.2
+		 * @version 8.1.0
 		 * @since   8.0.2
 		 * @param int $order_id defines the order ID.
 		 * @return int
@@ -547,7 +566,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 				return (int) $order->get_customer_id();
 			}
 
-			return (int) get_post_meta( $order_id, '_customer_user', true );
+			return 0;
 		}
 
 		/**
