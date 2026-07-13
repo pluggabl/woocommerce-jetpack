@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 
 			$order_id     = $this->order_id;
 			$invoice_type = $this->invoice_type;
-			$order = $this->get_order();
+			$order        = $this->get_order();
 			if ( ! $order ) {
 				return;
 			}
@@ -178,7 +178,6 @@ if ( ! class_exists( 'WCJ_Invoice' ) ) :
 				$this->order_id
 			);
 		}
-
 	}
 
 endif;

@@ -287,7 +287,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 				$cart->get_cart_contents_total() );
 			$total_in_cart += 'no' === $this->wcj_get_option( 'include_taxes', $current_gateway ) ? 0 : $cart->get_subtotal_tax() + $cart->get_shipping_tax();
 			if ( $total_in_cart >= $min_cart_amount && ( 0.0 === $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway, $cart ) ) {
-				$userwise_options                  = (array) wcj_get_option( 'wcj_enable_payment_gateway_charge_discount_userwise', array() );
+				$userwise_options                 = (array) wcj_get_option( 'wcj_enable_payment_gateway_charge_discount_userwise', array() );
 				$enable_user_wise_charge_discount = isset( $userwise_options[ $current_gateway ] ) ? $userwise_options[ $current_gateway ] : 'no';
 				if ( 'yes' === $enable_user_wise_charge_discount ) {
 					if ( is_user_logged_in() ) {

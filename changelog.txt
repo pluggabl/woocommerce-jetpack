@@ -9,6 +9,8 @@
 * Admin experience - Expanded module-level Checkout Blocks and HPOS status guidance with clear supported, partial, and Classic-only boundaries.
 * Tier-specific value - Improved the existing Free field, fee, upload, order-number, invoice, add-on, and input-field capabilities without enabling paid counts or premium controls.
 * Security hardening - Strengthened validation and request handling in selected customer-facing workflows.
+* WooCommerce 10.9.4 Tested
+* WordPress 7.0 Tested
 
 
 = 8.0.2 - 17/06/2026 =

@@ -35,19 +35,39 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		/** Minimum WooCommerce version with conditional additional fields. */
 		const CONDITIONAL_FIELDS_MIN_VERSION = '9.9.0';
 
-		/** @var int Total configured fields for the current tier. */
+		/**
+		 * Total configured fields for the current tier.
+		 *
+		 * @var int
+		 */
 		private $total_fields;
 
-		/** @var array Types supported by the Additional Checkout Fields API. */
+		/**
+		 * Types supported by the Additional Checkout Fields API.
+		 *
+		 * @var array
+		 */
 		private $supported_types = array( 'text', 'select', 'checkbox', 'radio' );
 
-		/** @var array|null Request-scoped field configuration. */
+		/**
+		 * Request-scoped field configuration.
+		 *
+		 * @var array|null
+		 */
 		private $field_config_cache = null;
 
-		/** @var array|null Request-scoped cart product IDs. */
+		/**
+		 * Request-scoped cart product IDs.
+		 *
+		 * @var array|null
+		 */
 		private $cart_product_ids_cache = null;
 
-		/** @var array|null Request-scoped cart category IDs. */
+		/**
+		 * Request-scoped cart category IDs.
+		 *
+		 * @var array|null
+		 */
 		private $cart_category_ids_cache = null;
 
 		/**
@@ -132,7 +152,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 					continue;
 				}
 
-				$config = array(
+				$config                = array(
 					'type'           => $type,
 					'label'          => wcj_get_option( 'wcj_checkout_custom_field_label_' . $i, '' ),
 					'required'       => 'yes' === wcj_get_option( 'wcj_checkout_custom_field_required_' . $i, 'no' ),
@@ -418,10 +438,10 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		 * WooCommerce saves the order object after this hook, so this method only
 		 * mutates the object and deliberately does not trigger an extra save.
 		 *
-		 * @param string    $key       Additional field key.
-		 * @param mixed     $value     Saved value.
-		 * @param string    $group     Field group.
-		 * @param WC_Data   $wc_object WooCommerce data object.
+		 * @param string  $key       Additional field key.
+		 * @param mixed   $value     Saved value.
+		 * @param string  $group     Field group.
+		 * @param WC_Data $wc_object WooCommerce data object.
 		 */
 		public function bridge_additional_field_value( $key, $value, $group, $wc_object ) {
 			if ( 'other' !== $group || ! is_a( $wc_object, 'WC_Order' ) ) {

@@ -323,13 +323,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			$block_size = 512;
 			while ( true ) {
 				$args   = array(
-					'type'           => 'shop_order',
-					'status'         => 'any',
-					'limit'          => $block_size,
-					'orderby'        => 'meta_value_num',
-					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-					'order'          => 'ASC',
-					'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					'type'       => 'shop_order',
+					'status'     => 'any',
+					'limit'      => $block_size,
+					'orderby'    => 'meta_value_num',
+					'meta_key'   => '_wcj_invoicing_' . $invoice_type_id . '_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'order'      => 'ASC',
+					'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
 							'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
 							'value'   => array( $first_minute, $last_minute ),
@@ -337,8 +337,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 							'compare' => 'BETWEEN',
 						),
 					),
-					'offset'         => $offset,
-					'return'         => 'objects',
+					'offset'     => $offset,
+					'return'     => 'objects',
 				);
 				$orders = wc_get_orders( $args );
 				if ( ! $orders ) {
@@ -501,7 +501,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 
 					if ( wcj_is_invoice_created( $order_id, $invoice_type_id ) ) {
 
-						$the_order = wc_get_order( $order_id );
+						$the_order        = wc_get_order( $order_id );
 						$billing_country  = $the_order->get_billing_country();
 						$shipping_country = $the_order->get_shipping_country();
 						$customer_country = ( '' === $billing_country ) ? $shipping_country : $billing_country;
@@ -639,13 +639,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			$block_size = 512;
 			while ( true ) {
 				$args   = array(
-					'type'           => 'shop_order',
-					'status'         => 'any',
-					'limit'          => $block_size,
-					'orderby'        => 'meta_value_num',
-					'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-					'order'          => 'ASC',
-					'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					'type'       => 'shop_order',
+					'status'     => 'any',
+					'limit'      => $block_size,
+					'orderby'    => 'meta_value_num',
+					'meta_key'   => '_wcj_invoicing_' . $invoice_type_id . '_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'order'      => 'ASC',
+					'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
 							'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
 							'value'   => array( $first_minute, $last_minute ),
@@ -653,8 +653,8 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 							'compare' => 'BETWEEN',
 						),
 					),
-					'offset'         => $offset,
-					'return'         => 'objects',
+					'offset'     => $offset,
+					'return'     => 'objects',
 				);
 				$orders = wc_get_orders( $args );
 				if ( ! $orders ) {
@@ -788,8 +788,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Report_Tool' ) ) :
 			}
 			return $headers;
 		}
-
-
 	}
 
 endif;

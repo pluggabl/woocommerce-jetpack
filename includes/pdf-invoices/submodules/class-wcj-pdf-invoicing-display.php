@@ -175,8 +175,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 							'action' => $the_action,
 						);
 					}
-				} else {
-					if ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn', 'yes' ) ) {
+				} elseif ( 'yes' === wcj_get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn', 'yes' ) ) {
 						// Create button.
 						$query_args                = array(
 							'create_invoice_for_order_id' => wcj_get_order_id( $the_order ),
@@ -192,7 +191,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 							'name'   => $the_name,
 							'action' => $the_action,
 						);
-					}
 				}
 			}
 			return $actions;
@@ -442,7 +440,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 						if ( 'yes' === wcj_get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
 							$number_option = 'wcj_invoicing_' . $invoice_type['id'] . '_number_id';
 							$date_option   = 'wcj_invoicing_' . $invoice_type['id'] . '_date';
-							$number_input = '<br>' .
+							$number_input  = '<br>' .
 							'<input style="width:100%;" type="number"' .
 								' id="' . $number_option . '" name="' . $number_option . '" value="' . esc_attr( $_order->get_meta( '_' . $number_option ) ) . '">' .
 							'<input style="width:100%;" type="text"' .
@@ -476,7 +474,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

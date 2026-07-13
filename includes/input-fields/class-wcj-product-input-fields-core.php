@@ -219,7 +219,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Save product input fields on Product Edit.
 		 *
-	 * @version 8.1.0
+		 * @version 8.1.0
 		 * @param int         $post_id Get post ID.
 		 * @param obj | Array $post Get post.
 		 */
@@ -537,7 +537,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Get_value.
 		 *
-	 * @version 8.1.0
+		 * @version 8.1.0
 		 * @todo    `wcj_get_product_input_field_value()` is almost identical
 		 * @param string $option_name Get option name.
 		 * @param int    $product_id Get product id.
@@ -918,7 +918,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * From `$_POST` to `$cart_item_data`
 		 *
-	 * @version 8.1.0
+		 * @version 8.1.0
 		 * @param Array $cart_item_data Get cart items.
 		 * @param int   $product_id Get product id.
 		 * @param int   $variation_id Get variation id.

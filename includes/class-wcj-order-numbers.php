@@ -362,7 +362,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 						)
 					);
 				} else {
-					$loop = new WP_Query(
+					$loop      = new WP_Query(
 						array(
 							'post_type'      => 'shop_order',
 							'post_status'    => 'any',
@@ -398,7 +398,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		 * @param string | array $order defines the order.
 		 */
 		public function display_order_number( $order_number, $order ) {
-			$order_id = wcj_get_order_id( $order );
+			$order_id          = wcj_get_order_id( $order );
 			$order_number_meta = is_callable( array( $order, 'get_meta' ) ) ? $order->get_meta( '_wcj_order_number' ) : $this->get_booster_order_meta( $order_id, '_wcj_order_number' );
 			if ( '' === $order_number_meta || 'no' === wcj_get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 				$order_number_meta = $order_id;
@@ -653,14 +653,14 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 			while ( true ) {
 
 				if ( function_exists( 'wc_get_orders' ) ) {
-					$args  = array(
-						'type'           => array( 'shop_order' ),
-						'status'         => 'any',
-						'limit'          => $block_size,
-						'orderby'        => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
-						'order'          => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order', 'ASC' ),
-						'offset'         => $offset,
-						'fields'         => 'ids',
+					$args      = array(
+						'type'    => array( 'shop_order' ),
+						'status'  => 'any',
+						'limit'   => $block_size,
+						'orderby' => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
+						'order'   => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order', 'ASC' ),
+						'offset'  => $offset,
+						'fields'  => 'ids',
 					);
 					$order_ids = wc_get_orders( $args );
 					if ( ! $order_ids ) {

@@ -1215,7 +1215,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				$order = wcj_get_order( $order_id );
 				if ( $wpnonce && 0 !== $order_id && isset( $_GET['key'] ) && ( $order ) && $order->key_is_valid( sanitize_text_field( wp_unslash( $_GET['key'] ) ) ) ) {
 					$order_file_name = $this->get_order_file_meta( $order, '_wcj_checkout_files_upload_' . $i );
-					$tmp_file_name = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
+					$tmp_file_name   = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
 				} else {
 					$session_data  = (array) wcj_session_get( 'wcj_checkout_files_upload_' . $i );
 					$tmp_file_name = isset( $session_data['tmp_name'] ) ? $session_data['tmp_name'] : '';
@@ -1319,7 +1319,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 						( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_add_to_myaccount_' . $i, 'no' ) && 'woocommerce_view_order' === $current_filter )
 					) {
 						$file_name = $this->get_order_file_meta( $order_id, '_wcj_checkout_files_upload_real_name_' . $i );
-						$html .= $this->get_the_form( $i, $file_name, $order_id );
+						$html     .= $this->get_the_form( $i, $file_name, $order_id );
 					}
 				}
 			}

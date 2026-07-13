@@ -164,7 +164,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				}
 				$post_data = array();
 				if ( isset( $_REQUEST['post_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-					parse_str( wp_unslash( $_REQUEST['post_data'] ), $post_data ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					parse_str( wp_unslash( $_REQUEST['post_data'] ), $post_data ); // phpcs:ignore
 				} else {
 					$post_data = wp_unslash( $_REQUEST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				}
