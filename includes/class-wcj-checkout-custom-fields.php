@@ -50,7 +50,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 7.1.4
+		 * @version 8.1.0
 		 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 		 */
 		public function __construct() {
@@ -295,73 +295,69 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $order_id defines the order_id.
 		 */
 		public function update_custom_checkout_fields_order_meta( $order_id ) {
-			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
-				if ( 'yes' === wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
-					if ( 'woocommerce_checkout_update_order_meta' === current_filter() && ! $this->is_visible( $i ) ) {
-						continue;
-					}
-					$the_section       = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
-					$the_type          = wcj_get_option( 'wcj_checkout_custom_field_type_' . $i );
-					$option_name       = $the_section . '_wcj_checkout_field_' . $i;
-					$option_name_label = $the_section . '_wcj_checkout_field_label_' . $i;
-					$option_name_type  = $the_section . '_wcj_checkout_field_type_' . $i;
+			$current_hook = current_filter();
+			$is_checkout  = 'woocommerce_checkout_update_order_meta' === $current_hook;
 
-					if ( true === wcj_is_hpos_enabled() ) {
-
-						$order = wcj_get_order( $order_id );
-						if ( $order && false !== $order ) {
-							$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : $order->get_meta( '_' . $option_name ) ); // phpcs:ignore WordPress.Security.NonceVerification
-							if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
-								$order->update_meta_data( '_' . $option_name_type, $the_type );
-								$order->update_meta_data( '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
-								if ( 'checkbox' === $the_type ) {
-									$the_value = ! empty( $post_value ) ? 1 : 0;
-									$order->update_meta_data( '_' . $option_name, $the_value );
-									$option_name_checkbox_value = $the_section . '_wcj_checkout_field_checkbox_value_' . $i;
-									$checkbox_value             = ( 1 === $the_value ) ?
-									get_option( 'wcj_checkout_custom_field_checkbox_yes_' . $i ) :
-									get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
-									$order->update_meta_data( '_' . $option_name_checkbox_value, $checkbox_value );
-								} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
-									$order->update_meta_data( '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
-									$option_name_values = $the_section . '_wcj_checkout_field_select_options_' . $i;
-									$the_values         = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i );
-									$order->update_meta_data( '_' . $option_name_values, $the_values );
-								} elseif ( 'textarea' === $the_type && 'no' === wcj_get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
-									$order->update_meta_data( '_' . $option_name, urldecode( $post_value ) );
-								} else {
-									$order->update_meta_data( '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
-								}
-								$order->save();
-							}
-						}
-					} else {
-
-						$post_value = isset( $_POST[ $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) ) : ( isset( $_POST[ '_' . $option_name ] ) ? ( sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ) ) : get_post_meta( $order_id, '_' . $option_name, true ) ); // phpcs:ignore WordPress.Security.NonceVerification
-						if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
-							update_post_meta( $order_id, '_' . $option_name_type, $the_type );
-							update_post_meta( $order_id, '_' . $option_name_label, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
-							if ( 'checkbox' === $the_type ) {
-								$the_value = ! empty( $post_value ) ? 1 : 0;
-								update_post_meta( $order_id, '_' . $option_name, $the_value );
-								$option_name_checkbox_value = $the_section . '_wcj_checkout_field_checkbox_value_' . $i;
-								$checkbox_value             = ( 1 === $the_value ) ?
-								get_option( 'wcj_checkout_custom_field_checkbox_yes_' . $i ) :
-								get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
-								update_post_meta( $order_id, '_' . $option_name_checkbox_value, $checkbox_value );
-							} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
-								update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
-								$option_name_values = $the_section . '_wcj_checkout_field_select_options_' . $i;
-								$the_values         = wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i );
-								update_post_meta( $order_id, '_' . $option_name_values, $the_values );
-							} elseif ( 'textarea' === $the_type && 'no' === wcj_get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
-								update_post_meta( $order_id, '_' . $option_name, urldecode( $post_value ) );
-							} else {
-								update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
-							}
-						}
-					}
+			// WooCommerce verifies checkout requests before firing the checkout hook.
+			// Admin saves need an explicit capability and WooCommerce meta-box nonce.
+			if ( ! $is_checkout ) {
+				$nonce = isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				if ( ! current_user_can( 'edit_shop_order', $order_id ) || ! wp_verify_nonce( $nonce, 'woocommerce_save_data' ) ) {
+					return;
 				}
+			}
+
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				return;
+			}
+
+			$changed = false;
+			for ( $i = 1; $i <= $this->wcj_checkout_custom_fields_total_number; $i++ ) {
+				if ( 'yes' !== wcj_get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
+					continue;
+				}
+				if ( $is_checkout && ! $this->is_visible( $i ) ) {
+					continue;
+				}
+
+				$section     = wcj_get_option( 'wcj_checkout_custom_field_section_' . $i );
+				$type        = wcj_get_option( 'wcj_checkout_custom_field_type_' . $i );
+				$option_name = $section . '_wcj_checkout_field_' . $i;
+				if ( isset( $_POST[ $option_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$post_value = sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				} elseif ( isset( $_POST[ '_' . $option_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$post_value = sanitize_text_field( wp_unslash( $_POST[ '_' . $option_name ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				} else {
+					$post_value = $order->get_meta( '_' . $option_name );
+				}
+
+				if ( empty( $post_value ) && 'checkbox' !== $type ) {
+					continue;
+				}
+
+				$order->update_meta_data( '_' . $section . '_wcj_checkout_field_type_' . $i, $type );
+				$order->update_meta_data( '_' . $section . '_wcj_checkout_field_label_' . $i, wcj_get_option( 'wcj_checkout_custom_field_label_' . $i ) );
+				if ( 'checkbox' === $type ) {
+					$value = ! empty( $post_value ) ? 1 : 0;
+					$order->update_meta_data( '_' . $option_name, $value );
+					$order->update_meta_data(
+						'_' . $section . '_wcj_checkout_field_checkbox_value_' . $i,
+						$value ? wcj_get_option( 'wcj_checkout_custom_field_checkbox_yes_' . $i ) : wcj_get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i )
+					);
+				} elseif ( in_array( $type, array( 'radio', 'select' ), true ) ) {
+					$order->update_meta_data( '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
+					$order->update_meta_data( '_' . $section . '_wcj_checkout_field_select_options_' . $i, wcj_get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+				} elseif ( 'textarea' === $type && 'no' === wcj_get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
+					$order->update_meta_data( '_' . $option_name, urldecode( $post_value ) );
+				} else {
+					$order->update_meta_data( '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
+				}
+				$changed = true;
+			}
+
+			if ( $changed ) {
+				$order->save();
 			}
 		}
 

@@ -1,12 +1,13 @@
 {
-    "0": "= 8.0.2 - 17/06/2026 =",
-    "1": "* Security - Hardened Product by User image uploads so customer-submitted product images are validated as real allowed image files before they can be moved into uploads.",
-    "2": "* Security hardening - Strengthened related customer upload validation in Checkout Files Upload and Product Input Fields.",
-    "3": "* Continuous improvement - Free stores get safer Product Addons selection handling with stable submitted values and compatibility for older cached forms.",
-    "4": "* Checkout confidence - Added admin-only compatibility status for active checkout modules that need Classic Checkout, Checkout Blocks staging, or HPOS review.",
-    "5": "* Reliability - Order Numbers and PDF Invoicing now prefer WooCommerce order APIs for maintained order meta reads/writes, with legacy fallbacks.",
-    "6": "* Performance - Product Addons settings are cached for the current request to reduce repeated option reads during cart and checkout calculations.",
-    "7": "* Value - The Free feature set keeps its documented limits while receiving maintenance hardening on shared module paths.",
-    "8": "* WooCommerce 10.8.1 Tested",
-    "9": "* WordPress 7.0 Tested"
+    "0": "= 8.1.0 - 15/07/2026 =",
+    "1": "* Checkout Blocks compatibility - Added support for Checkout Custom Fields in WooCommerce Checkout Blocks with server-side validation, order saving, and module-specific product, category, and cart visibility on supported WooCommerce versions.",
+    "2": "* Checkout Blocks compatibility - Retained textarea fields, conditional checkout fees, and checkout file uploads on their supported Classic Checkout or post-order workflows where Blocks support is not yet available.",
+    "3": "* HPOS compatibility - Updated Order Numbers, Checkout Files Upload, PDF Invoicing, Checkout Custom Fields, Product Addons, and Product Input Fields to use modern WooCommerce order and order-item APIs throughout active order processing.",
+    "4": "* Performance - Optimized cart, checkout, order, and PDF generation by reusing normalized fee, gateway, invoice, product, category, and input-field configuration within each request.",
+    "5": "* Reliability - Preserved conditional fees when guests create an account during Classic Checkout, prevented duplicate order-item processing, and improved fallback handling around checkout and order data.",
+    "6": "* Admin experience - Expanded Checkout Blocks and HPOS compatibility guidance with clear module-level supported, partial, and Classic-only status indicators.",
+    "7": "* Value - The Free feature set keeps its documented limits while benefiting from ongoing compatibility, reliability, and performance improvements across shared modules.",
+    "8": "* Security hardening - Strengthened validation and request handling across selected customer-facing checkout and order workflows.",
+    "9": "* WooCommerce 10.9.4 Tested",
+    "10": "* WordPress 7.0 Tested"
 }

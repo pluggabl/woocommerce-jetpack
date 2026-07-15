@@ -100,7 +100,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 					if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 						add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
 					} else {
-						add_action( 'woocommerce_new_order_item', array( $this, 'add_info_to_order_item_meta_wc3' ), PHP_INT_MAX, 3 );
+						add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'add_info_to_order_line_item' ), PHP_INT_MAX, 4 );
 					}
 				}
 				if ( is_admin() ) {
@@ -720,18 +720,37 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		}
 
 		/**
-		 * Add_info_to_order_item_meta_wc3.
+		 * Add product addon data to a modern WooCommerce order line item.
 		 *
-		 * @version 3.4.0
-		 * @since   3.4.0
-		 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module - `woocommerce_checkout_create_order_line_item` hook)
-		 * @param int   $item_id defines the item_id.
-		 * @param array $item defines the item.
-		 * @param int   $order_id defines the order_id.
+		 * Runs before WooCommerce saves the item, so it works for both Classic and
+		 * Store API checkout without using the removed legacy_values property or
+		 * triggering additional database writes.
+		 *
+		 * @version 8.1.0
+		 * @since   8.1.0
+		 * @param WC_Order_Item_Product $item          Order line item.
+		 * @param string                $cart_item_key Cart item key.
+		 * @param array                 $values        Cart item values.
+		 * @param WC_Order              $order         Order object.
 		 */
-		public function add_info_to_order_item_meta_wc3( $item_id, $item, $order_id ) {
-			if ( is_a( $item, 'WC_Order_Item_Product' ) ) {
-				$this->add_info_to_order_item_meta( $item_id, $item->legacy_values, null );
+		public function add_info_to_order_line_item( $item, $cart_item_key, $values, $order ) {
+			if ( ! $item instanceof WC_Order_Item_Product || empty( $values['product_id'] ) ) {
+				return;
+			}
+
+			$product = isset( $values['data'] ) && $values['data'] instanceof WC_Product
+				? $values['data']
+				: wc_get_product( ! empty( $values['variation_id'] ) ? $values['variation_id'] : $values['product_id'] );
+			if ( ! $product ) {
+				return;
+			}
+
+			foreach ( $this->get_product_addons( $values['product_id'] ) as $addon ) {
+				if ( ! isset( $values[ $addon['price_key'] ] ) ) {
+					continue;
+				}
+				$item->update_meta_data( '_' . $addon['price_key'], $this->maybe_convert_currency( $values[ $addon['price_key'] ], $product ) );
+				$item->update_meta_data( '_' . $addon['label_key'], $this->get_cart_addon_label( $values, $addon ) );
 			}
 		}
 
