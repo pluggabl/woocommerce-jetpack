@@ -33,8 +33,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		public $additional_price_filters;
 
 		/** @var array Request-scoped exchange rates and product currency metadata. */
-		private $currency_rate_cache       = array();
-		private $product_price_meta_cache  = array();
+		private $currency_rate_cache            = array();
+		private $product_price_meta_cache       = array();
+		private $variation_price_context_cache = array();
 
 		/**
 		 * Constructor.
@@ -1222,15 +1223,18 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @param string $display defines the display.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
-			$currency_code                   = $this->get_current_currency_code();
-			$price_hash['wcj_multicurrency'] = array(
-				'currency'               => $currency_code,
-				'exchange_rate'          => $this->get_currency_exchange_rate( $currency_code ),
-				'per_product'            => wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
-				'per_product_make_empty' => wcj_get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ),
-				'rounding'               => wcj_get_option( 'wcj_multicurrency_rounding', 'no_round' ),
-				'rounding_precision'     => wcj_get_option( 'wcj_multicurrency_rounding_precision', absint( wcj_get_option( 'woocommerce_price_num_decimals', 2 ) ) ),
-			);
+			$currency_code = $this->get_current_currency_code();
+			if ( ! isset( $this->variation_price_context_cache[ $currency_code ] ) ) {
+				$this->variation_price_context_cache[ $currency_code ] = array(
+					'currency'               => $currency_code,
+					'exchange_rate'          => $this->get_currency_exchange_rate( $currency_code ),
+					'per_product'            => wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
+					'per_product_make_empty' => wcj_get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ),
+					'rounding'               => wcj_get_option( 'wcj_multicurrency_rounding', 'no_round' ),
+					'rounding_precision'     => wcj_get_option( 'wcj_multicurrency_rounding_precision', absint( wcj_get_option( 'woocommerce_price_num_decimals', 2 ) ) ),
+				);
+			}
+			$price_hash['wcj_multicurrency'] = $this->variation_price_context_cache[ $currency_code ];
 			return $price_hash;
 		}
 
@@ -1317,6 +1321,10 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @param null  $args defines the args.
 		 */
 		public function change_price( $price, $_product, $args = null ) {
+			if ( '' === $price ) {
+				return $price;
+			}
+
 			// Pricing Deals.
 			global $vtprd_cart;
 			if (
@@ -1324,10 +1332,6 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			( is_cart() || is_checkout() ) &&
 			! empty( $vtprd_cart )
 			) {
-				return $price;
-			}
-
-			if ( '' === $price ) {
 				return $price;
 			}
 
@@ -1353,11 +1357,19 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			}
 
 			// Per product.
-			$current_currency_code      = $this->get_current_currency_code();
-			$product_currency_prices    = $this->get_product_currency_prices( $_product_id, $current_currency_code );
-			$regular_price_per_product  = $product_currency_prices['regular'];
+			$current_currency_code     = $this->get_current_currency_code();
+			$per_product_enabled       = ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) );
+			$product_currency_prices   = array(
+				'regular'    => '',
+				'sale'       => '',
+				'make_empty' => '',
+			);
+			if ( $per_product_enabled && null !== $_product ) {
+				$product_currency_prices = $this->get_product_currency_prices( $_product_id, $current_currency_code );
+			}
+			$regular_price_per_product = $product_currency_prices['regular'];
 			$additional_price_filters  = is_array( $this->additional_price_filters ) ? $this->additional_price_filters : array();
-			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) && null !== $_product ) {
+			if ( $per_product_enabled && null !== $_product ) {
 				if (
 				'yes' === wcj_get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) &&
 				'yes' === $product_currency_prices['make_empty']

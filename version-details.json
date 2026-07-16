@@ -1,13 +1,15 @@
 {
     "0": "= 8.2.0 - 06/08/2026 =",
-    "1": "* Faster pricing - Reuses wholesale, role, formula, variation, and multi-currency context during each request.",
-    "2": "* Predictable gateway fees - Normalizes legacy settings safely and records clear internal reason codes when a fee applies or is skipped.",
-    "3": "* Clearer store checks - Adds a read-only Booster Status page with environment, checkout architecture, HPOS, module, and configuration guidance.",
-    "4": "* Faster order exports - Processes orders in bounded batches and reuses WooCommerce order objects under HPOS.",
-    "5": "* Compatibility boundaries - Retains Checkout Files and checkout-field-conditional fee collection on supported Classic Checkout paths.",
-    "6": "* Value - Improves existing Free capabilities without changing Free feature limits.",
-    "7": "* Reliability - Preserves saved pricing and checkout settings while reducing repeated work.",
-    "8": "* Admin experience - Keeps diagnostics capability-protected, escaped, read-only, and free of customer or order data.",
-    "9": "* WooCommerce 10.9.4 Tested",
-    "10": "* WordPress 7.0 Tested"
+    "1": "* Performance 1 of 6 - Reuses identical Price by User Role decisions during a request.",
+    "2": "* Performance 2 of 6 - Reuses role, formula, and multi-currency context while WooCommerce builds variation prices.",
+    "3": "* Performance 3 of 6 - Normalizes export precision and additional fields once, uses bounded batches, and reuses HPOS order objects.",
+    "4": "* Performance 4 of 6 - Reuses gateway-fee cart context and refreshes it when products, variations, or quantities change.",
+    "5": "* Performance 5 of 6 - Shares request-local product and category context across pricing and gateway conditions.",
+    "6": "* Performance 6 of 6 - Skips settings, metadata, cart, and gateway work when the current input or request cannot use it.",
+    "7": "* Predictable gateway fees - Uses stable IDs, normalizes legacy settings, and records safe internal reason codes.",
+    "8": "* Clearer store checks - Adds a read-only Booster Status page with environment, Checkout Blocks, HPOS, module, and configuration guidance.",
+    "9": "* Compatibility boundaries - Retains Checkout Files and checkout-field-conditional fee collection on supported Classic Checkout paths.",
+    "10": "* Value - Improves existing Free capabilities without changing Free feature limits or rewriting saved settings.",
+    "11": "* WooCommerce 10.9.4 Tested",
+    "12": "* WordPress 7.0 Tested"
 }

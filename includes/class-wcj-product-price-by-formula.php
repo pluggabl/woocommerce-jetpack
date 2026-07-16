@@ -35,6 +35,9 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		/** @var array Request-scoped normalized formula configuration. */
 		private $formula_config_cache = array();
 
+		/** @var array Request-scoped variation price context. */
+		private $variation_price_context_cache = array();
+
 		/**
 		 * Gets the effective saved formula configuration once per request.
 		 *
@@ -338,6 +341,9 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		 * @param bool  $output_errors defines the output_errors.
 		 */
 		public function change_price( $price, $_product, $output_errors = false ) {
+			if ( '' === $price || ! $_product ) {
+				return $price;
+			}
 			if ( 'yes' === wcj_get_option( 'wcj_product_price_by_formula_admin_quick_edit_product_scope', 'no' ) ) {
 				if ( wcj_is_admin_product_quick_edit_page() ) {
 					return $price;
@@ -401,21 +407,27 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		 * @param string | bool $display defines the display.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
-			if ( $this->is_price_by_formula_product( $_product ) ) {
-				$the_formula  = wcj_get_option( 'wcj_product_price_by_formula_eval', '' );
-				$total_params = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_wcj_product_price_by_formula_total_params', true );
-				$the_params   = array();
-				for ( $i = 1; $i <= $total_params; $i++ ) {
-					$the_params[] = wcj_get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
-				}
-				$price_hash['wcj_price_by_formula'] = array(
-					'formula'            => $the_formula,
-					'total_params'       => $total_params,
-					'params'             => $the_params,
-					'rounding'           => $this->rounding,
-					'rounding_precision' => $this->rounding_precision,
-				);
+			if ( ! $_product ) {
+				return $price_hash;
 			}
+
+			$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
+			if ( isset( $this->variation_price_context_cache[ $product_id ] ) ) {
+				$price_hash['wcj_price_by_formula'] = $this->variation_price_context_cache[ $product_id ];
+				return $price_hash;
+			}
+			if ( ! $this->is_price_by_formula_product( $_product ) ) {
+				return $price_hash;
+			}
+			$config = $this->get_formula_config( $product_id );
+			$this->variation_price_context_cache[ $product_id ] = array(
+				'formula'            => $config['formula'],
+				'total_params'       => $config['total_params'],
+				'params'             => array_values( $config['params'] ),
+				'rounding'           => $this->rounding,
+				'rounding_precision' => $this->rounding_precision,
+			);
+			$price_hash['wcj_price_by_formula'] = $this->variation_price_context_cache[ $product_id ];
 			return $price_hash;
 		}
 

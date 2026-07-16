@@ -22,6 +22,12 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		/** @var array Request-scoped taxonomy context. */
 		private $product_terms_cache = array();
 
+		/** @var array Request-scoped final price decisions. */
+		private $price_decision_cache = array();
+
+		/** @var array Request-scoped variation price context. */
+		private $variation_price_context_cache = array();
+
 
 		/**
 		 * The module disable_for_regular_price
@@ -382,6 +388,39 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @param array $_product defines the _product.
 		 */
 		public function change_price( $price, $_product ) {
+			$current_filter  = current_filter();
+			$product_id      = $_product ? wcj_get_product_id( $_product ) : 0;
+			$product_changes = ( $_product && is_callable( array( $_product, 'get_changes' ) ) ) ? $_product->get_changes() : array();
+			$use_cache       = empty( $product_changes ) && apply_filters( 'wcj_price_by_user_role_use_request_cache', true, $price, $_product, $current_filter );
+
+			if ( ! $use_cache ) {
+				return $this->calculate_price( $price, $_product );
+			}
+
+			$cache_key = md5(
+				wp_json_encode(
+					array(
+						'product_id' => $product_id,
+						'user_role'  => wcj_get_current_user_first_role(),
+						'filter'     => $current_filter,
+						'price'      => $price,
+					)
+				)
+			);
+			if ( ! array_key_exists( $cache_key, $this->price_decision_cache ) ) {
+				$this->price_decision_cache[ $cache_key ] = $this->calculate_price( $price, $_product );
+			}
+			return $this->price_decision_cache[ $cache_key ];
+		}
+
+		/**
+		 * Calculates a role price without request-cache handling.
+		 *
+		 * @param int        $price Product price.
+		 * @param WC_Product $_product Product object.
+		 * @return mixed
+		 */
+		private function calculate_price( $price, $_product ) {
 
 			$current_user_role = wcj_get_current_user_first_role();
 
@@ -512,7 +551,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				$parent_product_id  = wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) );
 				$terms_cache_key    = $parent_product_id . '|product_cat';
 				if ( ! array_key_exists( $terms_cache_key, $this->product_terms_cache ) ) {
-					$this->product_terms_cache[ $terms_cache_key ] = get_the_terms( $parent_product_id, 'product_cat' );
+					$this->product_terms_cache[ $terms_cache_key ] = wcj_get_product_terms( $parent_product_id, 'product_cat' );
 				}
 				$product_categories = $this->product_terms_cache[ $terms_cache_key ];
 				if ( ! empty( $product_categories ) ) {
@@ -544,7 +583,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				$parent_product_id = wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) );
 				$terms_cache_key   = $parent_product_id . '|product_tag';
 				if ( ! array_key_exists( $terms_cache_key, $this->product_terms_cache ) ) {
-					$this->product_terms_cache[ $terms_cache_key ] = get_the_terms( $parent_product_id, 'product_tag' );
+					$this->product_terms_cache[ $terms_cache_key ] = wcj_get_product_terms( $parent_product_id, 'product_tag' );
 				}
 				$product_tags = $this->product_terms_cache[ $terms_cache_key ];
 				if ( ! empty( $product_tags ) ) {
@@ -589,10 +628,11 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 * @param string | array $display defines the display.
 		 */
 		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
-			$user_role                   = wcj_get_current_user_first_role();
-			$categories                  = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_categories', '' ) );
-			$tags                        = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_tags', '' ) );
-			$price_hash['wcj_user_role'] = array(
+			$user_role = wcj_get_current_user_first_role();
+			if ( ! isset( $this->variation_price_context_cache[ $user_role ] ) ) {
+				$categories = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_categories', '' ) );
+				$tags       = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_tags', '' ) );
+				$context    = array(
 				$user_role,
 				get_option( 'wcj_price_by_user_role_' . $user_role, 1 ),
 				get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' ),
@@ -602,19 +642,22 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				$this->disable_for_regular_price,
 				$categories,
 				$tags,
-			);
-			if ( ! empty( $categories ) ) {
-				foreach ( $categories as $category ) {
-					$price_hash['wcj_user_role'][] = wcj_get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $user_role, 'no' );
-					$price_hash['wcj_user_role'][] = wcj_get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, -1 );
+				);
+				if ( ! empty( $categories ) ) {
+					foreach ( $categories as $category ) {
+						$context[] = wcj_get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $user_role, 'no' );
+						$context[] = wcj_get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, -1 );
+					}
 				}
-			}
-			if ( ! empty( $tags ) ) {
-				foreach ( $tags as $tag ) {
-					$price_hash['wcj_user_role'][] = wcj_get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $user_role, 'no' );
-					$price_hash['wcj_user_role'][] = wcj_get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $user_role, -1 );
+				if ( ! empty( $tags ) ) {
+					foreach ( $tags as $tag ) {
+						$context[] = wcj_get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $user_role, 'no' );
+						$context[] = wcj_get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $user_role, -1 );
+					}
 				}
+				$this->variation_price_context_cache[ $user_role ] = $context;
 			}
+			$price_hash['wcj_user_role'] = $this->variation_price_context_cache[ $user_role ];
 			return $price_hash;
 		}
 	}

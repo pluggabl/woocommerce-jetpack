@@ -25,7 +25,14 @@ Trusted by more than **100,000 WooCommerce stores worldwide** — including **40
 
 ### New in 8.2.0 – Faster pricing and clearer checkout confidence
 
-Booster now does less repeated work when WooCommerce calculates wholesale, role-based, formula, variation, and multi-currency prices. That means complex catalogs and carts can stay responsive without changing your saved pricing rules.
+Booster now does less repeated work in six common WooCommerce hot paths, without changing your saved pricing rules:
+
+* **Role-based prices:** identical price decisions are reused during the current page or cart request.
+* **Variable products:** role, formula, and multi-currency context is prepared once and reused while WooCommerce builds variation prices.
+* **Order exports:** price precision and additional-field settings are normalized once, while large exports continue in bounded batches.
+* **Payment recalculation:** gateway-fee product context is reused for an unchanged cart and refreshed when products, variations, or quantities change.
+* **Product and category rules:** pricing and payment conditions share safe request-local taxonomy context instead of repeating the same lookups.
+* **Earlier exits:** empty prices, scalar currency conversions, unrestricted gateway rules, and irrelevant gateway screens skip work they do not need.
 
 Payment-method fees are also more predictable as customers update their cart and choose a gateway. Store managers get a new read-only **Booster Status** page that explains active Checkout Blocks and HPOS boundaries in plain language and flags settings that still need Classic Checkout.
 
