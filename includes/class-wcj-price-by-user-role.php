@@ -19,6 +19,9 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 	 */
 	class WCJ_Price_By_User_Role extends WCJ_Module {
 
+		/** @var array Request-scoped taxonomy context. */
+		private $product_terms_cache = array();
+
 
 		/**
 		 * The module disable_for_regular_price
@@ -506,7 +509,12 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			// By category.
 			$categories = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_categories', '' ) );
 			if ( ! empty( $categories ) ) {
-				$product_categories = get_the_terms( wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) ), 'product_cat' );
+				$parent_product_id  = wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) );
+				$terms_cache_key    = $parent_product_id . '|product_cat';
+				if ( ! array_key_exists( $terms_cache_key, $this->product_terms_cache ) ) {
+					$this->product_terms_cache[ $terms_cache_key ] = get_the_terms( $parent_product_id, 'product_cat' );
+				}
+				$product_categories = $this->product_terms_cache[ $terms_cache_key ];
 				if ( ! empty( $product_categories ) ) {
 					foreach ( $product_categories as $product_category ) {
 						foreach ( $categories as $category ) {
@@ -533,7 +541,12 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			// By tag.
 			$tags = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_tags', '' ) );
 			if ( ! empty( $tags ) ) {
-				$product_tags = get_the_terms( wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) ), 'product_tag' );
+				$parent_product_id = wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) );
+				$terms_cache_key   = $parent_product_id . '|product_tag';
+				if ( ! array_key_exists( $terms_cache_key, $this->product_terms_cache ) ) {
+					$this->product_terms_cache[ $terms_cache_key ] = get_the_terms( $parent_product_id, 'product_tag' );
+				}
+				$product_tags = $this->product_terms_cache[ $terms_cache_key ];
 				if ( ! empty( $product_tags ) ) {
 					foreach ( $product_tags as $product_tag ) {
 						foreach ( $tags as $tag ) {

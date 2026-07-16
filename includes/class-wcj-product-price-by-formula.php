@@ -32,6 +32,29 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		 */
 		public $rounding_precision;
 
+		/** @var array Request-scoped normalized formula configuration. */
+		private $formula_config_cache = array();
+
+		/**
+		 * Gets the effective saved formula configuration once per request.
+		 *
+		 * @param int $product_id Product or parent product ID.
+		 * @return array
+		 */
+		private function get_formula_config( $product_id ) {
+			if ( ! isset( $this->formula_config_cache[ $product_id ] ) ) {
+				$is_per_product = ( 'per_product' === get_post_meta( $product_id, '_wcj_product_price_by_formula_calculation', true ) );
+				$formula        = $is_per_product ? get_post_meta( $product_id, '_wcj_product_price_by_formula_eval', true ) : wcj_get_option( 'wcj_product_price_by_formula_eval', '' );
+				$total_params   = (int) ( $is_per_product ? get_post_meta( $product_id, '_wcj_product_price_by_formula_total_params', true ) : wcj_get_option( 'wcj_product_price_by_formula_total_params', 1 ) );
+				$params         = array();
+				for ( $i = 1; $i <= $total_params; $i++ ) {
+					$params[ $i ] = $is_per_product ? get_post_meta( $product_id, '_wcj_product_price_by_formula_param_' . $i, true ) : wcj_get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
+				}
+				$this->formula_config_cache[ $product_id ] = compact( 'is_per_product', 'formula', 'total_params', 'params' );
+			}
+			return $this->formula_config_cache[ $product_id ];
+		}
+
 		/**
 		 * Constructor.
 		 *
@@ -93,15 +116,12 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 				if ( false !== $saved_price ) {
 					return $saved_price;
 				}
-				$is_per_product = ( 'per_product' === get_post_meta( $_product_id, '_wcj_product_price_by_formula_calculation', true ) );
-				$the_formula    = ( $is_per_product )
-				? get_post_meta( $_product_id, '_wcj_product_price_by_formula_eval', true )
-				: wcj_get_option( 'wcj_product_price_by_formula_eval', '' );
+				$config         = $this->get_formula_config( $_product_id );
+				$is_per_product = $config['is_per_product'];
+				$the_formula    = $config['formula'];
 				$the_formula    = do_shortcode( $the_formula );
 				if ( '' !== $the_formula ) {
-					$total_params = ( $is_per_product )
-					? get_post_meta( $_product_id, '_wcj_product_price_by_formula_total_params', true )
-					: wcj_get_option( 'wcj_product_price_by_formula_total_params', 1 );
+					$total_params = $config['total_params'];
 					if ( $total_params > 0 ) {
 						$the_current_filter = current_filter();
 						if ( 'woocommerce_get_price_including_tax' === $the_current_filter || 'woocommerce_get_price_excluding_tax' === $the_current_filter ) {
@@ -112,9 +132,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 						$math = new WCJ_Math();
 						$math->registerVariable( 'x', $display_price );
 						for ( $i = 1; $i <= $total_params; $i++ ) {
-							$the_param = ( $is_per_product )
-							? get_post_meta( $_product_id, '_wcj_product_price_by_formula_param_' . $i, true )
-							: wcj_get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
+							$the_param = $config['params'][ $i ];
 							$the_param = $this->add_product_id_param( $the_param, $_product );
 							$the_param = do_shortcode( $the_param );
 							if ( '' !== $the_param ) {
@@ -331,15 +349,12 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 				if ( false !== $saved_price ) {
 					return $saved_price;
 				}
-				$is_per_product = ( 'per_product' === get_post_meta( $_product_id, '_wcj_product_price_by_formula_calculation', true ) );
-				$the_formula    = ( $is_per_product )
-				? get_post_meta( $_product_id, '_wcj_product_price_by_formula_eval', true )
-				: wcj_get_option( 'wcj_product_price_by_formula_eval', '' );
+				$config         = $this->get_formula_config( $_product_id );
+				$is_per_product = $config['is_per_product'];
+				$the_formula    = $config['formula'];
 				$the_formula    = do_shortcode( $the_formula );
 				if ( '' !== $the_formula ) {
-					$total_params = ( $is_per_product )
-					? get_post_meta( $_product_id, '_wcj_product_price_by_formula_total_params', true )
-					: wcj_get_option( 'wcj_product_price_by_formula_total_params', 1 );
+					$total_params = $config['total_params'];
 					if ( $total_params > 0 ) {
 						$the_current_filter = current_filter();
 						if ( 'woocommerce_get_price_including_tax' === $the_current_filter || 'woocommerce_get_price_excluding_tax' === $the_current_filter ) {
@@ -350,9 +365,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 						$math = new WCJ_Math();
 						$math->registerVariable( 'x', $price );
 						for ( $i = 1; $i <= $total_params; $i++ ) {
-							$the_param = ( $is_per_product )
-							? get_post_meta( $_product_id, '_wcj_product_price_by_formula_param_' . $i, true )
-							: wcj_get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
+							$the_param = $config['params'][ $i ];
 							$the_param = $this->add_product_id_param( $the_param, $_product );
 							$the_param = do_shortcode( $the_param );
 							if ( '' !== $the_param ) {

@@ -5,7 +5,7 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.1.0
+Stable tag: 8.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,6 +22,14 @@ Trusted by more than **100,000 WooCommerce stores worldwide** — including **40
 * **Zero Coding Needed:** Clean UI, granular toggles, ready in minutes for everyone.
 * **Modular & Performant:** Disabled modules never load, ensuring your site stays fast. (We encourage you to check out performance benchmarks on Booster.io!)
 * **Reliable & Supported:** Regular updates & < 24 hr WordPress.org support forum replies.
+
+### New in 8.2.0 – Faster pricing and clearer checkout confidence
+
+Booster now does less repeated work when WooCommerce calculates wholesale, role-based, formula, variation, and multi-currency prices. That means complex catalogs and carts can stay responsive without changing your saved pricing rules.
+
+Payment-method fees are also more predictable as customers update their cart and choose a gateway. Store managers get a new read-only **Booster Status** page that explains active Checkout Blocks and HPOS boundaries in plain language and flags settings that still need Classic Checkout.
+
+Order exports now process large order sets in smaller batches and reuse WooCommerce order objects under HPOS. Existing Free feature limits remain unchanged; the release improves the capabilities already included in Free.
 
 ### New in 7.4.0 – Guided onboarding for faster wins
 
@@ -346,6 +354,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.2.0 - 06/08/2026 =
+* Faster pricing - Reuses wholesale, role, formula, variation, and multi-currency context during each request instead of repeating the same settings, taxonomy, exchange-rate, and product metadata work.
+* Predictable gateway fees - Normalizes legacy fee settings safely and records clear internal reason codes when a configured gateway fee applies or is skipped.
+* Clearer store checks - Adds a read-only Booster Status page with WooCommerce, WordPress, PHP, checkout architecture, HPOS, active-module, and configuration-boundary guidance.
+* Faster order exports - Processes orders in bounded batches and reuses order objects in HPOS export paths.
+* Compatibility boundaries - Keeps Checkout Files collection and checkout-field-conditional fees on their supported Classic Checkout paths instead of overstating Blocks support.
+* Value - Free stores receive these performance, reliability, diagnostics, and order-workflow improvements without changing Free feature limits.
+* WooCommerce 10.9.4 Tested
+* WordPress 7.0 Tested
 
 = 8.1.0 - 15/07/2026 =
 * Checkout Blocks compatibility - Added supported Checkout Custom Fields to Blocks checkout with server-side validation, order saving, and module-specific product, category, and cart visibility on supported WooCommerce versions.

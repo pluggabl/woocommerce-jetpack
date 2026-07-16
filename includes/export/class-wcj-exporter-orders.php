@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			$data       = array();
 			$data[]     = $titles;
 			$offset     = 0;
-			$block_size = 1024;
+			$block_size = 250;
 			while ( true ) {
 				$args_orders = array(
 					'post_type'      => 'shop_order',
@@ -370,16 +370,16 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			$data       = array();
 			$data[]     = $titles;
 			$offset     = 0;
-			$block_size = 1024;
+			$block_size = 250;
 			while ( true ) {
 				$args_orders = array(
 					'type'           => 'shop_order',
 					'status'         => 'any',
-					'posts_per_page' => $block_size,
+					'limit'          => $block_size,
 					'orderby'        => 'date',
 					'order'          => 'DESC',
 					'offset'         => $offset,
-					'fields'         => 'ids',
+					'return'         => 'objects',
 				);
 				$args_orders = wcj_maybe_add_date_query( $args_orders );
 				$orders      = wc_get_orders( $args_orders );
@@ -390,7 +390,6 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 				foreach ( $orders as $order ) {
 					$order_id = $order->get_id();
 
-					$order = wc_get_order( $order_id );
 					if ( ! apply_filters( 'wcj_export_validation', true, 'order', $order ) ) {
 						continue;
 					}
@@ -495,7 +494,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			$data       = array();
 			$data[]     = $titles;
 			$offset     = 0;
-			$block_size = 1024;
+			$block_size = 250;
 			while ( true ) {
 				$args_orders = array(
 					'post_type'      => 'shop_order',
@@ -606,16 +605,16 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			$data       = array();
 			$data[]     = $titles;
 			$offset     = 0;
-			$block_size = 1024;
+			$block_size = 250;
 			while ( true ) {
 				$args_orders = array(
 					'type'           => 'shop_order',
 					'status'         => 'any',
-					'posts_per_page' => $block_size,
+					'limit'          => $block_size,
 					'orderby'        => 'date',
 					'order'          => 'DESC',
 					'offset'         => $offset,
-					'fields'         => 'ids',
+					'return'         => 'objects',
 				);
 				$args_orders = wcj_maybe_add_date_query( $args_orders );
 				$orders      = wc_get_orders( $args_orders );
@@ -625,7 +624,6 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 				foreach ( $orders as $order ) {
 					$order_id = $order->get_id();
 
-					$order = wc_get_order( $order_id );
 					if ( ! apply_filters( 'wcj_export_validation', true, 'order', $order ) ) {
 						continue;
 					}

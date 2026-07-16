@@ -339,6 +339,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 					$value = $cart->get_cart_contents_total() * $value / 100;
 				}
 				$fees_to_add[ $fee_id ] = array(
+					'id'        => 'wcj_checkout_fee_' . absint( $fee_id ),
 					'name'      => $title,
 					'amount'    => $value,
 					'taxable'   => 'yes' === $fees[ $fee_id ]['taxable'],
@@ -369,7 +370,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 
 			if ( ! empty( $fees_to_add ) ) {
 				foreach ( $fees_to_add as $fee_to_add ) {
-					$cart->add_fee( $fee_to_add['name'], $fee_to_add['amount'], $fee_to_add['taxable'], $fee_to_add['tax_class'] );
+					$cart->fees_api()->add_fee( $fee_to_add );
 				}
 			}
 		}

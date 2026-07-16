@@ -1,13 +1,13 @@
 {
-    "0": "= 8.1.0 - 15/07/2026 =",
-    "1": "* Checkout Blocks compatibility - Added support for Checkout Custom Fields in WooCommerce Checkout Blocks with server-side validation, order saving, and module-specific product, category, and cart visibility on supported WooCommerce versions.",
-    "2": "* Checkout Blocks compatibility - Retained textarea fields, conditional checkout fees, and checkout file uploads on their supported Classic Checkout or post-order workflows where Blocks support is not yet available.",
-    "3": "* HPOS compatibility - Updated Order Numbers, Checkout Files Upload, PDF Invoicing, Checkout Custom Fields, Product Addons, and Product Input Fields to use modern WooCommerce order and order-item APIs throughout active order processing.",
-    "4": "* Performance - Optimized cart, checkout, order, and PDF generation by reusing normalized fee, gateway, invoice, product, category, and input-field configuration within each request.",
-    "5": "* Reliability - Preserved conditional fees when guests create an account during Classic Checkout, prevented duplicate order-item processing, and improved fallback handling around checkout and order data.",
-    "6": "* Admin experience - Expanded Checkout Blocks and HPOS compatibility guidance with clear module-level supported, partial, and Classic-only status indicators.",
-    "7": "* Value - The Free feature set keeps its documented limits while benefiting from ongoing compatibility, reliability, and performance improvements across shared modules.",
-    "8": "* Security hardening - Strengthened validation and request handling across selected customer-facing checkout and order workflows.",
+    "0": "= 8.2.0 - 06/08/2026 =",
+    "1": "* Faster pricing - Reuses wholesale, role, formula, variation, and multi-currency context during each request.",
+    "2": "* Predictable gateway fees - Normalizes legacy settings safely and records clear internal reason codes when a fee applies or is skipped.",
+    "3": "* Clearer store checks - Adds a read-only Booster Status page with environment, checkout architecture, HPOS, module, and configuration guidance.",
+    "4": "* Faster order exports - Processes orders in bounded batches and reuses WooCommerce order objects under HPOS.",
+    "5": "* Compatibility boundaries - Retains Checkout Files and checkout-field-conditional fee collection on supported Classic Checkout paths.",
+    "6": "* Value - Improves existing Free capabilities without changing Free feature limits.",
+    "7": "* Reliability - Preserves saved pricing and checkout settings while reducing repeated work.",
+    "8": "* Admin experience - Keeps diagnostics capability-protected, escaped, read-only, and free of customer or order data.",
     "9": "* WooCommerce 10.9.4 Tested",
     "10": "* WordPress 7.0 Tested"
 }

@@ -32,6 +32,10 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 */
 		public $additional_price_filters;
 
+		/** @var array Request-scoped exchange rates and product currency metadata. */
+		private $currency_rate_cache       = array();
+		private $product_price_meta_cache  = array();
+
 		/**
 		 * Constructor.
 		 *
@@ -1237,6 +1241,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 * @version 2.4.3
 		 */
 		public function get_currency_exchange_rate( $currency_code ) {
+			if ( array_key_exists( $currency_code, $this->currency_rate_cache ) ) {
+				return $this->currency_rate_cache[ $currency_code ];
+			}
 			$currency_exchange_rate = 1;
 			$total_number           = apply_filters( 'booster_option', 2, wcj_get_option( 'wcj_multicurrency_total_number', 2 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -1245,7 +1252,27 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 					break;
 				}
 			}
+			$this->currency_rate_cache[ $currency_code ] = $currency_exchange_rate;
 			return $currency_exchange_rate;
+		}
+
+		/**
+		 * Gets per-product currency metadata once per request.
+		 *
+		 * @param int    $product_id Product ID.
+		 * @param string $currency_code Currency code.
+		 * @return array
+		 */
+		private function get_product_currency_prices( $product_id, $currency_code ) {
+			$cache_key = $product_id . '|' . $currency_code;
+			if ( ! isset( $this->product_price_meta_cache[ $cache_key ] ) ) {
+				$this->product_price_meta_cache[ $cache_key ] = array(
+					'regular'    => get_post_meta( $product_id, '_wcj_multicurrency_per_product_regular_price_' . $currency_code, true ),
+					'sale'       => get_post_meta( $product_id, '_wcj_multicurrency_per_product_sale_price_' . $currency_code, true ),
+					'make_empty' => get_post_meta( $product_id, '_wcj_multicurrency_per_product_make_empty_' . $currency_code, true ),
+				);
+			}
+			return $this->product_price_meta_cache[ $cache_key ];
 		}
 
 		/**
@@ -1326,12 +1353,14 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			}
 
 			// Per product.
-			$regular_price_per_product = get_post_meta( $_product_id, '_wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true );
+			$current_currency_code      = $this->get_current_currency_code();
+			$product_currency_prices    = $this->get_product_currency_prices( $_product_id, $current_currency_code );
+			$regular_price_per_product  = $product_currency_prices['regular'];
 			$additional_price_filters  = is_array( $this->additional_price_filters ) ? $this->additional_price_filters : array();
 			if ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) && null !== $_product ) {
 				if (
 				'yes' === wcj_get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) &&
-				'yes' === get_post_meta( $_product_id, '_wcj_multicurrency_per_product_make_empty_' . $this->get_current_currency_code(), true )
+				'yes' === $product_currency_prices['make_empty']
 				) {
 					$price = '';
 					$this->save_price( $price, $_product_id, $_current_filter );
@@ -1343,7 +1372,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 						return $price;
 					} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER === $_current_filter || 'woocommerce_variation_prices_price' === $_current_filter || 'woocommerce_product_variation_get_price' === $_current_filter || in_array( $_current_filter, $additional_price_filters, true ) ) {
 						if ( $_product->is_on_sale() ) {
-							$sale_price_per_product = get_post_meta( $_product_id, '_wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
+							$sale_price_per_product = $product_currency_prices['sale'];
 							$price                  = ( null !== $sale_price_per_product && '' !== $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
 						} else {
 							$price = $regular_price_per_product;
@@ -1355,7 +1384,7 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 						$this->save_price( $price, $_product_id, $_current_filter );
 						return $price;
 					} elseif ( WCJ_PRODUCT_GET_SALE_PRICE_FILTER === $_current_filter || 'woocommerce_variation_prices_sale_price' === $_current_filter || 'woocommerce_product_variation_get_sale_price' === $_current_filter ) {
-						$sale_price_per_product = get_post_meta( $_product_id, '_wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
+						$sale_price_per_product = $product_currency_prices['sale'];
 						$price                  = ( '' !== $sale_price_per_product && null !== $sale_price_per_product ) ? $sale_price_per_product : $price;
 						$this->save_price( $price, $_product_id, $_current_filter );
 						return $price;
