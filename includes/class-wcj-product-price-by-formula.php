@@ -32,10 +32,18 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		 */
 		public $rounding_precision;
 
-		/** @var array Request-scoped normalized formula configuration. */
+		/**
+		 * Request-scoped normalized formula configuration.
+		 *
+		 * @var array
+		 */
 		private $formula_config_cache = array();
 
-		/** @var array Request-scoped variation price context. */
+		/**
+		 * Request-scoped variation price context.
+		 *
+		 * @var array
+		 */
 		private $variation_price_context_cache = array();
 
 		/**
@@ -427,7 +435,7 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 				'rounding'           => $this->rounding,
 				'rounding_precision' => $this->rounding_precision,
 			);
-			$price_hash['wcj_price_by_formula'] = $this->variation_price_context_cache[ $product_id ];
+			$price_hash['wcj_price_by_formula']                 = $this->variation_price_context_cache[ $product_id ];
 			return $price_hash;
 		}
 

@@ -22,7 +22,11 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 	 */
 	class WCJ_Wholesale_Price extends WCJ_Module {
 
-		/** @var array Request-scoped wholesale discount results. */
+		/**
+		 * Request-scoped wholesale discount results.
+		 *
+		 * @var array
+		 */
 		private $discount_cache = array();
 
 		/**
@@ -345,7 +349,6 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 			return ( wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) && isset( $_product->wcj_wholesale_price ) ) ?
 			$_product->wcj_wholesale_price : $price;
 		}
-
 	}
 
 endif;

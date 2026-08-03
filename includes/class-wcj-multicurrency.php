@@ -32,9 +32,25 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		 */
 		public $additional_price_filters;
 
-		/** @var array Request-scoped exchange rates and product currency metadata. */
-		private $currency_rate_cache            = array();
-		private $product_price_meta_cache       = array();
+		/**
+		 * Request-scoped exchange rates and product currency metadata.
+		 *
+		 * @var array
+		 */
+		private $currency_rate_cache = array();
+
+		/**
+		 * Request-scoped product price metadata.
+		 *
+		 * @var array
+		 */
+		private $product_price_meta_cache = array();
+
+		/**
+		 * Request-scoped variation price context.
+		 *
+		 * @var array
+		 */
 		private $variation_price_context_cache = array();
 
 		/**
@@ -1357,9 +1373,9 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 			}
 
 			// Per product.
-			$current_currency_code     = $this->get_current_currency_code();
-			$per_product_enabled       = ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) );
-			$product_currency_prices   = array(
+			$current_currency_code   = $this->get_current_currency_code();
+			$per_product_enabled     = ( 'yes' === wcj_get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) );
+			$product_currency_prices = array(
 				'regular'    => '',
 				'sale'       => '',
 				'make_empty' => '',

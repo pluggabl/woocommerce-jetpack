@@ -362,7 +362,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
-= 8.2.0 - 06/08/2026 =
+= 8.2.0 - 05/08/2026 =
 * Faster pricing - Reuses wholesale, role, formula, variation, and multi-currency context during each request instead of repeating the same settings, taxonomy, exchange-rate, and product metadata work.
 * Predictable gateway fees - Normalizes legacy fee settings safely and records clear internal reason codes when a configured gateway fee applies or is skipped.
 * Clearer store checks - Adds a read-only Booster Status page with WooCommerce, WordPress, PHP, checkout architecture, HPOS, active-module, and configuration-boundary guidance.

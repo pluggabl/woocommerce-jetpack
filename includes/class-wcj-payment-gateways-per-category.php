@@ -25,7 +25,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		 */
 		public $do_use_variations;
 
-		/** @var array Request-scoped normalized gateway rules. */
+		/**
+		 * Request-scoped normalized gateway rules.
+		 *
+		 * @var array
+		 */
 		private $gateway_rules_cache = array();
 
 		/**
@@ -75,7 +79,6 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 				add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_available_payment_gateways_per_category' ), 100 );
 				$this->do_use_variations = ( 'yes' === wcj_get_option( 'wcj_gateways_per_category_use_variations', 'no' ) );
 			}
-
 		}
 
 		/**
@@ -213,7 +216,6 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 
 			return $available_gateways;
 		}
-
 	}
 
 endif;

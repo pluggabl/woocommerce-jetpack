@@ -52,15 +52,15 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 			$checkout_status = $this->detect_checkout_architecture();
 			$booster         = function_exists( 'w_c_j' ) ? w_c_j() : ( function_exists( 'WCJ' ) ? WCJ() : null );
 			$environment     = array(
-				__( 'Booster version', 'woocommerce-jetpack' )      => $booster && isset( $booster->version ) ? $booster->version : __( 'Unknown', 'woocommerce-jetpack' ),
-				__( 'WooCommerce version', 'woocommerce-jetpack' )  => defined( 'WC_VERSION' ) ? WC_VERSION : __( 'Unknown', 'woocommerce-jetpack' ),
-				__( 'WordPress version', 'woocommerce-jetpack' )    => get_bloginfo( 'version' ),
-				__( 'PHP version', 'woocommerce-jetpack' )          => PHP_VERSION,
+				__( 'Booster version', 'woocommerce-jetpack' ) => $booster && isset( $booster->version ) ? $booster->version : __( 'Unknown', 'woocommerce-jetpack' ),
+				__( 'WooCommerce version', 'woocommerce-jetpack' ) => defined( 'WC_VERSION' ) ? WC_VERSION : __( 'Unknown', 'woocommerce-jetpack' ),
+				__( 'WordPress version', 'woocommerce-jetpack' ) => get_bloginfo( 'version' ),
+				__( 'PHP version', 'woocommerce-jetpack' ) => PHP_VERSION,
 				__( 'Checkout architecture', 'woocommerce-jetpack' ) => ucfirst( $checkout_status ),
-				__( 'HPOS', 'woocommerce-jetpack' )                 => $this->is_hpos_enabled() ? __( 'Enabled', 'woocommerce-jetpack' ) : __( 'Disabled', 'woocommerce-jetpack' ),
+				__( 'HPOS', 'woocommerce-jetpack' )        => $this->is_hpos_enabled() ? __( 'Enabled', 'woocommerce-jetpack' ) : __( 'Disabled', 'woocommerce-jetpack' ),
 			);
-			$modules = array_merge( $this->get_active_checkout_modules(), $this->get_active_hpos_modules() );
-			$health  = $this->get_configuration_health( $checkout_status );
+			$modules         = array_merge( $this->get_active_checkout_modules(), $this->get_active_hpos_modules() );
+			$health          = $this->get_configuration_health( $checkout_status );
 
 			echo '<div class="wrap"><h1>' . esc_html__( 'Booster compatibility and configuration status', 'woocommerce-jetpack' ) . '</h1>';
 			echo '<p>' . esc_html__( 'This page is read-only. It does not change settings and does not display customer, cart, or order data.', 'woocommerce-jetpack' ) . '</p>';
@@ -112,7 +112,12 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 			return $health;
 		}
 
-		/** Renders an escaped status table. */
+		/**
+		 * Renders an escaped status table.
+		 *
+		 * @param array $rows Status table rows.
+		 * @return void
+		 */
 		protected function render_status_table( $rows ) {
 			echo '<table class="widefat striped" style="max-width:1100px"><thead><tr><th>' . esc_html__( 'Module', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Status', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Guidance', 'woocommerce-jetpack' ) . '</th></tr></thead><tbody>';
 			foreach ( $rows as $row ) {

@@ -19,13 +19,25 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 	 */
 	class WCJ_Price_By_User_Role extends WCJ_Module {
 
-		/** @var array Request-scoped taxonomy context. */
+		/**
+		 * Request-scoped taxonomy context.
+		 *
+		 * @var array
+		 */
 		private $product_terms_cache = array();
 
-		/** @var array Request-scoped final price decisions. */
+		/**
+		 * Request-scoped final price decisions.
+		 *
+		 * @var array
+		 */
 		private $price_decision_cache = array();
 
-		/** @var array Request-scoped variation price context. */
+		/**
+		 * Request-scoped variation price context.
+		 *
+		 * @var array
+		 */
 		private $variation_price_context_cache = array();
 
 
@@ -548,8 +560,8 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			// By category.
 			$categories = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_categories', '' ) );
 			if ( ! empty( $categories ) ) {
-				$parent_product_id  = wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) );
-				$terms_cache_key    = $parent_product_id . '|product_cat';
+				$parent_product_id = wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) );
+				$terms_cache_key   = $parent_product_id . '|product_cat';
 				if ( ! array_key_exists( $terms_cache_key, $this->product_terms_cache ) ) {
 					$this->product_terms_cache[ $terms_cache_key ] = wcj_get_product_terms( $parent_product_id, 'product_cat' );
 				}
@@ -633,15 +645,15 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				$categories = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_categories', '' ) );
 				$tags       = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_price_by_user_role_tags', '' ) );
 				$context    = array(
-				$user_role,
-				get_option( 'wcj_price_by_user_role_' . $user_role, 1 ),
-				get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' ),
-				get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
-				get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ),
-				get_option( 'wcj_price_by_user_role_disable_for_products_on_sale', 'no' ),
-				$this->disable_for_regular_price,
-				$categories,
-				$tags,
+					$user_role,
+					get_option( 'wcj_price_by_user_role_' . $user_role, 1 ),
+					get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' ),
+					get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
+					get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ),
+					get_option( 'wcj_price_by_user_role_disable_for_products_on_sale', 'no' ),
+					$this->disable_for_regular_price,
+					$categories,
+					$tags,
 				);
 				if ( ! empty( $categories ) ) {
 					foreach ( $categories as $category ) {

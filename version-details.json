@@ -1,5 +1,5 @@
 {
-    "0": "= 8.2.0 - 06/08/2026 =",
+    "0": "= 8.2.0 - 05/08/2026 =",
     "1": "* Performance 1 of 6 - Reuses identical Price by User Role decisions during a request.",
     "2": "* Performance 2 of 6 - Reuses role, formula, and multi-currency context while WooCommerce builds variation prices.",
     "3": "* Performance 3 of 6 - Normalizes export precision and additional fields once, uses bounded batches, and reuses HPOS order objects.",

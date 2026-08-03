@@ -33,16 +33,32 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 */
 		private $cart_product_ids = array();
 
-		/** @var string Signature for the cached cart context. */
+		/**
+		 * Signature for the cached cart context.
+		 *
+		 * @var string
+		 */
 		private $cart_context_signature = '';
 
-		/** @var int Number of cart-context builds in this request. */
+		/**
+		 * Number of cart-context builds in this request.
+		 *
+		 * @var int
+		 */
 		private $cart_context_build_count = 0;
 
-		/** @var int Number of gateway-fee callbacks in this request. */
+		/**
+		 * Number of gateway-fee callbacks in this request.
+		 *
+		 * @var int
+		 */
 		private $fee_calculation_count = 0;
 
-		/** @var array Last request-local decision; contains no customer data. */
+		/**
+		 * Last request-local decision; contains no customer data.
+		 *
+		 * @var array
+		 */
 		private $last_fee_decision = array();
 
 		/**
@@ -121,12 +137,18 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		/** Returns safe request-local counters for diagnostics and tests. */
 		public function get_performance_counters() {
 			return array(
-				'fee_calculations'   => $this->fee_calculation_count,
+				'fee_calculations'    => $this->fee_calculation_count,
 				'cart_context_builds' => $this->cart_context_build_count,
 			);
 		}
 
-		/** Records a request-local reason code without cart or customer details. */
+		/**
+		 * Records a request-local reason code without cart or customer details.
+		 *
+		 * @param string $gateway Gateway identifier.
+		 * @param string $reason  Fee decision reason code.
+		 * @return void
+		 */
 		private function set_fee_decision( $gateway, $reason ) {
 			$this->last_fee_decision = array(
 				'gateway' => sanitize_key( $gateway ),
@@ -244,9 +266,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 			$product_ids    = array();
 			$signature_data = array();
 			foreach ( $cart->get_cart() as $cart_item_key => $item ) {
-				$product_id   = ! empty( $item['product_id'] ) ? (string) $item['product_id'] : '';
-				$variation_id = ! empty( $item['variation_id'] ) ? (string) $item['variation_id'] : '';
-				$quantity     = isset( $item['quantity'] ) ? (float) $item['quantity'] : 0;
+				$product_id       = ! empty( $item['product_id'] ) ? (string) $item['product_id'] : '';
+				$variation_id     = ! empty( $item['variation_id'] ) ? (string) $item['variation_id'] : '';
+				$quantity         = isset( $item['quantity'] ) ? (float) $item['quantity'] : 0;
 				$signature_data[] = array( (string) $cart_item_key, $product_id, $variation_id, $quantity );
 				if ( '' !== $product_id ) {
 					$product_ids[] = $product_id;
@@ -261,8 +283,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 				return $this->cart_product_ids;
 			}
 			$this->cart_context_signature = $signature;
-			$this->cart_product_ids        = array_values( array_unique( $product_ids ) );
-			$this->cart_context_build_count++;
+			$this->cart_product_ids       = array_values( array_unique( $product_ids ) );
+			++$this->cart_context_build_count;
 			return $this->cart_product_ids;
 		}
 
@@ -302,7 +324,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @param WC_Cart|null $cart Cart passed by WooCommerce.
 		 */
 		public function gateways_fees( $cart = null ) {
-			$this->fee_calculation_count++;
+			++$this->fee_calculation_count;
 			$cart = $cart instanceof WC_Cart ? $cart : ( function_exists( 'WC' ) ? WC()->cart : null );
 			if ( ! $cart || ! function_exists( 'WC' ) || ! WC()->session ) {
 				$this->set_fee_decision( '', 'missing_cart_or_session' );

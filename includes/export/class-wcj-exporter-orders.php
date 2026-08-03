@@ -22,10 +22,18 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		 */
 	class WCJ_Exporter_Orders {
 
-		/** @var array Request-scoped price precision by order currency. */
+		/**
+		 * Request-scoped price precision by order currency.
+		 *
+		 * @var array
+		 */
 		private $price_precision_cache = array();
 
-		/** @var array Request-scoped normalized additional-field settings. */
+		/**
+		 * Request-scoped normalized additional-field settings.
+		 *
+		 * @var array
+		 */
 		private $additional_fields_config_cache = array();
 
 		/**
@@ -35,7 +43,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		 * @since   2.5.9
 		 */
 		public function __construct() {
-			return true;
+			return true; 
 		}
 
 		/**
@@ -413,13 +421,13 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			$block_size = 250;
 			while ( true ) {
 				$args_orders = array(
-					'type'           => 'shop_order',
-					'status'         => 'any',
-					'limit'          => $block_size,
-					'orderby'        => 'date',
-					'order'          => 'DESC',
-					'offset'         => $offset,
-					'return'         => 'objects',
+					'type'    => 'shop_order',
+					'status'  => 'any',
+					'limit'   => $block_size,
+					'orderby' => 'date',
+					'order'   => 'DESC',
+					'offset'  => $offset,
+					'return'  => 'objects',
 				);
 				$args_orders = wcj_maybe_add_date_query( $args_orders );
 				$orders      = wc_get_orders( $args_orders );
@@ -496,7 +504,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 					}
 
 					$data[] = $row;
-					$i++;
+					++$i;
 				}
 				$offset += $block_size;
 			}
@@ -638,13 +646,13 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			$block_size = 250;
 			while ( true ) {
 				$args_orders = array(
-					'type'           => 'shop_order',
-					'status'         => 'any',
-					'limit'          => $block_size,
-					'orderby'        => 'date',
-					'order'          => 'DESC',
-					'offset'         => $offset,
-					'return'         => 'objects',
+					'type'    => 'shop_order',
+					'status'  => 'any',
+					'limit'   => $block_size,
+					'orderby' => 'date',
+					'order'   => 'DESC',
+					'offset'  => $offset,
+					'return'  => 'objects',
 				);
 				$args_orders = wcj_maybe_add_date_query( $args_orders );
 				$orders      = wc_get_orders( $args_orders );
@@ -735,7 +743,6 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 			}
 			return $meta;
 		}
-
 	}
 
 endif;

@@ -164,17 +164,15 @@ if ( ! function_exists( 'wcj_get_product_total_stock' ) ) {
 	function wcj_get_product_total_stock( $_product ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return $_product->get_total_stock();
-		} else {
-			if ( $_product->is_type( array( 'variable', 'grouped' ) ) ) {
+		} elseif ( $_product->is_type( array( 'variable', 'grouped' ) ) ) {
 				$total_stock = 0;
-				foreach ( $_product->get_children() as $child_id ) {
-					$child        = wc_get_product( $child_id );
-					$total_stock += $child->get_stock_quantity();
-				}
-				return $total_stock;
-			} else {
-				return $_product->get_stock_quantity();
+			foreach ( $_product->get_children() as $child_id ) {
+				$child        = wc_get_product( $child_id );
+				$total_stock += $child->get_stock_quantity();
 			}
+				return $total_stock;
+		} else {
+			return $_product->get_stock_quantity();
 		}
 	}
 }
