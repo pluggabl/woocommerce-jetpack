@@ -31,7 +31,35 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 *
 		 * @var array|null
 		 */
-		private $cart_product_ids = null;
+		private $cart_product_ids = array();
+
+		/**
+		 * Signature for the cached cart context.
+		 *
+		 * @var string
+		 */
+		private $cart_context_signature = '';
+
+		/**
+		 * Number of cart-context builds in this request.
+		 *
+		 * @var int
+		 */
+		private $cart_context_build_count = 0;
+
+		/**
+		 * Number of gateway-fee callbacks in this request.
+		 *
+		 * @var int
+		 */
+		private $fee_calculation_count = 0;
+
+		/**
+		 * Last request-local decision; contains no customer data.
+		 *
+		 * @var array
+		 */
+		private $last_fee_decision = array();
 
 		/**
 		 * Constructor.
@@ -93,8 +121,38 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 				'tax_class_id'     => '',
 				'exclude_shipping' => 'no',
 				'include_taxes'    => 'no',
-				'include_products' => '',
-				'exclude_products' => '',
+				'include_products' => array(),
+				'exclude_products' => array(),
+			);
+			foreach ( $this->options as $option_key => $option_value ) {
+				$this->options[ $option_key ] = is_array( $option_value ) ? $option_value : array();
+			}
+		}
+
+		/** Returns the last safe fee decision for diagnostics and tests. */
+		public function get_last_fee_decision() {
+			return $this->last_fee_decision;
+		}
+
+		/** Returns safe request-local counters for diagnostics and tests. */
+		public function get_performance_counters() {
+			return array(
+				'fee_calculations'    => $this->fee_calculation_count,
+				'cart_context_builds' => $this->cart_context_build_count,
+			);
+		}
+
+		/**
+		 * Records a request-local reason code without cart or customer details.
+		 *
+		 * @param string $gateway Gateway identifier.
+		 * @param string $reason  Fee decision reason code.
+		 * @return void
+		 */
+		private function set_fee_decision( $gateway, $reason ) {
+			$this->last_fee_decision = array(
+				'gateway' => sanitize_key( $gateway ),
+				'reason'  => sanitize_key( $reason ),
 			);
 		}
 
@@ -199,25 +257,34 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		}
 
 		/**
-		 * Get product and variation IDs from the cart once per request.
+		 * Get product and variation IDs for the current cart state.
 		 *
 		 * @param WC_Cart $cart Cart object.
 		 * @return array
 		 */
 		private function get_cart_product_ids( $cart ) {
-			if ( null !== $this->cart_product_ids ) {
+			$product_ids    = array();
+			$signature_data = array();
+			foreach ( $cart->get_cart() as $cart_item_key => $item ) {
+				$product_id       = ! empty( $item['product_id'] ) ? (string) $item['product_id'] : '';
+				$variation_id     = ! empty( $item['variation_id'] ) ? (string) $item['variation_id'] : '';
+				$quantity         = isset( $item['quantity'] ) ? (float) $item['quantity'] : 0;
+				$signature_data[] = array( (string) $cart_item_key, $product_id, $variation_id, $quantity );
+				if ( '' !== $product_id ) {
+					$product_ids[] = $product_id;
+				}
+				if ( '' !== $variation_id ) {
+					$product_ids[] = $variation_id;
+				}
+			}
+
+			$signature = md5( wp_json_encode( $signature_data ) );
+			if ( $signature === $this->cart_context_signature ) {
 				return $this->cart_product_ids;
 			}
-			$this->cart_product_ids = array();
-			foreach ( $cart->get_cart() as $item ) {
-				if ( ! empty( $item['product_id'] ) ) {
-					$this->cart_product_ids[] = (string) $item['product_id'];
-				}
-				if ( ! empty( $item['variation_id'] ) ) {
-					$this->cart_product_ids[] = (string) $item['variation_id'];
-				}
-			}
-			$this->cart_product_ids = array_values( array_unique( $this->cart_product_ids ) );
+			$this->cart_context_signature = $signature;
+			$this->cart_product_ids       = array_values( array_unique( $product_ids ) );
+			++$this->cart_context_build_count;
 			return $this->cart_product_ids;
 		}
 
@@ -232,14 +299,18 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @param WC_Cart $cart    Cart object.
 		 */
 		public function check_cart_products( $gateway, $cart ) {
-			$product_ids      = $this->get_cart_product_ids( $cart );
-			$include_products = array_map( 'strval', (array) $this->wcj_get_option( 'include_products', $gateway ) );
+			$include_products = array_values( array_filter( array_map( 'strval', (array) $this->wcj_get_option( 'include_products', $gateway ) ) ) );
+			$exclude_products = array_values( array_filter( array_map( 'strval', (array) $this->wcj_get_option( 'exclude_products', $gateway ) ) ) );
+			if ( empty( $include_products ) && empty( $exclude_products ) ) {
+				return true;
+			}
+
+			$product_ids = $this->get_cart_product_ids( $cart );
 			if ( ! empty( $include_products ) ) {
 				if ( empty( array_intersect( $product_ids, $include_products ) ) ) {
 					return false;
 				}
 			}
-			$exclude_products = array_map( 'strval', (array) $this->wcj_get_option( 'exclude_products', $gateway ) );
 			if ( ! empty( $exclude_products ) && ! empty( array_intersect( $product_ids, $exclude_products ) ) ) {
 				return false;
 			}
@@ -253,8 +324,10 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 		 * @param WC_Cart|null $cart Cart passed by WooCommerce.
 		 */
 		public function gateways_fees( $cart = null ) {
+			++$this->fee_calculation_count;
 			$cart = $cart instanceof WC_Cart ? $cart : ( function_exists( 'WC' ) ? WC()->cart : null );
 			if ( ! $cart || ! function_exists( 'WC' ) || ! WC()->session ) {
+				$this->set_fee_decision( '', 'missing_cart_or_session' );
 				return;
 			}
 			if ( empty( $this->options ) || empty( $this->defaults ) ) {
@@ -263,6 +336,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 
 			$current_gateway = $this->get_current_gateway();
 			if ( '' === $current_gateway ) {
+				$this->set_fee_decision( '', 'no_gateway_selected' );
 				return;
 			}
 			if ( false !== strpos( $current_gateway, 'klarna' ) && 'yes' === wcj_get_option( 'wcj_enable_payment_gateway_charge_discount', 'no' ) ) {
@@ -273,6 +347,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 			$min_cart_amount = (float) $this->wcj_get_option( 'min_cart_amount', $current_gateway );
 			$max_cart_amount = (float) $this->wcj_get_option( 'max_cart_amount', $current_gateway );
 			if ( '' === $fee_text ) {
+				$this->set_fee_decision( $current_gateway, 'not_configured' );
 				return;
 			}
 
@@ -286,7 +361,15 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 				$cart->get_cart_contents_total() + $cart->get_shipping_total() :
 				$cart->get_cart_contents_total() );
 			$total_in_cart += 'no' === $this->wcj_get_option( 'include_taxes', $current_gateway ) ? 0 : $cart->get_subtotal_tax() + $cart->get_shipping_tax();
-			if ( $total_in_cart >= $min_cart_amount && ( 0.0 === $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway, $cart ) ) {
+			if ( $total_in_cart < $min_cart_amount || ( 0.0 !== $max_cart_amount && $total_in_cart > $max_cart_amount ) ) {
+				$this->set_fee_decision( $current_gateway, 'outside_cart_amount' );
+				return;
+			}
+			if ( ! $this->check_cart_products( $current_gateway, $cart ) ) {
+				$this->set_fee_decision( $current_gateway, 'product_condition_not_met' );
+				return;
+			}
+			if ( $total_in_cart >= $min_cart_amount ) {
 				$userwise_options                 = (array) wcj_get_option( 'wcj_enable_payment_gateway_charge_discount_userwise', array() );
 				$enable_user_wise_charge_discount = isset( $userwise_options[ $current_gateway ] ) ? $userwise_options[ $current_gateway ] : 'no';
 				if ( 'yes' === $enable_user_wise_charge_discount ) {
@@ -326,7 +409,18 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Fees' ) ) :
 						$tax_class_names = array_merge( array( '' ), WC_Tax::get_tax_classes() );
 						$tax_class_name  = isset( $tax_class_names[ $tax_class_id ] ) ? $tax_class_names[ $tax_class_id ] : '';
 					}
-					$cart->add_fee( $fee_text, $final_fee_to_add, $taxable, $tax_class_name );
+					$result = $cart->fees_api()->add_fee(
+						array(
+							'id'        => 'wcj_gateway_fee_' . sanitize_key( $current_gateway ),
+							'name'      => $fee_text,
+							'amount'    => $final_fee_to_add,
+							'taxable'   => $taxable,
+							'tax_class' => $tax_class_name,
+						)
+					);
+					$this->set_fee_decision( $current_gateway, is_wp_error( $result ) ? 'duplicate_suppressed' : 'applied' );
+				} else {
+					$this->set_fee_decision( $current_gateway, 'zero_or_invalid_amount' );
 				}
 			}
 		}

@@ -26,6 +26,104 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 		 */
 		public function __construct() {
 			add_action( 'admin_notices', array( $this, 'maybe_show_admin_notice' ) );
+			add_action( 'admin_menu', array( $this, 'register_status_page' ), 99 );
+		}
+
+		/** Registers the read-only Booster status page. */
+		public function register_status_page() {
+			add_submenu_page(
+				'woocommerce',
+				__( 'Booster Status', 'woocommerce-jetpack' ),
+				__( 'Booster Status', 'woocommerce-jetpack' ),
+				'manage_woocommerce',
+				'wcj-compatibility-status',
+				array( $this, 'render_status_page' )
+			);
+		}
+
+		/**
+		 * Renders a capability-protected, read-only environment and compatibility view.
+		 */
+		public function render_status_page() {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				wp_die( esc_html__( 'You do not have permission to view Booster status.', 'woocommerce-jetpack' ) );
+			}
+
+			$checkout_status = $this->detect_checkout_architecture();
+			$booster         = function_exists( 'w_c_j' ) ? w_c_j() : ( function_exists( 'WCJ' ) ? WCJ() : null );
+			$environment     = array(
+				__( 'Booster version', 'woocommerce-jetpack' ) => $booster && isset( $booster->version ) ? $booster->version : __( 'Unknown', 'woocommerce-jetpack' ),
+				__( 'WooCommerce version', 'woocommerce-jetpack' ) => defined( 'WC_VERSION' ) ? WC_VERSION : __( 'Unknown', 'woocommerce-jetpack' ),
+				__( 'WordPress version', 'woocommerce-jetpack' ) => get_bloginfo( 'version' ),
+				__( 'PHP version', 'woocommerce-jetpack' ) => PHP_VERSION,
+				__( 'Checkout architecture', 'woocommerce-jetpack' ) => ucfirst( $checkout_status ),
+				__( 'HPOS', 'woocommerce-jetpack' )        => $this->is_hpos_enabled() ? __( 'Enabled', 'woocommerce-jetpack' ) : __( 'Disabled', 'woocommerce-jetpack' ),
+			);
+			$modules         = array_merge( $this->get_active_checkout_modules(), $this->get_active_hpos_modules() );
+			$health          = $this->get_configuration_health( $checkout_status );
+
+			echo '<div class="wrap"><h1>' . esc_html__( 'Booster compatibility and configuration status', 'woocommerce-jetpack' ) . '</h1>';
+			echo '<p>' . esc_html__( 'This page is read-only. It does not change settings and does not display customer, cart, or order data.', 'woocommerce-jetpack' ) . '</p>';
+			echo '<h2>' . esc_html__( 'Environment', 'woocommerce-jetpack' ) . '</h2><table class="widefat striped" style="max-width:900px"><tbody>';
+			foreach ( $environment as $label => $value ) {
+				echo '<tr><th scope="row">' . esc_html( $label ) . '</th><td>' . esc_html( $value ) . '</td></tr>';
+			}
+			echo '</tbody></table>';
+
+			echo '<h2>' . esc_html__( 'Active module compatibility', 'woocommerce-jetpack' ) . '</h2>';
+			$this->render_status_table( $modules );
+			echo '<h2>' . esc_html__( 'Configuration health', 'woocommerce-jetpack' ) . '</h2>';
+			$this->render_status_table( $health );
+			echo '<p>' . esc_html( $this->get_tier_note() ) . '</p></div>';
+		}
+
+		/**
+		 * Returns safe configuration findings without reading customer data.
+		 *
+		 * @param string $checkout_status Checkout architecture.
+		 * @return array
+		 */
+		protected function get_configuration_health( $checkout_status ) {
+			$health = array();
+			if ( 'blocks' === $checkout_status && $this->is_module_enabled( 'checkout_files_upload' ) ) {
+				$health[] = array(
+					'label'  => __( 'Checkout Files Upload', 'woocommerce-jetpack' ),
+					'status' => __( 'Action recommended', 'woocommerce-jetpack' ),
+					'note'   => __( 'Checkout file collection needs Classic Checkout. Configured post-order and account upload paths can remain available.', 'woocommerce-jetpack' ),
+				);
+			}
+			if ( 'blocks' === $checkout_status && $this->is_module_enabled( 'checkout_fees' ) ) {
+				$condition_fields = (array) wcj_get_option( 'wcj_checkout_fees_data_checkout_fields', array() );
+				if ( ! empty( array_filter( $condition_fields ) ) ) {
+					$health[] = array(
+						'label'  => __( 'Checkout Fees', 'woocommerce-jetpack' ),
+						'status' => __( 'Classic-only condition detected', 'woocommerce-jetpack' ),
+						'note'   => __( 'At least one fee depends on a Classic Checkout field. Simple cart-based fees remain available in Blocks.', 'woocommerce-jetpack' ),
+					);
+				}
+			}
+			if ( empty( $health ) ) {
+				$health[] = array(
+					'label'  => __( 'Active configuration', 'woocommerce-jetpack' ),
+					'status' => __( 'No known boundary detected', 'woocommerce-jetpack' ),
+					'note'   => __( 'No active setting combination matched Booster’s known checkout compatibility warnings. Complete staging tests are still recommended.', 'woocommerce-jetpack' ),
+				);
+			}
+			return $health;
+		}
+
+		/**
+		 * Renders an escaped status table.
+		 *
+		 * @param array $rows Status table rows.
+		 * @return void
+		 */
+		protected function render_status_table( $rows ) {
+			echo '<table class="widefat striped" style="max-width:1100px"><thead><tr><th>' . esc_html__( 'Module', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Status', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Guidance', 'woocommerce-jetpack' ) . '</th></tr></thead><tbody>';
+			foreach ( $rows as $row ) {
+				echo '<tr><td><strong>' . esc_html( $row['label'] ) . '</strong></td><td>' . esc_html( $row['status'] ) . '</td><td>' . esc_html( $row['note'] ) . '</td></tr>';
+			}
+			echo '</tbody></table>';
 		}
 
 		/**
@@ -334,6 +432,7 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 
 			echo '</tbody></table>';
 			echo '<p>' . esc_html( $this->get_tier_note() ) . '</p>';
+			echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wcj-compatibility-status' ) ) . '">' . esc_html__( 'View Booster status', 'woocommerce-jetpack' ) . '</a></p>';
 			echo '</div>';
 		}
 

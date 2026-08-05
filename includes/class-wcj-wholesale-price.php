@@ -23,6 +23,13 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 	class WCJ_Wholesale_Price extends WCJ_Module {
 
 		/**
+		 * Request-scoped wholesale discount results.
+		 *
+		 * @var array
+		 */
+		private $discount_cache = array();
+
+		/**
 		 * Constructor.
 		 *
 		 * @version 4.1.0
@@ -176,12 +183,16 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		 * @param  int $product_id defines the product_id.
 		 */
 		private function get_discount_by_quantity( $quantity, $product_id ) {
+			$current_user_role = wcj_get_current_user_first_role();
+			$cache_key         = $product_id . '|' . (int) $quantity . '|' . $current_user_role;
+			if ( array_key_exists( $cache_key, $this->discount_cache ) ) {
+				return $this->discount_cache[ $cache_key ];
+			}
 
 			// Check for user role options.
 			$role_option_name_addon = '';
 			$user_roles             = wcj_get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
 			if ( ! empty( $user_roles ) ) {
-				$current_user_role = wcj_get_current_user_first_role();
 				foreach ( $user_roles as $user_role_key ) {
 					if ( $current_user_role === $user_role_key ) {
 						$role_option_name_addon = '_' . $user_role_key;
@@ -223,6 +234,7 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 				}
 			}
 
+			$this->discount_cache[ $cache_key ] = $discount;
 			return $discount;
 		}
 
@@ -337,7 +349,6 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 			return ( wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) && isset( $_product->wcj_wholesale_price ) ) ?
 			$_product->wcj_wholesale_price : $price;
 		}
-
 	}
 
 endif;

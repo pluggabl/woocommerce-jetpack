@@ -1,5 +1,19 @@
 == Changelog ==
 
+= 8.2.0 - 06/08/2026 =
+* Performance 1 of 6 - Reuses identical Price by User Role decisions during a request while bypassing the cache for products with unsaved price changes.
+* Performance 2 of 6 - Reuses effective role, formula, and multi-currency variation-price context instead of rebuilding settings for repeated variation hash calls.
+* Performance 3 of 6 - Normalizes order-export price precision and additional-field configuration once per request, alongside bounded batches and HPOS order-object reuse.
+* Performance 4 of 6 - Reuses gateway-fee product context for an unchanged cart and invalidates it when products, variations, or quantities change.
+* Performance 5 of 6 - Shares request-local product taxonomy context across pricing and payment-gateway category checks and normalizes gateway rules once.
+* Performance 6 of 6 - Adds early exits for empty pricing inputs, scalar currency conversions that do not need product metadata, unrestricted gateway rules, and irrelevant gateway screens.
+* Predictable gateway fees - Normalizes legacy fee settings safely and records clear internal reason codes when a configured gateway fee applies or is skipped.
+* Clearer store checks - Adds a read-only Booster Status page with WooCommerce, WordPress, PHP, checkout architecture, HPOS, active-module, and configuration-boundary guidance.
+* Compatibility boundaries - Keeps Checkout Files collection and checkout-field-conditional fees on their supported Classic Checkout paths instead of overstating Blocks support.
+* Value - Free stores receive these performance, reliability, diagnostics, and order-workflow improvements without changing Free feature limits.
+* WooCommerce 10.9.4 Tested
+* WordPress 7.0 Tested
+
 = 8.1.0 - 15/07/2026 =
 * Checkout Blocks compatibility - Added supported Checkout Custom Fields to Blocks checkout with server-side validation, order saving, and module-specific product, category, and cart visibility on supported WooCommerce versions.
 * Checkout Blocks compatibility - Kept textarea fields, checkout-field-conditional fees, and checkout file collection on their safe Classic Checkout or post-order paths instead of overstating Blocks support.

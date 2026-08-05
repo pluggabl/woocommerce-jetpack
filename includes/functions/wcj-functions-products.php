@@ -164,17 +164,15 @@ if ( ! function_exists( 'wcj_get_product_total_stock' ) ) {
 	function wcj_get_product_total_stock( $_product ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return $_product->get_total_stock();
-		} else {
-			if ( $_product->is_type( array( 'variable', 'grouped' ) ) ) {
+		} elseif ( $_product->is_type( array( 'variable', 'grouped' ) ) ) {
 				$total_stock = 0;
-				foreach ( $_product->get_children() as $child_id ) {
-					$child        = wc_get_product( $child_id );
-					$total_stock += $child->get_stock_quantity();
-				}
-				return $total_stock;
-			} else {
-				return $_product->get_stock_quantity();
+			foreach ( $_product->get_children() as $child_id ) {
+				$child        = wc_get_product( $child_id );
+				$total_stock += $child->get_stock_quantity();
 			}
+				return $total_stock;
+		} else {
+			return $_product->get_stock_quantity();
 		}
 	}
 }
@@ -552,6 +550,41 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_product_terms' ) ) {
+	/**
+	 * Gets product terms once per request.
+	 *
+	 * This intentionally uses request memory only. WordPress remains responsible
+	 * for persistent object caching and cache invalidation.
+	 *
+	 * @since 8.2.0
+	 * @param int    $product_id Product ID.
+	 * @param string $taxonomy   Taxonomy name.
+	 * @return array|WP_Error
+	 */
+	function wcj_get_product_terms( $product_id, $taxonomy ) {
+		static $terms_cache = array();
+
+		$product_id = absint( $product_id );
+		$taxonomy   = sanitize_key( $taxonomy );
+		if ( ! $product_id || '' === $taxonomy ) {
+			return array();
+		}
+
+		$cache_key = $product_id . '|' . $taxonomy;
+		$use_cache = apply_filters( 'wcj_use_product_terms_request_cache', true, $product_id, $taxonomy );
+		if ( $use_cache && array_key_exists( $cache_key, $terms_cache ) ) {
+			return $terms_cache[ $cache_key ];
+		}
+
+		$terms = get_the_terms( $product_id, $taxonomy );
+		if ( $use_cache ) {
+			$terms_cache[ $cache_key ] = $terms;
+		}
+		return $terms;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_the_terms' ) ) {
 	/**
 	 * Wcj_get_the_terms.
@@ -563,8 +596,8 @@ if ( ! function_exists( 'wcj_get_the_terms' ) ) {
 	 */
 	function wcj_get_the_terms( $product_id, $taxonomy ) {
 		$result = array();
-		$_terms = get_the_terms( $product_id, $taxonomy );
-		if ( ! empty( $_terms ) ) {
+		$_terms = wcj_get_product_terms( $product_id, $taxonomy );
+		if ( ! empty( $_terms ) && ! is_wp_error( $_terms ) ) {
 			foreach ( $_terms as $_term ) {
 				$result[] = $_term->term_id;
 			}
@@ -587,8 +620,8 @@ if ( ! function_exists( 'wcj_is_product_term' ) ) {
 		if ( empty( $term_ids ) ) {
 			return false;
 		}
-		$product_terms = get_the_terms( $product_id, $taxonomy );
-		if ( empty( $product_terms ) ) {
+		$product_terms = wcj_get_product_terms( $product_id, $taxonomy );
+		if ( empty( $product_terms ) || is_wp_error( $product_terms ) ) {
 			return false;
 		}
 		foreach ( $product_terms as $product_term ) {
