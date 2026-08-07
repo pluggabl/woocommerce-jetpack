@@ -5,13 +5,19 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.2.0
+Stable tag: 8.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 8.3.0 - Safer order operations and read-only Booster abilities
+
+Booster 8.3.0 hardens refund, scheduled order, and order metadata paths for both HPOS and legacy order storage. Checkout gateway rules now use the same supported server logic during Checkout Blocks Store API recalculation and Classic Checkout.
+
+On WordPress 6.9 and later, authorized store managers can use three bounded, read-only Booster abilities for module, compatibility, and Booster-owned background-job status. They expose no raw settings, customer or order records, action arguments, or credentials. Older WordPress versions continue normally without loading the abilities integration.
 
 Supercharge WooCommerce with powerful **PDF Invoices**, smart **Dynamic Pricing**, visual **Product Variation Swatches**, global **Multi-Currency** support, a flexible **Checkout Field Editor**, versatile **Product Addons**, and over 100+ more essential tools – all in one plugin! Booster offers a comprehensive suite, replacing dozens of individual extensions without the bloat. Activate only the modules you need, keeping your store fast, lean, and feature-rich. Many core features are completely free.
 
@@ -361,6 +367,15 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.3.0 - 07/08/2026 =
+* Platform - Adds three permission-protected, read-only WordPress abilities for safe module, compatibility, and Booster-owned background-job status.
+* Orders - Hardens refund totals, order metadata access, product-addon quantity handling, and bulk download-permission regeneration across HPOS and legacy storage.
+* Checkout - Applies product/category gateway rules through supported server logic for Checkout Blocks Store API recalculation and Classic Checkout.
+* Performance - Shares request-local Store API detection and keeps the abilities framework unloaded on WordPress versions below 6.9.
+* Security - Tightens operational status permissions and bounds diagnostic output.
+* WooCommerce 11.0.0 Tested
+* WordPress 7.0 Tested; WordPress 7.1 RC compatibility checked
 
 = 8.2.0 - 05/08/2026 =
 * Faster pricing - Reuses wholesale, role, formula, variation, and multi-currency context during each request instead of repeating the same settings, taxonomy, exchange-rate, and product metadata work.

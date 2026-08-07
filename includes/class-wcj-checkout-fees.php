@@ -74,25 +74,12 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		/**
 		 * Check if the current request is a WC Store API request (Blocks checkout).
 		 *
-		 * @version 8.0.0
+		 * @version 8.3.0
 		 * @since   8.0.0
 		 * @return bool
 		 */
 		private function is_store_api_request() {
-			if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
-				return false;
-			}
-			$route = '';
-			if ( isset( $GLOBALS['wp']->query_vars['rest_route'] ) ) {
-				$route = sanitize_text_field( wp_unslash( $GLOBALS['wp']->query_vars['rest_route'] ) );
-			} elseif ( isset( $_GET['rest_route'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				$route = sanitize_text_field( wp_unslash( $_GET['rest_route'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			}
-			if ( 0 === strpos( ltrim( $route, '/' ), 'wc/store/' ) ) {
-				return true;
-			}
-			$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-			return false !== strpos( $uri, '/wc/store/' );
+			return function_exists( 'wcj_is_store_api_request' ) && wcj_is_store_api_request();
 		}
 
 		/**

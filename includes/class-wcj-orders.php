@@ -119,7 +119,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		/**
 		 * Handle_orders_navigation.
 		 *
-		 * @version 7.1.4
+		 * @version 8.3.0
 		 * @since   3.4.0
 		 */
 		public function handle_orders_navigation() {
@@ -339,26 +339,23 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 			$total_orders = 0;
 			while ( true ) {
 				if ( true === wcj_is_hpos_enabled() ) {
-					$args  = array(
-						'type'           => 'shop_order',
-						'status'         => 'any',
-						'posts_per_page' => $block_size,
-						'offset'         => $offset,
-						'orderby'        => 'ID',
-						'order'          => 'DESC',
-						'fields'         => 'ids',
+					$args = array(
+						'type'    => 'shop_order',
+						'status'  => array_keys( wc_get_order_statuses() ),
+						'limit'   => $block_size,
+						'offset'  => $offset,
+						'orderby' => 'ID',
+						'order'   => 'DESC',
+						'return'  => 'ids',
 					);
-					$order = wc_get_orders( $args );
-					if ( ! $order ) {
+					$order_ids = wc_get_orders( $args );
+					if ( ! $order_ids ) {
 						break;
 					}
-					$i = 0;
-					foreach ( $order as $order_id ) {
-
-						$data_store->delete_by_order_id( $order[ $i ]->id );
-						wc_downloadable_product_permissions( $order[ $i ]->id, true );
+					foreach ( $order_ids as $order_id ) {
+						$data_store->delete_by_order_id( $order_id );
+						wc_downloadable_product_permissions( $order_id, true );
 						$total_orders++;
-						$i++;
 					}
 				} else {
 					$args = array(

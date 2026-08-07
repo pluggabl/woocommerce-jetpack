@@ -84,7 +84,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		/**
 		 * Is_gateway_allowed.
 		 *
-		 * @version 5.6.2
+		 * @version 8.3.0
 		 * @since   4.6.0
 		 *
 		 * @param string | int $gateway_id defines the gateway_id.
@@ -151,7 +151,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		/**
 		 * Filter_available_payment_gateways_per_category.
 		 *
-		 * @version 5.6.2
+		 * @version 8.3.0
 		 * @todo    [dev] (maybe) `if ( ! is_checkout() ) { return $available_gateways; }`
 		 * @param array $available_gateways defines the available_gateways.
 		 */
@@ -163,12 +163,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			$cart_products  = array();
 			$order_products = array();
 			$is_order_pay   = is_wc_endpoint_url( 'order-pay' );
-			if ( ! is_checkout() && ! $is_order_pay ) {
+			$is_store_api   = function_exists( 'wcj_is_store_api_request' ) && wcj_is_store_api_request();
+			if ( ! is_checkout() && ! $is_store_api && ! $is_order_pay ) {
 				return $available_gateways;
 			}
 
 			// Check if it is on Checkout Page.
-			if ( is_checkout() && ! $is_order_pay ) {
+			if ( ( is_checkout() || $is_store_api ) && ! $is_order_pay ) {
 				if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
 					return $available_gateways;
 				}

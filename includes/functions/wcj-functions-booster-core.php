@@ -124,3 +124,38 @@ if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
 			false : ( 'yes' === wcj_get_option( 'wcj_' . $module_id . '_enabled', 'no' ) ) );
 	}
 }
+
+if ( ! function_exists( 'wcj_is_store_api_request' ) ) {
+	/**
+	 * Detects WooCommerce Store API requests without relying on checkout globals.
+	 *
+	 * This is request scoped and intentionally does not persist cart or customer data.
+	 *
+	 * @version 8.3.0
+	 * @since   8.3.0
+	 * @return bool
+	 */
+	function wcj_is_store_api_request() {
+		static $is_store_api = null;
+		if ( null !== $is_store_api ) {
+			return $is_store_api;
+		}
+		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
+			$is_store_api = false;
+			return $is_store_api;
+		}
+		$route = '';
+		if ( isset( $GLOBALS['wp']->query_vars['rest_route'] ) ) {
+			$route = sanitize_text_field( wp_unslash( $GLOBALS['wp']->query_vars['rest_route'] ) );
+		} elseif ( isset( $_GET['rest_route'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$route = sanitize_text_field( wp_unslash( $_GET['rest_route'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+		if ( 0 === strpos( ltrim( $route, '/' ), 'wc/store/' ) ) {
+			$is_store_api = true;
+			return $is_store_api;
+		}
+		$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+		$is_store_api = false !== strpos( $uri, '/wc/store/' );
+		return $is_store_api;
+	}
+}
