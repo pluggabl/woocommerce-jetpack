@@ -44,7 +44,11 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 				'input_schema'        => $this->get_status_input_schema(),
 				'permission_callback' => array( $this, 'check_permission' ),
 				'meta'                => array(
-					'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ),
+					'annotations'  => array(
+						'readonly'    => true,
+						'destructive' => false,
+						'idempotent'  => true,
+					),
 					'show_in_rest' => true,
 					'public'       => true,
 					'mcp'          => array( 'public' => true ),
@@ -98,7 +102,7 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 
 		/** Executes module status. */
 		public function execute_module_status() {
-			$permission = $this->check_permission();
+			$permission = $this->check_permission(); // phpcs:ignore
 			return is_wp_error( $permission ) ? $permission : $this->service()->get_module_status();
 		}
 
@@ -135,58 +139,119 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 			);
 		}
 
-		/** Common schema for a safe string. */
+		/**
+		 * Common schema for a safe string.
+		 *
+		 * @param int $max Maximum length of the string.
+		 */
 		private function string_schema( $max = 240 ) {
-			return array( 'type' => 'string', 'maxLength' => $max );
+			return array(
+				'type'      => 'string',
+				'maxLength' => $max,
+			);
 		}
 
 		/** Module status output schema. */
 		private function get_module_output_schema() {
 			$item = array(
-				'type' => 'object', 'additionalProperties' => false,
-				'properties' => array(
-					'id' => $this->string_schema( 80 ), 'label' => $this->string_schema( 120 ),
-					'tier' => array( 'type'=>'string', 'enum'=>array( 'free', 'plus', 'elite' ) ),
-					'available' => array( 'type'=>'boolean' ), 'enabled' => array( 'type'=>'boolean' ),
-					'health' => array( 'type'=>'string', 'enum'=>array( 'ok', 'warning', 'disabled' ) ),
-					'warning_codes' => array( 'type'=>'array', 'maxItems'=>4, 'items'=>$this->string_schema( 64 ) ),
+				'type'                 => 'object',
+				'additionalProperties' => false,
+				'properties'           => array(
+					'id'            => $this->string_schema( 80 ),
+					'label'         => $this->string_schema( 120 ),
+					'tier'          => array(
+						'type' => 'string',
+						'enum' => array( 'free', 'plus', 'elite' ),
+					),
+					'available'     => array( 'type' => 'boolean' ),
+					'enabled'       => array( 'type' => 'boolean' ),
+					'health'        => array(
+						'type' => 'string',
+						'enum' => array( 'ok', 'warning', 'disabled' ),
+					),
+					'warning_codes' => array(
+						'type'     => 'array',
+						'maxItems' => 4,
+						'items'    => $this->string_schema( 64 ),
+					),
 				),
-				'required' => array( 'id', 'label', 'tier', 'available', 'enabled', 'health', 'warning_codes' ),
+				'required'             => array( 'id', 'label', 'tier', 'available', 'enabled', 'health', 'warning_codes' ),
 			);
 			return array(
-				'type'=>'object', 'additionalProperties'=>false,
-				'properties'=>array(
-					'tier'=>array( 'type'=>'string', 'enum'=>array( 'free', 'plus', 'elite' ) ),
-					'count'=>array( 'type'=>'integer', 'minimum'=>0, 'maximum'=>WCJ_Status_Service::MAX_MODULES ),
-					'modules'=>array( 'type'=>'array', 'maxItems'=>WCJ_Status_Service::MAX_MODULES, 'items'=>$item ),
+				'type'                 => 'object',
+				'additionalProperties' => false,
+				'properties'           => array(
+					'tier'    => array(
+						'type' => 'string',
+						'enum' => array( 'free', 'plus', 'elite' ),
+					),
+					'count'   => array(
+						'type'    => 'integer',
+						'minimum' => 0,
+						'maximum' => WCJ_Status_Service::MAX_MODULES,
+					),
+					'modules' => array(
+						'type'     => 'array',
+						'maxItems' => WCJ_Status_Service::MAX_MODULES,
+						'items'    => $item,
+					),
 				),
-				'required'=>array( 'tier', 'count', 'modules' ),
+				'required'             => array( 'tier', 'count', 'modules' ),
 			);
 		}
 
 		/** Compatibility output schema. */
 		private function get_compatibility_output_schema() {
 			$checkout = array( 'supported', 'partial', 'classic-only', 'not-a-checkout-concern' );
-			$item = array(
-				'type'=>'object', 'additionalProperties'=>false,
-				'properties'=>array(
-					'id'=>$this->string_schema( 80 ), 'label'=>$this->string_schema( 120 ), 'enabled'=>array( 'type'=>'boolean' ),
-					'hpos'=>array( 'type'=>'string', 'enum'=>array( 'supported', 'partial', 'not-an-order-concern' ) ),
-					'checkout_blocks'=>array( 'type'=>'string', 'enum'=>$checkout ),
-					'store_api'=>array( 'type'=>'string', 'enum'=>$checkout ),
-					'classic_checkout'=>array( 'type'=>'string', 'enum'=>array( 'supported', 'not-a-checkout-concern' ) ),
-					'boundary'=>$this->string_schema( 320 ), 'guidance_code'=>$this->string_schema( 80 ),
+			$item     = array(
+				'type'                 => 'object',
+				'additionalProperties' => false,
+				'properties'           => array(
+					'id'               => $this->string_schema( 80 ),
+					'label'            => $this->string_schema( 120 ),
+					'enabled'          => array( 'type' => 'boolean' ),
+					'hpos'             => array(
+						'type' => 'string',
+						'enum' => array( 'supported', 'partial', 'not-an-order-concern' ),
+					),
+					'checkout_blocks'  => array(
+						'type' => 'string',
+						'enum' => $checkout,
+					),
+					'store_api'        => array(
+						'type' => 'string',
+						'enum' => $checkout,
+					),
+					'classic_checkout' => array(
+						'type' => 'string',
+						'enum' => array( 'supported', 'not-a-checkout-concern' ),
+					),
+					'boundary'         => $this->string_schema( 320 ),
+					'guidance_code'    => $this->string_schema( 80 ),
 				),
-				'required'=>array( 'id', 'label', 'enabled', 'hpos', 'checkout_blocks', 'store_api', 'classic_checkout', 'boundary', 'guidance_code' ),
+				'required'             => array( 'id', 'label', 'enabled', 'hpos', 'checkout_blocks', 'store_api', 'classic_checkout', 'boundary', 'guidance_code' ),
 			);
 			return array(
-				'type'=>'object', 'additionalProperties'=>false,
-				'properties'=>array(
-					'tier'=>array( 'type'=>'string', 'enum'=>array( 'free', 'plus', 'elite' ) ), 'hpos_enabled'=>array( 'type'=>'boolean' ),
-					'count'=>array( 'type'=>'integer', 'minimum'=>0, 'maximum'=>WCJ_Status_Service::MAX_MODULES ),
-					'modules'=>array( 'type'=>'array', 'maxItems'=>WCJ_Status_Service::MAX_MODULES, 'items'=>$item ),
+				'type'                 => 'object',
+				'additionalProperties' => false,
+				'properties'           => array(
+					'tier'         => array(
+						'type' => 'string',
+						'enum' => array( 'free', 'plus', 'elite' ),
+					),
+					'hpos_enabled' => array( 'type' => 'boolean' ),
+					'count'        => array(
+						'type'    => 'integer',
+						'minimum' => 0,
+						'maximum' => WCJ_Status_Service::MAX_MODULES,
+					),
+					'modules'      => array(
+						'type'     => 'array',
+						'maxItems' => WCJ_Status_Service::MAX_MODULES,
+						'items'    => $item,
+					),
 				),
-				'required'=>array( 'tier', 'hpos_enabled', 'count', 'modules' ),
+				'required'             => array( 'tier', 'hpos_enabled', 'count', 'modules' ),
 			);
 		}
 
@@ -194,21 +259,44 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 		private function get_background_jobs_output_schema() {
 			$count_properties = array();
 			foreach ( array( 'pending', 'overdue', 'failed', 'recent_success' ) as $key ) {
-				$count_properties[ $key ] = array( 'type'=>'integer', 'minimum'=>0, 'maximum'=>100000 );
+				$count_properties[ $key ] = array(
+					'type'    => 'integer',
+					'minimum' => 0,
+					'maximum' => 100000,
+				);
 			}
 			$bucket_properties = array();
 			foreach ( array( 'under_1h', 'from_1h_to_24h', 'from_1d_to_7d', 'over_7d' ) as $key ) {
-				$bucket_properties[ $key ] = array( 'type'=>'integer', 'minimum'=>0, 'maximum'=>100000 );
+				$bucket_properties[ $key ] = array(
+					'type'    => 'integer',
+					'minimum' => 0,
+					'maximum' => 100000,
+				);
 			}
 			return array(
-				'type'=>'object', 'additionalProperties'=>false,
-				'properties'=>array(
-					'counts'=>array( 'type'=>'object', 'additionalProperties'=>false, 'properties'=>$count_properties, 'required'=>array_keys( $count_properties ) ),
-					'overdue_buckets'=>array( 'type'=>'object', 'additionalProperties'=>false, 'properties'=>$bucket_properties, 'required'=>array_keys( $bucket_properties ) ),
-					'diagnostic_codes'=>array( 'type'=>'array', 'maxItems'=>4, 'items'=>$this->string_schema( 64 ) ),
-					'history_available' => array( 'type'=>'boolean' ),
+				'type'                 => 'object',
+				'additionalProperties' => false,
+				'properties'           => array(
+					'counts'            => array(
+						'type'                 => 'object',
+						'additionalProperties' => false,
+						'properties'           => $count_properties,
+						'required'             => array_keys( $count_properties ),
+					),
+					'overdue_buckets'   => array(
+						'type'                 => 'object',
+						'additionalProperties' => false,
+						'properties'           => $bucket_properties,
+						'required'             => array_keys( $bucket_properties ),
+					),
+					'diagnostic_codes'  => array(
+						'type'     => 'array',
+						'maxItems' => 4,
+						'items'    => $this->string_schema( 64 ),
+					),
+					'history_available' => array( 'type' => 'boolean' ),
 				),
-				'required'=>array( 'counts', 'overdue_buckets', 'diagnostic_codes', 'history_available' ),
+				'required'             => array( 'counts', 'overdue_buckets', 'diagnostic_codes', 'history_available' ),
 			);
 		}
 	}

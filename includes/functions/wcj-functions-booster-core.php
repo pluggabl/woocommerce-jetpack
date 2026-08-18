@@ -34,7 +34,7 @@ if ( ! function_exists( 'wcj_plugin_url' ) ) {
 	 * @todo    (maybe) add `WCJ_PLUGIN_URL` constant instead
 	 */
 	function wcj_plugin_url() {
-		return untrailingslashit( plugin_dir_url( realpath( dirname( __FILE__ ) . '/..' ) ) );
+		return untrailingslashit( plugin_dir_url( realpath( __DIR__ . '/..' ) ) );
 	}
 }
 
@@ -64,8 +64,8 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 	function wcj_is_rest() {
 		$prefix = rest_get_url_prefix();
 		if (
-			defined( 'REST_REQUEST' ) && REST_REQUEST || // After WP_REST_Request initialisation.
-			isset( $_GET['rest_route'] ) && 0 === strpos( trim( wp_unslash( $_GET['rest_route'] ), '\\/' ), $prefix, 0 ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
+			defined( 'REST_REQUEST' ) && REST_REQUEST || // phpcs:ignore
+			isset( $_GET['rest_route'] ) && 0 === strpos( trim( wp_unslash( $_GET['rest_route'] ), '\\/' ), $prefix, 0 ) // phpcs:ignore
 			// Support "plain" permalink settings.
 		) {
 			return true;
@@ -154,7 +154,7 @@ if ( ! function_exists( 'wcj_is_store_api_request' ) ) {
 			$is_store_api = true;
 			return $is_store_api;
 		}
-		$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+		$uri          = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 		$is_store_api = false !== strpos( $uri, '/wc/store/' );
 		return $is_store_api;
 	}

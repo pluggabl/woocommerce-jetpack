@@ -135,8 +135,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					wp_safe_redirect( $url );
 					exit;
 				}
-			} else {
-				if ( isset( $_GET['wcj_orders_navigation'] ) ) {
+			} elseif ( isset( $_GET['wcj_orders_navigation'] ) ) {
 					$wpnonce           = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wcj-order-meta-nonce' ) : false;
 					$adjacent_order_id = $wpnonce && isset( $_GET['post'] ) && isset( $_GET['wcj_orders_navigation'] ) ? wcj_get_adjacent_order_id( sanitize_text_field( wp_unslash( $_GET['post'] ) ), sanitize_text_field( wp_unslash( $_GET['wcj_orders_navigation'] ) ) ) : false;
 					$url               = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id ) ?
@@ -144,7 +143,6 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					admin_url( 'post.php?post=' . $adjacent_order_id . '&action=edit' ) );
 					wp_safe_redirect( $url );
 					exit;
-				}
 			}
 		}
 
@@ -229,7 +227,6 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					'low'
 				);
 			}
-
 		}
 
 		/**
@@ -339,7 +336,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 			$total_orders = 0;
 			while ( true ) {
 				if ( true === wcj_is_hpos_enabled() ) {
-					$args = array(
+					$args      = array(
 						'type'    => 'shop_order',
 						'status'  => array_keys( wc_get_order_statuses() ),
 						'limit'   => $block_size,
@@ -355,7 +352,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					foreach ( $order_ids as $order_id ) {
 						$data_store->delete_by_order_id( $order_id );
 						wc_downloadable_product_permissions( $order_id, true );
-						$total_orders++;
+						++$total_orders;
 					}
 				} else {
 					$args = array(
@@ -374,7 +371,7 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 					foreach ( $loop->posts as $post_id ) {
 						$data_store->delete_by_order_id( $post_id );
 						wc_downloadable_product_permissions( $post_id, true );
-						$total_orders++;
+						++$total_orders;
 					}
 				}
 				$offset += $block_size;

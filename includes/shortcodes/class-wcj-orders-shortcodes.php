@@ -515,7 +515,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					}
 					$row[] = $cell;
 				}
-				$i++;
+				++$i;
 				$table_data[] = $row;
 			}
 			if ( empty( $table_data ) ) {
@@ -543,7 +543,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					$data_slice    = array_slice( $table_data, $slice_offset, $current_page_break );
 					$html         .= wcj_get_table_html( array_merge( $columns_titles, $data_slice ), $table_html_args );
 					$slice_offset += $current_page_break;
-					$slices++;
+					++$slices;
 				}
 			} else {
 				$html = wcj_get_table_html( array_merge( $columns_titles, $table_data ), $table_html_args );
