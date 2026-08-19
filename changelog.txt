@@ -1,5 +1,15 @@
 == Changelog ==
 
+= 8.3.0 - 19/08/2026 =
+* A stronger store today, an AI-ready foundation for tomorrow - This reliability-and-readiness release makes important order and checkout workflows more dependable while laying the first safe foundation for future Booster-assisted store operations.
+* More confidence around orders and refunds - Hardens partial-refund totals, order data handling, product-addon quantity updates, and bulk or scheduled download-permission work across HPOS and legacy order storage.
+* More consistent payment choices - Product/category gateway rules now use the same supported server logic during Checkout Blocks recalculation and Classic Checkout.
+* Less repeated request work - Shares Store API request detection so Booster does not re-check the same request context unnecessarily.
+* New read-only store health signals - On WordPress 6.9 and later, authorized store managers can retrieve concise summaries of available Booster modules, checkout and HPOS compatibility, and Booster-owned background jobs.
+* Built for what comes next - These permission-protected WordPress abilities create a base for future guided diagnostics, operational summaries, and safe AI or automation integrations without adding a chatbot or write access in this release.
+* Privacy and control by design - No AI provider is connected, no store data is sent to AI services, and the new summaries exclude customer and order records, raw settings, credentials, and job arguments.
+* Compatibility - Tested with WooCommerce 11.0.0 and WordPress 7.0; WordPress 7.1 RC compatibility checked.
+
 = 8.2.0 - 06/08/2026 =
 * Performance 1 of 6 - Reuses identical Price by User Role decisions during a request while bypassing the cache for products with unsaved price changes.
 * Performance 2 of 6 - Reuses effective role, formula, and multi-currency variation-price context instead of rebuilding settings for repeated variation hash calls.

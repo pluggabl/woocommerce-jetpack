@@ -34,7 +34,7 @@ if ( ! function_exists( 'wcj_plugin_url' ) ) {
 	 * @todo    (maybe) add `WCJ_PLUGIN_URL` constant instead
 	 */
 	function wcj_plugin_url() {
-		return untrailingslashit( plugin_dir_url( realpath( dirname( __FILE__ ) . '/..' ) ) );
+		return untrailingslashit( plugin_dir_url( realpath( __DIR__ . '/..' ) ) );
 	}
 }
 
@@ -64,8 +64,8 @@ if ( ! function_exists( 'wcj_is_rest' ) ) {
 	function wcj_is_rest() {
 		$prefix = rest_get_url_prefix();
 		if (
-			defined( 'REST_REQUEST' ) && REST_REQUEST || // After WP_REST_Request initialisation.
-			isset( $_GET['rest_route'] ) && 0 === strpos( trim( wp_unslash( $_GET['rest_route'] ), '\\/' ), $prefix, 0 ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
+			defined( 'REST_REQUEST' ) && REST_REQUEST || // phpcs:ignore
+			isset( $_GET['rest_route'] ) && 0 === strpos( trim( wp_unslash( $_GET['rest_route'] ), '\\/' ), $prefix, 0 ) // phpcs:ignore
 			// Support "plain" permalink settings.
 		) {
 			return true;
@@ -122,5 +122,40 @@ if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
 	function wcj_is_module_enabled( $module_id ) {
 		return ( 'modules_by_user_roles' !== $module_id && wcj_is_module_enabled( 'modules_by_user_roles' ) && ! wcj_is_rest() && ! wcj_check_modules_by_user_roles( $module_id ) ?
 			false : ( 'yes' === wcj_get_option( 'wcj_' . $module_id . '_enabled', 'no' ) ) );
+	}
+}
+
+if ( ! function_exists( 'wcj_is_store_api_request' ) ) {
+	/**
+	 * Detects WooCommerce Store API requests without relying on checkout globals.
+	 *
+	 * This is request scoped and intentionally does not persist cart or customer data.
+	 *
+	 * @version 8.3.0
+	 * @since   8.3.0
+	 * @return bool
+	 */
+	function wcj_is_store_api_request() {
+		static $is_store_api = null;
+		if ( null !== $is_store_api ) {
+			return $is_store_api;
+		}
+		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
+			$is_store_api = false;
+			return $is_store_api;
+		}
+		$route = '';
+		if ( isset( $GLOBALS['wp']->query_vars['rest_route'] ) ) {
+			$route = sanitize_text_field( wp_unslash( $GLOBALS['wp']->query_vars['rest_route'] ) );
+		} elseif ( isset( $_GET['rest_route'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$route = sanitize_text_field( wp_unslash( $_GET['rest_route'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+		if ( 0 === strpos( ltrim( $route, '/' ), 'wc/store/' ) ) {
+			$is_store_api = true;
+			return $is_store_api;
+		}
+		$uri          = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+		$is_store_api = false !== strpos( $uri, '/wc/store/' );
+		return $is_store_api;
 	}
 }

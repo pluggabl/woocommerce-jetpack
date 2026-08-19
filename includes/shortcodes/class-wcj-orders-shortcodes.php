@@ -515,7 +515,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					}
 					$row[] = $cell;
 				}
-				$i++;
+				++$i;
 				$table_data[] = $row;
 			}
 			if ( empty( $table_data ) ) {
@@ -543,7 +543,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					$data_slice    = array_slice( $table_data, $slice_offset, $current_page_break );
 					$html         .= wcj_get_table_html( array_merge( $columns_titles, $data_slice ), $table_html_args );
 					$slice_offset += $current_page_break;
-					$slices++;
+					++$slices;
 				}
 			} else {
 				$html = wcj_get_table_html( array_merge( $columns_titles, $table_data ), $table_html_args );
@@ -588,12 +588,14 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_item_total_refunded.
 		 *
-		 * @version 6.0.0
+		 * @version 8.3.0
 		 * @since   2.5.3
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_item_total_refunded( $atts ) {
-			$refund_item = $this->the_order->get_refunds();
+			$refund_total     = 0.0;
+			$refund_total_tax = 0.0;
+			$refund_item      = $this->the_order->get_refunds();
 			foreach ( $refund_item as $_refund ) {
 
 				foreach ( $_refund->get_items() as $_item ) {
@@ -1159,7 +1161,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_products_meta.
 		 *
-		 * @version 7.2.4
+		 * @version 8.3.0
 		 * @since   3.9.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
@@ -1215,7 +1217,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_meta( $atts ) {
-			return ( '' !== $atts['meta_key'] ? esc_js( get_post_meta( wcj_get_order_id( $this->the_order ), $atts['meta_key'], true ) ) : '' );
+			return ( '' !== $atts['meta_key'] ? esc_js( $this->the_order->get_meta( $atts['meta_key'], true ) ) : '' );
 		}
 
 		/**
@@ -1861,13 +1863,13 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		/**
 		 * Wcj_order_payment_method_notes
 		 *
-		 * @version 7.1.4
+		 * @version 8.3.0
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_payment_method_notes( $atts ) {
 
-			if ( true === wcj_is_hpos_enabled() && false !== $this->the_order ) {
-				$get_payment_notes = 'wcj_gateways_' . $this->the_order->get_meta( '_payment_method' ) . '_pdf_notes';
+			if ( false !== $this->the_order ) {
+				$get_payment_notes = 'wcj_gateways_' . $this->the_order->get_payment_method() . '_pdf_notes';
 				if ( str_contains( get_option( $get_payment_notes ), ']' ) ) {
 					$get_value        = get_option( $get_payment_notes );
 					$order_id         = ' order_id="' . wcj_get_order_id( $this->the_order ) . '"]';
@@ -1876,8 +1878,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 					$custom_shortcode = get_option( $get_payment_notes );
 				}
 			} else {
-				$get_payment_notes = 'wcj_gateways_' . get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method', true ) . '_pdf_notes';
-				$custom_shortcode  = get_option( $get_payment_notes );
+				$custom_shortcode = '';
 			}
 			return do_shortcode( $custom_shortcode );
 		}

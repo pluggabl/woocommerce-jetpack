@@ -61,6 +61,21 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 			);
 			$modules         = array_merge( $this->get_active_checkout_modules(), $this->get_active_hpos_modules() );
 			$health          = $this->get_configuration_health( $checkout_status );
+			if ( class_exists( 'WCJ_Status_Service' ) ) {
+				$status_service = new WCJ_Status_Service();
+				$module_status  = $status_service->get_module_status();
+				$job_status     = $status_service->get_background_jobs_status();
+				$health[]       = array(
+					'label'  => __( 'Normalized module inventory', 'woocommerce-jetpack' ),
+					'status' => sprintf( __( '%d available modules', 'woocommerce-jetpack' ), $module_status['count'] ),
+					'note'   => __( 'This is the same bounded, option-safe service used by Booster read-only abilities.', 'woocommerce-jetpack' ),
+				);
+				$health[]       = array(
+					'label'  => __( 'Booster background jobs', 'woocommerce-jetpack' ),
+					'status' => 0 === $job_status['counts']['overdue'] && 0 === $job_status['counts']['failed'] ? __( 'No aggregate issue detected', 'woocommerce-jetpack' ) : __( 'Review aggregate diagnostics', 'woocommerce-jetpack' ),
+					'note'   => implode( ', ', $job_status['diagnostic_codes'] ),
+				);
+			}
 
 			echo '<div class="wrap"><h1>' . esc_html__( 'Booster compatibility and configuration status', 'woocommerce-jetpack' ) . '</h1>';
 			echo '<p>' . esc_html__( 'This page is read-only. It does not change settings and does not display customer, cart, or order data.', 'woocommerce-jetpack' ) . '</p>';

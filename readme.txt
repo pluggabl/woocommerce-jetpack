@@ -5,13 +5,24 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.2.0
+Stable tag: 8.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 8.3.0 - A stronger store today, an AI-ready foundation for tomorrow
+
+Booster 8.3.0 is a reliability-and-readiness release designed to keep everyday store operations dependable as WooCommerce evolves:
+
+* **More confidence around orders and refunds:** hardened order handling supports both HPOS and legacy storage, including partial refunds, scheduled order work, and download-permission regeneration.
+* **More consistent payment choices at checkout:** product/category gateway rules now use the same supported server logic in Checkout Blocks and Classic Checkout, helping configured payment methods stay predictable during cart updates.
+* **Less repeated work:** shared request-level Store API detection avoids re-checking the same request context while leaving your saved settings and storefront behavior unchanged.
+* **A safer path toward AI-assisted store operations:** on WordPress 6.9 and later, authorized store managers can securely read concise summaries of available Booster modules, compatibility boundaries, and Booster-owned background jobs through three new WordPress abilities.
+
+**What the AI-ready foundation means:** this is the first infrastructure layer for future Booster experiences such as guided store diagnostics, clearer operational summaries, and safer connections to AI and automation tools. It is intentionally read-only and permission-protected. Booster 8.3.0 does not add a chatbot, connect to an AI provider, send store data to AI services, expose customer or order records, or let an integration change store settings. Older WordPress versions continue normally without loading this integration.
 
 Supercharge WooCommerce with powerful **PDF Invoices**, smart **Dynamic Pricing**, visual **Product Variation Swatches**, global **Multi-Currency** support, a flexible **Checkout Field Editor**, versatile **Product Addons**, and over 100+ more essential tools – all in one plugin! Booster offers a comprehensive suite, replacing dozens of individual extensions without the bloat. Activate only the modules you need, keeping your store fast, lean, and feature-rich. Many core features are completely free.
 
@@ -361,6 +372,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.3.0 - 19/08/2026 =
+* A stronger store today, an AI-ready foundation for tomorrow - This reliability-and-readiness release makes important order and checkout workflows more dependable while laying the first safe foundation for future Booster-assisted store operations.
+* More confidence around orders and refunds - Hardens partial-refund totals, order data handling, product-addon quantity updates, and bulk or scheduled download-permission work across HPOS and legacy order storage.
+* More consistent payment choices - Product/category gateway rules now use the same supported server logic during Checkout Blocks recalculation and Classic Checkout.
+* Less repeated request work - Shares Store API request detection so Booster does not re-check the same request context unnecessarily.
+* New read-only store health signals - On WordPress 6.9 and later, authorized store managers can retrieve concise summaries of available Booster modules, checkout and HPOS compatibility, and Booster-owned background jobs.
+* Built for what comes next - These permission-protected WordPress abilities create a base for future guided diagnostics, operational summaries, and safe AI or automation integrations without adding a chatbot or write access in this release.
+* Privacy and control by design - No AI provider is connected, no store data is sent to AI services, and the new summaries exclude customer and order records, raw settings, credentials, and job arguments.
+* Compatibility - Tested with WooCommerce 11.0.0 and WordPress 7.0; WordPress 7.1 RC compatibility checked.
 
 = 8.2.0 - 05/08/2026 =
 * Faster pricing - Reuses wholesale, role, formula, variation, and multi-currency context during each request instead of repeating the same settings, taxonomy, exchange-rate, and product metadata work.

@@ -52,7 +52,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 4.2.0
+		 * @version 8.3.0
 		 * @todo    save all info (e.g. label etc.) in order meta
 		 * @todo    add `do_shortcode()` to all applicable options (e.g. "Message on required")
 		 * @todo    add positions: `woocommerce_before_add_to_cart_quantity`, `woocommerce_after_add_to_cart_quantity` (same to all similar modules, search for `woocommerce_before_add_to_cart_button`)
@@ -193,7 +193,8 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 */
 		public function yith_raq_display_items_on_order( $formatted_meta, $order_item ) {
 			$order_id    = $order_item->get_order_id();
-			$raq_request = get_post_meta( $order_id, '_raq_request', true );
+			$order       = wc_get_order( $order_id );
+			$raq_request = $order ? $order->get_meta( '_raq_request', true ) : array();
 			if ( empty( $raq_request ) ) {
 				return $formatted_meta;
 			}
