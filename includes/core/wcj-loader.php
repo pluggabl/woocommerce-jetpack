@@ -55,6 +55,8 @@ require_once WCJ_FREE_PLUGIN_PATH . '/includes/wcj-quick-start-presets.php';
 if ( is_admin() ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-quick-start-admin.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-status-service.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-order-health-service.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-order-health-admin.php';
 	// Compatibility Status.
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-compatibility-status.php';
 }
@@ -62,6 +64,7 @@ if ( is_admin() ) {
 // WordPress 6.9+ Abilities API. Older WordPress versions do not load these frontend classes.
 if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '6.9', '>=' ) && function_exists( 'wp_register_ability' ) ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-status-service.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-order-health-service.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-abilities.php';
 }
 

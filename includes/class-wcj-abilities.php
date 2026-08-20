@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - WordPress Abilities API integration.
  *
- * @version 8.3.0
+ * @version 8.4.0
  * @since   8.3.0
  * @package Booster_For_WooCommerce/includes
  */
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 			}
 		}
 
-		/** Registers exactly the three public Booster status abilities. */
+		/** Registers Booster's four public, read-only status abilities. */
 		public function register_abilities() {
 			if ( ! function_exists( 'wp_register_ability' ) ) {
 				return;
@@ -93,6 +93,19 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 					)
 				)
 			);
+
+			wp_register_ability(
+				'booster/order-health-summary',
+				array_merge(
+					$common,
+					array(
+						'label'            => __( 'Booster Order Health summary', 'woocommerce-jetpack' ),
+						'description'      => __( 'Returns bounded, aggregate Order Health and Morning Store Briefing counts without order IDs or customer data.', 'woocommerce-jetpack' ),
+						'execute_callback' => array( $this, 'execute_order_health_summary' ),
+						'output_schema'    => $this->get_order_health_output_schema(),
+					)
+				)
+			);
 		}
 
 		/** Permission is checked again immediately before every execution. */
@@ -116,6 +129,12 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 		public function execute_background_jobs_status() {
 			$permission = $this->check_permission();
 			return is_wp_error( $permission ) ? $permission : $this->service()->get_background_jobs_status();
+		}
+
+		/** Executes the bounded, privacy-safe Order Health summary. */
+		public function execute_order_health_summary() {
+			$permission = $this->check_permission();
+			return is_wp_error( $permission ) ? $permission : ( new WCJ_Order_Health_Service() )->get_order_health_summary();
 		}
 
 		/** Returns a fresh service so no request/user state is persisted. */
@@ -297,6 +316,128 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 					'history_available' => array( 'type' => 'boolean' ),
 				),
 				'required'             => array( 'counts', 'overdue_buckets', 'diagnostic_codes', 'history_available' ),
+			);
+		}
+
+		/** Order Health and Morning Store Briefing output schema. */
+		private function get_order_health_output_schema() {
+			$count_schema = array(
+				'type'    => 'integer',
+				'minimum' => 0,
+				'maximum' => WCJ_Order_Health_Service::MAX_QUERY_ORDERS,
+			);
+			$fixed_counts = function ( $keys ) use ( $count_schema ) {
+				$properties = array();
+				foreach ( $keys as $key ) {
+					$properties[ $key ] = $count_schema;
+				}
+				return array(
+					'type'                 => 'object',
+					'additionalProperties' => false,
+					'properties'           => $properties,
+					'required'             => array_keys( $properties ),
+				);
+			};
+			$state_schema = array(
+				'type' => 'string',
+				'enum' => array( 'clear', 'review', 'action-needed' ),
+			);
+			return array(
+				'type'                 => 'object',
+				'additionalProperties' => false,
+				'properties'           => array(
+					'tier'             => array(
+						'type' => 'string',
+						'enum' => array( 'free', 'plus', 'elite' ),
+					),
+					'generated_at_gmt' => $this->string_schema( 40 ),
+					'storage_mode'     => array(
+						'type' => 'string',
+						'enum' => array( 'hpos', 'legacy' ),
+					),
+					'bounded_query'    => array(
+						'type'                 => 'object',
+						'additionalProperties' => false,
+						'properties'           => array(
+							'query_limit'     => $count_schema,
+							'candidate_count' => $count_schema,
+							'attention_count' => $count_schema,
+							'has_more'        => array( 'type' => 'boolean' ),
+						),
+						'required'             => array( 'query_limit', 'candidate_count', 'attention_count', 'has_more' ),
+					),
+					'age_buckets'      => $fixed_counts( WCJ_Order_Health_Service::AGE_BUCKETS ),
+					'cause_counts'     => $fixed_counts( WCJ_Order_Health_Service::CAUSES ),
+					'reason_counts'    => $fixed_counts( WCJ_Order_Health_Service::REASONS ),
+					'oldest_age_days'  => array(
+						'type'    => 'integer',
+						'minimum' => 0,
+						'maximum' => 36500,
+					),
+					'morning_briefing' => array(
+						'type'                 => 'object',
+						'additionalProperties' => false,
+						'properties'           => array(
+							'privacy'         => array(
+								'type' => 'string',
+								'enum' => array( 'aggregate-only' ),
+							),
+							'order_health'    => array(
+								'type'                 => 'object',
+								'additionalProperties' => false,
+								'properties'           => array(
+									'state'           => $state_schema,
+									'attention_count' => $count_schema,
+									'truncated'       => array( 'type' => 'boolean' ),
+								),
+								'required'             => array( 'state', 'attention_count', 'truncated' ),
+							),
+							'compatibility'   => array(
+								'type'                 => 'object',
+								'additionalProperties' => false,
+								'properties'           => array(
+									'state'         => $state_schema,
+									'warning_count' => array(
+										'type'    => 'integer',
+										'minimum' => 0,
+										'maximum' => WCJ_Status_Service::MAX_MODULES,
+									),
+								),
+								'required'             => array( 'state', 'warning_count' ),
+							),
+							'background_jobs' => array(
+								'type'                 => 'object',
+								'additionalProperties' => false,
+								'properties'           => array(
+									'state'            => $state_schema,
+									'overdue'          => array(
+										'type'    => 'integer',
+										'minimum' => 0,
+										'maximum' => 100000,
+									),
+									'failed'           => array(
+										'type'    => 'integer',
+										'minimum' => 0,
+										'maximum' => 100000,
+									),
+									'diagnostic_codes' => array(
+										'type'     => 'array',
+										'maxItems' => 4,
+										'items'    => $this->string_schema( 64 ),
+									),
+								),
+								'required'             => array( 'state', 'overdue', 'failed', 'diagnostic_codes' ),
+							),
+							'guidance_codes'  => array(
+								'type'     => 'array',
+								'maxItems' => 4,
+								'items'    => $this->string_schema( 64 ),
+							),
+						),
+						'required'             => array( 'privacy', 'order_health', 'compatibility', 'background_jobs', 'guidance_codes' ),
+					),
+				),
+				'required'             => array( 'tier', 'generated_at_gmt', 'storage_mode', 'bounded_query', 'age_buckets', 'cause_counts', 'reason_counts', 'oldest_age_days', 'morning_briefing' ),
 			);
 		}
 	}

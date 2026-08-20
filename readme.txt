@@ -13,15 +13,19 @@ Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swa
 
 == Description ==
 
-### New in 8.4.0 - Stronger protection for private store settings
+### New in 8.4.0 - Find delayed orders before they become customer problems
 
-Booster 8.4.0 starts with a tighter permission boundary around private store settings:
+Booster 8.4.0 adds Order Health, a read-only operational view that helps store managers focus on orders that may need attention:
 
-* **Private Booster settings stay with trusted store managers:** the settings-reading shortcode now requires WooCommerce management permission before it can return a value.
-* **Lower-privilege accounts are blocked at the shortcode itself:** guests, customers, subscribers, contributors, authors, and editors without store-management access receive no setting value, even when another WordPress feature executes the shortcode.
-* **Existing stores keep their configuration:** the protection needs no data migration and does not rewrite saved Booster settings.
+* **Know what needs attention:** a new WooCommerce > Order Health dashboard groups delayed payment, fulfillment, configuration, and incomplete-workflow signals in one place.
+* **Understand every flag:** fixed, documented rules explain why an order appears, how long it has been waiting, and which safe merchant-controlled review is appropriate.
+* **Scan large stores responsibly:** capped WooCommerce order queries prioritize the oldest active orders and clearly say when more records remain.
+* **Handle real order lifecycles:** current status, partial refunds, full refunds, and status transitions are evaluated through WooCommerce order APIs with HPOS and legacy-storage parity.
+* **Start the day with context:** Morning Store Briefing v1 combines aggregate Order Health, Booster compatibility warnings, and Booster background-job state without customer details or order identifiers.
+* **Use a safe operational summary:** the read-only `booster/order-health-summary` Ability is restricted to trusted store managers and returns bounded aggregate counts only.
+* **Keep private settings private:** option-reading shortcodes now require WooCommerce management permission, blocking guests and lower-privilege accounts at the sensitive function itself.
 
-This is the security foundation for the planned 8.4 Order Health release. The Order Health dashboard and summary features will be documented here only after they are implemented and validated.
+Order Health never changes an order, issues a refund, sends a customer message, or makes an AI-generated business decision.
 
 ### New in 8.3.0 - A stronger store today, an AI-ready foundation for tomorrow
 
@@ -384,9 +388,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 == Changelog ==
 
 = 8.4.0 - September 2026 =
-* Safer private settings - Restricts the settings-reading shortcode to trusted store managers and administrators so lower-privilege accounts cannot use shortcode execution to read Booster-owned options.
-* Clear permission boundary - Enforces WooCommerce management permission inside the shortcode, protecting every execution path rather than relying on the calling screen.
-* Upgrade confidence - Requires no settings migration and preserves authorized access for store management workflows.
+* Order Health dashboard - Shows which active orders may need attention, how long they have waited, why they were flagged, and a safe merchant-controlled review step.
+* Faster operational triage - Filters by current status, likely cause, and fixed aging buckets so teams can move from a store-wide signal to the right orders.
+* Explainable health reasons - Uses deterministic payment, fulfillment, configuration, workflow, and partial-refund rules instead of opaque scoring or AI decisions.
+* Built for order-storage changes - Uses bounded WooCommerce order queries and order objects for matching behavior under HPOS and legacy storage.
+* Refund and transition correctness - Excludes completed, cancelled, and fully refunded orders; keeps partially refunded active orders visible; and evaluates the current status on every scan.
+* Morning Store Briefing v1 - Combines privacy-safe aggregate Order Health, Booster compatibility warnings, and Booster background-job diagnostics.
+* Read-only Ability - Adds `booster/order-health-summary` for authorized store managers, with bounded counts and no customer data, order identifiers, raw settings, or job arguments.
+* Safer private settings - Requires WooCommerce management permission inside both option-reading shortcodes, blocking lower-privilege execution without changing saved settings.
+* Merchant control by design - Does not change statuses, issue refunds, send customer messages, or make AI-generated business decisions.
+* Compatibility validation - Locally tested with WooCommerce 11.0.0, WordPress 7.1 RC1, PHP 7.2/8.2/8.4 syntax, and both HPOS and legacy order storage.
 
 = 8.3.0 - 19/08/2026 =
 * A stronger store today, an AI-ready foundation for tomorrow - This reliability-and-readiness release makes important order and checkout workflows more dependable while laying the first safe foundation for future Booster-assisted store operations.
