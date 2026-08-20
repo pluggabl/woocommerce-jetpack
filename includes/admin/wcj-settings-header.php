@@ -65,6 +65,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</a>
 							</li>
 							<li>
+								<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-order-health' ) ); ?>">
+									<img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/order-health.svg'; ?>" width="20" height="20" alt="">
+									<span><?php esc_html_e( 'Order Health', 'woocommerce-jetpack' ); ?></span>
+								</a>
+							</li>
+							<li>
 								<a target="_blank" href="https://booster.io/contact-support/" class="
 								<?php
 								if ( 'wcj-support' === $active_page ) {

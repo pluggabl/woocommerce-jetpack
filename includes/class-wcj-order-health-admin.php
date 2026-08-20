@@ -44,6 +44,24 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			}
 		}
 
+		/** Returns the active Booster package label for the shared UI. */
+		private function get_package_label() {
+			if ( defined( 'WCJ_FREE_PLUGIN_FILE' ) ) {
+				return __( 'Free', 'woocommerce-jetpack' );
+			}
+			$plugin_file = defined( 'WCJ_PLUGIN_FILE' ) ? basename( WCJ_PLUGIN_FILE ) : '';
+			if ( 'booster-plus-for-woocommerce.php' === $plugin_file ) {
+				return __( 'Plus', 'woocommerce-jetpack' );
+			}
+			return __( 'Elite', 'woocommerce-jetpack' );
+		}
+
+		/** Returns a URL for an asset inside the active Booster package. */
+		private function get_asset_url( $relative_path ) {
+			$plugin_file = defined( 'WCJ_PLUGIN_FILE' ) ? WCJ_PLUGIN_FILE : ( defined( 'WCJ_FREE_PLUGIN_FILE' ) ? WCJ_FREE_PLUGIN_FILE : '' );
+			return '' !== $plugin_file ? plugin_dir_url( $plugin_file ) . ltrim( $relative_path, '/' ) : '';
+		}
+
 		/** Renders the read-only dashboard and Morning Store Briefing. */
 		public function render_page() {
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
@@ -65,10 +83,16 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			);
 			$briefing = $service->get_morning_store_briefing( $summary );
 
+			$logo_url = $this->get_asset_url( 'assets/images/wcj-booster-icon.svg' );
 			echo '<div class="wrap wcj-order-health">';
-			echo '<div class="wcj-order-health__hero"><div><span class="wcj-order-health__eyebrow">' . esc_html__( 'Booster 8.4', 'woocommerce-jetpack' ) . '</span><h1>' . esc_html__( 'Order Health', 'woocommerce-jetpack' ) . '</h1>';
-			echo '<p>' . esc_html__( 'See which orders may need attention, why they were flagged, and the safest merchant-controlled next step.', 'woocommerce-jetpack' ) . '</p></div>';
-			echo '<div class="wcj-order-health__mode"><span>' . esc_html__( 'Order storage', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( 'hpos' === $data['storage_mode'] ? __( 'HPOS', 'woocommerce-jetpack' ) : __( 'Legacy', 'woocommerce-jetpack' ) ) . '</strong></div></div>';
+			echo '<div class="wcj-order-health__hero"><div class="wcj-order-health__hero-main"><div class="wcj-order-health__brand">';
+			if ( '' !== $logo_url ) {
+				echo '<img src="' . esc_url( $logo_url ) . '" alt="">';
+			}
+			echo '<div><span class="wcj-order-health__eyebrow">' . esc_html__( 'Booster for WooCommerce · 8.4', 'woocommerce-jetpack' ) . '</span><h1>' . esc_html__( 'Order Health', 'woocommerce-jetpack' ) . '</h1></div></div>';
+			echo '<p>' . esc_html__( 'See which orders may need attention, why they were flagged, and the safest merchant-controlled next step.', 'woocommerce-jetpack' ) . '</p>';
+			echo '<div class="wcj-order-health__hero-actions"><a class="wcj-order-health__hero-button" href="https://booster.io/docs/woocommerce-order-health/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Read the setup guide', 'woocommerce-jetpack' ) . '</a><a class="wcj-order-health__hero-link" href="https://booster.io/features/woocommerce-order-health/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View feature overview', 'woocommerce-jetpack' ) . ' <span aria-hidden="true">↗</span></a></div></div>';
+			echo '<div class="wcj-order-health__meta"><div class="wcj-order-health__mode"><span>' . esc_html__( 'Package', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( $this->get_package_label() ) . '</strong></div><div class="wcj-order-health__mode"><span>' . esc_html__( 'Order storage', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( 'hpos' === $data['storage_mode'] ? __( 'HPOS', 'woocommerce-jetpack' ) : __( 'Legacy', 'woocommerce-jetpack' ) ) . '</strong></div></div></div>';
 
 			$this->render_briefing( $briefing );
 			$this->render_summary_cards( $data );
@@ -83,7 +107,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			}
 
 			$this->render_orders_table( $data['orders'] );
-			echo '<p class="description wcj-order-health__boundary">' . esc_html__( 'Order Health is read-only. It never changes order status, issues refunds, sends customer messages, or makes AI-generated business decisions.', 'woocommerce-jetpack' ) . '</p>';
+			echo '<p class="description wcj-order-health__boundary">' . esc_html__( 'Order Health is read-only. It never changes order status, issues refunds, sends customer messages, or makes AI-generated business decisions.', 'woocommerce-jetpack' ) . ' <a href="https://booster.io/docs/woocommerce-order-health/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn how flags and safe actions work.', 'woocommerce-jetpack' ) . '</a></p>';
 			echo '</div>';
 		}
 
