@@ -81,4 +81,3 @@ wp eval-file tests/integration/codex-8-4-option-shortcode-security.php
 ```
 
 Release evidence must identify the committed SHA, exact ZIP SHA-256, WordPress/WooCommerce/PHP versions, storage mode, install path, upgrade path, browser checks, and log/console results for Free, Plus, and Elite.
-

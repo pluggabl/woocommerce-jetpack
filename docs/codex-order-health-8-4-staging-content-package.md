@@ -82,4 +82,3 @@ Only use fixture orders on staging. Do not expose customer names, addresses, ema
 - Confirm visible copy and screenshot data are privacy-safe.
 - Check CTA destinations and ensure no staging link is accidentally introduced into plugin release copy.
 - Record the Booster.io PR SHA and staging validation evidence before Rony receives the website handoff.
-

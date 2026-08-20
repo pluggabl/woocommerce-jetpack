@@ -36,6 +36,10 @@ function codex_booster_84_shortcode_callback( $tag ) {
 	return $shortcode_tags[ $tag ];
 }
 
+function codex_booster_84_call_shortcode( $callback, $tag, $atts ) {
+	return call_user_func( $callback, $atts, '', $tag );
+}
+
 $original_user_id = get_current_user_id();
 $created_users    = array();
 $fixture_options  = array(
@@ -78,8 +82,8 @@ try {
 
 		$shortcode_get = do_shortcode( '[wcj_get_option name="' . $private_name . '" default="must-not-leak"]' );
 		$shortcode_wp  = do_shortcode( '[wcj_wp_option option="' . $private_name . '" default="must-not-leak"]' );
-		$direct_get    = call_user_func( $get_option_callback, array( 'name' => $private_name, 'default' => 'must-not-leak' ) );
-		$direct_wp     = call_user_func( $wp_option_callback, array( 'option' => $private_name, 'default' => 'must-not-leak' ) );
+		$direct_get    = codex_booster_84_call_shortcode( $get_option_callback, 'wcj_get_option', array( 'name' => $private_name, 'default' => 'must-not-leak' ) );
+		$direct_wp     = codex_booster_84_call_shortcode( $wp_option_callback, 'wcj_wp_option', array( 'option' => $private_name, 'default' => 'must-not-leak' ) );
 
 		codex_booster_84_security_assert( $expected === $shortcode_get, $role . ' shortcode wcj_get_option boundary failed.' );
 		codex_booster_84_security_assert( $expected === $shortcode_wp, $role . ' shortcode wcj_wp_option boundary failed.' );
@@ -101,7 +105,7 @@ try {
 			array( 'name' => 'wcj_' . str_repeat( 'x', 220 ), 'default' => 'default-leak' ),
 		) as $atts
 	) {
-		codex_booster_84_security_assert( '' === call_user_func( $get_option_callback, $atts ), 'Contributor direct wcj_get_option malformed-input denial failed.' );
+		codex_booster_84_security_assert( '' === codex_booster_84_call_shortcode( $get_option_callback, 'wcj_get_option', $atts ), 'Contributor direct wcj_get_option malformed-input denial failed.' );
 	}
 	foreach (
 		array(
@@ -113,24 +117,24 @@ try {
 			array( 'option' => 'wcj_' . str_repeat( 'x', 220 ), 'default' => 'default-leak' ),
 		) as $atts
 	) {
-		codex_booster_84_security_assert( '' === call_user_func( $wp_option_callback, $atts ), 'Contributor direct wcj_wp_option malformed-input denial failed.' );
+		codex_booster_84_security_assert( '' === codex_booster_84_call_shortcode( $wp_option_callback, 'wcj_wp_option', $atts ), 'Contributor direct wcj_wp_option malformed-input denial failed.' );
 	}
 
 	// Authorized users retain exact scalar, similar-name, array-field, and default behavior.
 	foreach ( array( 'shop_manager', 'administrator' ) as $role ) {
 		wp_set_current_user( $users[ $role ] );
-		codex_booster_84_security_assert( $private_value === call_user_func( $get_option_callback, array( 'name' => $private_name ) ), $role . ' scalar access failed.' );
-		codex_booster_84_security_assert( 'codex-similar-name-value' === call_user_func( $get_option_callback, array( 'name' => 'prefix_wcj_codex_84_setting' ) ), $role . ' similar-name access changed.' );
-		codex_booster_84_security_assert( 'beta' === call_user_func( $get_option_callback, array( 'name' => 'wcj_codex_84_array_setting', 'field' => 'second' ) ), $role . ' array field access failed.' );
-		codex_booster_84_security_assert( 'safe-default' === call_user_func( $get_option_callback, array( 'name' => 'wcj_missing_codex_84_setting', 'default' => 'safe-default' ) ), $role . ' default behavior failed.' );
-		codex_booster_84_security_assert( $private_value === call_user_func( $wp_option_callback, array( 'option' => $private_name ) ), $role . ' wcj_wp_option missing-default behavior failed.' );
+		codex_booster_84_security_assert( $private_value === codex_booster_84_call_shortcode( $get_option_callback, 'wcj_get_option', array( 'name' => $private_name ) ), $role . ' scalar access failed.' );
+		codex_booster_84_security_assert( 'codex-similar-name-value' === codex_booster_84_call_shortcode( $get_option_callback, 'wcj_get_option', array( 'name' => 'prefix_wcj_codex_84_setting' ) ), $role . ' similar-name access changed.' );
+		codex_booster_84_security_assert( 'beta' === codex_booster_84_call_shortcode( $get_option_callback, 'wcj_get_option', array( 'name' => 'wcj_codex_84_array_setting', 'field' => 'second' ) ), $role . ' array field access failed.' );
+		codex_booster_84_security_assert( 'safe-default' === codex_booster_84_call_shortcode( $get_option_callback, 'wcj_get_option', array( 'name' => 'wcj_missing_codex_84_setting', 'default' => 'safe-default' ) ), $role . ' default behavior failed.' );
+		codex_booster_84_security_assert( $private_value === codex_booster_84_call_shortcode( $wp_option_callback, 'wcj_wp_option', array( 'option' => $private_name ) ), $role . ' wcj_wp_option missing-default behavior failed.' );
 	}
 
 	// The existing name restriction is independent of role/capability.
 	wp_set_current_user( $users['administrator'] );
 	foreach ( array( 'admin_email', 'woocommerce_stripe_settings', 'WCJ_UPPERCASE_LOOKALIKE' ) as $non_booster_option ) {
-		codex_booster_84_security_assert( '' === call_user_func( $get_option_callback, array( 'name' => $non_booster_option, 'default' => 'must-not-leak' ) ), 'Non-wcj wcj_get_option access must remain denied.' );
-		codex_booster_84_security_assert( '' === call_user_func( $wp_option_callback, array( 'option' => $non_booster_option, 'default' => 'must-not-leak' ) ), 'Non-wcj wcj_wp_option access must remain denied.' );
+		codex_booster_84_security_assert( '' === codex_booster_84_call_shortcode( $get_option_callback, 'wcj_get_option', array( 'name' => $non_booster_option, 'default' => 'must-not-leak' ) ), 'Non-wcj wcj_get_option access must remain denied.' );
+		codex_booster_84_security_assert( '' === codex_booster_84_call_shortcode( $wp_option_callback, 'wcj_wp_option', array( 'option' => $non_booster_option, 'default' => 'must-not-leak' ) ), 'Non-wcj wcj_wp_option access must remain denied.' );
 	}
 
 	$results['direct_callback']      = 'passed';
