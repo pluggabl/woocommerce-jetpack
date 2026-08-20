@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 7.2.1
+ * @version 8.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -16,7 +16,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * WCJ_General_Shortcodes.
 		 *
-		 * @version 7.1.9
+		 * @version 8.4.0
 		 */
 	class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
@@ -211,21 +211,24 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_get_option.
 		 *
-		 * @version 7.1.2
+		 * @version 8.4.0
 		 * @since   3.9.0
 		 * @todo    [dev] handle multidimensional arrays
 		 * @todo    [dev] maybe also add `get_site_option()`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_get_option( $atts ) {
-			if ( isset( $atts['name'] ) && str_contains( $atts['name'], 'wcj' ) ) {
-				$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
-				return ( is_array( $result ) ?
-				( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
-				$result );
-			} else {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return '';
 			}
+			if ( ! isset( $atts['name'] ) || ! str_contains( $atts['name'], 'wcj' ) ) {
+				return '';
+			}
+			$result = wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) );
+			if ( ! is_array( $result ) ) {
+				return $result;
+			}
+			return ( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) );
 		}
 
 		/**
@@ -523,16 +526,18 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_wp_option.
 		 *
-		 * @version 7.1.1
+		 * @version 8.4.0
 		 * @since   3.2.1
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_wp_option( $atts ) {
-			if ( isset( $atts['option'] ) && str_contains( $atts['option'], 'wcj' ) ) {
-				return ( '' !== $atts['option'] ? wcj_get_option( $atts['option'], $atts['default'] ) : '' );
-			} else {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return '';
 			}
+			if ( ! isset( $atts['option'] ) || ! str_contains( $atts['option'], 'wcj' ) ) {
+				return '';
+			}
+			return ( '' !== $atts['option'] ? wcj_get_option( $atts['option'], $atts['default'] ) : '' );
 		}
 
 		/**

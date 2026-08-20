@@ -5,13 +5,23 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.3.0
+Stable tag: 8.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 8.4.0 - Stronger protection for private store settings
+
+Booster 8.4.0 starts with a tighter permission boundary around private store settings:
+
+* **Private Booster settings stay with trusted store managers:** the settings-reading shortcode now requires WooCommerce management permission before it can return a value.
+* **Lower-privilege accounts are blocked at the shortcode itself:** guests, customers, subscribers, contributors, authors, and editors without store-management access receive no setting value, even when another WordPress feature executes the shortcode.
+* **Existing stores keep their configuration:** the protection needs no data migration and does not rewrite saved Booster settings.
+
+This is the security foundation for the planned 8.4 Order Health release. The Order Health dashboard and summary features will be documented here only after they are implemented and validated.
 
 ### New in 8.3.0 - A stronger store today, an AI-ready foundation for tomorrow
 
@@ -372,6 +382,11 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.4.0 - September 2026 =
+* Safer private settings - Restricts the settings-reading shortcode to trusted store managers and administrators so lower-privilege accounts cannot use shortcode execution to read Booster-owned options.
+* Clear permission boundary - Enforces WooCommerce management permission inside the shortcode, protecting every execution path rather than relying on the calling screen.
+* Upgrade confidence - Requires no settings migration and preserves authorized access for store management workflows.
 
 = 8.3.0 - 19/08/2026 =
 * A stronger store today, an AI-ready foundation for tomorrow - This reliability-and-readiness release makes important order and checkout workflows more dependable while laying the first safe foundation for future Booster-assisted store operations.

@@ -1,10 +1,6 @@
 {
-  "0": "= 8.3.0 - 19/08/2026 =",
-  "1": "* Platform - Adds three permission-protected, read-only WordPress abilities for safe module, compatibility, and Booster-owned background-job status.",
-  "2": "* Orders - Hardens refund totals, order metadata access, product-addon quantity handling, and bulk download-permission regeneration across HPOS and legacy storage.",
-  "3": "* Checkout - Applies product/category gateway rules through supported server logic for Checkout Blocks Store API recalculation and Classic Checkout.",
-  "4": "* Performance - Reuses request-local Store API detection and keeps the abilities framework unloaded on WordPress versions below 6.9.",
-  "5": "* Security - Tightens operational status permissions and bounds diagnostic output.",
-  "6": "* WooCommerce 11.0.0 Tested",
-  "7": "* WordPress 7.0 Tested; WordPress 7.1 RC compatibility checked"
+  "0": "= 8.4.0 - September 2026 =",
+  "1": "* Safer private settings - Restricts the settings-reading shortcode to trusted store managers and administrators.",
+  "2": "* Clear permission boundary - Blocks lower-privilege shortcode execution at the sensitive option-reading function itself.",
+  "3": "* Upgrade confidence - Requires no settings migration and preserves authorized store-management access."
 }
