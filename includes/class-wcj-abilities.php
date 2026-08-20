@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 			}
 		}
 
-		/** Registers Booster's four public, read-only status abilities. */
+		/** Registers three base abilities plus the Elite-only Order Health summary. */
 		public function register_abilities() {
 			if ( ! function_exists( 'wp_register_ability' ) ) {
 				return;
@@ -94,18 +94,20 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 				)
 			);
 
-			wp_register_ability(
-				'booster/order-health-summary',
-				array_merge(
-					$common,
-					array(
-						'label'            => __( 'Booster Order Health summary', 'woocommerce-jetpack' ),
-						'description'      => __( 'Returns bounded, aggregate Order Health and Morning Store Briefing counts without order IDs or customer data.', 'woocommerce-jetpack' ),
-						'execute_callback' => array( $this, 'execute_order_health_summary' ),
-						'output_schema'    => $this->get_order_health_output_schema(),
+			if ( class_exists( 'WCJ_Order_Health_Service' ) && ( new WCJ_Order_Health_Service() )->is_full_experience() ) {
+				wp_register_ability(
+					'booster/order-health-summary',
+					array_merge(
+						$common,
+						array(
+							'label'            => __( 'Booster Order Health summary', 'woocommerce-jetpack' ),
+							'description'      => __( 'Returns bounded, aggregate Order Health and Morning Store Briefing counts without order IDs or customer data.', 'woocommerce-jetpack' ),
+							'execute_callback' => array( $this, 'execute_order_health_summary' ),
+							'output_schema'    => $this->get_order_health_output_schema(),
+						)
 					)
-				)
-			);
+				);
+			}
 		}
 
 		/** Permission is checked again immediately before every execution. */
@@ -134,7 +136,11 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 		/** Executes the bounded, privacy-safe Order Health summary. */
 		public function execute_order_health_summary() {
 			$permission = $this->check_permission();
-			return is_wp_error( $permission ) ? $permission : ( new WCJ_Order_Health_Service() )->get_order_health_summary();
+			if ( is_wp_error( $permission ) ) {
+				return $permission;
+			}
+			$service = new WCJ_Order_Health_Service();
+			return $service->is_full_experience() ? $service->get_order_health_summary() : new WP_Error( 'booster_elite_required', __( 'The Order Health summary Ability is available in Booster Elite.', 'woocommerce-jetpack' ) );
 		}
 
 		/** Returns a fresh service so no request/user state is persisted. */

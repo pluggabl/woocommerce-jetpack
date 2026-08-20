@@ -75,13 +75,17 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			);
 			$service = new WCJ_Order_Health_Service();
 			$data    = $service->get_dashboard_data( $filters );
-			$summary = array(
-				'bounded_query' => array(
-					'attention_count' => $data['query']['attention_count'],
-					'has_more'        => $data['query']['has_more'],
-				),
-			);
-			$briefing = $service->get_morning_store_briefing( $summary );
+			$is_full = $service->is_full_experience();
+			$briefing = array();
+			if ( $is_full ) {
+				$summary = array(
+					'bounded_query' => array(
+						'attention_count' => $data['query']['attention_count'],
+						'has_more'        => $data['query']['has_more'],
+					),
+				);
+				$briefing = $service->get_morning_store_briefing( $summary );
+			}
 
 			$logo_url = $this->get_asset_url( 'assets/images/wcj-booster-icon.svg' );
 			echo '<div class="wrap wcj-order-health">';
@@ -92,22 +96,30 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			echo '<div><span class="wcj-order-health__eyebrow">' . esc_html__( 'Booster for WooCommerce · 8.4', 'woocommerce-jetpack' ) . '</span><h1>' . esc_html__( 'Order Health', 'woocommerce-jetpack' ) . '</h1></div></div>';
 			echo '<p>' . esc_html__( 'See which orders may need attention, why they were flagged, and the safest merchant-controlled next step.', 'woocommerce-jetpack' ) . '</p>';
 			echo '<div class="wcj-order-health__hero-actions"><a class="wcj-order-health__hero-button" href="https://booster.io/docs/woocommerce-order-health/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Read the setup guide', 'woocommerce-jetpack' ) . '</a><a class="wcj-order-health__hero-link" href="https://booster.io/features/woocommerce-order-health/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View feature overview', 'woocommerce-jetpack' ) . ' <span aria-hidden="true">↗</span></a></div></div>';
-			echo '<div class="wcj-order-health__meta"><div class="wcj-order-health__mode"><span>' . esc_html__( 'Package', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( $this->get_package_label() ) . '</strong></div><div class="wcj-order-health__mode"><span>' . esc_html__( 'Order storage', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( 'hpos' === $data['storage_mode'] ? __( 'HPOS', 'woocommerce-jetpack' ) : __( 'Legacy', 'woocommerce-jetpack' ) ) . '</strong></div></div></div>';
+			echo '<div class="wcj-order-health__meta"><div class="wcj-order-health__mode"><span>' . esc_html__( 'Package', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( $this->get_package_label() ) . '</strong></div><div class="wcj-order-health__mode"><span>' . esc_html__( 'Experience', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( $is_full ? __( 'Full', 'woocommerce-jetpack' ) : __( 'Light', 'woocommerce-jetpack' ) ) . '</strong></div><div class="wcj-order-health__mode"><span>' . esc_html__( 'Order storage', 'woocommerce-jetpack' ) . '</span><strong>' . esc_html( 'hpos' === $data['storage_mode'] ? __( 'HPOS', 'woocommerce-jetpack' ) : __( 'Legacy', 'woocommerce-jetpack' ) ) . '</strong></div></div></div>';
 
-			$this->render_briefing( $briefing );
+			if ( $is_full ) {
+				$this->render_briefing( $briefing );
+			}
 			$this->render_summary_cards( $data );
 			$this->render_age_buckets( $data['summary']['age_buckets'] );
-			$this->render_filters( $data['filters'] );
+			if ( $is_full ) {
+				$this->render_filters( $data['filters'] );
+			}
 
 			if ( $data['query']['has_more'] ) {
 				echo '<div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Bounded scan reached.', 'woocommerce-jetpack' ) . '</strong> ' . esc_html( sprintf( __( 'For store performance, Order Health reads at most %d of the oldest active orders across fixed status families. Refine filters or review WooCommerce Orders for the remaining records.', 'woocommerce-jetpack' ), $data['query']['query_limit'] ) ) . '</p></div>';
 			}
 			if ( $data['display_truncated'] ) {
-				echo '<div class="notice notice-info inline"><p>' . esc_html( sprintf( __( 'Showing the %1$d oldest matching orders out of %2$d matches in this bounded scan.', 'woocommerce-jetpack' ), WCJ_Order_Health_Service::DISPLAY_LIMIT, $data['filtered_count'] ) ) . '</p></div>';
+				echo '<div class="notice notice-info inline"><p>' . esc_html( sprintf( __( 'Showing the %1$d oldest matching orders out of %2$d matches in this bounded scan.', 'woocommerce-jetpack' ), $data['display_limit'], $data['filtered_count'] ) ) . '</p></div>';
 			}
 
 			$this->render_orders_table( $data['orders'] );
-			echo '<p class="description wcj-order-health__boundary">' . esc_html__( 'Order Health is read-only. It never changes order status, issues refunds, sends customer messages, or makes AI-generated business decisions.', 'woocommerce-jetpack' ) . ' <a href="https://booster.io/docs/woocommerce-order-health/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn how flags and safe actions work.', 'woocommerce-jetpack' ) . '</a></p>';
+			if ( $is_full ) {
+				echo '<p class="description wcj-order-health__boundary">' . esc_html__( 'Order Health is read-only. It never changes order status, issues refunds, sends customer messages, or makes AI-generated business decisions.', 'woocommerce-jetpack' ) . ' <a href="https://booster.io/docs/woocommerce-order-health/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn how flags and safe actions work.', 'woocommerce-jetpack' ) . '</a></p>';
+			} else {
+				echo '<p class="description wcj-order-health__boundary"><strong>' . esc_html__( 'Light experience:', 'woocommerce-jetpack' ) . '</strong> ' . esc_html__( 'Free and Plus include the read-only attention list and aging overview. Advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability are available in Elite.', 'woocommerce-jetpack' ) . '</p>';
+			}
 			echo '</div>';
 		}
 

@@ -221,7 +221,13 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return '';
 			}
-			if ( ! isset( $atts['name'] ) || ! str_contains( $atts['name'], 'wcj' ) ) {
+			if (
+				! isset( $atts['name'] ) ||
+				! is_string( $atts['name'] ) ||
+				'' === $atts['name'] ||
+				191 < strlen( $atts['name'] ) ||
+				false === strpos( $atts['name'], 'wcj' )
+			) {
 				return '';
 			}
 			$result = wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) );
@@ -534,10 +540,16 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return '';
 			}
-			if ( ! isset( $atts['option'] ) || ! str_contains( $atts['option'], 'wcj' ) ) {
+			if (
+				! isset( $atts['option'] ) ||
+				! is_string( $atts['option'] ) ||
+				'' === $atts['option'] ||
+				191 < strlen( $atts['option'] ) ||
+				false === strpos( $atts['option'], 'wcj' )
+			) {
 				return '';
 			}
-			return ( '' !== $atts['option'] ? wcj_get_option( $atts['option'], $atts['default'] ) : '' );
+			return wcj_get_option( $atts['option'], ( isset( $atts['default'] ) ? $atts['default'] : false ) );
 		}
 
 		/**

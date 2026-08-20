@@ -4,16 +4,16 @@
 
 **Find delayed orders before they become customer problems**
 
-Order Health gives your team one explainable view of orders that may need attention—without changing an order behind your back.
+Order Health Light gives growing stores a focused list of common payment and fulfillment delays, with clear aging and a safe next review. It never changes an order behind your back.
 
-Primary CTA: **Explore Order Health**  
-Secondary CTA: **See how flags work**
+Primary CTA: **Explore Order Health Light**
+Secondary CTA: **Compare Free and Elite**
 
 ## Value blocks
 
 ### Know where to start
 
-See delayed payment, fulfillment, configuration, and incomplete-workflow signals together instead of opening every order one by one.
+See common failed-payment, pending-payment, delayed-fulfillment, and on-hold workflow signals instead of opening every order one by one.
 
 ### Understand every flag
 
@@ -21,45 +21,47 @@ Each result shows its current status, waiting time, a plain-language reason, and
 
 ### Keep performance predictable
 
-Bounded WooCommerce queries prioritize the oldest active orders and tell you when more records remain. The same WooCommerce APIs work with HPOS and legacy order storage.
-
-### Start the day with shared context
-
-Morning Store Briefing v1 combines aggregate Order Health, Booster compatibility warnings, and Booster background-job status—without exposing customer details.
+The light experience examines at most 200 candidate orders and displays at most 20 attention rows. WooCommerce order APIs keep the same path compatible with HPOS and legacy order storage.
 
 ### Keep the merchant in control
 
 Order Health is read-only. It does not change order status, issue refunds, contact customers, or automate a decision.
 
-## Feature list
+## Included in Free
 
-- WooCommerce > Order Health dashboard
-- Status, likely-cause, and aging-bucket filters
-- Deterministic reason codes and merchant-safe review guidance
-- Partial-refund, full-refund, and current-status correctness
-- HPOS and legacy-storage parity
-- Fixed query and display ceilings for larger stores
-- Privacy-safe Morning Store Briefing v1
-- `booster/order-health-summary` read-only Ability for authorized store managers
+- WooCommerce > Order Health branded dashboard
+- Core delayed-order reasons for failed, pending-payment, processing, and on-hold orders
+- Waiting time and aging buckets
+- Safe merchant review guidance
+- HPOS and legacy-storage support
+- Fixed 200-order scan and 20-row display ceilings
 - Stronger permission boundary for Booster option-reading shortcodes
+
+## Available in Elite
+
+- Status, likely-cause, and aging-bucket filters
+- Custom-status configuration signals
+- Partial-refund attention signals
+- Privacy-safe Morning Store Briefing v1
+- `booster/order-health-summary` read-only Ability
+- Larger 250-order scan and 50-row display ceilings
 
 ## Screenshot
 
-![Booster Free 8.4 Order Health dashboard](screenshots/booster-free-8-4-order-health.png)
+![Booster Free 8.4 Order Health Light dashboard](screenshots/booster-free-8-4-order-health.png)
 
-Suggested alt text: `Booster Free Order Health dashboard showing a privacy-safe morning briefing, aging buckets, filters, explainable order reasons, and safe merchant actions.`
+Suggested alt text: `Booster Free Order Health Light dashboard showing common delayed-order reasons, aging, and safe merchant review guidance.`
 
 ## FAQ
 
-**Does Order Health change orders?**  
+**Does Order Health change orders?**
 No. It is a read-only monitor and guidance surface.
 
-**Does it send store or customer data to an AI service?**  
-No. Booster 8.4 connects no AI provider. The public operational summary is aggregate-only.
+**Does it send store or customer data to an AI service?**
+No. Booster 8.4 connects no AI provider.
 
-**Will it work after enabling HPOS?**  
+**Will it work after enabling HPOS?**
 The maintained Order Health path uses WooCommerce order queries and CRUD objects and is tested with HPOS and legacy storage.
 
-**Does the count always represent every active order on a very large store?**  
-The scan is deliberately capped. The dashboard and Ability disclose the ceiling and whether more orders remain.
-
+**What does Elite add?**
+Elite adds advanced filters, custom-status and partial-refund signals, Morning Store Briefing, the read-only Order Health Ability, and higher scan and display ceilings.

@@ -1,8 +1,8 @@
 {
   "0": "= 8.4.0 - September 2026 =",
-  "1": "* Order Health - Find delayed orders, understand every deterministic flag, and review a safe merchant-controlled next step.",
-  "2": "* Morning Store Briefing - See aggregate order, compatibility, and background-job signals without customer or order details.",
-  "3": "* HPOS-ready bounded scans - Uses capped WooCommerce order queries with refund and current-status correctness across both order stores.",
-  "4": "* Read-only operations - Adds booster/order-health-summary while keeping order changes, refunds, messages, and AI decisions out of scope.",
+  "1": "* Order Health Light - Find common delayed payment, fulfillment, and on-hold orders with clear aging and safe next steps.",
+  "2": "* Responsible free-tier scope - Reads at most 200 candidates and displays the 20 oldest matches; advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability remain Elite-only.",
+  "3": "* HPOS-ready bounded scans - Uses WooCommerce order objects with current-status and full-refund safety across both order stores.",
+  "4": "* Merchant control - Makes no order changes, refunds, customer messages, or AI decisions.",
   "5": "* Safer private settings - Blocks lower-privilege access inside both option-reading shortcodes without changing saved configuration."
 }

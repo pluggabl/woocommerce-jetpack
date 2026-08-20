@@ -26,8 +26,14 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 		/** Maximum records rendered after filters are applied. */
 		const DISPLAY_LIMIT = 50;
 
+		/** Maximum records rendered by the light Free/Plus experience. */
+		const LIGHT_DISPLAY_LIMIT = 20;
+
 		/** Maximum records read across the five bounded status families. */
 		const MAX_QUERY_ORDERS = 250;
+
+		/** Maximum records read across the four light-experience status families. */
+		const LIGHT_MAX_QUERY_ORDERS = 200;
 
 		/** Fixed age bucket keys returned by the UI and Ability. */
 		const AGE_BUCKETS = array( 'under_1_day', 'from_1_to_3_days', 'from_4_to_7_days', 'over_7_days' );
@@ -47,6 +53,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 		public function get_dashboard_data( $filters = array() ) {
 			$filters       = $this->normalize_filters( $filters );
 			$query_result  = $this->get_candidate_orders();
+			$display_limit = $this->get_display_limit();
 			$health_orders = array();
 
 			foreach ( $query_result['orders'] as $order ) {
@@ -78,7 +85,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 				'storage_mode'     => $this->get_storage_mode(),
 				'filters'          => $filters,
 				'query'            => array(
-					'query_limit'    => self::MAX_QUERY_ORDERS,
+					'query_limit'    => $this->get_query_limit(),
 					'candidate_count' => count( $query_result['orders'] ),
 					'attention_count' => count( $health_orders ),
 					'has_more'        => $query_result['has_more'],
@@ -86,17 +93,36 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 				),
 				'summary'          => $summary,
 				'filtered_count'   => count( $filtered ),
-				'display_truncated' => count( $filtered ) > self::DISPLAY_LIMIT,
-				'orders'           => array_slice( $filtered, 0, self::DISPLAY_LIMIT ),
+				'display_limit'     => $display_limit,
+				'display_truncated' => count( $filtered ) > $display_limit,
+				'orders'           => array_slice( $filtered, 0, $display_limit ),
 			);
+		}
+
+		/** Returns whether the active package receives the full Elite experience. */
+		public function is_full_experience() {
+			return 'elite' === $this->get_tier();
+		}
+
+		/** Returns the tier-appropriate bounded query ceiling. */
+		public function get_query_limit() {
+			return $this->is_full_experience() ? self::MAX_QUERY_ORDERS : self::LIGHT_MAX_QUERY_ORDERS;
+		}
+
+		/** Returns the tier-appropriate dashboard row ceiling. */
+		public function get_display_limit() {
+			return $this->is_full_experience() ? self::DISPLAY_LIMIT : self::LIGHT_DISPLAY_LIMIT;
 		}
 
 		/**
 		 * Returns the privacy-safe aggregate used by booster/order-health-summary.
 		 *
-		 * @return array
+		 * @return array|WP_Error
 		 */
 		public function get_order_health_summary() {
+			if ( ! $this->is_full_experience() ) {
+				return new WP_Error( 'booster_elite_required', __( 'The Order Health summary Ability is available in Booster Elite.', 'woocommerce-jetpack' ) );
+			}
 			$data    = $this->get_dashboard_data();
 			$summary = array(
 				'tier'             => $this->get_tier(),
@@ -125,9 +151,12 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 		 * arguments, raw options, or autonomous recommendations.
 		 *
 		 * @param array $order_summary Optional already-computed order summary.
-		 * @return array
+		 * @return array|WP_Error
 		 */
 		public function get_morning_store_briefing( $order_summary = array() ) {
+			if ( ! $this->is_full_experience() ) {
+				return new WP_Error( 'booster_elite_required', __( 'Morning Store Briefing is available in Booster Elite.', 'woocommerce-jetpack' ) );
+			}
 			if ( empty( $order_summary ) ) {
 				$order_summary = $this->get_order_health_summary_without_briefing();
 			}
@@ -204,7 +233,8 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 				return array();
 			}
 
-			$status = sanitize_key( $order->get_status() );
+			$status  = sanitize_key( $order->get_status() );
+			$is_full = $this->is_full_experience();
 			if ( in_array( $status, array( 'completed', 'cancelled', 'refunded', 'trash', 'auto-draft', 'checkout-draft' ), true ) ) {
 				return array();
 			}
@@ -244,14 +274,14 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 				$reason_codes = array( 'workflow_incomplete' );
 				$reason_text  = __( 'The order has remained on hold for at least one day.', 'woocommerce-jetpack' );
 				$safe_action  = __( 'Review the hold reason and order notes, then choose the appropriate merchant-controlled next step.', 'woocommerce-jetpack' );
-			} elseif ( ! in_array( $status, array( 'pending', 'processing', 'on-hold', 'failed' ), true ) && $age_seconds >= 3 * DAY_IN_SECONDS ) {
+			} elseif ( $is_full && ! in_array( $status, array( 'pending', 'processing', 'on-hold', 'failed' ), true ) && $age_seconds >= 3 * DAY_IN_SECONDS ) {
 				$cause        = 'configuration';
 				$reason_codes = array( 'configuration_review' );
 				$reason_text  = __( 'A non-standard active status has not advanced for at least three days.', 'woocommerce-jetpack' );
 				$safe_action  = __( 'Review the workflow or integration that owns this status before changing the order.', 'woocommerce-jetpack' );
 			}
 
-			if ( $partial ) {
+			if ( $partial && $is_full ) {
 				$reason_codes[] = 'partial_refund_open';
 				if ( '' === $cause ) {
 					$cause       = 'incomplete_workflow';
@@ -327,7 +357,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 				'processing' => array( 'processing' ),
 				'failed'     => array( 'failed' ),
 			);
-			if ( ! empty( $custom ) ) {
+			if ( $this->is_full_experience() && ! empty( $custom ) ) {
 				$families['custom'] = $custom;
 			}
 
@@ -409,6 +439,13 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 
 		/** Normalizes dashboard filters to fixed public values. */
 		private function normalize_filters( $filters ) {
+			if ( ! $this->is_full_experience() ) {
+				return array(
+					'status' => 'all',
+					'cause'  => 'all',
+					'age'    => 'all',
+				);
+			}
 			$status = isset( $filters['status'] ) ? sanitize_key( $filters['status'] ) : 'all';
 			$cause  = isset( $filters['cause'] ) ? sanitize_key( $filters['cause'] ) : 'all';
 			$age    = isset( $filters['age'] ) ? sanitize_key( $filters['age'] ) : 'all';
@@ -457,7 +494,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 		}
 
 		/** Returns the installed Booster tier. */
-		private function get_tier() {
+		public function get_tier() {
 			if ( class_exists( 'WCJ_Status_Service' ) ) {
 				return ( new WCJ_Status_Service() )->get_tier();
 			}
