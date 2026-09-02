@@ -41,6 +41,7 @@ $settings           = array(
 );
 $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
+	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways, true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
@@ -54,8 +55,8 @@ foreach ( $available_gateways as $key => $gateway ) {
 		$settings,
 		array(
 			array(
-				'title'             => $gateway->title,
-				'desc_tip'          => __( 'Add notes for ' ) . $gateway->title,
+				'title'             => $gateway_title,
+				'desc_tip'          => __( 'Add notes for ' ) . $gateway_title,
 				'desc'              => $tip,
 				'id'                => 'wcj_gateways_' . $key . '_pdf_notes',
 				'default'           => '',

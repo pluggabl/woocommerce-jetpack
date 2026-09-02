@@ -89,6 +89,7 @@ $countries = wcj_get_countries();
 $states    = wcj_get_states();
 $gateways  = WC()->payment_gateways->payment_gateways();
 foreach ( $gateways as $key => $gateway ) {
+	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$default_gateways = array( 'bacs' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways, true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
@@ -104,7 +105,7 @@ foreach ( $gateways as $key => $gateway ) {
 		$settings,
 		array(
 			array(
-				'title'             => $gateway->title,
+				'title'             => $gateway_title,
 				'desc_tip'          => $desc_tip,
 				'desc'              => __( 'Include Countries', 'woocommerce-jetpack' ),
 				'id'                => 'wcj_gateways_countries_include_' . $key,

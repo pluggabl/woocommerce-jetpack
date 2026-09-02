@@ -8,6 +8,8 @@
 * Refund and transition correctness - Excludes completed, cancelled, and fully refunded orders; keeps partially refunded active orders visible; and evaluates the current status on every scan.
 * Morning Store Briefing v1 - Combines privacy-safe aggregate Order Health, Booster compatibility warnings, and Booster background-job diagnostics.
 * Read-only Ability - Adds `booster/order-health-summary` for authorized store managers, with bounded counts and no customer data, order identifiers, raw settings, or job arguments.
+* Clearer payment settings - Keeps third-party gateway rows identifiable by using standard WooCommerce label methods before stable ID fallbacks, without changing checkout titles.
+* Safer shipping configuration - Explains Include and Exclude behavior and warns when an Include rule narrows WooCommerce Free shipping.
 * Safer private settings - Requires WooCommerce management permission inside both option-reading shortcodes, blocking lower-privilege execution without changing saved settings.
 * Merchant control by design - Does not change statuses, issue refunds, send customer messages, or make AI-generated business decisions.
 * Compatibility validation - Locally tested with WooCommerce 11.0.0, WordPress 7.1 RC1, PHP 7.2/8.2/8.4 syntax, and both HPOS and legacy order storage.

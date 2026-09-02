@@ -104,3 +104,64 @@ if ( ! function_exists( 'wcj_get_option' ) ) {
 		return apply_filters( $option_name, w_c_j()->options[ $option_name ] );
 	}
 }
+
+if ( ! function_exists( 'wcj_get_payment_gateway_admin_title' ) ) {
+	/**
+	 * Returns a safe, nonempty payment gateway label for Booster admin settings.
+	 *
+	 * Gateway extensions do not always populate the public title property. Prefer
+	 * WooCommerce's label methods, then the public property, then a stable ID.
+	 * This helper is for admin settings only and does not change checkout titles.
+	 *
+	 * @version 8.4.0
+	 * @since   8.4.0
+	 *
+	 * @param object $gateway    Payment gateway object.
+	 * @param string $gateway_id Gateway key supplied by WooCommerce.
+	 * @return string
+	 */
+	function wcj_get_payment_gateway_admin_title( $gateway, $gateway_id = '' ) {
+		$candidates = array();
+
+		if ( is_object( $gateway ) ) {
+			foreach ( array( 'get_method_title', 'get_title' ) as $method ) {
+				if ( is_callable( array( $gateway, $method ) ) ) {
+					try {
+						$candidates[] = call_user_func( array( $gateway, $method ) );
+					} catch ( Throwable $error ) {
+						// Continue to the next stable fallback.
+					}
+				}
+			}
+
+			$public_properties = get_object_vars( $gateway );
+			if ( array_key_exists( 'title', $public_properties ) ) {
+				$candidates[] = $public_properties['title'];
+			}
+
+			if ( is_callable( array( $gateway, 'get_id' ) ) ) {
+				try {
+					$candidates[] = $gateway->get_id();
+				} catch ( Throwable $error ) {
+					// Continue to the public ID or supplied gateway key.
+				}
+			}
+			if ( array_key_exists( 'id', $public_properties ) ) {
+				$candidates[] = $public_properties['id'];
+			}
+		}
+
+		$candidates[] = $gateway_id;
+		foreach ( $candidates as $candidate ) {
+			if ( ! is_scalar( $candidate ) ) {
+				continue;
+			}
+			$label = sanitize_text_field( wp_strip_all_tags( (string) $candidate ) );
+			if ( '' !== trim( $label ) ) {
+				return trim( $label );
+			}
+		}
+
+		return __( 'Payment gateway', 'woocommerce-jetpack' );
+	}
+}

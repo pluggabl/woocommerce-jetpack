@@ -66,6 +66,7 @@ $settings                = array(
 	),
 );
 foreach ( $available_gateways as $gateway_id => $gateway ) {
+	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $gateway_id );
 	wcj_maybe_convert_and_update_option_value(
 		array(
 			array(
@@ -83,7 +84,7 @@ foreach ( $available_gateways as $gateway_id => $gateway ) {
 		$settings,
 		array(
 			array(
-				'title'    => $gateway->title,
+				'title'    => $gateway_title,
 				'desc'     => __( 'Product Categories - Include', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Show gateway only if there is product of selected category in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_gateways_per_category_' . $gateway_id,

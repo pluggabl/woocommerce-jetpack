@@ -40,6 +40,7 @@ $settings           = array(
 $currency_from      = get_woocommerce_currency();
 $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
+	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$currency_to       = wcj_get_option( 'wcj_gateways_currency_' . $key, get_woocommerce_currency() );
 	$custom_attributes = array(
 		'currency_from'        => $currency_from,
@@ -57,7 +58,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 		$settings,
 		array(
 			array(
-				'title'   => $gateway->get_method_title() . ( $gateway->get_title() !== $gateway->get_method_title() ? ' (' . $gateway->get_title() . ')' : '' ),
+				'title'   => $gateway_title,
 				'id'      => 'wcj_gateways_currency_' . $key,
 				'default' => 'no_changes',
 				'type'    => 'select',

@@ -21,6 +21,8 @@ Booster Free 8.4.0 adds Order Health Light, a focused read-only view that helps 
 * **Understand the wait:** aging buckets and clear reasons show how long an order has been waiting and the safest merchant-controlled review step.
 * **Scan responsibly:** the light experience reads at most 200 active candidates and displays the 20 oldest matches.
 * **Keep the boundary clear:** advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability remain Elite-only.
+* **Read payment settings clearly:** third-party gateways can now provide their admin names through standard WooCommerce methods, so configuration rows stay identifiable without changing checkout labels.
+* **Configure shipping rules with confidence:** clearer Include and Exclude guidance explains when a method stays visible and warns when an Include rule narrows WooCommerce Free shipping.
 * **Keep private settings private:** option-reading shortcodes now require WooCommerce management permission, blocking guests and lower-privilege accounts at the sensitive function itself.
 
 Order Health never changes an order, issues a refund, sends a customer message, or makes an AI-generated business decision.
@@ -390,6 +392,8 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Responsible free-tier scope - Reads at most 200 active candidates, displays the 20 oldest matches, and leaves advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability to Elite.
 * Built for order-storage changes - Uses bounded WooCommerce order queries and order objects for matching behavior under HPOS and legacy storage.
 * Refund and transition safety - Excludes terminal and fully refunded orders and evaluates current status on every scan.
+* Clearer payment settings - Keeps third-party gateway rows identifiable by using standard WooCommerce label methods before stable ID fallbacks, without changing checkout titles.
+* Safer shipping configuration - Explains Include and Exclude behavior and warns when an Include rule narrows WooCommerce Free shipping.
 * Safer private settings - Requires WooCommerce management permission inside both option-reading shortcodes, blocking lower-privilege execution without changing saved settings.
 * Merchant control by design - Does not change statuses, issue refunds, send customer messages, or make AI-generated business decisions.
 * Compatibility validation - Locally tested with WooCommerce 11.0.0, WordPress 7.1 RC1, PHP 7.2/8.2/8.4 syntax, and both HPOS and legacy order storage.

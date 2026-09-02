@@ -72,6 +72,7 @@ $settings              = array_merge(
 );
 $gateways              = WC()->payment_gateways->payment_gateways();
 foreach ( $gateways as $key => $gateway ) {
+	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	if ( ! in_array( $key, array( 'bacs', 'cod' ), true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
 		if ( '' === $custom_attributes ) {
@@ -86,7 +87,7 @@ foreach ( $gateways as $key => $gateway ) {
 		$settings,
 		array(
 			array(
-				'title'             => $gateway->title,
+				'title'             => $gateway_title,
 				'desc_tip'          => $desc_tip,
 				'desc'              => __( 'Enable for shipping methods', 'woocommerce' ),
 				'id'                => ( $use_shipping_instance ? 'wcj_gateways_by_shipping_enable_instance_' . $key : 'wcj_gateways_by_shipping_enable_' . $key ),

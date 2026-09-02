@@ -171,7 +171,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 				/* translators: %s: translators Added */
 				'title' => sprintf( __( 'Shipping Methods by %s', 'woocommerce-jetpack' ), $options_data['title'] ),
 				'type'  => 'title',
-				'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ) . ' ' . $options_data['desc'],
+				'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ) . ' ' . $options_data['desc'] . ( 'shipping_by_products' === $this->id ? ' ' . __( 'Include limits a shipping method to matching carts. Exclude hides a shipping method when the cart matches.', 'woocommerce-jetpack' ) : '' ),
 				'id'    => 'wcj_shipping_by_' . $options_id . '_options',
 			),
 			array(
@@ -204,6 +204,16 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		$include_id = 'wcj_shipping_' . $options_id . '_include_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 		$exclude_id = 'wcj_shipping_' . $options_id . '_exclude_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 
+		$include_desc = '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id );
+		$exclude_desc = '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id );
+		if ( 'shipping_by_products' === $this->id ) {
+			$include_desc .= '<br><span class="description">' . __( 'Include limits this shipping method to carts that match the selected value. If the cart does not match, the method is hidden.', 'woocommerce-jetpack' ) . '</span>';
+			$exclude_desc .= '<br><span class="description">' . __( 'Exclude hides this shipping method when the cart matches the selected value.', 'woocommerce-jetpack' ) . '</span>';
+			if ( 'free_shipping' === $method_id && ! empty( wcj_get_option( $include_id, '' ) ) ) {
+				$include_desc .= '<br><strong>' . __( 'Important: This Include rule narrows WooCommerce Free shipping. Free shipping will not appear for carts that do not match.', 'woocommerce-jetpack' ) . '</strong>';
+			}
+		}
+
 		if ( 'user_id' === $options_id ) {
 			$settings = array_merge(
 				$settings,
@@ -213,7 +223,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 							'title'             => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->get_method_title() ),
 							'desc_tip'          => $desc_tip,
 							/* translators: %s: translators Added */
-							'desc'              => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id ),
+							'desc'              => $include_desc,
 							'id'                => $include_id,
 							'default'           => '',
 							'css'               => $css,
@@ -226,7 +236,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 						array(
 							'desc_tip'          => $desc_tip,
 							/* translators: %s: translators Added */
-							'desc'              => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id ),
+							'desc'              => $exclude_desc,
 							'id'                => $exclude_id,
 							'default'           => '',
 							'css'               => $css,
@@ -245,7 +255,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 						'title'             => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->get_method_title() ),
 						'desc_tip'          => $desc_tip,
 						/* translators: %s: translators Added */
-						'desc'              => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id ),
+						'desc'              => $include_desc,
 						'id'                => $include_id,
 						'default'           => '',
 						'type'              => $types,
@@ -257,7 +267,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 					array(
 						'desc_tip'          => $desc_tip,
 						/* translators: %s: translators Added */
-						'desc'              => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id ),
+						'desc'              => $exclude_desc,
 						'id'                => $exclude_id,
 						'default'           => '',
 						'type'              => $types,
