@@ -21,7 +21,7 @@ $tab_ids = array(
 );
 
 foreach ( $available_gateways as $key => $gateway ) {
-	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
+	$gateway_title                                   = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$tab_ids[ 'wcj_gateways_fees_' . $key . '_tab' ] = $gateway_title;
 }
 
@@ -75,7 +75,7 @@ $settings = array(
 
 foreach ( $available_gateways as $key => $gateway ) {
 	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
-	$settings = array_merge(
+	$settings      = array_merge(
 		$settings,
 		array(
 			array(

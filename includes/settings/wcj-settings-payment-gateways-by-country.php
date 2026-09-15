@@ -89,7 +89,7 @@ $countries = wcj_get_countries();
 $states    = wcj_get_states();
 $gateways  = WC()->payment_gateways->payment_gateways();
 foreach ( $gateways as $key => $gateway ) {
-	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
+	$gateway_title    = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$default_gateways = array( 'bacs' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways, true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );

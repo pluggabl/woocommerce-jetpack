@@ -1,5 +1,5 @@
 {
-  "0": "= 8.4.0 - September 2026 =",
+  "0": "= 8.4.0 - 16/09/2026 =",
   "1": "* Order Health Light - Find common delayed payment, fulfillment, and on-hold orders with clear aging and safe next steps.",
   "2": "* Responsible free-tier scope - Reads at most 200 candidates and displays the 20 oldest matches; advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability remain Elite-only.",
   "3": "* HPOS-ready bounded scans - Uses WooCommerce order objects with current-status and full-refund safety across both order stores.",

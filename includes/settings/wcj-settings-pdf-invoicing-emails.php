@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
-	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
+	$gateway_title                            = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$available_gateways_options_array[ $key ] = $gateway_title;
 }
 $available_emails = array();

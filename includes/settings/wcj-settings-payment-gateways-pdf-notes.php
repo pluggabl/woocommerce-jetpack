@@ -41,7 +41,7 @@ $settings           = array(
 );
 $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
-	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
+	$gateway_title    = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways, true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );

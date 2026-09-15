@@ -387,7 +387,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 
 == Changelog ==
 
-= 8.4.0 - September 2026 =
+= 8.4.0 - 16/09/2026 =
 * Order Health Light - Shows common delayed payment, fulfillment, and on-hold orders with aging and safe merchant-controlled review steps.
 * Responsible free-tier scope - Reads at most 200 active candidates, displays the 20 oldest matches, and leaves advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability to Elite.
 * Built for order-storage changes - Uses bounded WooCommerce order queries and order objects for matching behavior under HPOS and legacy storage.
@@ -396,7 +396,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Safer shipping configuration - Explains Include and Exclude behavior and warns when an Include rule narrows WooCommerce Free shipping.
 * Safer private settings - Requires WooCommerce management permission inside both option-reading shortcodes, blocking lower-privilege execution without changing saved settings.
 * Merchant control by design - Does not change statuses, issue refunds, send customer messages, or make AI-generated business decisions.
-* Compatibility validation - Locally tested with WooCommerce 11.0.0, WordPress 7.1 RC1, PHP 7.2/8.2/8.4 syntax, and both HPOS and legacy order storage.
+* Compatibility validation - Locally tested with WooCommerce 11.1.0, WordPress 7.1 RC1, PHP 7.2/8.2/8.4 syntax, and both HPOS and legacy order storage.
 
 = 8.3.0 - 19/08/2026 =
 * A stronger store today, an AI-ready foundation for tomorrow - This reliability-and-readiness release makes important order and checkout workflows more dependable while laying the first safe foundation for future Booster-assisted store operations.

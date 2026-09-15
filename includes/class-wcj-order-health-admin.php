@@ -27,13 +27,17 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 				'woocommerce',
 				__( 'Order Health', 'woocommerce-jetpack' ),
 				__( 'Order Health', 'woocommerce-jetpack' ),
-				'manage_woocommerce',
+				'manage_woocommerce', // phpcs:ignore
 				'wcj-order-health',
 				array( $this, 'render_page' )
 			);
 		}
 
-		/** Enqueues the scoped dashboard stylesheet only on the Order Health page. */
+		/**
+		 * Enqueues the scoped dashboard stylesheet only on the Order Health page.
+		 *
+		 * @param string $hook_suffix Current admin page hook suffix.
+		 */
 		public function enqueue_assets( $hook_suffix ) {
 			if ( 'woocommerce_page_wcj-order-health' !== $hook_suffix ) {
 				return;
@@ -56,7 +60,12 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			return __( 'Elite', 'woocommerce-jetpack' );
 		}
 
-		/** Returns a URL for an asset inside the active Booster package. */
+		/**
+		 * Returns a URL for an asset inside the active Booster package.
+		 *
+		 * @param string $relative_path Relative asset path.
+		 * @return string Asset URL.
+		 */
 		private function get_asset_url( $relative_path ) {
 			$plugin_file = defined( 'WCJ_PLUGIN_FILE' ) ? WCJ_PLUGIN_FILE : ( defined( 'WCJ_FREE_PLUGIN_FILE' ) ? WCJ_FREE_PLUGIN_FILE : '' );
 			return '' !== $plugin_file ? plugin_dir_url( $plugin_file ) . ltrim( $relative_path, '/' ) : '';
@@ -64,21 +73,21 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 
 		/** Renders the read-only dashboard and Morning Store Briefing. */
 		public function render_page() {
-			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				wp_die( esc_html__( 'You do not have permission to view Order Health.', 'woocommerce-jetpack' ) );
 			}
 
-			$filters = array(
+			$filters  = array(
 				'status' => isset( $_GET['status'] ) ? sanitize_key( wp_unslash( $_GET['status'] ) ) : 'all', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				'cause'  => isset( $_GET['cause'] ) ? sanitize_key( wp_unslash( $_GET['cause'] ) ) : 'all', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				'age'    => isset( $_GET['age'] ) ? sanitize_key( wp_unslash( $_GET['age'] ) ) : 'all', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			);
-			$service = new WCJ_Order_Health_Service();
-			$data    = $service->get_dashboard_data( $filters );
-			$is_full = $service->is_full_experience();
+			$service  = new WCJ_Order_Health_Service();
+			$data     = $service->get_dashboard_data( $filters );
+			$is_full  = $service->is_full_experience();
 			$briefing = array();
 			if ( $is_full ) {
-				$summary = array(
+				$summary  = array(
 					'bounded_query' => array(
 						'attention_count' => $data['query']['attention_count'],
 						'has_more'        => $data['query']['has_more'],
@@ -108,9 +117,11 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			}
 
 			if ( $data['query']['has_more'] ) {
+				/* translators: %d: Maximum number of orders included in the bounded scan. */
 				echo '<div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Bounded scan reached.', 'woocommerce-jetpack' ) . '</strong> ' . esc_html( sprintf( __( 'For store performance, Order Health reads at most %d of the oldest active orders across fixed status families. Refine filters or review WooCommerce Orders for the remaining records.', 'woocommerce-jetpack' ), $data['query']['query_limit'] ) ) . '</p></div>';
 			}
 			if ( $data['display_truncated'] ) {
+				/* translators: 1: Number of orders displayed. 2: Total number of matching orders. */
 				echo '<div class="notice notice-info inline"><p>' . esc_html( sprintf( __( 'Showing the %1$d oldest matching orders out of %2$d matches in this bounded scan.', 'woocommerce-jetpack' ), $data['display_limit'], $data['filtered_count'] ) ) . '</p></div>';
 			}
 
@@ -123,7 +134,11 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			echo '</div>';
 		}
 
-		/** Renders the privacy-safe Morning Store Briefing. */
+		/**
+		 * Renders the privacy-safe Morning Store Briefing.
+		 *
+		 * @param array $briefing Morning Store Briefing data.
+		 */
 		private function render_briefing( $briefing ) {
 			echo '<section class="wcj-order-health__section"><div class="wcj-order-health__section-heading"><div><span class="wcj-order-health__eyebrow">' . esc_html__( 'Privacy-safe daily view', 'woocommerce-jetpack' ) . '</span><h2>' . esc_html__( 'Morning Store Briefing', 'woocommerce-jetpack' ) . '</h2></div><span class="wcj-order-health__privacy">' . esc_html__( 'Aggregate only', 'woocommerce-jetpack' ) . '</span></div>';
 			echo '<div class="wcj-order-health__briefing">';
@@ -148,32 +163,53 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			echo '</div><p class="description">' . esc_html__( 'The briefing contains counts and diagnostic codes only—no customer details, order identifiers, raw settings, or job arguments.', 'woocommerce-jetpack' ) . '</p></section>';
 		}
 
-		/** Renders one briefing item. */
+		/**
+		 * Renders one briefing item.
+		 *
+		 * @param string $label Item label.
+		 * @param int    $count Item count.
+		 * @param string $description Item description.
+		 * @param bool   $needs_review Whether the item needs review.
+		 */
 		private function render_briefing_item( $label, $count, $description, $needs_review ) {
 			$class = $needs_review ? 'is-review' : 'is-clear';
 			echo '<div class="wcj-order-health__briefing-item ' . esc_attr( $class ) . '"><span>' . esc_html( $label ) . '</span><strong>' . esc_html( number_format_i18n( $count ) ) . '</strong><small>' . esc_html( $description ) . '</small></div>';
 		}
 
-		/** Renders the main dashboard cards. */
+		/**
+		 * Renders the main dashboard cards.
+		 *
+		 * @param array $data Dashboard data.
+		 */
 		private function render_summary_cards( $data ) {
 			$attention = (int) $data['query']['attention_count'];
 			$oldest    = (int) $data['summary']['oldest_age_days'];
 			echo '<div class="wcj-order-health__cards">';
 			$this->render_card( __( 'Needs attention', 'woocommerce-jetpack' ), number_format_i18n( $attention ), __( 'flagged in this bounded scan', 'woocommerce-jetpack' ) );
-			$this->render_card( __( 'Oldest wait', 'woocommerce-jetpack' ), sprintf( _n( '%d day', '%d days', $oldest, 'woocommerce-jetpack' ), $oldest ), __( 'based on payment time or order creation', 'woocommerce-jetpack' ) );
+			$this->render_card( __( 'Oldest wait', 'woocommerce-jetpack' ), sprintf( /* translators: %d: Number of days. */ _n( '%d day', '%d days', $oldest, 'woocommerce-jetpack' ), $oldest ), __( 'based on payment time or order creation', 'woocommerce-jetpack' ) );
 			$this->render_card( __( 'Query ceiling', 'woocommerce-jetpack' ), number_format_i18n( $data['query']['query_limit'] ), __( 'orders across fixed status families', 'woocommerce-jetpack' ) );
 			echo '</div>';
 		}
 
-		/** Renders one summary card. */
+		/**
+		 * Renders one summary card.
+		 *
+		 * @param string $label Card label.
+		 * @param string $value Card value.
+		 * @param string $description Card description.
+		 */
 		private function render_card( $label, $value, $description ) {
 			echo '<div class="wcj-order-health__card"><span>' . esc_html( $label ) . '</span><strong>' . esc_html( $value ) . '</strong><small>' . esc_html( $description ) . '</small></div>';
 		}
 
-		/** Renders fixed age buckets. */
+		/**
+		 * Renders fixed age buckets.
+		 *
+		 * @param array $buckets Age bucket counts.
+		 */
 		private function render_age_buckets( $buckets ) {
 			$labels = array(
-				'under_1_day'     => __( 'Under 1 day', 'woocommerce-jetpack' ),
+				'under_1_day'      => __( 'Under 1 day', 'woocommerce-jetpack' ),
 				'from_1_to_3_days' => __( '1–3 days', 'woocommerce-jetpack' ),
 				'from_4_to_7_days' => __( '4–7 days', 'woocommerce-jetpack' ),
 				'over_7_days'      => __( 'Over 7 days', 'woocommerce-jetpack' ),
@@ -185,7 +221,11 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			echo '</div></section>';
 		}
 
-		/** Renders GET filters; no data is changed. */
+		/**
+		 * Renders GET filters; no data is changed.
+		 *
+		 * @param array $filters Current filter values.
+		 */
 		private function render_filters( $filters ) {
 			$statuses = array( 'all' => __( 'All statuses', 'woocommerce-jetpack' ) );
 			foreach ( (array) wc_get_order_statuses() as $key => $label ) {
@@ -199,12 +239,12 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 				'configuration'       => __( 'Configuration', 'woocommerce-jetpack' ),
 				'incomplete_workflow' => __( 'Incomplete workflow', 'woocommerce-jetpack' ),
 			);
-			$ages = array(
-				'all'                => __( 'All ages', 'woocommerce-jetpack' ),
-				'under_1_day'        => __( 'Under 1 day', 'woocommerce-jetpack' ),
-				'from_1_to_3_days'   => __( '1–3 days', 'woocommerce-jetpack' ),
-				'from_4_to_7_days'   => __( '4–7 days', 'woocommerce-jetpack' ),
-				'over_7_days'        => __( 'Over 7 days', 'woocommerce-jetpack' ),
+			$ages   = array(
+				'all'              => __( 'All ages', 'woocommerce-jetpack' ),
+				'under_1_day'      => __( 'Under 1 day', 'woocommerce-jetpack' ),
+				'from_1_to_3_days' => __( '1–3 days', 'woocommerce-jetpack' ),
+				'from_4_to_7_days' => __( '4–7 days', 'woocommerce-jetpack' ),
+				'over_7_days'      => __( 'Over 7 days', 'woocommerce-jetpack' ),
 			);
 
 			echo '<form class="wcj-order-health__filters" method="get"><input type="hidden" name="page" value="wcj-order-health">';
@@ -215,7 +255,14 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			echo '<a class="button" href="' . esc_url( admin_url( 'admin.php?page=wcj-order-health' ) ) . '">' . esc_html__( 'Clear', 'woocommerce-jetpack' ) . '</a></form>';
 		}
 
-		/** Renders one accessible select. */
+		/**
+		 * Renders one accessible select.
+		 *
+		 * @param string $name Select field name.
+		 * @param string $label Select label.
+		 * @param array  $options Select options.
+		 * @param string $selected Currently selected value.
+		 */
 		private function render_select( $name, $label, $options, $selected ) {
 			echo '<label><span>' . esc_html( $label ) . '</span><select name="' . esc_attr( $name ) . '">';
 			foreach ( $options as $value => $option_label ) {
@@ -224,9 +271,13 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			echo '</select></label>';
 		}
 
-		/** Renders explainable order rows without customer details. */
+		/**
+		 * Renders explainable order rows without customer details.
+		 *
+		 * @param array $orders Orders to display.
+		 */
 		private function render_orders_table( $orders ) {
-			echo '<section class="wcj-order-health__section"><div class="wcj-order-health__section-heading"><h2>' . esc_html__( 'Orders that may need attention', 'woocommerce-jetpack' ) . '</h2><span>' . esc_html( sprintf( _n( '%d result', '%d results', count( $orders ), 'woocommerce-jetpack' ), count( $orders ) ) ) . '</span></div>';
+			echo '<section class="wcj-order-health__section"><div class="wcj-order-health__section-heading"><h2>' . esc_html__( 'Orders that may need attention', 'woocommerce-jetpack' ) . '</h2><span>' . esc_html( sprintf( /* translators: %d: Number of order results. */ _n( '%d result', '%d results', count( $orders ), 'woocommerce-jetpack' ), count( $orders ) ) ) . '</span></div>';
 			if ( empty( $orders ) ) {
 				echo '<div class="wcj-order-health__empty"><strong>' . esc_html__( 'No matching orders were flagged.', 'woocommerce-jetpack' ) . '</strong><p>' . esc_html__( 'Try clearing the filters. Order Health only reports deterministic rules from the bounded active-order scan.', 'woocommerce-jetpack' ) . '</p></div></section>';
 				return;
@@ -243,21 +294,31 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			echo '</tbody></table></div></section>';
 		}
 
-		/** Formats an order wait in merchant-friendly units. */
+		/**
+		 * Formats an order wait in merchant-friendly units.
+		 *
+		 * @param array $order Order data.
+		 * @return string Formatted waiting time.
+		 */
 		private function format_waiting( $order ) {
 			if ( $order['age_days'] > 0 ) {
-				return sprintf( _n( '%d day', '%d days', $order['age_days'], 'woocommerce-jetpack' ), $order['age_days'] );
+				return sprintf( /* translators: %d: Number of days. */ _n( '%d day', '%d days', $order['age_days'], 'woocommerce-jetpack' ), $order['age_days'] );
 			}
 			$hours = max( 1, (int) floor( $order['age_seconds'] / HOUR_IN_SECONDS ) );
-			return sprintf( _n( '%d hour', '%d hours', $hours, 'woocommerce-jetpack' ), $hours );
+			return sprintf( /* translators: %d: Number of hours. */ _n( '%d hour', '%d hours', $hours, 'woocommerce-jetpack' ), $hours );
 		}
 
-		/** Explains which read-only timestamp supports the wait. */
+		/**
+		 * Explains which read-only timestamp supports the wait.
+		 *
+		 * @param string $basis Waiting time basis.
+		 * @return string Waiting basis label.
+		 */
 		private function waiting_basis_label( $basis ) {
 			$labels = array(
-				'order_created'       => __( 'since order creation', 'woocommerce-jetpack' ),
-				'payment_received'    => __( 'since payment', 'woocommerce-jetpack' ),
-				'unknown'             => __( 'wait start unavailable', 'woocommerce-jetpack' ),
+				'order_created'    => __( 'since order creation', 'woocommerce-jetpack' ),
+				'payment_received' => __( 'since payment', 'woocommerce-jetpack' ),
+				'unknown'          => __( 'wait start unavailable', 'woocommerce-jetpack' ),
 			);
 			return isset( $labels[ $basis ] ) ? $labels[ $basis ] : '';
 		}

@@ -47,7 +47,7 @@ foreach ( $paypal_allowed_currencies as $paypal_allowed_currency ) {
 /* translators: %s: translators Added */
 $paypal_tip = sprintf( __( 'PayPal allows only these currencies: %s.', 'woocommerce-jetpack' ), '<br>' . implode( '<br>', $paypal_allowed_currencies_and_names ) );
 foreach ( $gateways as $key => $gateway ) {
-	$gateway_title = wcj_get_payment_gateway_admin_title( $gateway, $key );
+	$gateway_title    = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$default_gateways = array( 'bacs' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways, true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );

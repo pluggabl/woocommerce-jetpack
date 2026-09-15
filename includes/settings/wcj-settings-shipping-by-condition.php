@@ -204,8 +204,8 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		$include_id = 'wcj_shipping_' . $options_id . '_include_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 		$exclude_id = 'wcj_shipping_' . $options_id . '_exclude_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 
-		$include_desc = '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id );
-		$exclude_desc = '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id );
+		$include_desc = '<br>' . sprintf( /* translators: %s: option title. */ __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id );
+		$exclude_desc = '<br>' . sprintf( /* translators: %s: option title. */ __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id );
 		if ( 'shipping_by_products' === $this->id ) {
 			$include_desc .= '<br><span class="description">' . __( 'Include limits this shipping method to carts that match the selected value. If the cart does not match, the method is hidden.', 'woocommerce-jetpack' ) . '</span>';
 			$exclude_desc .= '<br><span class="description">' . __( 'Exclude hides this shipping method when the cart matches the selected value.', 'woocommerce-jetpack' ) . '</span>';

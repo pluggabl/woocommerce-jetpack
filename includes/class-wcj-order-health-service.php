@@ -81,21 +81,21 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			);
 
 			return array(
-				'generated_at_gmt' => gmdate( 'c' ),
-				'storage_mode'     => $this->get_storage_mode(),
-				'filters'          => $filters,
-				'query'            => array(
-					'query_limit'    => $this->get_query_limit(),
+				'generated_at_gmt'  => gmdate( 'c' ),
+				'storage_mode'      => $this->get_storage_mode(),
+				'filters'           => $filters,
+				'query'             => array(
+					'query_limit'     => $this->get_query_limit(),
 					'candidate_count' => count( $query_result['orders'] ),
 					'attention_count' => count( $health_orders ),
 					'has_more'        => $query_result['has_more'],
 					'status_families' => $query_result['status_families'],
 				),
-				'summary'          => $summary,
-				'filtered_count'   => count( $filtered ),
+				'summary'           => $summary,
+				'filtered_count'    => count( $filtered ),
 				'display_limit'     => $display_limit,
 				'display_truncated' => count( $filtered ) > $display_limit,
-				'orders'           => array_slice( $filtered, 0, $display_limit ),
+				'orders'            => array_slice( $filtered, 0, $display_limit ),
 			);
 		}
 
@@ -123,8 +123,8 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			if ( ! $this->is_full_experience() ) {
 				return new WP_Error( 'booster_elite_required', __( 'The Order Health summary Ability is available in Booster Elite.', 'woocommerce-jetpack' ) );
 			}
-			$data    = $this->get_dashboard_data();
-			$summary = array(
+			$data                        = $this->get_dashboard_data();
+			$summary                     = array(
 				'tier'             => $this->get_tier(),
 				'generated_at_gmt' => $data['generated_at_gmt'],
 				'storage_mode'     => $data['storage_mode'],
@@ -246,13 +246,13 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 				return array();
 			}
 
-			$waiting       = $this->get_waiting_since( $order, $status );
-			$age_seconds   = max( 0, time() - $waiting['timestamp'] );
-			$partial       = $total_refunded > 0 && ! $fully_refunded;
-			$reason_codes  = array();
-			$cause         = '';
-			$safe_action   = '';
-			$reason_text   = '';
+			$waiting      = $this->get_waiting_since( $order, $status );
+			$age_seconds  = max( 0, time() - $waiting['timestamp'] );
+			$partial      = $total_refunded > 0 && ! $fully_refunded;
+			$reason_codes = array();
+			$cause        = '';
+			$safe_action  = '';
+			$reason_text  = '';
 
 			if ( 'failed' === $status ) {
 				$cause        = 'payment';
@@ -297,22 +297,22 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			}
 
 			return array(
-				'order_id'        => (int) $order->get_id(),
-				'order_number'    => (string) $order->get_order_number(),
-				'edit_url'        => $order->get_edit_order_url(),
-				'status'          => $status,
-				'status_label'    => function_exists( 'wc_get_order_status_name' ) ? wc_get_order_status_name( $status ) : ucfirst( str_replace( '-', ' ', $status ) ),
+				'order_id'          => (int) $order->get_id(),
+				'order_number'      => (string) $order->get_order_number(),
+				'edit_url'          => $order->get_edit_order_url(),
+				'status'            => $status,
+				'status_label'      => function_exists( 'wc_get_order_status_name' ) ? wc_get_order_status_name( $status ) : ucfirst( str_replace( '-', ' ', $status ) ),
 				'waiting_since_gmt' => gmdate( 'c', $waiting['timestamp'] ),
-				'waiting_basis'   => $waiting['basis'],
-				'age_seconds'     => $age_seconds,
-				'age_days'        => (int) floor( $age_seconds / DAY_IN_SECONDS ),
-				'age_bucket'      => $this->get_age_bucket( $age_seconds ),
-				'cause'           => $cause,
-				'cause_label'     => $this->get_cause_label( $cause ),
-				'reason_codes'    => array_values( array_unique( $reason_codes ) ),
-				'reason_text'     => $reason_text,
-				'safe_action'     => $safe_action,
-				'refund_state'    => $partial ? 'partial' : 'none',
+				'waiting_basis'     => $waiting['basis'],
+				'age_seconds'       => $age_seconds,
+				'age_days'          => (int) floor( $age_seconds / DAY_IN_SECONDS ),
+				'age_bucket'        => $this->get_age_bucket( $age_seconds ),
+				'cause'             => $cause,
+				'cause_label'       => $this->get_cause_label( $cause ),
+				'reason_codes'      => array_values( array_unique( $reason_codes ) ),
+				'reason_text'       => $reason_text,
+				'safe_action'       => $safe_action,
+				'refund_state'      => $partial ? 'partial' : 'none',
 			);
 		}
 
@@ -396,7 +396,12 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			);
 		}
 
-		/** Builds fixed aggregate counters. */
+		/**
+		 * Builds fixed aggregate counters.
+		 *
+		 * @param array $orders Orders to summarize.
+		 * @return array Aggregate order counters.
+		 */
 		private function summarize_orders( $orders ) {
 			$age_buckets   = array_fill_keys( self::AGE_BUCKETS, 0 );
 			$cause_counts  = array_fill_keys( self::CAUSES, 0 );
@@ -420,7 +425,13 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			);
 		}
 
-		/** Returns a stable read-only wait basis with HPOS/legacy parity. */
+		/**
+		 * Returns a stable read-only wait basis with HPOS/legacy parity.
+		 *
+		 * @param WC_Order $order Order object.
+		 * @param string   $status Order status.
+		 * @return array Waiting timestamp and basis.
+		 */
 		private function get_waiting_since( $order, $status ) {
 			$date  = $order->get_date_created();
 			$basis = 'order_created';
@@ -437,7 +448,12 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			);
 		}
 
-		/** Normalizes dashboard filters to fixed public values. */
+		/**
+		 * Normalizes dashboard filters to fixed public values.
+		 *
+		 * @param array $filters Dashboard filters.
+		 * @return array Normalized dashboard filters.
+		 */
 		private function normalize_filters( $filters ) {
 			if ( ! $this->is_full_experience() ) {
 				return array(
@@ -456,14 +472,25 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			);
 		}
 
-		/** Returns whether one health row matches all selected filters. */
+		/**
+		 * Returns whether one health row matches all selected filters.
+		 *
+		 * @param array $order Order health row.
+		 * @param array $filters Selected filters.
+		 * @return bool Whether the order matches the filters.
+		 */
 		private function matches_filters( $order, $filters ) {
 			return ( 'all' === $filters['status'] || $filters['status'] === $order['status'] )
 				&& ( 'all' === $filters['cause'] || $filters['cause'] === $order['cause'] )
 				&& ( 'all' === $filters['age'] || $filters['age'] === $order['age_bucket'] );
 		}
 
-		/** Returns a fixed age bucket. */
+		/**
+		 * Returns a fixed age bucket.
+		 *
+		 * @param int $age_seconds Order age in seconds.
+		 * @return string Age bucket identifier.
+		 */
 		private function get_age_bucket( $age_seconds ) {
 			if ( $age_seconds < DAY_IN_SECONDS ) {
 				return 'under_1_day';
@@ -477,7 +504,12 @@ if ( ! class_exists( 'WCJ_Order_Health_Service' ) ) :
 			return 'over_7_days';
 		}
 
-		/** Human-readable fixed cause labels. */
+		/**
+		 * Human-readable fixed cause labels.
+		 *
+		 * @param string $cause Cause identifier.
+		 * @return string Cause label.
+		 */
 		private function get_cause_label( $cause ) {
 			$labels = array(
 				'payment'             => __( 'Payment', 'woocommerce-jetpack' ),

@@ -93,13 +93,13 @@ if ( ! function_exists( 'wcj_get_option' ) ) {
 	 * @since   5.3.3
 	 *
 	 * @param string $option_name define option_name.
-	 * @param null   $default Get defult null value.
+	 * @param null   $default_val Get defult null value.
 	 *
 	 * @return  bool
 	 */
-	function wcj_get_option( $option_name, $default = null ) {
+	function wcj_get_option( $option_name, $default_val = null ) {
 		if ( ! isset( w_c_j()->options[ $option_name ] ) ) {
-			w_c_j()->options[ $option_name ] = get_option( $option_name, $default );
+			w_c_j()->options[ $option_name ] = get_option( $option_name, $default_val );
 		}
 		return apply_filters( $option_name, w_c_j()->options[ $option_name ] );
 	}
@@ -129,7 +129,7 @@ if ( ! function_exists( 'wcj_get_payment_gateway_admin_title' ) ) {
 					try {
 						$candidates[] = call_user_func( array( $gateway, $method ) );
 					} catch ( Throwable $error ) {
-						// Continue to the next stable fallback.
+						$error = $error;
 					}
 				}
 			}
@@ -143,7 +143,7 @@ if ( ! function_exists( 'wcj_get_payment_gateway_admin_title' ) ) {
 				try {
 					$candidates[] = $gateway->get_id();
 				} catch ( Throwable $error ) {
-					// Continue to the public ID or supplied gateway key.
+					$error = $error;
 				}
 			}
 			if ( array_key_exists( 'id', $public_properties ) ) {
