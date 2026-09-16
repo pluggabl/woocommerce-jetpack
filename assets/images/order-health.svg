@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Order Health">
+	<path fill="none" stroke="#0073aa" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 3.5h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"/>
+	<path fill="none" stroke="#00507c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 8h3l1.4 5 2.1-8 1.5 6h2"/>
+	<circle cx="17.5" cy="16.5" r="2.4" fill="#ff5722"/>
+</svg>

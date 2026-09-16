@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 7.2.1
+ * @version 8.4.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/shortcodes
  */
@@ -16,7 +16,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * WCJ_General_Shortcodes.
 		 *
-		 * @version 7.1.9
+		 * @version 8.4.0
 		 */
 	class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
@@ -127,7 +127,6 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -189,7 +188,6 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$atts['dimension']             = wcj_sanitize_input_attribute_values( $atts['dimension'], 'restrict_quotes' );
 			$atts['color']                 = wcj_sanitize_input_attribute_values( $atts['color'], 'restrict_quotes' );
 			return $atts;
-
 		}
 
 		/**
@@ -211,21 +209,30 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_get_option.
 		 *
-		 * @version 7.1.2
+		 * @version 8.4.0
 		 * @since   3.9.0
 		 * @todo    [dev] handle multidimensional arrays
 		 * @todo    [dev] maybe also add `get_site_option()`
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_get_option( $atts ) {
-			if ( isset( $atts['name'] ) && str_contains( $atts['name'], 'wcj' ) ) {
-				$result = ( isset( $atts['name'] ) ? wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
-				return ( is_array( $result ) ?
-				( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
-				$result );
-			} else {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				return '';
 			}
+			if (
+				! isset( $atts['name'] ) ||
+				! is_string( $atts['name'] ) ||
+				'' === $atts['name'] ||
+				191 < strlen( $atts['name'] ) ||
+				false === strpos( $atts['name'], 'wcj' )
+			) {
+				return '';
+			}
+			$result = wcj_get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) );
+			if ( ! is_array( $result ) ) {
+				return $result;
+			}
+			return ( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) );
 		}
 
 		/**
@@ -373,7 +380,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_session_value( $atts ) {
-			return ( '' === $atts['key'] || ! isset( $_SESSION[ $atts['key'] ] ) ? '' : $_SESSION[ $atts['key'] ] );
+			return ( '' === $atts['key'] || ! isset( $_SESSION[ $atts['key'] ] ) ? '' : $_SESSION[ $atts['key'] ] ); // phpcs:ignore
 		}
 
 		/**
@@ -523,16 +530,24 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		/**
 		 * Wcj_wp_option.
 		 *
-		 * @version 7.1.1
+		 * @version 8.4.0
 		 * @since   3.2.1
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_wp_option( $atts ) {
-			if ( isset( $atts['option'] ) && str_contains( $atts['option'], 'wcj' ) ) {
-				return ( '' !== $atts['option'] ? wcj_get_option( $atts['option'], $atts['default'] ) : '' );
-			} else {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				return '';
 			}
+			if (
+				! isset( $atts['option'] ) ||
+				! is_string( $atts['option'] ) ||
+				'' === $atts['option'] ||
+				191 < strlen( $atts['option'] ) ||
+				false === strpos( $atts['option'], 'wcj' )
+			) {
+				return '';
+			}
+			return wcj_get_option( $atts['option'], ( isset( $atts['default'] ) ? $atts['default'] : false ) );
 		}
 
 		/**
@@ -640,7 +655,6 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$store_base_currency    = strtolower( get_option( 'woocommerce_currency' ) );
 			$store_current_currency = strtolower( get_woocommerce_currency() );
 			return ( '' !== $store_base_currency && '' !== $store_current_currency ) ? wcj_get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $store_base_currency . $store_current_currency ) ) : '';
-
 		}
 
 
@@ -883,7 +897,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$columns_styles = array();
 			$i              = -1;
 			foreach ( $wholesale_price_levels as $wholesale_price_level ) {
-				$i++;
+				++$i;
 				if ( 0 === $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
 					continue;
 				}

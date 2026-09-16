@@ -1,10 +1,8 @@
 {
-  "0": "= 8.3.0 - 19/08/2026 =",
-  "1": "* Platform - Adds three permission-protected, read-only WordPress abilities for safe module, compatibility, and Booster-owned background-job status.",
-  "2": "* Orders - Hardens refund totals, order metadata access, product-addon quantity handling, and bulk download-permission regeneration across HPOS and legacy storage.",
-  "3": "* Checkout - Applies product/category gateway rules through supported server logic for Checkout Blocks Store API recalculation and Classic Checkout.",
-  "4": "* Performance - Reuses request-local Store API detection and keeps the abilities framework unloaded on WordPress versions below 6.9.",
-  "5": "* Security - Tightens operational status permissions and bounds diagnostic output.",
-  "6": "* WooCommerce 11.0.0 Tested",
-  "7": "* WordPress 7.0 Tested; WordPress 7.1 RC compatibility checked"
+  "0": "= 8.4.0 - 16/09/2026 =",
+  "1": "* Order Health Light - Find common delayed payment, fulfillment, and on-hold orders with clear aging and safe next steps.",
+  "2": "* Responsible free-tier scope - Reads at most 200 candidates and displays the 20 oldest matches; advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability remain Elite-only.",
+  "3": "* HPOS-ready bounded scans - Uses WooCommerce order objects with current-status and full-refund safety across both order stores.",
+  "4": "* Merchant control - Makes no order changes, refunds, customer messages, or AI decisions.",
+  "5": "* Safer private settings - Blocks lower-privilege access inside both option-reading shortcodes without changing saved configuration."
 }

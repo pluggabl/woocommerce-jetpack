@@ -37,6 +37,7 @@ $settings           = array(
 );
 $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
+	$gateway_title    = wcj_get_payment_gateway_admin_title( $gateway, $key );
 	$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways, true ) ) {
 		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
@@ -46,12 +47,12 @@ foreach ( $available_gateways as $key => $gateway ) {
 		$desc_tip          = '';
 	}
 	$current_icon_url = wcj_get_option( 'wcj_gateways_icons_' . $key . '_icon', '' );
-	$desc             = ( '' !== $current_icon_url ) ? '<img width="16" src="' . $current_icon_url . '" alt="' . $gateway->title . '" title="' . $gateway->title . '" />' : '';
+	$desc             = ( '' !== $current_icon_url ) ? '<img width="16" src="' . esc_url( $current_icon_url ) . '" alt="' . esc_attr( $gateway_title ) . '" title="' . esc_attr( $gateway_title ) . '" />' : '';
 	$settings         = array_merge(
 		$settings,
 		array(
 			array(
-				'title'             => $gateway->title,
+				'title'             => $gateway_title,
 				'desc_tip'          => __( 'Leave blank to set WooCommerce default value', 'woocommerce-jetpack' ),
 				'desc'              => ( '' !== $desc_tip ) ? $desc_tip : $desc,
 				'id'                => 'wcj_gateways_icons_' . $key . '_icon',

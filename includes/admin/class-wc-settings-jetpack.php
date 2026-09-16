@@ -925,6 +925,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 					<div class="wcj-nav-sidebar">
 						<ul>
 						<?php echo wp_kses_post( $this->output_sections_submenu() ); ?>
+							<li class="wcj-sidebar-item wcj-order-health-sidebar-link"><a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-order-health' ) ); ?>"><span><img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/order-health.svg'; ?>" alt=""></span><?php esc_html_e( 'Order Health', 'woocommerce-jetpack' ); ?></a></li>
 							<a href="https://booster.io/contact-us/" class="wcj-button" target="_blank"><?php esc_html_e( 'Need Help?', 'woocommerce-jetpack' ); ?><span><img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/need-help.png'; ?>"></span></a>
 						</ul>
 					</div>
