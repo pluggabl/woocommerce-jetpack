@@ -19,6 +19,35 @@ TOKEN = re.compile(r"%\d+\$[a-z_]+%|%[A-Za-z_][A-Za-z_0-9]*%|%%|%(?:\d+\$)?[-+0 
 MARKUP = re.compile(r"</?[A-Za-z][^>]*>|&(?:[A-Za-z][A-Za-z0-9]*|#\d+|#x[0-9a-fA-F]+);")
 PROTECTED = re.compile(r"\[[^\]]+\]|https?://[^\s<>]+|\b(?:wcj_[A-Za-z_0-9]+|field_id|meta_key)\b")
 
+# Reviewed non-formatting source uses only: Free onboarding-blueprints.php label,
+# Elite onboarding coupon description and onboarding-map.php subject defaults.
+# Exact gettext identity matters: no exception for another context, plural or key.
+# This mechanical exception is not approval of the offer/translation itself.
+LITERAL_PERCENT_KEYS = {
+    (None, 'Create a 10% coupon', None): ('10%',),
+    (None, 'Abandoned cart recovery coupon - 10% off', None): ('10%',),
+    (None, 'Complete your purchase - 10% off!', None): ('10%',),
+    (None, "Still interested? Here's 15% off", None): ('15%',),
+    (None, 'Last chance - 20% off your cart', None): ('20%',),
+}
+NUMERIC_PERCENT = re.compile(r'(?<![0-9.,])[-+]?\d+(?:[.,]\d+)?%')
+
+
+def placeholder_tokens(text, literal_percentages=()):
+    """Keep TOKEN intact; mask only reviewed numeric-percent prose collisions.
+
+    A space-flag conversion prefix inside a word (10% coupon or 10% off) is
+    prose in these five exact source uses. An isolated % d, width/position
+    conversion or newly added token is still scanned, including in these keys.
+    The separately compared numeric-percent multiset prevents amount loss,
+    mutation or duplication. Masking is scan-only; catalog bytes never change.
+    """
+    scan = list(text)
+    for match in NUMERIC_PERCENT.finditer(text):
+        if match.group() in literal_percentages and re.match(r' +[A-Za-z]{2}', text[match.end():]):
+            scan[match.end() - 1] = '\0'
+    return Counter(TOKEN.findall(''.join(scan)))
+
 
 def read_po(path):
     """Read standard quoted gettext fields; reject unsupported/malformed syntax."""
@@ -128,7 +157,12 @@ def validate(catalog, source, require_complete=False):
         for index, (original, target) in enumerate(zip(sources, forms)):
             if not target.strip():
                 errors.append({'key': k, 'error': 'blank translated plural branch', 'branch': index})
-            for name, rx in [('placeholder', TOKEN), ('markup/entity', MARKUP), ('protected identifier', PROTECTED)]:
+            literal_percentages = LITERAL_PERCENT_KEYS.get(k, ()) if k in source_keys else ()
+            if literal_percentages and Counter(NUMERIC_PERCENT.findall(target)) != Counter(literal_percentages):
+                errors.append({'key': k, 'error': 'literal numeric-percent mismatch', 'branch': index})
+            if placeholder_tokens(original, literal_percentages) != placeholder_tokens(target, literal_percentages):
+                errors.append({'key': k, 'error': 'placeholder mismatch', 'branch': index})
+            for name, rx in [('markup/entity', MARKUP), ('protected identifier', PROTECTED)]:
                 if Counter(rx.findall(original)) != Counter(rx.findall(target)):
                     errors.append({'key': k, 'error': name + ' mismatch', 'branch': index})
         translated.append(entry)

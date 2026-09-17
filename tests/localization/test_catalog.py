@@ -73,6 +73,94 @@ class CatalogTests(unittest.TestCase):
         self.header['msgstr'] = self.header['msgstr'].replace('nl_NL', 'nl_NL_formal')
         self.assertTrue(catalog.validate(self.entries, self.source)[0])
 
+    def literal_percent_examples(self):
+        # Mechanism-only cases: source commercial correctness is reviewed separately.
+        return [
+            ('Create a 10% coupon', 'Een kortingsbon van 10% aanmaken', '10%'),
+            ('Abandoned cart recovery coupon - 10% off', 'Kortingsbon voor het terugwinnen van een verlaten winkelwagen - 10% korting', '10%'),
+            ('Complete your purchase - 10% off!', 'Rond je aankoop af - 10% korting!', '10%'),
+            ("Still interested? Here's 15% off", 'Nog interesse? Ontvang 15% korting', '15%'),
+            ('Last chance - 20% off your cart', 'Laatste kans - 20% korting op je winkelwagen', '20%'),
+        ]
+
+    def test_exactly_five_reviewed_literal_keys_and_gettext_roundtrip(self):
+        examples = self.literal_percent_examples()
+        self.assertEqual({(None, source, None): (amount,) for source, _, amount in examples}, catalog.LITERAL_PERCENT_KEYS)
+        entries = [self.header] + [{'msgid': source, 'msgstr': target} for source, target, _ in examples]
+        errors, _ = catalog.validate(entries, entries, True)
+        self.assertEqual([], errors)
+        runtime = gettext.GNUTranslations(io.BytesIO(catalog.compile_mo(entries)))
+        for source, target, _ in examples:
+            self.assertEqual(target, runtime.gettext(source))
+
+    def test_literal_numeric_percentage_mutations_rejected(self):
+        for source, target, amount in self.literal_percent_examples():
+            for replacement in ['', '9%', '100%', amount[:-1], amount[:-1] + ' %', '-' + amount, '+' + amount, amount[:-1] + '.0%', amount + ' ' + amount]:
+                with self.subTest(source=source, replacement=replacement):
+                    entry = {'msgid': source, 'msgstr': target.replace(amount, replacement)}
+                    errors, _ = catalog.validate([self.header, entry], [entry])
+                    self.assertIn('literal numeric-percent mismatch', [error.get('error') for error in errors if isinstance(error, dict)])
+
+    def test_literal_percent_preservation_allows_reordered_prose_and_terminal_percent(self):
+        for source, _, amount in self.literal_percent_examples():
+            for target in [amount + ' korting', 'Kortingspercentage: ' + amount, amount + '!']:
+                with self.subTest(source=source, target=target):
+                    entry = {'msgid': source, 'msgstr': target}
+                    self.assertEqual([], catalog.validate([self.header, entry], [entry])[0])
+
+    def test_literal_exception_cannot_hide_printf_added_after_numeric_percent(self):
+        for source, _, amount in self.literal_percent_examples():
+            for suffix in [' d', ' s', ' o', ' f', ' 02d', '08d', '2$d', 'd', '%']:
+                with self.subTest(source=source, suffix=suffix):
+                    entry = {'msgid': source, 'msgstr': 'Korting ' + amount + suffix}
+                    errors, _ = catalog.validate([self.header, entry], [entry])
+                    self.assertIn('placeholder mismatch', [error.get('error') for error in errors if isinstance(error, dict)])
+
+    def test_literal_exception_cannot_hide_extra_printf_shortcode_or_markup(self):
+        for source, target, _ in self.literal_percent_examples():
+            for suffix in [' % d', ' %1$02d', ' %s', ' %%', ' %coupon_code%', ' [wcj_order_number]', ' <b>tekst</b>', ' https://example.test']:
+                with self.subTest(source=source, suffix=suffix):
+                    entry = {'msgid': source, 'msgstr': target + suffix}
+                    self.assertTrue(catalog.validate([self.header, entry], [entry])[0])
+
+    def test_literal_exception_requires_exact_context_plural_and_reference_key(self):
+        source, target, _ = self.literal_percent_examples()[0]
+        for entry in [
+            {'msgctxt': 'Another use', 'msgid': source, 'msgstr': target},
+            {'msgid': source + '.', 'msgstr': target},
+            {'msgid': source, 'msgid_plural': source + 's', 'msgstr[0]': target, 'msgstr[1]': target},
+        ]:
+            with self.subTest(entry=entry):
+                self.assertTrue(catalog.validate([self.header, entry], [entry])[0])
+        entry = {'msgid': source, 'msgstr': target}
+        errors, _ = catalog.validate([self.header, entry], [])
+        self.assertIn('absent from exact reference POT', [error.get('error') for error in errors if isinstance(error, dict)])
+        self.assertIn('placeholder mismatch', [error.get('error') for error in errors if isinstance(error, dict)])
+
+    def test_unreviewed_numeric_percent_prose_has_no_blanket_exemption(self):
+        entry = {'msgid': 'Another 10% coupon', 'msgstr': 'Nog een kortingsbon van 10% aanmaken'}
+        self.assertTrue(catalog.validate([self.header, entry], [entry])[0])
+
+    def test_real_printf_space_flags_and_width_types_remain_protected(self):
+        for token in ['% d', '%  d', '% s', '% o', '%1$ 02d', '%+08.2f', '%2$02d', '%%', '%coupon_code%', '%1$var%']:
+            with self.subTest(token=token):
+                self.assertEqual([token], catalog.TOKEN.findall(token))
+                entry = {'msgid': 'Value ' + token, 'msgstr': 'Waarde ' + token}
+                self.assertEqual([], catalog.validate([self.header, entry], [entry])[0])
+                entry['msgstr'] = 'Waarde'
+                self.assertTrue(catalog.validate([self.header, entry], [entry])[0])
+        entry = {'msgid': 'Value % d', 'msgstr': 'Waarde %d'}
+        self.assertTrue(catalog.validate([self.header, entry], [entry])[0])
+
+    def test_printf_and_shortcode_plural_branches_still_checked_independently(self):
+        entry = {'msgid': '% d [wcj_order_number]', 'msgid_plural': '% d [wcj_order_number] orders', 'msgstr[0]': '% d [wcj_order_number]', 'msgstr[1]': '% d [wcj_order_number] bestellingen'}
+        self.assertEqual([], catalog.validate([self.header, entry], [entry])[0])
+        for branch in ['msgstr[0]', 'msgstr[1]']:
+            for bad in ['%s [wcj_order_number]', '% d [wcj_invoice_number]']:
+                changed = copy.deepcopy(entry)
+                changed[branch] = bad
+                self.assertTrue(catalog.validate([self.header, changed], [entry])[0])
+
 
 class SourceTests(unittest.TestCase):
     def test_edition_bootstrap_uses_its_own_plugin_file_constant(self):
