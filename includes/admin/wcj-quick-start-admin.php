@@ -30,6 +30,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return  void
  */
 function wcj_quick_start_render_box( $module_id ) {
+	if ( 'pdf_invoicing' === $module_id && class_exists( 'WCJ_Invoice_Setup' ) ) {
+		echo '<p><a class="button" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Open branded document setup', 'woocommerce-jetpack' ) . '</a></p>';
+		return;
+	}
 	// Validate input.
 	if ( empty( $module_id ) || ! is_string( $module_id ) ) {
 		return;

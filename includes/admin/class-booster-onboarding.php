@@ -19,6 +19,13 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 	class Booster_Onboarding {
 
 		/**
+		 * Starter invoice journey.
+		 *
+		 * @var WCJ_Invoice_Setup
+		 */
+		private $invoice_setup;
+
+		/**
 		 * Onboarding map data
 		 *
 		 * @var array
@@ -36,6 +43,8 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * Constructor.
 		 */
 		public function __construct() {
+			require_once __DIR__ . '/class-wcj-invoice-setup.php';
+			$this->invoice_setup  = new WCJ_Invoice_Setup( $this->option_key );
 			$this->onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map.php';
 
 			add_action( 'admin_menu', array( $this, 'add_getting_started_menu' ), 100 );
@@ -61,7 +70,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 					'wcj-dashboard',
 					__( 'Getting Started', 'woocommerce-jetpack' ),
 					__( 'Getting Started', 'woocommerce-jetpack' ),
-					'manage_options',
+					'manage_woocommerce',
 					'wcj-getting-started',
 					array( $this, 'getting_started_page' )
 				);
@@ -97,9 +106,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 
 				$applied_goals    = array();
 				$onboarding_state = get_option( $this->option_key, array() );
-				if ( isset( $onboarding_state['completed_goals'] ) ) {
-					$applied_goals = $onboarding_state['completed_goals'];
-				}
+				$applied_goals    = $this->invoice_display_goals( isset( $onboarding_state['completed_goals'] ) ? $onboarding_state['completed_goals'] : array() );
 
 				$blueprints = file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php' )
 					? include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-blueprints.php'
@@ -179,11 +186,38 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		}
 
 		/**
+		 * Present only proved invoice completion, without rewriting legacy state.
+		 *
+		 * @param array $goals Existing completed goal IDs.
+		 * @return array Presentation-only goal IDs.
+		 */
+		private function invoice_display_goals( $goals ) {
+			$goals = array_values( array_diff( (array) $goals, array( 'professional_invoices', 'professional_docs_pro' ) ) );
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				return $goals;
+			}
+			try {
+				if ( $this->invoice_setup->is_active() ) {
+					$goals[] = isset( $this->onboarding_map['professional_docs_pro'] ) ? 'professional_docs_pro' : 'professional_invoices';
+				}
+			} catch ( Throwable $error ) {
+				// Invalid or conflicting setup state is never displayed as completion.
+				return $goals;
+			}
+			return $goals;
+		}
+
+		/**
 		 * Getting Started page content
 		 */
 		public function getting_started_page() {
+			if ( isset( $_GET['wcj-invoice-setup'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only view.
+				$this->invoice_setup->render();
+				return;
+			}
+			echo '<p><a class="button" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Create a branded starter invoice', 'woocommerce-jetpack' ) . '</a></p>';
 			$onboarding_state = get_option( $this->option_key, array() );
-			$completed_goals  = isset( $onboarding_state['completed_goals'] ) ? $onboarding_state['completed_goals'] : array();
+			$completed_goals  = $this->invoice_display_goals( isset( $onboarding_state['completed_goals'] ) ? $onboarding_state['completed_goals'] : array() );
 			$snapshots        = isset( $onboarding_state['snapshots'] ) ? $onboarding_state['snapshots'] : array();
 
 			echo '<div class="wrap">';
@@ -218,7 +252,9 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 						echo '<p>' . esc_html( $goal['subtitle'] ) . '</p>';
 						echo '</div>';
 
-						if ( isset( $snapshots[ $goal_id ] ) ) {
+						if ( in_array( $goal_id, array( 'professional_invoices', 'professional_docs_pro' ), true ) ) {
+							echo '<a class="button" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Review or undo starter settings', 'woocommerce-jetpack' ) . '</a>';
+						} elseif ( isset( $snapshots[ $goal_id ] ) ) {
 							echo '<div class="goal-item-actions">';
 							echo '<span class="applied-chip">' . esc_html__( 'Applied', 'woocommerce-jetpack' ) . '</span>';
 							echo '<button type="button" class="button undo-goal" data-goal="' . esc_attr( $goal_id ) . '">';
@@ -383,6 +419,14 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * @return array
 		 */
 		public function apply_goal( $goal_id, $create_snapshot = true ) {
+			if ( in_array( $goal_id, array( 'professional_invoices', 'professional_docs_pro' ), true ) ) {
+				WCJ_Invoice_Setup::authorize();
+				return array(
+					'success'   => false,
+					'message'   => __( 'Open the branded document guide, generate a sample and review before activating settings.', 'woocommerce-jetpack' ),
+					'setup_url' => WCJ_Invoice_Setup::url(),
+				);
+			}
 			if ( ! isset( $this->onboarding_map[ $goal_id ] ) ) {
 				return array(
 					'success' => false,
@@ -816,6 +860,13 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * @return array Result of undoing the goal.
 		 */
 		public function undo_goal( $goal_id ) {
+			if ( in_array( $goal_id, array( 'professional_invoices', 'professional_docs_pro' ), true ) ) {
+				return array(
+					'success'   => false,
+					'message'   => __( 'Use the document guide undo. Legacy snapshots cannot safely overwrite later invoice edits.', 'woocommerce-jetpack' ),
+					'setup_url' => WCJ_Invoice_Setup::url(),
+				);
+			}
 			$onboarding_state = get_option( $this->option_key, array() );
 
 			if ( ! isset( $onboarding_state['snapshots'][ $goal_id ] ) ) {
@@ -892,6 +943,9 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * @return bool True if the first win condition is met, false otherwise.
 		 */
 		public function check_first_win( $goal_id ) {
+			if ( in_array( $goal_id, array( 'professional_invoices', 'professional_docs_pro' ), true ) ) {
+				return $this->invoice_setup->is_active();
+			}
 			if ( ! isset( $this->onboarding_map[ $goal_id ] ) ) {
 				return false;
 			}

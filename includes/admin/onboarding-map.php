@@ -86,25 +86,15 @@ return array(
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=prices_and_currencies&section=currency&wcj-cat-nonce=',
 	),
 	'professional_invoices'                => array(
-		'title'           => __( 'Professional invoices (starter)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Auto-generate PDF invoices (free tier: Invoice only)', 'woocommerce-jetpack' ),
+		'title'           => __( 'Branded document setup', 'woocommerce-jetpack' ),
+		'subtitle'        => __( 'Create a starter sample, rehearse an attachment and activate only after review.', 'woocommerce-jetpack' ),
 		'icon'            => 'dashicons-media-document',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
-		'modules'         => array(
-			array(
-				'id'       => 'pdf_invoicing',
-				'name'     => 'PDF Invoicing',
-				'settings' => array(
-					'wcj_pdf_invoicing_enabled'       => 'yes',
-					'wcj_invoicing_invoice_enabled'   => 'yes',
-					'wcj_invoicing_invoice_create_on' => array( 'woocommerce_new_order' ),
-					'wcj_invoicing_invoice_attach_to_email_enabled' => 'yes',
-				),
-			),
-		),
-		'first_win_check' => 'wcj_invoicing_invoice_enabled',
-		'next_step_text'  => __( 'Customize invoice template', 'woocommerce-jetpack' ),
-		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing&wcj-cat-nonce=',
+		'setup_url'       => WCJ_Invoice_Setup::url(),
+		'modules'         => array(),
+		'first_win_check' => 'invoice_setup_completed',
+		'next_step_text'  => __( 'Open starter document guide', 'woocommerce-jetpack' ),
+		'next_step_link'  => 'admin.php?page=wcj-getting-started&wcj-invoice-setup=1&wcj-cat-nonce=',
 	),
 	'boost_conversions_free'               => array(
 		'title'           => __( 'Boost conversions (free tools)', 'woocommerce-jetpack' ),
