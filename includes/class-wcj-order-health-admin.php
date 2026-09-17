@@ -118,7 +118,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 
 			if ( $data['query']['has_more'] ) {
 				/* translators: %d: Maximum number of orders included in the bounded scan. */
-				echo '<div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Bounded scan reached.', 'woocommerce-jetpack' ) . '</strong> ' . esc_html( sprintf( __( 'For store performance, Order Health reads at most %d of the oldest active orders across fixed status families. Refine filters or review WooCommerce Orders for the remaining records.', 'woocommerce-jetpack' ), $data['query']['query_limit'] ) ) . '</p></div>';
+				echo '<div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Bounded scan reached.', 'woocommerce-jetpack' ) . '</strong> ' . esc_html( sprintf( __( 'For store performance, Order Health reads at most %d of the oldest active orders across fixed status families. Review WooCommerce Orders for the remaining records.', 'woocommerce-jetpack' ), $data['query']['query_limit'] ) ) . '</p></div>';
 			}
 			if ( $data['display_truncated'] ) {
 				/* translators: 1: Number of orders displayed. 2: Total number of matching orders. */

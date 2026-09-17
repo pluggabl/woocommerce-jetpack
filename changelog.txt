@@ -1,13 +1,10 @@
 == Changelog ==
 
 = 8.4.0 - 16/09/2026 =
-* Order Health dashboard - Shows which active orders may need attention, how long they have waited, why they were flagged, and a safe merchant-controlled review step.
-* Faster operational triage - Filters by current status, likely cause, and fixed aging buckets so teams can move from a store-wide signal to the right orders.
-* Explainable health reasons - Uses deterministic payment, fulfillment, configuration, workflow, and partial-refund rules instead of opaque scoring or AI decisions.
+* Order Health Light - Shows common delayed payment, fulfillment, and on-hold orders with aging and safe merchant-controlled review steps.
+* Responsible free-tier scope - Reads at most 200 active candidates, displays the 20 oldest matches, and leaves advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability to Elite.
 * Built for order-storage changes - Uses bounded WooCommerce order queries and order objects for matching behavior under HPOS and legacy storage.
-* Refund and transition correctness - Excludes completed, cancelled, and fully refunded orders; keeps partially refunded active orders visible; and evaluates the current status on every scan.
-* Morning Store Briefing v1 - Combines privacy-safe aggregate Order Health, Booster compatibility warnings, and Booster background-job diagnostics.
-* Read-only Ability - Adds `booster/order-health-summary` for authorized store managers, with bounded counts and no customer data, order identifiers, raw settings, or job arguments.
+* Refund and transition safety - Excludes terminal and fully refunded orders and evaluates current status on every scan.
 * Clearer payment settings - Keeps third-party gateway rows identifiable by using standard WooCommerce label methods before stable ID fallbacks, without changing checkout titles.
 * Safer shipping configuration - Explains Include and Exclude behavior and warns when an Include rule narrows WooCommerce Free shipping.
 * Safer private settings - Requires WooCommerce management permission inside both option-reading shortcodes, blocking lower-privilege execution without changing saved settings.
