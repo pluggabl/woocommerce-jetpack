@@ -685,7 +685,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 
 				case 'item_key':
 					if ( isset( $column_param ) && '' !== $column_param && isset( $item[ $column_param ] ) ) {
-						$maybe_unserialized_value = maybe_unserialize( $item[ $column_param ] );
+						$maybe_unserialized_value = wcj_maybe_unserialize_plain_data( $item[ $column_param ] );
 						if ( is_array( $maybe_unserialized_value ) ) {
 							return isset( $maybe_unserialized_value['name'] ) ? $maybe_unserialized_value['name'] : '';
 						} else {

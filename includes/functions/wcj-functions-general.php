@@ -639,6 +639,43 @@ if ( ! function_exists( 'wcj_maybe_implode' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_maybe_unserialize_plain_data' ) ) {
+	/**
+	 * Decode stored scalar/array data without constructing classes.
+	 *
+	 * @since 8.5.0
+	 * @param mixed $value Stored value.
+	 * @return mixed Plain data, or an empty string for unsupported structures.
+	 */
+	function wcj_maybe_unserialize_plain_data( $value ) {
+		if ( is_string( $value ) && is_serialized( $value ) ) {
+			$options = array( 'allowed_classes' => false );
+			if ( PHP_VERSION_ID >= 70400 ) {
+				$options['max_depth'] = 64;
+			}
+			// Legacy field storage requires decoding; classes are never permitted.
+			$value = @unserialize( trim( $value ), $options ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize,WordPress.PHP.NoSilencedErrors.Discouraged -- Reject classes and malformed legacy data without exposing parser diagnostics.
+		}
+		$pending = array( array( $value, 0 ) );
+		$visited = 0;
+		while ( $pending ) {
+			$entry = array_pop( $pending );
+			if ( ++$visited > 10000 || $entry[1] > 64 || is_object( $entry[0] ) || is_resource( $entry[0] ) ) {
+				return '';
+			}
+			if ( is_array( $entry[0] ) ) {
+				foreach ( $entry[0] as $child ) {
+					$pending[] = array( $child, $entry[1] + 1 );
+					if ( count( $pending ) > 10000 ) {
+						return '';
+					}
+				}
+			}
+		}
+		return $value;
+	}
+}
+
 if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
 	/**
 	 * Wcj_maybe_unserialize_and_implode.
@@ -652,8 +689,13 @@ if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
 	 */
 	function wcj_maybe_unserialize_and_implode( $value, $glue = ' ' ) {
 		if ( is_serialized( $value ) ) {
-			$value = unserialize( $value ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions
+			$value = wcj_maybe_unserialize_plain_data( $value );
 			if ( is_array( $value ) ) {
+				foreach ( $value as $part ) {
+					if ( ! is_scalar( $part ) && null !== $part ) {
+						return '';
+					}
+				}
 				$value = implode( $glue, $value );
 			}
 		}

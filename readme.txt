@@ -13,13 +13,15 @@ Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swa
 
 == Description ==
 
-### New in 8.5.0 - Check your first branded invoice, with Dutch continuity
+### New in 8.5.0 - Set up branded invoices with less guesswork
 
-Enter your business details and an optional local logo, open a clearly marked synthetic PDF, and review the proposed settings before enabling the chosen operation. The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.
+* **Preview before you switch on:** add your business details and an optional local logo, then check a sample PDF without editing HTML.
+* **Stay in control:** review the proposed settings before activation. Samples do not use real orders, consume invoice numbers or send customer emails. Existing templates and advanced settings stay available.
+* **Choose how invoices reach customers:** the Free guide supports invoices generated manually or on completed orders, with an optional attachment to the customer completed-order email.
+* **Work in your preferred admin language:** selected Booster screens and the new guide gain Dutch translations. Coverage is partial, with English fallback; saved content and PDF template labels are not automatically translated.
+* **Keep your store protected:** this update includes security improvements for product details and document processing. Updating is recommended.
 
-Selected core Booster modules and the new guide gain Dutch-language coverage. Untranslated surfaces fall back to English. Existing merchant content, saved templates and custom/community translations remain under your control. The stock PDF template may retain English labels.
-
-The guide does not send test emails or confirm inbox delivery. Configured stores are not automatically enrolled, and advanced controls remain available.
+Existing stores are not enrolled automatically. Test your actual order and email workflow before enabling it; a sample does not verify inbox delivery or tax compliance.
 
 ### New in 8.4.0 - Find delayed orders before they become customer problems
 
@@ -396,6 +398,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 == Changelog ==
 
 = 8.5.0 - Unreleased =
+* Security - Strengthened handling of customer-supplied product details and document processing to help keep stores protected. Updating is recommended.
 * Branded document setup - Enter plain business details and an optional supported local logo, open a real synthetic sample, and review exact setting changes before enabling the chosen operation.
 * Edition scope - The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.
 * Merchant control - Sample and attachment rehearsal do not send email, issue production documents or consume invoice numbers. Existing numbering, tax, advanced settings and custom templates are protected; settings undo detects later changes.
@@ -4493,6 +4496,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 == Upgrade Notice ==
 
 = 8.5.0 =
+Recommended security update, plus guided branded-invoice setup and Dutch translations for selected admin screens. Existing templates and settings remain under your control.
 Back up and test the update on staging. Guided setup is opt-in; review existing PDF configuration before activation. Dutch coverage is bounded and does not translate saved customer-facing content.
 
 = 7.5.0 = 

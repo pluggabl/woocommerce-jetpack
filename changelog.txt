@@ -1,4 +1,5 @@
 = 8.5.0 - Unreleased =
+* Security - Strengthened handling of customer-supplied product details and document processing to help keep stores protected. Updating is recommended.
 * Branded document setup - Enter plain business details and an optional supported local logo, open a real synthetic sample, and review exact setting changes before enabling the chosen operation.
 * Edition scope - The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.
 * Merchant control - Sample and attachment rehearsal do not send email, issue production documents or consume invoice numbers. Existing numbering, tax, advanced settings and custom templates are protected; settings undo detects later changes.
