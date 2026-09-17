@@ -295,7 +295,7 @@ if ( ! class_exists( 'WCJ_Order_Statuses_Tool' ) ) :
 			$action_button         = '<input class="button-primary" type="submit" name="' . ( $is_editing ? 'edit_custom_status' : 'add_custom_status' ) . '"' .
 				' value="' . ( $is_editing ? __( 'Edit custom status', 'woocommerce-jetpack' ) : __( 'Add new custom status', 'woocommerce-jetpack' ) ) . '">';
 			$clear_button          = ( $is_editing ?
-				' <a class="button-primary" href="' . ( remove_query_arg( array( 'delete', 'edit', 'edit-custom-statuses-nonce', 'delete_custom_status-nonce', 'delete_all_custom_status-nonce' ) ) ) . '">' . __( 'Clear', 'woocommerce-jetpack' ) . '</a>' : '' );
+				' <a class="button-primary" href="' . ( remove_query_arg( array( 'delete', 'edit', 'edit-custom-statuses-nonce', 'delete_custom_status-nonce', 'delete_all_custom_status-nonce' ) ) ) . '">' . _x( 'Clear', 'Reset form', 'woocommerce-jetpack' ) . '</a>' : '' );
 			$nonce_field           = wp_nonce_field( $is_editing ? 'edit_custom_status' : 'add_custom_status', $is_editing ? 'edit_custom_status-nonce' : 'add_custom_status-nonce' );
 			$table_data            = array(
 				array(
