@@ -15,7 +15,7 @@ WCJ_Invoice_Setup::authorize();
 	#wcj-invoice-setup td{overflow-wrap:anywhere}
 	#wcj-setup-summary{table-layout:fixed}
 	#wcj-invoice-setup a{color:#0073aa}
-	#wcj-invoice-setup .button{border-color:#0073aa;color:#0073aa}
+	#wcj-invoice-setup .button{border-color:#0073aa;color:#0073aa;max-width:100%;white-space:normal;overflow-wrap:anywhere;height:auto}
 	#wcj-invoice-setup .button:hover{border-color:#005f8d;color:#005f8d}
 	#wcj-invoice-setup .button-primary:not(:disabled){background:#0073aa;border-color:#0073aa;color:#fff}
 	#wcj-invoice-setup .button-primary:not(:disabled):hover{background:#005f8d;border-color:#005f8d;color:#fff}
