@@ -13,6 +13,7 @@ require_once $wcj_qa_plugin . '/includes/admin/class-wcj-invoice-setup.php';
 $wcj_qa_file          = defined( 'WCJ_PLUGIN_FILE' ) ? WCJ_PLUGIN_FILE : WCJ_FREE_PLUGIN_FILE;
 $wcj_qa_tier          = false !== strpos( basename( $wcj_qa_file ), 'elite' ) ? 'elite' : ( false !== strpos( basename( $wcj_qa_file ), 'plus' ) ? 'plus' : 'free' );
 $wcj_qa_state         = 'booster_' . $wcj_qa_tier . '_onboarding';
+$wcj_qa_journal       = $wcj_qa_state . '_invoice_setup';
 $wcj_qa_guide         = new WCJ_Invoice_Setup( $wcj_qa_state );
 $wcj_qa_tests         = array();
 $wcj_qa_original_user = get_current_user_id();
@@ -28,10 +29,10 @@ if ( ! $wcj_qa_admins ) {
 }
 wp_set_current_user( $wcj_qa_admins[0] );
 global $wpdb;
-$wcj_qa_rows        = static function () use ( $wpdb, $wcj_qa_state ) {
+$wcj_qa_rows        = static function () use ( $wpdb, $wcj_qa_state, $wcj_qa_journal ) {
 	$wcj_qa_out = array();
 	foreach ( $wpdb->get_results( "SELECT option_name,option_value,autoload FROM {$wpdb->options}", ARRAY_A ) as $wcj_qa_row ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Isolated QA must compare persisted bytes independently of option caches.
-		if ( 0 === strpos( $wcj_qa_row['option_name'], 'wcj_invoicing_' ) || in_array( $wcj_qa_row['option_name'], array( $wcj_qa_state, 'wcj_pdf_invoicing_enabled', 'wcj_general_advanced_disable_save_sys_temp_dir', 'wcj_invoice_setup_lock' ), true ) ) {
+		if ( 0 === strpos( $wcj_qa_row['option_name'], 'wcj_invoicing_' ) || in_array( $wcj_qa_row['option_name'], array( $wcj_qa_state, $wcj_qa_journal, 'wcj_pdf_invoicing_enabled', 'wcj_general_advanced_disable_save_sys_temp_dir', 'wcj_invoice_setup_lock' ), true ) ) {
 			$wcj_qa_out[ $wcj_qa_row['option_name'] ] = $wcj_qa_row;
 		}
 	}
@@ -251,11 +252,15 @@ try {
 	$wcj_qa_assert( 'INV-ACTIVATE-seller-identity', false !== strpos( get_option( 'wcj_invoicing_invoice_template' ), 'Booster QA Shop' ) && false === strpos( get_option( 'wcj_invoicing_invoice_template' ), 'COMPANY NAME' ) );
 	$wcj_qa_assert( 'INV-ACTIVATE-counter-preserved', 811 === (int) get_option( 'wcj_invoicing_invoice_numbering_counter' ) );
 	$wcj_qa_assert( 'INV-ACTIVATE-onboarding-preserved', 'preserved' === get_option( $wcj_qa_state )['sentinel'] && isset( get_option( $wcj_qa_state )['snapshots']['legacy'] ) );
+	$wcj_qa_legacy_write                  = get_option( $wcj_qa_state );
+	$wcj_qa_legacy_write['applied_goals'] = array( 'unrelated_legacy_goal' );
+	update_option( $wcj_qa_state, $wcj_qa_legacy_write );
+	$wcj_qa_assert( 'INV-JOURNAL-legacy-whole-option-write-cannot-erase-undo', isset( get_option( $wcj_qa_journal )['invoice_setup_v1']['entries'] ) && ! isset( get_option( $wcj_qa_state )['invoice_setup_v1'] ) && $wcj_qa_guide->is_active() );
 	$wcj_qa_prior = $wcj_qa_rows();
 	$wcj_qa_run   = $wcj_qa_guide->activate( $wcj_qa_draft, $wcj_qa_review['fingerprint'] );
 	$wcj_qa_assert( 'INV-ACTIVATE-replay-idempotent', $wcj_qa_run['activated'] && $wcj_qa_prior === $wcj_qa_rows() );
 	$wcj_qa_assert( 'INV-COMPLETION-full-settings-current', $wcj_qa_guide->is_active() );
-	$wcj_qa_assert( 'INV-UNDO-snapshot-only-actual-writes', ! isset( get_option( $wcj_qa_state )['invoice_setup_v1']['entries']['wcj_invoicing_invoice_header_text_color'] ) );
+	$wcj_qa_assert( 'INV-UNDO-snapshot-only-actual-writes', ! isset( get_option( $wcj_qa_journal )['invoice_setup_v1']['entries']['wcj_invoicing_invoice_header_text_color'] ) );
 	update_option( 'wcj_invoicing_invoice_header_text_color', '#111111' );
 	$wcj_qa_assert( 'INV-COMPLETION-preexisting-matching-setting-edit-detected', ! $wcj_qa_guide->is_active() );
 	$wcj_qa_reject(
@@ -271,18 +276,27 @@ try {
 	delete_option( 'wcj_invoicing_packing_slip_create_on' );
 	$wcj_qa_run = $wcj_qa_guide->undo();
 	$wcj_qa_assert( 'INV-UNDO-conflict-preserved', ! $wcj_qa_run['restored'] && in_array( 'wcj_invoicing_invoice_header_text', $wcj_qa_run['conflicts'], true ) && 'Keep later edit' === get_option( 'wcj_invoicing_invoice_header_text' ) );
-	$wcj_qa_assert( 'INV-UNDO-conflict-snapshot-retained', isset( get_option( $wcj_qa_state )['invoice_setup_v1']['entries']['wcj_invoicing_invoice_header_text'] ) );
+	$wcj_qa_assert( 'INV-UNDO-conflict-snapshot-retained', isset( get_option( $wcj_qa_journal )['invoice_setup_v1']['entries']['wcj_invoicing_invoice_header_text'] ) );
 	$wcj_qa_assert( 'INV-UNDO-originally-absent-restored', false === get_option( 'wcj_pdf_invoicing_enabled', false ) );
 	$wcj_qa_assert( 'INV-UNDO-never-written-setting-preserved', '#111111' === get_option( 'wcj_invoicing_invoice_header_text_color' ) );
 	update_option( 'wcj_invoicing_invoice_header_text', 'Booster QA Shop' );
 	$wcj_qa_run = $wcj_qa_guide->undo();
 	$wcj_qa_assert( 'INV-UNDO-resolved', $wcj_qa_run['restored'] && false === get_option( 'wcj_invoicing_invoice_header_text', false ) );
+	$wcj_qa_review = $wcj_qa_guide->review( $wcj_qa_draft );
+	$wcj_qa_guide->activate( $wcj_qa_draft, $wcj_qa_review['fingerprint'] );
+	update_option( 'wcj_invoicing_invoice_create_on', array( 'manual' ) );
+	$wcj_qa_run = $wcj_qa_guide->undo();
+	$wcj_qa_assert( 'INV-UNDO-later-selected-recipe-parent-preserved', 'yes' === get_option( 'wcj_pdf_invoicing_enabled' ) && array( 'manual' ) === get_option( 'wcj_invoicing_invoice_create_on' ) && in_array( 'wcj_pdf_invoicing_enabled', $wcj_qa_run['conflicts'], true ) && in_array( 'wcj_invoicing_invoice_create_on', $wcj_qa_run['conflicts'], true ) );
+	update_option( 'wcj_invoicing_invoice_create_on', array( 'woocommerce_order_status_completed' ) );
+	$wcj_qa_run = $wcj_qa_guide->undo();
+	$wcj_qa_assert( 'INV-UNDO-selected-recipe-conflict-resolved', $wcj_qa_run['restored'] && false === get_option( 'wcj_pdf_invoicing_enabled', false ) && false === get_option( 'wcj_invoicing_invoice_create_on', false ) );
 	$wcj_qa_review    = $wcj_qa_guide->review( $wcj_qa_draft );
 	$wcj_qa_injecting = false;
 	$wcj_qa_fault     = static function ( $wcj_qa_sql ) use ( &$wcj_qa_injecting, $wpdb ) {
 		if ( ! $wcj_qa_injecting && 0 === strpos( $wcj_qa_sql, 'UPDATE ' ) && false !== strpos( $wcj_qa_sql, 'invoice_setup_v1' ) && false !== strpos( $wcj_qa_sql, 'active' ) ) {
 			$wcj_qa_injecting = true;
 			update_option( 'wcj_invoicing_packing_slip_create_on', array( 'manual' ) );
+			update_option( 'wcj_invoicing_invoice_create_on', array( 'manual' ) );
 			$wcj_qa_injecting = false;
 			return "UPDATE {$wpdb->options} SET option_value = option_value WHERE option_name = 'wcj_qa_intentionally_missing_option'";
 		}
@@ -299,8 +313,11 @@ try {
 	} finally {
 		remove_filter( 'query', $wcj_qa_fault );
 	}
-	$wcj_qa_assert( 'INV-ROLLBACK-later-document-parent-preserved', 'yes' === get_option( 'wcj_pdf_invoicing_enabled' ) && isset( get_option( $wcj_qa_state )['invoice_setup_v1']['entries']['wcj_pdf_invoicing_enabled'] ) && array( 'manual' ) === get_option( 'wcj_invoicing_packing_slip_create_on' ) );
+	$wcj_qa_assert( 'INV-ROLLBACK-later-document-parent-preserved', 'yes' === get_option( 'wcj_pdf_invoicing_enabled' ) && isset( get_option( $wcj_qa_journal )['invoice_setup_v1']['entries']['wcj_pdf_invoicing_enabled'] ) && array( 'manual' ) === get_option( 'wcj_invoicing_packing_slip_create_on' ) );
 	delete_option( 'wcj_invoicing_packing_slip_create_on' );
+	$wcj_qa_run = $wcj_qa_guide->undo();
+	$wcj_qa_assert( 'INV-ROLLBACK-later-selected-recipe-parent-preserved', 'yes' === get_option( 'wcj_pdf_invoicing_enabled' ) && array( 'manual' ) === get_option( 'wcj_invoicing_invoice_create_on' ) && in_array( 'wcj_pdf_invoicing_enabled', $wcj_qa_run['conflicts'], true ) );
+	update_option( 'wcj_invoicing_invoice_create_on', array( 'woocommerce_order_status_completed' ) );
 	$wcj_qa_run = $wcj_qa_guide->undo();
 	$wcj_qa_assert( 'INV-ROLLBACK-parent-conflict-resolved', $wcj_qa_run['restored'] && false === get_option( 'wcj_pdf_invoicing_enabled', false ) );
 	$wcj_qa_read = new ReflectionMethod( $wcj_qa_guide, 'read_option' );

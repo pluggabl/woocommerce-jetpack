@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WCJ_Invoice_Setup {
 	/**
-	 * Existing edition onboarding option.
+	 * Dedicated edition invoice journal, isolated from legacy onboarding writers.
 	 *
 	 * @var string
 	 */
@@ -30,7 +30,7 @@ class WCJ_Invoice_Setup {
 		if ( ! in_array( $state_key, array( 'booster_free_onboarding', 'booster_plus_onboarding', 'booster_elite_onboarding' ), true ) ) {
 			throw new RuntimeException( 'Unknown onboarding state.' );
 		}
-		$this->state_key = $state_key;
+		$this->state_key = $state_key . '_invoice_setup';
 		foreach ( array( 'sample', 'rehearse', 'review', 'activate', 'undo' ) as $operation ) {
 			add_action( 'wp_ajax_wcj_invoice_setup_' . $operation, array( $this, 'handle_request' ) );
 		}
@@ -624,7 +624,7 @@ class WCJ_Invoice_Setup {
 			$before = $this->read_option( $this->state_key );
 			$state  = $this->value( $before );
 			if ( $before['exists'] && ! is_array( $state ) ) {
-				throw new RuntimeException( esc_html__( 'Existing onboarding data is not in the expected format. It has been preserved.', 'woocommerce-jetpack' ) );
+				throw new RuntimeException( esc_html__( 'Setup history is not in the expected format. It was preserved without restoring any settings.', 'woocommerce-jetpack' ) );
 			}
 			$state = is_array( $state ) ? $state : array();
 			$prior = isset( $state['invoice_setup_v1'] ) ? $state['invoice_setup_v1'] : null;
@@ -642,7 +642,7 @@ class WCJ_Invoice_Setup {
 				return;
 			}
 		}
-		throw new RuntimeException( esc_html__( 'Onboarding settings changed concurrently. Please refresh.', 'woocommerce-jetpack' ) );
+		throw new RuntimeException( esc_html__( 'Setup history changed. Refresh before continuing.', 'woocommerce-jetpack' ) );
 	}
 
 	/**
@@ -820,7 +820,7 @@ class WCJ_Invoice_Setup {
 		} catch ( Throwable $error ) {
 			$conflicts = array();
 			foreach ( array_reverse( $applied, true ) as $key => $entry ) {
-				$other_document_dependency = 'wcj_pdf_invoicing_enabled' === $key && 'yes' !== $this->value( $entry['before'] ) && $this->other_documents( $draft['document_type'] );
+				$other_document_dependency = 'wcj_pdf_invoicing_enabled' === $key && 'yes' !== $this->value( $entry['before'] ) && $this->parent_needed_by_later_recipe( $draft['document_type'], $snapshot['entries'] );
 				if ( $other_document_dependency || ! $this->compare_exchange( $key, $entry['after'], $entry['before'] ) ) {
 					$conflicts[ $key ] = $entry;
 				}
@@ -877,8 +877,8 @@ class WCJ_Invoice_Setup {
 			if ( $current === $entry['before'] ) {
 				continue; // Already restored or a write never occurred after an interrupted activation.
 			}
-			// Never disable a different document configured after this guide's activation.
-			$other_document_dependency = 'wcj_pdf_invoicing_enabled' === $key && 'yes' !== $this->value( $entry['before'] ) && $this->other_documents( $snapshot['document_type'] );
+			// Preserve the parent for later recipes, including an edited selected document.
+			$other_document_dependency = 'wcj_pdf_invoicing_enabled' === $key && 'yes' !== $this->value( $entry['before'] ) && $this->parent_needed_by_later_recipe( $snapshot['document_type'], $snapshot['entries'] );
 			if ( $other_document_dependency || ! $this->compare_exchange( $key, $entry['after'], $entry['before'] ) ) {
 				$remaining[ $key ] = $entry;
 			}
@@ -891,6 +891,22 @@ class WCJ_Invoice_Setup {
 			'conflicts' => array_keys( $remaining ),
 			'message'   => $remaining ? __( 'Later edits were preserved. The listed conflicts remain in the undo snapshot; review them in advanced settings.', 'woocommerce-jetpack' ) : __( 'Starter settings restored. Orders, issued invoices and invoice numbers were not changed.', 'woocommerce-jetpack' ),
 		);
+	}
+
+	/**
+	 * Whether disabling the parent would also disable a later configured recipe.
+	 *
+	 * @param string $selected Selected document type.
+	 * @param array  $entries This operation's exact write journal.
+	 * @return bool True when a current recipe is not owned by this journal.
+	 */
+	private function parent_needed_by_later_recipe( $selected, $entries ) {
+		if ( $this->other_documents( $selected ) ) {
+			return true;
+		}
+		$key     = 'wcj_invoicing_' . $selected . '_create_on';
+		$current = $this->read_option( $key );
+		return (bool) $this->value( $current ) && ( ! isset( $entries[ $key ] ) || $current !== $entries[ $key ]['after'] );
 	}
 
 	/**
