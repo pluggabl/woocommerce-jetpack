@@ -5,13 +5,21 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.4.0
+Stable tag: 8.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 8.5.0 - Check your first branded invoice, with Dutch continuity
+
+Enter your business details and an optional local logo, open a clearly marked synthetic PDF, and review the proposed settings before enabling the chosen operation. The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.
+
+Selected core Booster modules and the new guide gain Dutch-language coverage. Untranslated surfaces fall back to English. Existing merchant content, saved templates and custom/community translations remain under your control. The stock PDF template may retain English labels.
+
+The guide does not send test emails or confirm inbox delivery. Configured stores are not automatically enrolled, and advanced controls remain available.
 
 ### New in 8.4.0 - Find delayed orders before they become customer problems
 
@@ -386,6 +394,13 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.5.0 - Unreleased =
+* Branded document setup - Enter plain business details and an optional supported local logo, open a real synthetic sample, and review exact setting changes before enabling the chosen operation.
+* Edition scope - The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.
+* Merchant control - Sample and attachment rehearsal do not send email, issue production documents or consume invoice numbers. Existing numbering, tax, advanced settings and custom templates are protected; settings undo detects later changes.
+* Dutch continuity - Adds reviewed Dutch translations across selected core modules and the new setup guide, with English fallback outside the bounded coverage. Merchant-authored content and saved PDF templates are not translated; community and custom language overrides retain priority.
+* Clear limits - The starter layout needs no HTML editing, but custom layouts remain in advanced settings. Sample success and attachment rehearsal do not confirm production email delivery or tax/legal compliance.
 
 = 8.4.0 - 16/09/2026 =
 * Order Health Light - Shows common delayed payment, fulfillment, and on-hold orders with aging and safe merchant-controlled review steps.
@@ -4476,6 +4491,9 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 8.5.0 =
+Back up and test the update on staging. Guided setup is opt-in; review existing PDF configuration before activation. Dutch coverage is bounded and does not translate saved customer-facing content.
 
 = 7.5.0 = 
 
