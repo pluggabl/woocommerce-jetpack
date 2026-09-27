@@ -10,6 +10,7 @@
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || '1' !== getenv( 'BOOSTER_INVOICE_SETUP_ISOLATED_QA' ) || ! in_array( wp_parse_url( home_url(), PHP_URL_HOST ), array( '127.0.0.1', 'localhost' ), true ) ) {
 	exit( 1 );
 }
+if ( ! defined( 'DOING_AJAX' ) ) { define( 'DOING_AJAX', true ); }
 class Codex_Wishlist_Json_End extends RuntimeException {}
 $stop = static function () {
 	return static function () { throw new Codex_Wishlist_Json_End(); };
@@ -30,6 +31,8 @@ $check    = static function ( $name, $condition ) use ( &$cases ) {
 	if ( ! $condition ) { throw new RuntimeException( $name ); }
 };
 $request = static function ( $id, $nonce = null ) use ( $module ) {
+	$booster = function_exists( 'WCJ' ) ? WCJ() : w_c_j();
+	unset( $booster->options['wcj_wishlist_remove_on_add_to_cart'] );
 	$_POST['product_id']           = $id;
 	$_REQUEST['wishlist_wpnonce'] = null === $nonce ? wp_create_nonce( 'wcj-wishlist' ) : $nonce;
 	ob_start();

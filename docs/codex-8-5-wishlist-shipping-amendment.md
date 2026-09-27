@@ -2,7 +2,7 @@
 
 ## Merchant choices
 
-Removal after a successful Wishlist cart addition remains enabled by default, including for existing stores with no saved value. In Wishlist > General, disable **Remove from wishlist after adding to cart** to retain saved items. This affects guests and signed-in customers. Explicit Remove is independent; failed additions must not delete saved products. Upgrading alone does not enable preservation.
+Removal after a successful Wishlist cart addition remains enabled by default, including for existing stores with no saved value. In Wishlist > General, disable **Remove from wishlist after adding to cart** to retain saved items. This affects guests and signed-in customers. Explicit Remove remains visible and keyboard reachable without external icon fonts; failed additions must not delete saved products. Upgrading alone does not enable preservation.
 
 Wishlist archive controls remain Elite-only. In Elite, enable Archives and place `[wcj_wishlist_button]` in a Shortcode widget within a custom loop-item template, outside product links. The current product must resolve separately for every card. Do not hard-code one ID into a reusable card. Back up the template, then check separate widgets, pagination/load-more, keyboard and mobile. Installation never edits merchant templates. Synthetic renderer tests do not certify Elementor Pro or any merchant template.
 

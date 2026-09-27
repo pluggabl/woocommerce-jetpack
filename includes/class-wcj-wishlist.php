@@ -92,8 +92,8 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 				wp_enqueue_style( 'wcj-wishlist-font-awesome-style', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), w_c_j()->version );
 			}
 
-			wp_enqueue_style( 'wcj-wishlist-style', wcj_plugin_url() . '/includes/css/wcj-wishlist-style.css', array(), w_c_j()->version );
-			wp_enqueue_script( 'wcj-wishlist-script', wcj_plugin_url() . '/includes/js/wcj-wishlist-script.js', array( 'jquery' ), w_c_j()->version . '-wishlist-2', true );
+			wp_enqueue_style( 'wcj-wishlist-style', wcj_plugin_url() . '/includes/css/wcj-wishlist-style.css', array(), w_c_j()->version . '-wishlist-3' );
+			wp_enqueue_script( 'wcj-wishlist-script', wcj_plugin_url() . '/includes/js/wcj-wishlist-script.js', array( 'jquery' ), w_c_j()->version . '-wishlist-3', true );
 
 			if ( is_user_logged_in() ) {
 				$logged_user_id = get_current_user_id();
@@ -453,8 +453,7 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 
 							$wcj_wishlist .= '<tr>
 								<td> 
-									<a href="#" class="wcj_ajax_remove_from_wishlist wcj_wishlist_general_loader" data-product_id="' . $id . '">  
-									</a>
+									<a href="#" class="wcj_ajax_remove_from_wishlist wcj_wishlist_general_loader" data-product_id="' . $id . '" aria-label="' . esc_attr__( 'Remove', 'woocommerce-jetpack' ) . '"><span aria-hidden="true">&times;</span></a>
 								</td>
 								<td> <a href="' . get_permalink( $id ) . '"> <img width="50" height="50" src="' . $product_img . '" /> </a> </td>
 								<td> <a href="' . get_permalink( $id ) . '" data-product_id="' . $id . '"> ' . $product->get_title() . ' </a> </td>
@@ -520,8 +519,7 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 
 						$guest_wishlist_html .= '<tr>
 						<td> 
-							<a href="#" class="wcj_ajax_remove_from_wishlist wcj_wishlist_general_loader" data-product_id="' . $id . '"> <span>x</span> 
-							</a>
+							<a href="#" class="wcj_ajax_remove_from_wishlist wcj_wishlist_general_loader" data-product_id="' . $id . '" aria-label="' . esc_attr__( 'Remove', 'woocommerce-jetpack' ) . '"><span aria-hidden="true">&times;</span></a>
 						</td>
 						<td> <a href="' . get_permalink( $id ) . '"> <img width="50" height="50" src="' . $product_img . '" /> </a> </td>
 						<td> <a href="' . get_permalink( $id ) . '" data-product_id="' . $id . '"> ' . $product->get_title() . ' </a> </td>
