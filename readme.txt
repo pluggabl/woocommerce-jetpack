@@ -400,6 +400,7 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 == Changelog ==
 
 = 8.5.0 - Unreleased =
+* Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately.
 * Wishlist control - Choose to keep saved products after adding them to the cart. Removal remains enabled by default, including after upgrade; disable "Remove from wishlist after adding to cart" to preserve items. Explicit removal still works.
 * Shipping setup - Clearer guidance shows how separate category and minimum-order free-shipping methods can offer either route without duplicate free options. Existing shipping rules are not changed automatically.
 * Security - Strengthened handling of customer-supplied product details and document processing to help keep stores protected. Updating is recommended.

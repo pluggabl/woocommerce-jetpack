@@ -20,3 +20,7 @@ Back up settings and record the applicable zone/method IDs before an authorized 
 On an isolated disposable site only, run the tracked `tests/wishlist-preservation-integration.php` and `tests/shipping-or-integration.php` with `BOOSTER_INVOICE_SETUP_ISOLATED_QA=1 wp eval-file`. Elite also has `tests/wishlist-loop-integration.php`. Browser cookies, reloads, actual theme/builder behavior and merchant policy acceptance are separate gates.
 
 Restore the prior exact ZIP and backed-up settings/templates for rollback after validating data compatibility; do not delete saved Wishlist metadata. Public 8.5 is not released by this amendment. Paid shipped-baseline upgrades, customer staging permission, human acceptance and release gates remain separate from synthetic tests.
+
+## First request after activation
+
+A pending onboarding redirect must not intercept guest/customer AJAX or scheduled work. The amendment reserves that redirect for a user who can manage WooCommerce, preserving the pending flag until an eligible admin request. Test with a newly armed activation flag before the first Wishlist table request, not only after an administrator has visited settings. This reproduced local defect is not evidence of the cause on any merchant installation.

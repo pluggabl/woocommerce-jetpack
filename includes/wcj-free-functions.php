@@ -69,6 +69,11 @@ function wcj_set_activation_redirect_free() {
  * Redirect admin after first activation.
  */
 function wcj_redirect_after_first_activation_free() {
+	// Onboarding belongs to an authorized admin page, never a storefront AJAX request.
+	if ( wp_doing_ajax() || wp_doing_cron() || ! current_user_can( 'manage_woocommerce' ) ) {
+		return;
+	}
+
 	if ( ! get_transient( 'wcj_activation_redirect' ) ) {
 		return;
 	}
