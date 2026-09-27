@@ -195,6 +195,14 @@ $settings = array_merge(
 			'id'    => 'wcj_wishlist_general_options',
 		),
 		array(
+			'title'     => __( 'Remove from wishlist after adding to cart', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Remove the added item', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_wishlist_remove_on_add_to_cart',
+			'default'   => 'yes',
+			'type'      => 'checkbox',
+			'help_text' => __( 'Enabled by default to preserve existing behavior after upgrade. Disable to keep saved items after a successful cart addition, for guests and signed-in customers. Explicit Remove still works; failed additions never remove an item.', 'woocommerce-jetpack' ),
+		),
+		array(
 			'title'     => __( 'Add/Remove font awesome icon css', 'woocommerce-jetpack' ),
 			'desc'      => __( 'Add/Remove', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_wishlist_enabled_font_awesome',

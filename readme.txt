@@ -15,6 +15,8 @@ Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swa
 
 ### New in 8.5.0 - Set up branded invoices with less guesswork
 
+* **Let customers keep a shopping shortlist:** opt into retaining Wishlist items after adding them to the cart. Existing removal behavior stays the default after upgrade.
+* **Offer clearer shipping choices:** setup guidance explains category OR minimum-order free shipping using separate methods, without automatically changing store rules.
 * **Preview before you switch on:** add your business details and an optional local logo, then check a sample PDF without editing HTML.
 * **Stay in control:** review the proposed settings before activation. Samples do not use real orders, consume invoice numbers or send customer emails. Existing templates and advanced settings stay available.
 * **Choose how invoices reach customers:** the Free guide supports invoices generated manually or on completed orders, with an optional attachment to the customer completed-order email.
@@ -398,6 +400,8 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 == Changelog ==
 
 = 8.5.0 - Unreleased =
+* Wishlist control - Choose to keep saved products after adding them to the cart. Removal remains enabled by default, including after upgrade; disable "Remove from wishlist after adding to cart" to preserve items. Explicit removal still works.
+* Shipping setup - Clearer guidance shows how separate category and minimum-order free-shipping methods can offer either route without duplicate free options. Existing shipping rules are not changed automatically.
 * Security - Strengthened handling of customer-supplied product details and document processing to help keep stores protected. Updating is recommended.
 * Branded document setup - Enter plain business details and an optional supported local logo, open a real synthetic sample, and review exact setting changes before enabling the chosen operation.
 * Edition scope - The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.

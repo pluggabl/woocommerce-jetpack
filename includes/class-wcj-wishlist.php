@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 			}
 
 			wp_enqueue_style( 'wcj-wishlist-style', wcj_plugin_url() . '/includes/css/wcj-wishlist-style.css', array(), w_c_j()->version );
-			wp_enqueue_script( 'wcj-wishlist-script', wcj_plugin_url() . '/includes/js/wcj-wishlist-script.js', array(), w_c_j()->version, true );
+			wp_enqueue_script( 'wcj-wishlist-script', wcj_plugin_url() . '/includes/js/wcj-wishlist-script.js', array( 'jquery' ), w_c_j()->version . '-wishlist-2', true );
 
 			if ( is_user_logged_in() ) {
 				$logged_user_id = get_current_user_id();
@@ -335,53 +335,47 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 		 * @version 1.0.0
 		 */
 		public function wcj_ajax_add_to_cart_wishlist_pro() {
-			$wpnonce = isset( $_REQUEST['wishlist_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wishlist_wpnonce'] ), 'wcj-wishlist' ) : false;
+			$response_data = array(
+				'success'              => 0,
+				'removed'              => 0,
+				'remove_from_wishlist' => false,
+				'messages'             => '',
+			);
+			$wpnonce       = isset( $_REQUEST['wishlist_wpnonce'] ) && is_scalar( $_REQUEST['wishlist_wpnonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wishlist_wpnonce'] ), 'wcj-wishlist' ) : false;
 			if ( ! $wpnonce ) {
-				die();
+				wp_send_json( $response_data, 403 );
 			}
-			$product_id            = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '0';
-			$response_data         = array();
+			$product_id = isset( $_POST['product_id'] ) && is_scalar( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '0';
+			$product    = ctype_digit( (string) $product_id ) ? wc_get_product( $product_id ) : false;
+			if ( ! $product || ! WC()->cart ) {
+				wp_send_json( $response_data );
+			}
+
 			$product_added_to_cart = false;
-			$product               = wc_get_product( $product_id );
+			$passed_validation     = false;
+			$quantity              = 1;
+			$remove_on_add         = 'yes' === wcj_get_option( 'wcj_wishlist_remove_on_add_to_cart', 'yes' );
 			$add_to_cart_handler   = apply_filters( 'woocommerce_add_to_cart_handler', $product->get_type(), $product );
-			$wcj_product_title     = $product->get_title();
-
-			$quantity = 1;
-			$removed  = 0;
-
 			if ( 'simple' === $add_to_cart_handler ) {
-				// Add to cart validation.
 				$passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
-
-				if ( $passed_validation ) {
-					// Add the product to the cart.
-					if ( WC()->cart->add_to_cart( $product_id, $quantity ) ) {
-						wc_add_notice( $this->get_add_to_cart_message( $quantity, $product->get_title() ), 'success' );
-						$product_added_to_cart = true;
-						$removed               = $this->wcj_remove_from_wishlist( $product_id );
+				if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity ) ) {
+					wc_add_notice( $this->get_add_to_cart_message( $quantity, $product->get_title() ), 'success' );
+					$product_added_to_cart = true;
+					if ( $remove_on_add ) {
+						$response_data['removed'] = $this->wcj_remove_from_wishlist( $product_id );
 					}
 				}
-
 				WC()->cart->maybe_set_cart_cookies();
-
 				ob_start();
-
 				wc_print_notices();
 				$response_data['messages'] = ob_get_clean();
-
 			}
-
 			if ( $passed_validation && $product_added_to_cart ) {
-				$response_data['success'] = 1;
-				$response_data['removed'] = $removed;
+				$response_data['success']              = 1;
+				$response_data['remove_from_wishlist'] = $remove_on_add;
 				do_action( 'woocommerce_ajax_added_to_cart', $product_id );
-
-			} else {
-				$response_data['success'] = 0;
 			}
-
-			echo wp_json_encode( $response_data );
-			die();
+			wp_send_json( $response_data );
 		}
 
 		/**

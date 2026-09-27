@@ -28483,3 +28483,19 @@ msgstr ""
 #: includes/widgets/class-wcj-widget-selector.php:79
 msgid "Product custom visibility"
 msgstr ""
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Remove from wishlist after adding to cart"
+msgstr "Van de verlanglijst verwijderen na toevoegen aan de winkelwagen"
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Remove the added item"
+msgstr "Het toegevoegde artikel verwijderen"
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Enabled by default to preserve existing behavior after upgrade. Disable to keep saved items after a successful cart addition, for guests and signed-in customers. Explicit Remove still works; failed additions never remove an item."
+msgstr "Standaard ingeschakeld om het bestaande gedrag na een update te behouden. Schakel dit uit om opgeslagen artikelen te behouden nadat ze aan de winkelwagen zijn toegevoegd, voor gasten en ingelogde klanten. Handmatig verwijderen blijft mogelijk; mislukte toevoegingen verwijderen nooit een artikel."
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Include limits a shipping method to matching carts. Exclude hides a shipping method when the cart matches. For category OR minimum-order free shipping, use two instances in the same zone: no native requirement plus category Include on one; a native minimum without category Include on the other. Exclude that category from the minimum instance to avoid duplicate free rates. Match any versus all items and cart versus package scope deliberately; verify coupons, taxes, roles, product exclusions and Shipping Options before changing existing rules."
+msgstr "Opnemen beperkt een verzendmethode tot overeenkomende winkelwagens. Uitsluiten verbergt een verzendmethode als de winkelwagen overeenkomt. Gebruik voor gratis verzending op basis van een categorie OF een minimumbedrag twee methoden in dezelfde zone: een zonder WooCommerce-vereiste met de categorie bij Opnemen, en een met een WooCommerce-minimumbedrag zonder categorie bij Opnemen. Sluit die categorie uit bij de methode met het minimumbedrag om dubbele gratis opties te voorkomen. Kies bewust tussen een of alle artikelen en tussen winkelwagen- en pakketniveau; controleer kortingsbonnen, belastingen, rollen, productuitsluitingen en Verzendopties voordat u bestaande regels wijzigt."
