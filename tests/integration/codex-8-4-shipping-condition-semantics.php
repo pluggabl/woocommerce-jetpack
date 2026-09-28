@@ -161,6 +161,28 @@ try {
 	$set_option( 'wcj_shipping_by_order_amount_min_free_shipping', 26 );
 	$amount_denied = $amount_module->available_shipping_methods( $role_result, $package );
 	$assert( ! isset( $amount_denied['free_shipping:17'] ), 'Nonmatching amount did not remove the product-and-role-matched rate.' );
+
+	// A newly added method has no saved instance limits. Missing options must mean unlimited.
+	$amount_module->use_shipping_instances = true;
+	$min_key = 'wcj_shipping_by_order_amount_min_instance_17';
+	$max_key = 'wcj_shipping_by_order_amount_max_instance_17';
+	$remember_option( $min_key );
+	$remember_option( $max_key );
+	delete_option( $min_key );
+	delete_option( $max_key );
+	$amount_default = $amount_module->available_shipping_methods( $rates, $package );
+	$assert( isset( $amount_default['free_shipping:17'] ), 'Missing instance limits unexpectedly removed a new shipping method.' );
+	$set_option( $min_key, '0' );
+	$set_option( $max_key, '0' );
+	$amount_zero = $amount_module->available_shipping_methods( $rates, $package );
+	$assert( isset( $amount_zero['free_shipping:17'] ), 'Explicit zero instance limits unexpectedly removed a shipping method.' );
+	$set_option( $min_key, '26' );
+	$amount_min_denied = $amount_module->available_shipping_methods( $rates, $package );
+	$assert( ! isset( $amount_min_denied['free_shipping:17'] ), 'Nonzero minimum instance limit did not remove a below-threshold rate.' );
+	$set_option( $min_key, '0' );
+	$set_option( $max_key, '24' );
+	$amount_max_denied = $amount_module->available_shipping_methods( $rates, $package );
+	$assert( ! isset( $amount_max_denied['free_shipping:17'] ), 'Nonzero maximum instance limit did not remove an above-threshold rate.' );
 	WC()->cart = $original_cart;
 
 	$settings_source = file_get_contents( dirname( __DIR__, 2 ) . '/includes/settings/wcj-settings-shipping-by-condition.php' );
