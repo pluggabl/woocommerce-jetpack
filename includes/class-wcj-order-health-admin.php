@@ -118,7 +118,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 
 			if ( $data['query']['has_more'] ) {
 				/* translators: %d: Maximum number of orders included in the bounded scan. */
-				echo '<div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Bounded scan reached.', 'woocommerce-jetpack' ) . '</strong> ' . esc_html( sprintf( __( 'For store performance, Order Health reads at most %d of the oldest active orders across fixed status families. Refine filters or review WooCommerce Orders for the remaining records.', 'woocommerce-jetpack' ), $data['query']['query_limit'] ) ) . '</p></div>';
+				echo '<div class="notice notice-warning inline"><p><strong>' . esc_html__( 'Bounded scan reached.', 'woocommerce-jetpack' ) . '</strong> ' . esc_html( sprintf( __( 'For store performance, Order Health reads at most %d of the oldest active orders across fixed status families. Review WooCommerce Orders for the remaining records.', 'woocommerce-jetpack' ), $data['query']['query_limit'] ) ) . '</p></div>';
 			}
 			if ( $data['display_truncated'] ) {
 				/* translators: 1: Number of orders displayed. 2: Total number of matching orders. */
@@ -252,7 +252,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			$this->render_select( 'cause', __( 'Likely cause', 'woocommerce-jetpack' ), $causes, $filters['cause'] );
 			$this->render_select( 'age', __( 'Age', 'woocommerce-jetpack' ), $ages, $filters['age'] );
 			echo '<button type="submit" class="button button-primary">' . esc_html__( 'Apply filters', 'woocommerce-jetpack' ) . '</button>';
-			echo '<a class="button" href="' . esc_url( admin_url( 'admin.php?page=wcj-order-health' ) ) . '">' . esc_html__( 'Clear', 'woocommerce-jetpack' ) . '</a></form>';
+			echo '<a class="button" href="' . esc_url( admin_url( 'admin.php?page=wcj-order-health' ) ) . '">' . esc_html_x( 'Clear', 'Reset filters', 'woocommerce-jetpack' ) . '</a></form>';
 		}
 
 		/**
@@ -279,7 +279,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 		private function render_orders_table( $orders ) {
 			echo '<section class="wcj-order-health__section"><div class="wcj-order-health__section-heading"><h2>' . esc_html__( 'Orders that may need attention', 'woocommerce-jetpack' ) . '</h2><span>' . esc_html( sprintf( /* translators: %d: Number of order results. */ _n( '%d result', '%d results', count( $orders ), 'woocommerce-jetpack' ), count( $orders ) ) ) . '</span></div>';
 			if ( empty( $orders ) ) {
-				echo '<div class="wcj-order-health__empty"><strong>' . esc_html__( 'No matching orders were flagged.', 'woocommerce-jetpack' ) . '</strong><p>' . esc_html__( 'Try clearing the filters. Order Health only reports deterministic rules from the bounded active-order scan.', 'woocommerce-jetpack' ) . '</p></div></section>';
+				echo '<div class="wcj-order-health__empty"><strong>' . esc_html__( 'No matching orders were flagged.', 'woocommerce-jetpack' ) . '</strong><p>' . esc_html__( 'Order Health only reports deterministic rules from the bounded active-order scan.', 'woocommerce-jetpack' ) . '</p></div></section>';
 				return;
 			}
 			echo '<div class="wcj-order-health__table-wrap"><table class="widefat striped"><thead><tr><th>' . esc_html__( 'Order', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Status', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Waiting', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Likely cause', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Why flagged', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Safe merchant action', 'woocommerce-jetpack' ) . '</th></tr></thead><tbody>';

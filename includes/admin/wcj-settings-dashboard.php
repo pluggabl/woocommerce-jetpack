@@ -25,6 +25,10 @@ if ( isset( $_GET['apply_preset'] ) && ! empty( $_GET['apply_preset'] ) ) {
 		wp_die( esc_html__( 'Permission denied.', 'woocommerce-jetpack' ) );
 	}
 	$preset_id = sanitize_key( wp_unslash( $_GET['apply_preset'] ) );
+	if ( 'pdf_invoicing' === $preset_id && class_exists( 'WCJ_Invoice_Setup' ) ) {
+		wp_safe_redirect( WCJ_Invoice_Setup::url() );
+		exit;
+	}
 	if ( class_exists( 'WCJ_Presets' ) ) {
 		WCJ_Presets::apply_preset( $preset_id );
 	}

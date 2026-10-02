@@ -5,13 +5,25 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.4.0
+Stable tag: 8.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 8.5.0 - Set up branded invoices with less guesswork
+
+* **Let customers keep a shopping shortlist:** opt into retaining Wishlist items after adding them to the cart. Existing removal behavior stays the default after upgrade.
+* **Offer clearer shipping choices:** setup guidance explains category OR minimum-order free shipping using separate methods, without automatically changing store rules.
+* **Preview before you switch on:** add your business details and an optional local logo, then check a sample PDF without editing HTML.
+* **Stay in control:** review the proposed settings before activation. Samples do not use real orders, consume invoice numbers or send customer emails. Existing templates and advanced settings stay available.
+* **Choose how invoices reach customers:** the Free guide supports invoices generated manually or on completed orders, with an optional attachment to the customer completed-order email.
+* **Work in your preferred admin language:** selected Booster screens and the new guide gain Dutch translations. Coverage is partial, with English fallback; saved content and PDF template labels are not automatically translated.
+* **Keep your store protected:** this update includes security improvements for product details and document processing. Updating is recommended.
+
+Existing stores are not enrolled automatically. Test your actual order and email workflow before enabling it; a sample does not verify inbox delivery or tax compliance.
 
 ### New in 8.4.0 - Find delayed orders before they become customer problems
 
@@ -386,6 +398,17 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
 == Changelog ==
+
+= 8.5.0 - Unreleased =
+* Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately.
+* Wishlist control - Choose to keep saved products after adding them to the cart. Removal remains enabled by default, including after upgrade; disable "Remove from wishlist after adding to cart" to preserve items. Explicit removal still works.
+* Shipping setup - Clearer guidance shows how separate category and minimum-order free-shipping methods can offer either route without duplicate free options. Existing shipping rules are not changed automatically.
+* Security - Strengthened handling of customer-supplied product details and document processing to help keep stores protected. Updating is recommended.
+* Branded document setup - Enter plain business details and an optional supported local logo, open a real synthetic sample, and review exact setting changes before enabling the chosen operation.
+* Edition scope - The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.
+* Merchant control - Sample and attachment rehearsal do not send email, issue production documents or consume invoice numbers. Existing numbering, tax, advanced settings and custom templates are protected; settings undo detects later changes.
+* Dutch continuity - Adds reviewed Dutch translations across selected core modules and the new setup guide, with English fallback outside the bounded coverage. Merchant-authored content and saved PDF templates are not translated; community and custom language overrides retain priority.
+* Clear limits - The starter layout needs no HTML editing, but custom layouts remain in advanced settings. Sample success and attachment rehearsal do not confirm production email delivery or tax/legal compliance.
 
 = 8.4.0 - 16/09/2026 =
 * Order Health Light - Shows common delayed payment, fulfillment, and on-hold orders with aging and safe merchant-controlled review steps.
@@ -4476,6 +4499,10 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 8.5.0 =
+Recommended security update, plus guided branded-invoice setup and Dutch translations for selected admin screens. Existing templates and settings remain under your control.
+Back up and test the update on staging. Guided setup is opt-in; review existing PDF configuration before activation. Dutch coverage is bounded and does not translate saved customer-facing content.
 
 = 7.5.0 = 
 

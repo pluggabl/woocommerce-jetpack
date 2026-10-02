@@ -163,6 +163,9 @@ if ( ! class_exists( 'WCJ_Presets' ) ) :
 		 * @return bool|WP_Error True on success, WP_Error on failure.
 		 */
 		public static function apply_preset( $preset_id ) {
+			if ( 'pdf_invoicing' === $preset_id ) {
+				return new WP_Error( 'invoice_setup_required', __( 'Open branded document setup and review before activating.', 'woocommerce-jetpack' ) );
+			}
 			$presets = self::get_presets();
 
 			if ( ! isset( $presets[ $preset_id ] ) ) {

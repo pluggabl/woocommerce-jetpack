@@ -248,7 +248,7 @@ for ( $i = 1; $i <= $checkout_fields_num; $i++ ) {
 					),
 				),
 				array(
-					'title'   => __( 'Clear', 'woocommerce-jetpack' ),
+					'title'   => _x( 'Clear', 'Clear floated form-field layout', 'woocommerce-jetpack' ),
 					'id'      => 'wcj_checkout_custom_field_clear_' . $i,
 					'default' => 'yes',
 					'type'    => 'checkbox',

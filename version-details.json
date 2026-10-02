@@ -1,8 +1,12 @@
 {
-  "0": "= 8.4.0 - 16/09/2026 =",
-  "1": "* Order Health Light - Find common delayed payment, fulfillment, and on-hold orders with clear aging and safe next steps.",
-  "2": "* Responsible free-tier scope - Reads at most 200 candidates and displays the 20 oldest matches; advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability remain Elite-only.",
-  "3": "* HPOS-ready bounded scans - Uses WooCommerce order objects with current-status and full-refund safety across both order stores.",
-  "4": "* Merchant control - Makes no order changes, refunds, customer messages, or AI decisions.",
-  "5": "* Safer private settings - Blocks lower-privilege access inside both option-reading shortcodes without changing saved configuration."
+  "0": "= 8.5.0 - Unreleased =",
+  "1": "* Wishlist control - Choose to keep saved products after adding them to the cart. Removal remains enabled by default, including after upgrade; disable \"Remove from wishlist after adding to cart\" to preserve items. Explicit removal still works.",
+  "2": "* Shipping setup - Clearer guidance shows how separate category and minimum-order free-shipping methods can offer either route without duplicate free options. Existing shipping rules are not changed automatically.",
+  "3": "* Security - Strengthened handling of customer-supplied product details and document processing to help keep stores protected. Updating is recommended.",
+  "4": "* Branded document setup - Enter plain business details and an optional supported local logo, open a real synthetic sample, and review exact setting changes before enabling the chosen operation.",
+  "5": "* Edition scope - The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.",
+  "6": "* Merchant control - Sample and attachment rehearsal do not send email, issue production documents or consume invoice numbers. Existing numbering, tax, advanced settings and custom templates are protected; settings undo detects later changes.",
+  "7": "* Dutch continuity - Adds reviewed Dutch translations across selected core modules and the new setup guide, with English fallback outside the bounded coverage. Merchant-authored content and saved PDF templates are not translated; community and custom language overrides retain priority.",
+  "8": "* Clear limits - The starter layout needs no HTML editing, but custom layouts remain in advanced settings. Sample success and attachment rehearsal do not confirm production email delivery or tax/legal compliance.",
+  "9": "* Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately."
 }

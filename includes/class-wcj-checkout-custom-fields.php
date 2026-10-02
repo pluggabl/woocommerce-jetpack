@@ -61,20 +61,21 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			$this->desc_pro   = __( 'Add custom fields to the checkout page.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-checkout-custom-fields';
 			$this->extra_desc = sprintf(
-				/* translators: %s: search term */
-				__( 'After setting Checkout Custom Fields, you can use below shortcode with meta_key to display the Product Input Fields value: %s', 'woocommerce-jetpack' ),
+				/* translators: %s: List of shortcode and PHP usage examples. */
+				__( 'After setting Checkout Custom Fields, use the field_id attribute in the shortcode below to display a checkout field value: %s', 'woocommerce-jetpack' ),
 				'<ol>' .
 				'<li>' . sprintf(
 					/* translators: %s: search term */
 					__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
-					'<code>[wcj_order_checkout_field meta_key = "billing_wcj_checkout_field_&lt;field_id&gt;"]</code><br>field_id is the key of your Checkout Custom Fields, You will find key from Option Custom Field'
+					'<code>[wcj_order_checkout_field field_id="billing_wcj_checkout_field_1"]</code><br>' .
+					__( 'Replace the example field_id value with the field key shown in the Custom Field settings.', 'woocommerce-jetpack' )
 				) .
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: search term */
 					__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
 					'<code>do_shortcode()</code>',
-					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_checkout_field meta_key = "billing_wcj_checkout_field_1]\'&nbsp;);</code>'
+					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_checkout_field field_id="billing_wcj_checkout_field_1"]\'&nbsp;);</code>'
 				) .
 				'</li>' .
 				'</ol>'

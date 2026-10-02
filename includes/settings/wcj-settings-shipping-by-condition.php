@@ -171,7 +171,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 				/* translators: %s: translators Added */
 				'title' => sprintf( __( 'Shipping Methods by %s', 'woocommerce-jetpack' ), $options_data['title'] ),
 				'type'  => 'title',
-				'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ) . ' ' . $options_data['desc'] . ( 'shipping_by_products' === $this->id ? ' ' . __( 'Include limits a shipping method to matching carts. Exclude hides a shipping method when the cart matches.', 'woocommerce-jetpack' ) : '' ),
+				'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ) . ' ' . $options_data['desc'] . ( 'shipping_by_products' === $this->id ? ' ' . __( 'Include limits a shipping method to matching carts. Exclude hides a shipping method when the cart matches. For category OR minimum-order free shipping, use two instances in the same zone: no native requirement plus category Include on one; a native minimum without category Include on the other. Exclude that category from the minimum instance to avoid duplicate free rates. Match any versus all items and cart versus package scope deliberately; verify coupons, taxes, roles, product exclusions and Shipping Options before changing existing rules.', 'woocommerce-jetpack' ) : '' ),
 				'id'    => 'wcj_shipping_by_' . $options_id . '_options',
 			),
 			array(

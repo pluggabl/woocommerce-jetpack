@@ -7857,8 +7857,12 @@ class TCPDF {
 			}
 			if (isset($this->imagekeys)) {
 				foreach($this->imagekeys as $file) {
-					if (strpos($file, K_PATH_CACHE) === 0 && TCPDF_STATIC::file_exists($file)) {
-						@unlink($file);
+					// Resolve both paths before checking the cache-directory boundary.
+					$cache_path = realpath(K_PATH_CACHE);
+					$file_path = is_string($file) ? realpath($file) : false;
+					if ($cache_path !== false && $file_path !== false && is_file($file_path)
+						&& strpos($file_path, rtrim($cache_path, '/\\').DIRECTORY_SEPARATOR) === 0) {
+						@unlink($file_path);
 					}
 				}
 			}

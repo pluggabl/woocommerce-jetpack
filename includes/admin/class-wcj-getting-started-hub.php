@@ -58,10 +58,10 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 				array(
 					'id'          => 'pdf_invoicing',
 					'title'       => __( 'PDF Invoicing', 'woocommerce-jetpack' ),
-					'description' => __( 'Generate invoices and packing slips', 'woocommerce-jetpack' ),
+					'description' => __( 'Create a starter sample and review before activating.', 'woocommerce-jetpack' ),
 					'icon'        => 'dashicons-media-document',
 					'link'        => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing' ),
-					'preset_link' => wp_nonce_url( admin_url( 'admin.php?page=wcj-dashboard&apply_preset=pdf_invoicing' ), 'wcj_apply_preset' ),
+					'preset_link' => WCJ_Invoice_Setup::url(),
 				),
 				array(
 					'id'          => 'multicurrency',

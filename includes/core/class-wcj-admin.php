@@ -274,7 +274,8 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				wp_enqueue_style( 'wp-color-picker' );
 				wp_enqueue_script( 'wp-color-picker' );
 				wp_enqueue_style( 'wcj-admin-select2', esc_url( wcj_plugin_url() ) . '/includes/lib/select2/css/select2.min.css', array(), w_c_j()->version );
-				wp_enqueue_style( 'wcj-admin-new-style', esc_url( wcj_plugin_url() ) . '/includes/css/admin-style.css', array(), w_c_j()->version );
+				// wp_enqueue_style( 'wcj-admin-new-style', esc_url( wcj_plugin_url() ) . '/includes/css/admin-style.css', array(), w_c_j()->version );
+				wp_enqueue_style( 'wcj-admin-new-style', esc_url( wcj_plugin_url() ) . '/includes/css/admin-style.css', array(), time() );
 				wp_enqueue_script( 'wcc-admin-select2', esc_url( wcj_plugin_url() ) . '/includes/lib/select2/js/select2.min.js', array(), w_c_j()->version, true );
 				wp_enqueue_script( 'wcj-admin-new-script', esc_url( wcj_plugin_url() ) . '/includes/js/admin-script.js', array( 'jquery' ), w_c_j()->version, true );
 

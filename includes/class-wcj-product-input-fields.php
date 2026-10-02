@@ -156,16 +156,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		 * @return mixed
 		 */
 		private function wcj_safe_unserialize( $value ) {
-			if ( ! is_string( $value ) || ! is_serialized( $value ) ) {
-				return $value;
-			}
-
-			$unserialized = @unserialize( trim( $value ), array( 'allowed_classes' => false ) ); // phpcs:ignore 
-			if ( false === $unserialized && 'b:0;' !== $value ) {
-				return $value;
-			}
-
-			return $unserialized;
+			return wcj_maybe_unserialize_plain_data( $value );
 		}
 
 		/**

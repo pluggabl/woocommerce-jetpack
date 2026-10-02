@@ -35,6 +35,82 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 		}
 
 		/**
+		 * Render only a validated synthetic starter document with the existing engine.
+		 * Deliberately avoids order methods, merchant options, shortcodes and font downloads.
+		 *
+		 * @param array $draft Plain starter fields.
+		 * @return string PDF bytes, never a production invoice or filename.
+		 * @throws RuntimeException When the local sample cannot be safely rendered.
+		 */
+		public static function setup_sample_pdf( $draft ) {
+			WCJ_Invoice_Setup::authorize();
+			$content = WCJ_Invoice_Setup::sample_content( $draft );
+			$library = dirname( __DIR__ ) . '/lib/tcpdf/';
+			if ( ! class_exists( 'TCPDF' ) ) {
+				require_once $library . 'tcpdf.php';
+			}
+			// The base engine avoids WCJ_TCPDF::Footer(), which evaluates merchant shortcodes.
+			$pdf = new class( 'P', 'mm', 'A4', true, 'UTF-8', false ) extends TCPDF {
+				/**
+				 * Convert engine failures into a recoverable setup error.
+				 *
+				 * @param string $message Internal engine error.
+				 * @throws RuntimeException Always, without exposing engine internals.
+				 */
+				public function Error( $message ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid -- TCPDF override.
+					throw new RuntimeException( esc_html__( 'The sample PDF engine could not complete the document. No setup settings were activated.', 'woocommerce-jetpack' ) );
+				}
+			};
+			$pdf->setPrintHeader( false );
+			$pdf->setPrintFooter( false );
+			$pdf->SetCreator( 'Booster starter sample' );
+			$pdf->SetTitle( __( 'SAMPLE - NOT A VALID INVOICE', 'woocommerce-jetpack' ) );
+			$pdf->SetMargins( 15, 15, 15 );
+			$pdf->SetAutoPageBreak( true, 15 );
+			// Explicit shipped font paths also work if another PDF initialized global font constants.
+			foreach ( array(
+				''   => 'helvetica',
+				'B'  => 'helveticab',
+				'I'  => 'helveticai',
+				'BI' => 'helveticabi',
+			) as $style => $font ) {
+				$pdf->AddFont( 'helvetica', $style, $library . 'fonts/' . $font . '.php' );
+			}
+			$pdf->SetFont( 'helvetica', '', 10 );
+			$pdf->AddPage();
+			if ( '' !== $content['logo_path'] ) {
+				// Same bounded 35 x 15 mm logo box as the proposed production header.
+				$pdf->Image( $content['logo_path'], 15, 15, (float) $content['logo_width_mm'], $content['logo_height_mm'] );
+				$pdf->SetY( 45 );
+			}
+			$css = '<style>h1,th{color:' . $content['accent'] . ';}table{width:100%;}td,th{padding:4px;}h1{font-size:20pt;}</style>';
+			$pdf->writeHTMLCell( 0, 0, '', '', $css . $content['html'], 0, 1, 0, true, '', true );
+			$bytes = $pdf->Output( '', 'S' );
+			if ( ! is_string( $bytes ) || 0 !== strpos( $bytes, '%PDF-' ) || strlen( $bytes ) < 500 || strlen( $bytes ) > 4194304 ) {
+				throw new RuntimeException( esc_html__( 'The sample PDF could not be generated within the supported size limit.', 'woocommerce-jetpack' ) );
+			}
+			return $bytes;
+		}
+
+		/**
+		 * Existing attachment persistence primitive, also exercised by the no-mail rehearsal.
+		 * Callers own destination validation and cleanup; legacy invoice paths are unchanged.
+		 *
+		 * @param string $path Caller-owned destination.
+		 * @param string $bytes PDF bytes.
+		 * @return bool Whether the write succeeded.
+		 */
+		public static function write_pdf_bytes( $path, $bytes ) {
+			global $wp_filesystem;
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			if ( ! $wp_filesystem && ! WP_Filesystem() ) {
+				return false;
+			}
+			$mode = defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644;
+			return $wp_filesystem->put_contents( $path, $bytes, $mode );
+		}
+
+		/**
 		 * Prepare_pdf.
 		 *
 		 * @version 7.0.0
@@ -311,7 +387,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 			$file_name  = $this->get_file_name();
 			if ( 'F' === $dest ) {
 				$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
-				if ( ! $wp_filesystem->put_contents( $file_path, $result_pdf, FS_CHMOD_FILE ) ) {
+				if ( ! self::write_pdf_bytes( $file_path, $result_pdf ) ) {
 					return null;
 				}
 				return $file_path;
@@ -331,7 +407,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 					echo $result_pdf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				} else {
 					$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
-					if ( ! $wp_filesystem->put_contents( $file_path, $result_pdf, FS_CHMOD_FILE ) ) {
+					if ( ! self::write_pdf_bytes( $file_path, $result_pdf ) ) {
 						return null;
 					}
 					if ( apply_filters( 'wcj_invoicing_header_content_length', true ) ) {
