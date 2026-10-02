@@ -2091,4 +2091,64 @@ input.exchage_rate_button{ border: 1px solid rgba(0,0,0,.2);height: 38px;border-
 		left: 10px;
 		max-width: none;
 	}
+	.wcj-new-header-main .wcj-logo{
+		flex: 1;
+		padding-inline: 5px;
+		margin-bottom: 10px;
+	}
+	.wcj-new-header-main .wcj-logo a{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.wcj-new-header{
+		padding-block: 15px;
+	}
+	.wcj-menubar nav{
+		width: 100%;
+		overflow: hidden;
+	}
+	.wcj-menubar ul, .wcj-module-filters{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		scrollbar-width: none;		
+	}
+	.wcj-menubar{
+		width: 100%;
+		overflow: hidden;
+	}
+	.wcj-menubar li a{
+		white-space: nowrap;
+		flex-wrap: nowrap;
+	}
+	.wcj-plugins .wcj-row{
+		display: flex;
+		flex-direction: column;
+	}
+	.wcj-plugins-tp-search, .wcj-plugins-right-main{
+		width: 100%;
+		max-width: 100%;
+	}
+	.wcj-plugins-tp-search{
+		justify-content: center;
+		padding-inline: 10px;
+	}
+	.plug_sv_btn{
+		float: none;
+		width: 100%;		
+		justify-content: center;
+	}
+	.fixed-header{
+		width: 100%;
+	}
+	.wcj-plugins-sing-head-lf {    
+    	width: 100%;
+	}
+	.wcj-plugins-sing-head-right {    
+		width: 100%;    
+		margin-top: 10px;    
+	}
 }
