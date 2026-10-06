@@ -44,7 +44,8 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			}
 			$plugin_file = defined( 'WCJ_PLUGIN_FILE' ) ? WCJ_PLUGIN_FILE : ( defined( 'WCJ_FREE_PLUGIN_FILE' ) ? WCJ_FREE_PLUGIN_FILE : '' );
 			if ( '' !== $plugin_file ) {
-				wp_enqueue_style( 'wcj-order-health', plugin_dir_url( $plugin_file ) . 'assets/css/admin/wcj-order-health.css', array(), '8.4.0' );
+				// wp_enqueue_style( 'wcj-order-health', plugin_dir_url( $plugin_file ) . 'assets/css/admin/wcj-order-health.css', array(), '8.4.0' );
+				wp_enqueue_style( 'wcj-order-health', plugin_dir_url( $plugin_file ) . 'assets/css/admin/wcj-order-health.css', array(), '8.4.3' );
 			}
 		}
 

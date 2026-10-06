@@ -1673,6 +1673,17 @@ table.form-table.wcj_custom_surrencies_table th {
     line-height: 1.4;
     top: 23px;
 }
+/* CSS design - 10-6-25 */
+.wcj_help_tooltip p a{
+	color: #FFF;
+	text-decoration: underline;
+	text-underline-position: below;
+}
+.wcj_help_tooltip p code {
+	word-wrap: break-word;
+	word-wrap: anywhere;
+	word-break: break-word;
+}
 .wcj_help_tooltip p:before{
     position: absolute;
     content: '';
@@ -2143,6 +2154,7 @@ input.exchage_rate_button{ border: 1px solid rgba(0,0,0,.2);height: 38px;border-
 	}
 	.fixed-header{
 		width: 100%;
+		top: 0;
 	}
 	.wcj-plugins-sing-head-lf {    
     	width: 100%;
@@ -2150,5 +2162,29 @@ input.exchage_rate_button{ border: 1px solid rgba(0,0,0,.2);height: 38px;border-
 	.wcj-plugins-sing-head-right {    
 		width: 100%;    
 		margin-top: 10px;    
+	}
+	.wcj-upgrade-booster-head{
+		flex-wrap: wrap;
+	}
+	.wcj-dashboard-box-listing .wcj-col-lg-6, .wcj-upgrade-booster-sub-cnt ul{
+		max-width: 100%;
+	}
+	.wcj-upgrade-booster-sub-cnt ul{
+		gap: 10px;
+	}
+	.wcj-upgrade-booster-sub-cnt ul li {
+    	width: calc(50% - 5px);
+	}	
+	#wpbody-content{
+		padding-inline: 20px;
+	}
+	.wcj-welcome-booster-left h2{
+		font-size: 26px;
+	}
+	.wcj-welcome-booster-bg{
+		padding: 20px;
+	}
+	.wcj-welcome-banner-btn{
+		row-gap: 15px;
 	}
 }
