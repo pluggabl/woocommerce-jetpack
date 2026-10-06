@@ -214,8 +214,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 						'_line_subtotal_tax' => array( $line_subtotal_tax ),
 					),
 				);
-			} else {
-				if ( 'shipping' === $type ) {
+			} elseif ( 'shipping' === $type ) {
 					$item = new WC_Order_Item_Shipping();
 					$item->set_props(
 						array(
@@ -228,21 +227,20 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 							),
 						)
 					);
-				} else {
-					$item = new WC_Order_Item_Fee();
-					$item->set_props(
-						array(
-							'name'       => $name,
-							'total'      => wc_format_decimal( $line_total ),
-							'total_tax'  => $line_tax,
-							'tax_class'  => '',
-							'tax_status' => 'taxable',
-							'taxes'      => array(
-								'total' => array( $line_tax ),
-							),
-						)
-					);
-				}
+			} else {
+				$item = new WC_Order_Item_Fee();
+				$item->set_props(
+					array(
+						'name'       => $name,
+						'total'      => wc_format_decimal( $line_total ),
+						'total_tax'  => $line_tax,
+						'tax_class'  => '',
+						'tax_status' => 'taxable',
+						'taxes'      => array(
+							'total' => array( $line_tax ),
+						),
+					)
+				);
 			}
 			$items[] = $item;
 			return $items;
@@ -436,7 +434,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 						}
 					}
 				}
-				$item_counter++;
+				++$item_counter;
 				// Columns.
 				foreach ( $columns as $cell_columns ) {
 					$cell_columns = explode( ',', $cell_columns );
@@ -508,7 +506,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					$data_slice    = array_slice( $data, $slice_offset, $current_page_break );
 					$html         .= wcj_get_table_html( array_merge( array( $columns_titles ), $data_slice ), $table_html_args );
 					$slice_offset += $current_page_break;
-					$slices++;
+					++$slices;
 				}
 			} else {
 				$html = wcj_get_table_html( array_merge( array( $columns_titles ), $data ), $table_html_args );
@@ -560,12 +558,10 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 					} else {
 						$item_name = '';
 					}
-				} else {
-					if ( isset( $item ) && $item instanceof WC_Order_Item_Product ) {
+				} elseif ( isset( $item ) && $item instanceof WC_Order_Item_Product ) {
 						$item_name = get_the_title( $item->get_product_ID() );
-					} else {
-						$item_name = '';
-					}
+				} else {
+					$item_name = '';
 				}
 			}
 			return $item_name;
@@ -926,9 +922,7 @@ if ( ! class_exists( 'WCJ_Order_Items_Shortcodes' ) ) :
 				default:
 					return '';
 			}
-
 		}
-
 	}
 
 endif;

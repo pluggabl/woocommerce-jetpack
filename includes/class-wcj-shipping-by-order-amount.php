@@ -73,7 +73,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 			}
 			return $rates;
 		}
-
 	}
 
 endif;

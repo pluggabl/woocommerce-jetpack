@@ -303,7 +303,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 			// Admin saves need an explicit capability and WooCommerce meta-box nonce.
 			if ( ! $is_checkout ) {
 				$nonce = isset( $_POST['woocommerce_meta_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
-				if ( ! current_user_can( 'edit_shop_order', $order_id ) || ! wp_verify_nonce( $nonce, 'woocommerce_save_data' ) ) {
+				if ( ! current_user_can( 'edit_shop_order', $order_id ) || ! wp_verify_nonce( $nonce, 'woocommerce_save_data' ) ) { // phpcs:ignore
 					return;
 				}
 			}

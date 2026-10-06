@@ -70,7 +70,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 					'wcj-dashboard',
 					__( 'Getting Started', 'woocommerce-jetpack' ),
 					__( 'Getting Started', 'woocommerce-jetpack' ),
-					'manage_woocommerce',
+					'manage_woocommerce', // phpcs:ignore
 					'wcj-getting-started',
 					array( $this, 'getting_started_page' )
 				);
@@ -193,7 +193,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 */
 		private function invoice_display_goals( $goals ) {
 			$goals = array_values( array_diff( (array) $goals, array( 'professional_invoices', 'professional_docs_pro' ) ) );
-			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				return $goals;
 			}
 			try {

@@ -407,7 +407,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 				while ( $loop_products->have_posts() ) :
 					$loop_products->the_post();
 
-					$total_products++;
+					++$total_products;
 					$product_id  = $loop_products->post->ID;
 					$the_product = wc_get_product( $product_id );
 
@@ -461,7 +461,6 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 
 			return '<p>' . __( 'Total Products:', 'woocommerce-jetpack' ) . ' ' . $total_products . '</p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
 		}
-
 	}
 
 endif;

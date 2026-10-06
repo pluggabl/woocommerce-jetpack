@@ -472,7 +472,7 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 
 			$wcj_wishlist .= '</table></div>';
 
-			return $wcj_wishlist;
+			return $wcj_wishlist; // phpcs:ignore
 		}
 
 		/**
@@ -537,7 +537,6 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 			echo wp_json_encode( $response_data );
 			die();
 		}
-
 	}
 
 endif;
