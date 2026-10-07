@@ -66,7 +66,7 @@ $settings = array(
 		'type'    => 'checkbox',
 	),
 	array(
-		'title'   => __( 'Clear', 'woocommerce-jetpack' ),
+		'title'   => _x( 'Clear', 'Clear floated form-field layout', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Yes', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_eu_vat_number_field_clear',
 		'default' => 'yes',

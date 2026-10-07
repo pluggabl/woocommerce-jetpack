@@ -429,3 +429,22 @@ a.btn-upgrade-to-booster-elite{
 	margin-right: 10px;
 }
 /* Upgrade Blocks - End */
+/* CSS design - 10-06-26 */ 
+div.notice .wcj-upgrade-block__actions a{
+  text-decoration: none;
+  display: inline-block;
+}
+div.notice .wcj-upgrade-block__actions a.btn-upgrade-to-booster-elite{
+	color: #fff;
+}
+.wcj-plugins-sing-acc-box .wcj-upgrade-block.notice ~ p{
+  padding-inline: 20px;
+}
+.wcj-plugins-sing-acc-box .wcj-upgrade-block.notice + p{
+  margin-bottom: 10px;
+}
+@media (max-width: 768px){
+  div.notice .wcj-upgrade-block__actions a.btn-upgrade-to-booster-elite{
+    margin-top: 10px;
+  }
+}

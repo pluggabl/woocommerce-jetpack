@@ -1673,6 +1673,17 @@ table.form-table.wcj_custom_surrencies_table th {
     line-height: 1.4;
     top: 23px;
 }
+/* CSS design - 10-6-25 */
+.wcj_help_tooltip p a{
+	color: #FFF;
+	text-decoration: underline;
+	text-underline-position: below;
+}
+.wcj_help_tooltip p code {
+	word-wrap: break-word;
+	word-wrap: anywhere;
+	word-break: break-word;
+}
 .wcj_help_tooltip p:before{
     position: absolute;
     content: '';
@@ -2090,5 +2101,90 @@ input.exchage_rate_button{ border: 1px solid rgba(0,0,0,.2);height: 38px;border-
 		right: 10px;
 		left: 10px;
 		max-width: none;
+	}
+	.wcj-new-header-main .wcj-logo{
+		flex: 1;
+		padding-inline: 5px;
+		margin-bottom: 10px;
+	}
+	.wcj-new-header-main .wcj-logo a{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.wcj-new-header{
+		padding-block: 15px;
+	}
+	.wcj-menubar nav{
+		width: 100%;
+		overflow: hidden;
+	}
+	.wcj-menubar ul, .wcj-module-filters{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		scrollbar-width: none;		
+	}
+	.wcj-menubar{
+		width: 100%;
+		overflow: hidden;
+	}
+	.wcj-menubar li a{
+		white-space: nowrap;
+		flex-wrap: nowrap;
+	}
+	.wcj-plugins .wcj-row{
+		display: flex;
+		flex-direction: column;
+	}
+	.wcj-plugins-tp-search, .wcj-plugins-right-main{
+		width: 100%;
+		max-width: 100%;
+	}
+	.wcj-plugins-tp-search{
+		justify-content: center;
+		padding-inline: 10px;
+	}
+	.plug_sv_btn{
+		float: none;
+		width: 100%;		
+		justify-content: center;
+	}
+	.fixed-header{
+		width: 100%;
+		top: 0;
+	}
+	.wcj-plugins-sing-head-lf {    
+    	width: 100%;
+	}
+	.wcj-plugins-sing-head-right {    
+		width: 100%;    
+		margin-top: 10px;    
+	}
+	.wcj-upgrade-booster-head{
+		flex-wrap: wrap;
+	}
+	.wcj-dashboard-box-listing .wcj-col-lg-6, .wcj-upgrade-booster-sub-cnt ul{
+		max-width: 100%;
+	}
+	.wcj-upgrade-booster-sub-cnt ul{
+		gap: 10px;
+	}
+	.wcj-upgrade-booster-sub-cnt ul li {
+    	width: calc(50% - 5px);
+	}	
+	#wpbody-content{
+		padding-inline: 20px;
+	}
+	.wcj-welcome-booster-left h2{
+		font-size: 26px;
+	}
+	.wcj-welcome-booster-bg{
+		padding: 20px;
+	}
+	.wcj-welcome-banner-btn{
+		row-gap: 15px;
 	}
 }

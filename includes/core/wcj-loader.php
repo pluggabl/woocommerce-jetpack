@@ -27,18 +27,9 @@ if ( ! defined( 'WCJ_FREE_PLUGIN_PATH' ) ) {
 	define( 'WCJ_FREE_PLUGIN_PATH', untrailingslashit( realpath( plugin_dir_path( WCJ_FREE_PLUGIN_FILE ) ) ) );
 }
 
-// Set up localisation.
-if ( 'no' === wcj_get_option( 'wcj_load_modules_on_init', 'no' ) ) {
-	load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( WCJ_FREE_PLUGIN_FILE ) ) . '/langs/' );
-} else {
-	add_action(
-		'init',
-		function () {
-			load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( WCJ_FREE_PLUGIN_FILE ) ) . '/langs/' );
-		},
-		9
-	);
-}
+// Set up localisation using WordPress catalog precedence and locale switching.
+require_once 'class-wcj-localization.php';
+new WCJ_Localization( WCJ_FREE_PLUGIN_FILE );
 
 // Include required core files used in admin and on the frontend.
 

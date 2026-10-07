@@ -65,7 +65,9 @@
 	font-size: 15px;
 	color: #eaf8fd;
 }
-
+/* CSS design - 10-06-26 */
+.wcj-order-health__hero .notice p{color: #000;}
+/* CSS design - 10-06-26 */
 .wcj-order-health__eyebrow {
 	display: block;
 	font-size: 11px;
@@ -113,7 +115,8 @@
 
 .wcj-order-health__meta {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(120px, 1fr));
+	/* grid-template-columns: repeat(2, minmax(120px, 1fr)); */
+	grid-template-columns: 1fr;
 	gap: 10px;
 }
 
@@ -230,12 +233,22 @@
 .wcj-order-health__boundary { margin: 18px 0 30px !important; }
 .wcj-order-health__boundary a { color: var(--wcj-blue); font-weight: 600; }
 
+@media (max-width: 1600px) {
+	/* CSS design - 10-06-25 */
+	.wcj-order-health__brand > div{width: 100%;    overflow: hidden;}
+	.wcj-order-health__brand > div .notice{overflow: auto;width: 100%;}
+	/* .wcj-order-health__hero{width: 100%;} */
+	.wcj-order-health__hero-main{width: 70%;}
+	.wcj-order-health__meta{width: 20%;}
+}
+
 @media (max-width: 900px) {
 	.wcj-order-health__hero { flex-direction: column; }
 	.wcj-order-health__meta { width: 100%; }
 	.wcj-order-health__briefing,
 	.wcj-order-health__cards { grid-template-columns: 1fr; }
 	.wcj-order-health__buckets { grid-template-columns: repeat(2, 1fr); }
+	.wcj-order-health__hero-main{width: 100%;}
 }
 
 @media (max-width: 520px) {

@@ -24373,3 +24373,19 @@ msgstr ""
 #: tracking/class-plugin-usage-tracker.php:1184
 msgid "Just Deactivate"
 msgstr ""
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Remove from wishlist after adding to cart"
+msgstr ""
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Remove the added item"
+msgstr ""
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Enabled by default to preserve existing behavior after upgrade. Disable to keep saved items after a successful cart addition, for guests and signed-in customers. Explicit Remove still works; failed additions never remove an item."
+msgstr ""
+
+#. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
+msgid "Include limits a shipping method to matching carts. Exclude hides a shipping method when the cart matches. For category OR minimum-order free shipping, use two instances in the same zone: no native requirement plus category Include on one; a native minimum without category Include on the other. Exclude that category from the minimum instance to avoid duplicate free rates. Match any versus all items and cart versus package scope deliberately; verify coupons, taxes, roles, product exclusions and Shipping Options before changing existing rules."
+msgstr ""

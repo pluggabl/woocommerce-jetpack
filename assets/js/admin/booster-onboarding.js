@@ -354,6 +354,10 @@
 		},
 
 		selectGoal: function(goalId) {
+			if ( boosterOnboarding.goals[goalId] && boosterOnboarding.goals[goalId].setup_url ) {
+				window.location.assign( boosterOnboarding.goals[goalId].setup_url );
+				return;
+			}
 			if ( ! boosterOnboarding.goals[goalId]) {
 				return;
 			}

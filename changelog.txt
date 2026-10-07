@@ -1,13 +1,21 @@
+= 8.5.0 - 07/10/2026 =
+* Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately.
+* Wishlist control - Choose to keep saved products after adding them to the cart. Removal remains enabled by default, including after upgrade; disable "Remove from wishlist after adding to cart" to preserve items. Explicit removal still works.
+* Shipping setup - Clearer guidance shows how separate category and minimum-order free-shipping methods can offer either route without duplicate free options. Existing shipping rules are not changed automatically.
+* Security - Strengthened handling of customer-supplied product details and document processing to help keep stores protected. Updating is recommended.
+* Branded document setup - Enter plain business details and an optional supported local logo, open a real synthetic sample, and review exact setting changes before enabling the chosen operation.
+* Edition scope - The Light guide supports the Invoice document type, generated manually or on completed orders, with optional attachment to the customer completed-order email.
+* Merchant control - Sample and attachment rehearsal do not send email, issue production documents or consume invoice numbers. Existing numbering, tax, advanced settings and custom templates are protected; settings undo detects later changes.
+* Dutch continuity - Adds reviewed Dutch translations across selected core modules and the new setup guide, with English fallback outside the bounded coverage. Merchant-authored content and saved PDF templates are not translated; community and custom language overrides retain priority.
+* Clear limits - The starter layout needs no HTML editing, but custom layouts remain in advanced settings. Sample success and attachment rehearsal do not confirm production email delivery or tax/legal compliance.
+
 == Changelog ==
 
 = 8.4.0 - 16/09/2026 =
-* Order Health dashboard - Shows which active orders may need attention, how long they have waited, why they were flagged, and a safe merchant-controlled review step.
-* Faster operational triage - Filters by current status, likely cause, and fixed aging buckets so teams can move from a store-wide signal to the right orders.
-* Explainable health reasons - Uses deterministic payment, fulfillment, configuration, workflow, and partial-refund rules instead of opaque scoring or AI decisions.
+* Order Health Light - Shows common delayed payment, fulfillment, and on-hold orders with aging and safe merchant-controlled review steps.
+* Responsible free-tier scope - Reads at most 200 active candidates, displays the 20 oldest matches, and leaves advanced filters, custom-status and partial-refund reasons, Morning Store Briefing, and the Order Health Ability to Elite.
 * Built for order-storage changes - Uses bounded WooCommerce order queries and order objects for matching behavior under HPOS and legacy storage.
-* Refund and transition correctness - Excludes completed, cancelled, and fully refunded orders; keeps partially refunded active orders visible; and evaluates the current status on every scan.
-* Morning Store Briefing v1 - Combines privacy-safe aggregate Order Health, Booster compatibility warnings, and Booster background-job diagnostics.
-* Read-only Ability - Adds `booster/order-health-summary` for authorized store managers, with bounded counts and no customer data, order identifiers, raw settings, or job arguments.
+* Refund and transition safety - Excludes terminal and fully refunded orders and evaluates current status on every scan.
 * Clearer payment settings - Keeps third-party gateway rows identifiable by using standard WooCommerce label methods before stable ID fallbacks, without changing checkout titles.
 * Safer shipping configuration - Explains Include and Exclude behavior and warns when an Include rule narrows WooCommerce Free shipping.
 * Safer private settings - Requires WooCommerce management permission inside both option-reading shortcodes, blocking lower-privilege execution without changing saved settings.

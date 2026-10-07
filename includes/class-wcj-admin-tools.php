@@ -264,7 +264,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 				$table_data = array();
 				foreach ( $_order->get_items() as $item_key => $item ) {
 					foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
-						$item_meta_value = maybe_unserialize( $item_meta_value );
+						$item_meta_value = wcj_maybe_unserialize_plain_data( $item_meta_value );
 						$item_meta_value = is_array( $item_meta_value ) ? wp_json_encode( $item_meta_value ) : $item_meta_value;
 						$table_data[]    = array( $item_key, $item_meta_key, $item_meta_value );
 					}
@@ -328,7 +328,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 					$table_data = array();
 					foreach ( $_order->get_items() as $item_key => $item ) {
 						foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
-							$item_meta_value = maybe_unserialize( $item_meta_value );
+							$item_meta_value = wcj_maybe_unserialize_plain_data( $item_meta_value );
 							$item_meta_value = is_array( $item_meta_value ) ? wp_json_encode( $item_meta_value ) : $item_meta_value;
 							$table_data[]    = array( $item_key, $item_meta_key, $item_meta_value );
 						}
@@ -407,7 +407,7 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 				while ( $loop_products->have_posts() ) :
 					$loop_products->the_post();
 
-					$total_products++;
+					++$total_products;
 					$product_id  = $loop_products->post->ID;
 					$the_product = wc_get_product( $product_id );
 
@@ -461,7 +461,6 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 
 			return '<p>' . __( 'Total Products:', 'woocommerce-jetpack' ) . ' ' . $total_products . '</p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
 		}
-
 	}
 
 endif;
