@@ -1,0 +1,3 @@
+# Workflow and ownership-policy changes require repository-owner review.
+/.github/workflows/ @pluggabl
+/.github/CODEOWNERS @pluggabl
