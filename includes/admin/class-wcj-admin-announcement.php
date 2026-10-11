@@ -155,7 +155,8 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 				return;
 			}
 			?>
-			<div class="notice notice-info wcj-admin-announcement">
+			<!-- Keep this inline: WordPress otherwise moves notices into Booster's hidden onboarding modal. -->
+			<div class="notice notice-info inline wcj-admin-announcement" style="overflow-wrap: break-word;">
 				<p><?php echo esc_html( $item['message'] ); ?>
 				<?php if ( $item['url'] ) : ?>
 					<a href="<?php echo esc_url( $item['url'] ); ?>"><?php esc_html_e( 'Learn more', 'woocommerce-jetpack' ); ?></a>

@@ -134,6 +134,7 @@ try {
 	delete_transient( $wcj_qa_cache );
 	$wcj_qa_requests = array();
 	wcj_qa_assert( 'valid-feed-visible', strpos( wcj_qa_render(), 'QA announcement &amp; store news' ) !== false );
+	wcj_qa_assert( 'inline-notice-placement', strpos( wcj_qa_render(), 'notice-info inline wcj-admin-announcement' ) !== false );
 	wcj_qa_assert( 'fetch-fixed-url', $wcj_qa_requests[0]['url'], WCJ_Admin_Announcement::ENDPOINT );
 	wcj_qa_assert( 'fetch-timeout', $wcj_qa_requests[0]['args']['timeout'], 2 );
 	wcj_qa_assert( 'fetch-no-redirect', $wcj_qa_requests[0]['args']['redirection'], 0 );
