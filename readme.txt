@@ -5,13 +5,16 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 8.5.0
+Stable tag: 8.5.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 8.5.1 - Useful store updates, on your terms
+Short Booster announcements stay on Booster pages, not across your WordPress dashboard. Dismiss a notice once and it stays dismissed for your account. Existing store settings are preserved.
 
 ### New in 8.5.0 - Set up branded invoices with less guesswork
 
@@ -397,7 +400,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](https://booster.io/submit-idea/).
 * For support please visit the [Plugin Support Forum](https://wordpress.org/support/plugin/woocommerce-jetpack/).
 
+
+== Booster announcements ==
+
+On Booster admin pages, WooCommerce managers may see a short, optional announcement from https://booster.io/announcements/booster-admin.json. The fixed HTTPS JSON feed is cached for 24 hours, including failures. Notices expire and can be permanently dismissed per user and announcement ID; edits to the same ID do not reset dismissal. Nothing is shown for an empty or unavailable feed. No remote code is executed. No user, order, license or site-URL data is sent, and links contain no tracking parameters. As with any HTTPS request, the server receives the requesting IP address. Privacy policy: https://booster.io/privacy-policy/.
+
 == Changelog ==
+
+= 8.5.1 - 12/10/2026 =
+* Store updates, without dashboard clutter - Receive short Booster news only on Booster settings pages. Each user can permanently dismiss a notice; store and checkout settings are unchanged.
+
 
 = 8.5.0 - 07/10/2026 =
 * Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately.
@@ -4499,6 +4511,9 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 8.5.1 =
+Back up and test on staging. This maintenance update preserves existing store settings and adds contextual, individually dismissible Booster announcements. No campaign is active by default.
 
 = 8.5.0 =
 Recommended security update, plus guided branded-invoice setup and Dutch translations for selected admin screens. Existing templates and settings remain under your control.

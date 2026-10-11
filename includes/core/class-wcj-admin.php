@@ -54,6 +54,9 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 */
 		public function __construct() {
 
+			require_once __DIR__ . '/../admin/class-wcj-admin-announcement.php';
+			WCJ_Admin_Announcement::init();
+
 			$this->cats                     = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php';
 			$this->custom_dashboard_modules = apply_filters( 'wcj_custom_dashboard_modules', array() );
 
