@@ -15,6 +15,7 @@ require_once ABSPATH . 'wp-admin/includes/user.php';
 $wcj_qa_root = defined( 'WCJ_FREE_PLUGIN_PATH' ) ? WCJ_FREE_PLUGIN_PATH : WCJ_PLUGIN_PATH;
 require_once $wcj_qa_root . '/includes/admin/class-wcj-admin-announcement.php';
 WCJ_Admin_Announcement::init();
+global $wcj_qa_cases;
 $GLOBALS['admin_page_hooks']['wcj-dashboard'] = 'booster'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Synthetic CLI screen fixture only.
 $wcj_qa_cases                                 = array();
 $wcj_qa_users                                 = array();
@@ -261,6 +262,7 @@ try {
 	wcj_qa_assert( 'empty-feed-no-notice', wcj_qa_render(), '' );
 	WCJ_Admin_Announcement::init();
 	wcj_qa_assert( 'single-render-hook', isset( $GLOBALS['wp_filter']['admin_notices'] ) && false !== has_action( 'admin_notices', array( 'WCJ_Admin_Announcement', 'render' ) ) );
+	wcj_qa_assert( 'complete-assertion-ledger', count( $wcj_qa_cases ) >= 100 );
 	echo wp_json_encode(
 		array(
 			'result' => 'PASS',
