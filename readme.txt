@@ -407,9 +407,8 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 
 == Changelog ==
 
-= 8.5.1 - 12/10/2026 =
+= 8.5.1 - 15/10/2026 =
 * Store updates, without dashboard clutter - Receive short Booster news only on Booster settings pages. Each user can permanently dismiss a notice; store and checkout settings are unchanged.
-
 
 = 8.5.0 - 07/10/2026 =
 * Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately.
