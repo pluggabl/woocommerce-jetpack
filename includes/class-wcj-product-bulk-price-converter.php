@@ -25,18 +25,38 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		public function __construct() {
 
 			$this->id         = 'bulk_price_converter';
-			$this->short_desc = __( 'Bulk Price Converter', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Multiply all products prices by set value.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-bulk-price-converter';
+			$this->short_desc = 'Bulk Price Converter';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Bulk Price Converter', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Multiply all products prices by set value.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Multiply all products prices by set value.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-bulk-price-converter';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'bulk_price_converter' => array(
-						'title' => __( 'Bulk Price Converter', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Bulk Price Converter Tool.', 'woocommerce-jetpack' ),
+						'title' => 'Bulk Price Converter',
+						'desc'  => 'Bulk Price Converter Tool.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'bulk_price_converter' => array(
+							'title' => __( 'Bulk Price Converter', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Bulk Price Converter Tool.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 		}
 

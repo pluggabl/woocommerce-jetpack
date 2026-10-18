@@ -29,9 +29,19 @@ if ( ! class_exists( 'WCJ_Custom_JS' ) ) :
 		public function __construct() {
 
 			$this->id         = 'custom_js';
-			$this->short_desc = __( 'Custom JS', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Separate custom JS for front and back end.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-booster-custom-js';
+			$this->short_desc = 'Custom JS';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Custom JS', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Separate custom JS for front and back end.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Separate custom JS for front and back end.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-booster-custom-js';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

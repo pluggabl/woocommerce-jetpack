@@ -38,10 +38,25 @@ if ( ! class_exists( 'WCJ_Wholesale_Price' ) ) :
 		public function __construct() {
 
 			$this->id         = 'wholesale_price';
-			$this->short_desc = __( 'Wholesale Price', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set wholesale pricing depending on product quantity in cart - buy more pay less (1 level allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set wholesale pricing depending on product quantity in cart - buy more pay less.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-wholesale-price';
+			$this->short_desc = 'Wholesale Price';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Wholesale Price', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set wholesale pricing depending on product quantity in cart - buy more pay less (1 level allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set wholesale pricing depending on product quantity in cart - buy more pay less (1 level allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set wholesale pricing depending on product quantity in cart - buy more pay less.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set wholesale pricing depending on product quantity in cart - buy more pay less.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-wholesale-price';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

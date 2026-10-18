@@ -29,17 +29,44 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		public function __construct() {
 
 			$this->id         = 'cross_sells';
-			$this->short_desc = __( 'Cross-sells', 'woocommerce-jetpack' );
-			$this->extra_desc = __( 'Cross-sells are products which you promote in the cart, based on the current product.', 'woocommerce' ) . '<br>' .
+			$this->short_desc = 'Cross-sells';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Cross-sells', 'woocommerce-jetpack' );
+				}
+			);
+			$this->extra_desc = 'Cross-sells are products which you promote in the cart, based on the current product.<br>' .
 			sprintf(
 				/* translators: %s: translation added */
-				__( 'You can also use %1$s shortcode to display cross-sells anywhere on your site, for example on checkout page with %2$s module.', 'woocommerce-jetpack' ),
+				'You can also use %1$s shortcode to display cross-sells anywhere on your site, for example on checkout page with %2$s module.',
 				'<code>[wcj_cross_sell_display]</code>',
 				'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=cart_and_checkout&section=checkout_custom_info' ) . '">' .
-				__( 'Checkout Custom Info', 'woocommerce-jetpack' ) . '</a>'
+				'Checkout Custom Info</a>'
 			);
-			$this->desc      = __( 'Customize cross-sells products display. Global Cross-sells (Elite); Exclude "Not in Stock" Products (Elite); Replace Cart Products with Cross-sells (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro  = __( 'Customize cross-sells products display. Global Cross-sells; Exclude "Not in Stock" Products; Replace Cart Products with Cross-sells.', 'woocommerce-jetpack' );
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'Cross-sells are products which you promote in the cart, based on the current product.', 'woocommerce' ) . '<br>' .
+					sprintf(
+						/* translators: %s: translation added */
+						__( 'You can also use %1$s shortcode to display cross-sells anywhere on your site, for example on checkout page with %2$s module.', 'woocommerce-jetpack' ),
+						'<code>[wcj_cross_sell_display]</code>',
+						'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=cart_and_checkout&section=checkout_custom_info' ) . '">' .
+						__( 'Checkout Custom Info', 'woocommerce-jetpack' ) . '</a>'
+					);
+				}
+			);
+			$this->desc = 'Customize cross-sells products display. Global Cross-sells (Elite); Exclude "Not in Stock" Products (Elite); Replace Cart Products with Cross-sells (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize cross-sells products display. Global Cross-sells (Elite); Exclude "Not in Stock" Products (Elite); Replace Cart Products with Cross-sells (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize cross-sells products display. Global Cross-sells; Exclude "Not in Stock" Products; Replace Cart Products with Cross-sells.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize cross-sells products display. Global Cross-sells; Exclude "Not in Stock" Products; Replace Cart Products with Cross-sells.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug = 'woocommerce-cross-sells';
 			parent::__construct();
 

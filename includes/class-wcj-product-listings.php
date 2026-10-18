@@ -36,10 +36,25 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'product_listings';
-			$this->short_desc = __( 'Product Listings', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Elite), exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Change display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-listings';
+			$this->short_desc = 'Product Listings';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Listings', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Elite), exclude categories, show/hide empty categories.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Elite), exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Change display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Change display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-listings';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

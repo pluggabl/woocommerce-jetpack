@@ -30,9 +30,19 @@ if ( ! class_exists( 'WCJ_Cart_Customization' ) ) :
 		public function __construct() {
 
 			$this->id         = 'cart_customization';
-			$this->short_desc = __( 'Cart Customization', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-cart-customization';
+			$this->short_desc = 'Cart Customization';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Cart Customization', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-cart-customization';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

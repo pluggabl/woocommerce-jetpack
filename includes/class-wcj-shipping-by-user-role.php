@@ -44,32 +44,73 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_by_user_role';
-			$this->short_desc = __( 'Shipping Methods by Users', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-methods-by-users';
+			$this->short_desc = 'Shipping Methods by Users';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Methods by Users', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up (Free shipping available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set user roles, users or membership plans to include/exclude for shipping methods to show up.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-methods-by-users';
 
 			$this->condition_options = array(
 				'user_roles'      => array(
-					'title' => __( 'User Roles', 'woocommerce-jetpack' ),
+					'title' => 'User Roles',
 					'desc'  => sprintf(
 						/* translators: %s: translators Added */
-						__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
+						'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.',
 						admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
 					),
 				),
 				'user_id'         => array(
-					'title' => __( 'Users', 'woocommerce-jetpack' ),
+					'title' => 'Users',
 					'desc'  => '',
 				),
 				'user_membership' => array(
-					'title' => __( 'User Membership Plans', 'woocommerce-jetpack' ),
+					'title' => 'User Membership Plans',
 					'desc'  => sprintf(
 						/* translators: %s: translators Added */
-						__( 'This section requires <a target="_blank" href="%s">WooCommerce Memberships</a> plugin.', 'woocommerce-jetpack' ),
+						'This section requires <a target="_blank" href="%s">WooCommerce Memberships</a> plugin.',
 						'https://woocommerce.com/products/woocommerce-memberships/'
 					),
 				),
+			);
+			wcj_init_presentation(
+				function () {
+					$this->condition_options = array(
+						'user_roles'      => array(
+							'title' => __( 'User Roles', 'woocommerce-jetpack' ),
+							'desc'  => sprintf(
+								/* translators: %s: translators Added */
+								__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
+								admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=general' )
+							),
+						),
+						'user_id'         => array(
+							'title' => __( 'Users', 'woocommerce-jetpack' ),
+							'desc'  => '',
+						),
+						'user_membership' => array(
+							'title' => __( 'User Membership Plans', 'woocommerce-jetpack' ),
+							'desc'  => sprintf(
+								/* translators: %s: translators Added */
+								__( 'This section requires <a target="_blank" href="%s">WooCommerce Memberships</a> plugin.', 'woocommerce-jetpack' ),
+								'https://woocommerce.com/products/woocommerce-memberships/'
+							),
+						),
+					);
+				}
 			);
 
 			parent::__construct();
@@ -102,29 +143,32 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 		public function check( $options_id, $user_roles_or_ids_or_membership_plans, $include_or_exclude, $package ) {
 			switch ( $options_id ) {
 				case 'user_roles':
+					$wcj_path = 'cached_roles';
 					if ( empty( $this->customer_roles ) ) {
 						$multi_role_check     = wcj_get_option( 'wcj_' . $this->id . '_check_multiple_roles', 'no' );
+						$wcj_path = 'no' === $multi_role_check ? 'fresh_first_role' : 'fresh_all_roles';
 						$this->customer_roles = 'no' === ( $multi_role_check ) ? array( wcj_get_current_user_first_role() ) : wcj_get_current_user_all_roles();
 					}
-					return count( array_intersect( $this->customer_roles, $user_roles_or_ids_or_membership_plans ) ) > 0;
+					return WCJ_Rule_Explanations::shipping_v2_result( $this, count( array_intersect( WCJ_Rule_Explanations::shipping_v2_bound( $this, $this->customer_roles ), $user_roles_or_ids_or_membership_plans ) ) > 0, $wcj_path );
 				case 'user_id':
+					$wcj_path = isset( $this->user_id ) ? 'cached_own_id' : 'fresh_own_id';
 					if ( ! isset( $this->user_id ) ) {
 						$this->user_id = get_current_user_id();
 					}
-					return in_array( (string) $this->user_id, $user_roles_or_ids_or_membership_plans, true );
+					return WCJ_Rule_Explanations::shipping_v2_result( $this, in_array( (string) $this->user_id, $user_roles_or_ids_or_membership_plans, true ), $wcj_path );
 				case 'user_membership':
 					if ( ! isset( $this->user_id ) ) {
 						$this->user_id = get_current_user_id();
 					}
 					if ( ! function_exists( 'wc_memberships_is_user_active_member' ) ) {
-						return false;
+						return WCJ_Rule_Explanations::shipping_v2_result( $this, false, 'membership_missing', 'membership_extension_missing' );
 					}
 					foreach ( $user_roles_or_ids_or_membership_plans as $membership_plan ) {
 						if ( wc_memberships_is_user_active_member( $this->user_id, $membership_plan ) ) {
-							return true;
+							return WCJ_Rule_Explanations::shipping_v2_result( $this, true, 'membership_present' );
 						}
 					}
-					return false;
+					return WCJ_Rule_Explanations::shipping_v2_result( $this, false, 'membership_present' );
 			}
 		}
 

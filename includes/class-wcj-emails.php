@@ -25,10 +25,25 @@ if ( ! class_exists( 'WCJ_Emails' ) ) :
 		public function __construct() {
 
 			$this->id         = 'emails';
-			$this->short_desc = __( 'Custom Emails', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add custom emails to WooCommerce (1 custom email allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add custom emails to WooCommerce.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-custom-emails';
+			$this->short_desc = 'Custom Emails';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Custom Emails', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add custom emails to WooCommerce (1 custom email allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add custom emails to WooCommerce (1 custom email allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add custom emails to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add custom emails to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-custom-emails';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

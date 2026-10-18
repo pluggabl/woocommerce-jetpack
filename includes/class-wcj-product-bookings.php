@@ -34,10 +34,25 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_bookings';
-			$this->short_desc = __( 'Bookings', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add bookings products to WooCommerce.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Bookings';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Bookings', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add bookings products to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add bookings products to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-bookings';
-			$this->extra_desc = __( 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
+			$this->extra_desc = 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
+				}
+			);
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

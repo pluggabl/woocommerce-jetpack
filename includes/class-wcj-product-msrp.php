@@ -38,12 +38,34 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'product_msrp';
-			$this->short_desc = __( 'Product MSRP', 'woocommerce-jetpack' );
-			$this->extra_desc = __( 'The <strong>manufacturer\'s suggested retail price</strong> (<strong>MSRP</strong>), also known as the <strong>list price</strong>, or the <strong>recommended retail price</strong> (<strong>RRP</strong>), or the <strong>suggested retail price</strong> (<strong>SRP</strong>), of a product is the price at which the manufacturer recommends that the retailer sell the product.', 'woocommerce-jetpack' ) . '<br>' .
+			$this->short_desc = 'Product MSRP';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product MSRP', 'woocommerce-jetpack' );
+				}
+			);
+			$this->extra_desc = 'The <strong>manufacturer\'s suggested retail price</strong> (<strong>MSRP</strong>), also known as the <strong>list price</strong>, or the <strong>recommended retail price</strong> (<strong>RRP</strong>), or the <strong>suggested retail price</strong> (<strong>SRP</strong>), of a product is the price at which the manufacturer recommends that the retailer sell the product.<br>' .
 			/* translators: %s: translation added */
-			sprintf( __( 'Booster stores MSRP as product meta with %s key.', 'woocommerce-jetpack' ), '<code>_wcj_msrp</code>' );
-			$this->desc      = __( 'Save and display product MSRP in WooCommerce (Custom template available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro  = __( 'Save and display product MSRP in WooCommerce.', 'woocommerce-jetpack' );
+			sprintf( 'Booster stores MSRP as product meta with %s key.', '<code>_wcj_msrp</code>' );
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'The <strong>manufacturer\'s suggested retail price</strong> (<strong>MSRP</strong>), also known as the <strong>list price</strong>, or the <strong>recommended retail price</strong> (<strong>RRP</strong>), or the <strong>suggested retail price</strong> (<strong>SRP</strong>), of a product is the price at which the manufacturer recommends that the retailer sell the product.', 'woocommerce-jetpack' ) . '<br>' .
+					/* translators: %s: translation added */
+					sprintf( __( 'Booster stores MSRP as product meta with %s key.', 'woocommerce-jetpack' ), '<code>_wcj_msrp</code>' );
+				}
+			);
+			$this->desc = 'Save and display product MSRP in WooCommerce (Custom template available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Save and display product MSRP in WooCommerce (Custom template available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Save and display product MSRP in WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Save and display product MSRP in WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug = 'woocommerce-msrp';
 			parent::__construct();
 

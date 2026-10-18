@@ -95,10 +95,25 @@ if ( ! class_exists( 'WCJ_Stock' ) ) :
 		public function __construct() {
 
 			$this->id         = 'stock';
-			$this->short_desc = __( 'Stock', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Products stock display management. Custom Stock HTML (Elite). Remove Stock Display (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Products stock display management.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-stock';
+			$this->short_desc = 'Stock';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Stock', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Products stock display management. Custom Stock HTML (Elite). Remove Stock Display (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Products stock display management. Custom Stock HTML (Elite). Remove Stock Display (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Products stock display management.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Products stock display management.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-stock';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

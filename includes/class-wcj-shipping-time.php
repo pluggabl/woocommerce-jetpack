@@ -30,13 +30,32 @@ if ( ! class_exists( 'WCJ_Shipping_Time' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_time';
-			$this->short_desc = __( 'Shipping Time', 'woocommerce-jetpack' );
+			$this->short_desc = 'Shipping Time';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Time', 'woocommerce-jetpack' );
+				}
+			);
 			$this->extra_desc = sprintf(
 				/* translators: %s: translators Added */
-				__( 'After you set estimated shipping time here, you can display it on frontend with %s shortcodes.', 'woocommerce-jetpack' ),
+				'After you set estimated shipping time here, you can display it on frontend with %s shortcodes.',
 				'<code>[wcj_shipping_time_table]</code>, <code>[wcj_product_shipping_time_table]</code>'
 			);
-			$this->desc      = __( 'Add delivery time estimation to shipping methods.', 'woocommerce-jetpack' );
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translators Added */
+						__( 'After you set estimated shipping time here, you can display it on frontend with %s shortcodes.', 'woocommerce-jetpack' ),
+						'<code>[wcj_shipping_time_table]</code>, <code>[wcj_product_shipping_time_table]</code>'
+					);
+				}
+			);
+			$this->desc = 'Add delivery time estimation to shipping methods.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add delivery time estimation to shipping methods.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug = 'woocommerce-shipping-time';
 			parent::__construct();
 

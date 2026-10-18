@@ -34,11 +34,22 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 		 */
 		public function __construct() {
 			$this->update_intervals = array(
-				'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
-				'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
-				'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
-				'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
-				'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
+				'minutely'   => 'Update Every Minute',
+				'hourly'     => 'Update Hourly',
+				'twicedaily' => 'Update Twice Daily',
+				'daily'      => 'Update Daily',
+				'weekly'     => 'Update Weekly',
+			);
+			wcj_init_presentation(
+				function () {
+					$this->update_intervals = array(
+						'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
+						'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
+						'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
+						'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
+						'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
+					);
+				}
 			);
 			add_action( 'init', array( $this, 'schedule_the_events' ) );
 			add_action( 'admin_init', array( $this, 'schedule_the_events' ) );

@@ -27,14 +27,38 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'related_products';
-			$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Elite). Hide related products completely.', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Related Products';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Elite). Hide related products completely.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Elite). Hide related products completely.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-related-products';
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+				'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.',
 				esc_url( add_query_arg( 'wcj_clear_all_products_transients', 'yes' ) )
+			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translation added */
+						__( 'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+						esc_url( add_query_arg( 'wcj_clear_all_products_transients', 'yes' ) )
+					);
+				}
 			);
 			parent::__construct();
 

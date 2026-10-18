@@ -39,11 +39,31 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		public function __construct() {
 
 			$this->id         = 'max_products_per_user';
-			$this->short_desc = __( 'Maximum Products per User', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Limit number of items your (logged) customers can buy (Free version allows to limit globally).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
-			$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-maximum-products-per-user';
+			$this->short_desc = 'Maximum Products per User';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Maximum Products per User', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Limit number of items your (logged) customers can buy (Free version allows to limit globally).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Limit number of items your (logged) customers can buy (Free version allows to limit globally).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Limit number of items your (logged) customers can buy.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->extra_desc = 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-maximum-products-per-user';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

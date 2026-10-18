@@ -32,19 +32,44 @@ if ( ! class_exists( 'WCJ_Admin_Tools' ) ) :
 		public function __construct() {
 
 			$this->id         = 'admin_tools';
-			$this->short_desc = __( 'Admin Tools', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Booster for WooCommerce general back-end tools. Enable interface by user roles (Elite). Custom shop manager editable roles (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Booster for WooCommerce general back-end tools.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-booster-admin-tools';
+			$this->short_desc = 'Admin Tools';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Admin Tools', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Booster for WooCommerce general back-end tools. Enable interface by user roles (Elite). Custom shop manager editable roles (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Booster for WooCommerce general back-end tools. Enable interface by user roles (Elite). Custom shop manager editable roles (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Booster for WooCommerce general back-end tools.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Booster for WooCommerce general back-end tools.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-booster-admin-tools';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'products_atts' => array(
-						'title' => __( 'Products Attributes', 'woocommerce-jetpack' ),
-						'desc'  => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
+						'title' => 'Products Attributes',
+						'desc'  => 'All Products and All Attributes.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'products_atts' => array(
+							'title' => __( 'Products Attributes', 'woocommerce-jetpack' ),
+							'desc'  => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {

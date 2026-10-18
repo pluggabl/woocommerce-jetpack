@@ -33,10 +33,25 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Info' ) ) :
 		public function __construct() {
 
 			$this->id         = 'checkout_custom_info';
-			$this->short_desc = __( 'Checkout Custom Info', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add custom info to the checkout page (1 block allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add custom info to the checkout page.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-checkout-custom-info';
+			$this->short_desc = 'Checkout Custom Info';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Checkout Custom Info', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add custom info to the checkout page (1 block allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add custom info to the checkout page (1 block allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add custom info to the checkout page.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add custom info to the checkout page.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-checkout-custom-info';
 			parent::__construct();
 			$this->wcj_checkout_custom_info_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_custom_info_total_number', 1 ) );
 

@@ -32,26 +32,41 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_by_time';
-			$this->short_desc = __( 'Shipping Methods by Current Date/Time', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set date and/or time to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-methods-by-current-date-time';
+			$this->short_desc = 'Shipping Methods by Current Date/Time';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Methods by Current Date/Time', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set date and/or time to include/exclude for shipping methods to show up.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set date and/or time to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-methods-by-current-date-time';
 
 			$this->condition_options = array(
 				'time' => array(
-					'title' => __( 'Current Date/Time', 'woocommerce-jetpack' ),
+					'title' => 'Current Date/Time',
 					/* translators: %s: translators Added */
-					'desc'  => '<br>' . sprintf( __( 'Current time: %s.', 'woocommerce-jetpack' ), '<code>' . current_time( 'Y-m-d H:i:s' ) . '</code>' ) . '<br>' .
+					'desc'  => '<br>' . sprintf( 'Current time: %s.', '<code>' . current_time( 'Y-m-d H:i:s' ) . '</code>' ) . '<br>' .
 					/* translators: %s: translators Added */
-					sprintf( __( 'Time <em>from</em> and time <em>to</em> must be separated with %s symbol.', 'woocommerce-jetpack' ), '<code>~</code>' ) . ' ' .
+					sprintf( 'Time <em>from</em> and time <em>to</em> must be separated with %s symbol.', '<code>~</code>' ) . ' ' .
 					sprintf(
 						/* translators: %s: translators Added */
-						__( 'Each time input must be set in format that is parsable by PHP %s function.', 'woocommerce-jetpack' ),
+						'Each time input must be set in format that is parsable by PHP %s function.',
 						'<a href="http://php.net/manual/en/function.strtotime.php" target="_blank"><code>strtotime()</code></a>'
 					) . ' ' .
 					sprintf(
 						/* translators: %s: translators Added */
-						__( 'Valid time input examples are: %s', 'woocommerce-jetpack' ),
+						'Valid time input examples are: %s',
 						'<ul><li><code>' . implode(
 							'</code></li><li><code>',
 							array(
@@ -64,6 +79,38 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 					'class' => '',
 					'css'   => 'width:100%',
 				),
+			);
+			wcj_init_presentation(
+				function () {
+					$this->condition_options = array(
+						'time' => array(
+							'title' => __( 'Current Date/Time', 'woocommerce-jetpack' ),
+							/* translators: %s: translators Added */
+							'desc'  => '<br>' . sprintf( __( 'Current time: %s.', 'woocommerce-jetpack' ), '<code>' . current_time( 'Y-m-d H:i:s' ) . '</code>' ) . '<br>' .
+							/* translators: %s: translators Added */
+							sprintf( __( 'Time <em>from</em> and time <em>to</em> must be separated with %s symbol.', 'woocommerce-jetpack' ), '<code>~</code>' ) . ' ' .
+							sprintf(
+								/* translators: %s: translators Added */
+								__( 'Each time input must be set in format that is parsable by PHP %s function.', 'woocommerce-jetpack' ),
+								'<a href="http://php.net/manual/en/function.strtotime.php" target="_blank"><code>strtotime()</code></a>'
+							) . ' ' .
+							sprintf(
+								/* translators: %s: translators Added */
+								__( 'Valid time input examples are: %s', 'woocommerce-jetpack' ),
+								'<ul><li><code>' . implode(
+									'</code></li><li><code>',
+									array(
+										'this week Thursday 4:30pm ~ this week Friday 4:30pm',
+										'this year September 1 ~ this year September 30',
+									)
+								) . '</code></li></ul>'
+							),
+							'type'  => 'text',
+							'class' => '',
+							'css'   => 'width:100%',
+						),
+					);
+				}
 			);
 
 			parent::__construct();
@@ -112,9 +159,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 					$parsed_time = $this->parse_time( $values );
 					if ( $parsed_time ) {
 						$current_time = wcj_get_timestamp_date_from_gmt();
-						return ( $current_time >= $parsed_time['time_from'] && $current_time <= $parsed_time['time_to'] );
+						return WCJ_Rule_Explanations::shipping_v2_result( $this, ( $current_time >= $parsed_time['time_from'] && $current_time <= $parsed_time['time_to'] ), 'valid_real_clock' );
 					}
-					return ( 'include' === $include_or_exclude ); // not parsable time input - leaving shipping method enabled.
+					return WCJ_Rule_Explanations::shipping_v2_result( $this, ( 'include' === $include_or_exclude ), 'invalid_range', 'invalid_time_bypass' ); // not parsable time input - leaving shipping method enabled.
 			}
 		}
 

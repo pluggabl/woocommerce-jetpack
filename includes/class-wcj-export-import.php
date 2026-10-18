@@ -34,37 +34,80 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		public function __construct() {
 
 			$this->id         = 'export';
-			$this->short_desc = __( 'Export', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce export tools. Additional export fields (1 field allowed in free version).', 'woocommerce-jetpack' );
+			$this->short_desc = 'Export';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Export', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce export tools. Additional export fields (1 field allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce export tools. Additional export fields (1 field allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
 			/* translators: %s: translation added */
-			$this->desc_pro  = sprintf( __( 'WooCommerce export tools. Check and use the shortcodes from <a href="%s" target=\'blank\'>here</a>', 'woocommerce-jetpack' ), 'https://booster.io/category/shortcodes/' );
+			$this->desc_pro = sprintf( 'WooCommerce export tools. Check and use the shortcodes from <a href="%s" target=\'blank\'>here</a>', 'https://booster.io/category/shortcodes/' );
+			wcj_init_presentation(
+				function () {
+					/* translators: %s: translation added */
+					$this->desc_pro = sprintf( __( 'WooCommerce export tools. Check and use the shortcodes from <a href="%s" target=\'blank\'>here</a>', 'woocommerce-jetpack' ), 'https://booster.io/category/shortcodes/' );
+				}
+			);
 			$this->link_slug = 'woocommerce-export-tools';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'export_customers'             => array(
-						'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Export Customers.', 'woocommerce-jetpack' ),
+						'title' => 'Export Customers',
+						'desc'  => 'Export Customers.',
 					),
 					'export_customers_from_orders' => array(
-						'title' => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ) . ' ' .
-							__( 'Customers are identified by billing email.', 'woocommerce-jetpack' ),
+						'title' => 'Export Customers from Orders',
+						'desc'  => 'Export Customers (extracted from orders). ' .
+							'Customers are identified by billing email.',
 					),
 					'export_orders'                => array(
-						'title' => __( 'Export Orders', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Export Orders.', 'woocommerce-jetpack' ),
+						'title' => 'Export Orders',
+						'desc'  => 'Export Orders.',
 					),
 					'export_orders_items'          => array(
-						'title' => __( 'Export Orders Items', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Export Orders Items.', 'woocommerce-jetpack' ),
+						'title' => 'Export Orders Items',
+						'desc'  => 'Export Orders Items.',
 					),
 					'export_products'              => array(
-						'title' => __( 'Export Products', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Export Products.', 'woocommerce-jetpack' ),
+						'title' => 'Export Products',
+						'desc'  => 'Export Products.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'export_customers'             => array(
+							'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Export Customers.', 'woocommerce-jetpack' ),
+						),
+						'export_customers_from_orders' => array(
+							'title' => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ) . ' ' .
+								__( 'Customers are identified by billing email.', 'woocommerce-jetpack' ),
+						),
+						'export_orders'                => array(
+							'title' => __( 'Export Orders', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Export Orders.', 'woocommerce-jetpack' ),
+						),
+						'export_orders_items'          => array(
+							'title' => __( 'Export Orders Items', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Export Orders Items.', 'woocommerce-jetpack' ),
+						),
+						'export_products'              => array(
+							'title' => __( 'Export Products', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Export Products.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			$this->fields_helper = require_once 'export/class-wcj-export-fields-helper.php';

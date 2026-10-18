@@ -42,6 +42,14 @@ $settings     = array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
+		'title'    => __( 'Native Blocks Company Condition', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable billing-company fee conditions in Cart and Checkout Blocks', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Off by default. When enabled, only billing_company uses the current cart customer company, and WooCommerce must configure the Company field as optional or required. A nonempty current value qualifies; omitted address values can retain a saved company. This is not proof of a freshly submitted field. Other field keys remain unsupported on Blocks. Classic behavior is unchanged.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_fees_blocks_billing_company_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'type' => 'sectionend',
 		'id'   => 'wcj_checkout_fees_general_options',
 	),

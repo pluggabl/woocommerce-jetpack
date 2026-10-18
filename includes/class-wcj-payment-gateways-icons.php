@@ -26,9 +26,19 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Icons' ) ) :
 		public function __construct() {
 
 			$this->id         = 'payment_gateways_icons';
-			$this->short_desc = __( 'Gateways Icons', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change or completely remove icons (images) for any (default or custom) payment gateway.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-payment-gateways-icons';
+			$this->short_desc = 'Gateways Icons';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Gateways Icons', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Change or completely remove icons (images) for any (default or custom) payment gateway.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Change or completely remove icons (images) for any (default or custom) payment gateway.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-payment-gateways-icons';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

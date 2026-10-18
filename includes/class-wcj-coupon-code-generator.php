@@ -30,10 +30,25 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		public function __construct() {
 
 			$this->id         = 'coupon_code_generator';
-			$this->short_desc = __( 'Coupon Code Generator', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Coupon code generator (Multiple generation algorithms available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Coupon code generator.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-coupon-code-generator';
+			$this->short_desc = 'Coupon Code Generator';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Coupon Code Generator', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Coupon code generator (Multiple generation algorithms available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Coupon code generator (Multiple generation algorithms available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Coupon code generator.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Coupon code generator.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-coupon-code-generator';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

@@ -56,14 +56,30 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_addons';
-			$this->short_desc = __( 'Product Addons', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add (paid/free/discount) addons to products (1 addon allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __(
-				'Add (paid/free/discount) addons to products.<br>
-							You can add <code>item_product_addons</code> into columns parameter of <code>[wcj_order_items_table]</code> to show selected product addon in pdf.',
-				'woocommerce-jetpack'
+			$this->short_desc = 'Product Addons';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Addons', 'woocommerce-jetpack' );
+				}
 			);
-			$this->link_slug  = 'woocommerce-product-addons';
+			$this->desc = 'Add (paid/free/discount) addons to products (1 addon allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add (paid/free/discount) addons to products (1 addon allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add (paid/free/discount) addons to products.<br>
+							You can add <code>item_product_addons</code> into columns parameter of <code>[wcj_order_items_table]</code> to show selected product addon in pdf.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __(
+						'Add (paid/free/discount) addons to products.<br>
+							You can add <code>item_product_addons</code> into columns parameter of <code>[wcj_order_items_table]</code> to show selected product addon in pdf.',
+						'woocommerce-jetpack'
+					);
+				}
+			);
+			$this->link_slug = 'woocommerce-product-addons';
 
 			parent::__construct();
 

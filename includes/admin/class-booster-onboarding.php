@@ -47,6 +47,358 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 			$this->invoice_setup  = new WCJ_Invoice_Setup( $this->option_key );
 			$this->onboarding_map = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/onboarding-map.php';
 
+			if ( ! did_action( 'init' ) ) {
+				wcj_init_presentation(
+					function () {
+						if ( ! is_array( $this->onboarding_map ) ) {
+							return;
+						}
+
+						if (
+							isset( $this->onboarding_map['grow_sales'] ) &&
+							is_array( $this->onboarding_map['grow_sales'] ) &&
+							isset( $this->onboarding_map['grow_sales']['title'] ) &&
+							'Grow sales now' === $this->onboarding_map['grow_sales']['title']
+						) {
+							$this->onboarding_map['grow_sales']['title'] = __( 'Grow sales now', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['grow_sales'] ) &&
+							is_array( $this->onboarding_map['grow_sales'] ) &&
+							isset( $this->onboarding_map['grow_sales']['subtitle'] ) &&
+							'Enable sales notifications' === $this->onboarding_map['grow_sales']['subtitle']
+						) {
+							$this->onboarding_map['grow_sales']['subtitle'] = __( 'Enable sales notifications', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['work_smarter'] ) &&
+							is_array( $this->onboarding_map['work_smarter'] ) &&
+							isset( $this->onboarding_map['work_smarter']['title'] ) &&
+							'Work smarter (backend)' === $this->onboarding_map['work_smarter']['title']
+						) {
+							$this->onboarding_map['work_smarter']['title'] = __( 'Work smarter (backend)', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['work_smarter'] ) &&
+							is_array( $this->onboarding_map['work_smarter'] ) &&
+							isset( $this->onboarding_map['work_smarter']['subtitle'] ) &&
+							'Enable sequential order numbers and admin enhancements' === $this->onboarding_map['work_smarter']['subtitle']
+						) {
+							$this->onboarding_map['work_smarter']['subtitle'] = __( 'Enable sequential order numbers and admin enhancements', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['work_smarter'] ) &&
+							is_array( $this->onboarding_map['work_smarter'] ) &&
+							isset( $this->onboarding_map['work_smarter']['next_step_text'] ) &&
+							'Configure order numbers' === $this->onboarding_map['work_smarter']['next_step_text']
+						) {
+							$this->onboarding_map['work_smarter']['next_step_text'] = __( 'Configure order numbers', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['go_global'] ) &&
+							is_array( $this->onboarding_map['go_global'] ) &&
+							isset( $this->onboarding_map['go_global']['title'] ) &&
+							'Go global (starter)' === $this->onboarding_map['go_global']['title']
+						) {
+							$this->onboarding_map['go_global']['title'] = __( 'Go global (starter)', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['go_global'] ) &&
+							is_array( $this->onboarding_map['go_global'] ) &&
+							isset( $this->onboarding_map['go_global']['subtitle'] ) &&
+							'Add additional currency support' === $this->onboarding_map['go_global']['subtitle']
+						) {
+							$this->onboarding_map['go_global']['subtitle'] = __( 'Add additional currency support', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['go_global'] ) &&
+							is_array( $this->onboarding_map['go_global'] ) &&
+							isset( $this->onboarding_map['go_global']['next_step_text'] ) &&
+							'Configure currencies' === $this->onboarding_map['go_global']['next_step_text']
+						) {
+							$this->onboarding_map['go_global']['next_step_text'] = __( 'Configure currencies', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['professional_invoices'] ) &&
+							is_array( $this->onboarding_map['professional_invoices'] ) &&
+							isset( $this->onboarding_map['professional_invoices']['title'] ) &&
+							'Branded document setup' === $this->onboarding_map['professional_invoices']['title']
+						) {
+							$this->onboarding_map['professional_invoices']['title'] = __( 'Branded document setup', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['professional_invoices'] ) &&
+							is_array( $this->onboarding_map['professional_invoices'] ) &&
+							isset( $this->onboarding_map['professional_invoices']['subtitle'] ) &&
+							'Create a starter sample, rehearse an attachment and activate only after review.' === $this->onboarding_map['professional_invoices']['subtitle']
+						) {
+							$this->onboarding_map['professional_invoices']['subtitle'] = __( 'Create a starter sample, rehearse an attachment and activate only after review.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['professional_invoices'] ) &&
+							is_array( $this->onboarding_map['professional_invoices'] ) &&
+							isset( $this->onboarding_map['professional_invoices']['next_step_text'] ) &&
+							'Open starter document guide' === $this->onboarding_map['professional_invoices']['next_step_text']
+						) {
+							$this->onboarding_map['professional_invoices']['next_step_text'] = __( 'Open starter document guide', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['boost_conversions_free'] ) &&
+							is_array( $this->onboarding_map['boost_conversions_free'] ) &&
+							isset( $this->onboarding_map['boost_conversions_free']['title'] ) &&
+							'Boost conversions (free tools)' === $this->onboarding_map['boost_conversions_free']['title']
+						) {
+							$this->onboarding_map['boost_conversions_free']['title'] = __( 'Boost conversions (free tools)', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['boost_conversions_free'] ) &&
+							is_array( $this->onboarding_map['boost_conversions_free'] ) &&
+							isset( $this->onboarding_map['boost_conversions_free']['subtitle'] ) &&
+							'Enable product add-ons and related products' === $this->onboarding_map['boost_conversions_free']['subtitle']
+						) {
+							$this->onboarding_map['boost_conversions_free']['subtitle'] = __( 'Enable product add-ons and related products', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['boost_conversions_free'] ) &&
+							is_array( $this->onboarding_map['boost_conversions_free'] ) &&
+							isset( $this->onboarding_map['boost_conversions_free']['next_step_text'] ) &&
+							'Add your first product add-on' === $this->onboarding_map['boost_conversions_free']['next_step_text']
+						) {
+							$this->onboarding_map['boost_conversions_free']['next_step_text'] = __( 'Add your first product add-on', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['better_checkout_basics'] ) &&
+							is_array( $this->onboarding_map['better_checkout_basics'] ) &&
+							isset( $this->onboarding_map['better_checkout_basics']['title'] ) &&
+							'Better checkout (basics)' === $this->onboarding_map['better_checkout_basics']['title']
+						) {
+							$this->onboarding_map['better_checkout_basics']['title'] = __( 'Better checkout (basics)', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['better_checkout_basics'] ) &&
+							is_array( $this->onboarding_map['better_checkout_basics'] ) &&
+							isset( $this->onboarding_map['better_checkout_basics']['subtitle'] ) &&
+							'Customize checkout fields and button labels' === $this->onboarding_map['better_checkout_basics']['subtitle']
+						) {
+							$this->onboarding_map['better_checkout_basics']['subtitle'] = __( 'Customize checkout fields and button labels', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['better_checkout_basics'] ) &&
+							is_array( $this->onboarding_map['better_checkout_basics'] ) &&
+							isset( $this->onboarding_map['better_checkout_basics']['next_step_text'] ) &&
+							'Customize checkout fields' === $this->onboarding_map['better_checkout_basics']['next_step_text']
+						) {
+							$this->onboarding_map['better_checkout_basics']['next_step_text'] = __( 'Customize checkout fields', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['store_essentials_quick'] ) &&
+							is_array( $this->onboarding_map['store_essentials_quick'] ) &&
+							isset( $this->onboarding_map['store_essentials_quick']['title'] ) &&
+							'Store essentials (quick setup)' === $this->onboarding_map['store_essentials_quick']['title']
+						) {
+							$this->onboarding_map['store_essentials_quick']['title'] = __( 'Store essentials (quick setup)', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['store_essentials_quick'] ) &&
+							is_array( $this->onboarding_map['store_essentials_quick'] ) &&
+							isset( $this->onboarding_map['store_essentials_quick']['subtitle'] ) &&
+							'Enable sequential order numbers and product tabs' === $this->onboarding_map['store_essentials_quick']['subtitle']
+						) {
+							$this->onboarding_map['store_essentials_quick']['subtitle'] = __( 'Enable sequential order numbers and product tabs', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['store_essentials_quick'] ) &&
+							is_array( $this->onboarding_map['store_essentials_quick'] ) &&
+							isset( $this->onboarding_map['store_essentials_quick']['next_step_text'] ) &&
+							'Configure order numbers' === $this->onboarding_map['store_essentials_quick']['next_step_text']
+						) {
+							$this->onboarding_map['store_essentials_quick']['next_step_text'] = __( 'Configure order numbers', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['recover_lost_sales_goal'] ) &&
+							is_array( $this->onboarding_map['recover_lost_sales_goal'] ) &&
+							isset( $this->onboarding_map['recover_lost_sales_goal']['title'] ) &&
+							'Recover Lost Sale' === $this->onboarding_map['recover_lost_sales_goal']['title']
+						) {
+							$this->onboarding_map['recover_lost_sales_goal']['title'] = __( 'Recover Lost Sale', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['recover_lost_sales_goal'] ) &&
+							is_array( $this->onboarding_map['recover_lost_sales_goal'] ) &&
+							isset( $this->onboarding_map['recover_lost_sales_goal']['subtitle'] ) &&
+							'Enable sequential Cart Abandonment' === $this->onboarding_map['recover_lost_sales_goal']['subtitle']
+						) {
+							$this->onboarding_map['recover_lost_sales_goal']['subtitle'] = __( 'Enable sequential Cart Abandonment', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['recover_lost_sales_goal'] ) &&
+							is_array( $this->onboarding_map['recover_lost_sales_goal'] ) &&
+							isset( $this->onboarding_map['recover_lost_sales_goal']['next_step_text'] ) &&
+							'Configure cart recovery emails' === $this->onboarding_map['recover_lost_sales_goal']['next_step_text']
+						) {
+							$this->onboarding_map['recover_lost_sales_goal']['next_step_text'] = __( 'Configure cart recovery emails', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['b2b_store'] ) &&
+							is_array( $this->onboarding_map['b2b_store'] ) &&
+							isset( $this->onboarding_map['b2b_store']['title'] ) &&
+							'B2B Store' === $this->onboarding_map['b2b_store']['title']
+						) {
+							$this->onboarding_map['b2b_store']['title'] = __( 'B2B Store', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['b2b_store'] ) &&
+							is_array( $this->onboarding_map['b2b_store'] ) &&
+							isset( $this->onboarding_map['b2b_store']['subtitle'] ) &&
+							'Coupon by user role, Gateways by User Role, Shipping Methods by Users, and Business tools' === $this->onboarding_map['b2b_store']['subtitle']
+						) {
+							$this->onboarding_map['b2b_store']['subtitle'] = __( 'Coupon by user role, Gateways by User Role, Shipping Methods by Users, and Business tools', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['b2b_store'] ) &&
+							is_array( $this->onboarding_map['b2b_store'] ) &&
+							isset( $this->onboarding_map['b2b_store']['next_step_text'] ) &&
+							'Configure Coupon by User Role' === $this->onboarding_map['b2b_store']['next_step_text']
+						) {
+							$this->onboarding_map['b2b_store']['next_step_text'] = __( 'Configure Coupon by User Role', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['intl_Store'] ) &&
+							is_array( $this->onboarding_map['intl_Store'] ) &&
+							isset( $this->onboarding_map['intl_Store']['title'] ) &&
+							'INTL Store' === $this->onboarding_map['intl_Store']['title']
+						) {
+							$this->onboarding_map['intl_Store']['title'] = __( 'INTL Store', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['intl_Store'] ) &&
+							is_array( $this->onboarding_map['intl_Store'] ) &&
+							isset( $this->onboarding_map['intl_Store']['subtitle'] ) &&
+							'Currency Exchange Rates, Prices and Currencies by Country, Multicurrency Product Base Price, and International currency tools' === $this->onboarding_map['intl_Store']['subtitle']
+						) {
+							$this->onboarding_map['intl_Store']['subtitle'] = __( 'Currency Exchange Rates, Prices and Currencies by Country, Multicurrency Product Base Price, and International currency tools', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['intl_Store'] ) &&
+							is_array( $this->onboarding_map['intl_Store'] ) &&
+							isset( $this->onboarding_map['intl_Store']['next_step_text'] ) &&
+							'Configure Exchange Rates' === $this->onboarding_map['intl_Store']['next_step_text']
+						) {
+							$this->onboarding_map['intl_Store']['next_step_text'] = __( 'Configure Exchange Rates', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_getting_started'] ) &&
+							is_array( $this->onboarding_map['merchant_getting_started'] ) &&
+							isset( $this->onboarding_map['merchant_getting_started']['title'] ) &&
+							'Merchant getting started' === $this->onboarding_map['merchant_getting_started']['title']
+						) {
+							$this->onboarding_map['merchant_getting_started']['title'] = __( 'Merchant getting started', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_getting_started'] ) &&
+							is_array( $this->onboarding_map['merchant_getting_started'] ) &&
+							isset( $this->onboarding_map['merchant_getting_started']['subtitle'] ) &&
+							'Product input fields, Checkout Custom Info, Product Variation Swatches, and other product tools' === $this->onboarding_map['merchant_getting_started']['subtitle']
+						) {
+							$this->onboarding_map['merchant_getting_started']['subtitle'] = __( 'Product input fields, Checkout Custom Info, Product Variation Swatches, and other product tools', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_getting_started'] ) &&
+							is_array( $this->onboarding_map['merchant_getting_started'] ) &&
+							isset( $this->onboarding_map['merchant_getting_started']['next_step_text'] ) &&
+							'Configure Product Input Fields' === $this->onboarding_map['merchant_getting_started']['next_step_text']
+						) {
+							$this->onboarding_map['merchant_getting_started']['next_step_text'] = __( 'Configure Product Input Fields', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_aov_increase'] ) &&
+							is_array( $this->onboarding_map['merchant_aov_increase'] ) &&
+							isset( $this->onboarding_map['merchant_aov_increase']['title'] ) &&
+							'Merchant AOV increase' === $this->onboarding_map['merchant_aov_increase']['title']
+						) {
+							$this->onboarding_map['merchant_aov_increase']['title'] = __( 'Merchant AOV increase', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_aov_increase'] ) &&
+							is_array( $this->onboarding_map['merchant_aov_increase'] ) &&
+							isset( $this->onboarding_map['merchant_aov_increase']['subtitle'] ) &&
+							'Coupon Code Generator, URL Coupon, and Sale Flash' === $this->onboarding_map['merchant_aov_increase']['subtitle']
+						) {
+							$this->onboarding_map['merchant_aov_increase']['subtitle'] = __( 'Coupon Code Generator, URL Coupon, and Sale Flash', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_aov_increase'] ) &&
+							is_array( $this->onboarding_map['merchant_aov_increase'] ) &&
+							isset( $this->onboarding_map['merchant_aov_increase']['next_step_text'] ) &&
+							'Configure Coupon Code' === $this->onboarding_map['merchant_aov_increase']['next_step_text']
+						) {
+							$this->onboarding_map['merchant_aov_increase']['next_step_text'] = __( 'Configure Coupon Code', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_run_their_store_efficiently'] ) &&
+							is_array( $this->onboarding_map['merchant_run_their_store_efficiently'] ) &&
+							isset( $this->onboarding_map['merchant_run_their_store_efficiently']['title'] ) &&
+							'Merchant run their store efficiently' === $this->onboarding_map['merchant_run_their_store_efficiently']['title']
+						) {
+							$this->onboarding_map['merchant_run_their_store_efficiently']['title'] = __( 'Merchant run their store efficiently', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_run_their_store_efficiently'] ) &&
+							is_array( $this->onboarding_map['merchant_run_their_store_efficiently'] ) &&
+							isset( $this->onboarding_map['merchant_run_their_store_efficiently']['subtitle'] ) &&
+							'Export, Admin product List, and Purchase data' === $this->onboarding_map['merchant_run_their_store_efficiently']['subtitle']
+						) {
+							$this->onboarding_map['merchant_run_their_store_efficiently']['subtitle'] = __( 'Export, Admin product List, and Purchase data', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $this->onboarding_map['merchant_run_their_store_efficiently'] ) &&
+							is_array( $this->onboarding_map['merchant_run_their_store_efficiently'] ) &&
+							isset( $this->onboarding_map['merchant_run_their_store_efficiently']['next_step_text'] ) &&
+							'Configure Export Tool' === $this->onboarding_map['merchant_run_their_store_efficiently']['next_step_text']
+						) {
+							$this->onboarding_map['merchant_run_their_store_efficiently']['next_step_text'] = __( 'Configure Export Tool', 'woocommerce-jetpack' );
+						}
+					}
+				);
+			}
+
 			add_action( 'admin_menu', array( $this, 'add_getting_started_menu' ), 100 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_ajax_booster_apply_goal', array( $this, 'ajax_apply_goal' ) );

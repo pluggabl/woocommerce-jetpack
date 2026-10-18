@@ -268,9 +268,10 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 					break;
 				}
 				foreach ( $orders as $order ) {
-					$order_id = $order->get_id();
-					$order    = wc_get_order( $order_id );
-					$items    = $order->get_items();
+					$order_id   = $order->get_id();
+					$order      = wc_get_order( $order_id );
+					$order_date = $order->get_date_created();
+					$items      = $order->get_items();
 					foreach ( $items as $item ) {
 						// Filtering by product title.
 						if ( '' !== $this->product_title && false === stripos( $item['name'], $this->product_title ) ) {
@@ -278,7 +279,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 						}
 						// Preparing data.
 						$product_id      = ( 0 !== $item['variation_id'] && $count_variations ) ? $item['variation_id'] : $item['product_id'];
-						$order_day_date  = get_the_date( 'Y-m-d', $order_id );
+						$order_day_date  = ( null !== $order_date ? $order_date->date_i18n( 'Y-m-d' ) : '' );
 						$sale_line_total = $item['line_total'] + ( $include_taxes ? $item['line_tax'] : 0 );
 						// Total sales by day.
 						if ( ! isset( $this->total_sales_by_day[ $order_day_date ] ) ) {
@@ -312,7 +313,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 						}
 						// Last Sale Time.
 						if ( ! isset( $this->last_sale_data[ $product_id ] ) ) {
-							$this->last_sale_data[ $product_id ]['date']         = get_the_time( 'Y-m-d H:i:s', $order_id );
+							$this->last_sale_data[ $product_id ]['date']         = ( null !== $order_date ? $order_date->date_i18n( 'Y-m-d H:i:s' ) : '' );
 							$this->last_sale_data[ $product_id ]['order_id']     = $order_id;
 							$this->last_sale_data[ $product_id ]['order_status'] = $order->get_status();
 						}

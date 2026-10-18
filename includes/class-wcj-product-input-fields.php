@@ -44,28 +44,66 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_input_fields';
-			$this->short_desc = __( 'Product Input Fields', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add input fields to the products (1 input field allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add input fields to the products.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Product Input Fields';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Input Fields', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add input fields to the products (1 input field allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add input fields to the products (1 input field allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add input fields to the products.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add input fields to the products.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-product-input-fields';
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'After setting Product Input Fields, you can use below shortcode with meta_key to display the Product Input Fields value: %s', 'woocommerce-jetpack' ),
+				'After setting Product Input Fields, you can use below shortcode with meta_key to display the Product Input Fields value: %s',
 				'<ol>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<strong>Shortcodes:</strong> %s',
 					'<code>[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_&lt;field_id&gt;"]</code>, <code>[wcj_order_items_meta meta_key = "_wcj_product_input_fields_local_&lt;field_id&gt;"]</code><br>field_id is the Id of your Product Input Field'
 				) .
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
+					'<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s',
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_1]\'&nbsp;);</code>'
 				) .
 				'</li>' .
 				'</ol>'
+			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translation added */
+						__( 'After setting Product Input Fields, you can use below shortcode with meta_key to display the Product Input Fields value: %s', 'woocommerce-jetpack' ),
+						'<ol>' .
+						'<li>' . sprintf(
+							/* translators: %s: translation added */
+							__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+							'<code>[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_&lt;field_id&gt;"]</code>, <code>[wcj_order_items_meta meta_key = "_wcj_product_input_fields_local_&lt;field_id&gt;"]</code><br>field_id is the Id of your Product Input Field'
+						) .
+						'</li>' .
+						'<li>' . sprintf(
+							/* translators: %s: translation added */
+							__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
+							'<code>do_shortcode()</code>',
+							'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_items_meta meta_key = "_wcj_product_input_fields_global_1]\'&nbsp;);</code>'
+						) .
+						'</li>' .
+						'</ol>'
+					);
+				}
 			);
 			parent::__construct();
 

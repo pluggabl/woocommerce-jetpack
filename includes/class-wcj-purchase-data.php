@@ -30,38 +30,86 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 		public function __construct() {
 
 			$this->id         = 'purchase_data';
-			$this->short_desc = __( 'Cost of Goods', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Save product purchase costs data for admin reports (1 custom field allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Save product purchase costs data for admin reports.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Cost of Goods';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Cost of Goods', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Save product purchase costs data for admin reports (1 custom field allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Save product purchase costs data for admin reports (1 custom field allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Save product purchase costs data for admin reports.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Save product purchase costs data for admin reports.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-cost-of-goods';
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'After setting cost of goods section below, Admin can export the Cost & Profit column from admin order list: %s', 'woocommerce-jetpack' ),
+				'After setting cost of goods section below, Admin can export the Cost & Profit column from admin order list: %s',
 				'<ol>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<strong>Shortcodes:</strong> %s',
 					'Profit: <code>[wcj_order_profit]</code>, Item Cost: <code>[wcj_order_items_cost]</code>'
 				) .
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s', 'woocommerce-jetpack' ),
+					'<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s',
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_profit]\'&nbsp;);</code>'
 				) .
 				'</li>' .
 				'</ol>'
 			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translation added */
+						__( 'After setting cost of goods section below, Admin can export the Cost & Profit column from admin order list: %s', 'woocommerce-jetpack' ),
+						'<ol>' .
+						'<li>' . sprintf(
+							/* translators: %s: translation added */
+							__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+							'Profit: <code>[wcj_order_profit]</code>, Item Cost: <code>[wcj_order_items_cost]</code>'
+						) .
+						'</li>' .
+						'<li>' . sprintf(
+							/* translators: %s: translation added */
+							__( '<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s', 'woocommerce-jetpack' ),
+							'<code>do_shortcode()</code>',
+							'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_profit]\'&nbsp;);</code>'
+						) .
+						'</li>' .
+						'</ol>'
+					);
+				}
+			);
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'import_from_wc_cog' => array(
-						'title' => __( '"WooCommerce Cost of Goods" Data Import', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Import products costs from "WooCommerce Cost of Goods".', 'woocommerce-jetpack' ),
+						'title' => '"WooCommerce Cost of Goods" Data Import',
+						'desc'  => 'Import products costs from "WooCommerce Cost of Goods".',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'import_from_wc_cog' => array(
+							'title' => __( '"WooCommerce Cost of Goods" Data Import', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Import products costs from "WooCommerce Cost of Goods".', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {

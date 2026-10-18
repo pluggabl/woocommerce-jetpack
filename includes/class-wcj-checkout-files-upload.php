@@ -48,14 +48,32 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		public function __construct() {
 
 			$this->id         = 'checkout_files_upload';
-			$this->short_desc = __( 'Checkout Files Upload', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Let customers upload files on (or after) the checkout (1 file allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Let customers upload files on (or after) the checkout.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-checkout-files-upload';
+			$this->short_desc = 'Checkout Files Upload';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Checkout Files Upload', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Let customers upload files on (or after) the checkout (1 file allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Let customers upload files on (or after) the checkout (1 file allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Let customers upload files on (or after) the checkout.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Let customers upload files on (or after) the checkout.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-checkout-files-upload';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
 				$this->init_settings();
+				require_once __DIR__ . '/class-wcj-checkout-files-upload-store.php';
+				require_once __DIR__ . '/class-wcj-checkout-files-upload-blocks.php';
+				new WCJ_Checkout_Files_Upload_Blocks( $this );
 				add_action( 'add_meta_boxes', array( $this, 'add_file_admin_order_meta_box' ) );
 				add_action( 'init', array( $this, 'process_checkout_files_upload' ) );
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_remove_on_empty_cart', 'no' ) ) {
@@ -95,20 +113,33 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 * @todo    (dev) (maybe) init settings on demand only
 		 */
 		public function init_settings() {
-			$this->templates_settings                = wcj_get_option( 'wcj_checkout_files_upload_templates', array() );
-			$this->templates_settings                = wp_parse_args(
-				$this->templates_settings,
+			$this->templates_settings = wcj_get_option( 'wcj_checkout_files_upload_templates', array() );
+			$template_overrides       = wp_parse_args( $this->templates_settings, array() );
+			$this->templates_settings = wp_parse_args(
+				$template_overrides,
 				array(
 					'order_before'      => '',
 					/* translators: %s: search term */
-					'order_item'        => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
+					'order_item'        => sprintf( 'File: %s', '%file_name%' ) . '<br>',
 					'order_after'       => '',
 					'order_image_style' => 'width:64px;',
 					'email_before'      => '',
 					/* translators: %s: search term */
-					'email_item'        => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
+					'email_item'        => sprintf( 'File: %s', '%file_name%' ) . '<br>',
 					'email_after'       => '',
 				)
+			);
+			// Localize only absent defaults; preserve stored and pre-init runtime overrides.
+			wcj_init_presentation(
+				function () use ( $template_overrides ) {
+					foreach ( array( 'order_item', 'email_item' ) as $template_key ) {
+						if ( ! array_key_exists( $template_key, $template_overrides ) &&
+							'File: %file_name%<br>' === $this->templates_settings[ $template_key ] ) {
+							/* translators: %s: uploaded file name placeholder. */
+							$this->templates_settings[ $template_key ] = sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>';
+						}
+					}
+				}
 			);
 			$this->additional_admin_emails_settings  = wcj_get_option( 'wcj_checkout_files_upload_additional_admin_emails', array() );
 			$this->additional_admin_emails_settings  = wp_parse_args(
@@ -210,6 +241,10 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 * @param \WC_Order $order The order object.
 		 */
 		public function add_files_to_order_from_blocks( $order ) {
+			// Private Blocks claims do not use or overwrite the Classic PHP-session bridge.
+			if ( $order instanceof WC_Order && $order->get_meta( '_wcj_blocks_upload_claim' ) ) {
+				return;
+			}
 			if ( ! $order || false === $order ) {
 				return;
 			}

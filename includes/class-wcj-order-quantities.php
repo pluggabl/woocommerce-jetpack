@@ -53,9 +53,19 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 		public function __construct() {
 
 			$this->id         = 'order_quantities';
-			$this->short_desc = __( 'Order Quantities', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-order-min-max-quantities';
+			$this->short_desc = 'Order Quantities';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Order Quantities', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-order-min-max-quantities';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

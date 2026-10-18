@@ -17,6 +17,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 	 * WCJ_Payment_Gateways_By_Shipping.
 	 */
 	class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
+		private $payment_receipt = null;
+		private $payment_collect = false;
 
 		/**
 		 * Constructor.
@@ -28,9 +30,19 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 		public function __construct() {
 
 			$this->id         = 'payment_gateways_by_shipping';
-			$this->short_desc = __( 'Gateways by Shipping', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set "enable for shipping methods" for payment gateways.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-payment-gateways-by-shipping';
+			$this->short_desc = 'Gateways by Shipping';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Gateways by Shipping', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set "enable for shipping methods" for payment gateways.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set "enable for shipping methods" for payment gateways.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-payment-gateways-by-shipping';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -89,7 +101,57 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 					$chosen_shipping_methods = array();
 				}
 
+				$result = $this->payment_shipping_match( $enable_for_methods, $chosen_shipping_methods, $order );
+				$decision = $result[1];
+				if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
+				return $result[0];
+			}
+
+			$decision = array( 'retained', 'shipping_not_required', 'shipping' );
+			if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
+			return true;
+				}
+
+		/**
+		 * Available_payment_gateways.
+		 *
+		 * @version 7.1.6
+		 * @since   2.7.0
+		 * @param array $_available_gateways defines the _available_gateways.
+		 */
+		public function available_payment_gateways( $_available_gateways ) {
+			$ticket = WCJ_Rule_Explanations::payment_start( $this, $_available_gateways );
+			$this->payment_collect = null !== $ticket;
+			if ( $this->payment_collect ) { $this->payment_receipt = null; }
+			$row = null;
+			$whole = false;
+			$result = $this->payment_filter_body( $_available_gateways, $ticket, $row, $whole );
+			$this->payment_collect = false;
+			if ( null !== $ticket ) { WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
+			return $result;
+		}
+
+		/** Original lazy collector, shared with bounded per-gateway decisions. */
+		private function payment_filter_body( $_available_gateways, $ticket, &$row, &$whole ) {
+			foreach ( $_available_gateways as $key => $gateway ) {
+				if ( $this->payment_collect ) { $this->payment_receipt = null; }
+				$enable_for_methods = ( $this->use_shipping_instances ?
+				get_option( 'wcj_gateways_by_shipping_enable_instance_' . $key, '' ) :
+				get_option( 'wcj_gateways_by_shipping_enable_' . $key, '' ) );
+				if ( ! empty( $enable_for_methods ) && ! $this->check_if_enabled_for_methods( $key, $enable_for_methods ) ) {
+					if ( $ticket === (string) $key ) { $row = $this->payment_receipt; }
+					unset( $_available_gateways[ $key ] );
+					continue;
+				}
+				if ( $ticket === (string) $key ) { $row = empty( $enable_for_methods ) ? array( 'not_configured', 'no_rules', 'shipping' ) : $this->payment_receipt; }
+			}
+			return $_available_gateways;
+		
+		}
+
+		private function payment_shipping_match( $enable_for_methods, $chosen_shipping_methods, $order ) {
 				$check_method = false;
+				$selection_reason = empty( $chosen_shipping_methods ) ? 'no_shipping_selection' : ( count( $chosen_shipping_methods ) > 1 ? 'multiple_shipping_selections' : 'invalid_shipping_selection' );
 
 				if ( is_object( $order ) ) {
 					if ( $order->shipping_method ) {
@@ -101,8 +163,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 					$check_method = $chosen_shipping_methods[0];
 				}
 
+				$invalid_shape = false !== $check_method && ! is_string( $check_method );
 				if ( ! $check_method ) {
-					return false;
+					return array( false, $invalid_shape ? array( 'not_checked', 'invalid_shipping_selection_shape', 'shipping' ) : array( 'removed', $selection_reason, 'shipping' ) );
 				}
 
 				$found = false;
@@ -114,7 +177,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 						// "Flexible Shipping" plugin (e.g. `flexible_shipping_13_2`).
 						$_check_method = explode( '_', strrev( $check_method ), 3 );
 						if ( ! isset( $_check_method[1] ) || ! is_numeric( $_check_method[1] ) ) {
-							return false;
+							return array( false, $invalid_shape ? array( 'not_checked', 'invalid_shipping_selection_shape', 'shipping' ) : array( 'removed', 'invalid_shipping_instance', 'shipping' ) );
 						} else {
 							$check_method = strrev( $_check_method[1] );
 						}
@@ -127,41 +190,29 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Shipping' ) ) :
 				foreach ( $enable_for_methods as $method_id ) {
 					if ( $this->use_shipping_instances ) {
 						if ( $check_method === $method_id ) {
-							return true;
+							return array( true, $invalid_shape ? array( 'not_checked', 'invalid_shipping_selection_shape', 'shipping' ) : array( 'retained', 'shipping_method_match', 'shipping' ) );
 						}
 					} else {
 						if ( strpos( $check_method, $method_id ) === 0 ) {
-							return true;
+							return array( true, $invalid_shape ? array( 'not_checked', 'invalid_shipping_selection_shape', 'shipping' ) : array( 'retained', 'shipping_method_match', 'shipping' ) );
 						}
 					}
 				}
 
 				if ( ! $found ) {
-					return false;
+					return array( false, $invalid_shape ? array( 'not_checked', 'invalid_shipping_selection_shape', 'shipping' ) : array( 'removed', 'shipping_method_mismatch', 'shipping' ) );
 				}
-			}
-
-			return true;
 		}
 
-		/**
-		 * Available_payment_gateways.
-		 *
-		 * @version 7.1.6
-		 * @since   2.7.0
-		 * @param array $_available_gateways defines the _available_gateways.
-		 */
-		public function available_payment_gateways( $_available_gateways ) {
-			foreach ( $_available_gateways as $key => $gateway ) {
-				$enable_for_methods = ( $this->use_shipping_instances ?
-				get_option( 'wcj_gateways_by_shipping_enable_instance_' . $key, '' ) :
-				get_option( 'wcj_gateways_by_shipping_enable_' . $key, '' ) );
-				if ( ! empty( $enable_for_methods ) && ! $this->check_if_enabled_for_methods( $key, $enable_for_methods ) ) {
-					unset( $_available_gateways[ $key ] );
-					continue;
-				}
-			}
-			return $_available_gateways;
+		public function explain_payment_gateway( $key, $facts ) {
+			$enable = $this->use_shipping_instances ? get_option( 'wcj_gateways_by_shipping_enable_instance_' . $key, '' ) : get_option( 'wcj_gateways_by_shipping_enable_' . $key, '' );
+			if ( empty( $enable ) ) { return array( 'not_configured', 'no_rules', 'shipping' ); }
+			if ( 'unknown' === $facts['needs_shipping']['state'] ) { return array( 'not_checked', 'missing_fact', 'needs_shipping' ); }
+			if ( false === $facts['needs_shipping']['value'] ) { return array( 'retained', 'shipping_not_required', 'shipping' ); }
+			if ( 'unknown' === $facts['chosen_shipping_methods']['state'] ) { return array( 'not_checked', 'missing_fact', 'chosen_shipping_methods' ); }
+			$chosen = 'known_empty' === $facts['chosen_shipping_methods']['state'] ? array() : array_unique( $facts['chosen_shipping_methods']['value'] );
+			$result = $this->payment_shipping_match( $enable, $chosen, null );
+			return $result[1];
 		}
 
 	}

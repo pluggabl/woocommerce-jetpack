@@ -36,10 +36,25 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 		public function __construct() {
 
 			$this->id         = 'currency';
-			$this->short_desc = __( 'Currencies', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol (Elite); add custom currencies (1 allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol; add custom currencies.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-all-currencies';
+			$this->short_desc = 'Currencies';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Currencies', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add all world currencies and cryptocurrencies to your store; change currency symbol (Elite); add custom currencies (1 allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol (Elite); add custom currencies (1 allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add all world currencies and cryptocurrencies to your store; change currency symbol; add custom currencies.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol; add custom currencies.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-all-currencies';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

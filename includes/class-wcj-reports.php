@@ -47,9 +47,19 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		public function __construct() {
 
 			$this->id         = 'reports';
-			$this->short_desc = __( 'Reports', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Stock, sales, customers etc. reports.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-reports';
+			$this->short_desc = 'Reports';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Reports', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Stock, sales, customers etc. reports.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Stock, sales, customers etc. reports.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-reports';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

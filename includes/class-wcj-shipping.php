@@ -28,9 +28,19 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'shipping';
-			$this->short_desc = __( 'Custom Shipping', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add multiple custom shipping methods to WooCommerce.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-custom-shipping';
+			$this->short_desc = 'Custom Shipping';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Custom Shipping', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add multiple custom shipping methods to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add multiple custom shipping methods to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-custom-shipping';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

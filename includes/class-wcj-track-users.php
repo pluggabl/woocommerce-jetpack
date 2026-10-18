@@ -37,18 +37,43 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 		public function __construct() {
 
 			$this->id         = 'track_users';
-			$this->short_desc = __( 'User Tracking', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Track your users in WooCommerce. Track Orders (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Track your users in WooCommerce.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-user-tracking';
+			$this->short_desc = 'User Tracking';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'User Tracking', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Track your users in WooCommerce. Track Orders (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Track your users in WooCommerce. Track Orders (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Track your users in WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Track your users in WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-user-tracking';
 			parent::__construct();
 
 			// By country scopes.
 			$this->track_users_scopes = array(
-				'1'        => __( 'Last 24 hours', 'woocommerce-jetpack' ),
-				'7'        => __( 'Last 7 days', 'woocommerce-jetpack' ),
-				'28'       => __( 'Last 28 days', 'woocommerce-jetpack' ),
-				'all_time' => __( 'All time', 'woocommerce-jetpack' ),
+				'1'        => 'Last 24 hours',
+				'7'        => 'Last 7 days',
+				'28'       => 'Last 28 days',
+				'all_time' => 'All time',
+			);
+			wcj_init_presentation(
+				function () {
+					$this->track_users_scopes = array(
+						'1'        => __( 'Last 24 hours', 'woocommerce-jetpack' ),
+						'7'        => __( 'Last 7 days', 'woocommerce-jetpack' ),
+						'28'       => __( 'Last 28 days', 'woocommerce-jetpack' ),
+						'all_time' => __( 'All time', 'woocommerce-jetpack' ),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {

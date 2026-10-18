@@ -4,14 +4,24 @@ Donate link: https://booster.io/
 Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invoices, variation swatches, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce product feed, currency switcher
 Requires at least: 5.8
 Tested up to: 7.0
-Requires PHP: 7.2
-Stable tag: 8.5.1
+Requires PHP: 7.3
+Stable tag: 9.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 9.0.0 - Return requests and clearer store operations
+
+* Customer Return Requests - Opt-in account and verified-guest requests with private quantity claims, history and merchant review. The purpose-bound synthetic safe test does not create a WooCommerce order or issue refunds, stock changes or payments.
+* Checkout labels - Adds supported WooCommerce Checkout Blocks button-label integration while retaining classic checkout behavior and supported gateway-label priority.
+* Order data - Uses WooCommerce order data for affected HPOS export and report date reads.
+* Runtime requirements - Requires PHP 7.3 or later on a 64-bit build with a working native integer hrtime clock; protected operations fail closed when the clock is unavailable.
+* Payment gateway fees - Keeps unpaid-order fees in sync when changing payment gateways, preserves unrelated custom fees, and respects WooCommerce payment availability.
+
+Runtime requirements for Booster 9.0: PHP 7.3 or later on a 64-bit build with the native hrtime() function enabled and returning integer monotonic nanoseconds. PHP 7.3 is the API-introduction floor, not a deployment recommendation. Use a currently maintained PHP release supported by your WordPress and WooCommerce versions. No wall-clock fallback is used. If the runtime clock is unavailable, Booster initialization and protected Returns operations fail closed.
 
 ### New in 8.5.1 - Useful store updates, on your terms
 Short Booster announcements stay on Booster pages, not across your WordPress dashboard. Dismiss a notice once and it stays dismissed for your account. Existing store settings are preserved.
@@ -407,8 +417,16 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 
 == Changelog ==
 
+= 9.0.0 =
+* Customer Return Requests - Opt-in account and verified-guest requests with private quantity claims, history and merchant review. The purpose-bound synthetic safe test does not create a WooCommerce order or issue refunds, stock changes or payments.
+* Checkout labels - Adds supported WooCommerce Checkout Blocks button-label integration while retaining classic checkout behavior and supported gateway-label priority.
+* Order data - Uses WooCommerce order data for affected HPOS export and report date reads.
+* Runtime requirements - Requires PHP 7.3 or later on a 64-bit build with a working native integer hrtime clock; protected operations fail closed when the clock is unavailable.
+* Payment gateway fees - Keeps unpaid-order fees in sync when changing payment gateways, preserves unrelated custom fees, and respects WooCommerce payment availability.
+
 = 8.5.1 - 15/10/2026 =
 * Store updates, without dashboard clutter - Receive short Booster news only on Booster settings pages. Each user can permanently dismiss a notice; store and checkout settings are unchanged.
+
 
 = 8.5.0 - 07/10/2026 =
 * Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately.
@@ -4510,6 +4528,9 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 9.0.0 =
+Back up and test the exact package on staging before enabling new workflows. Review the PHP 7.3, 64-bit native-clock requirements and edition-specific limits.
 
 = 8.5.1 =
 Back up and test on staging. This maintenance update preserves existing store settings and adds contextual, individually dismissible Booster announcements. No campaign is active by default.

@@ -30,9 +30,19 @@ if ( ! class_exists( 'WCJ_Custom_CSS' ) ) :
 		public function __construct() {
 
 			$this->id         = 'custom_css';
-			$this->short_desc = __( 'Custom CSS', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Separate custom CSS for front and back end. Per product CSS.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-booster-custom-css';
+			$this->short_desc = 'Custom CSS';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Custom CSS', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Separate custom CSS for front and back end. Per product CSS.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Separate custom CSS for front and back end. Per product CSS.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-booster-custom-css';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

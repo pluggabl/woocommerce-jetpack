@@ -94,12 +94,5 @@ function wcj_redirect_after_first_activation_free() {
  * Start plugin usage tracking.
  */
 function woocommerce_jetpack_start_plugin_tracking() {
-	new Plugin_Usage_Tracker(
-		WCJ_FREE_PLUGIN_FILE,
-		'https://boosterio.bigscoots-staging.com',
-		array(),
-		true,
-		true,
-		1
-	);
+	// Optional legacy usage telemetry is disabled pending a verified intended receiver.
 }

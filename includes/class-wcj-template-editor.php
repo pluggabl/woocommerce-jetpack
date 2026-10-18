@@ -37,9 +37,19 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 		public function __construct() {
 
 			$this->id         = 'template_editor';
-			$this->short_desc = __( 'Template Editor', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce template editor.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-template-editor';
+			$this->short_desc = 'Template Editor';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Template Editor', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce template editor.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce template editor.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-template-editor';
 			parent::__construct();
 
 			add_action( 'woojetpack_after_settings_save', array( $this, 'create_templates' ), PHP_INT_MAX, 2 );

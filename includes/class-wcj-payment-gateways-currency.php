@@ -35,10 +35,25 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 		public function __construct() {
 
 			$this->id         = 'payment_gateways_currency';
-			$this->short_desc = __( 'Gateways Currency Converter', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Currency converter for payment gateways. Update exchange rates automatically (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Currency converter for payment gateways.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-payment-gateways-currency-converter';
+			$this->short_desc = 'Gateways Currency Converter';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Gateways Currency Converter', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Currency converter for payment gateways. Update exchange rates automatically (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Currency converter for payment gateways. Update exchange rates automatically (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Currency converter for payment gateways.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Currency converter for payment gateways.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-payment-gateways-currency-converter';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

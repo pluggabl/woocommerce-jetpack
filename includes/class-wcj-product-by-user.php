@@ -28,11 +28,31 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_by_user';
-			$this->short_desc = __( 'User Products', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Let users add new products from the frontend. Image additional field (Elite). Custom Taxonomies (1 allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Let users add new products from the frontend.', 'woocommerce-jetpack' );
+			$this->short_desc = 'User Products';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'User Products', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Let users add new products from the frontend. Image additional field (Elite). Custom Taxonomies (1 allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Let users add new products from the frontend. Image additional field (Elite). Custom Taxonomies (1 allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Let users add new products from the frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Let users add new products from the frontend.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-product-by-user';
-			$this->extra_desc = __( 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.', 'woocommerce-jetpack' );
+			$this->extra_desc = 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.', 'woocommerce-jetpack' );
+				}
+			);
 			parent::__construct();
 
 			// My Products endpoint.

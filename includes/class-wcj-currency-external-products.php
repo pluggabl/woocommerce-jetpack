@@ -25,9 +25,19 @@ if ( ! class_exists( 'WCJ_Currency_External_Products' ) ) :
 		public function __construct() {
 
 			$this->id         = 'currency_external_products';
-			$this->short_desc = __( 'Currency for External Products', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set different currency for external products.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-currency-for-external-products';
+			$this->short_desc = 'Currency for External Products';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Currency for External Products', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set different currency for external products.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set different currency for external products.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-currency-for-external-products';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

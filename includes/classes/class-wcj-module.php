@@ -190,7 +190,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
 			} elseif ( 'init' === current_filter() || 'plugins_loaded' === current_filter() ) {
 					$this->add_settings();
-					$this->reset_settings();
+					add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
 			}
 
 			// Handle WPML hooks.
