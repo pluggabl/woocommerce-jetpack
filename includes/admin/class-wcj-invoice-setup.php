@@ -982,7 +982,7 @@ class WCJ_Invoice_Setup {
 	public function render() {
 		self::authorize();
 		wp_enqueue_media();
-		wp_enqueue_script( 'wcj-invoice-setup', wcj_plugin_url() . '/assets/js/admin/wcj-invoice-setup.js', array(), '1.1', true );
+		wp_enqueue_script( 'wcj-invoice-setup', wcj_plugin_url() . '/assets/js/admin/wcj-invoice-setup.js', array(), '1.2', true );
 		$nonces = array();
 		foreach ( array( 'sample', 'rehearse', 'review', 'activate', 'undo' ) as $op ) {
 			$nonces[ $op ] = wp_create_nonce( 'wcj_invoice_setup_' . $op );

@@ -5,6 +5,9 @@ const fs = require( 'node:fs' );
 const path = require( 'node:path' );
 const vm = require( 'node:vm' );
 
+const phpSource = fs.readFileSync( path.join( __dirname, '../includes/admin/class-wcj-invoice-setup.php' ), 'utf8' );
+assert.match( phpSource, /wp_enqueue_script\( 'wcj-invoice-setup', [^\r\n]*, '1\.2', true \)/, 'changed guide controller uses a new cache version' );
+
 const elements = new Map();
 let focused = null;
 function element( id, tag = 'div' ) {
