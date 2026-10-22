@@ -60,34 +60,47 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 					'title'       => __( 'PDF Invoicing', 'woocommerce-jetpack' ),
 					'description' => __( 'Create a starter sample and review before activating.', 'woocommerce-jetpack' ),
 					'icon'        => 'dashicons-media-document',
-					'link'        => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing' ),
-					'preset_link' => WCJ_Invoice_Setup::url(),
+					'link'        => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=pdf_invoicing&section=pdf_invoicing' ),
+					'destination' => WCJ_Invoice_Setup::url(),
 				),
 				array(
 					'id'          => 'multicurrency',
 					'title'       => __( 'Multicurrency', 'woocommerce-jetpack' ),
 					'description' => __( 'Sell in multiple currencies', 'woocommerce-jetpack' ),
 					'icon'        => 'dashicons-money-alt',
-					'link'        => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_currencies&section=multicurrency' ),
-					'preset_link' => wp_nonce_url( admin_url( 'admin.php?page=wcj-dashboard&apply_preset=multicurrency' ), 'wcj_apply_preset' ),
+					'link'        => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=prices_and_currencies&section=multicurrency' ),
+					'destination' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=prices_and_currencies&section=multicurrency' ),
 				),
 				array(
 					'id'          => 'product_addons',
 					'title'       => __( 'Product Addons', 'woocommerce-jetpack' ),
 					'description' => __( 'Add extra options to products', 'woocommerce-jetpack' ),
 					'icon'        => 'dashicons-plus-alt',
-					'link'        => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_addons' ),
-					'preset_link' => wp_nonce_url( admin_url( 'admin.php?page=wcj-dashboard&apply_preset=product_addons' ), 'wcj_apply_preset' ),
+					'link'        => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=products&section=product_addons' ),
+					'destination' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=products&section=product_addons' ),
 				),
 				array(
 					'id'          => 'checkout',
 					'title'       => __( 'Checkout', 'woocommerce-jetpack' ),
 					'description' => __( 'Customize checkout experience', 'woocommerce-jetpack' ),
 					'icon'        => 'dashicons-cart',
-					'link'        => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_checkout&section=checkout_customization' ),
-					'preset_link' => wp_nonce_url( admin_url( 'admin.php?page=wcj-dashboard&apply_preset=checkout' ), 'wcj_apply_preset' ),
+					'link'        => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=checkout_customization' ),
+					'destination' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=checkout_customization' ),
 				),
 			);
+		}
+
+		/**
+		 * Persistent navigation, independent of the optional welcome cards.
+		 */
+		public function render_task_links() {
+			?>
+			<nav class="wcj-task-links" aria-label="<?php esc_attr_e( 'Booster tasks', 'woocommerce-jetpack' ); ?>">
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins' ) ); ?>"><?php esc_html_e( 'Find a tool', 'woocommerce-jetpack' ); ?></a>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-getting-started#launch-onboarding-modal' ) ); ?>"><?php esc_html_e( 'Setup and blueprints', 'woocommerce-jetpack' ); ?></a>
+				<a href="<?php echo esc_url( WCJ_Invoice_Setup::url() ); ?>"><?php esc_html_e( 'Invoice guide', 'woocommerce-jetpack' ); ?></a>
+			</nav>
+			<?php
 		}
 
 		/**
@@ -97,6 +110,7 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 		 * @since   7.9.0
 		 */
 		public function render() {
+			$this->render_task_links();
 			if ( ! $this->should_display() ) {
 				return;
 			}
@@ -110,11 +124,11 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 							<div class="wcj-hub-header">
 								<h2><?php esc_html_e( 'Getting Started', 'woocommerce-jetpack' ); ?></h2>
 								<p><?php esc_html_e( 'Choose what you want to accomplish with Booster:', 'woocommerce-jetpack' ); ?></p>
-								<button class="wcj-hub-dismiss" id="wcj-hub-dismiss" title="<?php esc_attr_e( 'Dismiss', 'woocommerce-jetpack' ); ?>">&times;</button>
+								<button type="button" class="wcj-hub-dismiss" id="wcj-hub-dismiss" title="<?php esc_attr_e( 'Dismiss', 'woocommerce-jetpack' ); ?>">&times;</button>
 							</div>
 							<div class="wcj-hub-cards">
 								<?php foreach ( $jobs as $job ) : ?>
-									<a href="<?php echo esc_url( $job['preset_link'] ); ?>" class="wcj-hub-card" data-job-id="<?php echo esc_attr( $job['id'] ); ?>">
+									<a href="<?php echo esc_url( $job['destination'] ); ?>" class="wcj-hub-card" data-job-id="<?php echo esc_attr( $job['id'] ); ?>">
 										<span class="dashicons <?php echo esc_attr( $job['icon'] ); ?>"></span>
 										<h3><?php echo esc_html( $job['title'] ); ?></h3>
 										<p><?php echo esc_html( $job['description'] ); ?></p>
@@ -158,7 +172,7 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 
 			if ( 'wcj-dashboard' === $active_page || 'wcj-plugins' === $active_page ) {
 
-				$version = defined( 'WCJ_VERSION' );
+				$version = ( defined( 'WCJ_VERSION' ) ? WCJ_VERSION : '10.0.0' ) . '-discovery-1';
 
 				wp_enqueue_style(
 					'wcj-hub-css',
@@ -181,6 +195,10 @@ if ( ! class_exists( 'WCJ_Getting_Started_Hub' ) ) :
 					array(
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
 						'nonce'    => wp_create_nonce( 'wcj-hub-nonce' ),
+						'empty'    => __( 'No tools match these filters.', 'woocommerce-jetpack' ),
+						/* translators: %d: number of visible tools. */
+						'count'    => __( '%d tools shown.', 'woocommerce-jetpack' ),
+						'one'      => __( '1 tool shown.', 'woocommerce-jetpack' ),
 					)
 				);
 			}

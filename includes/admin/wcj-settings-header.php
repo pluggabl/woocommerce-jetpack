@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 													?>
 								">
 									<img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/new-menu-icn2.png'; ?>">
-									<span><?php esc_html_e( 'Plugins', 'woocommerce-jetpack' ); ?></span>
+									<span><?php esc_html_e( 'Tools', 'woocommerce-jetpack' ); ?></span>
 								</a>
 							</li>
 							<li>

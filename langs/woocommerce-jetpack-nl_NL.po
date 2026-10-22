@@ -28751,3 +28751,153 @@ msgstr "Begin met tekst voor of na de prijs. HTML en lege waarden behouden hun b
 #: includes/admin/class-wcj-settings-presentation.php:119
 msgid "Use the existing tabs and save buttons. Active or changed advanced options stay expanded. Edition restrictions still apply."
 msgstr "Gebruik de bestaande tabbladen en opslagknoppen. Actieve of gewijzigde geavanceerde opties blijven uitgeklapt. De beperkingen van je editie blijven gelden."
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:200
+msgid "%d tools shown."
+msgstr "%d tools weergegeven."
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:201
+msgid "1 tool shown."
+msgstr "1 tool weergegeven."
+
+#. Booster v10 discovery presentation.
+#: includes/core/class-wcj-admin.php:598
+msgid "All categories"
+msgstr "Alle categorieën"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:234
+msgid "All results"
+msgstr "Alle resultaten"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:49
+msgid "All tools"
+msgstr "Alle tools"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:98
+msgid "Booster tasks"
+msgstr "Booster-taken"
+
+#. Booster v10 discovery presentation.
+#: includes/class-wcj-rule-explanations-admin.php:190
+msgid "Check one scenario against your configured gateway fee or discount. This is not an actual shopper, order or gateway-availability diagnosis. No cart, session, order or setting is changed."
+msgstr "Controleer één scenario met je ingestelde betaaltoeslag of korting. Dit is geen diagnose van een echte klant, bestelling of beschikbare betaalmethode. Er wordt geen winkelwagen, sessie, bestelling of instelling gewijzigd."
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:233
+msgid "Filter this list"
+msgstr "Deze lijst filteren"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:99
+msgid "Find a tool"
+msgstr "Een tool zoeken"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:101
+msgid "Invoice guide"
+msgstr "Factuurhandleiding"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:54
+msgid "My tools"
+msgstr "Mijn tools"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:198
+msgid "No tools match these filters."
+msgstr "Geen tools voldoen aan deze filters."
+
+#. Booster v10 discovery presentation.
+#: includes/core/class-wcj-admin.php:952
+msgid "No tools match this view. Clear the search, choose All categories or switch to All tools."
+msgstr "Geen tools passen bij deze weergave. Wis de zoekopdracht, kies Alle categorieën of ga naar Alle tools."
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-dashboard.php:72
+msgid "Open setup and blueprints"
+msgstr "Instellen en blauwdrukken openen"
+
+#. Booster v10 discovery presentation.
+#: includes/class-wcj-returns.php:419
+msgid "Review submitted return requests in this queue. Approval records a decision, not receipt of goods. Refunds, restocking and payments remain separate merchant actions. Guest access requires a separately enabled, compatible HTTPS verification page and private auth storage."
+msgstr "Bekijk ingediende retouraanvragen in deze wachtrij. Goedkeuring legt een beslissing vast, niet de ontvangst van goederen. Terugbetalingen, voorraadherstel en betalingen blijven afzonderlijke handelingen van de winkelier. Gasttoegang vereist een afzonderlijk ingeschakelde, compatibele HTTPS-verificatiepagina en afgeschermde authenticatieopslag."
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:70
+msgid "Search tool names, descriptions or tasks..."
+msgstr "Zoek op toolnaam, beschrijving of taak..."
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:69
+msgid "Search tools"
+msgstr "Tools zoeken"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:100
+msgid "Setup and blueprints"
+msgstr "Instellen en blauwdrukken"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:235
+msgid "Suggested tools"
+msgstr "Voorgestelde tools"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:238
+msgid "Use search and categories to find tools. Suggested tools requires JavaScript."
+msgstr "Gebruik zoeken en categorieën om tools te vinden. Voorgestelde tools vereist JavaScript."
+
+#. Booster v10 discovery presentation.
+#: includes/settings/wcj-settings-checkout-custom-fields.php:36
+msgid "Use the native field settings below. Checkout Blocks support text, select and checkbox fields; radio fields appear as a select. Other field types remain Classic Checkout only. Conditional Blocks fields require WooCommerce 9.9 or later. Email options apply across this module."
+msgstr "Gebruik de bestaande veldinstellingen hieronder. Checkout Blocks ondersteunt tekstvelden, keuzelijsten en selectievakjes; keuzerondjes worden als keuzelijst weergegeven. Andere veldtypen werken alleen in Classic Checkout. Voorwaardelijke Blocks-velden vereisen WooCommerce 9.9 of nieuwer. E-mailopties gelden voor de hele module."
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:206
+msgid "branded invoice receipt packing slip document pdf"
+msgstr "huisstijl factuur ontvangstbewijs pakbon document pdf"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:201
+msgid "button wording cart text"
+msgstr "knop tekst winkelwagen formulering"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:202
+msgid "button wording place order checkout text"
+msgstr "knop tekst bestelling plaatsen afrekenen formulering"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:208
+msgid "checkout extra fields classic blocks"
+msgstr "afrekenen extra velden classic blocks"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:204
+msgid "extra product options addons"
+msgstr "extra productopties uitbreidingen"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:207
+msgid "multiple currencies currency switcher"
+msgstr "meerdere valuta valutaschakelaar"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:203
+msgid "price prefix suffix wording text"
+msgstr "prijs voorvoegsel achtervoegsel formulering tekst"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:205
+msgid "recommendations similar products"
+msgstr "aanbevelingen vergelijkbare producten"
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:209
+msgid "return requests approval queue"
+msgstr "retouraanvragen goedkeuring wachtrij"

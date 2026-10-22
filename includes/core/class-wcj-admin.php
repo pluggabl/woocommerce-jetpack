@@ -289,7 +289,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				wp_enqueue_style( 'wcj-admin-select2', esc_url( wcj_plugin_url() ) . '/includes/lib/select2/css/select2.min.css', array(), w_c_j()->version );
 				wp_enqueue_style( 'wcj-admin-new-style', esc_url( wcj_plugin_url() ) . '/includes/css/admin-style.css', array(), time() );
 				wp_enqueue_script( 'wcc-admin-select2', esc_url( wcj_plugin_url() ) . '/includes/lib/select2/js/select2.min.js', array(), w_c_j()->version, true );
-				wp_enqueue_script( 'wcj-admin-new-script', esc_url( wcj_plugin_url() ) . '/includes/js/admin-script.js', array( 'jquery' ), w_c_j()->version, true );
+				wp_enqueue_script( 'wcj-admin-new-script', esc_url( wcj_plugin_url() ) . '/includes/js/admin-script.js', array( 'jquery' ), w_c_j()->version . '-discovery-1', true );
 
 				wp_localize_script(
 					'wcj-admin-new-script',
@@ -583,35 +583,29 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 * @version 7.0.0
 		 */
 		public function output_cats_submenu() {
-			global $current_section;
-			$wpnonce     = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
-			$current_cat = isset( $_REQUEST['wcj-cat'] ) && ! empty( $_REQUEST['wcj-cat'] ) ? sanitize_title( wp_unslash( $_REQUEST['wcj-cat'] ) ) : 'prices_and_currencies';
-
-			$section    = ( isset( $_REQUEST['section'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) : '' );
-			$wcj_search = ( isset( $_REQUEST['wcj_search'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_search'] ) ) : '' );
-
-			if ( 'active' === $section || '' !== $wcj_search ) {
-				$current_cat = 'active';
+			// Read-only catalog navigation; preserve My tools and the query.
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended
+			$current_cat = isset( $_GET['wcj-cat'] ) ? sanitize_key( wp_unslash( $_GET['wcj-cat'] ) ) : '';
+			$section     = isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '';
+			$query       = isset( $_GET['wcj_search'] ) ? sanitize_text_field( wp_unslash( $_GET['wcj_search'] ) ) : '';
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
+			$args = array(
+				'page'          => 'wcj-plugins',
+				'wcj-cat-nonce' => wp_create_nonce( 'wcj-cat-nonce' ),
+			);
+			if ( 'active' === $section ) {
+				$args['section'] = 'active';
 			}
-
-			if ( empty( $this->cats ) ) {
-				return;
+			if ( '' !== $query ) {
+				$args['wcj_search'] = $query;
 			}
-			echo '<ul>';
-			$array_keys = array_keys( $this->cats );
+			echo '<ul><li><a href="' . esc_url( add_query_arg( $args, admin_url( 'admin.php' ) ) ) . '"' . ( '' === $current_cat ? ' class="active" aria-current="page"' : '' ) . '>' . esc_html__( 'All categories', 'woocommerce-jetpack' ) . '</a></li>';
 			foreach ( $this->cats as $id => $label_info ) {
-				$dashboard_section = '';
 				if ( 'dashboard' === $id ) {
 					continue;
 				}
-				echo wp_kses_post(
-					'<li ' . $id . '>
-	          			<a href="' . admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . sanitize_title( $id ) . '' . $dashboard_section ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '" class="' . ( $current_cat === $id ? 'active' : '' ) . '">
-	          				<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/' . $label_info['icon'] . '">
-	          				<span class="wcj_admin_span">' . $label_info['label'] . '<span>
-	          			</a>
-	          		</li>'
-				);
+				$args['wcj-cat'] = $id;
+				echo '<li><a href="' . esc_url( add_query_arg( $args, admin_url( 'admin.php' ) ) ) . '"' . ( $current_cat === $id ? ' class="active" aria-current="page"' : '' ) . '><img alt="" src="' . esc_url( wcj_plugin_url() . '/assets/images/' . $label_info['icon'] ) . '"><span class="wcj_admin_span">' . esc_html( $label_info['label'] ) . '</span></a></li>';
 			}
 			echo '</ul>';
 		}
@@ -840,21 +834,11 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		public function output_modules( $skip_section = '' ) {
 			$html            = '';
 			$wpnonce         = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
-			$settings        = $this->get_settings( 'all_module' );
-			$cat_id          = ( isset( $_GET['wcj-cat'] ) && '' !== sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) ) ? sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) : 'prices_and_currencies';
+			$settings        = is_array( $this->module_statuses ) ? $this->module_statuses : array();
+			$cat_id          = ( isset( $_GET['wcj-cat'] ) && '' !== sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) ) ? sanitize_text_field( wp_unslash( $_GET['wcj-cat'] ) ) : '';
 			$setting_section = ( isset( $_GET['section'] ) && '' !== sanitize_text_field( wp_unslash( $_GET['section'] ) ) ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '';
 			$wcj_search      = ( isset( $_REQUEST['wcj_search'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_search'] ) ) : '' );
 			usort( $settings, array( $this, 'compare_for_usort' ) );
-
-			$wcj_search_results = array();
-			if ( '' !== $wcj_search ) {
-				$wcj_search_results = $this->wcj_array_search( array_column( $settings, 'title' ), '%' . $wcj_search . '%' );
-				if ( empty( $wcj_search_results ) ) {
-					$search_result_msg = __( 'Your search', 'woocommerce-jetpack' ) . ': ' . $wcj_search . ' ' . __( 'did not match with any plugins. please try different keywords.', 'woocommerce-jetpack' );
-					$html             .= wp_kses_post( '<div style="padding:15px;"><p><strong>' . $search_result_msg . '</strong></p></div>' );
-
-				}
-			}
 
 			$total_modules = 0;
 			foreach ( $settings as $key => $the_feature ) {
@@ -862,34 +846,22 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				$section = str_replace( 'wcj_', '', $section );
 				$section = str_replace( '_enabled', '', $section );
 
-				if ( '' !== $wcj_search ) {
-					if ( ! array_key_exists( $key, $wcj_search_results ) ) {
-						continue;
-					}
-					if ( wcj_is_module_deprecated( $section, false, true ) ) {
-						continue;
-					}
-				} else {
-					if ( 'checkbox' !== $the_feature['type'] ) {
-						continue;
-					}
-
-					if ( $section === $skip_section ) {
-						continue;
-					}
-					if ( wcj_is_module_deprecated( $section, false, true ) ) {
-						continue;
-					}
-					if ( '' !== $cat_id ) {
-						if ( 'active_modules_only' === $cat_id || 'active' === $skip_section ) {
-
-							if ( 'no' === wcj_get_option( $the_feature['id'], 'no' ) ) {
-								continue;
-							}
-						} elseif ( $cat_id !== $this->get_cat_by_section( $section ) ) {
-							continue;
-						}
-					}
+				if ( 'checkbox' !== $the_feature['type'] || $section === $skip_section || wcj_is_module_deprecated( $section, false, true ) ) {
+					continue;
+				}
+				// Preserve the native PDF category header's existing role restriction.
+				if ( 'pdf_invoicing' === $section && wcj_is_module_enabled( 'modules_by_user_roles' ) && ! wcj_check_modules_by_user_roles( 'pdf_invoicing' ) ) {
+					continue;
+				}
+				if ( ( 'active' === $skip_section || 'active_modules_only' === $cat_id ) && 'yes' !== wcj_get_option( $the_feature['id'], 'no' ) ) {
+					continue;
+				}
+				if ( '' !== $cat_id && 'active_modules_only' !== $cat_id && $cat_id !== $this->get_cat_by_section( $section ) ) {
+					continue;
+				}
+				$description = isset( $the_feature['wcj_desc'] ) ? $the_feature['wcj_desc'] : ( isset( $the_feature['desc_tip'] ) ? $the_feature['desc_tip'] : '' );
+				if ( ! WCJ_Module_Filters::matches_catalog_search( $section, $the_feature['title'], $description, $wcj_search ) ) {
+					continue;
 				}
 
 				++$total_modules;
@@ -907,14 +879,14 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					$lite_ribbon = '';
 				}
 
-				if ( 'pdf_invoicing' !== $cat_id ) {
-					$html .= '<div class="wcj-plugins-sing-acc-box-head"' . $module_data_attrs . '>
+				if ( 'pdf_invoicing' !== $cat_id || '' === $skip_section || 'active' === $skip_section ) {
+					$html .= '<div class="wcj-catalog-item wcj-plugins-sing-acc-box-head"' . $module_data_attrs . '>
 						<div class="wcj-plugins-sing-head-lf">
 							<span class="wcj_admin_span">
 								<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pr-sm-icn.png" alt="">
 							</span>
 							<div class="wcj-plugins-sing-head-rh">
-								<a href="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . sanitize_title( $cat_id ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=' . $section ) ) . '">
+								<a href="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . sanitize_title( $this->get_cat_by_section( $section ) ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=' . $section ) ) . '">
 									<h5>' . esc_html( $the_feature['title'] ) . ' ' . $lite_ribbon . '</h5>
 								</a>
 								<p>' . esc_html( isset( $the_feature['wcj_desc'] ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . '</p>
@@ -941,7 +913,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				}
 			}
 
-			if ( 'pdf_invoicing' === $cat_id ) {
+			if ( 'pdf_invoicing' === $cat_id && '' !== $skip_section && 'active' !== $skip_section ) {
 				$sections = $this->get_sections();
 
 				$pdf_invoicing_menu = array();
@@ -980,10 +952,8 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 
 			echo wp_kses_post( $html );
 
-			if ( 0 === $total_modules && 'active' === $skip_section ) {
-				echo wp_kses_post( '<div id="message" class="updated inline wcj_setting_updated wcj_setting_updated_cat" bis_skin_checked="1"><p><strong>' . __( 'No Active module found.', 'woocommerce-jetpack' ) . '</strong></p></div>' );
-			} elseif ( 0 === $total_modules && '' === $setting_section ) {
-				echo wp_kses_post( '<div id="message" class="updated inline wcj_setting_updated wcj_setting_updated_cat" bis_skin_checked="1"><p><strong>' . __( 'No Modules available.', 'woocommerce-jetpack' ) . '</strong></p></div>' );
+			if ( 0 === $total_modules && ( '' === $setting_section || 'active' === $setting_section ) ) {
+				echo '<p class="wcj-module-empty-state" role="status">' . esc_html__( 'No tools match this view. Clear the search, choose All categories or switch to All tools.', 'woocommerce-jetpack' ) . '</p>';
 			}
 		}
 

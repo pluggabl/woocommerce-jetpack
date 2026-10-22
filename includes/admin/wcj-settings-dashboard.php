@@ -69,7 +69,7 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 					<p><?php esc_html_e( 'The all-in-one Toolkit to Supercharge your WooCommerce Site with 120+ modules! Booster helps 100,000+ website owners increase sales, engage visitors and more. Save time and money with ready-to-use solutions!' ); ?></p>
 					<div class="wcj-welcome-banner-btn">
 						<div class="wcj-btn-lg-main">
-							<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins' ) ); ?>" class="wcj-btn-lg wcj-btn-lg-deshboard"><?php esc_html_e( 'Launch Getting Started Wizard ', 'woocommerce-jetpack' ); ?><img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/wcj-rh-arw.png'; ?>"></a>
+							<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-getting-started#launch-onboarding-modal' ) ); ?>" class="wcj-btn-lg wcj-btn-lg-deshboard"><?php esc_html_e( 'Open setup and blueprints', 'woocommerce-jetpack' ); ?><img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/wcj-rh-arw.png'; ?>"></a>
 						</div>
 						<div class="wcj-btn-link">
 							<a href="javascript:;" data-targetclass="wcj_desh_welcome_modal" class="wcj_close_deshboard_modal"><?php esc_html_e( 'Dismiss', 'woocommerce-jetpack' ); ?></a>

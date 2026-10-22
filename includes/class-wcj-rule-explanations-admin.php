@@ -187,7 +187,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations_Admin' ) ) :
 			$this->render_readiness();
 			$this->render_payment_admin();
 			$this->render_shipping_admin();
-			echo '<p>' . esc_html__( 'Evaluate your configured gateway fee or discount using one merchant-supplied scenario. This is not an actual shopper, order or gateway-availability diagnosis. No cart, session, order or setting is changed.', 'woocommerce-jetpack' ) . '</p>';
+			echo '<p>' . esc_html__( 'Check one scenario against your configured gateway fee or discount. This is not an actual shopper, order or gateway-availability diagnosis. No cart, session, order or setting is changed.', 'woocommerce-jetpack' ) . '</p>';
 			echo '<p>' . esc_html__( 'Enter merchandise total after discounts, excluding tax, and shipping total excluding tax. Enter merchandise subtotal tax BEFORE discounts and shipping tax separately. The existing fee rule chooses which amounts to include. The result is before any tax on the fee, not a final payable total.', 'woocommerce-jetpack' ) . '</p>';
 			if ( null !== $result ) {
 				$this->render_result( $result ); }
