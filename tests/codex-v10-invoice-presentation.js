@@ -98,6 +98,9 @@ async function click( op, data ) {
 	assert.equal( focused, status, 'negative response receives focus' );
 	await click( 'sample', { pdf: Buffer.from( '%PDF-fixture' ).toString( 'base64' ), message: 'Sample only, no settings saved.' } );
 	assert.equal( elements.get( 'wcj-setup-open' ).hidden, false );
+	assert.equal( focused, elements.get( 'wcj-setup-open' ), 'successful sample focuses the newly revealed PDF link' );
+	assert.equal( focused.href, 'blob:fixture', 'focused sample link points to the generated PDF' );
+	assert.equal( status.textContent, 'Sample only, no settings saved.', 'sample status remains available for the live region' );
 	assert.equal( status.classList.contains( 'is-error' ), false );
 	await click( 'review', { fingerprint: 'review-1', changes: [ { label: '<unsafe>', before_display: 'Old', after_display: 'New' } ], gateway_restrictions: [] } );
 	assert.equal( focused, heading, 'newly revealed review heading receives focus' );
@@ -106,6 +109,7 @@ async function click( op, data ) {
 	assert.ok( actions.activate.disabled, 'attachment rehearsal is still required' );
 	await click( 'rehearse', { constructed: true, removed: true, message: 'Attachment built and removed. No email sent.' } );
 	assert.equal( actions.activate.disabled, false );
+	assert.equal( focused, status, 'other non-review success retains status focus' );
 	await click( 'activate', { message: 'Server confirmed saved settings.' } );
 	const saved = requests.at( -1 ).options.body.values;
 	assert.equal( saved.action, 'wcj_invoice_setup_activate' );

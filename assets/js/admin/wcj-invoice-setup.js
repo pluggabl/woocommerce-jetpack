@@ -111,7 +111,7 @@
 					fingerprint = ''; panel.hidden = true;
 					if ( data.conflicts.length ) { status.textContent += '\n' + data.conflicts.join( '\n' ); }
 				} else if ( op === 'activate' ) { fingerprint = ''; panel.hidden = true; }
-				if ( op !== 'review' ) { status.focus(); }
+				if ( op === 'sample' ) { open.focus(); } else if ( op !== 'review' ) { status.focus(); }
 			} catch ( error ) { showStatus( error.message || wcjInvoiceSetup.failed, true, true ); }
 			finally {
 				busy = false;
