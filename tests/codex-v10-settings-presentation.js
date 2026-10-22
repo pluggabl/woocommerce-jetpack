@@ -125,7 +125,7 @@ function build( section, edit = () => {}, hash = '', enhance = true, withConfig 
 	const observers = [];
 	const window = { location: { hash }, handlers: {}, addEventListener( name, handler ) { ( this.handlers[ name ] ||= [] ).push( handler ); }, dispatch( name ) { for ( const handler of this.handlers[ name ] || [] ) { handler(); } }, getComputedStyle: doc.computedStyle, setTimeout: ( callback, delay ) => clock.set( callback, delay ), clearTimeout: id => clock.clear( id ), MutationObserver: class { constructor( callback ) { observers.push( callback ); } observe() {} } };
 	const queueReads = [];
-	window.jQuery = tab => { queueReads.push( tab ); return { is: selector => { assert.equal( selector, ':animated' ); return clock.now < ( tab.animationUntil || 0 ); }, queue: name => { assert.equal( name, 'fx' ); return tab.stalled || clock.now < ( tab.queueUntil || 0 ) ? [ 'inprogress' ] : []; } }; };
+	window.jQuery = tab => { queueReads.push( tab ); return { is: selector => { assert.equal( selector, ':animated' ); return clock.now < ( tab.animationUntil || 0 ); }, queue: name => { assert.equal( name, 'fx' ); return tab.stalled || clock.now < ( tab.queueUntil || 0 ) ? Array( tab.queueSlots || 1 ).fill( 'inprogress' ) : []; } }; };
 	window.jQuery.fx = { speeds: { slow: 600 } };
 	const state = { form, doc, controls, rows, tabs, links, active, observers, window, clock, queueReads };
 	edit( state );
@@ -234,6 +234,62 @@ multiple.field.emit( 'invalid' ); later.emit( 'invalid' );
 assert.equal( multiple.state.active.value, general, 'later invalid events in the burst do not switch away from the first invalid tab' );
 multiple.state.clock.advance( 600 ); assert.ok( multiple.state.doc.activeElement === multiple.field, 'first invalid field wins across native tabs' );
 assert.ok( multiple.state.doc.focusCalls.length === 1 && multiple.state.doc.focusCalls[ 0 ] === multiple.field, 'multiple invalid fields produce exactly one focus' ); clean( multiple.state, 'multiple invalid success' );
+// These same-tab pairs model rapid native navigation with active and queued
+// slow fades. Native validation still emits both invalid events synchronously.
+for ( const slots of [ 1, 2, 3 ] ) {
+	const pending = hiddenInvalid(); const second = invalidField( pending.state, 'wcj_product_info_related_products_columns' ); second.value = '1.5';
+	pending.state.tabs[ general ].parentElement.queueSlots = slots; pending.state.queueDelay = slots * 600;
+	const before = pending.state.values();
+	assert.equal( pending.field.emit( 'invalid' ).defaultPrevented, false );
+	assert.equal( second.emit( 'invalid' ).defaultPrevented, false );
+	assert.equal( pending.state.active.value, general, 'same-tab invalid pair reveals General without switching to a later field' );
+	pending.state.clock.advance( slots * 600 - 1 );
+	assert.ok( pending.state.doc.activeElement === pending.state.doc.body, slots + ' native fade(s): no premature focus' );
+	pending.state.clock.advance( 1 );
+	assert.ok( pending.state.doc.activeElement === pending.field, slots + ' native fade(s): same-tab invalid pair focuses the first field' );
+	assert.deepEqual( pending.state.doc.focusCalls, [ pending.field ], 'exactly the first invalid receives focus' );
+	assert.deepEqual( pending.state.values(), before, 'queued reveal/focus preserves both invalid values and all native controls' );
+	assert.ok( pending.state.queueReads.every( tab => tab.id === general ), 'queued work inspects only the first target tab' ); clean( pending.state, 'same-tab queued pair' );
+}
+for ( const late of [ 750, 900 ] ) {
+	const pending = hiddenInvalid(); pending.field.emit( 'invalid' );
+	// Simulate a delayed event-loop callback after the soft 700ms deadline.
+	pending.state.clock.now = late; pending.state.clock.advance( 0 );
+	assert.ok( pending.state.doc.activeElement === pending.field, 'a settled target may focus at ' + late + 'ms within its fixed 200ms late-callback allowance' );
+	assert.deepEqual( pending.state.doc.focusCalls, [ pending.field ] ); clean( pending.state, 'late settled success' );
+}
+for ( const scenario of [ 'late-stale', 'queued-stalled', 'queue-over-cap', 'budget-not-extended', 'max-budget-stalled', 'max-hard-cap' ] ) {
+	const pending = hiddenInvalid(); const tab = pending.state.tabs[ general ].parentElement;
+	if ( scenario === 'queued-stalled' ) { tab.queueSlots = 3; tab.stalled = true; }
+	if ( scenario === 'queue-over-cap' ) { tab.queueSlots = 4; pending.state.queueDelay = 2500; }
+	if ( scenario === 'budget-not-extended' ) { pending.state.queueDelay = 1200; }
+	if ( scenario === 'max-hard-cap' || scenario === 'max-budget-stalled' ) { pending.state.window.jQuery.fx.speeds.slow = 1000; tab.queueSlots = 3; pending.state.queueDelay = 2000; }
+	if ( scenario === 'max-budget-stalled' ) { tab.stalled = true; }
+	pending.field.emit( 'invalid' );
+	if ( scenario === 'budget-not-extended' ) { pending.state.clock.advance( 100 ); tab.queueSlots = 3; }
+	if ( scenario === 'late-stale' ) { pending.state.clock.now = 901; }
+	if ( scenario === 'max-hard-cap' ) { pending.state.clock.now = 2201; }
+	pending.state.clock.advance( scenario === 'late-stale' || scenario === 'max-hard-cap' ? 0 : scenario === 'budget-not-extended' ? 600 : scenario === 'max-budget-stalled' ? 2000 : 1900 );
+	assert.ok( pending.state.doc.activeElement === pending.state.doc.body, scenario + ': safe no-focus fallback, not success' );
+	assert.ok( pending.state.queueReads.length <= 82, scenario + ': fixed maximum of 81 polls plus one queue snapshot' ); clean( pending.state, scenario + ' bounded completion' );
+	tab.stalled = false; pending.state.clock.advance( 3000 );
+	assert.ok( pending.state.doc.activeElement === pending.state.doc.body, scenario + ': no stale focus' ); clean( pending.state, scenario + ' no late timer' );
+}
+// The longer queue allowance must retain every user-cancellation and target-
+// eligibility guard, rather than stealing focus when native fades finish later.
+for ( const terminal of [ 'pointerdown', 'keydown', 'click', 'hashchange', 'corrected', 'disabled', 'removed', 'foreign-form', 'not-validatable' ] ) {
+	const pending = hiddenInvalid(); pending.state.tabs[ general ].parentElement.queueSlots = 2; pending.state.queueDelay = 1200;
+	pending.field.emit( 'invalid' ); pending.state.clock.advance( 100 );
+	if ( terminal === 'hashchange' ) { pending.state.window.dispatch( terminal ); }
+	else if ( [ 'pointerdown', 'keydown', 'click' ].includes( terminal ) ) { pending.state.doc.body.emit( terminal, { isTrusted: true } ); }
+	else if ( terminal === 'corrected' ) { pending.field.validity.valid = true; }
+	else if ( terminal === 'disabled' ) { pending.field.disabled = true; }
+	else if ( terminal === 'not-validatable' ) { pending.field.willValidate = false; }
+	else if ( terminal === 'removed' ) { const parent = pending.field.parentElement; parent.children.splice( parent.children.indexOf( pending.field ), 1 ); pending.field.parentNode = null; }
+	else { const other = pending.state.doc.createElement( 'form' ); pending.state.doc.body.appendChild( other ); other.appendChild( pending.field ); }
+	pending.state.clock.advance( 25 ); clean( pending.state, 'queued ' + terminal ); pending.state.clock.advance( 3000 );
+	assert.ok( pending.state.doc.activeElement === pending.state.doc.body, 'queued ' + terminal + ': no later focus' ); clean( pending.state, 'queued ' + terminal + ' settled' );
+}
 for ( const action of [ 'pointerdown', 'keydown', 'click', 'hashchange' ] ) {
 	const pending = hiddenInvalid(); pending.field.emit( 'invalid' ); pending.state.clock.advance( 100 );
 	if ( action === 'hashchange' ) { pending.state.window.dispatch( action ); } else { pending.state.links[ order ].emit( action, { isTrusted: true } ); }

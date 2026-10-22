@@ -129,23 +129,32 @@
 		function focusInvalid( job ) {
 			if ( invalidFocus !== job ) { return; }
 			var target = job.target;
-			if ( Date.now() >= job.deadline || ! target.isConnected || target.closest( 'form' ) !== form || ! target.willValidate || ! target.validity || target.validity.valid || target.disabled ) { cancelInvalidFocus(); return; }
+			if ( ! target.isConnected || target.closest( 'form' ) !== form || ! target.willValidate || ! target.validity || target.validity.valid || target.disabled ) { cancelInvalidFocus(); return; }
 			var tab = target.closest( '.wcj-tab-box' );
 			var queue = tab && typeof window.jQuery === 'function' ? window.jQuery( tab ) : null;
 			var busy = queue && ( queue.is( ':animated' ) || queue.queue( 'fx' ).length );
 			var visible = target.getClientRects().length && window.getComputedStyle( target ).visibility === 'visible' && ( ! tab || Number( window.getComputedStyle( tab ).opacity ) === 1 );
-			if ( ! busy && visible ) { cancelInvalidFocus(); target.focus(); return; }
+			var now = Date.now();
+			// A late callback may still focus a settled target within the fixed stale cap.
+			if ( ! busy && visible && now <= job.staleDeadline ) { cancelInvalidFocus(); target.focus(); return; }
 			// A stalled or foreign animation fails safely without retaining a focus job.
-			if ( --job.polls <= 0 ) { cancelInvalidFocus(); return; }
+			if ( now >= job.deadline || now > job.staleDeadline || --job.polls <= 0 ) { cancelInvalidFocus(); return; }
 			job.timer = window.setTimeout( function () { focusInvalid( job ); }, 25 );
 		}
 		form.addEventListener( 'invalid', function ( event ) {
 			// Native validation can emit several invalid events in one synchronous burst.
 			if ( invalidFocus || ! event.target.matches( 'input:not([type="hidden"]),select,textarea' ) ) { return; }
 			var slow = window.jQuery && window.jQuery.fx && window.jQuery.fx.speeds ? Number( window.jQuery.fx.speeds.slow ) : 600;
-			var job = { target: event.target, deadline: Date.now() + Math.min( 1000, ( slow > 0 ? slow : 600 ) + 100 ), polls: 41, timer: null };
+			var job = { target: event.target, timer: null };
 			invalidFocus = job;
 			reveal( job.target );
+			// Snapshot only this native tab's existing queue; never extend or mutate it.
+			var tab = job.target.closest( '.wcj-tab-box' );
+			var queued = tab && typeof window.jQuery === 'function' ? window.jQuery( tab ).queue( 'fx' ).length : 1;
+			var budget = Math.min( 2000, ( slow > 0 ? slow : 600 ) * Math.min( 3, Math.max( 1, queued ) ) + 100 );
+			job.deadline = Date.now() + budget;
+			job.staleDeadline = job.deadline + 200;
+			job.polls = Math.ceil( budget / 25 ) + 1;
 			// Defer until native validation has completed, then wait for this tab's fx queue.
 			job.timer = window.setTimeout( function () { focusInvalid( job ); }, 0 );
 		}, true );

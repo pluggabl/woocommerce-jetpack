@@ -34,7 +34,7 @@ class WCJ_Settings_Presentation {
 			return;
 		}
 		wp_enqueue_style( 'wcj-settings-presentation', wcj_plugin_url() . '/assets/css/admin/wcj-settings-presentation.css', array( 'wcj-admin-new-style' ), '1.1' );
-		wp_enqueue_script( 'wcj-settings-presentation', wcj_plugin_url() . '/assets/js/admin/wcj-settings-presentation.js', array( 'wcj-admin-new-script' ), '1.1', true );
+		wp_enqueue_script( 'wcj-settings-presentation', wcj_plugin_url() . '/assets/js/admin/wcj-settings-presentation.js', array( 'wcj-admin-new-script' ), '1.2', true );
 	}
 
 	/**
