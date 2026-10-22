@@ -15,14 +15,26 @@
 		var logoName = document.getElementById( 'wcj-setup-logo-name' );
 		var removeLogo = document.getElementById( 'wcj-setup-remove-logo' );
 		var fingerprint = '', sample = false, rehearsal = false, busy = false, objectUrl = '';
+		function showStatus( message, isError, focus ) {
+			status.textContent = message;
+			status.classList.toggle( 'is-error', Boolean( isError ) );
+			if ( focus ) { status.focus(); }
+		}
 		function refresh() { activate.disabled = busy || ! fingerprint || ! confirm.checked || ! sample || ! rehearsal; }
 		function invalidate() {
 			fingerprint = ''; sample = false; rehearsal = false; confirm.checked = false; panel.hidden = true;
 			download.hidden = true; open.hidden = true;
 			download.removeAttribute( 'href' ); open.removeAttribute( 'href' );
 			if ( objectUrl ) { URL.revokeObjectURL( objectUrl ); objectUrl = ''; }
-			status.textContent = wcjInvoiceSetup.changed; refresh();
+			showStatus( wcjInvoiceSetup.changed, false, false ); refresh();
 		}
+		form.addEventListener( 'invalid', function ( event ) {
+			var details = event.target.closest( 'details' );
+			while ( details ) {
+				details.open = true;
+				details = details.parentElement.closest( 'details' );
+			}
+		}, true );
 		form.addEventListener( 'input', function ( event ) {
 			if ( event.target !== confirm ) {
 				if ( event.target === logo ) {
@@ -35,7 +47,7 @@
 		form.addEventListener( 'submit', function ( event ) { event.preventDefault(); } );
 		document.getElementById( 'wcj-setup-choose-logo' ).addEventListener( 'click', function () {
 			if ( busy ) { return; }
-			if ( ! window.wp || ! wp.media ) { status.textContent = wcjInvoiceSetup.mediaUnavailable; return; }
+			if ( ! window.wp || ! wp.media ) { showStatus( wcjInvoiceSetup.mediaUnavailable, true, true ); return; }
 			var picker = wp.media( { title: wcjInvoiceSetup.chooseLogo, button: { text: wcjInvoiceSetup.useLogo }, library: { type: [ 'image/jpeg', 'image/png' ] }, multiple: false } );
 			picker.on( 'select', function () {
 				var selected = picker.state().get( 'selection' ).first().toJSON();
@@ -62,13 +74,14 @@
 			body.append( 'fingerprint', fingerprint );
 			busy = true; root.querySelectorAll( 'button' ).forEach( function ( item ) { item.disabled = true; } );
 			form.querySelectorAll( 'input,select,textarea' ).forEach( function ( item ) { item.disabled = true; } );
-			status.textContent = wcjInvoiceSetup.working;
+			root.setAttribute( 'aria-busy', 'true' );
+			showStatus( wcjInvoiceSetup.working, false, false );
 			try {
 				var response = await fetch( wcjInvoiceSetup.url, { method: 'POST', credentials: 'same-origin', body: body, cache: 'no-store' } );
 				var result = await response.json();
 				if ( ! result.success ) { throw new Error( result.data && result.data.message ? result.data.message : wcjInvoiceSetup.failed ); }
 				var data = result.data;
-				status.textContent = data.message || '';
+				showStatus( data.message || '', false, false );
 				if ( op === 'sample' ) {
 					if ( objectUrl ) { URL.revokeObjectURL( objectUrl ); }
 					var binary = atob( data.pdf );
@@ -93,13 +106,16 @@
 						cell.colSpan = 3; cell.textContent = wcjInvoiceSetup.noChanges; row.appendChild( cell ); table.appendChild( row );
 					}
 					document.getElementById( 'wcj-setup-changes' ).textContent = JSON.stringify( { changes: data.changes, existing_gateway_restrictions: data.gateway_restrictions }, null, 2 );
+					document.getElementById( 'wcj-setup-review-heading' ).focus();
 				} else if ( op === 'undo' ) {
 					fingerprint = ''; panel.hidden = true;
 					if ( data.conflicts.length ) { status.textContent += '\n' + data.conflicts.join( '\n' ); }
 				} else if ( op === 'activate' ) { fingerprint = ''; panel.hidden = true; }
-			} catch ( error ) { status.textContent = error.message || wcjInvoiceSetup.failed; }
+				if ( op !== 'review' ) { status.focus(); }
+			} catch ( error ) { showStatus( error.message || wcjInvoiceSetup.failed, true, true ); }
 			finally {
 				busy = false;
+				root.setAttribute( 'aria-busy', 'false' );
 				root.querySelectorAll( 'button,input,select,textarea' ).forEach( function ( item ) { item.disabled = false; } );
 				refresh();
 			}

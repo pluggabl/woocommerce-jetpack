@@ -31,7 +31,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function wcj_quick_start_render_box( $module_id ) {
 	if ( 'pdf_invoicing' === $module_id && class_exists( 'WCJ_Invoice_Setup' ) ) {
-		echo '<p><a class="button" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Open branded document setup', 'woocommerce-jetpack' ) . '</a></p>';
+		if ( current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown -- Registered by WooCommerce.
+			echo '<p><a class="button" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Open invoice guide', 'woocommerce-jetpack' ) . '</a></p>';
+		}
 		return;
 	}
 	// Validate input.

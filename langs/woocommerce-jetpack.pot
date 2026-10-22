@@ -24389,3 +24389,120 @@ msgstr ""
 #. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
 msgid "Include limits a shipping method to matching carts. Exclude hides a shipping method when the cart matches. For category OR minimum-order free shipping, use two instances in the same zone: no native requirement plus category Include on one; a native minimum without category Include on the other. Exclude that category from the minimum instance to avoid duplicate free rates. Match any versus all items and cart versus package scope deliberately; verify coupons, taxes, roles, product exclusions and Shipping Options before changing existing rules."
 msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:47
+msgid "1. Add your business details"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:64
+msgid "2. Choose when the document is used"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:84
+msgid "3. Check a sample and review"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:91
+msgid "4. Save and activate reviewed settings"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:41
+msgid "A sample is not a production preview or proof of customer email delivery. All existing edition rights remain available in full invoice settings."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:37
+msgid "Add your business details, check a sample, then review the settings before you save and activate."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:38
+msgid "Back to Getting Started"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:36
+msgid "Branded invoice setup"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:578
+msgid "Check a stock sample with your business details, then review before saving. Already use invoices or a custom template? Open full invoice settings instead."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-wcj-invoice-setup.php:998
+msgid "Draft changed. Generate a new sample, repeat the attachment test and review before saving."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:85
+msgid "Generate and open a sample, test attachment creation, then review the exact settings changes. These checks do not save or activate settings."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:86
+msgid "Generate sample PDF"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:580
+#: includes/admin/views/invoice-setup.php:38
+msgid "Open full invoice settings"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:579
+#: includes/admin/wcj-quick-start-admin.php:35
+msgid "Open invoice guide"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:88
+msgid "Review settings changes"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:42
+msgid "Sample layout and language limits"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:40
+msgid "Samples use a stock design and synthetic data. Sample and attachment tests do not create orders, use invoice numbers, enable settings or send email. Existing custom templates cannot be replaced here."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:96
+msgid "Save and activate reviewed settings"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:95
+msgid "Saving is available after a sample, an attachment test and your confirmation. If you edit this draft, repeat the checks and review."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:577
+msgid "Set up a branded invoice"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:87
+msgid "Test attachment (no email sent)"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:44
+msgid "This draft has not been saved. Start with your business details below."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:100
+msgid "Undo this guide's settings changes"
+msgstr ""
