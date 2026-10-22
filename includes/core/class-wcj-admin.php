@@ -279,6 +279,10 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 
 			$active_page = ( isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '' );
 
+			require_once __DIR__ . '/../admin/class-wcj-settings-presentation.php';
+			$presentation_section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : '';
+			WCJ_Settings_Presentation::enqueue( $active_page, $presentation_section );
+
 			if ( 'wcj-dashboard' === $active_page || 'wcj-plugins' === $active_page || 'wcj-general-settings' === $active_page || 'wcj-license' === $active_page || 'wcj-tools' === $active_page ) {
 				wp_enqueue_style( 'wp-color-picker' );
 				wp_enqueue_script( 'wp-color-picker' );
@@ -1005,6 +1009,9 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 			$active_tab        = '';
 			$tab_ids_titles    = array();
 			$module_reset_link = '';
+
+			require_once __DIR__ . '/../admin/class-wcj-settings-presentation.php';
+			WCJ_Settings_Presentation::configure( $current_section, $settings );
 
 			if ( ! empty( $settings ) ) {
 				if ( 'title' === $settings[0]['type'] || 'checkbox' === $settings[0]['type'] ) {

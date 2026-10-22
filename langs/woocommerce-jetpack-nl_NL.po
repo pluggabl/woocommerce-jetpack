@@ -28616,3 +28616,138 @@ msgstr "Dit concept is niet opgeslagen. Begin hieronder met je bedrijfsgegevens.
 #: includes/admin/views/invoice-setup.php:100
 msgid "Undo this guide's settings changes"
 msgstr "Instellingswijzigingen van deze handleiding ongedaan maken"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:149
+msgid "Advanced: External product conditions"
+msgstr "Geavanceerd: voorwaarden voor externe producten"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:150
+msgid "Advanced: Grouped product conditions"
+msgstr "Geavanceerd: voorwaarden voor gegroepeerde producten"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:224
+msgid "Advanced: Limit where related products are hidden"
+msgstr "Geavanceerd: beperken waar gerelateerde producten worden verborgen"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:182
+msgid "Advanced: Limit which products receive labels"
+msgstr "Geavanceerd: beperken welke producten labels krijgen"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:205
+msgid "Advanced: Match product attributes"
+msgstr "Geavanceerd: producteigenschappen laten overeenkomen"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:151
+msgid "Advanced: Other product conditions"
+msgstr "Geavanceerd: voorwaarden voor overige producten"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:125
+msgid "Advanced: Payment gateway text override"
+msgstr "Geavanceerd: tekst van de betaalgateway overschrijven"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:181
+msgid "Advanced: Remove or replace price text"
+msgstr "Geavanceerd: prijstekst verwijderen of vervangen"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:180
+msgid "Advanced: Sale price text"
+msgstr "Geavanceerd: tekst bij de aanbiedingsprijs"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:215
+msgid "Advanced: Select related products manually"
+msgstr "Geavanceerd: gerelateerde producten handmatig selecteren"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:147
+msgid "Advanced: Simple product conditions"
+msgstr "Geavanceerd: voorwaarden voor eenvoudige producten"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:148
+msgid "Advanced: Variable product conditions"
+msgstr "Geavanceerd: voorwaarden voor variabele producten"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:121
+msgid "All settings are visible. Your unsaved edits are unchanged. Select a tab to return to the tabbed view."
+msgstr "Alle instellingen zijn zichtbaar. Je niet-opgeslagen wijzigingen blijven behouden. Selecteer een tabblad om terug te keren naar de tabbladweergave."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:199
+msgid "Category and tag relationships are enabled by default. Review them before changing advanced matching."
+msgstr "Relaties op basis van categorieën en tags zijn standaard ingeschakeld. Controleer ze voordat je geavanceerde overeenkomsten wijzigt."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:198
+msgid "Choose how related products are sorted. Random sorting ignores the ascending or descending order."
+msgstr "Kies hoe gerelateerde producten worden gesorteerd. Bij willekeurig sorteren wordt de oplopende of aflopende volgorde genegeerd."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:197
+msgid "Choose the number of related products and grid columns."
+msgstr "Kies het aantal gerelateerde producten en rasterkolommen."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:176
+msgid "Enable per-product editing below, then set labels on each product edit screen."
+msgstr "Schakel hieronder bewerken per product in en stel de labels daarna op elk productbewerkingsscherm in."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:143
+msgid "Enable per-product labels here, then edit individual labels on the product edit screen."
+msgstr "Schakel hier labels per product in en bewerk de afzonderlijke labels daarna op het productbewerkingsscherm."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:118
+msgid "Essentials"
+msgstr "Basisinstellingen"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:200
+msgid "Hide can remove the whole related-products section. Review its state before using the filters."
+msgstr "Verbergen kan de hele sectie met gerelateerde producten verwijderen. Controleer de instelling voordat je de filters gebruikt."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:126
+msgid "Keep this visible option off unless a payment gateway replaces your checkout button text."
+msgstr "Laat deze zichtbare optie uitgeschakeld, tenzij een betaalgateway de tekst van je afrekenknop vervangt."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:142
+msgid "Manage category groups below. Save after changing the number of groups."
+msgstr "Beheer hieronder de categoriegroepen. Sla op nadat je het aantal groepen hebt gewijzigd."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:173
+msgid "Set checkout button text, or leave it blank to keep the WooCommerce default. Both settings remain visible."
+msgstr "Stel de tekst van de afrekenknop in of laat het veld leeg om de WooCommerce-standaard te behouden. Beide instellingen blijven zichtbaar."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:120
+msgid "Show all settings"
+msgstr "Alle instellingen tonen"
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:144
+msgid "Start with single-product and archive labels. Conditional labels apply when this section is enabled."
+msgstr "Begin met labels voor product- en archiefpagina's. Voorwaardelijke labels gelden wanneer deze sectie is ingeschakeld."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:177
+msgid "Start with text before or after the price. HTML and blank values keep their existing meaning."
+msgstr "Begin met tekst voor of na de prijs. HTML en lege waarden behouden hun bestaande betekenis."
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:119
+msgid "Use the existing tabs and save buttons. Active or changed advanced options stay expanded. Edition restrictions still apply."
+msgstr "Gebruik de bestaande tabbladen en opslagknoppen. Actieve of gewijzigde geavanceerde opties blijven uitgeklapt. De beperkingen van je editie blijven gelden."
