@@ -8,6 +8,15 @@ const { execFileSync } = require( 'node:child_process' );
 const fixtures = JSON.parse( execFileSync( process.env.PHP_BINARY || 'php', [ path.join( __dirname, 'codex-v10-settings-presentation.php' ), '--fixtures', ...process.argv.slice( 2 ) ], { encoding: 'utf8' } ) );
 const code = fs.readFileSync( process.env.CODEX_SETTINGS_PRESENTATION_SOURCE || path.join( __dirname, '../assets/js/admin/wcj-settings-presentation.js' ), 'utf8' );
 
+// Source contract only: browser QA still owns real long-label/RTL geometry.
+const css = fs.readFileSync( process.env.CODEX_SETTINGS_PRESENTATION_CSS || path.join( __dirname, '../assets/css/admin/wcj-settings-presentation.css' ), 'utf8' );
+const showAllRule = css.match( /^form\[data-wcj-settings-presentation\] \.wcj-settings-show-all \{([^}]+)\}/m );
+assert.ok( showAllRule, 'long translated Show all action has a scoped reflow rule' );
+for ( const declaration of [ 'max-width: 100%;', 'white-space: normal;', 'overflow-wrap: anywhere;' ] ) {
+	assert.ok( showAllRule[ 1 ].includes( declaration ), 'scoped Show all reflow retains ' + declaration );
+}
+assert.ok( ! /overflow\s*:\s*(hidden|clip)|height\s*:/.test( showAllRule[ 1 ] ), 'reflow does not clip long text or override native automatic height' );
+
 function makeClock() {
 	const timers = new Map(); let next = 0;
 	return { now: 0, timers, set( callback, delay ) { const id = ++next; timers.set( id, { at: this.now + delay, callback } ); return id; }, clear( id ) { timers.delete( id ); }, advance( delay ) {
