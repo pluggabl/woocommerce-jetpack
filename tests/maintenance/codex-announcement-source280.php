@@ -94,10 +94,10 @@ $main = 'free' === $tier ? 'woocommerce-jetpack.php' : 'booster-' . $tier . '-fo
 $main_source = file_get_contents( $root . '/' . $tier . '/' . $main );
 $readme = file_get_contents( $root . '/' . $tier . '/readme.txt' );
 $admin = file_get_contents( $root . '/' . $tier . '/includes/core/class-wcj-admin.php' );
-check279( 'main-header-version', 1 === preg_match( '/\* Version: 9\.0\.0\r?\r?\n/', $main_source ), true );
-check279( 'runtime-version', false !== strpos( $main_source, "public $". "version = '9.0.0';" ), true );
+check279( 'main-header-version', 1 === preg_match( '/\* Version: 10\.0\.0\r?\r?\n/', $main_source ), true );
+check279( 'runtime-version', false !== strpos( $main_source, "public $". "version = '10.0.0';" ), true );
 check279( 'php73-header-preserved', false !== strpos( $main_source, '* Requires PHP: 7.3' ), true );
-check279( 'readme-stable-version', false !== strpos( $readme, 'Stable tag: 9.0.0' ), true );
+check279( 'readme-stable-version', false !== strpos( $readme, 'Stable tag: 10.0.0' ), true );
 check279( 'native-clock-entry-preserved', false !== strpos( $main_source, 'WCJ_Returns_Clock::read();' ), true );
 check279( 'announcement-loader-present', 1 === substr_count( $admin, "require_once __DIR__ . '/../admin/class-wcj-admin-announcement.php';" ) && 1 === substr_count( $admin, 'WCJ_Admin_Announcement::init();' ), true );
 echo json_encode( array( 'result' => 'PASS', 'tier' => $tier, 'cases' => $cases, 'scope' => 'Offline synthetic primitives and actual reader; no WordPress/DB/network or POST adapter execution.' ), JSON_PRETTY_PRINT ) . "\n";

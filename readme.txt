@@ -5,13 +5,23 @@ Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invo
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.3
-Stable tag: 9.0.0
+Stable tag: 10.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 10.0.0 - Find tools and manage settings with less guesswork
+
+* Find tools faster - Search tool names, descriptions and common tasks. Combine All tools or My tools with categories, and keep setup and invoice guides within reach.
+* Clearer native settings - Add to Cart, More Button Labels, Price Labels and Related Products distinguish essentials from advanced controls. Consequential advanced groups stay open when active or changed. Use Show all settings to see the full native form; unsupported layouts keep their native presentation.
+* Easier invoice setup - Follow clearer steps to enter details, open a synthetic sample and review supported changes using the existing save, activation and undo flow. Samples do not verify customer email delivery or tax compliance.
+* Clearer guidance - Selected admin help explains Checkout Blocks support, scenario-check limits and return-request decisions. Existing module limits, permissions and store settings remain in place.
+* Admin language - Adds Dutch translations for these updated screens, with English fallback elsewhere. Saved merchant content is not translated.
+
+Open Setup and blueprints for the existing guided setup, or choose the Invoice guide for supported document setup. Changes remain under your control.
 
 ### New in 9.0.0 - Handle returns and understand gateway fees
 
@@ -419,6 +429,13 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 On Booster admin pages, WooCommerce managers may see a short, optional announcement from https://booster.io/announcements/booster-admin.json. The fixed HTTPS JSON feed is cached for 24 hours, including failures. Notices expire and can be permanently dismissed per user and announcement ID; edits to the same ID do not reset dismissal. Nothing is shown for an empty or unavailable feed. No remote code is executed. No user, order, license or site-URL data is sent, and links contain no tracking parameters. As with any HTTPS request, the server receives the requesting IP address. Privacy policy: https://booster.io/privacy-policy/.
 
 == Changelog ==
+
+= 10.0.0 =
+* Find tools faster - Search tool names, descriptions and common tasks. Combine All tools or My tools with categories, and keep setup and invoice guides within reach.
+* Clearer native settings - Add to Cart, More Button Labels, Price Labels and Related Products distinguish essentials from advanced controls. Consequential advanced groups stay open when active or changed. Use Show all settings to see the full native form; unsupported layouts keep their native presentation.
+* Easier invoice setup - Follow clearer steps to enter details, open a synthetic sample and review supported changes using the existing save, activation and undo flow. Samples do not verify customer email delivery or tax compliance.
+* Clearer guidance - Selected admin help explains Checkout Blocks support, scenario-check limits and return-request decisions. Existing module limits, permissions and store settings remain in place.
+* Admin language - Adds Dutch translations for these updated screens, with English fallback elsewhere. Saved merchant content is not translated.
 
 = 9.0.0 =
 * Customer Return Requests - Turn on Return Requests to let signed-in customers request eligible item quantities from completed orders, follow their history and see your decision there. Verified guest access is a separate setup that needs HTTPS. Approval records your decision; it does not refund money, restock products or process a payment.
@@ -4531,6 +4548,9 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 10.0.0 =
+Back up and test on staging. This update improves selected admin screens and navigation; existing store settings and edition limits remain in place. Review proposed invoice changes before activation. A sample does not verify production email delivery or tax compliance.
 
 = 9.0.0 =
 Back up and test the exact package on staging before enabling new workflows. Review the PHP 7.3, 64-bit native-clock requirements and edition-specific limits.

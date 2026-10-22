@@ -1,3 +1,10 @@
+= 10.0.0 =
+* Find tools faster - Search tool names, descriptions and common tasks. Combine All tools or My tools with categories, and keep setup and invoice guides within reach.
+* Clearer native settings - Add to Cart, More Button Labels, Price Labels and Related Products distinguish essentials from advanced controls. Consequential advanced groups stay open when active or changed. Use Show all settings to see the full native form; unsupported layouts keep their native presentation.
+* Easier invoice setup - Follow clearer steps to enter details, open a synthetic sample and review supported changes using the existing save, activation and undo flow. Samples do not verify customer email delivery or tax compliance.
+* Clearer guidance - Selected admin help explains Checkout Blocks support, scenario-check limits and return-request decisions. Existing module limits, permissions and store settings remain in place.
+* Admin language - Adds Dutch translations for these updated screens, with English fallback elsewhere. Saved merchant content is not translated.
+
 = 9.0.0 =
 * Customer Return Requests - Turn on Return Requests to let signed-in customers request eligible item quantities from completed orders, follow their history and see your decision there. Verified guest access is a separate setup that needs HTTPS. Approval records your decision; it does not refund money, restock products or process a payment.
 * Checkout Blocks - Collect supported checkout file uploads and show your Place order button text in the WooCommerce Checkout block, alongside existing supported custom fields. Existing module and edition limits still apply; this does not make every Booster option or third-party checkout compatible.
