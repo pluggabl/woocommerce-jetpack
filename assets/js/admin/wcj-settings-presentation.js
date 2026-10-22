@@ -122,7 +122,37 @@
 			var tab = target.closest( '.wcj-tab-box' ), link = tab && nativeLink( tab );
 			if ( link && ! form.classList.contains( 'wcj-settings-all-visible' ) && ! link.classList.contains( 'active' ) ) { link.click(); }
 		}
-		form.addEventListener( 'invalid', function ( event ) { reveal( event.target ); }, true );
+		var invalidFocus = null;
+		function cancelInvalidFocus() {
+			if ( invalidFocus ) { window.clearTimeout( invalidFocus.timer ); invalidFocus = null; }
+		}
+		function focusInvalid( job ) {
+			if ( invalidFocus !== job ) { return; }
+			var target = job.target;
+			if ( Date.now() >= job.deadline || ! target.isConnected || target.closest( 'form' ) !== form || ! target.willValidate || ! target.validity || target.validity.valid || target.disabled ) { cancelInvalidFocus(); return; }
+			var tab = target.closest( '.wcj-tab-box' );
+			var queue = tab && typeof window.jQuery === 'function' ? window.jQuery( tab ) : null;
+			var busy = queue && ( queue.is( ':animated' ) || queue.queue( 'fx' ).length );
+			var visible = target.getClientRects().length && window.getComputedStyle( target ).visibility === 'visible' && ( ! tab || Number( window.getComputedStyle( tab ).opacity ) === 1 );
+			if ( ! busy && visible ) { cancelInvalidFocus(); target.focus(); return; }
+			// A stalled or foreign animation fails safely without retaining a focus job.
+			if ( --job.polls <= 0 ) { cancelInvalidFocus(); return; }
+			job.timer = window.setTimeout( function () { focusInvalid( job ); }, 25 );
+		}
+		form.addEventListener( 'invalid', function ( event ) {
+			// Native validation can emit several invalid events in one synchronous burst.
+			if ( invalidFocus || ! event.target.matches( 'input:not([type="hidden"]),select,textarea' ) ) { return; }
+			var slow = window.jQuery && window.jQuery.fx && window.jQuery.fx.speeds ? Number( window.jQuery.fx.speeds.slow ) : 600;
+			var job = { target: event.target, deadline: Date.now() + Math.min( 1000, ( slow > 0 ? slow : 600 ) + 100 ), polls: 41, timer: null };
+			invalidFocus = job;
+			reveal( job.target );
+			// Defer until native validation has completed, then wait for this tab's fx queue.
+			job.timer = window.setTimeout( function () { focusInvalid( job ); }, 0 );
+		}, true );
+		[ 'pointerdown', 'keydown', 'click' ].forEach( function ( name ) {
+			document.addEventListener( name, function ( event ) { if ( event.isTrusted ) { cancelInvalidFocus(); } }, true );
+		} );
+		window.addEventListener( 'hashchange', cancelInvalidFocus );
 		[ 'input', 'change' ].forEach( function ( name ) {
 			form.addEventListener( name, function () { groups.forEach( function ( group ) { if ( group.shouldOpen() ) { group.details.open = true; } } ); } );
 		} );
