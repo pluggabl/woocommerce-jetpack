@@ -9,7 +9,17 @@
  */
 
 define( 'ABSPATH', __DIR__ . '/' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Required offline WordPress constant.
-define( 'WCJ_PLUGIN_FILE', $argv[1] . '/booster-test.php' );
+
+// Match the actual entry file and constant profile instead of masking Free's missing paid alias.
+$GLOBALS['wcj_codex_root'] = str_replace( '\\', '/', rtrim( $argv[1], '/\\' ) );
+if ( is_file( $argv[1] . '/woocommerce-jetpack.php' ) ) {
+	$wcj_codex_entry = 'woocommerce-jetpack.php';
+	define( 'WCJ_FREE_PLUGIN_FILE', $argv[1] . '/' . $wcj_codex_entry );
+} else {
+	$wcj_codex_entry = is_file( $argv[1] . '/booster-plus-for-woocommerce.php' ) ? 'booster-plus-for-woocommerce.php' : 'booster-elite-for-woocommerce.php';
+	define( 'WCJ_PLUGIN_FILE', $argv[1] . '/' . $wcj_codex_entry );
+}
+$GLOBALS['wcj_codex_asset_url'] = 'https://example.test/wp-content/plugins/' . basename( $wcj_codex_entry, '.php' );
 
 $GLOBALS['wcj_codex_hooks']   = array();
 $GLOBALS['wcj_codex_options'] = array();
@@ -53,6 +63,17 @@ function add_filter( $name, $callback, $priority = 10, $accepted_args = 1 ) { //
  */
 function add_action( $name, $callback, $priority = 10, $accepted_args = 1 ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Exact offline WordPress/Woo API double.
 	add_filter( $name, $callback, $priority, $accepted_args );
+}
+
+/**
+ * Schedule presentation callbacks in this pre-init fixture only.
+ *
+ * @param callable $callback Presentation callback.
+ * @param int      $priority Init priority.
+ * @return void
+ */
+function wcj_init_presentation( $callback, $priority = -90 ) {
+	add_action( 'init', $callback, $priority, 0 );
 }
 
 /**
@@ -171,11 +192,17 @@ function WC() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.Non
  * Construct the frontend URL without transporting data.
  *
  * @param mixed $path Synthetic fixture argument.
- * @param mixed $file Synthetic fixture argument.
+ * @param mixed $file Actual local plugin anchor file.
+ * @throws RuntimeException When the anchor or asset is outside the local fixture.
  * @return mixed
  */
-function plugins_url( $path, $file ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound, Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Exact API signature, all synthetic tiers share the fixed plugin root.
-	return 'https://example.test/wp-content/plugins/booster-test/' . $path;
+function plugins_url( $path, $file ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Exact offline WordPress API double, resolving the actual edition's anchor and shipped asset.
+	$file = str_replace( '\\', '/', $file );
+	$root = $GLOBALS['wcj_codex_root'];
+	if ( 0 !== strpos( $file, $root . '/' ) || ! is_file( $file ) || ! is_file( dirname( $file ) . '/' . $path ) ) {
+		throw new RuntimeException( 'Script URL must resolve an existing asset inside the plugin root.' );
+	}
+	return $GLOBALS['wcj_codex_asset_url'] . substr( dirname( $file ), strlen( $root ) ) . '/' . $path;
 }
 
 /**
@@ -323,7 +350,7 @@ function wcj_codex_run( $root, $upstream, $baseline ) {
 		wcj_codex_check( 'real registry integration registered', $registry->is_registered( 'wcj_more_button_labels' ), true );
 		wcj_codex_check( 'frontend-only handle', $registry->get_all_registered_script_handles(), array( 'wcj-more-button-labels-blocks' ) );
 		wcj_codex_check( 'no editor script', $registry->get_all_registered_editor_script_handles(), array() );
-		wcj_codex_check( 'exact dependency registration', $GLOBALS['wcj_codex_scripts']['wcj-more-button-labels-blocks'] ?? null, array( 'https://example.test/wp-content/plugins/booster-test/includes/js/wcj-more-button-labels-blocks.js', array( 'wc-blocks-checkout', 'wc-settings', 'wc-blocks-data-store', 'wc-blocks-registry', 'wp-data' ), '9.0.0', true ) );
+		wcj_codex_check( 'exact edition URI, dependency and version registration', $GLOBALS['wcj_codex_scripts']['wcj-more-button-labels-blocks'] ?? null, array( $GLOBALS['wcj_codex_asset_url'] . '/includes/js/wcj-more-button-labels-blocks.js', array( 'wc-blocks-checkout', 'wc-settings', 'wc-blocks-data-store', 'wc-blocks-registry', 'wp-data' ), '9.0.0', true ) );
 		foreach ( array( 'no', 'yes' ) as $override ) {
 			$GLOBALS['wcj_codex_options']['wcj_checkout_place_order_button_override'] = $override;
 			foreach ( array( '', '0', '支付 <script> & " ✓', null, false, 0, array( 'bad' ) ) as $text ) {
