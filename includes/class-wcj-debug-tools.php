@@ -26,18 +26,38 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 		public function __construct() {
 
 			$this->id         = 'debug_tools';
-			$this->short_desc = __( 'Debug Tools', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Booster for WooCommerce debug and log tools.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-booster-debug-tools';
+			$this->short_desc = 'Debug Tools';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Debug Tools', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Booster for WooCommerce debug and log tools.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Booster for WooCommerce debug and log tools.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-booster-debug-tools';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'debug_tools' => array(
-						'title' => __( 'Log', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Log.', 'woocommerce-jetpack' ),
+						'title' => 'Log',
+						'desc'  => 'Log.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'debug_tools' => array(
+							'title' => __( 'Log', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Log.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 		}

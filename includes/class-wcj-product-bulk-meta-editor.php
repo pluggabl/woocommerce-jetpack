@@ -27,19 +27,44 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_bulk_meta_editor';
-			$this->short_desc = __( 'Product Bulk Meta Editor', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set products meta with bulk editor (Variations available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set products meta with bulk editor.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-bulk-meta-editor';
+			$this->short_desc = 'Product Bulk Meta Editor';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Bulk Meta Editor', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set products meta with bulk editor (Variations available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set products meta with bulk editor (Variations available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set products meta with bulk editor.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set products meta with bulk editor.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-bulk-meta-editor';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'product_bulk_meta_editor' => array(
-						'title' => __( 'Product Bulk Meta Editor', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Product Bulk Meta Editor Tool.', 'woocommerce-jetpack' ),
+						'title' => 'Product Bulk Meta Editor',
+						'desc'  => 'Product Bulk Meta Editor Tool.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'product_bulk_meta_editor' => array(
+							'title' => __( 'Product Bulk Meta Editor', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Product Bulk Meta Editor Tool.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 		}
 

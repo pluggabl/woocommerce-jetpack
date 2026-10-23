@@ -38,10 +38,25 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 		public function __construct() {
 
 			$this->id         = 'offer_price';
-			$this->short_desc = __( 'Offer Your Price', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Let your customers suggest their price for products (Available for all the products in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Let your customers suggest their price for products.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-offer-your-product-price';
+			$this->short_desc = 'Offer Your Price';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Offer Your Price', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Let your customers suggest their price for products (Available for all the products in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Let your customers suggest their price for products (Available for all the products in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Let your customers suggest their price for products.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Let your customers suggest their price for products.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-offer-your-product-price';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

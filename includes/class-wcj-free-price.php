@@ -28,10 +28,25 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		public function __construct() {
 
 			$this->id         = 'free_price';
-			$this->short_desc = __( 'Free Price Labels', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set free price labels (Variable products allowed in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set free price labels.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-free-price-labels';
+			$this->short_desc = 'Free Price Labels';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Free Price Labels', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set free price labels (Variable products allowed in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set free price labels (Variable products allowed in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set free price labels.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set free price labels.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-free-price-labels';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

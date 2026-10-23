@@ -34,8 +34,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 		public function __construct() {
 			$this->id         = 'pdf_invoicing_styling';
 			$this->parent_id  = 'pdf_invoicing';
-			$this->short_desc = __( 'Styling', 'woocommerce-jetpack' );
-			$this->desc       = '';
+			$this->short_desc = 'Styling';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Styling', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = '';
 			parent::__construct( 'submodule' );
 			add_action( 'init', array( $this, 'manually_download_fonts' ) );
 			add_action( 'init', array( $this, 'schedule_download_fonts_event' ) );

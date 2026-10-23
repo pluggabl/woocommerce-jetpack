@@ -39,10 +39,25 @@ if ( ! class_exists( 'WCJ_Preorders' ) ) :
 		public function __construct() {
 
 			$this->id         = 'preorders';
-			$this->short_desc = __( 'Pre Orders', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Pre Orders.', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Pre Orders.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-preorders';
+			$this->short_desc = 'Pre Orders';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Pre Orders', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Pre Orders.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Pre Orders.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Pre Orders.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Pre Orders.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-preorders';
 
 			parent::__construct();
 

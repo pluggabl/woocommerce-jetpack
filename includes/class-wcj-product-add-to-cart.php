@@ -28,23 +28,50 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_add_to_cart';
-			$this->short_desc = __( 'Add to Cart', 'woocommerce-jetpack' );
+			$this->short_desc = 'Add to Cart';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Add to Cart', 'woocommerce-jetpack' );
+				}
+			);
 			// Desc.
-			$this->desc = __( 'Set any local URL to redirect to on Add to Cart (Per product not allowed in free version).', 'woocommerce-jetpack' )
-					. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
-					. ' ' . __( 'Display radio buttons instead of drop box for variable products (Elite).', 'woocommerce-jetpack' )
-					. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
-					. ' ' . __( 'Open external products on the add to cart in the new window.', 'woocommerce-jetpack' )
-					. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
-					. ' ' . __( 'Customize Add to Cart messages (Elite).', 'woocommerce-jetpack' );
+			$this->desc = 'Set any local URL to redirect to on Add to Cart (Per product not allowed in free version).'
+					. ' Automatically add to cart on product visit.'
+					. ' Display radio buttons instead of drop box for variable products (Elite).'
+					. ' Disable quantity input.'
+					. ' Open external products on the add to cart in the new window.'
+					. ' Replace Add to Cart button on archives with button from single product pages.'
+					. ' Customize Add to Cart messages (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set any local URL to redirect to on Add to Cart (Per product not allowed in free version).', 'woocommerce-jetpack' )
+							. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
+							. ' ' . __( 'Display radio buttons instead of drop box for variable products (Elite).', 'woocommerce-jetpack' )
+							. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
+							. ' ' . __( 'Open external products on the add to cart in the new window.', 'woocommerce-jetpack' )
+							. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
+							. ' ' . __( 'Customize Add to Cart messages (Elite).', 'woocommerce-jetpack' );
+				}
+			);
 			// Desc Pro.
-			$this->desc_pro  = __( 'Set any local URL to redirect to on Add to Cart.', 'woocommerce-jetpack' )
-						. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
-						. ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
-						. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
-						. ' ' . __( 'Open external products on the add to cart in the new window.', 'woocommerce-jetpack' )
-						. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
-						. ' ' . __( 'Customize Add to Cart messages.', 'woocommerce-jetpack' );
+			$this->desc_pro = 'Set any local URL to redirect to on Add to Cart.'
+						. ' Automatically add to cart on product visit.'
+						. ' Display radio buttons instead of drop box for variable products.'
+						. ' Disable quantity input.'
+						. ' Open external products on the add to cart in the new window.'
+						. ' Replace Add to Cart button on archives with button from single product pages.'
+						. ' Customize Add to Cart messages.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set any local URL to redirect to on Add to Cart.', 'woocommerce-jetpack' )
+								. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
+								. ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
+								. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
+								. ' ' . __( 'Open external products on the add to cart in the new window.', 'woocommerce-jetpack' )
+								. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
+								. ' ' . __( 'Customize Add to Cart messages.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug = 'woocommerce-product-add-to-cart';
 			parent::__construct();
 

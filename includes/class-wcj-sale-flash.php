@@ -65,10 +65,25 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 		public function __construct() {
 
 			$this->id         = 'sale_flash';
-			$this->short_desc = __( 'Sale Flash', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize products sale flash. Per product (Elite); Per category (Elite); Per tag (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize products sale flash.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-sale-flash';
+			$this->short_desc = 'Sale Flash';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Sale Flash', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize products sale flash. Per product (Elite); Per category (Elite); Per tag (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize products sale flash. Per product (Elite); Per category (Elite); Per tag (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize products sale flash.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize products sale flash.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-sale-flash';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

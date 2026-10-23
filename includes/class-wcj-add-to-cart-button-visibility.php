@@ -31,14 +31,34 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Button_Visibility' ) ) :
 		public function __construct() {
 
 			$this->id         = 'add_to_cart_button_visibility';
-			$this->short_desc = __( 'Add to Cart Button Visibility', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Enable/disable Add to Cart button globally or on per product basis.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Add to Cart Button Visibility';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Add to Cart Button Visibility', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Enable/disable Add to Cart button globally or on per product basis.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Enable/disable Add to Cart button globally or on per product basis.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->extra_desc = '<em>' . sprintf(
 				/* translators: %s: search term */
-				__( 'If you need to enable/disable Add to Cart button for some <strong>user roles</strong> only, we suggest using this module in conjunction with Booster\'s %s module.', 'woocommerce-jetpack' ),
+				'If you need to enable/disable Add to Cart button for some <strong>user roles</strong> only, we suggest using this module in conjunction with Booster\'s %s module.',
 				'<a href="' . wcj_get_module_settings_admin_url( 'modules_by_user_roles' ) . '">' .
-				__( 'Modules By User Roles', 'woocommerce-jetpack' ) . '</a>'
+				'Modules By User Roles</a>'
 			) . '</em>';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = '<em>' . sprintf(
+						/* translators: %s: search term */
+						__( 'If you need to enable/disable Add to Cart button for some <strong>user roles</strong> only, we suggest using this module in conjunction with Booster\'s %s module.', 'woocommerce-jetpack' ),
+						'<a href="' . wcj_get_module_settings_admin_url( 'modules_by_user_roles' ) . '">' .
+						__( 'Modules By User Roles', 'woocommerce-jetpack' ) . '</a>'
+					) . '</em>';
+				}
+			);
 			$this->link_slug = 'woocommerce-add-to-cart-button-visibility';
 			parent::__construct();
 

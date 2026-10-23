@@ -34,10 +34,25 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 		public function __construct() {
 
 			$this->id         = 'order_min_amount';
-			$this->short_desc = __( 'Order Minimum Amount', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Minimum order amount (optionally by user role) .', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-order-minimum-amount';
+			$this->short_desc = 'Order Minimum Amount';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Order Minimum Amount', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Minimum order amount (optionally by user role) .';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Minimum order amount (optionally by user role) .', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-order-minimum-amount';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

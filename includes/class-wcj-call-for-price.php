@@ -30,10 +30,31 @@ if ( ! class_exists( 'WCJ_Call_For_Price' ) ) :
 		public function __construct() {
 
 			$this->id         = 'call_for_price';
-			$this->short_desc = __( 'Call for Price', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Create any custom price label for all products with empty price (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Create any custom price label for all products with empty price.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-call-for-price';
+			$this->short_desc = 'Call for Price';
+			wcj_init_presentation(
+				function () {
+					if ( isset( $this->short_desc ) && 'Call for Price' === $this->short_desc ) {
+						$this->short_desc = __( 'Call for Price', 'woocommerce-jetpack' );
+					}
+				}
+			);
+			$this->desc = 'Create any custom price label for all products with empty price (Elite).';
+			wcj_init_presentation(
+				function () {
+					if ( isset( $this->desc ) && 'Create any custom price label for all products with empty price (Elite).' === $this->desc ) {
+						$this->desc = __( 'Create any custom price label for all products with empty price (Elite).', 'woocommerce-jetpack' );
+					}
+				}
+			);
+			$this->desc_pro = 'Create any custom price label for all products with empty price.';
+			wcj_init_presentation(
+				function () {
+					if ( isset( $this->desc_pro ) && 'Create any custom price label for all products with empty price.' === $this->desc_pro ) {
+						$this->desc_pro = __( 'Create any custom price label for all products with empty price.', 'woocommerce-jetpack' );
+					}
+				}
+			);
+			$this->link_slug = 'woocommerce-call-for-price';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -190,7 +211,6 @@ if ( ! class_exists( 'WCJ_Call_For_Price' ) ) :
 				return $price;
 			}
 		}
-
 	}
 
 	endif;

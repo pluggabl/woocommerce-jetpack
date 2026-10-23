@@ -34,7 +34,7 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 			}
 		}
 
-		/** Registers three base abilities plus the Elite-only Order Health summary. */
+		/** Registers base and bounded merchant abilities, preserving tier gates. */
 		public function register_abilities() {
 			if ( ! function_exists( 'wp_register_ability' ) ) {
 				return;
@@ -94,6 +94,94 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 				)
 			);
 
+			if ( class_exists( 'WCJ_Rule_Explanations' ) ) {
+				$explanations = new WCJ_Rule_Explanations();
+				wp_register_ability(
+					'booster/explain-payment-options',
+					array_merge(
+						$common,
+						array(
+							'label'            => __( 'Explain payment options', 'woocommerce-jetpack' ),
+							'description'      => __( 'Six bounded Booster predicates for an explicit merchant scenario; not current or final availability, not a configuration snapshot.', 'woocommerce-jetpack' ),
+							'input_schema'     => $explanations->get_payment_input_schema( false ),
+							'output_schema'    => $explanations->get_payment_output_schema( false ),
+							'execute_callback' => array( $this, 'execute_payment_explanation' ),
+						)
+					)
+				);
+
+				wp_register_ability(
+					'booster/compare-payment-options',
+					array_merge(
+						$common,
+						array(
+							'label'            => __( 'Compare payment options', 'woocommerce-jetpack' ),
+							'description'      => __( 'Six bounded Booster predicates for an explicit merchant scenario; not current or final availability, not a configuration snapshot.', 'woocommerce-jetpack' ),
+							'input_schema'     => $explanations->get_payment_input_schema( true ),
+							'output_schema'    => $explanations->get_payment_output_schema( true ),
+							'execute_callback' => array( $this, 'execute_payment_comparison' ),
+						)
+					)
+				);
+				wp_register_ability(
+					'booster/explain-shipping-options',
+					array_merge(
+						$common,
+						array(
+							'label'            => __( 'Explain shipping predicates', 'woocommerce-jetpack' ),
+							'description'      => __( 'Version 1 explains amount and quantity predicates; version 2 explains nine bounded Booster shipping conditions and options. Explicit merchant scenarios only, not final shipping availability. Comparisons are independent and not atomic.', 'woocommerce-jetpack' ),
+							'input_schema'     => $explanations->get_shipping_dispatch_input_schema( false ),
+							'output_schema'    => $explanations->get_shipping_dispatch_output_schema( false ),
+							'execute_callback' => array( $this, 'execute_shipping_explanation' ),
+						)
+					)
+				);
+				wp_register_ability(
+					'booster/compare-shipping-options',
+					array_merge(
+						$common,
+						array(
+							'label'            => __( 'Compare shipping predicates', 'woocommerce-jetpack' ),
+							'description'      => __( 'Version 1 explains amount and quantity predicates; version 2 explains nine bounded Booster shipping conditions and options. Explicit merchant scenarios only, not final shipping availability. Comparisons are independent and not atomic.', 'woocommerce-jetpack' ),
+							'input_schema'     => $explanations->get_shipping_dispatch_input_schema( true ),
+							'output_schema'    => $explanations->get_shipping_dispatch_output_schema( true ),
+							'execute_callback' => array( $this, 'execute_shipping_comparison' ),
+						)
+					)
+				);
+
+				wp_register_ability(
+					'booster/explain-gateway-fee',
+					array_merge(
+						$common,
+						array(
+							'label'            => __( 'Explain a Booster gateway fee rule', 'woocommerce-jetpack' ),
+							'description'      => __( 'Evaluates one explicit merchant-supplied scenario using the live fee evaluator, or returns the last callback in this request. Never applies fees or reads a shopper session. Unsupported dynamic contexts are explicit. Basic scenarios mean guest with no supplied product IDs. Elite conditional role/product facts must be explicit.', 'woocommerce-jetpack' ),
+							'input_schema'     => $explanations->get_input_schema(),
+							'execute_callback' => array( $this, 'execute_rule_explanation' ),
+							'output_schema'    => $explanations->get_output_schema(),
+						)
+					)
+				);
+			}
+
+			if ( class_exists( 'WCJ_Returns_Summary' ) ) {
+				$returns_summary = new WCJ_Returns_Summary();
+				wp_register_ability(
+					'booster/returns-summary',
+					array_merge(
+						$common,
+						array(
+							'label'            => __( 'Booster Returns summary', 'woocommerce-jetpack' ),
+							'description'      => __( 'Returns status counts for the latest up to 50 return requests, with current review/unavailable flags. A bounded sample, not full-store totals or an atomic snapshot. No identifiers, customer data, reasons or amounts. Never changes returns, orders, stock, refunds or notifications.', 'woocommerce-jetpack' ),
+							'input_schema'     => $returns_summary->get_input_schema(),
+							'output_schema'    => $returns_summary->get_output_schema(),
+							'execute_callback' => array( $this, 'execute_returns_summary' ),
+						)
+					)
+				);
+			}
+
 			if ( class_exists( 'WCJ_Order_Health_Service' ) && ( new WCJ_Order_Health_Service() )->is_full_experience() ) {
 				wp_register_ability(
 					'booster/order-health-summary',
@@ -141,6 +229,36 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 			}
 			$service = new WCJ_Order_Health_Service();
 			return $service->is_full_experience() ? $service->get_order_health_summary() : new WP_Error( 'booster_elite_required', __( 'The Order Health summary Ability is available in Booster Elite.', 'woocommerce-jetpack' ) );
+		}
+
+		/** Executes only a permissioned, read-only fee explanation.
+		 *
+		 * @param array $input Explicit scenario or request-local request.
+		 * @return array|WP_Error
+		 */
+		public function execute_rule_explanation( $input ) {
+			$permission = $this->check_permission();
+			if ( is_wp_error( $permission ) ) {
+				return $permission;
+			}
+			return class_exists( 'WCJ_Rule_Explanations' ) ? ( new WCJ_Rule_Explanations() )->explain( $input ) : new WP_Error( 'booster_rule_explanations_unavailable', __( 'Rule explanations are unavailable.', 'woocommerce-jetpack' ) );
+		}
+
+		/**
+		 * Executes only a currently authorized, bounded Returns sample.
+		 *
+		 * @param mixed $input Exactly scope=summary, with no default summary request.
+		 * @return array|WP_Error Safe counts or a fixed authorization/input error.
+		 */
+		public function execute_returns_summary( $input = null ) {
+			if ( get_current_user_id() < 1 ) {
+				return new WP_Error( 'booster_forbidden', __( 'You do not have permission to view the Returns summary.', 'woocommerce-jetpack' ) );
+			}
+			$permission = $this->check_permission();
+			if ( is_wp_error( $permission ) ) {
+				return $permission;
+			}
+			return class_exists( 'WCJ_Returns_Summary' ) ? ( new WCJ_Returns_Summary() )->get_summary( $input ) : new WP_Error( 'booster_returns_summary_unavailable', __( 'The Returns summary is unavailable.', 'woocommerce-jetpack' ) );
 		}
 
 		/** Returns a fresh service so no request/user state is persisted. */
@@ -445,6 +563,71 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 				),
 				'required'             => array( 'tier', 'generated_at_gmt', 'storage_mode', 'bounded_query', 'age_buckets', 'cause_counts', 'reason_counts', 'oldest_age_days', 'morning_briefing' ),
 			);
+		}
+		/**
+		 * Executes a permission-checked payment predicate explanation.
+		 *
+		 * @param mixed $input Explicit merchant-supplied payment scenario.
+		 * @return array|WP_Error Bounded explanation or permission/input error.
+		 */
+		public function execute_payment_explanation( $input ) {
+			$permission = $this->check_permission();
+			if ( is_wp_error( $permission ) ) {
+				return $permission;
+			}
+			return ( new WCJ_Rule_Explanations() )->explain_payment_options( $input );
+		}
+
+		/**
+		 * Executes a permission-checked payment predicate comparison.
+		 *
+		 * @param mixed $input Explicit merchant-supplied comparison scenarios.
+		 * @return array|WP_Error Independent comparison results or permission/input error.
+		 */
+		public function execute_payment_comparison( $input ) {
+			$permission = $this->check_permission();
+			if ( is_wp_error( $permission ) ) {
+				return $permission;
+			}
+			return ( new WCJ_Rule_Explanations() )->compare_payment_options( $input );
+		}
+
+		/**
+		 * Executes and validates a permission-checked shipping explanation.
+		 *
+		 * @param mixed $input Explicit merchant-supplied shipping scenario.
+		 * @return array|WP_Error Validated diagnostic or permission/input/output error.
+		 */
+		public function execute_shipping_explanation( $input ) {
+			$permission = $this->check_permission();
+			if ( is_wp_error( $permission ) ) {
+				return $permission;
+			}
+			$service = new WCJ_Rule_Explanations();
+			$result  = $service->explain_shipping_options( $input );
+			if ( is_wp_error( $result ) ) {
+				return $result;
+			}
+			return $service->validate_shipping_output( $result, false ) ? $result : new WP_Error( 'booster_shipping_diagnostic_unavailable', __( 'Shipping diagnostic unavailable for this context.', 'woocommerce-jetpack' ) );
+		}
+
+		/**
+		 * Executes and validates a permission-checked shipping comparison.
+		 *
+		 * @param mixed $input Explicit merchant-supplied comparison scenarios.
+		 * @return array|WP_Error Validated independent results or permission/input/output error.
+		 */
+		public function execute_shipping_comparison( $input ) {
+			$permission = $this->check_permission();
+			if ( is_wp_error( $permission ) ) {
+				return $permission;
+			}
+			$service = new WCJ_Rule_Explanations();
+			$result  = $service->compare_shipping_options( $input );
+			if ( is_wp_error( $result ) ) {
+				return $result;
+			}
+			return $service->validate_shipping_output( $result, true ) ? $result : new WP_Error( 'booster_shipping_diagnostic_unavailable', __( 'Shipping diagnostic unavailable for this context.', 'woocommerce-jetpack' ) );
 		}
 	}
 endif;

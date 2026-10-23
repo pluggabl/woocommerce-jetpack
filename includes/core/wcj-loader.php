@@ -42,12 +42,20 @@ require_once 'wcj-functions.php';
 // Quick Start Presets.
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/wcj-quick-start-presets.php';
 
+// Shared fee and payment diagnostics bind wcj_loaded now, before either module path.
+require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-rule-explanations.php';
+
+// Shared Returns summary definitions do not construct or read the queue.
+require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-returns-summary.php';
+
 // Quick Start Admin UI.
 if ( is_admin() ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-quick-start-admin.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-status-service.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-order-health-service.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-order-health-admin.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-rule-explanations-admin.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-returns-summary-admin.php';
 	// Compatibility Status.
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-compatibility-status.php';
 }

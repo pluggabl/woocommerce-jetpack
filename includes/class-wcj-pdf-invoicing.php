@@ -68,7 +68,62 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 */
 		private function get_enabled_invoice_types() {
 			if ( null === $this->enabled_invoice_types ) {
-				$this->enabled_invoice_types = wcj_get_enabled_invoice_types();
+				$initial_owner = null;
+				if ( ! did_action( 'init' ) ) {
+					$initial_owner = w_c_j();
+				}
+				$title_presentation          = null;
+				$this->enabled_invoice_types = wcj_get_enabled_invoice_types( $title_presentation );
+				if ( ! did_action( 'init' ) ) {
+					$initial_types = $this->enabled_invoice_types;
+					wcj_init_presentation(
+						function () use ( $initial_types, $initial_owner, $title_presentation ) {
+							$default_titles = array(
+								'invoice'          => array( 'Invoice', __( 'Invoice', 'woocommerce-jetpack' ) ),
+								'proforma_invoice' => array( 'Proforma Invoice', __( 'Proforma Invoice', 'woocommerce-jetpack' ) ),
+								'packing_slip'     => array( 'Packing Slip', __( 'Packing Slip', 'woocommerce-jetpack' ) ),
+								'credit_note'      => array( 'Credit Note', __( 'Credit Note', 'woocommerce-jetpack' ) ),
+							);
+							foreach ( $initial_types as $index => $initial_type ) {
+								$id = $initial_type['id'];
+								if ( isset( $default_titles[ $id ] ) ) {
+									$pair = $default_titles[ $id ];
+								} elseif ( isset( $initial_type['is_custom_doc'], $initial_type['custom_doc_nr'] ) && true === $initial_type['is_custom_doc'] ) {
+									$pair = array( 'Custom Document #' . $initial_type['custom_doc_nr'], __( 'Custom Document', 'woocommerce-jetpack' ) . ' #' . $initial_type['custom_doc_nr'] );
+								} else {
+									continue;
+								}
+								$option_name = 'wcj_invoicing_' . $id . '_admin_title';
+								if ( has_filter( $option_name )
+									|| has_filter( 'default_option_' . $option_name )
+									|| has_filter( 'pre_option_' . $option_name )
+									|| has_filter( 'pre_option' )
+									|| has_filter( 'option_' . $option_name )
+									|| has_filter( 'all' ) ) {
+									continue;
+								}
+								if ( ! is_array( $title_presentation ) || ! isset( $title_presentation[ $option_name ] ) ) {
+									continue;
+								}
+								$realization = $title_presentation[ $option_name ];
+								if ( ! ( $realization instanceof stdClass ) || ! isset( $realization->owner, $realization->eligible, $realization->admitted, $realization->realized, $realization->value ) || $initial_owner !== $realization->owner || true !== $realization->eligible || true !== $realization->admitted || true !== $realization->realized || $pair[1] !== $realization->value ) {
+									continue;
+								}
+								// A replacement singleton must not have a conflicting title entry.
+								$current_owner = w_c_j();
+								if ( $current_owner !== $initial_owner && ( ! is_array( $current_owner->options ) || array_key_exists( $option_name, $current_owner->options ) ) ) {
+									continue;
+								}
+								if ( $pair[0] === $initial_type['title'] && isset( $initial_owner->options[ $option_name ] ) ) {
+									$cached_title = $initial_owner->options[ $option_name ];
+									if ( $pair[1] === $cached_title && isset( $this->enabled_invoice_types[ $index ] ) && $initial_type === $this->enabled_invoice_types[ $index ] ) {
+										$this->enabled_invoice_types[ $index ]['title'] = $pair[1];
+									}
+								}
+							}
+						}
+					);
+				}
 			}
 			return $this->enabled_invoice_types;
 		}
@@ -79,25 +134,59 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 		 */
 		public function __construct() {
 
-			$this->id            = 'pdf_invoicing';
-			$this->short_desc    = __( 'PDF Invoicing', 'woocommerce-jetpack' );
-			$this->section_title = __( 'General', 'woocommerce-jetpack' );
-			$this->desc          = __( 'Invoices, Proforma Invoices (Elite), Credit Notes (Elite) and Packing Slips (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro      = __( 'Invoices, Proforma Invoices, Credit Notes and Packing Slips.', 'woocommerce-jetpack' );
-			$this->link_slug     = 'woocommerce-pdf-invoicing-and-packing-slips';
+			$this->id         = 'pdf_invoicing';
+			$this->short_desc = 'PDF Invoicing';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'PDF Invoicing', 'woocommerce-jetpack' );
+				}
+			);
+			$this->section_title = 'General';
+			wcj_init_presentation(
+				function () {
+					$this->section_title = __( 'General', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Invoices, Proforma Invoices (Elite), Credit Notes (Elite) and Packing Slips (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Invoices, Proforma Invoices (Elite), Credit Notes (Elite) and Packing Slips (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Invoices, Proforma Invoices, Credit Notes and Packing Slips.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Invoices, Proforma Invoices, Credit Notes and Packing Slips.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-pdf-invoicing-and-packing-slips';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'renumerate_invoices' => array(
-						'title' => __( 'Invoices Renumerate', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Tool renumerates all invoices, proforma invoices, credit notes and packing slips.', 'woocommerce-jetpack' ),
+						'title' => 'Invoices Renumerate',
+						'desc'  => 'Tool renumerates all invoices, proforma invoices, credit notes and packing slips.',
 					),
 					'invoices_report'     => array(
-						'title' => __( 'Invoices Report', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ),
+						'title' => 'Invoices Report',
+						'desc'  => 'Invoices Monthly Reports.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'renumerate_invoices' => array(
+							'title' => __( 'Invoices Renumerate', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Tool renumerates all invoices, proforma invoices, credit notes and packing slips.', 'woocommerce-jetpack' ),
+						),
+						'invoices_report'     => array(
+							'title' => __( 'Invoices Report', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {

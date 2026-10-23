@@ -39,9 +39,19 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 		public function __construct() {
 
 			$this->id         = 'wpml';
-			$this->short_desc = __( 'Booster WPML', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Booster for WooCommerce basic WPML support.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-booster-wpml';
+			$this->short_desc = 'Booster WPML';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Booster WPML', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Booster for WooCommerce basic WPML support.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Booster for WooCommerce basic WPML support.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-booster-wpml';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

@@ -30,10 +30,25 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'admin_orders_list';
-			$this->short_desc = __( 'Admin Orders List', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize admin orders list: add custom columns (1 allowed in free version); add multiple status filtering (1 allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize admin orders list: add custom columns; add multiple status filtering.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-admin-orders-list';
+			$this->short_desc = 'Admin Orders List';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Admin Orders List', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize admin orders list: add custom columns (1 allowed in free version); add multiple status filtering (1 allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize admin orders list: add custom columns (1 allowed in free version); add multiple status filtering (1 allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize admin orders list: add custom columns; add multiple status filtering.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize admin orders list: add custom columns; add multiple status filtering.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-admin-orders-list';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -51,8 +66,13 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 					}
 					if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_country', 'no' ) || 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 						// Billing country or Currency filtering.
-						add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
-						add_filter( 'parse_query', array( $this, 'parse_query' ) );
+						if ( true === wcj_is_hpos_enabled() ) {
+							add_action( 'woocommerce_order_list_table_restrict_manage_orders', array( $this, 'restrict_manage_orders_hpos' ), 10, 2 );
+							add_filter( 'woocommerce_shop_order_list_table_prepare_items_query_args', array( $this, 'filter_orders_query_hpos' ) );
+						} else {
+							add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+							add_filter( 'parse_query', array( $this, 'parse_query' ) );
+						}
 					}
 					// Maybe make sortable custom columns.
 					add_filter( 'manage_edit-shop_order_sortable_columns', array( $this, 'shop_order_sortable_columns' ) );
@@ -500,6 +520,62 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		}
 
 		/**
+		 * Render the existing country/currency selectors on the native HPOS list.
+		 *
+		 * @since 9.0.0
+		 * @param string $order_type Current order type.
+		 * @param string $which Top or bottom navigation.
+		 */
+		public function restrict_manage_orders_hpos( $order_type, $which ) {
+			if ( 'shop_order' !== $order_type || 'top' !== $which || true !== wcj_is_hpos_enabled() || ! $this->is_enabled() || 'yes' !== wcj_get_option( 'wcj_order_admin_list_custom_columns_enabled', 'no' ) ) {
+				return;
+			}
+			foreach ( array( 'country', 'currency' ) as $selector ) {
+				if ( 'yes' !== wcj_get_option( 'wcj_orders_list_custom_columns_' . $selector, 'no' ) ) {
+					continue;
+				}
+				$codes = 'country' === $selector ? wcj_get_countries() : wcj_get_woocommerce_currencies_and_symbols();
+				$value = isset( $_GET[ $selector ] ) && is_string( $_GET[ $selector ] ) ? wp_unslash( $_GET[ $selector ] ) : 'all';
+				$value = array_key_exists( $value, $codes ) ? $value : 'all';
+				$label = 'country' === $selector ? __( 'All countries', 'woocommerce-jetpack' ) : __( 'All currencies', 'woocommerce-jetpack' );
+				echo '<select id="' . esc_attr( $selector ) . '" name="' . esc_attr( $selector ) . '">';
+				foreach ( array_merge( array( 'all' => $label ), $codes ) as $code => $name ) {
+					echo '<option value="' . esc_attr( $code ) . '"' . selected( $code, $value, false ) . '>' . esc_html( $name ) . '</option>';
+				}
+				echo '</select>';
+			}
+		}
+
+		/**
+		 * Map helper-supported selections to public Woo order-query arguments.
+		 *
+		 * @since 9.0.0
+		 * @param array $query_args Existing list query arguments.
+		 * @return array Unrelated arguments are unchanged.
+		 */
+		public function filter_orders_query_hpos( $query_args ) {
+			if ( ! is_array( $query_args ) || 'shop_order' !== ( $query_args['type'] ?? '' ) || true !== wcj_is_hpos_enabled() || ! $this->is_enabled() || 'yes' !== wcj_get_option( 'wcj_order_admin_list_custom_columns_enabled', 'no' ) ) {
+				return $query_args;
+			}
+			foreach (
+				array(
+					'country'  => 'billing_country',
+					'currency' => 'currency',
+				) as $selector => $query_key
+			) {
+				if ( 'yes' !== wcj_get_option( 'wcj_orders_list_custom_columns_' . $selector, 'no' ) || ! isset( $_GET[ $selector ] ) || ! is_string( $_GET[ $selector ] ) ) {
+					continue;
+				}
+				$value = wp_unslash( $_GET[ $selector ] );
+				$codes = 'country' === $selector ? wcj_get_countries() : wcj_get_woocommerce_currencies_and_symbols();
+				if ( 'all' !== $value && array_key_exists( $value, $codes ) ) {
+					$query_args[ $query_key ] = $value;
+				}
+			}
+			return $query_args;
+		}
+
+		/**
 		 * Rearange_order_columns.
 		 *
 		 * @version 2.5.7
@@ -594,7 +670,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( 'yes' === wcj_get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
 						if ( 'wcj_orders_custom_column_' . $i === $column ) {
-							if ( str_contains( wcj_get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' ), ']' ) ) {
+							if ( false !== strpos( wcj_get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' ), ']' ) ) {
 								$get_value        = wcj_get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' );
 								$order_id         = ' order_id="' . $order->id . '"]';
 								$custom_shortcode = str_replace( ']', $order_id, $get_value );

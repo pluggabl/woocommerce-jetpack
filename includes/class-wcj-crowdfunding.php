@@ -27,40 +27,85 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 		public function __construct() {
 
 			$this->id         = 'crowdfunding';
-			$this->short_desc = __( 'Crowdfunding', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add crowdfunding products to WooCommerce.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Crowdfunding';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Crowdfunding', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add crowdfunding products to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add crowdfunding products to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-crowdfunding';
-			$this->extra_desc = __( 'When enabled, module will add Crowdfunding metabox to product edit.', 'woocommerce-jetpack' ) . '<br>' .
+			$this->extra_desc = 'When enabled, module will add Crowdfunding metabox to product edit.<br>' .
 			'<ol>' .
 			'<li>' .
 			sprintf(
 				/* translators: %s: translation added */
-				__( 'To add crowdfunding info to the product, use <a href="%s" target="_blank">Booster\'s crowdfunding shortcodes</a>.', 'woocommerce-jetpack' ),
+				'To add crowdfunding info to the product, use <a href="%s" target="_blank">Booster\'s crowdfunding shortcodes</a>.',
 				'https://booster.io/category/shortcodes/products-crowdfunding/'
 			) .
 				'</li>' .
 				'<li>' .
 				sprintf(
 					/* translators: %s: translation added */
-					__( 'Shortcodes could be used for example in <a href="%s">Product Info module</a>.', 'woocommerce-jetpack' ),
+					'Shortcodes could be used for example in <a href="%s">Product Info module</a>.',
 					admin_url( wcj_admin_tab_url() . '&wcj-cat=products&section=product_custom_info' )
 				) .
 				'</li>' .
 				'<li>' .
 				sprintf(
 					/* translators: %s: translation added */
-					__( 'To change add to cart button labels use <a href="%s">Add to Cart Labels module</a>.', 'woocommerce-jetpack' ),
+					'To change add to cart button labels use <a href="%s">Add to Cart Labels module</a>.',
 					admin_url( wcj_admin_tab_url() . '&wcj-cat=labels&section=add_to_cart' )
 				) .
 				'</li>' .
 				'<li>' .
 				sprintf(
 					/* translators: %s: translation added */
-					__( 'If you want to allow customers to choose dynamic price, Use <a href="%s">Product Open Pricing (Name Your Price) module</a>.', 'woocommerce-jetpack' ),
+					'If you want to allow customers to choose dynamic price, Use <a href="%s">Product Open Pricing (Name Your Price) module</a>.',
 					admin_url( wcj_admin_tab_url() . '&wcj-cat=prices_and_currencies&section=product_open_pricing' )
 				) .
 				'</li>' .
 			'</ol>';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'When enabled, module will add Crowdfunding metabox to product edit.', 'woocommerce-jetpack' ) . '<br>' .
+					'<ol>' .
+					'<li>' .
+					sprintf(
+						/* translators: %s: translation added */
+						__( 'To add crowdfunding info to the product, use <a href="%s" target="_blank">Booster\'s crowdfunding shortcodes</a>.', 'woocommerce-jetpack' ),
+						'https://booster.io/category/shortcodes/products-crowdfunding/'
+					) .
+						'</li>' .
+						'<li>' .
+						sprintf(
+							/* translators: %s: translation added */
+							__( 'Shortcodes could be used for example in <a href="%s">Product Info module</a>.', 'woocommerce-jetpack' ),
+							admin_url( wcj_admin_tab_url() . '&wcj-cat=products&section=product_custom_info' )
+						) .
+						'</li>' .
+						'<li>' .
+						sprintf(
+							/* translators: %s: translation added */
+							__( 'To change add to cart button labels use <a href="%s">Add to Cart Labels module</a>.', 'woocommerce-jetpack' ),
+							admin_url( wcj_admin_tab_url() . '&wcj-cat=labels&section=add_to_cart' )
+						) .
+						'</li>' .
+						'<li>' .
+						sprintf(
+							/* translators: %s: translation added */
+							__( 'If you want to allow customers to choose dynamic price, Use <a href="%s">Product Open Pricing (Name Your Price) module</a>.', 'woocommerce-jetpack' ),
+							admin_url( wcj_admin_tab_url() . '&wcj-cat=prices_and_currencies&section=product_open_pricing' )
+						) .
+						'</li>' .
+					'</ol>';
+				}
+			);
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

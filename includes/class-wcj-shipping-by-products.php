@@ -30,28 +30,65 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_by_products';
-			$this->short_desc = __( 'Shipping Methods by Products', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-methods-by-products';
+			$this->short_desc = 'Shipping Methods by Products';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Methods by Products', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up (Free shipping available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-methods-by-products';
 
 			$this->condition_options = array(
 				'products'     => array(
-					'title' => __( 'Products', 'woocommerce-jetpack' ),
-					'desc'  => __( 'Shipping methods by <strong>products</strong>.', 'woocommerce-jetpack' ),
+					'title' => 'Products',
+					'desc'  => 'Shipping methods by <strong>products</strong>.',
 				),
 				'product_cats' => array(
-					'title' => __( 'Product Categories', 'woocommerce-jetpack' ),
-					'desc'  => __( 'Shipping methods by <strong>products categories</strong>.', 'woocommerce-jetpack' ),
+					'title' => 'Product Categories',
+					'desc'  => 'Shipping methods by <strong>products categories</strong>.',
 				),
 				'product_tags' => array(
-					'title' => __( 'Product Tags', 'woocommerce-jetpack' ),
-					'desc'  => __( 'Shipping methods by <strong>products tags</strong>.', 'woocommerce-jetpack' ),
+					'title' => 'Product Tags',
+					'desc'  => 'Shipping methods by <strong>products tags</strong>.',
 				),
 				'classes'      => array(
-					'title' => __( 'Product Shipping Classes', 'woocommerce-jetpack' ),
+					'title' => 'Product Shipping Classes',
 					'desc'  => '',
 				),
+			);
+			wcj_init_presentation(
+				function () {
+					$this->condition_options = array(
+						'products'     => array(
+							'title' => __( 'Products', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Shipping methods by <strong>products</strong>.', 'woocommerce-jetpack' ),
+						),
+						'product_cats' => array(
+							'title' => __( 'Product Categories', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Shipping methods by <strong>products categories</strong>.', 'woocommerce-jetpack' ),
+						),
+						'product_tags' => array(
+							'title' => __( 'Product Tags', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Shipping methods by <strong>products tags</strong>.', 'woocommerce-jetpack' ),
+						),
+						'classes'      => array(
+							'title' => __( 'Product Shipping Classes', 'woocommerce-jetpack' ),
+							'desc'  => '',
+						),
+					);
+				}
 			);
 
 			parent::__construct();
@@ -107,7 +144,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 		public function check( $options_id, $values, $include_or_exclude, $package ) {
 			$cart_instead_of_package = ( 'yes' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_cart_not_package', 'yes' ) );
 			if ( ! $this->check_for_data( $cart_instead_of_package, $package ) ) {
-				return true;
+				return WCJ_Rule_Explanations::shipping_v2_result( $this, true, 'unavailable_data', 'data_unavailable_bypass' );
 			}
 			$do_add_variations = ( 'yes' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) );
 			if ( 'products' === $options_id && ( $do_add_variations ) ) {
@@ -115,7 +152,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 				foreach ( $values as $_product_id ) {
 					$_product = wc_get_product( $_product_id );
 					if ( $_product->is_type( 'variable' ) ) {
-						$products_variations = array_merge( $products_variations, $_product->get_children() );
+						$products_variations = array_merge( $products_variations, WCJ_Rule_Explanations::shipping_v2_bound( $this, $_product->get_children() ) );
 					} else {
 						$products_variations[] = $_product_id;
 					}
@@ -123,31 +160,31 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 				$values = array_unique( $products_variations );
 			}
 			$validate_all_for_include = ( 'include' === $include_or_exclude && 'yes' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_validate_all_enabled', 'no' ) );
-			foreach ( $this->get_items( $cart_instead_of_package, $package ) as $item ) {
+			foreach ( WCJ_Rule_Explanations::shipping_v2_bound( $this, $this->get_items( $cart_instead_of_package, $package ) ) as $item ) {
 				switch ( $options_id ) {
 					case 'products':
 						$_product_id = ( $do_add_variations && 0 !== $item['variation_id'] && '0' !== $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
 						if ( $validate_all_for_include && ! in_array( (string) $_product_id, $values, true ) ) {
-							return false;
+							return WCJ_Rule_Explanations::shipping_v2_result( $this, false, $cart_instead_of_package ? 'cart' : 'package' );
 						} elseif ( ! $validate_all_for_include && in_array( (string) $_product_id, $values, true ) ) {
-							return true;
+							return WCJ_Rule_Explanations::shipping_v2_result( $this, true, $cart_instead_of_package ? 'cart' : 'package' );
 						}
 						break;
 					case 'product_cats':
 					case 'product_tags':
-						$product_terms = get_the_terms( $item['product_id'], ( 'product_cats' === $options_id ? 'product_cat' : 'product_tag' ) );
+						$product_terms = WCJ_Rule_Explanations::shipping_v2_bound( $this, get_the_terms( $item['product_id'], ( 'product_cats' === $options_id ? 'product_cat' : 'product_tag' ) ) );
 						if ( empty( $product_terms ) ) {
 							if ( $validate_all_for_include ) {
-								return false;
+								return WCJ_Rule_Explanations::shipping_v2_result( $this, false, $cart_instead_of_package ? 'cart' : 'package' );
 							} else {
 								break;
 							}
 						}
 						foreach ( $product_terms as $product_term ) {
 							if ( $validate_all_for_include && ! in_array( (string) $product_term->term_id, $values, true ) ) {
-								return false;
+								return WCJ_Rule_Explanations::shipping_v2_result( $this, false, $cart_instead_of_package ? 'cart' : 'package' );
 							} elseif ( ! $validate_all_for_include && in_array( (string) $product_term->term_id, $values, true ) ) {
-								return true;
+								return WCJ_Rule_Explanations::shipping_v2_result( $this, true, $cart_instead_of_package ? 'cart' : 'package' );
 							}
 						}
 						break;
@@ -155,14 +192,14 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 						$product                = $item['data'];
 						$product_shipping_class = $product->get_shipping_class_id();
 						if ( $validate_all_for_include && ! in_array( (string) $product_shipping_class, $values, true ) ) {
-							return false;
+							return WCJ_Rule_Explanations::shipping_v2_result( $this, false, $cart_instead_of_package ? 'cart' : 'package' );
 						} elseif ( ! $validate_all_for_include && in_array( (string) $product_shipping_class, $values, true ) ) {
-							return true;
+							return WCJ_Rule_Explanations::shipping_v2_result( $this, true, $cart_instead_of_package ? 'cart' : 'package' );
 						}
 						break;
 				}
 			}
-			return $validate_all_for_include;
+			return WCJ_Rule_Explanations::shipping_v2_result( $this, $validate_all_for_include, $cart_instead_of_package ? 'cart' : 'package' );
 		}
 
 		/**

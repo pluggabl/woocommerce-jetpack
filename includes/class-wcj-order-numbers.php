@@ -28,19 +28,44 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 		public function __construct() {
 
 			$this->id         = 'order_numbers';
-			$this->short_desc = __( 'Order Numbers', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Elite). ', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-custom-order-numbers';
+			$this->short_desc = 'Order Numbers';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Order Numbers', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Elite). ';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Elite). ', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Sequential order numbering, custom order number prefix, suffix and number width.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-custom-order-numbers';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'renumerate_orders' => array(
-						'title' => __( 'Orders Renumerate', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Tool renumerates all orders.', 'woocommerce-jetpack' ),
+						'title' => 'Orders Renumerate',
+						'desc'  => 'Tool renumerates all orders.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'renumerate_orders' => array(
+							'title' => __( 'Orders Renumerate', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Tool renumerates all orders.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {
@@ -660,7 +685,7 @@ if ( ! class_exists( 'WCJ_Order_Numbers' ) ) :
 						'orderby' => wcj_get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
 						'order'   => wcj_get_option( 'wcj_order_numbers_renumerate_tool_order', 'ASC' ),
 						'offset'  => $offset,
-						'fields'  => 'ids',
+						'return'  => 'ids',
 					);
 					$order_ids = wc_get_orders( $args );
 					if ( ! $order_ids ) {

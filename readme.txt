@@ -4,14 +4,27 @@ Donate link: https://booster.io/
 Tags: woocommerce, abandoned cart, cart recovery, swatches, woocommerce pdf invoices, variation swatches, woocommerce multi currency, woocommerce dynamic pricing, woocommerce checkout fields, woocommerce product addons, woocommerce product feed, currency switcher
 Requires at least: 5.8
 Tested up to: 7.0
-Requires PHP: 7.2
-Stable tag: 8.5.1
+Requires PHP: 7.3
+Stable tag: 9.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
 
 == Description ==
+
+### New in 9.0.0 - Handle returns and understand gateway fees
+
+* Customer Return Requests - Turn on Return Requests to let signed-in customers request eligible item quantities from completed orders, follow their history and see your decision there. Verified guest access is a separate setup that needs HTTPS. Approval records your decision; it does not refund money, restock products or process a payment.
+* Checkout Blocks - Collect supported checkout file uploads and show your Place order button text in the WooCommerce Checkout block, alongside existing supported custom fields. Existing module and edition limits still apply; this does not make every Booster option or third-party checkout compatible.
+* Order and payment reliability - Use WooCommerce order data in affected HPOS exports and reports. Keep Booster gateway fees in sync when an eligible unpaid order changes payment method, without replacing unrelated custom fees.
+* Understand gateway fees - See why a configured fee applies to a sample guest purchase, and check a summary of your latest up to 50 return requests. These read-only views do not change a shopper cart or predict the final checkout total. Booster Elite adds role and product facts, fee comparisons and payment/shipping rule scenarios.
+
+### Requirements and compatibility
+
+Before updating, confirm that your hosting uses 64-bit PHP and allows native hrtime() to return integer monotonic nanoseconds. PHP 7.3 is the minimum API version, not a recommended deployment version. There is no wall-clock fallback: Booster initialization and protected Returns operations stop safely if this clock is unavailable. Test enabled modules, custom checkout rules and your theme on staging first.
+
+Checkout scope: supported custom-field types are text, select, checkbox and radio shown as a select. Conditional fields need WooCommerce 9.9 or later. File uploads need compatible private storage. Rule explanations cover supported Booster rules, not third-party behavior. In Free and Plus, fee rules with product conditions show as unsupported. Optional WordPress Abilities require an available host API and current permissions; they do not connect or certify an external AI assistant.
 
 ### New in 8.5.1 - Useful store updates, on your terms
 Short Booster announcements stay on Booster pages, not across your WordPress dashboard. Dismiss a notice once and it stays dismissed for your account. Existing store settings are preserved.
@@ -407,8 +420,16 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 
 == Changelog ==
 
+= 9.0.0 =
+* Customer Return Requests - Turn on Return Requests to let signed-in customers request eligible item quantities from completed orders, follow their history and see your decision there. Verified guest access is a separate setup that needs HTTPS. Approval records your decision; it does not refund money, restock products or process a payment.
+* Checkout Blocks - Collect supported checkout file uploads and show your Place order button text in the WooCommerce Checkout block, alongside existing supported custom fields. Existing module and edition limits still apply; this does not make every Booster option or third-party checkout compatible.
+* Order and payment reliability - Use WooCommerce order data in affected HPOS exports and reports. Keep Booster gateway fees in sync when an eligible unpaid order changes payment method, without replacing unrelated custom fees.
+* Understand gateway fees - See why a configured fee applies to a sample guest purchase, and check a summary of your latest up to 50 return requests. These read-only views do not change a shopper cart or predict the final checkout total. Booster Elite adds role and product facts, fee comparisons and payment/shipping rule scenarios.
+* Hosting requirements - Requires PHP 7.3 or later on a 64-bit build with native integer hrtime() enabled. Use a maintained PHP release supported by your WordPress and WooCommerce versions.
+
 = 8.5.1 - 15/10/2026 =
 * Store updates, without dashboard clutter - Receive short Booster news only on Booster settings pages. Each user can permanently dismiss a notice; store and checkout settings are unchanged.
+
 
 = 8.5.0 - 07/10/2026 =
 * Storefront continuity - Keeps setup redirects out of customer background requests after activation, so saved-list actions can work immediately.
@@ -4510,6 +4531,9 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 9.0.0 =
+Back up and test the exact package on staging before enabling new workflows. Review the PHP 7.3, 64-bit native-clock requirements and edition-specific limits.
 
 = 8.5.1 =
 Back up and test on staging. This maintenance update preserves existing store settings and adds contextual, individually dismissible Booster announcements. No campaign is active by default.

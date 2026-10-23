@@ -41,19 +41,44 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		public function __construct() {
 
 			$this->id         = 'sku';
-			$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Elite); Sequential Number Generation (Elite); Variable Products Variations (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Generate SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-sku';
+			$this->short_desc = 'SKU';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Elite); Sequential Number Generation (Elite); Variable Products Variations (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Elite); Sequential Number Generation (Elite); Variable Products Variations (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Generate SKUs automatically. Search by SKU on frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Generate SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-sku';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'sku' => array(
-						'title' => __( 'Autogenerate SKUs', 'woocommerce-jetpack' ),
-						'desc'  => __( 'The tool generates and sets product SKUs for existing products.', 'woocommerce-jetpack' ),
+						'title' => 'Autogenerate SKUs',
+						'desc'  => 'The tool generates and sets product SKUs for existing products.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'sku' => array(
+							'title' => __( 'Autogenerate SKUs', 'woocommerce-jetpack' ),
+							'desc'  => __( 'The tool generates and sets product SKUs for existing products.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {

@@ -1870,7 +1870,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 
 			if ( false !== $this->the_order ) {
 				$get_payment_notes = 'wcj_gateways_' . $this->the_order->get_payment_method() . '_pdf_notes';
-				if ( str_contains( get_option( $get_payment_notes ), ']' ) ) {
+				if ( false !== strpos( get_option( $get_payment_notes ), ']' ) ) {
 					$get_value        = get_option( $get_payment_notes );
 					$order_id         = ' order_id="' . wcj_get_order_id( $this->the_order ) . '"]';
 					$custom_shortcode = str_replace( ']', $order_id, $get_value );

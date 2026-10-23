@@ -1,0 +1,918 @@
+{
+    "tier": "free",
+    "outputs": {
+        "fixed": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "missing_session": {
+            "fees": [],
+            "gateway": "",
+            "reason": "missing_cart_or_session"
+        },
+        "no_gateway": {
+            "fees": [],
+            "gateway": "",
+            "reason": "no_gateway_selected"
+        },
+        "unknown_gateway": {
+            "fees": [],
+            "gateway": "unknown",
+            "reason": "not_configured"
+        },
+        "empty_title": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "not_configured"
+        },
+        "shortcode_empty": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "not_configured"
+        },
+        "shortcode_title": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Resolved title",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "duplicate": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "duplicate_suppressed"
+        },
+        "role_override": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -7,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "role_zero_fallback": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "roleless": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 4,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "include_match": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "include_miss": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "exclude_match": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "exclude_miss": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "invalid_type": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "klarna_alias": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_klarna_payments",
+                    "name": "Klarna fee",
+                    "amount": 3,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "klarna_payments",
+            "reason": "applied"
+        },
+        "calc-fixed--12.345--no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -12.345,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-fixed--12.345--yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -12.345,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-fixed--12.345-1-no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -24.69,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-fixed--12.345-1-yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -24.69,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-fixed-0--no": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-fixed-0--yes": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-fixed-0-1-no": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-fixed-0-1-yes": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-fixed-7.891--no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 7.891,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-fixed-7.891--yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 7.891,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-fixed-7.891-1-no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 15.782,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-fixed-7.891-1-yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 15.782,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent--12.345--no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -13.579500000000001,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent--12.345--yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -13.6,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent--12.345-1-no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -13.579500000000001,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent--12.345-1-yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": -13.6,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent-0--no": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-percent-0--yes": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-percent-0-1-no": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-percent-0-1-yes": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "zero_or_invalid_amount"
+        },
+        "calc-percent-7.891--no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 8.6801,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent-7.891--yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 8.7,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent-7.891-1-no": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 8.6801,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "calc-percent-7.891-1-yes": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 8.7,
+                    "taxable": true,
+                    "tax_class": "Reduced rate"
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-no-0-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-no-0-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-0-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-no-100-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-no-100-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-100-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-no-110-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-no-110-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-110-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.5,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-no-116-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-116-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-116-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-117-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-117-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-no-117-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-yes-0-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-0-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-yes-0-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-100-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-100-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-yes-100-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-110-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-110-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-yes-110-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-116-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-116-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-yes-116-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.800000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-no-yes-117-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-yes-117-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-no-yes-117-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-0-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.0,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-no-0-105": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.0,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-no-0-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.0,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-no-100-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.0,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-no-100-105": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.0,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-no-100-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.0,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-no-110-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-110-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-110-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-116-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-116-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-116-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-117-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-117-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-no-117-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-0-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.300000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-yes-0-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-0-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.300000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-yes-100-0": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.300000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-yes-100-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-100-116": {
+            "fees": [
+                {
+                    "id": "wcj_gateway_fee_cod",
+                    "name": "Gateway fee",
+                    "amount": 5.300000000000001,
+                    "taxable": false,
+                    "tax_class": ""
+                }
+            ],
+            "gateway": "cod",
+            "reason": "applied"
+        },
+        "bounds-yes-yes-110-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-110-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-110-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-116-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-116-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-116-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-117-0": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-117-105": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        },
+        "bounds-yes-yes-117-116": {
+            "fees": [],
+            "gateway": "cod",
+            "reason": "outside_cart_amount"
+        }
+    }
+}

@@ -28,10 +28,25 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 		public function __construct() {
 
 			$this->id         = 'products_xml';
-			$this->short_desc = __( 'Products XML Feeds', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Products XML feeds (1 file allowed in free version.).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Products XML feeds.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-products-xml-feeds';
+			$this->short_desc = 'Products XML Feeds';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Products XML Feeds', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Products XML feeds (1 file allowed in free version.).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Products XML feeds (1 file allowed in free version.).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Products XML feeds.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Products XML feeds.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-products-xml-feeds';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

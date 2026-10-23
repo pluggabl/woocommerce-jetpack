@@ -41,9 +41,19 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		public function __construct() {
 
 			$this->id         = 'admin_bar';
-			$this->short_desc = __( 'Admin Bar', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce admin bar.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-admin-bar';
+			$this->short_desc = 'Admin Bar';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Admin Bar', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce admin bar.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce admin bar.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-admin-bar';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

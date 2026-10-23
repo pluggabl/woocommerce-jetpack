@@ -317,9 +317,10 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 					break;
 				}
 				foreach ( $orders as $order ) {
-					$order_id = $order->get_id();
-					$order    = wc_get_order( $order_id );
-					$items    = $order->get_items();
+					$order_id   = $order->get_id();
+					$order      = wc_get_order( $order_id );
+					$order_date = $order->get_date_created();
+					$items      = $order->get_items();
 					foreach ( $items as $item ) {
 						$product_id = ( 'product' !== $this->product_type && ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
 						if ( ! isset( $products_info[ $product_id ] ) && $this->include_deleted_products ) {
@@ -342,7 +343,7 @@ if ( ! class_exists( 'WCJ_Reports_Stock' ) ) :
 						if ( isset( $products_info[ $product_id ] ) ) {
 							$products_info[ $product_id ]['sales_in_period'][ $the_period ] += $item['qty'];
 							if ( 0 === $products_info[ $product_id ]['last_sale'] ) {
-								$products_info[ $product_id ]['last_sale'] = get_the_time( 'U', $order_id );
+								$products_info[ $product_id ]['last_sale'] = ( null !== $order_date ? $order_date->getOffsetTimestamp() : 0 );
 							}
 						}
 					}

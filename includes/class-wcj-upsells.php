@@ -34,11 +34,31 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 		public function __construct() {
 
 			$this->id         = 'upsells';
-			$this->short_desc = __( 'Upsells', 'woocommerce-jetpack' );
-			$this->extra_desc = __( 'Upsells are products which you recommend instead of the currently viewed product, for example, products that are more profitable or better quality or more expensive.', 'woocommerce' );
-			$this->desc       = __( 'Customize upsells products display. Global upsells (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize upsells products display.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-upsells';
+			$this->short_desc = 'Upsells';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Upsells', 'woocommerce-jetpack' );
+				}
+			);
+			$this->extra_desc = 'Upsells are products which you recommend instead of the currently viewed product, for example, products that are more profitable or better quality or more expensive.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'Upsells are products which you recommend instead of the currently viewed product, for example, products that are more profitable or better quality or more expensive.', 'woocommerce' );
+				}
+			);
+			$this->desc = 'Customize upsells products display. Global upsells (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize upsells products display. Global upsells (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize upsells products display.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize upsells products display.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-upsells';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

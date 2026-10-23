@@ -28,10 +28,25 @@ if ( ! class_exists( 'WCJ_Add_To_Cart' ) ) :
 		public function __construct() {
 
 			$this->id         = 'add_to_cart';
-			$this->short_desc = __( 'Add to Cart Button Labels', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change text for Add to Cart button by product type, by product category or for individual products (1 category group allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Change text for Add to Cart button by product type, by product category or for individual products.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-add-to-cart-labels';
+			$this->short_desc = 'Add to Cart Button Labels';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Add to Cart Button Labels', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Change text for Add to Cart button by product type, by product category or for individual products (1 category group allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Change text for Add to Cart button by product type, by product category or for individual products (1 category group allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Change text for Add to Cart button by product type, by product category or for individual products.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Change text for Add to Cart button by product type, by product category or for individual products.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-add-to-cart-labels';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

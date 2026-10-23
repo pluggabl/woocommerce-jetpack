@@ -58,26 +58,30 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 		 * @param Array $package Get pakages.
 		 */
 		public function available_shipping_methods( $rates, $package ) {
+			$wcj_ticket = WCJ_Rule_Explanations::shipping_v2_start( $this, $this->id, $rates );
 			$include_arr = array();
 			$exclude_arr = array();
 			foreach ( $rates as $rate_key => $rate ) {
 				foreach ( $this->condition_options as $options_id => $options_data ) {
+					WCJ_Rule_Explanations::shipping_v2_section( $this, $rate_key, $rate, $options_id );
 					if ( 'no' === wcj_get_option( 'wcj_shipping_by_' . $options_id . '_section_enabled', 'yes' ) ) {
 						continue;
 					}
 					$include = ( $this->use_shipping_instances ?
-					get_option( 'wcj_shipping_' . $options_id . '_include_instance_' . $rate->instance_id, '' ) :
-					get_option( 'wcj_shipping_' . $options_id . '_include_' . $rate->method_id, '' )
+					get_option( 'wcj_shipping_' . $options_id . '_include_instance_' . WCJ_Rule_Explanations::shipping_v2_key( $this, $rate, $options_id, 'include', $this->use_shipping_instances, $rate->instance_id ), '' ) :
+					get_option( 'wcj_shipping_' . $options_id . '_include_' . WCJ_Rule_Explanations::shipping_v2_key( $this, $rate, $options_id, 'include', $this->use_shipping_instances, $rate->method_id ), '' )
 					);
+					WCJ_Rule_Explanations::shipping_v2_phase( $this, $rate_key, $options_id, 'include', $include );
 					if ( ! empty( $include ) ) {
 						if ( ! $this->check( $options_id, $include, 'include', $package ) ) {
 							unset( $rates[ $rate_key ] );
 						}
 					}
 					$exclude = ( $this->use_shipping_instances ?
-					get_option( 'wcj_shipping_' . $options_id . '_exclude_instance_' . $rate->instance_id, '' ) :
-					get_option( 'wcj_shipping_' . $options_id . '_exclude_' . $rate->method_id, '' )
+					get_option( 'wcj_shipping_' . $options_id . '_exclude_instance_' . WCJ_Rule_Explanations::shipping_v2_key( $this, $rate, $options_id, 'exclude', $this->use_shipping_instances, $rate->instance_id ), '' ) :
+					get_option( 'wcj_shipping_' . $options_id . '_exclude_' . WCJ_Rule_Explanations::shipping_v2_key( $this, $rate, $options_id, 'exclude', $this->use_shipping_instances, $rate->method_id ), '' )
 					);
+					WCJ_Rule_Explanations::shipping_v2_phase( $this, $rate_key, $options_id, 'exclude', $exclude );
 					if ( ! empty( $exclude ) && $this->check( $options_id, $exclude, 'exclude', $package ) ) {
 						$exclude_arr[] = $rate_key;
 					}
@@ -90,6 +94,7 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 					unset( $rates[ $rate_key ] );
 				}
 			}
+			WCJ_Rule_Explanations::shipping_v2_finish( $wcj_ticket, $rates );
 			return $rates;
 		}
 

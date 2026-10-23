@@ -28,9 +28,19 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		public function __construct() {
 
 			$this->id         = 'email_options';
-			$this->short_desc = __( 'Email Options', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-email-options';
+			$this->short_desc = 'Email Options';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Email Options', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-email-options';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

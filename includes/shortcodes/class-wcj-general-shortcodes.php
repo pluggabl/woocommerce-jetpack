@@ -101,8 +101,8 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				'selector_type'         => 'country',
 				'option'                => '',
 				'company'               => '',
-				'label_incl'            => __( 'Tax toggle (incl.)', 'woocommerce-jetpack' ),
-				'label_excl'            => __( 'Tax toggle (excl.)', 'woocommerce-jetpack' ),
+				'label_incl'            => 'Tax toggle (incl.)',
+				'label_excl'            => 'Tax toggle (excl.)',
 				'slug'                  => '',
 				'code'                  => '',
 				'type'                  => '',
@@ -124,6 +124,12 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				'table'                 => '',
 				'cmp'                   => 'max',
 				'prop'                  => 'quantity',
+			);
+			wcj_init_presentation(
+				function () {
+					$this->the_atts['label_incl'] = __( 'Tax toggle (incl.)', 'woocommerce-jetpack' );
+					$this->the_atts['label_excl'] = __( 'Tax toggle (excl.)', 'woocommerce-jetpack' );
+				}
 			);
 
 			parent::__construct();

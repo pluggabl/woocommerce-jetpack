@@ -35,10 +35,25 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 		public function __construct() {
 
 			$this->id         = 'global_discount';
-			$this->short_desc = __( 'Global Discount', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add global discount to all products (1 discount group allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add global discount to all products.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shop-global-discount';
+			$this->short_desc = 'Global Discount';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Global Discount', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add global discount to all products (1 discount group allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add global discount to all products (1 discount group allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add global discount to all products.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add global discount to all products.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shop-global-discount';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

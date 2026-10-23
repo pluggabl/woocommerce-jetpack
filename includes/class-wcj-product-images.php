@@ -34,9 +34,19 @@ if ( ! class_exists( 'WCJ_Product_Images' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_images';
-			$this->short_desc = __( 'Product Images', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize products images and thumbnails.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-images';
+			$this->short_desc = 'Product Images';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Images', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize products images and thumbnails.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize products images and thumbnails.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-images';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

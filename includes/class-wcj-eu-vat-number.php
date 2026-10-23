@@ -33,19 +33,44 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		public function __construct() {
 
 			$this->id         = 'eu_vat_number';
-			$this->short_desc = __( 'EU VAT Number', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Elite). Check for IP Location Country  (Elite)', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-eu-vat-number';
+			$this->short_desc = 'EU VAT Number';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'EU VAT Number', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Elite). Check for IP Location Country  (Elite)';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Elite). Check for IP Location Country  (Elite)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-eu-vat-number';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'eu_countries_vat_rates' => array(
-						'title' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' ),
+						'title' => 'EU Countries VAT Rates',
+						'desc'  => 'Add all EU countries VAT standard rates to WooCommerce.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'eu_countries_vat_rates' => array(
+							'title' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {

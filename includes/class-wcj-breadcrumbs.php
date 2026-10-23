@@ -33,10 +33,25 @@ if ( ! class_exists( 'WCJ_Breadcrumbs' ) ) :
 		public function __construct() {
 
 			$this->id         = 'breadcrumbs';
-			$this->short_desc = __( 'Breadcrumbs', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize WooCommerce breadcrumbs. Hide breadcrumbs (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize WooCommerce breadcrumbs.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-breadcrumbs';
+			$this->short_desc = 'Breadcrumbs';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Breadcrumbs', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize WooCommerce breadcrumbs. Hide breadcrumbs (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize WooCommerce breadcrumbs. Hide breadcrumbs (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize WooCommerce breadcrumbs.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize WooCommerce breadcrumbs.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-breadcrumbs';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

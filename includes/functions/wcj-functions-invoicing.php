@@ -271,30 +271,129 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 	 * Wcj_get_invoice_types.
 	 *
 	 * @version 3.4.0
+	 * @param array|null $presentation Optional per-call default realization output.
 	 */
-	function wcj_get_invoice_types() {
+	function wcj_get_invoice_types( &$presentation = null ) {
+		static $default_presentations = array();
+		$collect_presentation         = 0 < func_num_args();
+		$presentation                 = array();
+		// Only a witnessed default on its exact options owner can be reused.
+		$get_title         = static function ( $option_name, $raw_title, $translate ) use ( &$presentation, $collect_presentation, &$default_presentations ) {
+			if ( did_action( 'init' ) ) {
+				return wcj_get_option( $option_name, $translate() );
+			}
+			$has_title_filters = static function () use ( $option_name ) {
+				return has_filter( $option_name )
+					|| has_filter( 'default_option_' . $option_name )
+					|| has_filter( 'pre_option_' . $option_name )
+					|| has_filter( 'pre_option' )
+					|| has_filter( 'option_' . $option_name )
+					|| has_filter( 'all' );
+			};
+			$unfiltered        = ! $has_title_filters();
+			$owner             = w_c_j();
+			$owner_key         = spl_object_hash( $owner );
+			$had_title         = is_array( $owner->options ) && array_key_exists( $option_name, $owner->options );
+			$realization       = isset( $default_presentations[ $owner_key ][ $option_name ] ) ? $default_presentations[ $owner_key ][ $option_name ] : null;
+			if ( null !== $realization && ( ! $unfiltered || ! $realization->eligible || $owner !== $realization->owner || ! isset( $owner->options[ $option_name ] ) || $raw_title !== $owner->options[ $option_name ] ) ) {
+				$realization->eligible = false;
+				$realization           = null;
+				unset( $default_presentations[ $owner_key ][ $option_name ] );
+			}
+			$used_default    = false;
+			$observe_default = static function ( $value ) use ( &$used_default, $raw_title ) {
+				$used_default = $raw_title === $value;
+				return $value;
+			};
+			add_filter( 'default_option_' . $option_name, $observe_default, PHP_INT_MAX );
+			try {
+				$title = wcj_get_option( $option_name, $raw_title );
+			} finally {
+				remove_filter( 'default_option_' . $option_name, $observe_default, PHP_INT_MAX );
+			}
+			$owned_default = $unfiltered && ! $has_title_filters() && $raw_title === $title
+				&& isset( $owner->options[ $option_name ] ) && $raw_title === $owner->options[ $option_name ];
+			if ( ! $owned_default && null !== $realization ) {
+				$realization->eligible = false;
+				$realization           = null;
+				unset( $default_presentations[ $owner_key ][ $option_name ] );
+			}
+			if ( $owned_default && $used_default ) {
+				$realization = (object) array(
+					'owner'    => $owner,
+					'eligible' => true,
+					'admitted' => ! $had_title,
+					'realized' => false,
+					'value'    => null,
+				);
+				if ( $realization->admitted ) {
+					$default_presentations[ $owner_key ][ $option_name ] = $realization;
+				}
+				wcj_init_presentation(
+					static function () use ( $option_name, $raw_title, $translate, $has_title_filters, $realization, $owner ) {
+						if ( $realization->eligible && ! $has_title_filters() && isset( $owner->options[ $option_name ] ) ) {
+							$cached_title = $owner->options[ $option_name ];
+							if ( $raw_title === $cached_title ) {
+								$translated_title               = $translate();
+								$owner->options[ $option_name ] = $translated_title;
+								$realization->value             = $translated_title;
+								$realization->realized          = true;
+							}
+						}
+					}
+				);
+			}
+			if ( $collect_presentation && $owned_default && null !== $realization && $realization->eligible ) {
+				$presentation[ $option_name ] = $realization;
+			}
+			return $title;
+		};
 		$invoice_types     = array(
 			array(
 				'id'       => 'invoice',
-				'title'    => wcj_get_option( 'wcj_invoicing_invoice_admin_title', __( 'Invoice', 'woocommerce-jetpack' ) ),
+				'title'    => $get_title(
+					'wcj_invoicing_invoice_admin_title',
+					'Invoice',
+					static function () {
+						return __( 'Invoice', 'woocommerce-jetpack' );
+					}
+				),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'green',
 			),
 			array(
 				'id'       => 'proforma_invoice',
-				'title'    => wcj_get_option( 'wcj_invoicing_proforma_invoice_admin_title', __( 'Proforma Invoice', 'woocommerce-jetpack' ) ),
+				'title'    => $get_title(
+					'wcj_invoicing_proforma_invoice_admin_title',
+					'Proforma Invoice',
+					static function () {
+						return __( 'Proforma Invoice', 'woocommerce-jetpack' );
+					}
+				),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'orange',
 			),
 			array(
 				'id'       => 'packing_slip',
-				'title'    => wcj_get_option( 'wcj_invoicing_packing_slip_admin_title', __( 'Packing Slip', 'woocommerce-jetpack' ) ),
+				'title'    => $get_title(
+					'wcj_invoicing_packing_slip_admin_title',
+					'Packing Slip',
+					static function () {
+						return __( 'Packing Slip', 'woocommerce-jetpack' );
+					}
+				),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'blue',
 			),
 			array(
 				'id'       => 'credit_note',
-				'title'    => wcj_get_option( 'wcj_invoicing_credit_note_admin_title', __( 'Credit Note', 'woocommerce-jetpack' ) ),
+				'title'    => $get_title(
+					'wcj_invoicing_credit_note_admin_title',
+					'Credit Note',
+					static function () {
+						return __( 'Credit Note', 'woocommerce-jetpack' );
+					}
+				),
 				'defaults' => array( 'init' => 'disabled' ),
 				'color'    => 'red',
 			),
@@ -303,9 +402,12 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 		for ( $i = 1; $i <= $total_custom_docs; $i++ ) {
 			$invoice_types[] = array(
 				'id'            => ( 1 === $i ? 'custom_doc' : 'custom_doc_' . $i ),
-				'title'         => wcj_get_option(
+				'title'         => $get_title(
 					'wcj_invoicing_' . ( 1 === $i ? 'custom_doc' : 'custom_doc_' . $i ) . '_admin_title',
-					__( 'Custom Document', 'woocommerce-jetpack' ) . ' #' . $i
+					'Custom Document #' . $i,
+					static function () use ( $i ) {
+						return __( 'Custom Document', 'woocommerce-jetpack' ) . ' #' . $i;
+					}
 				),
 				'defaults'      => array( 'init' => 'disabled' ),
 				'color'         => 'gray',
@@ -354,9 +456,11 @@ if ( ! function_exists( 'wcj_get_enabled_invoice_types' ) ) {
 	 * Wcj_get_enabled_invoice_types.
 	 *
 	 * @version 3.2.0
+	 * @param array|null $presentation Optional per-call default realization output.
 	 */
-	function wcj_get_enabled_invoice_types() {
-		$invoice_types         = wcj_get_invoice_types();
+	function wcj_get_enabled_invoice_types( &$presentation = null ) {
+		$presentation          = null;
+		$invoice_types         = 0 < func_num_args() ? wcj_get_invoice_types( $presentation ) : wcj_get_invoice_types();
 		$enabled_invoice_types = array();
 		foreach ( $invoice_types as $k => $invoice_type ) {
 			$z = ( 0 === $k ) ? wcj_get_invoice_create_on( $invoice_type['id'] ) : apply_filters( 'booster_option', '', wcj_get_invoice_create_on( $invoice_type['id'] ) );

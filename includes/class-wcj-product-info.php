@@ -118,13 +118,52 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_info';
-			$this->short_desc = __( 'Product Info V1', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add additional info to category and single product pages.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-info';
+			$this->short_desc = 'Product Info V1';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Info V1', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add additional info to category and single product pages.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add additional info to category and single product pages.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-info';
 			parent::__construct();
 
 			$this->product_info_on_archive_filters_array = $this->get_product_info_on_archive_filters_array();
 			$this->product_info_on_single_filters_array  = $this->get_product_info_on_single_filters_array();
+			wcj_init_presentation(
+				function () {
+					if ( is_array( $this->product_info_on_archive_filters_array ) ) {
+						if ( isset( $this->product_info_on_archive_filters_array['woocommerce_before_shop_loop_item'] ) && 'Before product' === $this->product_info_on_archive_filters_array['woocommerce_before_shop_loop_item'] ) {
+							$this->product_info_on_archive_filters_array['woocommerce_before_shop_loop_item'] = __( 'Before product', 'woocommerce-jetpack' );
+						}
+						if ( isset( $this->product_info_on_archive_filters_array['woocommerce_before_shop_loop_item_title'] ) && 'Before product title' === $this->product_info_on_archive_filters_array['woocommerce_before_shop_loop_item_title'] ) {
+							$this->product_info_on_archive_filters_array['woocommerce_before_shop_loop_item_title'] = __( 'Before product title', 'woocommerce-jetpack' );
+						}
+						if ( isset( $this->product_info_on_archive_filters_array['woocommerce_after_shop_loop_item'] ) && 'After product' === $this->product_info_on_archive_filters_array['woocommerce_after_shop_loop_item'] ) {
+							$this->product_info_on_archive_filters_array['woocommerce_after_shop_loop_item'] = __( 'After product', 'woocommerce-jetpack' );
+						}
+						if ( isset( $this->product_info_on_archive_filters_array['woocommerce_after_shop_loop_item_title'] ) && 'After product title' === $this->product_info_on_archive_filters_array['woocommerce_after_shop_loop_item_title'] ) {
+							$this->product_info_on_archive_filters_array['woocommerce_after_shop_loop_item_title'] = __( 'After product title', 'woocommerce-jetpack' );
+						}
+					}
+					if ( is_array( $this->product_info_on_single_filters_array ) ) {
+						if ( isset( $this->product_info_on_single_filters_array['woocommerce_single_product_summary'] ) && 'Inside single product summary' === $this->product_info_on_single_filters_array['woocommerce_single_product_summary'] ) {
+							$this->product_info_on_single_filters_array['woocommerce_single_product_summary'] = __( 'Inside single product summary', 'woocommerce-jetpack' );
+						}
+						if ( isset( $this->product_info_on_single_filters_array['woocommerce_before_single_product_summary'] ) && 'Before single product summary' === $this->product_info_on_single_filters_array['woocommerce_before_single_product_summary'] ) {
+							$this->product_info_on_single_filters_array['woocommerce_before_single_product_summary'] = __( 'Before single product summary', 'woocommerce-jetpack' );
+						}
+						if ( isset( $this->product_info_on_single_filters_array['woocommerce_after_single_product_summary'] ) && 'After single product summary' === $this->product_info_on_single_filters_array['woocommerce_after_single_product_summary'] ) {
+							$this->product_info_on_single_filters_array['woocommerce_after_single_product_summary'] = __( 'After single product summary', 'woocommerce-jetpack' );
+						}
+					}
+				}
+			);
 
 			if ( $this->is_enabled() ) {
 				$this->add_product_info_filters( 'archive' );
@@ -140,10 +179,10 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		 */
 		private function get_product_info_on_archive_filters_array() {
 			return array(
-				'woocommerce_before_shop_loop_item'       => __( 'Before product', 'woocommerce-jetpack' ),
-				'woocommerce_before_shop_loop_item_title' => __( 'Before product title', 'woocommerce-jetpack' ),
-				'woocommerce_after_shop_loop_item'        => __( 'After product', 'woocommerce-jetpack' ),
-				'woocommerce_after_shop_loop_item_title'  => __( 'After product title', 'woocommerce-jetpack' ),
+				'woocommerce_before_shop_loop_item'       => 'Before product',
+				'woocommerce_before_shop_loop_item_title' => 'Before product title',
+				'woocommerce_after_shop_loop_item'        => 'After product',
+				'woocommerce_after_shop_loop_item_title'  => 'After product title',
 			);
 		}
 
@@ -155,9 +194,9 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 		 */
 		private function get_product_info_on_single_filters_array() {
 			return array(
-				'woocommerce_single_product_summary'       => __( 'Inside single product summary', 'woocommerce-jetpack' ),
-				'woocommerce_before_single_product_summary' => __( 'Before single product summary', 'woocommerce-jetpack' ),
-				'woocommerce_after_single_product_summary' => __( 'After single product summary', 'woocommerce-jetpack' ),
+				'woocommerce_single_product_summary'       => 'Inside single product summary',
+				'woocommerce_before_single_product_summary' => 'Before single product summary',
+				'woocommerce_after_single_product_summary' => 'After single product summary',
 			);
 		}
 

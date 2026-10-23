@@ -57,7 +57,15 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 
 				'visibility'             => implode( ',', wcj_get_option( 'wcj_product_by_user_user_visibility', array() ) ),
 				'module'                 => 'product_by_user',
-				'module_name'            => __( 'Product by User', 'woocommerce-jetpack' ),
+				'module_name'            => 'Product by User',
+			);
+
+			wcj_init_presentation(
+				function () {
+					if ( isset( $this->the_atts['module_name'] ) && 'Product by User' === $this->the_atts['module_name'] ) {
+						$this->the_atts['module_name'] = __( 'Product by User', 'woocommerce-jetpack' );
+					}
+				}
 			);
 
 			if ( 'external' !== wcj_get_option( 'wcj_product_by_user_product_type', 'simple' ) ) {
