@@ -38,7 +38,7 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 						$catalog_args['wcj-cat'] = sanitize_key( wp_unslash( $_GET['wcj-cat'] ) );
 					}
 					if ( '' !== $wcj_search ) {
-						$catalog_args['wcj_search'] = $wcj_search;
+						$catalog_args['wcj_search'] = $wcj_search_replaced;
 					}
 					$all_tools_url = add_query_arg( $catalog_args, admin_url( 'admin.php' ) );
 					$my_tools_url  = add_query_arg( 'section', 'active', $all_tools_url );
@@ -76,13 +76,9 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 			<input type="hidden" name="wcj-verify-save-module-settings" value="<?php echo esc_html( wp_create_nonce( 'wcj-verify-save-module-settings' ) ); ?>">
 			<?php
 			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			echo '<input type="hidden" name="return_url" value="' . esc_url( $search_url ) . '">';
 			if ( isset( $_REQUEST['section'] ) && '' !== sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) ) {
-				$wcj_cat = ( isset( $_REQUEST['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-cat'] ) ) : '' );
-				echo '<input type="hidden" name="return_url" value="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . $wcj_cat ) . '&section=' . sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) ) . '">';
 				echo '<input type="hidden" name="section" value="' . esc_html( sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) ) . '">';
-			} else {
-				$wcj_cat = ( isset( $_REQUEST['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-cat'] ) ) : '' );
-				echo '<input type="hidden" name="return_url" value="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . $wcj_cat . '&wcj_search=' . $wcj_search_replaced ) ) . '">';
 			}
 			$phpwpnonce = isset( $_REQUEST['wcj_disable_custom_php_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_disable_custom_php_nonce'] ), 'wcj-disable-custom-php' ) : false;
 			if ( isset( $_REQUEST['wcj_disable_custom_php'] ) && $phpwpnonce ) {

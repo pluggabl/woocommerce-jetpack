@@ -174,8 +174,15 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 
 				$active_tab = isset( $_POST['wcj_setting_active_tab'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_setting_active_tab'] ) ) : '';
 
-				if ( isset( $_POST['return_url'] ) ) {
-					$return_url = sanitize_text_field( wp_unslash( $_POST['return_url'] ) ) . '&active_tab=' . $active_tab . '&success=1&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
+				if ( isset( $_POST['return_url'] ) && is_string( $_POST['return_url'] ) ) {
+					$return_url = add_query_arg(
+						array(
+							'active_tab'    => rawurlencode( $active_tab ),
+							'success'       => 1,
+							'wcj-cat-nonce' => wp_create_nonce( 'wcj-cat-nonce' ),
+						),
+						esc_url_raw( wp_unslash( $_POST['return_url'] ) )
+					);
 					wp_safe_redirect( $return_url );
 					exit();
 				} else {
@@ -597,7 +604,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 				$args['section'] = 'active';
 			}
 			if ( '' !== $query ) {
-				$args['wcj_search'] = $query;
+				$args['wcj_search'] = rawurlencode( $query );
 			}
 			echo '<ul><li><a href="' . esc_url( add_query_arg( $args, admin_url( 'admin.php' ) ) ) . '"' . ( '' === $current_cat ? ' class="active" aria-current="page"' : '' ) . '>' . esc_html__( 'All categories', 'woocommerce-jetpack' ) . '</a></li>';
 			foreach ( $this->cats as $id => $label_info ) {

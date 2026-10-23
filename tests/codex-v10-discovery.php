@@ -32,7 +32,8 @@ function get_current_user_id() { return 1; }
 function get_user_meta( $id, $key, $single = true ) { return 'wcj_getting_started_dismissed' === $key ? 'yes' : array(); }
 function update_user_meta() { throw new Exception( 'Unexpected write' ); }
 function update_option() { throw new Exception( 'Unexpected write' ); }
-function add_query_arg( $args, $url ) { return $url . '?' . http_build_query( $args ); }
+// WordPress expects new values already URL-encoded. Do not mask literal-query defects.
+function add_query_arg( $args, $url ) { $pairs = array(); foreach ( $args as $key => $value ) { $pairs[] = $key . '=' . $value; } return $url . '?' . implode( '&', $pairs ); }
 class WCJ_Invoice_Setup { public static function url() { return admin_url( 'admin.php?page=wcj-getting-started&wcj-invoice-setup=1' ); } }
 class WCJ_Presets { public static function get_module_allowlist() { return array( 'pdf_invoicing', 'multicurrency' ); } public static function get_presets() { return array( array( 'id' => 'grow_sales', 'title' => 'Grow sales now' ) ); } }
 require dirname( __DIR__ ) . '/includes/admin/class-wcj-module-filters.php';
