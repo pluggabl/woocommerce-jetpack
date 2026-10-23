@@ -155,10 +155,16 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 * @version 7.1.0
 		 */
 		public function wcj_save_module_settings() {
+			$capability = 'yes' === wcj_get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === wcj_get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce';
+			if ( ! current_user_can( $capability ) ) {
+				wp_die( esc_html__( 'Sorry, you are not allowed to access this page.' ), '', array( 'response' => 403 ) );
+			}
+
 			$wpnonce = isset( $_POST['wcj-verify-save-module-settings'] ) ? wp_verify_nonce( sanitize_key( $_POST['wcj-verify-save-module-settings'] ), 'wcj-verify-save-module-settings' ) : false;
 			if ( $wpnonce ) {
 
-				if ( isset( $_POST['section'] ) ) {
+				// Catalog forms submit only visible module switches, not a complete settings schema.
+				if ( isset( $_POST['section'] ) && ! in_array( sanitize_key( $_POST['section'] ), array( '', 'active' ), true ) ) {
 					$settings = $this->get_settings( sanitize_key( $_POST['section'] ) );
 					WC_Admin_Settings::save_fields( $settings );
 					$this->wcj_save_other_modules_key_settings();
@@ -170,6 +176,9 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 					do_action( 'woojetpack_after_settings_save', $this->get_sections(), sanitize_key( $_POST['section'] ) );
 				} else {
 					$this->wcj_save_other_modules_key_settings();
+					if ( isset( $_POST['section'] ) ) {
+						do_action( 'woojetpack_after_settings_save', $this->get_sections(), sanitize_key( $_POST['section'] ) );
+					}
 				}
 
 				$active_tab = isset( $_POST['wcj_setting_active_tab'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_setting_active_tab'] ) ) : '';
