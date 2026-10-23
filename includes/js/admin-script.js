@@ -199,17 +199,24 @@ jQuery( document ).ready(
       }
     );
 
-    $( '#wcj_search_modules_btn' ).on(
-      'click',
-      function(){
-        if ( $( '#wcj_search_modules' ).val() != "" ) {
-          var search_url       = $( this ).attr( 'return_url' ) + $( '#wcj_search_modules' ).val();
-          window.location.href = search_url;
-        } else {
-          $( '#wcj_search_modules' ).focus();
-        }
+    // Read-only catalog GET navigation. Enter must not submit settings.
+    function wcjSearchTools(e) {
+      e.preventDefault();
+      var url = new URL($( '#wcj_search_modules_btn' ).attr( 'return_url' ), window.location.href);
+      var query = $( '#wcj_search_modules' ).val().trim();
+      if (query) {
+        url.searchParams.set( 'wcj_search', query );
+      } else {
+        url.searchParams.delete( 'wcj_search' );
       }
-    );
+      window.location.href = url.toString();
+    }
+    $( '#wcj_search_modules_btn' ).on( 'click', wcjSearchTools );
+    $( '#wcj_search_modules' ).on( 'keydown', function(e) {
+      if (e.key === 'Enter' || e.which === 13) {
+        wcjSearchTools(e);
+      }
+    });
 
     $( 'body' ).on(
       'change',

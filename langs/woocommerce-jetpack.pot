@@ -24389,3 +24389,410 @@ msgstr ""
 #. Wishlist/shipping amendment. Dutch wording awaits native human acceptance.
 msgid "Include limits a shipping method to matching carts. Exclude hides a shipping method when the cart matches. For category OR minimum-order free shipping, use two instances in the same zone: no native requirement plus category Include on one; a native minimum without category Include on the other. Exclude that category from the minimum instance to avoid duplicate free rates. Match any versus all items and cart versus package scope deliberately; verify coupons, taxes, roles, product exclusions and Shipping Options before changing existing rules."
 msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:47
+msgid "1. Add your business details"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:64
+msgid "2. Choose when the document is used"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:84
+msgid "3. Check a sample and review"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:91
+msgid "4. Save and activate reviewed settings"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:41
+msgid "A sample is not a production preview or proof of customer email delivery. All existing edition rights remain available in full invoice settings."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:37
+msgid "Add your business details, check a sample, then review the settings before you save and activate."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:38
+msgid "Back to Getting Started"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:36
+msgid "Branded invoice setup"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:578
+msgid "Check a stock sample with your business details, then review before saving. Already use invoices or a custom template? Open full invoice settings instead."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-wcj-invoice-setup.php:998
+msgid "Draft changed. Generate a new sample, repeat the attachment test and review before saving."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:85
+msgid "Generate and open a sample, test attachment creation, then review the exact settings changes. These checks do not save or activate settings."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:86
+msgid "Generate sample PDF"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:580
+#: includes/admin/views/invoice-setup.php:38
+msgid "Open full invoice settings"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:579
+#: includes/admin/wcj-quick-start-admin.php:35
+msgid "Open invoice guide"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:88
+msgid "Review settings changes"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:42
+msgid "Sample layout and language limits"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:40
+msgid "Samples use a stock design and synthetic data. Sample and attachment tests do not create orders, use invoice numbers, enable settings or send email. Existing custom templates cannot be replaced here."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:96
+msgid "Save and activate reviewed settings"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:95
+msgid "Saving is available after a sample, an attachment test and your confirmation. If you edit this draft, repeat the checks and review."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/class-booster-onboarding.php:577
+msgid "Set up a branded invoice"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:87
+msgid "Test attachment (no email sent)"
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:44
+msgid "This draft has not been saved. Start with your business details below."
+msgstr ""
+
+#. Booster v10 invoice presentation.
+#: includes/admin/views/invoice-setup.php:100
+msgid "Undo this guide's settings changes"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:149
+msgid "Advanced: External product conditions"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:150
+msgid "Advanced: Grouped product conditions"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:224
+msgid "Advanced: Limit where related products are hidden"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:182
+msgid "Advanced: Limit which products receive labels"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:205
+msgid "Advanced: Match product attributes"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:151
+msgid "Advanced: Other product conditions"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:125
+msgid "Advanced: Payment gateway text override"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:181
+msgid "Advanced: Remove or replace price text"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:180
+msgid "Advanced: Sale price text"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:215
+msgid "Advanced: Select related products manually"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:147
+msgid "Advanced: Simple product conditions"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:148
+msgid "Advanced: Variable product conditions"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:121
+msgid "All settings are visible. Your unsaved edits are unchanged. Select a tab to return to the tabbed view."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:199
+msgid "Category and tag relationships are enabled by default. Review them before changing advanced matching."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:198
+msgid "Choose how related products are sorted. Random sorting ignores the ascending or descending order."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:197
+msgid "Choose the number of related products and grid columns."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:176
+msgid "Enable per-product editing below, then set labels on each product edit screen."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:143
+msgid "Enable per-product labels here, then edit individual labels on the product edit screen."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:118
+msgid "Essentials"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:200
+msgid "Hide can remove the whole related-products section. Review its state before using the filters."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:126
+msgid "Keep this visible option off unless a payment gateway replaces your checkout button text."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:142
+msgid "Manage category groups below. Save after changing the number of groups."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:173
+msgid "Set checkout button text, or leave it blank to keep the WooCommerce default. Both settings remain visible."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:120
+msgid "Show all settings"
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:144
+msgid "Start with single-product and archive labels. Conditional labels apply when this section is enabled."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:177
+msgid "Start with text before or after the price. HTML and blank values keep their existing meaning."
+msgstr ""
+
+#. Booster v10 four-area presentation.
+#: includes/admin/class-wcj-settings-presentation.php:119
+msgid "Use the existing tabs and save buttons. Active or changed advanced options stay expanded. Edition restrictions still apply."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:200
+msgid "%d tools shown."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:201
+msgid "1 tool shown."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/core/class-wcj-admin.php:598
+msgid "All categories"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:234
+msgid "All results"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:49
+msgid "All tools"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:98
+msgid "Booster tasks"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/class-wcj-rule-explanations-admin.php:190
+msgid "Check one scenario against your configured gateway fee or discount. This is not an actual shopper, order or gateway-availability diagnosis. No cart, session, order or setting is changed."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:72
+msgid "Clear search"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:233
+msgid "Filter this list"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:99
+msgid "Find a tool"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:101
+msgid "Invoice guide"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:54
+msgid "My tools"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:198
+msgid "No tools match these filters."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/core/class-wcj-admin.php:952
+msgid "No tools match this view. Clear the search, choose All categories or switch to All tools."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-dashboard.php:72
+msgid "Open setup and blueprints"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/class-wcj-returns.php:419
+msgid "Review submitted return requests in this queue. Approval records a decision, not receipt of goods. Refunds, restocking and payments remain separate merchant actions. Guest access requires a separately enabled, compatible HTTPS verification page and private auth storage."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:70
+msgid "Search tool names, descriptions or tasks..."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/wcj-settings-plugins.php:69
+msgid "Search tools"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-getting-started-hub.php:100
+msgid "Setup and blueprints"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:235
+msgid "Suggested tools"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:238
+msgid "Use search and categories to find tools. Suggested tools requires JavaScript."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/settings/wcj-settings-checkout-custom-fields.php:36
+msgid "Use the native field settings below. Checkout Blocks support text, select and checkbox fields; radio fields appear as a select. Other field types remain Classic Checkout only. Conditional Blocks fields require WooCommerce 9.9 or later. Email options apply across this module."
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:206
+msgid "branded invoice receipt packing slip document pdf"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:201
+msgid "button wording cart text"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:202
+msgid "button wording place order checkout text"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:208
+msgid "checkout extra fields classic blocks"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:204
+msgid "extra product options addons"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:207
+msgid "multiple currencies currency switcher"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:203
+msgid "price prefix suffix wording text"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:205
+msgid "recommendations similar products"
+msgstr ""
+
+#. Booster v10 discovery presentation.
+#: includes/admin/class-wcj-module-filters.php:209
+msgid "return requests approval queue"
+msgstr ""

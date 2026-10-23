@@ -567,13 +567,18 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 				$this->invoice_setup->render();
 				return;
 			}
-			echo '<p><a class="button" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Create a branded starter invoice', 'woocommerce-jetpack' ) . '</a></p>';
 			$onboarding_state = get_option( $this->option_key, array() );
 			$completed_goals  = $this->invoice_display_goals( isset( $onboarding_state['completed_goals'] ) ? $onboarding_state['completed_goals'] : array() );
 			$snapshots        = isset( $onboarding_state['snapshots'] ) ? $onboarding_state['snapshots'] : array();
 
 			echo '<div class="wrap">';
 			echo '<h1>' . esc_html__( 'Getting Started with Booster', 'woocommerce-jetpack' ) . '</h1>';
+			echo '<section class="booster-invoice-entry" aria-labelledby="booster-invoice-entry-heading" style="background:#fff;border:1px solid #c3c4c7;border-left:4px solid #0073aa;padding:8px 20px 16px;margin:20px 0;">';
+			echo '<h2 id="booster-invoice-entry-heading">' . esc_html__( 'Set up a branded invoice', 'woocommerce-jetpack' ) . '</h2>';
+			echo '<p>' . esc_html__( 'Check a stock sample with your business details, then review before saving. Already use invoices or a custom template? Open full invoice settings instead.', 'woocommerce-jetpack' ) . '</p>';
+			echo '<p><a class="button button-primary" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Open invoice guide', 'woocommerce-jetpack' ) . '</a> ';
+			echo '<a class="button" href="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing' ) ) . '">' . esc_html__( 'Open full invoice settings', 'woocommerce-jetpack' ) . '</a></p>';
+			echo '</section>';
 
 			echo '<div class="booster-getting-started">';
 			echo '<p>' . esc_html__( 'Welcome to Booster! Get started quickly by choosing one of these goals:', 'woocommerce-jetpack' ) . '</p>';

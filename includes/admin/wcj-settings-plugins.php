@@ -13,6 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 
+<?php
+if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
+	$GLOBALS['wcj_getting_started_hub']->render_task_links();
+}
+?>
 <div class="wcj-plugins">
 	<div class="wcj-container wcj_backend_settings_container">
 		<div class="wcj-row">
@@ -23,37 +28,57 @@ require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 						$active_page         = ( isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '' );
 						$section             = ( isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '' );
 						$wcj_search          = ( isset( $_REQUEST['wcj_search'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_search'] ) ) : '' );
-						$wcj_search_replaced = str_replace( ' ', '+', $wcj_search );
+						$wcj_search_replaced = rawurlencode( $wcj_search );
+
+					$catalog_args = array(
+						'page'          => 'wcj-plugins',
+						'wcj-cat-nonce' => wp_create_nonce( 'wcj-cat-nonce' ),
+					);
+					if ( isset( $_GET['wcj-cat'] ) ) {
+						$catalog_args['wcj-cat'] = sanitize_key( wp_unslash( $_GET['wcj-cat'] ) );
+					}
+					if ( '' !== $wcj_search ) {
+						$catalog_args['wcj_search'] = $wcj_search_replaced;
+					}
+					$all_tools_url = add_query_arg( $catalog_args, admin_url( 'admin.php' ) );
+					$my_tools_url  = add_query_arg( 'section', 'active', $all_tools_url );
+					$search_url    = 'active' === $section ? $my_tools_url : $all_tools_url;
 					?>
 					<li>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) ); ?>" class="<?php echo 'wcj-plugins' === $active_page && 'active' !== $section ? 'active' : ''; ?>">
-							<?php esc_html_e( 'All Plugins', 'woocommerce-jetpack' ); ?>
+						<a href="<?php echo esc_url( $all_tools_url ); ?>" class="<?php echo 'wcj-plugins' === $active_page && 'active' !== $section ? 'active' : ''; ?>" aria-current="<?php echo 'wcj-plugins' === $active_page && 'active' !== $section ? 'page' : 'false'; ?>">
+							<?php esc_html_e( 'All tools', 'woocommerce-jetpack' ); ?>
 						</a>
 					</li>
 					<li>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&section=active&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) ) ); ?>" class="<?php echo 'wcj-plugins' === $active_page && 'active' === $section ? 'active' : ''; ?>">
-							<?php esc_html_e( 'Active', 'woocommerce-jetpack' ); ?>
+						<a href="<?php echo esc_url( $my_tools_url ); ?>" class="<?php echo 'wcj-plugins' === $active_page && 'active' === $section ? 'active' : ''; ?>" aria-current="<?php echo 'wcj-plugins' === $active_page && 'active' === $section ? 'page' : 'false'; ?>">
+							<?php esc_html_e( 'My tools', 'woocommerce-jetpack' ); ?>
 						</a>
 					</li>
 				</ul>
 			</div>
-			<div class="wcj-plugins-tp-search src_plug">
+			<form class="wcj-plugins-tp-search src_plug" method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>">
+				<?php foreach ( $catalog_args as $key => $value ) : ?>
+					<?php if ( 'wcj_search' !== $key ) : ?>
+						<input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>">
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<?php if ( 'active' === $section ) : ?>
+					<input type="hidden" name="section" value="active">
+				<?php endif; ?>
 				<span class="wcj_admin_span"><img src="<?php echo esc_url( wcj_plugin_url() ) . '/assets/images/search-icn.png'; ?>"></span>
-				<input type="text" id="wcj_search_modules" name="wcj_search_modules" class="wcj-search-inp" placeholder="<?php esc_html_e( 'Search plugins and settings...', 'woocommerce-jetpack' ); ?>" value="<?php echo esc_html( $wcj_search ); ?>" >
-				<input return_url="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj_search=' ) ); ?>" type="button" class="wcj-btn-sm wcj_search_modules" name="wcj_search_modules_btn" id="wcj_search_modules_btn" value="<?php esc_html_e( 'Search', 'woocommerce-jetpack' ); ?>">
-			</div>
+				<label class="screen-reader-text" for="wcj_search_modules"><?php esc_html_e( 'Search tools', 'woocommerce-jetpack' ); ?></label>
+				<input type="search" id="wcj_search_modules" name="wcj_search" class="wcj-search-inp" placeholder="<?php esc_html_e( 'Search tool names, descriptions or tasks...', 'woocommerce-jetpack' ); ?>" value="<?php echo esc_attr( $wcj_search ); ?>" >
+				<input return_url="<?php echo esc_url( $search_url ); ?>" type="submit" class="wcj-btn-sm wcj_search_modules" name="wcj_search_modules_btn" id="wcj_search_modules_btn" value="<?php esc_html_e( 'Search', 'woocommerce-jetpack' ); ?>">
+				<a class="wcj-search-clear" href="<?php echo esc_url( remove_query_arg( 'wcj_search', $search_url ) ); ?>"><?php esc_html_e( 'Clear search', 'woocommerce-jetpack' ); ?></a>
+			</form>
 		<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
 			<input type="hidden" name="action" value="wcj_save_module_settings">
 			<input type="hidden" name="wcj-verify-save-module-settings" value="<?php echo esc_html( wp_create_nonce( 'wcj-verify-save-module-settings' ) ); ?>">
 			<?php
 			$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+			echo '<input type="hidden" name="return_url" value="' . esc_url( $search_url ) . '">';
 			if ( isset( $_REQUEST['section'] ) && '' !== sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) ) {
-				$wcj_cat = ( isset( $_REQUEST['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-cat'] ) ) : '' );
-				echo '<input type="hidden" name="return_url" value="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . $wcj_cat ) . '&section=' . sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) ) . '">';
 				echo '<input type="hidden" name="section" value="' . esc_html( sanitize_text_field( wp_unslash( $_REQUEST['section'] ) ) ) . '">';
-			} else {
-				$wcj_cat = ( isset( $_REQUEST['wcj-cat'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj-cat'] ) ) : '' );
-				echo '<input type="hidden" name="return_url" value="' . esc_url( admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . $wcj_cat . '&wcj_search=' . $wcj_search_replaced ) ) . '">';
 			}
 			$phpwpnonce = isset( $_REQUEST['wcj_disable_custom_php_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_disable_custom_php_nonce'] ), 'wcj-disable-custom-php' ) : false;
 			if ( isset( $_REQUEST['wcj_disable_custom_php'] ) && $phpwpnonce ) {
@@ -135,15 +160,6 @@ require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 							}
 						} else {
 							echo wp_kses_post( '<div class="wcj-plugins-sing-acc-box">' );
-							if ( 'pdf_invoicing' === $wcj_cat ) {
-								if ( wcj_is_module_enabled( 'modules_by_user_roles' ) ) {
-									if ( wcj_check_modules_by_user_roles( 'pdf_invoicing' ) ) {
-										echo $pdf_header; // phpcs:ignore WordPress.Security.EscapeOutput
-									}
-								} else {
-									echo $pdf_header; // phpcs:ignore WordPress.Security.EscapeOutput
-								}
-							}
 							$this->output_modules( $section );
 							echo wp_kses_post( '</div>' );
 						}

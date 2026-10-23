@@ -982,7 +982,7 @@ class WCJ_Invoice_Setup {
 	public function render() {
 		self::authorize();
 		wp_enqueue_media();
-		wp_enqueue_script( 'wcj-invoice-setup', wcj_plugin_url() . '/assets/js/admin/wcj-invoice-setup.js', array(), '1.0', true );
+		wp_enqueue_script( 'wcj-invoice-setup', wcj_plugin_url() . '/assets/js/admin/wcj-invoice-setup.js', array(), '1.2', true );
 		$nonces = array();
 		foreach ( array( 'sample', 'rehearse', 'review', 'activate', 'undo' ) as $op ) {
 			$nonces[ $op ] = wp_create_nonce( 'wcj_invoice_setup_' . $op );
@@ -995,7 +995,7 @@ class WCJ_Invoice_Setup {
 				'nonces'           => $nonces,
 				'working'          => __( 'Working...', 'woocommerce-jetpack' ),
 				'failed'           => __( 'The operation failed. No success is being claimed; refresh and review the setup state.', 'woocommerce-jetpack' ),
-				'changed'          => __( 'Draft changed. Generate a new sample and review before activation.', 'woocommerce-jetpack' ),
+				'changed'          => __( 'Draft changed. Generate a new sample, repeat the attachment test and review before saving.', 'woocommerce-jetpack' ),
 				'chooseLogo'       => __( 'Choose a local PNG or JPEG logo', 'woocommerce-jetpack' ),
 				'useLogo'          => __( 'Use this logo', 'woocommerce-jetpack' ),
 				'noLogo'           => __( 'No logo selected.', 'woocommerce-jetpack' ),

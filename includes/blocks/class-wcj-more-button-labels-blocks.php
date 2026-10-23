@@ -33,7 +33,7 @@ if ( ! class_exists( 'WCJ_More_Button_Labels_Blocks' ) ) :
 		public function initialize() {
 			wp_register_script(
 				'wcj-more-button-labels-blocks',
-				plugins_url( 'includes/js/wcj-more-button-labels-blocks.js', WCJ_PLUGIN_FILE ),
+				plugins_url( 'js/wcj-more-button-labels-blocks.js', dirname( __DIR__ ) . '/class-wcj-more-button-labels.php' ),
 				array( 'wc-blocks-checkout', 'wc-settings', 'wc-blocks-data-store', 'wc-blocks-registry', 'wp-data' ),
 				'9.0.0',
 				true

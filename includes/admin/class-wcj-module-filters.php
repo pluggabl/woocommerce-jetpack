@@ -188,6 +188,41 @@ if ( ! class_exists( 'WCJ_Module_Filters' ) ) :
 		}
 
 		/**
+		 * Match catalog metadata literally. Never evaluate a settings definition.
+		 *
+		 * @param string $module_id Module identifier.
+		 * @param string $title Catalog title.
+		 * @param string $description Catalog description.
+		 * @param string $query Merchant search text.
+		 * @return bool
+		 */
+		public static function matches_catalog_search( $module_id, $title, $description, $query ) {
+			$aliases  = array(
+				'add_to_cart'            => __( 'button wording cart text', 'woocommerce-jetpack' ),
+				'more_button_labels'     => __( 'button wording place order checkout text', 'woocommerce-jetpack' ),
+				'price_labels'           => __( 'price prefix suffix wording text', 'woocommerce-jetpack' ),
+				'product_addons'         => __( 'extra product options addons', 'woocommerce-jetpack' ),
+				'related_products'       => __( 'recommendations similar products', 'woocommerce-jetpack' ),
+				'pdf_invoicing'          => __( 'branded invoice receipt packing slip document pdf', 'woocommerce-jetpack' ),
+				'multicurrency'          => __( 'multiple currencies currency switcher', 'woocommerce-jetpack' ),
+				'checkout_custom_fields' => __( 'checkout extra fields classic blocks', 'woocommerce-jetpack' ),
+				'returns'                => __( 'return requests approval queue', 'woocommerce-jetpack' ),
+			);
+			$haystack = wp_strip_all_tags( $title . ' ' . $description . ' ' . str_replace( '_', ' ', $module_id ) . ' ' . ( isset( $aliases[ $module_id ] ) ? $aliases[ $module_id ] : '' ) );
+			$terms    = preg_split( '/\s+/u', trim( $query ), -1, PREG_SPLIT_NO_EMPTY );
+			if ( false === $terms ) {
+				return false;
+			}
+			foreach ( $terms as $term ) {
+				$position = function_exists( 'mb_stripos' ) ? mb_stripos( $haystack, $term, 0, 'UTF-8' ) : stripos( $haystack, $term );
+				if ( false === $position ) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		/**
 		 * Render filter buttons.
 		 *
 		 * @version 7.9.0
@@ -195,20 +230,12 @@ if ( ! class_exists( 'WCJ_Module_Filters' ) ) :
 		 */
 		public function render_filter_buttons() {
 			?>
-			<div class="wcj-module-filters" id="wcj-module-filters">
-				<button class="wcj-filter-btn active" data-filter="all">
-					<?php esc_html_e( 'All', 'woocommerce-jetpack' ); ?>
-				</button>
-				<button class="wcj-filter-btn" data-filter="recommended">
-					<?php esc_html_e( 'Recommended', 'woocommerce-jetpack' ); ?>
-				</button>
-				<button class="wcj-filter-btn" data-filter="active">
-					<?php esc_html_e( 'Active', 'woocommerce-jetpack' ); ?>
-				</button>
-				<button class="wcj-filter-btn" data-filter="recent">
-					<?php esc_html_e( 'Recently Used', 'woocommerce-jetpack' ); ?>
-				</button>
+			<div class="wcj-module-filters" id="wcj-module-filters" role="group" aria-label="<?php esc_attr_e( 'Filter this list', 'woocommerce-jetpack' ); ?>">
+				<button type="button" class="wcj-filter-btn active" data-filter="all" aria-pressed="true"><?php esc_html_e( 'All results', 'woocommerce-jetpack' ); ?></button>
+				<button type="button" class="wcj-filter-btn" data-filter="recommended" aria-pressed="false"><?php esc_html_e( 'Suggested tools', 'woocommerce-jetpack' ); ?></button>
 			</div>
+			<p class="wcj-catalog-status" id="wcj-catalog-status" role="status" aria-live="polite"></p>
+			<noscript><p><?php esc_html_e( 'Use search and categories to find tools. Suggested tools requires JavaScript.', 'woocommerce-jetpack' ); ?></p></noscript>
 			<?php
 		}
 	}

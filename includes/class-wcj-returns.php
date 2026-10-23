@@ -416,7 +416,7 @@ class WCJ_Returns extends WCJ_Module {
 		}
 		$before = isset( $_GET['before'] ) && is_string( $_GET['before'] ) && preg_match( '/^[1-9][0-9]{0,17}$/D', $_GET['before'] ) ? (int) $_GET['before'] : PHP_INT_MAX;
 		$rows   = ( new WCJ_Returns_Service() )->queue( $before );
-		echo '<div class="wrap"><h1>' . esc_html__( 'Return Requests', 'woocommerce-jetpack' ) . '</h1><p>' . esc_html__( 'Approval records a decision only. Refunds, restocking and payments remain separate merchant actions. Guest access requires a separately enabled, compatible HTTPS verification page and private auth storage.', 'woocommerce-jetpack' ) . '</p>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Return Requests', 'woocommerce-jetpack' ) . '</h1><p>' . esc_html__( 'Review submitted return requests in this queue. Approval records a decision, not receipt of goods. Refunds, restocking and payments remain separate merchant actions. Guest access requires a separately enabled, compatible HTTPS verification page and private auth storage.', 'woocommerce-jetpack' ) . '</p>';
 		echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wcj-returns&wcj_returns_view=synthetic' ) ) . '">' . esc_html__( 'Private synthetic workflow exercise', 'woocommerce-jetpack' ) . '</a></p>';
 		$this->overlap_warning();
 		$this->setup_guide();

@@ -1,0 +1,59 @@
+/* Admin-only progressive enhancement. No storefront selectors. */
+form[data-wcj-settings-presentation] .wcj-settings-presentation-note {
+	padding: 16px 20px;
+	margin-block: 12px;
+	border-inline-start: 4px solid #2271b1;
+	background: #f0f6fc;
+	color: #1d2327;
+}
+form[data-wcj-settings-presentation] .wcj-settings-presentation-note p { margin-block: 0 12px; }
+/* Long translated actions must wrap instead of widening the native form. */
+form[data-wcj-settings-presentation] .wcj-settings-show-all {
+	max-width: 100%;
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+form[data-wcj-settings-presentation] .wcj-settings-view-status:empty { display: none; }
+form[data-wcj-settings-presentation] .wcj-settings-view-status { margin-block-start: 12px; }
+form[data-wcj-settings-presentation] .wcj-settings-heading { color: #1d2327; margin-block: 16px 8px; }
+form[data-wcj-settings-presentation] .wcj-settings-help { color: #3c434a; margin-block: 0 20px; max-width: 75ch; }
+form[data-wcj-settings-presentation] .wcj-settings-help strong { margin-inline-end: 8px; }
+/* Native tab contents wrap flex items; each injected heading/help needs its own row. */
+form[data-wcj-settings-presentation] .wcj-tab-cnt-main > .wcj-settings-heading,
+form[data-wcj-settings-presentation] .wcj-tab-cnt-main > .wcj-settings-help {
+	width: 100%;
+	flex-basis: 100%;
+	max-width: none;
+}
+form[data-wcj-settings-presentation] .wcj-settings-advanced {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	margin-block: 16px 24px;
+	padding: 0 16px;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	background: #fff;
+	color: #1d2327;
+}
+form[data-wcj-settings-presentation] .wcj-settings-advanced > summary {
+	cursor: pointer;
+	padding-block: 16px;
+	font-size: 14px;
+	font-weight: 600;
+	overflow-wrap: anywhere;
+}
+form[data-wcj-settings-presentation] .wcj-settings-advanced > summary:focus-visible,
+form[data-wcj-settings-presentation] .wcj-settings-show-all:focus-visible {
+	outline: 3px solid #2271b1;
+	outline-offset: 3px;
+}
+/* Show all is an in-place view of every native tab, not a second form. */
+form.wcj-settings-all-visible[data-wcj-settings-presentation] .wcj-tab-box { display: block !important; }
+@media (max-width: 782px) {
+	form[data-wcj-settings-presentation] .wcj-settings-advanced { padding-inline: 12px; }
+	form[data-wcj-settings-presentation] .wcj-tab-plugins-form-inp { flex-wrap: wrap; }
+	form[data-wcj-settings-presentation] .wcj-plugins-form-inp-lf,
+	form[data-wcj-settings-presentation] .wcj-plugins-form-inp-rh { width: 100%; min-width: 0; }
+	form[data-wcj-settings-presentation] .wcj-plugins-form-inp-rh :is(input:not([type="checkbox"]),select,textarea,.select2-container) { max-width: 100%; box-sizing: border-box; }
+}
