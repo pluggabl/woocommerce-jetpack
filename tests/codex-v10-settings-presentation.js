@@ -102,13 +102,21 @@ class Element {
 		assert.ok( this.getClientRects().length, 'native control is connected and rendered before focus' );
 		assert.ok( ! tab || this.doc.computedStyle( tab ).opacity === '1', 'native fade completes before focus' );
 		this.doc.focusCalls.push( this ); this.doc.activeElement = this;
+		// Model focus's default edge scroll as obscured until a subsequent center.
+		// This records intent/order, not real sticky-header or viewport geometry.
+		this.doc.centeredTarget = null; this.doc.focusScrollEvents.push( { type: 'focus', target: this } );
+	}
+	scrollIntoView( options ) {
+		assert.ok( this.doc.activeElement === this, 'the target is focused before scrolling' );
+		this.doc.focusScrollEvents.push( { type: 'scroll', target: this, options: JSON.parse( JSON.stringify( options ) ) } );
+		this.doc.centeredTarget = options.block === 'center' && options.inline === 'nearest' ? this : null;
 	}
 }
 function build( section, edit = () => {}, hash = '', enhance = true, withConfig = true, readyModel = null ) {
 	const fixture = fixtures[ section ]; const clock = makeClock();
 	const doc = { readyState: readyModel?.state || 'complete', defaultAnchorNavigations: [], modelHiddenFocus: Boolean( readyModel ), createElement: tag => new Element( tag, doc ), createTextNode: text => { const node = new Element( 'text', doc ); node.textContent = text; return node; } };
 	doc.handlers = {}; doc.addEventListener = ( name, handler, capture = false ) => { ( doc.handlers[ name ] ||= [] ).push( { handler, capture } ); };
-	const form = doc.createElement( 'form' ); doc.body = doc.createElement( 'body' ); doc.body.appendChild( form ); doc.activeElement = doc.body; doc.focusCalls = [];
+	const form = doc.createElement( 'form' ); doc.body = doc.createElement( 'body' ); doc.body.appendChild( form ); doc.activeElement = doc.body; doc.focusCalls = []; doc.focusScrollEvents = []; doc.centeredTarget = null;
 	doc.computedStyle = node => {
 		let visibility = 'visible'; for ( let parent = node; parent; parent = parent.parentElement ) { if ( parent.style.visibility === 'hidden' ) { visibility = 'hidden'; } }
 		return { visibility, opacity: clock.now < ( node.animationUntil || 0 ) ? '0.5' : '1' };
@@ -217,9 +225,9 @@ assert.ok( invalid.doc.activeElement === invalid.controls[ conditional ], 'inval
 assert.equal( invalid.clock.timers.size, 0, 'success releases the timer/job' );
 assert.ok( invalid.controls[ conditional ].closest( 'details' ).open );
 assert.equal( invalid.active.value, 'add_to_cart_per_product_type_tab', 'invalid reveal reuses native active-tab contract' );
-const anchored = build( 'add_to_cart', () => {}, '#' + conditional );
+const anchored = build( 'add_to_cart', () => {}, '#' + conditional ); anchored.clock.advance( 0 );
 assert.ok( anchored.doc.activeElement === anchored.controls[ conditional ], 'supported anchor reveals and focuses existing field' );
-const checkboxAnchor = build( 'related_products', () => {}, '#wcj_product_info_related_products_by_attribute_enabled' );
+const checkboxAnchor = build( 'related_products', () => {}, '#wcj_product_info_related_products_by_attribute_enabled' ); checkboxAnchor.clock.advance( 0 );
 assert.ok( checkboxAnchor.doc.activeElement === checkboxAnchor.controls.wcj_product_info_related_products_by_attribute_enabled.checkbox, 'hidden-value anchor focuses its visible native checkbox' );
 for ( const kind of [ 'duplicate', 'injected-row', 'injected-control' ] ) {
 	const state = build( 'add_to_cart', s => {
@@ -397,6 +405,49 @@ for ( const readiness of [ 'loading', 'complete' ] ) {
 	assert.equal( fallback.form.getAttribute( 'data-wcj-settings-presentation' ), 'price_labels', readiness + ': no-jQuery fallback still enhances the native form' );
 	assert.deepEqual( fallback.doc.defaultAnchorNavigations, [], readiness + ': no-jQuery fallback does not navigate without a field fragment' );
 }
+// c009: focus alone can leave a field below sticky chrome. Verify the shared
+// terminal focus/center intent for anchors and validation, not actual geometry.
+const focusCases = process.env.CODEX_SETTINGS_FOCUS_CASE ? [ process.env.CODEX_SETTINGS_FOCUS_CASE ] : [ 'anchor', 'invalid' ];
+assert.ok( focusCases.every( name => [ 'anchor', 'invalid' ].includes( name ) ), 'optional expected-red case is exact' );
+function centered( state, target, label ) {
+	assert.ok( state.doc.activeElement === target, label + ': original target owns focus' );
+	assert.ok( state.doc.centeredTarget === target, label + ': focus is followed by center scrolling, not sticky-edge occlusion' );
+	const events = state.doc.focusScrollEvents.slice( -2 );
+	assert.deepEqual( events.map( event => event.type ), [ 'focus', 'scroll' ], label + ': focus precedes final scroll' );
+	assert.ok( events.every( event => event.target === target ), label + ': only the focused target is scrolled' );
+	assert.deepEqual( events[ 1 ].options, { block: 'center', inline: 'nearest' }, label + ': no arbitrary fixed header height or animation' );
+}
+for ( const name of focusCases ) {
+	const state = name === 'anchor' ? build( 'price_labels', () => {}, anchorHash ) : build( 'related_products' );
+	const target = name === 'anchor' ? state.controls[ anchorId ] : invalidField( state );
+	const original = state.values();
+	if ( name === 'invalid' ) { assert.equal( target.emit( 'invalid' ).defaultPrevented, false ); }
+	state.clock.advance( 0 ); centered( state, target, name );
+	assert.deepEqual( state.values(), original, name + ': no native field/value/entitlement state changes' ); clean( state, name + ' center success' );
+}
+const fadingAnchor = build( 'price_labels', state => { state.animationDelay = 600; state.queueDelay = 650; }, anchorHash );
+const fadingValues = fadingAnchor.values();
+fadingAnchor.clock.advance( 625 );
+assert.ok( fadingAnchor.doc.activeElement === fadingAnchor.doc.body && fadingAnchor.doc.centeredTarget === null, 'anchor does not focus/center before its native fx queue settles' );
+fadingAnchor.clock.advance( 25 ); centered( fadingAnchor, fadingAnchor.controls[ anchorId ], 'settled anchor' );
+assert.equal( fadingAnchor.window.location.hash, anchorHash, 'settled anchor preserves the exact fragment' );
+assert.deepEqual( fadingAnchor.values(), fadingValues, 'settled anchor leaves named controls unchanged' ); clean( fadingAnchor, 'settled anchor' );
+for ( const action of [ 'pointerdown', 'keydown', 'click', 'hashchange' ] ) {
+	const pending = build( 'price_labels', state => { state.animationDelay = 600; }, anchorHash );
+	pending.clock.advance( 100 );
+	if ( action === 'hashchange' ) { pending.window.location.hash = ''; pending.window.dispatch( action ); }
+	else { pending.doc.body.emit( action, { isTrusted: true } ); }
+	pending.clock.advance( 2000 );
+	assert.ok( pending.doc.activeElement === pending.doc.body && pending.doc.focusScrollEvents.length === 0, action + ': canceled anchor never steals focus or scrolls later' ); clean( pending, action + ' canceled anchor' );
+}
+const validationPriority = build( 'price_labels', state => { state.animationDelay = 600; }, anchorHash );
+const priorityTarget = invalidField( validationPriority, 'wcj_global_price_labels_add_after_text' );
+priorityTarget.emit( 'invalid' ); validationPriority.clock.advance( 600 ); centered( validationPriority, priorityTarget, 'native validation supersedes pending anchor' );
+assert.equal( validationPriority.doc.focusCalls.length, 1, 'pending anchor cannot block first native invalid field' ); clean( validationPriority, 'validation priority' );
+const noScrollMethod = build( 'price_labels', state => { state.controls[ anchorId ].scrollIntoView = undefined; }, anchorHash );
+noScrollMethod.clock.advance( 0 );
+assert.ok( noScrollMethod.doc.activeElement === noScrollMethod.controls[ anchorId ], 'missing optional scrollIntoView retains native focus without an exception' ); clean( noScrollMethod, 'missing scroll method' );
+console.log( 'PASS: c009 anchor/invalid focus-then-center intent, native-fade settlement, cancellation/hash/validation priority, optional-method fallback and unchanged native controls; not real geometry proof.' );
 console.log( 'PASS: asynchronous native-ready cold/loaded/late-load anchors, native href default action, missing-jQuery fallback and unchanged setting contracts; DOM doubles, not browser/save proof.' );
 console.log( 'PASS: bounded invalid-focus/current-tab/native-fade/queue/first-invalid/cancellation/terminal-path fixtures; no real browser claim.' );
 console.log( 'PASS: four-area metadata/controller DOM-double fixtures; no real browser, server save or commerce-output claim.' );

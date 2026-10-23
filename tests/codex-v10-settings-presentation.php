@@ -103,7 +103,7 @@ WCJ_Settings_Presentation::enqueue( 'wcj-plugins', 'unknown' );
 check_fixture( array() === $assets, 'legacy and unrelated pages enqueue no presentation assets' );
 WCJ_Settings_Presentation::enqueue( 'wcj-plugins', 'price_labels' );
 check_fixture( array( 'wcj-settings-presentation', 'wcj-settings-presentation' ) === $assets, 'only supported modern route enqueues two assets' );
-check_fixture( array( '/fixture-plugin/assets/js/admin/wcj-settings-presentation.js', array( 'wcj-admin-new-script' ), '1.3', true ) === $script_assets['wcj-settings-presentation'], 'changed presentation JavaScript uses cache version 1.3 with its exact native dependency and footer contract' );
+check_fixture( array( '/fixture-plugin/assets/js/admin/wcj-settings-presentation.js', array( 'wcj-admin-new-script' ), '1.4', true ) === $script_assets['wcj-settings-presentation'], 'changed presentation JavaScript uses cache version 1.4 with its exact native dependency and footer contract' );
 check_fixture( 1 === $conversions, 'related-products inherited conversion was evaluated once, never repeated by metadata' );
 if ( in_array( '--fixtures', $argv, true ) ) { echo json_encode( $result ); }
 else { echo "PASS: exact native definitions/renderer and read-free metadata fixture; not WordPress runtime QA.\n"; }

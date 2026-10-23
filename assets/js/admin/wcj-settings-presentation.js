@@ -122,31 +122,34 @@
 			var tab = target.closest( '.wcj-tab-box' ), link = tab && nativeLink( tab );
 			if ( link && ! form.classList.contains( 'wcj-settings-all-visible' ) && ! link.classList.contains( 'active' ) ) { link.click(); }
 		}
-		var invalidFocus = null;
-		function cancelInvalidFocus() {
-			if ( invalidFocus ) { window.clearTimeout( invalidFocus.timer ); invalidFocus = null; }
+		function focusVisible( target ) {
+			target.focus();
+			// Native focus can align a field beneath sticky WordPress/Booster chrome.
+			if ( typeof target.scrollIntoView === 'function' ) { target.scrollIntoView( { block: 'center', inline: 'nearest' } ); }
 		}
-		function focusInvalid( job ) {
-			if ( invalidFocus !== job ) { return; }
+		var pendingFocus = null;
+		function cancelFocus() {
+			if ( pendingFocus ) { window.clearTimeout( pendingFocus.timer ); pendingFocus = null; }
+		}
+		function focusSettled( job ) {
+			if ( pendingFocus !== job ) { return; }
 			var target = job.target;
-			if ( ! target.isConnected || target.closest( 'form' ) !== form || ! target.willValidate || ! target.validity || target.validity.valid || target.disabled ) { cancelInvalidFocus(); return; }
+			if ( ! target.isConnected || target.closest( 'form' ) !== form || target.disabled || ( job.anchor ? window.location.hash !== job.anchor : ! target.willValidate || ! target.validity || target.validity.valid ) ) { cancelFocus(); return; }
 			var tab = target.closest( '.wcj-tab-box' );
 			var queue = tab && typeof window.jQuery === 'function' ? window.jQuery( tab ) : null;
 			var busy = queue && ( queue.is( ':animated' ) || queue.queue( 'fx' ).length );
 			var visible = target.getClientRects().length && window.getComputedStyle( target ).visibility === 'visible' && ( ! tab || Number( window.getComputedStyle( tab ).opacity ) === 1 );
 			var now = Date.now();
 			// A late callback may still focus a settled target within the fixed stale cap.
-			if ( ! busy && visible && now <= job.staleDeadline ) { cancelInvalidFocus(); target.focus(); return; }
+			if ( ! busy && visible && now <= job.staleDeadline ) { cancelFocus(); focusVisible( target ); return; }
 			// A stalled or foreign animation fails safely without retaining a focus job.
-			if ( now >= job.deadline || now > job.staleDeadline || --job.polls <= 0 ) { cancelInvalidFocus(); return; }
-			job.timer = window.setTimeout( function () { focusInvalid( job ); }, 25 );
+			if ( now >= job.deadline || now > job.staleDeadline || --job.polls <= 0 ) { cancelFocus(); return; }
+			job.timer = window.setTimeout( function () { focusSettled( job ); }, 25 );
 		}
-		form.addEventListener( 'invalid', function ( event ) {
-			// Native validation can emit several invalid events in one synchronous burst.
-			if ( invalidFocus || ! event.target.matches( 'input:not([type="hidden"]),select,textarea' ) ) { return; }
+		function queueFocus( target, anchor ) {
 			var slow = window.jQuery && window.jQuery.fx && window.jQuery.fx.speeds ? Number( window.jQuery.fx.speeds.slow ) : 600;
-			var job = { target: event.target, timer: null };
-			invalidFocus = job;
+			var job = { target: target, anchor: anchor, timer: null };
+			pendingFocus = job;
 			reveal( job.target );
 			// Snapshot only this native tab's existing queue; never extend or mutate it.
 			var tab = job.target.closest( '.wcj-tab-box' );
@@ -155,13 +158,19 @@
 			job.deadline = Date.now() + budget;
 			job.staleDeadline = job.deadline + 200;
 			job.polls = Math.ceil( budget / 25 ) + 1;
-			// Defer until native validation has completed, then wait for this tab's fx queue.
-			job.timer = window.setTimeout( function () { focusInvalid( job ); }, 0 );
+			// Defer native validation/default fragment scrolling, then await this tab's fx queue.
+			job.timer = window.setTimeout( function () { focusSettled( job ); }, 0 );
+		}
+		form.addEventListener( 'invalid', function ( event ) {
+			// Native validation wins over an anchor, then retains the first invalid in its burst.
+			if ( pendingFocus && pendingFocus.anchor ) { cancelFocus(); }
+			if ( pendingFocus || ! event.target.matches( 'input:not([type="hidden"]),select,textarea' ) ) { return; }
+			queueFocus( event.target, '' );
 		}, true );
 		[ 'pointerdown', 'keydown', 'click' ].forEach( function ( name ) {
-			document.addEventListener( name, function ( event ) { if ( event.isTrusted ) { cancelInvalidFocus(); } }, true );
+			document.addEventListener( name, function ( event ) { if ( event.isTrusted ) { cancelFocus(); } }, true );
 		} );
-		window.addEventListener( 'hashchange', cancelInvalidFocus );
+		window.addEventListener( 'hashchange', cancelFocus );
 		[ 'input', 'change' ].forEach( function ( name ) {
 			form.addEventListener( name, function () { groups.forEach( function ( group ) { if ( group.shouldOpen() ) { group.details.open = true; } } ); } );
 		} );
@@ -175,7 +184,7 @@
 				var row = target.closest( '.wcj-tab-plugins-form-inp' );
 				target = row && row.querySelector( '.wcj_setting_checkbox_key' );
 			}
-			if ( target && target.matches( 'input:not([type="hidden"]),select,textarea,button,a' ) ) { target.focus(); }
+			if ( target && target.matches( 'input:not([type="hidden"]),select,textarea,button,a' ) ) { cancelFocus(); queueFocus( target, window.location.hash ); }
 		}
 		window.addEventListener( 'hashchange', revealAnchor );
 		revealAnchor();
