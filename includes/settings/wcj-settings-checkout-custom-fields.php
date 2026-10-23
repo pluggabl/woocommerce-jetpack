@@ -33,7 +33,7 @@ $settings            = array(
 	),
 	array(
 		'title' => __( 'Options', 'woocommerce-jetpack' ),
-		'desc'  => __( 'Use the native field settings below. Checkout Blocks support text, select and checkbox fields; radio fields appear as a select. Other field types remain Classic Checkout only. Conditional Blocks fields require WooCommerce 9.9 or later. Email options apply across this module.', 'woocommerce-jetpack' ),
+		'desc'  => __( 'Use the native field settings below. Checkout Blocks support text, select and checkbox fields; radio fields appear as a select. Other field types remain Classic Checkout only. Conditional Blocks fields require WooCommerce 9.9 or later. Email options apply across this module.', 'woocommerce-jetpack' ) . '<br><br><a href="' . esc_url( 'https://booster.io/docs/woocommerce-checkout-blocks/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Checkout Blocks setup guide', 'woocommerce-jetpack' ) . '</a>',
 		'type'  => 'title',
 		'id'    => 'wcj_checkout_custom_fields_options',
 	),

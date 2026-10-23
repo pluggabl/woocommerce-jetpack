@@ -28,6 +28,7 @@ if ( ! class_exists( 'WCJ_Returns_Summary_Admin' ) ) :
 			}
 			$result = class_exists( 'WCJ_Returns_Summary' ) ? ( new WCJ_Returns_Summary() )->get_summary( array( 'scope' => 'summary' ) ) : null;
 			echo '<div class="wrap"><h1>' . esc_html__( 'Return Requests summary', 'woocommerce-jetpack' ) . '</h1>';
+			echo '<p><a href="' . esc_url( 'https://booster.io/docs/woocommerce-rule-explanations/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Rule Explanations and Returns Summary guide', 'woocommerce-jetpack' ) . '</a></p>';
 			echo '<p>' . esc_html__( 'This read-only sample covers the latest up to 50 return requests by request ID, not full-store totals or the most recently updated requests. Current order flags are sequential reads, not an atomic snapshot. No refund, stock, notification, order or setting is changed.', 'woocommerce-jetpack' ) . '</p>';
 			if ( ! is_array( $result ) || 'available' !== $result['state'] ) {
 				$messages = array(
