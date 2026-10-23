@@ -180,5 +180,9 @@
 		window.addEventListener( 'hashchange', revealAnchor );
 		revealAnchor();
 	}
-	if ( document.readyState === 'loading' ) { document.addEventListener( 'DOMContentLoaded', init ); } else { init(); }
+	// The native tab handler is installed by the earlier script's jQuery-ready
+	// callback. Use that same queue before an initial field anchor clicks a tab.
+	if ( typeof window.jQuery === 'function' && window.jQuery.fn && typeof window.jQuery.fn.ready === 'function' ) {
+		window.jQuery( document ).ready( init );
+	} else if ( document.readyState === 'loading' ) { document.addEventListener( 'DOMContentLoaded', init ); } else { init(); }
 }() );

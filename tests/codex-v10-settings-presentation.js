@@ -86,8 +86,16 @@ class Element {
 		for ( const node of chain ) { for ( const listener of node.handlers[ name ] || [] ) { if ( ! listener.capture ) { listener.handler( event ); } } }
 		return event;
 	}
-	click() { return this.emit( 'click' ); }
+	click() {
+		const event = this.emit( 'click' );
+		if ( this.tagName === 'A' && this.getAttribute( 'href' ) === '#' && ! event.defaultPrevented ) {
+			this.doc.defaultAnchorNavigations.push( '#' ); this.doc.window.location.hash = ''; this.doc.window.dispatch( 'hashchange' );
+		}
+		return event;
+	}
 	focus() {
+		// A real hidden element's focus() is a no-op, not an exception.
+		if ( this.doc.modelHiddenFocus && ! this.getClientRects().length ) { return; }
 		assert.ok( ! this.closest( 'details' ) || this.closest( 'details' ).open, 'disclosure revealed before focus' );
 		const tab = this.closest( '.wcj-tab-box' );
 		assert.ok( ! tab || tab.style.display === 'block' || this.closest( 'form' ).classList.contains( 'wcj-settings-all-visible' ), 'native tab revealed before focus' );
@@ -96,9 +104,9 @@ class Element {
 		this.doc.focusCalls.push( this ); this.doc.activeElement = this;
 	}
 }
-function build( section, edit = () => {}, hash = '', enhance = true, withConfig = true ) {
+function build( section, edit = () => {}, hash = '', enhance = true, withConfig = true, readyModel = null ) {
 	const fixture = fixtures[ section ]; const clock = makeClock();
-	const doc = { readyState: 'complete', createElement: tag => new Element( tag, doc ), createTextNode: text => { const node = new Element( 'text', doc ); node.textContent = text; return node; } };
+	const doc = { readyState: readyModel?.state || 'complete', defaultAnchorNavigations: [], modelHiddenFocus: Boolean( readyModel ), createElement: tag => new Element( tag, doc ), createTextNode: text => { const node = new Element( 'text', doc ); node.textContent = text; return node; } };
 	doc.handlers = {}; doc.addEventListener = ( name, handler, capture = false ) => { ( doc.handlers[ name ] ||= [] ).push( { handler, capture } ); };
 	const form = doc.createElement( 'form' ); doc.body = doc.createElement( 'body' ); doc.body.appendChild( form ); doc.activeElement = doc.body; doc.focusCalls = [];
 	doc.computedStyle = node => {
@@ -108,12 +116,12 @@ function build( section, edit = () => {}, hash = '', enhance = true, withConfig 
 	doc.getElementById = id => doc.body.querySelectorAll( '[id]' ).find( node => node.id === id ) || null;
 	const menu = doc.createElement( 'div' ); menu.className = 'wcj-tab-menu'; form.appendChild( menu );
 	const active = doc.createElement( 'input' ); active.name = 'wcj_setting_active_tab'; active.type = 'hidden'; form.appendChild( active );
-	const tabs = {}, controls = {}, rows = {}, links = {};
+	const tabs = {}, controls = {}, rows = {}, links = {}, nativeBindings = [];
 	for ( const id of fixture.settings.filter( field => field.type === 'tab_start' ).map( field => field.id ) ) {
 		const tab = doc.createElement( 'div' ); tab.id = id; tab.className = 'wcj-tab-box'; tab.style.display = Object.keys( tabs ).length ? 'none' : 'block';
 		const inner = doc.createElement( 'div' ); inner.className = 'wcj-tab-cnt-main'; tab.appendChild( inner ); form.appendChild( tab ); tabs[ id ] = inner;
-		const link = doc.createElement( 'a' ); link.textContent = id; link.setAttribute( 'data-rel', id ); link.className = active.value ? '' : 'active'; menu.appendChild( link ); links[ id ] = link;
-		link.addEventListener( 'click', () => { for ( const other of Object.values( links ) ) { other.classList.remove( 'active' ); } link.classList.add( 'active' ); for ( const other of Object.values( tabs ) ) { other.parentElement.style.display = 'none'; } tab.style.display = 'block'; tab.animationUntil = clock.now + ( state.animationDelay || 0 ); tab.queueUntil = clock.now + ( state.queueDelay || state.animationDelay || 0 ); active.value = id; } );
+		const link = doc.createElement( 'a' ); link.textContent = id; link.setAttribute( 'data-rel', id ); link.setAttribute( 'href', '#' ); link.className = active.value ? '' : 'active'; menu.appendChild( link ); links[ id ] = link;
+		nativeBindings.push( () => link.addEventListener( 'click', event => { event.preventDefault(); for ( const other of Object.values( links ) ) { other.classList.remove( 'active' ); } link.classList.add( 'active' ); for ( const other of Object.values( tabs ) ) { other.parentElement.style.display = 'none'; } tab.style.display = 'block'; tab.animationUntil = clock.now + ( state.animationDelay || 0 ); tab.queueUntil = clock.now + ( state.queueDelay || state.animationDelay || 0 ); active.value = id; } ) );
 		if ( ! active.value ) { active.value = id; }
 	}
 	let tab;
@@ -133,10 +141,30 @@ function build( section, edit = () => {}, hash = '', enhance = true, withConfig 
 	}
 	const observers = [];
 	const window = { location: { hash }, handlers: {}, addEventListener( name, handler ) { ( this.handlers[ name ] ||= [] ).push( handler ); }, dispatch( name ) { for ( const handler of this.handlers[ name ] || [] ) { handler(); } }, getComputedStyle: doc.computedStyle, setTimeout: ( callback, delay ) => clock.set( callback, delay ), clearTimeout: id => clock.clear( id ), MutationObserver: class { constructor( callback ) { observers.push( callback ); } observe() {} } };
+	doc.window = window;
 	const queueReads = [];
 	window.jQuery = tab => { queueReads.push( tab ); return { is: selector => { assert.equal( selector, ':animated' ); return clock.now < ( tab.animationUntil || 0 ); }, queue: name => { assert.equal( name, 'fx' ); return tab.stalled || clock.now < ( tab.queueUntil || 0 ) ? Array( tab.queueSlots || 1 ).fill( 'inprogress' ) : []; } }; };
 	window.jQuery.fx = { speeds: { slow: 600 } };
+	let nativeBound = false;
+	const bindNativeTabs = () => { nativeBindings.forEach( bind => bind() ); nativeBound = true; };
+	if ( readyModel ) {
+		// jQuery 3 readyList.then callbacks run asynchronously even on a loaded DOM.
+		// Native admin-script registers first by the actual WP script dependency.
+		const callbacks = []; let resolved = doc.readyState !== 'loading';
+		const ready = callback => { if ( resolved ) { clock.set( callback, 0 ); } else { callbacks.push( callback ); } };
+		const resolve = () => { resolved = true; callbacks.splice( 0 ).forEach( callback => clock.set( callback, 0 ) ); };
+		if ( readyModel.jquery !== false ) {
+			const queue = window.jQuery;
+			window.jQuery = target => target === doc ? { ready } : queue( target );
+			window.jQuery.fn = { ready }; window.jQuery.fx = queue.fx;
+			ready( bindNativeTabs );
+			doc.addEventListener( 'DOMContentLoaded', resolve );
+			if ( readyModel.nativeSettled ) { if ( ! resolved ) { resolve(); } clock.advance( 0 ); }
+		} else { delete window.jQuery; }
+	} else { bindNativeTabs(); }
 	const state = { form, doc, controls, rows, tabs, links, active, observers, window, clock, queueReads };
+	state.nativeBound = () => nativeBound;
+	state.domReady = () => { doc.readyState = 'interactive'; for ( const listener of doc.handlers.DOMContentLoaded || [] ) { listener.handler(); } };
 	edit( state );
 	state.originals = form.querySelectorAll( 'input,select,textarea' ).filter( item => item.name && item !== active );
 	state.values = () => state.originals.map( node => [ node.id, node.name, node.value, node.checked, node.disabled, node.readOnly, node.multiple, JSON.stringify( node.selectedOptions ) ] );
@@ -335,5 +363,40 @@ noJQuery.state.clock.advance( 1 ); assert.ok( noJQuery.state.doc.activeElement =
 const delayed = hiddenInvalid(); delayed.field.emit( 'invalid' );
 delayed.state.clock.now = 2000; delayed.state.clock.advance( 0 );
 assert.ok( delayed.state.doc.activeElement === delayed.state.doc.body, 'a background-delayed timer cannot focus after its deadline' ); clean( delayed.state, 'late timer deadline' );
+// Cold navigation is not a later hashchange. Exercise the actual native href="#"
+// default action while native jQuery-ready tab binding is still deferred.
+const anchorId = 'wcj_global_price_labels_replace_text';
+const anchorHash = '#' + anchorId;
+const readyStates = process.env.CODEX_SETTINGS_READY_STATE ? [ process.env.CODEX_SETTINGS_READY_STATE ] : [ 'loading', 'complete' ];
+assert.ok( readyStates.every( value => [ 'loading', 'complete' ].includes( value ) ), 'optional reproduction selector names a real document readiness state' );
+for ( const readiness of readyStates ) {
+	const cold = build( 'price_labels', () => {}, anchorHash, true, true, { state: readiness } );
+	assert.equal( cold.nativeBound(), false, readiness + ': native ready callback is not eagerly installed by the double' );
+	if ( readiness === 'loading' ) { cold.domReady(); }
+	assert.equal( cold.form.hasAttribute( 'data-wcj-settings-presentation' ), false, readiness + ': enhancement waits for native jQuery ready callback' );
+	assert.equal( cold.window.location.hash, anchorHash, readiness + ': deferred ready never follows native href="#"' );
+	const original = cold.values(); cold.clock.advance( 0 );
+	assert.equal( cold.nativeBound(), true, readiness + ': native click handler is installed before enhancement' );
+	assert.equal( cold.active.value, cold.controls[ anchorId ].closest( '.wcj-tab-box' ).id, readiness + ': cold field anchor selects its native tab' );
+	assert.equal( cold.window.location.hash, anchorHash, readiness + ': original deep-link fragment is preserved' );
+	assert.deepEqual( cold.doc.defaultAnchorNavigations, [], readiness + ': click is handled, no default fragment navigation' );
+	assert.ok( cold.controls[ anchorId ].closest( 'details' ).open, readiness + ': target advanced group opens' );
+	assert.ok( cold.doc.activeElement === cold.controls[ anchorId ], readiness + ': visible target receives focus' );
+	assert.deepEqual( cold.values(), original, readiness + ': every named native setting retains its value/state' );
+	assert.equal( cold.clock.timers.size, 0, readiness + ': no arbitrary wait/retry timer remains' );
+}
+const lateReady = build( 'price_labels', () => {}, anchorHash, true, true, { state: 'complete', nativeSettled: true } );
+lateReady.clock.advance( 0 );
+assert.ok( lateReady.doc.activeElement === lateReady.controls[ anchorId ], 'late-loaded script works after native ready has already settled' );
+assert.equal( lateReady.window.location.hash, anchorHash, 'late-loaded enhancement preserves field fragment' );
+for ( const readiness of [ 'loading', 'complete' ] ) {
+	const fallback = build( 'price_labels', () => {}, '', true, true, { state: readiness, jquery: false } );
+	if ( readiness === 'loading' ) {
+		assert.equal( fallback.form.hasAttribute( 'data-wcj-settings-presentation' ), false, 'no-jQuery loading fallback waits for DOM' ); fallback.domReady();
+	}
+	assert.equal( fallback.form.getAttribute( 'data-wcj-settings-presentation' ), 'price_labels', readiness + ': no-jQuery fallback still enhances the native form' );
+	assert.deepEqual( fallback.doc.defaultAnchorNavigations, [], readiness + ': no-jQuery fallback does not navigate without a field fragment' );
+}
+console.log( 'PASS: asynchronous native-ready cold/loaded/late-load anchors, native href default action, missing-jQuery fallback and unchanged setting contracts; DOM doubles, not browser/save proof.' );
 console.log( 'PASS: bounded invalid-focus/current-tab/native-fade/queue/first-invalid/cancellation/terminal-path fixtures; no real browser claim.' );
 console.log( 'PASS: four-area metadata/controller DOM-double fixtures; no real browser, server save or commerce-output claim.' );
