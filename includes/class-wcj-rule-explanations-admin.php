@@ -184,6 +184,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations_Admin' ) ) :
 				}
 			}
 			echo '<div class="wrap"><h1>' . esc_html__( 'Rule explanations', 'woocommerce-jetpack' ) . '</h1>';
+			echo '<p><a href="' . esc_url( 'https://booster.io/docs/woocommerce-rule-explanations/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Rule Explanations and Returns Summary guide', 'woocommerce-jetpack' ) . '</a></p>';
 			$this->render_readiness();
 			$this->render_payment_admin();
 			$this->render_shipping_admin();

@@ -32,6 +32,8 @@ class WCJ_Returns extends WCJ_Module {
 			}
 		);
 		$this->desc_pro = $this->desc;
+
+		$this->link_slug = 'woocommerce-return-requests';
 		parent::__construct();
 		if ( $this->is_enabled() ) {
 			add_action( 'admin_menu', array( $this, 'menu' ) );
@@ -417,6 +419,7 @@ class WCJ_Returns extends WCJ_Module {
 		$before = isset( $_GET['before'] ) && is_string( $_GET['before'] ) && preg_match( '/^[1-9][0-9]{0,17}$/D', $_GET['before'] ) ? (int) $_GET['before'] : PHP_INT_MAX;
 		$rows   = ( new WCJ_Returns_Service() )->queue( $before );
 		echo '<div class="wrap"><h1>' . esc_html__( 'Return Requests', 'woocommerce-jetpack' ) . '</h1><p>' . esc_html__( 'Approval records a decision only. Refunds, restocking and payments remain separate merchant actions. Guest access requires a separately enabled, compatible HTTPS verification page and private auth storage.', 'woocommerce-jetpack' ) . '</p>';
+		echo '<p><a href="' . esc_url( 'https://booster.io/docs/woocommerce-return-requests/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Customer Returns setup guide', 'woocommerce-jetpack' ) . '</a></p>';
 		echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wcj-returns&wcj_returns_view=synthetic' ) ) . '">' . esc_html__( 'Private synthetic workflow exercise', 'woocommerce-jetpack' ) . '</a></p>';
 		$this->overlap_warning();
 		$this->setup_guide();
