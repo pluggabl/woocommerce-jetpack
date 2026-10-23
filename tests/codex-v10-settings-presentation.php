@@ -10,6 +10,9 @@ $reads       = 0;
 $conversions = 0;
 $assets      = array();
 $localized   = array();
+
+$script_assets = array();
+
 if ( in_array( '--text-products', $argv, true ) ) { $options['wcj_list_for_products'] = 'no'; }
 function __( $text, $domain = '' ) { return $text; }
 function get_option( $id, $default = '', $unused = null ) { global $options, $reads; ++$reads; return array_key_exists( $id, $options ) ? $options[ $id ] : $default; }
@@ -24,7 +27,11 @@ function wc_get_product_types() { return array( 'simple' => 'Simple' ); }
 function wcj_maybe_convert_and_update_option_value() { global $conversions; ++$conversions; }
 function wcj_get_settings_as_multiselect_or_text( $setting, $products, $multi ) { return array_merge( $setting, $multi ? array( 'type' => 'multiselect', 'options' => $products ) : array( 'type' => 'text' ) ); }
 function wp_enqueue_style( $handle, ...$args ) { global $assets; $assets[] = $handle; }
-function wp_enqueue_script( $handle, ...$args ) { global $assets; $assets[] = $handle; }
+function wp_enqueue_script( $handle, ...$args ) {
+	global $assets, $script_assets;
+	$assets[]                 = $handle;
+	$script_assets[ $handle ] = $args;
+}
 function wp_script_is() { return true; }
 function wp_localize_script( $handle, $name, $value ) { global $localized; $localized[ $name ] = $value; }
 function wcj_plugin_url() { return '/fixture-plugin'; }
@@ -96,6 +103,7 @@ WCJ_Settings_Presentation::enqueue( 'wcj-plugins', 'unknown' );
 check_fixture( array() === $assets, 'legacy and unrelated pages enqueue no presentation assets' );
 WCJ_Settings_Presentation::enqueue( 'wcj-plugins', 'price_labels' );
 check_fixture( array( 'wcj-settings-presentation', 'wcj-settings-presentation' ) === $assets, 'only supported modern route enqueues two assets' );
+check_fixture( array( '/fixture-plugin/assets/js/admin/wcj-settings-presentation.js', array( 'wcj-admin-new-script' ), '1.3', true ) === $script_assets['wcj-settings-presentation'], 'changed presentation JavaScript uses cache version 1.3 with its exact native dependency and footer contract' );
 check_fixture( 1 === $conversions, 'related-products inherited conversion was evaluated once, never repeated by metadata' );
 if ( in_array( '--fixtures', $argv, true ) ) { echo json_encode( $result ); }
 else { echo "PASS: exact native definitions/renderer and read-free metadata fixture; not WordPress runtime QA.\n"; }
