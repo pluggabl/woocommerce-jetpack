@@ -2139,6 +2139,24 @@ input.exchage_rate_button{ border: 1px solid rgba(0,0,0,.2);height: 38px;border-
 		display: flex;
 		flex-direction: column;
 	}
+	/* Keep discovery tabs above search when their labels wrap. */
+	.wcj-plugins .wcj-plugins-top-part-left.plug_tab {
+		float: none;
+		width: 100%;
+		max-height: none;
+	}
+	.wcj-plugins .wcj-plugins-top-part-left.plug_tab ul {
+		flex-wrap: wrap;
+	}
+	.wcj-plugins .wcj-plugins-tp-search.src_plug {
+		box-sizing: border-box;
+		min-width: 0;
+	}
+	.wcj-plugins .wcj-plugins-tp-search.src_plug .wcj-search-inp {
+		box-sizing: border-box;
+		min-width: 0;
+		max-width: 100%;
+	}
 	.wcj-plugins-tp-search, .wcj-plugins-right-main{
 		width: 100%;
 		max-width: 100%;
