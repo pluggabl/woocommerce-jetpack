@@ -1,6 +1,6 @@
 <?php
 /**
- * Presentation metadata for four existing native module forms.
+ * Presentation metadata and bounded native no-JavaScript fallbacks.
  *
  * @package Booster_For_WooCommerce/admin
  */
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * No option reads, settings evaluation, rendering or save behavior.
+ * No option reads, settings evaluation or save behavior.
  */
 class WCJ_Settings_Presentation {
 	/**
@@ -21,6 +21,86 @@ class WCJ_Settings_Presentation {
 	 */
 	public static function supports( $section ) {
 		return in_array( $section, array( 'add_to_cart', 'more_button_labels', 'price_labels', 'related_products' ), true );
+	}
+
+	/**
+	 * Bound the fallback to the four editors and this edition's invoice family.
+	 *
+	 * @param string $section Native module identifier.
+	 * @return bool
+	 */
+	public static function supports_no_script( $section ) {
+		return self::supports( $section ) || in_array(
+			$section,
+			array(
+				'pdf_invoicing',
+				'pdf_invoicing_numbering',
+				'pdf_invoicing_templates',
+				'pdf_invoicing_header',
+				'pdf_invoicing_footer',
+				'pdf_invoicing_styling',
+				'pdf_invoicing_page',
+				'pdf_invoicing_emails',
+				'pdf_invoicing_display',
+				'pdf_invoicing_advanced',
+			),
+			true
+		);
+	}
+
+	/**
+	 * Reveal only the selected native editor, never the surrounding catalog.
+	 *
+	 * @param string $section Native module identifier.
+	 */
+	public static function render_no_script( $section ) {
+		if ( ! self::supports_no_script( $section ) ) {
+			return;
+		}
+		?>
+		<noscript>
+			<style>
+				#wcj-native-settings-nojs .wcj-plugins-sing-acc-sub-cnt,
+				#wcj-native-settings-nojs .wcj-tab-box { display: block !important; }
+				#wcj-native-settings-nojs .wcj-tab-menu,
+				#wcj-native-settings-nojs .wcj_enable_plugin,
+				#wcj-native-invoice-parent .wcj_enable_plugin,
+				#wcj-native-settings-nojs .wcj_setting_checkbox_key { display: none !important; }
+				#wcj-native-settings-nojs .wcj-native-nojs-heading { padding: 16px 20px 0; }
+			</style>
+			<p class="notice notice-info"><?php esc_html_e( 'JavaScript is off. All settings panels for this module are shown below. Use Save Changes for editable fields. Turning modules on or off, changing checkbox settings and JavaScript-powered selectors requires JavaScript. Their saved values are unchanged.', 'woocommerce-jetpack' ); ?></p>
+		</noscript>
+		<?php
+	}
+
+	/**
+	 * Retain the actual native tab label when the inactive tab menu is hidden.
+	 *
+	 * @param string $section Native module identifier.
+	 * @param string $id      Native tab identifier.
+	 * @param array  $labels  Already resolved native tab labels.
+	 * @return string
+	 */
+	public static function no_script_heading( $section, $id, $labels ) {
+		if ( ! self::supports_no_script( $section ) || ! isset( $labels[ $id ] ) || ! is_scalar( $labels[ $id ] ) ) {
+			return '';
+		}
+		return '<noscript><h2 class="wcj-native-nojs-heading">' . esc_html( (string) $labels[ $id ] ) . '</h2></noscript>';
+	}
+
+	/**
+	 * Describe the resolved checkbox/activation value without another writer.
+	 *
+	 * @param string $section      Native module identifier.
+	 * @param mixed  $option_value Already resolved native value.
+	 * @return string
+	 */
+	public static function no_script_checkbox_state( $section, $option_value ) {
+		if ( ! self::supports_no_script( $section ) ) {
+			return '';
+		}
+		$label = 'yes' === $option_value ? __( 'On (requires JavaScript to change)', 'woocommerce-jetpack' ) : __( 'Off (requires JavaScript to change)', 'woocommerce-jetpack' );
+		return '<noscript><span class="wcj-native-nojs-checkbox">' . esc_html( $label ) . '</span></noscript>';
 	}
 
 	/**

@@ -994,6 +994,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 			$tab_ids_key       = '';
 			$active_tab        = '';
 			$tab_ids_titles    = array();
+			$tab_ids_labels    = array();
 			$module_reset_link = '';
 
 			require_once __DIR__ . '/../admin/class-wcj-settings-presentation.php';
@@ -1070,13 +1071,15 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
                                     </div>
                                     <div class="wcj-plugins-sing-head-right">';
 							if ( '' !== $id ) {
-								$final_html .= '<div class="wcj-plugins-border-sm-btn">
+								$final_html    .= '<div class="wcj-plugins-border-sm-btn">
                                                 <a target="_blank" href="' . $wcj_link . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation"><img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pdw-download.png"></a>
                                             </div>
                                             <div class="wcj-plugins-button-tp">
                                                 <button id="disable_' . $id . '" data-type="disable" data-id="' . $id . '" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( $id ) ) ? 'wcj-disable' : '' ) . '">' . __( 'Disable', 'woocommerce-jetpack' ) . '</button>
-                                                <button id="enable_' . $id . '" data-type="enable" data-id="' . $id . '" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( $id ) ) ? '' : 'wcj-disable' ) . '">' . __( 'Enable', 'woocommerce-jetpack' ) . '</button>
-                                                <input id="' . $id . '" type="hidden" name="' . $id . '" value="' . ( 'yes' === ( wcj_get_option( $id ) ) ? 'yes' : 'no' ) . '">
+                                                <button id="enable_' . $id . '" data-type="enable" data-id="' . $id . '" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( $id ) ) ? '' : 'wcj-disable' ) . '">' . __( 'Enable', 'woocommerce-jetpack' ) . '</button>';
+								$module_enabled = 'yes' === ( wcj_get_option( $id ) ) ? 'yes' : 'no';
+								$final_html    .= '
+                                                <input id="' . $id . '" type="hidden" name="' . $id . '" value="' . $module_enabled . '">' . WCJ_Settings_Presentation::no_script_checkbox_state( $current_section, $module_enabled ) . '
                                             </div>
                                             <div class="wcj-plugins-acc-arw">
                                                 <img data-img_path="' . esc_url( wcj_plugin_url() ) . '/assets/images/" class="wcj_closing_accordion_form" src="' . esc_url( wcj_plugin_url() ) . '/assets/images/up-arw-new.png">
@@ -1094,10 +1097,11 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 						case 'tab_ids':
 							$final_html .= '<div class="wcj-tab-menu"><ul class="wcj-nav wcj-nav-tabs">';
 							if ( isset( $setting['tab_ids'] ) ) {
-								$tab_ids_key = key( $setting['tab_ids'] );
-								$wpnonce     = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
-								$active_tab  = ( isset( $_GET['active_tab'] ) ? sanitize_text_field( wp_unslash( $_GET['active_tab'] ) ) : $tab_ids_key );
-								$active_tab  = esc_attr( $active_tab );
+								$tab_ids_labels = $setting['tab_ids'];
+								$tab_ids_key    = key( $setting['tab_ids'] );
+								$wpnonce        = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;
+								$active_tab     = ( isset( $_GET['active_tab'] ) ? sanitize_text_field( wp_unslash( $_GET['active_tab'] ) ) : $tab_ids_key );
+								$active_tab     = esc_attr( $active_tab );
 								foreach ( $setting['tab_ids'] as $key => $option ) {
 									$tab_ids_titles[] = $option;
 									$final_html      .= '<li class="wcj-nav-item">
@@ -1109,7 +1113,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 							$final_html .= '</ul></div><div class="wcj-tab-main-box">';
 							break;
 						case 'tab_start':
-							$final_html .= '<div class="wcj-tab-box" id="' . $id . '" style="' . ( $active_tab === $id ? 'display:block;' : '' ) . '">
+							$final_html .= '<div class="wcj-tab-box" id="' . $id . '" style="' . ( $active_tab === $id ? 'display:block;' : '' ) . '">' . WCJ_Settings_Presentation::no_script_heading( $current_section, $id, $tab_ids_labels ) . '
                                                 <div class="wcj-tab-cnt-main">
                             ';
 							break;
@@ -1153,7 +1157,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
                                 <div class="wcj-plugins-form-inp-rh">
                                     <label for="' . $id . '">
                                     <input type="hidden" id="' . $id . '" name="' . $id . '" value="' . $option_value . '">
-                                    <input class="wcj_setting_checkbox_key" data-rel_id="' . $id . '" type="checkbox" ' . $checked . ' ' . wp_kses_post( implode( ' ', $custom_attributes ) ) . '></input>
+                                    <input class="wcj_setting_checkbox_key" data-rel_id="' . $id . '" type="checkbox" ' . $checked . ' ' . wp_kses_post( implode( ' ', $custom_attributes ) ) . '></input>' . WCJ_Settings_Presentation::no_script_checkbox_state( $current_section, $option_value ) . '
                                     	' . $desc . '
                                     </label>
                                     <span class="wcj_admin_span"><em>' . $desc_tip_str . '</em></span>
@@ -1393,7 +1397,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
                                 value="yes"
                                 ' . $checked . '
                                 ' . wp_kses_post( implode( ' ', $custom_attributes ) ) . '/> 
-                                <input type="hidden" id="' . $id . '" name="' . $id . '" value="' . $option_value . '">
+                                <input type="hidden" id="' . $id . '" name="' . $id . '" value="' . $option_value . '">' . WCJ_Settings_Presentation::no_script_checkbox_state( $current_section, $option_value ) . '
                                 <span class="wcj_admin_span"><em>' . $desc . '</em></span>
                                 </div>
                             </div>';

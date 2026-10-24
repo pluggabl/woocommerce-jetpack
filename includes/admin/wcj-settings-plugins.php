@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once __DIR__ . '/class-wcj-settings-presentation.php';
+
 require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 
 <?php
@@ -115,7 +117,7 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 							}
 						}
 
-						$pdf_header = '<div class="wcj-plugins-sing-acc-box-head">
+						$pdf_header  = '<div class="wcj-plugins-sing-acc-box-head" id="wcj-native-invoice-parent">
 							<div class="wcj-plugins-sing-head-lf">
 								<span class="wcj_admin_span">
 									<img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/pr-sm-icn.png">
@@ -131,8 +133,10 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 								</div>
 								<div class="wcj-plugins-button-tp">
 									<button id="disable_wcj_pdf_invoicing_enabled" data-type="disable" data-id="wcj_pdf_invoicing_enabled" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( 'wcj_pdf_invoicing_enabled' ) ) ? 'wcj-disable' : '' ) . '">' . __( 'Disable', 'woocommerce-jetpack' ) . '</button>
-									<button id="enable_wcj_pdf_invoicing_enabled" data-type="enable" data-id="wcj_pdf_invoicing_enabled" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( 'wcj_pdf_invoicing_enabled' ) ) ? '' : 'wcj-disable' ) . '">' . __( 'Enable', 'woocommerce-jetpack' ) . '</button>
-									<input id="wcj_pdf_invoicing_enabled" type="hidden" name="wcj_pdf_invoicing_enabled" value="' . ( 'yes' === ( wcj_get_option( 'wcj_pdf_invoicing_enabled' ) ) ? 'yes' : 'no' ) . '">
+									<button id="enable_wcj_pdf_invoicing_enabled" data-type="enable" data-id="wcj_pdf_invoicing_enabled" type="button" class="wcj_enable_plugin wcj-enble-btn ' . ( 'yes' === ( wcj_get_option( 'wcj_pdf_invoicing_enabled' ) ) ? '' : 'wcj-disable' ) . '">' . __( 'Enable', 'woocommerce-jetpack' ) . '</button>';
+						$pdf_enabled = 'yes' === ( wcj_get_option( 'wcj_pdf_invoicing_enabled' ) ) ? 'yes' : 'no';
+						$pdf_header .= '
+									<input id="wcj_pdf_invoicing_enabled" type="hidden" name="wcj_pdf_invoicing_enabled" value="' . $pdf_enabled . '">' . WCJ_Settings_Presentation::no_script_checkbox_state( $section, $pdf_enabled ) . '
 								</div>
 								<div class="wcj-plugins-acc-arw">
 									<a href="' . admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . $this->get_cat_by_section( 'pdf_invoicing' ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) . '&section=pdf_invoicing' ) . '"><img src="' . esc_url( wcj_plugin_url() ) . '/assets/images/down-arw2.png"></a>
@@ -150,7 +154,9 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 									echo $pdf_header; // phpcs:ignore WordPress.Security.EscapeOutput
 								}
 							}
-							echo wp_kses_post( '<div class="wcj-plugins-sing-acc-box">' );
+							$no_script_settings = WCJ_Settings_Presentation::supports_no_script( $section );
+							echo '<div class="wcj-plugins-sing-acc-box"' . ( $no_script_settings ? ' id="wcj-native-settings-nojs"' : '' ) . '>';
+							WCJ_Settings_Presentation::render_no_script( $section );
 							$this->output_settings( $section );
 							echo wp_kses_post( '</div>' );
 							if ( 'subscription_customization' !== $section && 'sales_notifications' !== $section ) {

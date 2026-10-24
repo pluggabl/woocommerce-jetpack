@@ -15,6 +15,26 @@ $script_assets = array();
 
 if ( in_array( '--text-products', $argv, true ) ) { $options['wcj_list_for_products'] = 'no'; }
 function __( $text, $domain = '' ) { return $text; }
+/**
+ * Escape text in the CLI-only native-renderer double.
+ *
+ * @param mixed $text Fixture text.
+ * @return string
+ */
+function esc_html( $text ) {
+	return htmlspecialchars( (string) $text, ENT_QUOTES, 'UTF-8' );
+}
+/**
+ * Translate and escape text in the CLI-only native-renderer double.
+ *
+ * @param string $text   Fixture text.
+ * @param string $domain Fixture text domain.
+ * @return string
+ */
+function esc_html__( $text, $domain = '' ) {
+	$GLOBALS['codex_fixture_escaped_domains'][] = $domain;
+	return esc_html( $text );
+}
 function get_option( $id, $default = '', $unused = null ) { global $options, $reads; ++$reads; return array_key_exists( $id, $options ) ? $options[ $id ] : $default; }
 function wcj_get_option( $id, $default = '', $unused = null ) { return get_option( $id, $default ); }
 function update_option() { throw new RuntimeException( 'Presentation must not write options.' ); }

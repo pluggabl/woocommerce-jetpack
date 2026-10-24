@@ -36,6 +36,14 @@ WCJ_Invoice_Setup::authorize();
 	<h1><?php esc_html_e( 'Branded invoice setup', 'woocommerce-jetpack' ); ?></h1>
 	<p><?php esc_html_e( 'Add your business details, check a sample, then review the settings before you save and activate.', 'woocommerce-jetpack' ); ?></p>
 	<p class="wcj-setup-actions"><a href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-getting-started' ) ); ?>"><?php esc_html_e( 'Back to Getting Started', 'woocommerce-jetpack' ); ?></a><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing' ) ); ?>"><?php esc_html_e( 'Open full invoice settings', 'woocommerce-jetpack' ); ?></a></p>
+	<noscript>
+		<style>
+			#wcj-invoice-setup-form,
+			#wcj-setup-status,
+			#wcj-setup-undo { display: none !important; }
+		</style>
+		<p class="notice notice-warning"><?php esc_html_e( 'JavaScript is required to choose a logo, generate samples, test attachments, review settings changes, save and activate, or undo changes in this guide. Enable JavaScript to use the guide, or open full invoice settings to edit existing settings. Existing settings have not been changed.', 'woocommerce-jetpack' ); ?></p>
+	</noscript>
 	<div class="wcj-setup-safety">
 		<p><?php esc_html_e( 'Samples use a stock design and synthetic data. Sample and attachment tests do not create orders, use invoice numbers, enable settings or send email. Existing custom templates cannot be replaced here.', 'woocommerce-jetpack' ); ?></p>
 		<p><?php esc_html_e( 'A sample is not a production preview or proof of customer email delivery. All existing edition rights remain available in full invoice settings.', 'woocommerce-jetpack' ); ?></p>
@@ -96,7 +104,7 @@ WCJ_Invoice_Setup::authorize();
 			<p><label><input type="checkbox" id="wcj-setup-confirm"> <?php esc_html_e( 'I reviewed the changes and want to activate these settings.', 'woocommerce-jetpack' ); ?></label></p><button type="button" class="button button-primary" data-setup-action="activate" aria-describedby="wcj-setup-activation-help" disabled><?php esc_html_e( 'Save and activate reviewed settings', 'woocommerce-jetpack' ); ?></button>
 		</section>
 	</form>
-	<section class="wcj-setup-section" aria-labelledby="wcj-setup-undo-heading">
+	<section class="wcj-setup-section" id="wcj-setup-undo" aria-labelledby="wcj-setup-undo-heading">
 	<h2 id="wcj-setup-undo-heading"><?php esc_html_e( 'Undo this guide\'s settings changes', 'woocommerce-jetpack' ); ?></h2><p><?php esc_html_e( 'Only values still matching this guide\'s changes can be restored. Later edits are preserved and reported as conflicts. Issued invoices and orders are never removed.', 'woocommerce-jetpack' ); ?></p><button type="button" class="button" data-setup-action="undo"><?php esc_html_e( 'Undo this guide’s settings changes', 'woocommerce-jetpack' ); ?></button>
 	</section>
 </div>

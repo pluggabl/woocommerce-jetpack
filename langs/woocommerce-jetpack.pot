@@ -24796,3 +24796,23 @@ msgstr ""
 #: includes/admin/class-wcj-module-filters.php:209
 msgid "return requests approval queue"
 msgstr ""
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/class-wcj-settings-presentation.php:71
+msgid "JavaScript is off. All settings panels for this module are shown below. Use Save Changes for editable fields. Turning modules on or off, changing checkbox settings and JavaScript-powered selectors requires JavaScript. Their saved values are unchanged."
+msgstr ""
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/class-wcj-settings-presentation.php:102
+msgid "On (requires JavaScript to change)"
+msgstr ""
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/class-wcj-settings-presentation.php:102
+msgid "Off (requires JavaScript to change)"
+msgstr ""
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/views/invoice-setup.php:45
+msgid "JavaScript is required to choose a logo, generate samples, test attachments, review settings changes, save and activate, or undo changes in this guide. Enable JavaScript to use the guide, or open full invoice settings to edit existing settings. Existing settings have not been changed."
+msgstr ""

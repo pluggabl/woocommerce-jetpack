@@ -28901,3 +28901,23 @@ msgstr "aanbevelingen vergelijkbare producten"
 #: includes/admin/class-wcj-module-filters.php:209
 msgid "return requests approval queue"
 msgstr "retouraanvragen goedkeuring wachtrij"
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/class-wcj-settings-presentation.php:71
+msgid "JavaScript is off. All settings panels for this module are shown below. Use Save Changes for editable fields. Turning modules on or off, changing checkbox settings and JavaScript-powered selectors requires JavaScript. Their saved values are unchanged."
+msgstr "JavaScript is uitgeschakeld. Hieronder worden alle instellingenpanelen voor deze module weergegeven. Gebruik Wijzigingen opslaan voor bewerkbare velden. Voor het in- of uitschakelen van modules, het wijzigen van selectievakjes en het gebruik van JavaScript-afhankelijke keuzelijsten is JavaScript vereist. De opgeslagen waarden hiervan zijn ongewijzigd."
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/class-wcj-settings-presentation.php:102
+msgid "On (requires JavaScript to change)"
+msgstr "Aan (JavaScript vereist om te wijzigen)"
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/class-wcj-settings-presentation.php:102
+msgid "Off (requires JavaScript to change)"
+msgstr "Uit (JavaScript vereist om te wijzigen)"
+
+#. Booster v10 c011 no-JavaScript notice. Additive-only localization.
+#: includes/admin/views/invoice-setup.php:45
+msgid "JavaScript is required to choose a logo, generate samples, test attachments, review settings changes, save and activate, or undo changes in this guide. Enable JavaScript to use the guide, or open full invoice settings to edit existing settings. Existing settings have not been changed."
+msgstr "JavaScript is vereist om in deze handleiding een logo te kiezen, voorbeelden te genereren, bijlagen te testen, wijzigingen in instellingen te controleren, instellingen op te slaan en te activeren, of wijzigingen ongedaan te maken. Schakel JavaScript in om de handleiding te gebruiken of open de volledige factuurinstellingen om bestaande instellingen te bewerken. Bestaande instellingen zijn niet gewijzigd."
