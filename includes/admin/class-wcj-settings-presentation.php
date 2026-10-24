@@ -67,6 +67,7 @@ class WCJ_Settings_Presentation {
 				#wcj-native-invoice-parent .wcj_enable_plugin,
 				#wcj-native-settings-nojs .wcj_setting_checkbox_key { display: none !important; }
 				#wcj-native-settings-nojs .wcj-native-nojs-heading { padding: 16px 20px 0; }
+				#wcj-native-settings-nojs :focus-visible { outline: 3px solid #2271b1; outline-offset: 3px; }
 				@media (max-width: 782px) {
 					#wcj-native-settings-nojs .wcj_custom_number_row {
 						display: flex;

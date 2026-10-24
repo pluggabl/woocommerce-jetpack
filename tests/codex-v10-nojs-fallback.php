@@ -74,6 +74,11 @@ check_fixture( 0 === preg_match( '/<(?:form|input|select|textarea|button)\b/i', 
 
 // The narrow repair exists only inside this selected editor's no-script style.
 check_fixture( 1 === preg_match( '/@media \(max-width: 782px\) \{(.*?)\n\s*\}\s*<\/style>/s', $notice, $number_media ), 'custom-number layout is limited to the 782px mobile boundary' );
+// Native keyboard focus remains visible at every viewport without changing controls.
+$focus_rule = '#wcj-native-settings-nojs :focus-visible { outline: 3px solid #2271b1; outline-offset: 3px; }';
+check_fixture( 1 === substr_count( $notice, $focus_rule ), 'native keyboard focus uses the existing presentation outline token without important' );
+check_fixture( 1 === substr_count( str_replace( $number_media[0], '', $notice ), $focus_rule ), 'native keyboard focus is outside the mobile-only layout breakpoint' );
+check_fixture( 1 === substr_count( $notice, ':focus-visible' ), 'keyboard focus has only the selected native-editor scope' );
 $number_css   = preg_replace( '/\s+/', ' ', $number_media[1] );
 $number_rules = array(
 	'#wcj-native-settings-nojs .wcj_custom_number_row'   => 'display: flex; flex-wrap: wrap; gap: 10px;',
