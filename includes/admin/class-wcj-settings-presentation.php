@@ -67,6 +67,28 @@ class WCJ_Settings_Presentation {
 				#wcj-native-invoice-parent .wcj_enable_plugin,
 				#wcj-native-settings-nojs .wcj_setting_checkbox_key { display: none !important; }
 				#wcj-native-settings-nojs .wcj-native-nojs-heading { padding: 16px 20px 0; }
+				@media (max-width: 782px) {
+					#wcj-native-settings-nojs .wcj_custom_number_row {
+						display: flex;
+						flex-wrap: wrap;
+						gap: 10px;
+					}
+					#wcj-native-settings-nojs .wcj_custom_number_input,
+					#wcj-native-settings-nojs .wcj_custom_number_save {
+						float: none;
+						width: auto;
+						min-width: 0;
+						max-width: 100%;
+						margin-left: 0;
+					}
+					#wcj-native-settings-nojs .wcj_custom_number_input { flex: 1 1 8em; }
+					#wcj-native-settings-nojs .wcj_custom_number_save { flex: 0 1 auto; }
+					#wcj-native-settings-nojs .wcj_custom_number_save_btn {
+						box-sizing: border-box;
+						max-width: 100%;
+						margin-inline: 0;
+					}
+				}
 			</style>
 			<p class="notice notice-info"><?php esc_html_e( 'JavaScript is off. All settings panels for this module are shown below. Use Save Changes for editable fields. Turning modules on or off, changing checkbox settings and JavaScript-powered selectors requires JavaScript. Their saved values are unchanged.', 'woocommerce-jetpack' ); ?></p>
 		</noscript>

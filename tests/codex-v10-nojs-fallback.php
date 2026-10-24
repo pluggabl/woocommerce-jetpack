@@ -71,6 +71,25 @@ check_fixture( false !== strpos( $notice, '#wcj-native-invoice-parent .wcj_enabl
 check_fixture( false !== strpos( $notice, 'Use Save Changes for editable fields.' ) && false !== strpos( $notice, 'JavaScript-powered selectors requires JavaScript.' ), 'native fallback states precise editing limits, not full parity' );
 check_fixture( 0 === preg_match( '/<(?:form|input|select|textarea|button)\b/i', $notice ), 'notice creates no form, action or successful control' );
 
+
+// The narrow repair exists only inside this selected editor's no-script style.
+check_fixture( 1 === preg_match( '/@media \(max-width: 782px\) \{(.*?)\n\s*\}\s*<\/style>/s', $notice, $number_media ), 'custom-number layout is limited to the 782px mobile boundary' );
+$number_css   = preg_replace( '/\s+/', ' ', $number_media[1] );
+$number_rules = array(
+	'#wcj-native-settings-nojs .wcj_custom_number_row'   => 'display: flex; flex-wrap: wrap; gap: 10px;',
+	'#wcj-native-settings-nojs .wcj_custom_number_input, #wcj-native-settings-nojs .wcj_custom_number_save' => 'float: none; width: auto; min-width: 0; max-width: 100%; margin-left: 0;',
+	'#wcj-native-settings-nojs .wcj_custom_number_input' => 'flex: 1 1 8em;',
+	'#wcj-native-settings-nojs .wcj_custom_number_save'  => 'flex: 0 1 auto;',
+	'#wcj-native-settings-nojs .wcj_custom_number_save_btn' => 'box-sizing: border-box; max-width: 100%; margin-inline: 0;',
+);
+check_fixture( count( $number_rules ) === preg_match_all( '/[^{}]+\{[^{}]*\}/', $number_media[1] ), 'only the five selected custom-number layout rules are added' );
+foreach ( $number_rules as $selector => $declarations ) {
+	check_fixture( 1 === preg_match( '/(?:^|\})\s*' . preg_quote( $selector, '/' ) . ' \{([^}]*)\}/', $number_css, $number_rule ), 'custom-number rule stays inside its native wrapper: ' . $selector );
+	check_fixture( trim( $number_rule[1] ) === $declarations, 'native number and submit wrap without clipping or hiding: ' . $selector );
+}
+check_fixture( false === strpos( str_replace( $number_media[0], '', $notice ), '.wcj_custom_number_' ), 'custom-number layout has no rule above 782px' );
+check_fixture( '' === trim( preg_replace( '/<noscript>.*?<\/noscript>/s', '', $notice ) ), 'JavaScript-enabled output receives none of the fallback layout or notice' );
+
 $label = '<script>alert("x")</script> Ελληνικά & café 中文';
 check_fixture( '<noscript><h2 class="wcj-native-nojs-heading">' . esc_html( $label ) . '</h2></noscript>' === WCJ_Settings_Presentation::no_script_heading( 'price_labels', 'tab', array( 'tab' => $label ) ), 'actual tab label is escaped without losing Unicode context' );
 check_fixture( '' === WCJ_Settings_Presentation::no_script_heading( 'price_labels', 'missing', array() ), 'missing tab label does not invent a heading' );
@@ -98,7 +117,7 @@ foreach ( $result as $section => $data ) {
 }
 
 // Preserve current values, disabled/readonly rights and the native activation field.
-$fixture->settings               = array(
+$fixture->settings                    = array(
 	array(
 		'type' => 'sectionend',
 		'id'   => 'fixture_start',
@@ -134,13 +153,25 @@ $fixture->settings               = array(
 		'custom_attributes' => array( 'readonly' => 'readonly' ),
 	),
 	array(
+		'type'              => 'custom_number',
+		'id'                => 'wcj_fixture_custom_number',
+		'title'             => 'Custom count',
+		'default'           => 7,
+		'custom_attributes' => array(
+			'min'      => '1',
+			'max'      => '100',
+			'readonly' => 'readonly',
+		),
+	),
+	array(
 		'type' => 'tab_end',
 		'id'   => 'fixture_tab',
 	),
 );
-$options['wcj_fixture_enabled']  = 'yes';
-$options['wcj_fixture_checkbox'] = 'yes';
-$options['wcj_fixture_text']     = 'Saved custom value';
+$options['wcj_fixture_enabled']       = 'yes';
+$options['wcj_fixture_checkbox']      = 'yes';
+$options['wcj_fixture_text']          = 'Saved custom value';
+$options['wcj_fixture_custom_number'] = '37';
 ob_start();
 $fixture->output_settings( 'price_labels' );
 $supported_html = ob_get_clean();
@@ -151,6 +182,18 @@ check_fixture( preg_replace( '/<noscript>.*?<\/noscript>/s', '', $supported_html
 check_fixture( false !== strpos( $supported_html, 'name="wcj_fixture_enabled" value="yes"' ), 'activation retains exactly the resolved hidden value' );
 check_fixture( 2 === substr_count( $supported_html, '<span class="wcj-native-nojs-checkbox">On (requires JavaScript to change)</span>' ), 'module activation and checkbox both show their resolved state without a new getter' );
 check_fixture( false !== strpos( $supported_html, 'name="wcj_fixture_checkbox" value="yes"' ) && false !== strpos( $supported_html, 'On (requires JavaScript to change)' ), 'checkbox retains hidden named value and visible no-script state' );
+
+
+check_fixture( 1 === preg_match( '/<input\b[^>]*\bid="wcj_fixture_custom_number"[^>]*>/', $supported_html, $number_input ), 'existing custom-number input is rendered once' );
+foreach ( array( 'name="wcj_fixture_custom_number"', 'type="number"', 'value="37"', 'min="1"', 'max="100"', 'readonly="readonly"' ) as $attribute ) {
+	check_fixture( false !== strpos( $number_input[0], $attribute ), 'custom-number saved value and native validation/right remain: ' . $attribute );
+}
+$inline_submit_count = substr_count( $supported_html, 'wcj_custom_number_save_btn' );
+check_fixture( substr_count( $native_html, 'wcj_custom_number_save_btn' ) === $inline_submit_count && 1 >= $inline_submit_count, 'existing filtered edition-specific inline submit count is unchanged' );
+if ( $inline_submit_count ) {
+	check_fixture( 1 === preg_match( '/<input\b[^>]*wcj_custom_number_save_btn[^>]*>/', $supported_html, $number_submit ), 'existing custom-number Save remains an input' );
+	check_fixture( false !== strpos( $number_submit[0], 'type="submit"' ) && false !== strpos( $number_submit[0], 'name="wcj_save_module_settings"' ), 'existing inline Save retains exact native submit type and name' );
+}
 
 // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Fixed local CLI source, never an external URL.
 $template = file_get_contents( __DIR__ . '/../includes/admin/wcj-settings-plugins.php' );
