@@ -21,6 +21,11 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 	class WCJ_Cart_Abandonment extends WCJ_Module {
 
 		/**
+		 * Expected per-site schema version. Bump when the table definitions change.
+		 */
+		const DB_VERSION = '1.0.0';
+
+		/**
 		 * Constructor.
 		 *
 		 * @version 7.2.1
@@ -598,10 +603,16 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 		 * Wcj_cart_abandonment_required_tables.
 		 *
 		 * @version 6.0.1
+		 * @return bool Whether the expected schema and version marker are installed.
 		 */
 		public function wcj_cart_abandonment_required_tables() {
 
 			global $wpdb;
+			if ( version_compare( (string) get_option( 'test_db_version', '0' ), static::DB_VERSION, '>' ) ) {
+				// An older plugin build must not downgrade a newer schema.
+				return false;
+			}
+
 			$table_wcj_cart_abandonment_data = $wpdb->prefix . 'wcj_cart_abandonment_data';
 			$table_wcj_email_history         = $wpdb->prefix . 'wcj_abandonment_email_history';
 
@@ -609,8 +620,8 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.SchemaChange
-			if ( $wpdb->get_var( "show tables like '$table_wcj_cart_abandonment_data'" ) !== $table_wcj_cart_abandonment_data ) {
-				$sql = "CREATE TABLE $table_wcj_cart_abandonment_data (
+			$schema = array(
+				"CREATE TABLE $table_wcj_cart_abandonment_data (
 				id BIGINT(20) NOT NULL AUTO_INCREMENT,
 				checkout_id int(11) NOT NULL, 
 				session_id VARCHAR(60) NOT NULL,
@@ -619,34 +630,35 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 				cart_total DECIMAL(10,2) DEFAULT NULL,
 				checkout_data TEXT DEFAULT NULL,
 				order_status VARCHAR(20) NOT NULL DEFAULT 'normal',
-				is_subscribe  tinyint(1) DEFAULT 1,
+				is_subscribe tinyint(1) DEFAULT 1,
 				coupon_code VARCHAR(50) DEFAULT NULL,
 	   			time DATETIME DEFAULT NULL,
 				PRIMARY KEY  (`id`)
-			) $charset_collate;";
-
-				dbDelta( $sql );
-				$wcj_db_version = '1.0.0';
-				add_option( 'test_db_version', $wcj_db_version );
-			}
-
-			if ( $wpdb->get_var( "show tables like '$table_wcj_email_history'" ) !== $table_wcj_email_history ) {
-				$sql = "CREATE TABLE $table_wcj_email_history (
+			) $charset_collate;",
+				"CREATE TABLE $table_wcj_email_history (
 				id BIGINT(20) NOT NULL AUTO_INCREMENT,
 				session_id VARCHAR(60) NOT NULL,
 				email VARCHAR(100) DEFAULT NULL,
 				template_id BIGINT(20) DEFAULT NULL,
 				coupon_code VARCHAR(100) DEFAULT NULL,				
-				status  tinyint(1) DEFAULT 1,
+				status tinyint(1) DEFAULT 1,
 	   			time DATETIME DEFAULT NULL,
 				PRIMARY KEY  (`id`)
-			) $charset_collate;";
+			) $charset_collate;",
+			);
 
-				dbDelta( $sql );
-				$wcj_db_version = '1.0.0';
-				add_option( 'test_db_version', $wcj_db_version );
+			// Apply the definitions to existing tables as well as new installations.
+			dbDelta( $schema );
+			// dbDelta reports intended changes, not successful SQL execution. Verify
+			// that no supported schema changes remain before recording the version.
+			$pending_changes = dbDelta( $schema, false );
+			if ( ! empty( $pending_changes ) || '' !== $wpdb->last_error ) {
+				return false;
 			}
 			// phpcs:enable
+
+			update_option( 'test_db_version', static::DB_VERSION );
+			return static::DB_VERSION === get_option( 'test_db_version' );
 		}
 
 
@@ -656,8 +668,7 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 		 * @version 6.0.2
 		 */
 		public function myplugin_update_db_check() {
-			global $wcj_db_version;
-			if ( get_site_option( 'test_db_version' ) !== $wcj_db_version ) {
+			if ( version_compare( (string) get_option( 'test_db_version', '0' ), static::DB_VERSION, '<' ) ) {
 				$this->wcj_cart_abandonment_required_tables();
 			}
 		}
