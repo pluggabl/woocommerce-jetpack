@@ -656,8 +656,8 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 		 * @version 6.0.2
 		 */
 		public function myplugin_update_db_check() {
-			global $wcj_db_version;
-			if ( get_site_option( 'test_db_version' ) !== $wcj_db_version ) {
+			$wcj_db_version = '1.0.0';
+			if ( get_option( 'test_db_version' ) !== $wcj_db_version ) {
 				$this->wcj_cart_abandonment_required_tables();
 			}
 		}
