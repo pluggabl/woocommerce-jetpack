@@ -59,10 +59,8 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) :
 		 *
 		 * @version 2.8.0
 		 * @access  public
-		 * @return  statement
 		 */
 		public function __construct() {
-			return true;
 		}
 
 		/**

@@ -26,9 +26,19 @@ if ( ! class_exists( 'WCJ_Wishlist' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'wishlist';
-			$this->short_desc = __( 'Wishlist', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Wishlist', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-wishlist';
+			$this->short_desc = 'Wishlist';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Wishlist', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Wishlist';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Wishlist', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-wishlist';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

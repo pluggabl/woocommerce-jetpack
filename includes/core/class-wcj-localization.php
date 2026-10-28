@@ -44,7 +44,7 @@ if ( ! class_exists( 'WCJ_Localization' ) ) :
 		 */
 		public function __construct( $plugin_file ) {
 			$this->plugin_file = $plugin_file;
-			add_action( 'init', array( $this, 'load' ), 9, 0 );
+			add_action( 'init', array( $this, 'load' ), -100, 0 );
 			add_action( 'change_locale', array( $this, 'load' ), 10 );
 			add_action( 'unload_textdomain', array( $this, 'unload' ), 10, 2 );
 			$this->load();
@@ -82,6 +82,9 @@ if ( ! class_exists( 'WCJ_Localization' ) ) :
 			$this->loading = true;
 			try {
 				load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( $this->plugin_file ) ) . '/langs/' );
+				if ( ! did_action( 'init' ) ) {
+					return;
+				}
 				$locale = null === $locale ? determine_locale() : $locale;
 
 				// Only the owner-approved standard Dutch locale gets a new fallback.

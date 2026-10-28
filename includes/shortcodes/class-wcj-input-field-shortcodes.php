@@ -47,7 +47,6 @@ if ( ! class_exists( 'WCJ_Input_Field_Shortcodes' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**

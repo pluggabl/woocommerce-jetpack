@@ -34,10 +34,25 @@ if ( ! class_exists( 'WCJ_Multicurrency_Product_Base_Price' ) ) :
 		public function __construct() {
 
 			$this->id         = 'multicurrency_base_price';
-			$this->short_desc = __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Enter prices for products in different currencies (1 currency allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Enter prices for products in different currencies.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-multicurrency-product-base-price';
+			$this->short_desc = 'Multicurrency Product Base Price';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Enter prices for products in different currencies (1 currency allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Enter prices for products in different currencies (1 currency allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Enter prices for products in different currencies.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Enter prices for products in different currencies.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-multicurrency-product-base-price';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -540,7 +555,6 @@ if ( ! class_exists( 'WCJ_Multicurrency_Product_Base_Price' ) ) :
 			}
 			return $currency_symbol;
 		}
-
 	}
 
 endif;

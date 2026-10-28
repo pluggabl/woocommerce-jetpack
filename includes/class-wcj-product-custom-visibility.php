@@ -27,22 +27,52 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_custom_visibility';
-			$this->short_desc = __( 'Product Custom Visibility', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display products by custom param (Bulk actions available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Display products by custom param.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Product Custom Visibility';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Custom Visibility', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Display products by custom param (Bulk actions available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Display products by custom param (Bulk actions available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Display products by custom param.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Display products by custom param.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-product-custom-visibility';
-			$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Custom Visibility" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . '<br>' .
+			$this->extra_desc = 'When enabled, module will add new "Booster: Product Custom Visibility" meta box to each product\'s edit page.<br>' .
 			sprintf(
 				/* translators: %s: translation added */
-				__( 'You can add selection drop box to frontend with "%1$s" widget (set "Product custom visibility" as "Selector Type") or %2$s shortcode.', 'woocommerce-jetpack' ),
-				__( 'Booster - Selector', 'woocommerce-jetpack' ),
+				'You can add selection drop box to frontend with "%1$s" widget (set "Product custom visibility" as "Selector Type") or %2$s shortcode.',
+				'Booster - Selector',
 				'<code>[wcj_selector selector_type="product_custom_visibility"]</code>'
 			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Custom Visibility" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . '<br>' .
+					sprintf(
+						/* translators: %s: translation added */
+						__( 'You can add selection drop box to frontend with "%1$s" widget (set "Product custom visibility" as "Selector Type") or %2$s shortcode.', 'woocommerce-jetpack' ),
+						__( 'Booster - Selector', 'woocommerce-jetpack' ),
+						'<code>[wcj_selector selector_type="product_custom_visibility"]</code>'
+					);
+				}
+			);
 
-			$this->title = __( 'Custom Visibility', 'woocommerce-jetpack' );
+			$this->title = 'Custom Visibility';
+			wcj_init_presentation(
+				function () {
+					$this->title = __( 'Custom Visibility', 'woocommerce-jetpack' );
+				}
+			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -118,7 +148,6 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;

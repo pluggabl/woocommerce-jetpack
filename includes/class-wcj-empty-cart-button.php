@@ -27,10 +27,25 @@ if ( ! class_exists( 'WCJ_Empty_Cart_Button' ) ) :
 		public function __construct() {
 
 			$this->id         = 'empty_cart';
-			$this->short_desc = __( 'Empty Cart Button', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Elite). Different button positions on the cart page (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add (and customize) "Empty Cart" button to the cart and checkout pages.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-empty-cart-button';
+			$this->short_desc = 'Empty Cart Button';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Empty Cart Button', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Elite). Different button positions on the cart page (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Elite). Different button positions on the cart page (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add (and customize) "Empty Cart" button to the cart and checkout pages.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add (and customize) "Empty Cart" button to the cart and checkout pages.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-empty-cart-button';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -85,7 +100,6 @@ if ( ! class_exists( 'WCJ_Empty_Cart_Button' ) ) :
 				WC()->cart->empty_cart();
 			}
 		}
-
 	}
 
 endif;

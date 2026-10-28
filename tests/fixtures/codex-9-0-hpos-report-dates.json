@@ -1,0 +1,13 @@
+{
+  "cases": [
+    {"name":"utc","input":"2026-10-09 12:34:56","zone":"UTC","day":"2026-10-09","full":"2026-10-09 12:34:56","month":"10","year":"2026","epoch":1791549296,"offset":0,"offset_timestamp":1791549296},
+    {"name":"positive_year_boundary","input":"2026-01-01 00:15:00","zone":"Asia/Kathmandu","day":"2026-01-01","full":"2026-01-01 00:15:00","month":"1","year":"2026","epoch":1767205800,"offset":20700,"offset_timestamp":1767226500},
+    {"name":"negative_year_boundary","input":"2025-12-31 23:45:00","zone":"America/New_York","day":"2025-12-31","full":"2025-12-31 23:45:00","month":"12","year":"2025","epoch":1767242700,"offset":-18000,"offset_timestamp":1767224700},
+    {"name":"dst_before","input":"2026-03-08 01:30:00","zone":"America/New_York","day":"2026-03-08","full":"2026-03-08 01:30:00","month":"3","year":"2026","epoch":1772951400,"offset":-18000,"offset_timestamp":1772933400},
+    {"name":"dst_after","input":"2026-03-08 03:30:00","zone":"America/New_York","day":"2026-03-08","full":"2026-03-08 03:30:00","month":"3","year":"2026","epoch":1772955000,"offset":-14400,"offset_timestamp":1772940600},
+    {"name":"fixed_offset","input":"2025-12-31 18:30:00","zone":"UTC","fixed_offset":20700,"day":"2026-01-01","full":"2026-01-01 00:15:00","month":"1","year":"2026","epoch":1767205800,"offset":20700,"offset_timestamp":1767226500},
+    {"name":"null","input":null,"zone":"UTC","day":"","full":"","month":"","year":"","epoch":null,"offset":null,"offset_timestamp":0}
+  ],
+  "single": {"order_id":901,"product_id":11,"qty":2,"line_total":10,"line_tax":1,"sum_no_tax":10,"sum_tax":11,"profit_no_tax":6,"profit_tax":7},
+  "multi": {"total_orders":2,"total_qty":6,"sum_no_tax":62,"sum_tax":68,"stock_qty_product11":5,"stock_qty_variation22":1,"last_product11":"2026-10-09 12:34:56","last_product11_timestamp":1791549296,"last_variation22":"2026-03-08 03:30:00","last_variation22_timestamp":1772940600}
+}

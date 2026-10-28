@@ -172,7 +172,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 		 * @param string $post_id defines the post id.
 		 * @param object $post defines the post object.
 		 */
-		public function save_custom_meta_box_on_product_edit( $post_id, $post ) {
+		public function save_custom_meta_box_on_product_edit( $post_id, $post ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( isset( $_POST['security'] ) ) {
 				$wpnonce = wp_verify_nonce( wp_unslash( isset( $_POST['security'] ) ? sanitize_text_field( wp_unslash( $_POST['security'] ) ) : '' ), 'save-variations' );
 			} else {
@@ -283,7 +283,6 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Local' ) ) :
 			}
 			return $html;
 		}
-
 	}
 
 endif;

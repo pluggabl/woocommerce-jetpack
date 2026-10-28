@@ -40,6 +40,198 @@ if ( ! function_exists( 'wcj_get_module_category' ) ) {
 		global $wcj_modules_cats;
 		if ( ! isset( $wcj_modules_cats ) ) {
 			$wcj_modules_cats = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php';
+
+			if ( ! did_action( 'init' ) ) {
+				wcj_init_presentation(
+					static function () {
+						global $wcj_modules_cats;
+
+						if ( ! is_array( $wcj_modules_cats ) ) {
+							return;
+						}
+
+						if (
+							isset( $wcj_modules_cats['dashboard'] ) &&
+							is_array( $wcj_modules_cats['dashboard'] ) &&
+							isset( $wcj_modules_cats['dashboard']['label'] ) &&
+							'Dashboard' === $wcj_modules_cats['dashboard']['label']
+						) {
+							$wcj_modules_cats['dashboard']['label'] = __( 'Dashboard', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['dashboard'] ) &&
+							is_array( $wcj_modules_cats['dashboard'] ) &&
+							isset( $wcj_modules_cats['dashboard']['desc'] ) &&
+							'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="https://booster.io" target="_blank">https://booster.io</a> for detailed info on each feature.' === $wcj_modules_cats['dashboard']['desc']
+						) {
+							$wcj_modules_cats['dashboard']['desc'] = __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="https://booster.io" target="_blank">https://booster.io</a> for detailed info on each feature.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['prices_and_currencies'] ) &&
+							is_array( $wcj_modules_cats['prices_and_currencies'] ) &&
+							isset( $wcj_modules_cats['prices_and_currencies']['label'] ) &&
+							'Prices & Currencies' === $wcj_modules_cats['prices_and_currencies']['label']
+						) {
+							$wcj_modules_cats['prices_and_currencies']['label'] = __( 'Prices & Currencies', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['prices_and_currencies'] ) &&
+							is_array( $wcj_modules_cats['prices_and_currencies'] ) &&
+							isset( $wcj_modules_cats['prices_and_currencies']['desc'] ) &&
+							'Multicurrency, Price Converter, Wholesale Pricing, Name You Price, Price based on User Role and more.' === $wcj_modules_cats['prices_and_currencies']['desc']
+						) {
+							$wcj_modules_cats['prices_and_currencies']['desc'] = __( 'Multicurrency, Price Converter, Wholesale Pricing, Name You Price, Price based on User Role and more.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['labels'] ) &&
+							is_array( $wcj_modules_cats['labels'] ) &&
+							isset( $wcj_modules_cats['labels']['label'] ) &&
+							'Button & Price Labels' === $wcj_modules_cats['labels']['label']
+						) {
+							$wcj_modules_cats['labels']['label'] = __( 'Button & Price Labels', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['labels'] ) &&
+							is_array( $wcj_modules_cats['labels'] ) &&
+							isset( $wcj_modules_cats['labels']['desc'] ) &&
+							'Add to Cart Labels, Call for Price, Custom Price Labels and more.' === $wcj_modules_cats['labels']['desc']
+						) {
+							$wcj_modules_cats['labels']['desc'] = __( 'Add to Cart Labels, Call for Price, Custom Price Labels and more.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['products'] ) &&
+							is_array( $wcj_modules_cats['products'] ) &&
+							isset( $wcj_modules_cats['products']['label'] ) &&
+							'Products' === $wcj_modules_cats['products']['label']
+						) {
+							$wcj_modules_cats['products']['label'] = __( 'Products', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['products'] ) &&
+							is_array( $wcj_modules_cats['products'] ) &&
+							isset( $wcj_modules_cats['products']['desc'] ) &&
+							'Bookings, Crowdfunding Products, Product Addons and Input Fields, Product Listings, Product Tabs and more.' === $wcj_modules_cats['products']['desc']
+						) {
+							$wcj_modules_cats['products']['desc'] = __( 'Bookings, Crowdfunding Products, Product Addons and Input Fields, Product Listings, Product Tabs and more.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['cart_and_checkout'] ) &&
+							is_array( $wcj_modules_cats['cart_and_checkout'] ) &&
+							isset( $wcj_modules_cats['cart_and_checkout']['label'] ) &&
+							'Cart & Checkout' === $wcj_modules_cats['cart_and_checkout']['label']
+						) {
+							$wcj_modules_cats['cart_and_checkout']['label'] = __( 'Cart & Checkout', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['cart_and_checkout'] ) &&
+							is_array( $wcj_modules_cats['cart_and_checkout'] ) &&
+							isset( $wcj_modules_cats['cart_and_checkout']['desc'] ) &&
+							'Cart and Checkout Customization, Empty Cart Button, Mini Cart, Coupons and more.' === $wcj_modules_cats['cart_and_checkout']['desc']
+						) {
+							$wcj_modules_cats['cart_and_checkout']['desc'] = __( 'Cart and Checkout Customization, Empty Cart Button, Mini Cart, Coupons and more.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['payment_gateways'] ) &&
+							is_array( $wcj_modules_cats['payment_gateways'] ) &&
+							isset( $wcj_modules_cats['payment_gateways']['label'] ) &&
+							'Payment Gateways' === $wcj_modules_cats['payment_gateways']['label']
+						) {
+							$wcj_modules_cats['payment_gateways']['label'] = __( 'Payment Gateways', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['payment_gateways'] ) &&
+							is_array( $wcj_modules_cats['payment_gateways'] ) &&
+							isset( $wcj_modules_cats['payment_gateways']['desc'] ) &&
+							'Custom Payment Gateways, Gateways Currency, Gateways Fees and Discounts and more.' === $wcj_modules_cats['payment_gateways']['desc']
+						) {
+							$wcj_modules_cats['payment_gateways']['desc'] = __( 'Custom Payment Gateways, Gateways Currency, Gateways Fees and Discounts and more.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['shipping_and_orders'] ) &&
+							is_array( $wcj_modules_cats['shipping_and_orders'] ) &&
+							isset( $wcj_modules_cats['shipping_and_orders']['label'] ) &&
+							'Shipping & Orders' === $wcj_modules_cats['shipping_and_orders']['label']
+						) {
+							$wcj_modules_cats['shipping_and_orders']['label'] = __( 'Shipping & Orders', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['shipping_and_orders'] ) &&
+							is_array( $wcj_modules_cats['shipping_and_orders'] ) &&
+							isset( $wcj_modules_cats['shipping_and_orders']['desc'] ) &&
+							'Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping Methods and more.' === $wcj_modules_cats['shipping_and_orders']['desc']
+						) {
+							$wcj_modules_cats['shipping_and_orders']['desc'] = __( 'Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping Methods and more.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['marketings'] ) &&
+							is_array( $wcj_modules_cats['marketings'] ) &&
+							isset( $wcj_modules_cats['marketings']['label'] ) &&
+							'Marketing' === $wcj_modules_cats['marketings']['label']
+						) {
+							$wcj_modules_cats['marketings']['label'] = __( 'Marketing', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['marketings'] ) &&
+							is_array( $wcj_modules_cats['marketings'] ) &&
+							isset( $wcj_modules_cats['marketings']['desc'] ) &&
+							'Marketing.' === $wcj_modules_cats['marketings']['desc']
+						) {
+							$wcj_modules_cats['marketings']['desc'] = __( 'Marketing.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['pdf_invoicing'] ) &&
+							is_array( $wcj_modules_cats['pdf_invoicing'] ) &&
+							isset( $wcj_modules_cats['pdf_invoicing']['label'] ) &&
+							'PDF Invoicing & Packing Slips' === $wcj_modules_cats['pdf_invoicing']['label']
+						) {
+							$wcj_modules_cats['pdf_invoicing']['label'] = __( 'PDF Invoicing & Packing Slips', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['pdf_invoicing'] ) &&
+							is_array( $wcj_modules_cats['pdf_invoicing'] ) &&
+							isset( $wcj_modules_cats['pdf_invoicing']['desc'] ) &&
+							'PDF Documents' === $wcj_modules_cats['pdf_invoicing']['desc']
+						) {
+							$wcj_modules_cats['pdf_invoicing']['desc'] = __( 'PDF Documents', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['emails_and_misc'] ) &&
+							is_array( $wcj_modules_cats['emails_and_misc'] ) &&
+							isset( $wcj_modules_cats['emails_and_misc']['label'] ) &&
+							'Emails & Misc.' === $wcj_modules_cats['emails_and_misc']['label']
+						) {
+							$wcj_modules_cats['emails_and_misc']['label'] = __( 'Emails & Misc.', 'woocommerce-jetpack' );
+						}
+
+						if (
+							isset( $wcj_modules_cats['emails_and_misc'] ) &&
+							is_array( $wcj_modules_cats['emails_and_misc'] ) &&
+							isset( $wcj_modules_cats['emails_and_misc']['desc'] ) &&
+							'Emails, Reports, Export, Admin Tools, General Options and more.' === $wcj_modules_cats['emails_and_misc']['desc']
+						) {
+							$wcj_modules_cats['emails_and_misc']['desc'] = __( 'Emails, Reports, Export, Admin Tools, General Options and more.', 'woocommerce-jetpack' );
+						}
+					}
+				);
+			}
 		}
 		foreach ( $wcj_modules_cats as $cat_id => $cat_data ) {
 			if ( ! empty( $cat_data['all_cat_ids'] ) && in_array( $module_id, $cat_data['all_cat_ids'], true ) ) {

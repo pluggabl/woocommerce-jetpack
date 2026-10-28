@@ -30,9 +30,19 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 		public function __construct() {
 
 			$this->id         = 'tax_display';
-			$this->short_desc = __( 'Tax Display', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize WooCommerce tax display.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-tax-display';
+			$this->short_desc = 'Tax Display';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Tax Display', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize WooCommerce tax display.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize WooCommerce tax display.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-tax-display';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -174,7 +184,6 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 			}
 			return $value;
 		}
-
 	}
 
 endif;

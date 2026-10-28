@@ -31,10 +31,25 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_by_order_amount';
-			$this->short_desc = __( 'Shipping Methods by Min/Max Order Amount', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set minimum and/or maximum order amount for shipping methods to show up.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-methods-by-min-max-order-amount';
+			$this->short_desc = 'Shipping Methods by Min/Max Order Amount';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Methods by Min/Max Order Amount', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set minimum and/or maximum order amount for shipping methods to show up.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set minimum and/or maximum order amount for shipping methods to show up.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-methods-by-min-max-order-amount';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -55,22 +70,32 @@ if ( ! class_exists( 'WCJ_Shipping_By_Order_Amount' ) ) :
 		 * @param string | array $package  Get packages.
 		 */
 		public function available_shipping_methods( $rates, $package ) {
+			$wcj_ticket = WCJ_Rule_Explanations::shipping_start( $this, $rates );
 
-			if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
+			$wcj_present = isset( WC()->cart );
+			if ( ! $wcj_present || WC()->cart->is_empty() ) {
+				WCJ_Rule_Explanations::shipping_finish( $wcj_ticket, $rates, $wcj_present ? 'empty_cart' : 'no_cart' );
 				return $rates;
 			}
 			$total_in_cart = WC()->cart->cart_contents_total;
 			foreach ( $rates as $rate_key => $rate ) {
-				$min = ( $this->use_shipping_instances ?
-				get_option( 'wcj_shipping_by_order_amount_min_instance_' . $rate->instance_id, 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_min_' . $rate->method_id, 0 ) );
-				$max = ( $this->use_shipping_instances ?
-					get_option( 'wcj_shipping_by_order_amount_max_instance_' . $rate->instance_id, 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_max_' . $rate->method_id, 0 ) );
+				$wcj_mode   = $this->use_shipping_instances;
+				$min        = ( $wcj_mode ?
+				get_option( 'wcj_shipping_by_order_amount_min_instance_' . WCJ_Rule_Explanations::shipping_capture_rule_key( $this, $rate, 'min', $wcj_mode, $rate->instance_id ), 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_min_' . WCJ_Rule_Explanations::shipping_capture_rule_key( $this, $rate, 'min', $wcj_mode, $rate->method_id ), 0 ) );
+				$wcj_mode   = $this->use_shipping_instances;
+				$max        = ( $wcj_mode ?
+					get_option( 'wcj_shipping_by_order_amount_max_instance_' . WCJ_Rule_Explanations::shipping_capture_rule_key( $this, $rate, 'max', $wcj_mode, $rate->instance_id ), 0 ) : wcj_get_option( 'wcj_shipping_by_order_amount_max_' . WCJ_Rule_Explanations::shipping_capture_rule_key( $this, $rate, 'max', $wcj_mode, $rate->method_id ), 0 ) );
+				$wcj_branch = null;
 				if ( 0.0 !== (float) $min && $total_in_cart < $min ) {
+					$wcj_branch = 'below_min';
 					unset( $rates[ $rate_key ] );
 				} elseif ( 0.0 !== (float) $max && $total_in_cart > $max ) {
+					$wcj_branch = 'above_max';
 					unset( $rates[ $rate_key ] );
 				}
+				WCJ_Rule_Explanations::shipping_capture_bounds( $this, $rate, $min, $max, $total_in_cart, $wcj_branch );
 			}
+			WCJ_Rule_Explanations::shipping_finish( $wcj_ticket, $rates );
 			return $rates;
 		}
 	}

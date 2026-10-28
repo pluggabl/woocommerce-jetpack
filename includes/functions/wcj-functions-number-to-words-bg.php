@@ -158,18 +158,16 @@ if ( ! function_exists( 'convert_number_to_words_bg' ) ) {
 			} else {
 				$str .= ' ' . $edinici[ $y ];
 			}
-		} else {
-			if ( $edinici[ $y % 10 ] ) {
+		} elseif ( $edinici[ $y % 10 ] ) {
 				$str .= $desetici[ (int) ( $y / 10 ) ];
 				$str .= ' и';
-				if ( is_array( $edinici[ $y % 10 ] ) && isset( $edinici[ $y % 10 ][ $tri ] ) ) {
-					$str .= $edinici[ $y % 10 ][ $tri ];
-				} else {
-					$str .= $edinici[ $y % 10 ];
-				}
+			if ( is_array( $edinici[ $y % 10 ] ) && isset( $edinici[ $y % 10 ][ $tri ] ) ) {
+				$str .= $edinici[ $y % 10 ][ $tri ];
 			} else {
-				$str .= ' и' . $desetici[ (int) ( $y / 10 ) ];
+				$str .= $edinici[ $y % 10 ];
 			}
+		} else {
+			$str .= ' и' . $desetici[ (int) ( $y / 10 ) ];
 		}
 
 		// добавяне на модификатор - хиляди, милиони, билиони.

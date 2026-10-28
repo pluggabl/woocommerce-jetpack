@@ -1,3 +1,12 @@
+= 9.0.0 =
+* Settings backups - Export saved Booster settings and restore them after reinstalling the same edition, including general options and grouped settings.
+* Checkout file uploads - Fix uploads with mixed-case file extensions and supported session settings. Keep staged files recoverable when an order attachment cannot be saved.
+* Customer Return Requests - Turn on Return Requests to let signed-in customers request eligible item quantities from completed orders, follow their history and see your decision there. Verified guest access is a separate setup that needs HTTPS. Approval records your decision; it does not refund money, restock products or process a payment.
+* Checkout Blocks - Collect supported checkout file uploads and show your Place order button text in the WooCommerce Checkout block, alongside existing supported custom fields. Existing module and edition limits still apply; this does not make every Booster option or third-party checkout compatible.
+* Order and payment reliability - Use WooCommerce order data in affected HPOS exports and reports. Keep Booster gateway fees in sync when an eligible unpaid order changes payment method, without replacing unrelated custom fees.
+* Understand gateway fees - See why a configured fee applies to a sample guest purchase, and check a summary of your latest up to 50 return requests. These read-only views do not change a shopper cart or predict the final checkout total. Booster Elite adds role and product facts, fee comparisons and payment/shipping rule scenarios.
+* Hosting requirements - Requires PHP 7.3 or later on a 64-bit build with native integer hrtime() enabled. Use a maintained PHP release supported by your WordPress and WooCommerce versions.
+
 = 8.5.1 - 15/10/2026 =
 * Store updates, without dashboard clutter - Receive short Booster news only on Booster settings pages. Each user can permanently dismiss a notice; store and checkout settings are unchanged.
 

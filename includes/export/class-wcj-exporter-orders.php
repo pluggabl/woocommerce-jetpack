@@ -43,7 +43,6 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		 * @since   2.5.9
 		 */
 		public function __construct() {
-			return true; 
 		}
 
 		/**
@@ -369,12 +368,12 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 						$additional_field_value = $additional_field['value'];
 						if ( '' !== ( $additional_field_value ) ) {
 							if ( 'meta' === $additional_field['type'] ) {
-								$row[] = wp_strip_all_tags( html_entity_decode( $this->safely_get_post_meta( $order_id, $additional_field_value ) ) );
+								$row[] = wp_strip_all_tags( html_entity_decode( $this->safely_get_post_meta( $order_id, $additional_field_value ), ( PHP_VERSION_ID >= 80100 ? ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 : ENT_COMPAT | ENT_HTML401 ) ) );
 							} else {
 								global $post;
 								$post = get_post( $order_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 								setup_postdata( $post );
-								$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
+								$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ), ( PHP_VERSION_ID >= 80100 ? ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 : ENT_COMPAT | ENT_HTML401 ) ) );
 								wp_reset_postdata();
 							}
 						} else {
@@ -487,16 +486,16 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 						$additional_field_value = $additional_field['value'];
 						if ( '' !== ( $additional_field_value ) ) {
 							if ( 'meta' === $additional_field['type'] ) {
-								$row[] = wp_strip_all_tags( html_entity_decode( $order->get_meta( $additional_field_value ) ) );
+								$row[] = wp_strip_all_tags( html_entity_decode( $order->get_meta( $additional_field_value ), ( PHP_VERSION_ID >= 80100 ? ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 : ENT_COMPAT | ENT_HTML401 ) ) );
 							} else {
-								if ( str_contains( $additional_field_value, ']' ) ) {
+								if ( false !== strpos( $additional_field_value, ']' ) ) {
 									$get_value        = $additional_field_value;
-									$order_id         = ' order_id="' . $order_id . '"]';
-									$custom_shortcode = str_replace( ']', $order_id, $get_value );
+									$order_id_custom  = ' order_id="' . $order_id . '"]';
+									$custom_shortcode = str_replace( ']', $order_id_custom, $get_value );
 								} else {
 									$custom_shortcode = $additional_field_value;
 								}
-								$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $custom_shortcode ) ) );
+								$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $custom_shortcode ), ( PHP_VERSION_ID >= 80100 ? ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 : ENT_COMPAT | ENT_HTML401 ) ) );
 							}
 						} else {
 							$row[] = '';
@@ -592,7 +591,7 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 										global $post;
 										$post = get_post( $order_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 										setup_postdata( $post );
-										$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ) ) );
+										$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $additional_field_value ), ( PHP_VERSION_ID >= 80100 ? ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 : ENT_COMPAT | ENT_HTML401 ) ) );
 										wp_reset_postdata();
 										break;
 									case 'shortcode_product':
@@ -696,14 +695,14 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 										$row[]      = $this->safely_get_post_meta( $product_id, $additional_field_value );
 										break;
 									case 'shortcode':
-										if ( str_contains( $additional_field_value, ']' ) ) {
+										if ( false !== strpos( $additional_field_value, ']' ) ) {
 											$get_value_custom = $additional_field_value;
 											$order_id_custom  = ' order_id="' . $order_id . '"]';
 											$custom_shortcode = str_replace( ']', $order_id_custom, $get_value_custom );
 										} else {
 											$custom_shortcode = $additional_field_value;
 										}
-										$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $custom_shortcode ) ) );
+										$row[] = wp_strip_all_tags( html_entity_decode( do_shortcode( $custom_shortcode ), ( PHP_VERSION_ID >= 80100 ? ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 : ENT_COMPAT | ENT_HTML401 ) ) );
 										break;
 									case 'shortcode_product':
 										global $post;

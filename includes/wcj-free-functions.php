@@ -70,6 +70,7 @@ function wcj_set_activation_redirect_free() {
  */
 function wcj_redirect_after_first_activation_free() {
 	// Onboarding belongs to an authorized admin page, never a storefront AJAX request.
+	// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 	if ( wp_doing_ajax() || wp_doing_cron() || ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 		return;
 	}
@@ -94,12 +95,5 @@ function wcj_redirect_after_first_activation_free() {
  * Start plugin usage tracking.
  */
 function woocommerce_jetpack_start_plugin_tracking() {
-	new Plugin_Usage_Tracker(
-		WCJ_FREE_PLUGIN_FILE,
-		'https://boosterio.bigscoots-staging.com',
-		array(),
-		true,
-		true,
-		1
-	);
+	// Optional legacy usage telemetry is disabled pending a verified intended receiver.
 }

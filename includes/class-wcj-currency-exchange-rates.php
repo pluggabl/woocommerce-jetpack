@@ -26,10 +26,25 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 		public function __construct() {
 
 			$this->id         = 'currency_exchange_rates';
-			$this->short_desc = __( 'Currency Exchange Rates', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Automatic currency exchange rates for WooCommerce (1 allowed in free version). If you want to change the currency rate with real conversion then enable it', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Automatic currency exchange rates for WooCommerce. If you want to change the currency rate with real conversion then enable it', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-currency-exchange-rates';
+			$this->short_desc = 'Currency Exchange Rates';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Currency Exchange Rates', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Automatic currency exchange rates for WooCommerce (1 allowed in free version). If you want to change the currency rate with real conversion then enable it';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Automatic currency exchange rates for WooCommerce (1 allowed in free version). If you want to change the currency rate with real conversion then enable it', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Automatic currency exchange rates for WooCommerce. If you want to change the currency rate with real conversion then enable it';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Automatic currency exchange rates for WooCommerce. If you want to change the currency rate with real conversion then enable it', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-currency-exchange-rates';
 			parent::__construct();
 
 			add_action( 'wp_ajax_wcj_ajax_get_exchange_rates', array( $this, 'wcj_ajax_get_exchange_rates' ) );
@@ -309,7 +324,6 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 			}
 			return $settings;
 		}
-
 	}
 
 endif;

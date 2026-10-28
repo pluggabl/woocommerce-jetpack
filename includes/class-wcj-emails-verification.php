@@ -27,10 +27,25 @@ if ( ! class_exists( 'WCJ_Emails_Verification' ) ) :
 		public function __construct() {
 
 			$this->id         = 'emails_verification';
-			$this->short_desc = __( 'Email Verification', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add WooCommerce email verification. Customize verification email subject, content and template (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add WooCommerce email verification.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-email-verification';
+			$this->short_desc = 'Email Verification';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Email Verification', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add WooCommerce email verification. Customize verification email subject, content and template (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add WooCommerce email verification. Customize verification email subject, content and template (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add WooCommerce email verification.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add WooCommerce email verification.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-email-verification';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

@@ -27,7 +27,7 @@ $fields_required_options = array();
 $i                       = 0;
 $total_fields            = count( $fields );
 foreach ( $fields as $field_id => $field_desc ) {
-	$i++;
+	++$i;
 	$checkboxgroup = '';
 	if ( 1 === $i ) {
 		$checkboxgroup = 'start';

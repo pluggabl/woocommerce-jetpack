@@ -26,10 +26,25 @@ if ( ! class_exists( 'WCJ_Mini_Cart' ) ) :
 		public function __construct() {
 
 			$this->id         = 'mini_cart';
-			$this->short_desc = __( 'Mini Cart Custom Info', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add custom info to the mini cart widget (1 block allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add custom info to the mini cart widget.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-mini-cart';
+			$this->short_desc = 'Mini Cart Custom Info';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Mini Cart Custom Info', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add custom info to the mini cart widget (1 block allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add custom info to the mini cart widget (1 block allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add custom info to the mini cart widget.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add custom info to the mini cart widget.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-mini-cart';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -63,7 +78,6 @@ if ( ! class_exists( 'WCJ_Mini_Cart' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

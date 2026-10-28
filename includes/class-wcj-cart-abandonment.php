@@ -28,18 +28,43 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 		public function __construct() {
 
 			$this->id         = 'cart_abandonment';
-			$this->short_desc = __( 'Cart Abandonment', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Stop Cart Abandonments and Recover Your Lost Amount!', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Stop Cart Abandonments and Recover Your Lost Amount!', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-cart-abandonment';
+			$this->short_desc = 'Cart Abandonment';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Cart Abandonment', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Stop Cart Abandonments and Recover Your Lost Amount!';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Stop Cart Abandonments and Recover Your Lost Amount!', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Stop Cart Abandonments and Recover Your Lost Amount!';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Stop Cart Abandonments and Recover Your Lost Amount!', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-cart-abandonment';
 			parent::__construct();
 			$this->add_tools(
 				array(
 					'cart_abandonment' => array(
-						'title' => __( 'Cart Abandonment Report', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Cart Abandonment Report.', 'woocommerce-jetpack' ),
+						'title' => 'Cart Abandonment Report',
+						'desc'  => 'Cart Abandonment Report.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'cart_abandonment' => array(
+							'title' => __( 'Cart Abandonment Report', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Cart Abandonment Report.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			// Create required tables.
@@ -420,10 +445,8 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 				// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				if ( empty( $scheduled_email ) ) {
 					$wpdb->delete( $cart_abandonment_table, array( 'session_id' => sanitize_key( $session_id ) ) );
-				} else {
-					if ( $checkout_deta && ( 'normal' === $checkout_deta->order_status || 'lost' === $checkout_deta->order_status ) ) {
-						$wpdb->query( "UPDATE $cart_abandonment_table SET order_status='recovered' WHERE session_id='$session_id'" );
-					}
+				} elseif ( $checkout_deta && ( 'normal' === $checkout_deta->order_status || 'lost' === $checkout_deta->order_status ) ) {
+					$wpdb->query( "UPDATE $cart_abandonment_table SET order_status='recovered' WHERE session_id='$session_id'" );
 				}
 				// phpcs:enable
 			}
@@ -488,7 +511,7 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 					'coupon_generated_by' => 'woocommerce-jetpack',
 				);
 
-				$coupon_post_data = apply_filters( 'woo_ca_generate_coupon', $coupon_post_data );
+				$coupon_post_data = apply_filters( 'woo_ca_generate_coupon', $coupon_post_data ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Preserve the existing public coupon filter name for integrations.
 
 				foreach ( $coupon_post_data as $key => $value ) {
 					update_post_meta( $new_coupon_id, $key, $value );
@@ -540,7 +563,7 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 				$token_data = $this->wcj_decode_token( $wcj_restore_ac_token );
 				if ( is_array( $token_data ) && isset( $token_data['wcj_ca_session_id'] ) ) {
 					$result = $this->get_checkout_deta( $token_data['wcj_ca_session_id'] );
-					if ( isset( $result ) && 'normal' === $result->order_status || 'lost' === $result->order_status ) {
+					if ( ( isset( $result ) && 'normal' === $result->order_status ) || 'lost' === $result->order_status ) {
 						WC()->session->set( 'wcj_ca_session_id', $token_data['wcj_ca_session_id'] );
 					}
 				}
@@ -602,6 +625,7 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 		public function wcj_cart_abandonment_required_tables() {
 
 			global $wpdb;
+			$wcj_db_version                  = '1.0.0';
 			$table_wcj_cart_abandonment_data = $wpdb->prefix . 'wcj_cart_abandonment_data';
 			$table_wcj_email_history         = $wpdb->prefix . 'wcj_abandonment_email_history';
 
@@ -609,44 +633,49 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.SchemaChange
-			if ( $wpdb->get_var( "show tables like '$table_wcj_cart_abandonment_data'" ) !== $table_wcj_cart_abandonment_data ) {
-				$sql = "CREATE TABLE $table_wcj_cart_abandonment_data (
-				id BIGINT(20) NOT NULL AUTO_INCREMENT,
-				checkout_id int(11) NOT NULL, 
-				session_id VARCHAR(60) NOT NULL,
-				email VARCHAR(100) DEFAULT NULL,
-				cart_data TEXT DEFAULT NULL,
-				cart_total DECIMAL(10,2) DEFAULT NULL,
-				checkout_data TEXT DEFAULT NULL,
-				order_status VARCHAR(20) NOT NULL DEFAULT 'normal',
-				is_subscribe  tinyint(1) DEFAULT 1,
-				coupon_code VARCHAR(50) DEFAULT NULL,
-	   			time DATETIME DEFAULT NULL,
-				PRIMARY KEY  (`id`)
+			$cart_table_ready = $wpdb->get_var( "show tables like '$table_wcj_cart_abandonment_data'" ) === $table_wcj_cart_abandonment_data;
+			if ( ! $cart_table_ready ) {
+				$sql = "CREATE TABLE $table_wcj_cart_abandonment_data (\r
+				id BIGINT(20) NOT NULL AUTO_INCREMENT,\r
+				checkout_id int(11) NOT NULL, \r
+				session_id VARCHAR(60) NOT NULL,\r
+				email VARCHAR(100) DEFAULT NULL,\r
+				cart_data TEXT DEFAULT NULL,\r
+				cart_total DECIMAL(10,2) DEFAULT NULL,\r
+				checkout_data TEXT DEFAULT NULL,\r
+				order_status VARCHAR(20) NOT NULL DEFAULT 'normal',\r
+				is_subscribe  tinyint(1) DEFAULT 1,\r
+				coupon_code VARCHAR(50) DEFAULT NULL,\r
+	   			time DATETIME DEFAULT NULL,\r
+				PRIMARY KEY  (`id`)\r
 			) $charset_collate;";
 
 				dbDelta( $sql );
-				$wcj_db_version = '1.0.0';
-				add_option( 'test_db_version', $wcj_db_version );
+				$cart_table_ready = $wpdb->get_var( "show tables like '$table_wcj_cart_abandonment_data'" ) === $table_wcj_cart_abandonment_data;
 			}
 
-			if ( $wpdb->get_var( "show tables like '$table_wcj_email_history'" ) !== $table_wcj_email_history ) {
-				$sql = "CREATE TABLE $table_wcj_email_history (
-				id BIGINT(20) NOT NULL AUTO_INCREMENT,
-				session_id VARCHAR(60) NOT NULL,
-				email VARCHAR(100) DEFAULT NULL,
-				template_id BIGINT(20) DEFAULT NULL,
-				coupon_code VARCHAR(100) DEFAULT NULL,				
-				status  tinyint(1) DEFAULT 1,
-	   			time DATETIME DEFAULT NULL,
-				PRIMARY KEY  (`id`)
+			$email_table_ready = $wpdb->get_var( "show tables like '$table_wcj_email_history'" ) === $table_wcj_email_history;
+			if ( ! $email_table_ready ) {
+				$sql = "CREATE TABLE $table_wcj_email_history (\r
+				id BIGINT(20) NOT NULL AUTO_INCREMENT,\r
+				session_id VARCHAR(60) NOT NULL,\r
+				email VARCHAR(100) DEFAULT NULL,\r
+				template_id BIGINT(20) DEFAULT NULL,\r
+				coupon_code VARCHAR(100) DEFAULT NULL,				\r
+				status  tinyint(1) DEFAULT 1,\r
+	   			time DATETIME DEFAULT NULL,\r
+				PRIMARY KEY  (`id`)\r
 			) $charset_collate;";
 
 				dbDelta( $sql );
-				$wcj_db_version = '1.0.0';
-				add_option( 'test_db_version', $wcj_db_version );
+				$email_table_ready = $wpdb->get_var( "show tables like '$table_wcj_email_history'" ) === $table_wcj_email_history;
 			}
 			// phpcs:enable
+
+			// Publish readiness only after both per-site tables have been observed.
+			if ( $cart_table_ready && $email_table_ready && false === get_option( 'test_db_version' ) ) {
+				add_option( 'test_db_version', $wcj_db_version );
+			}
 		}
 
 
@@ -656,10 +685,8 @@ if ( ! class_exists( 'WCJ_Cart_Abandonment' ) ) :
 		 * @version 6.0.2
 		 */
 		public function myplugin_update_db_check() {
-			global $wcj_db_version;
-			if ( get_site_option( 'test_db_version' ) !== $wcj_db_version ) {
-				$this->wcj_cart_abandonment_required_tables();
-			}
+			// A version marker cannot prove that either per-site table still exists.
+			$this->wcj_cart_abandonment_required_tables();
 		}
 	}
 

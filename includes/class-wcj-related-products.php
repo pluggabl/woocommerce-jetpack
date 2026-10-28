@@ -27,14 +27,38 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'related_products';
-			$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Elite). Hide related products completely.', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Related Products';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Elite). Hide related products completely.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Elite). Hide related products completely.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-related-products';
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+				'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.',
 				esc_url( add_query_arg( 'wcj_clear_all_products_transients', 'yes' ) )
+			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translation added */
+						__( 'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+						esc_url( add_query_arg( 'wcj_clear_all_products_transients', 'yes' ) )
+					);
+				}
 			);
 			parent::__construct();
 
@@ -181,7 +205,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 			// Change Related Products.
 			if (
 				'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
-				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) )
+				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( ( ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) ) )
 			) {
 				// Relate per Product (Manual).
 				$related_per_product = get_post_meta( get_the_ID(), '_wcj_product_info_related_products_ids', true );
@@ -333,7 +357,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				$do_fix = true;
 			} elseif (
 				'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
-				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) &&
+				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( ( ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) ) ) &&
 				'' !== get_post_meta( $product_id, '_wcj_product_info_related_products_ids', true )
 			) {
 				$do_fix = true;
@@ -422,7 +446,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 			// Change Related Products.
 			if (
 				'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
-				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) )
+				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( ( ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) ) )
 			) {
 				// Relate per Product (Manual).
 				$related_per_product = get_post_meta( get_the_ID(), '_wcj_product_info_related_products_ids', true );

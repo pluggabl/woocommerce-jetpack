@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 	/** Fixed feed and persistent, user-owned dismissal. */
 	class WCJ_Admin_Announcement {
-		const ENDPOINT  = 'https://boosterio.bigscoots-staging.com/announcements/booster-admin.json';
+		const ENDPOINT  = 'https://booster.io/announcements/booster-admin.json';
 		const CACHE_KEY = 'wcj_admin_announcement_v1';
 
 		/**
@@ -69,43 +69,19 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 		 * @return array Valid announcement or empty array.
 		 */
 		private static function validate( $item ) {
-			if ( is_string( $item ) ) {
-				$item = array( 'message' => $item );
-			}
-			if ( ! is_array( $item ) ) {
+			if ( ! is_array( $item ) || array_diff( array_keys( $item ), array( 'id', 'message', 'url', 'expires_at' ) ) || ! isset( $item['id'], $item['message'], $item['expires_at'] ) ) {
 				return array();
 			}
-			if ( ! isset( $item['message'] ) && isset( $item['announcement'] ) && is_string( $item['announcement'] ) ) {
-				$item['message'] = $item['announcement'];
-			}
-			if ( ! isset( $item['message'] ) || ! is_string( $item['message'] ) || '' === trim( $item['message'] ) || strlen( $item['message'] ) > 500 || 1 !== preg_match( '//u', $item['message'] ) || preg_match( '/[<>\x00-\x1F\x7F]/', $item['message'] ) ) {
+			if ( ! self::valid_id( $item['id'] ) || ! is_string( $item['message'] ) || '' === trim( $item['message'] ) || strlen( $item['message'] ) > 500 || 1 !== preg_match( '//u', $item['message'] ) || preg_match( '/[<>\x00-\x1F\x7F]/', $item['message'] ) ) {
 				return array();
 			}
-
-			// Validate or auto-generate ID (optional key).
-			if ( isset( $item['id'] ) && '' !== $item['id'] ) {
-				if ( ! self::valid_id( $item['id'] ) ) {
-					return array();
-				}
-				$id = $item['id'];
-			} else {
-				$id = 'wcj_' . substr( md5( $item['message'] ), 0, 28 );
+			if ( ! is_string( $item['expires_at'] ) || ! preg_match( '/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\z/', $item['expires_at'] ) ) {
+				return array();
 			}
-
-			// Validate expiration if provided (optional key).
-			$expires_at = '';
-			if ( ! empty( $item['expires_at'] ) ) {
-				if ( ! is_string( $item['expires_at'] ) || ! preg_match( '/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\z/', $item['expires_at'] ) ) {
-					return array();
-				}
-				$expiry = strtotime( $item['expires_at'] );
-				if ( false === $expiry || gmdate( 'Y-m-d\TH:i:s\Z', $expiry ) !== $item['expires_at'] || $expiry <= time() ) {
-					return array();
-				}
-				$expires_at = $item['expires_at'];
+			$expiry = strtotime( $item['expires_at'] );
+			if ( false === $expiry || gmdate( 'Y-m-d\TH:i:s\Z', $expiry ) !== $item['expires_at'] || $expiry <= time() ) {
+				return array();
 			}
-
-			// Validate URL if provided (optional key).
 			$url = array_key_exists( 'url', $item ) ? $item['url'] : '';
 			if ( ! is_string( $url ) || strlen( $url ) > 200 ) {
 				return array();
@@ -117,10 +93,10 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 				}
 			}
 			return array(
-				'id'         => $id,
+				'id'         => $item['id'],
 				'message'    => $item['message'],
 				'url'        => $url,
-				'expires_at' => $expires_at,
+				'expires_at' => $item['expires_at'],
 			);
 		}
 
@@ -137,7 +113,7 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 			$response = wp_safe_remote_get(
 				self::ENDPOINT,
 				array(
-					'timeout'             => 5,
+					'timeout'             => 2,
 					'redirection'         => 0,
 					'limit_response_size' => 4097,
 					'user-agent'          => 'Booster-Announcement-Reader/1.0',
@@ -150,33 +126,12 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 				$body = wp_remote_retrieve_body( $response );
 				if ( is_string( $body ) && strlen( $body ) <= 4096 ) {
 					$decoded = json_decode( $body, true, 4 );
-					if ( JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) ) {
-						if ( isset( $decoded['announcement'] ) ) {
-							if ( is_array( $decoded['announcement'] ) ) {
-								$item = self::validate( $decoded['announcement'] );
-							} else {
-								$payload = array(
-									'message' => (string) $decoded['announcement'],
-								);
-								if ( isset( $decoded['id'] ) ) {
-									$payload['id'] = $decoded['id'];
-								}
-								if ( isset( $decoded['url'] ) ) {
-									$payload['url'] = $decoded['url'];
-								}
-								if ( isset( $decoded['expires_at'] ) ) {
-									$payload['expires_at'] = $decoded['expires_at'];
-								}
-								$item = self::validate( $payload );
-							}
-						} elseif ( isset( $decoded['message'] ) ) {
-							$item = self::validate( $decoded );
-						}
+					if ( JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) && array( 'announcement' ) === array_keys( $decoded ) ) {
+						$item = self::validate( $decoded['announcement'] );
 					}
 				}
 			}
-			$cache_ttl = ! empty( $item ) ? DAY_IN_SECONDS : ( 15 * MINUTE_IN_SECONDS );
-			set_transient( self::CACHE_KEY, $item, $cache_ttl );
+			set_transient( self::CACHE_KEY, $item, DAY_IN_SECONDS );
 			return $item;
 		}
 
@@ -192,7 +147,8 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 
 		/** Display only to WooCommerce managers on Booster-owned screens. */
 		public static function render() {
-			if ( ! current_user_can( 'manage_woocommerce' ) || ! self::is_booster_page() ) { // phpcs:ignore
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
+			if ( ! current_user_can( 'manage_woocommerce' ) || ! self::is_booster_page() ) {
 				return;
 			}
 			$item = self::read();
@@ -224,7 +180,8 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 		 * @return bool Whether this user's dismissal is saved.
 		 */
 		public static function dismiss( $id, $nonce ) {
-			if ( ! current_user_can( 'manage_woocommerce' ) || ! self::valid_id( $id ) || ! is_string( $nonce ) || strlen( $nonce ) > 32 || ! wp_verify_nonce( $nonce, 'wcj-dismiss-announcement-' . $id ) ) { // phpcs:ignore
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
+			if ( ! current_user_can( 'manage_woocommerce' ) || ! self::valid_id( $id ) || ! is_string( $nonce ) || strlen( $nonce ) > 32 || ! wp_verify_nonce( $nonce, 'wcj-dismiss-announcement-' . $id ) ) {
 				return false;
 			}
 			$item = self::validate( get_transient( self::CACHE_KEY ) );

@@ -137,7 +137,7 @@ for ( $i = 1; $i <= $input_fields_global_total_num;  $i++ ) {
 			array(
 				array(
 					'title'    => ( isset( $option['short_title'] ) ? $option['short_title'] : $option['title'] ),
-					'desc'     => ( ( 'checkbox' === $option['type'] ) || isset( $option['short_title'] ) && $option['short_title'] !== $option['title'] ? $option['title'] : '' ),
+					'desc'     => ( ( 'checkbox' === $option['type'] ) || ( isset( $option['short_title'] ) && $option['short_title'] !== $option['title'] ) ? $option['title'] : '' ),
 					'desc_tip' => ( isset( $option['desc_tip'] ) ) ? $option['desc_tip'] : '',
 					'id'       => $option['id'] . $i,
 					'default'  => $option['default'],

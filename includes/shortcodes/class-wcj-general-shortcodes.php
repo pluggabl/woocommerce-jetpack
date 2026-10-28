@@ -101,8 +101,8 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				'selector_type'         => 'country',
 				'option'                => '',
 				'company'               => '',
-				'label_incl'            => __( 'Tax toggle (incl.)', 'woocommerce-jetpack' ),
-				'label_excl'            => __( 'Tax toggle (excl.)', 'woocommerce-jetpack' ),
+				'label_incl'            => 'Tax toggle (incl.)',
+				'label_excl'            => 'Tax toggle (excl.)',
 				'slug'                  => '',
 				'code'                  => '',
 				'type'                  => '',
@@ -124,6 +124,12 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 				'table'                 => '',
 				'cmp'                   => 'max',
 				'prop'                  => 'quantity',
+			);
+			wcj_init_presentation(
+				function () {
+					$this->the_atts['label_incl'] = __( 'Tax toggle (incl.)', 'woocommerce-jetpack' );
+					$this->the_atts['label_excl'] = __( 'Tax toggle (excl.)', 'woocommerce-jetpack' );
+				}
 			);
 
 			parent::__construct();
@@ -216,6 +222,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_get_option( $atts ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				return '';
 			}
@@ -535,6 +542,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_wp_option( $atts ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				return '';
 			}

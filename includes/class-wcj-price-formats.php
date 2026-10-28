@@ -27,10 +27,25 @@ if ( ! class_exists( 'WCJ_Price_Formats' ) ) :
 		public function __construct() {
 
 			$this->id         = 'price_formats';
-			$this->short_desc = __( 'Price Formats', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set different price formats for different currencies (1 price format allowed in free version). Set general price format options.', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set different price formats for different currencies. Set general price format options.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-price-formats';
+			$this->short_desc = 'Price Formats';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Price Formats', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set different price formats for different currencies (1 price format allowed in free version). Set general price format options.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set different price formats for different currencies (1 price format allowed in free version). Set general price format options.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set different price formats for different currencies. Set general price format options.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set different price formats for different currencies. Set general price format options.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-price-formats';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -167,7 +182,6 @@ if ( ! class_exists( 'WCJ_Price_Formats' ) ) :
 
 			return apply_filters( 'woocommerce_price_format', $format, $currency_pos );
 		}
-
 	}
 
 endif;

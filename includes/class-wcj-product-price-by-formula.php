@@ -76,10 +76,25 @@ if ( ! class_exists( 'WCJ_Product_Price_By_Formula' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_price_by_formula';
-			$this->short_desc = __( 'Product Price by Formula', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set formula for automatic product price calculation (Available per product in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set formula for automatic product price calculation.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-price-formula';
+			$this->short_desc = 'Product Price by Formula';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Price by Formula', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set formula for automatic product price calculation (Available per product in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set formula for automatic product price calculation (Available per product in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set formula for automatic product price calculation.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set formula for automatic product price calculation.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-price-formula';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

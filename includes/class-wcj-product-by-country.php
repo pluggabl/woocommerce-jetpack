@@ -27,20 +27,44 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_by_country';
-			$this->short_desc = __( 'Product Visibility by Country', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display products by customer\'s country. User Country Selection Method (Elite); Admin country list options (Elite); Visibility method options (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Display products by customer\'s country.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Product Visibility by Country';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Visibility by Country', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Display products by customer\'s country. User Country Selection Method (Elite); Admin country list options (Elite); Visibility method options (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Display products by customer\'s country. User Country Selection Method (Elite); Admin country list options (Elite); Visibility method options (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Display products by customer\'s country.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Display products by customer\'s country.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-product-visibility-by-country';
-			$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
+			$this->extra_desc = 'When enabled, module will add new "Booster: Product Visibility by Country" meta box to each product\'s edit page.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
+				}
+			);
 
-			$this->title = __( 'Countries', 'woocommerce-jetpack' );
+			$this->title = 'Countries';
+			wcj_init_presentation(
+				function () {
+					$this->title = __( 'Countries', 'woocommerce-jetpack' );
+				}
+			);
 
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
 				add_filter( 'woocommerce_checkout_update_order_review_expired', array( $this, 'update_order_review_expired' ) );
 			}
-
 		}
 
 		/**
@@ -239,7 +263,6 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;

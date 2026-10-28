@@ -29,9 +29,19 @@ if ( ! class_exists( 'WCJ_Address_Formats' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'address_formats';
-			$this->short_desc = __( 'Address Formats', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set address format in orders on per country basis. Force base country display.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-address-formats';
+			$this->short_desc = 'Address Formats';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Address Formats', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set address format in orders on per country basis. Force base country display.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set address format in orders on per country basis. Force base country display.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-address-formats';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

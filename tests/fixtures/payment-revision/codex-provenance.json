@@ -1,0 +1,25 @@
+{
+  "scope": "Offline retained908 metadata regression; no WordPress bootstrap, DB, gateway or native acceptance",
+  "original_assertion_body_sha256": "cd83b51bb9e198404ac75634b419058c87eeff38da63ef54ab623b66dc49d675",
+  "assertions": 27,
+  "woocommerce_version": "11.1.0",
+  "wordpress_version": "7.1",
+  "dependencies": {
+    "includes/abstracts/abstract-wc-data.php": "7a9c9f5150506a1d86324f9d95c5f6ed5db8b73ed0d3fdd0ebb341ec7b0f2daf",
+    "includes/class-wc-datetime.php": "1fa32f308786fa66284c673984e33602dae1d642255f923b16551e874828d6df",
+    "includes/class-wc-meta-data.php": "8aa027314ad537d2dfe5207f1e8372ae14f061aacb6e5da20dac7dd1e45f4d3a",
+    "includes/abstracts/abstract-wc-order.php": "2b3384b5e8a49ad8d6e948eaa40cd5492c7e8f0354617df6c6db9774b02fbe64",
+    "wp-includes/class-wp-list-util.php": "90171523d0b89315e0cba603b03dc177998de8f3e9895a956cbeed42955a085b",
+    "wp-includes/functions.php": "cac8a17e293df99f0683a88debd3ba5e5cce274183a4e9fd3c9f18375747f41c"
+  },
+  "class_boundaries": [
+    "Pinned full plugin class body; remove only its one terminal return-new constructor invocation",
+    "Pinned real Woo data/meta/date classes, unchanged",
+    "Inert WC_Order shell; two exact public date methods verified against pinned abstract-wc-order.php",
+    "Verbatim wp_list_pluck verified against pinned functions.php; do not execute full functions.php"
+  ],
+  "limitations": [
+    "Inert storage and item shell; not whole WC_Order datastore, native persistence, concurrency or actual private queue validation",
+    "Source hash changes require an explicit reviewed pin update; no automatic acceptance of newest source"
+  ]
+}

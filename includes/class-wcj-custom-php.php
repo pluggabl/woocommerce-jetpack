@@ -29,20 +29,46 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 		public function __construct() {
 
 			$this->id         = 'custom_php';
-			$this->short_desc = __( 'Custom PHP', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Custom PHP tool.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Custom PHP';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Custom PHP', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Custom PHP tool.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Custom PHP tool.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %1$s attribute to the URL (you must be logged as shop manager or admin (for this reason custom PHP code is not executed on %2$s page)).', 'woocommerce-jetpack' ),
+				'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %1$s attribute to the URL (you must be logged as shop manager or admin (for this reason custom PHP code is not executed on %2$s page)).',
 				'<code>wcj_disable_custom_php</code>',
 				'<strong>wp-login.php</strong>'
 			) . ' ' .
 				sprintf(
 					/* translators: %s: translation added */
-					__( 'E.g.: %s', 'woocommerce-jetpack' ),
+					'E.g.: %s',
 					'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
 					admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '</a>'
 				);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translation added */
+						__( 'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %1$s attribute to the URL (you must be logged as shop manager or admin (for this reason custom PHP code is not executed on %2$s page)).', 'woocommerce-jetpack' ),
+						'<code>wcj_disable_custom_php</code>',
+						'<strong>wp-login.php</strong>'
+					) . ' ' .
+						sprintf(
+							/* translators: %s: translation added */
+							__( 'E.g.: %s', 'woocommerce-jetpack' ),
+							'<a href="' . admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '">' .
+							admin_url( wcj_admin_tab_url() . '&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php&wcj_disable_custom_php_nonce=' . wp_create_nonce( 'wcj-disable-custom-php' ) ) . '</a>'
+						);
+				}
+			);
 			$this->link_slug = 'woocommerce-booster-custom-php';
 			parent::__construct();
 
@@ -52,6 +78,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				$wpnonce = isset( $_REQUEST['wcj_disable_custom_php_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_disable_custom_php_nonce'] ), 'wcj-disable-custom-php' ) : false;
 
 				if ( isset( $_REQUEST['wcj_disable_custom_php'] ) && $wpnonce ) {
+					// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 					if ( wcj_current_user_can( 'manage_woocommerce' ) ) {
 						// Stop custom PHP execution.
 						return;
@@ -96,12 +123,11 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				} else {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
 					if ( file_exists( $file_path ) ) {
-						unlink( $file_path );
+						wp_delete_file( $file_path );
 					}
 				}
 			}
 		}
-
 	}
 
 endif;

@@ -25,18 +25,38 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 		public function __construct() {
 
 			$this->id         = 'bulk_price_converter';
-			$this->short_desc = __( 'Bulk Price Converter', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Multiply all products prices by set value.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-bulk-price-converter';
+			$this->short_desc = 'Bulk Price Converter';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Bulk Price Converter', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Multiply all products prices by set value.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Multiply all products prices by set value.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-bulk-price-converter';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'bulk_price_converter' => array(
-						'title' => __( 'Bulk Price Converter', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Bulk Price Converter Tool.', 'woocommerce-jetpack' ),
+						'title' => 'Bulk Price Converter',
+						'desc'  => 'Bulk Price Converter Tool.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'bulk_price_converter' => array(
+							'title' => __( 'Bulk Price Converter', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Bulk Price Converter Tool.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 		}
 
@@ -260,20 +280,24 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 			if ( $multiply_prices_by <= 0 ) {
 				$result_message     = '<p><div class="error"><p><strong>' . __( 'Multiply value must be above zero.', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 				$multiply_prices_by = 1;
-			} else {
-				if ( isset( $_POST['bulk_change_prices'] ) || isset( $_POST['bulk_change_prices_preview'] ) ) {
+			} elseif ( isset( $_POST['bulk_change_prices'] ) || isset( $_POST['bulk_change_prices_preview'] ) ) {
 					$result_changing_prices = $this->change_all_products_prices( $multiply_prices_by, $is_preview );
-					if ( ! $is_preview ) {
-						$result_message     = '<p><div class="updated"><p><strong>' . __( 'Prices changed successfully!', 'woocommerce-jetpack' ) .
-						'</strong></p></div></p>';
-						$multiply_prices_by = 1;
-					}
+				if ( ! $is_preview ) {
+					$result_message     = '<p><div class="updated"><p><strong>' . __( 'Prices changed successfully!', 'woocommerce-jetpack' ) .
+					'</strong></p></div></p>';
+					$multiply_prices_by = 1;
 				}
 			}
 
 			$select_options_html = '';
 			$selected_option     = ( isset( $_POST['wcj_product_cat'] ) ) ? sanitize_text_field( wp_unslash( $_POST['wcj_product_cat'] ) ) : '';
-			$product_categories  = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+			$product_categories  = get_terms(
+				array(
+					'taxonomy'   => 'product_cat',
+					'orderby'    => 'name',
+					'hide_empty' => false,
+				)
+			);
 			if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
 				foreach ( $product_categories as $product_category ) {
 					$select_options_html .= '<option value="' . $product_category->slug . '"' . selected( $product_category->slug, $selected_option, false ) . '>' .
@@ -394,7 +418,6 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Price_Converter' ) ) :
 			}
 			return $the_modified_price;
 		}
-
 	}
 
 endif;

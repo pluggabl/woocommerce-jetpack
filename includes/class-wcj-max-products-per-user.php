@@ -39,11 +39,31 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 		public function __construct() {
 
 			$this->id         = 'max_products_per_user';
-			$this->short_desc = __( 'Maximum Products per User', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Limit number of items your (logged) customers can buy (Free version allows to limit globally).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
-			$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-maximum-products-per-user';
+			$this->short_desc = 'Maximum Products per User';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Maximum Products per User', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Limit number of items your (logged) customers can buy (Free version allows to limit globally).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Limit number of items your (logged) customers can buy (Free version allows to limit globally).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Limit number of items your (logged) customers can buy.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->extra_desc = 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-maximum-products-per-user';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -201,8 +221,8 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 						$i = 0;
 						foreach ( $order as $order_id ) {
 							$this->save_quantities( $order[ $i ]->id );
-							$total_orders++;
-							$i++;
+							++$total_orders;
+							++$i;
 						}
 					} else {
 						$args = array(
@@ -220,7 +240,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 						}
 						foreach ( $loop->posts as $_order_id ) {
 							$this->save_quantities( $_order_id );
-							$total_orders++;
+							++$total_orders;
 						}
 					}
 					$offset += $block_size;
@@ -321,30 +341,28 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 						$order->update_meta_data( '_wcj_max_products_per_user_saved', 'yes' );
 						$order->save();
 					}
-				} else {
+				} elseif ( 'yes' !== get_post_meta( $order_id, '_wcj_max_products_per_user_saved', true ) ) {
 
-					if ( 'yes' !== get_post_meta( $order_id, '_wcj_max_products_per_user_saved', true ) ) {
-						if ( count( $order->get_items() ) > 0 ) {
-							$user_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_user : $order->get_customer_id() );
-							foreach ( $order->get_items() as $item ) {
-								$product = $item->get_product();
-								if ( $item->is_type( 'line_item' ) && ( $product ) ) {
-									$product_id       = wcj_get_product_id_or_variation_parent_id( $product );
-									$product_qty      = $item->get_quantity();
-									$users_quantities = get_post_meta( $product_id, '_wcj_max_products_per_user_report', true );
-									if ( '' === ( $users_quantities ) ) {
-										$users_quantities = array();
-									}
-									if ( isset( $users_quantities[ $user_id ] ) ) {
-										$product_qty += $users_quantities[ $user_id ];
-									}
-									$users_quantities[ $user_id ] = $product_qty;
-									update_post_meta( $product_id, '_wcj_max_products_per_user_report', $users_quantities );
+					if ( count( $order->get_items() ) > 0 ) {
+						$user_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_user : $order->get_customer_id() );
+						foreach ( $order->get_items() as $item ) {
+							$product = $item->get_product();
+							if ( $item->is_type( 'line_item' ) && ( $product ) ) {
+								$product_id       = wcj_get_product_id_or_variation_parent_id( $product );
+								$product_qty      = $item->get_quantity();
+								$users_quantities = get_post_meta( $product_id, '_wcj_max_products_per_user_report', true );
+								if ( '' === ( $users_quantities ) ) {
+									$users_quantities = array();
 								}
+								if ( isset( $users_quantities[ $user_id ] ) ) {
+									$product_qty += $users_quantities[ $user_id ];
+								}
+								$users_quantities[ $user_id ] = $product_qty;
+								update_post_meta( $product_id, '_wcj_max_products_per_user_report', $users_quantities );
 							}
 						}
-						update_post_meta( $order_id, '_wcj_max_products_per_user_saved', 'yes' );
 					}
+						update_post_meta( $order_id, '_wcj_max_products_per_user_saved', 'yes' );
 				}
 			}
 		}
@@ -455,7 +473,6 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 			}
 			return $result;
 		}
-
 	}
 
 endif;

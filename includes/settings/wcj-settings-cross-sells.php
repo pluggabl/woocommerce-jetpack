@@ -73,7 +73,7 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3_3_0 ) {
 			'asc'        => __( 'Ascending', 'woocommerce-jetpack' ),
 		),
 	);
-};
+}
 $settings = array_merge(
 	$settings,
 	array(

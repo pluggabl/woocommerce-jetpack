@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Retain the established include path; the companion adapter/exception is intentionally colocated.
 /**
  * Booster for WooCommerce - TCPDF
  *
@@ -27,7 +27,10 @@ if ( ! class_exists( 'WCJ_TCPDF' ) ) :
 	 *
 	 * @version 7.1.6
 	 */
+	// phpcs:disable Generic.Classes.DuplicateClassName.Found -- Mutually exclusive PDF backends preserve the established WCJ_TCPDF integration name.
+	/** WCJ TCPDF implementation. */
 	class WCJ_TCPDF extends TCPDF {
+		// phpcs:enable Generic.Classes.DuplicateClassName.Found
 
 		/**
 		 * Invoice_type.

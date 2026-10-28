@@ -41,8 +41,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 		 * @since   2.3.0
 		 * @param null $args Get null value.
 		 */
-		public function __construct( $args = null ) {
-			return true;
+		public function __construct( $args = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 		}
 
 		/**
@@ -214,7 +213,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 							}
 						}
 					}
-					$total_orders++;
+					++$total_orders;
 				}
 				$offset += $block_size;
 			}
@@ -452,9 +451,10 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 					break;
 				}
 				foreach ( $orders as $order ) {
-					$order_id = $order->get_id();
-					$order    = wc_get_order( $order_id );
-					$items    = $order->get_items();
+					$order_id   = $order->get_id();
+					$order      = wc_get_order( $order_id );
+					$order_date = $order->get_date_created();
+					$items      = $order->get_items();
 					foreach ( $items as $item ) {
 						if ( ! apply_filters( 'wcj_reports_products_sales_check_product', true, $item['product_id'] ) ) {
 							continue;
@@ -499,8 +499,8 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 							$products_data[ $product_id ]['total_sum'] += ( $item['line_total'] + ( 'yes' === wcj_get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ?
 							$item['line_tax'] : 0 ) );
 							// Sales by Month.
-							$month          = gmdate( 'n', get_the_time( 'U', $order_id ) );
-							$year           = gmdate( 'Y', get_the_time( 'U', $order_id ) );
+							$month          = ( null !== $order_date ? $order_date->date( 'n' ) : '' );
+							$year           = ( null !== $order_date ? $order_date->date( 'Y' ) : '' );
 							$years[ $year ] = true;
 							if ( ! isset( $products_data[ $product_id ]['sales_by_month'][ $year ][ $month ] ) ) {
 								$products_data[ $product_id ]['sales_by_month'][ $year ][ $month ] = 0;
@@ -525,7 +525,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 							( 'yes' === wcj_get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
 							// Last Sale Time.
 							if ( ! isset( $products_data[ $product_id ]['last_sale'] ) ) {
-								$products_data[ $product_id ]['last_sale'] = gmdate( 'Y-m-d H:i:s', get_the_time( 'U', $order_id ) );
+								$products_data[ $product_id ]['last_sale'] = ( null !== $order_date ? $order_date->date( 'Y-m-d H:i:s' ) : '' );
 							}
 							// Product ID.
 							if ( ! isset( $products_data[ $product_id ]['product_id'] ) ) {
@@ -533,7 +533,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales' ) ) :
 							}
 						}
 					}
-					$total_orders++;
+					++$total_orders;
 				}
 				$offset += $block_size;
 			}

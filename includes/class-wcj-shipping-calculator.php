@@ -27,10 +27,25 @@ if ( ! class_exists( 'WCJ_Shipping_Calculator' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_calculator';
-			$this->short_desc = __( 'Shipping Calculator', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Elite). Update totals label (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize WooCommerce shipping calculator on cart page.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-calculator-customizer';
+			$this->short_desc = 'Shipping Calculator';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Calculator', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Elite). Update totals label (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Elite). Update totals label (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize WooCommerce shipping calculator on cart page.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize WooCommerce shipping calculator on cart page.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-calculator-customizer';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -103,7 +118,6 @@ if ( ! class_exists( 'WCJ_Shipping_Calculator' ) ) :
 		public function enable_postcode() {
 			return ( 'yes' === wcj_get_option( 'wcj_shipping_calculator_enable_postcode' ) );
 		}
-
 	}
 
 endif;

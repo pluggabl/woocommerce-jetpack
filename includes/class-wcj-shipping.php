@@ -28,9 +28,19 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'shipping';
-			$this->short_desc = __( 'Custom Shipping', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add multiple custom shipping methods to WooCommerce.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-custom-shipping';
+			$this->short_desc = 'Custom Shipping';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Custom Shipping', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add multiple custom shipping methods to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add multiple custom shipping methods to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-custom-shipping';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -78,7 +88,7 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 				$this->init_template_class();
 			}
 			$total_number = wcj_get_option( 'wcj_shipping_custom_shipping_total_number', 1 );
-			for ( $i = 1; $i <= $total_number; $i ++ ) {
+			for ( $i = 1; $i <= $total_number; $i++ ) {
 				$the_method = new WC_Shipping_WCJ_Custom_Template();
 				$the_method->init( $i );
 				$methods[ $the_method->id ] = $the_method;
@@ -100,7 +110,6 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 			$methods['booster_custom_shipping_w_zones'] = 'WC_Shipping_WCJ_Custom_With_Shipping_Zones';
 			return $methods;
 		}
-
 	}
 
 endif;

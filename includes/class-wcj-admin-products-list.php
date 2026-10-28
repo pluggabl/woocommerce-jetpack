@@ -30,10 +30,25 @@ if ( ! class_exists( 'WCJ_Admin_Products_List' ) ) :
 		public function __construct() {
 
 			$this->id         = 'admin_products_list';
-			$this->short_desc = __( 'Admin Products List', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize admin products list (1 custom column allowed in free).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize admin products list.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-admin-products-list';
+			$this->short_desc = 'Admin Products List';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Admin Products List', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize admin products list (1 custom column allowed in free).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize admin products list (1 custom column allowed in free).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize admin products list.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize admin products list.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-admin-products-list';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -131,7 +146,6 @@ if ( ! class_exists( 'WCJ_Admin_Products_List' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

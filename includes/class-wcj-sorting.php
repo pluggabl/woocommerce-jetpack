@@ -26,10 +26,25 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 		public function __construct() {
 
 			$this->id         = 'sorting';
-			$this->short_desc = __( 'Sorting', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add more sorting options; rename or remove default sorting options (Elite); rearrange sorting options on frontend. Sort SKUs as numbers (Elite)', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add more sorting options; rename or remove default sorting options; rearrange sorting options on frontend.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-sorting';
+			$this->short_desc = 'Sorting';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Sorting', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add more sorting options; rename or remove default sorting options (Elite); rearrange sorting options on frontend. Sort SKUs as numbers (Elite)';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add more sorting options; rename or remove default sorting options (Elite); rearrange sorting options on frontend. Sort SKUs as numbers (Elite)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add more sorting options; rename or remove default sorting options; rearrange sorting options on frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add more sorting options; rename or remove default sorting options; rearrange sorting options on frontend.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-sorting';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -358,7 +373,6 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 
 			return $args;
 		}
-
 	}
 
 endif;

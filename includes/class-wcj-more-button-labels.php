@@ -26,17 +26,42 @@ if ( ! class_exists( 'WCJ_More_Button_Labels' ) ) :
 		public function __construct() {
 
 			$this->id         = 'more_button_labels';
-			$this->short_desc = __( 'More Button Labels', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set "Place order" button label.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-more-button-labels';
+			$this->short_desc = 'More Button Labels';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'More Button Labels', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set "Place order" button label.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set "Place order" button label.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-more-button-labels';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
+				add_action( 'woocommerce_blocks_checkout_block_registration', array( $this, 'register_blocks_integration' ) );
 				add_filter( 'woocommerce_order_button_text', array( $this, 'set_order_button_text' ), PHP_INT_MAX );
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_place_order_button_override', 'no' ) ) {
 					add_action( 'init', array( $this, 'override_order_button_text' ), PHP_INT_MAX );
 				}
 			}
+		}
+
+		/**
+		 * Register the frontend Checkout block label integration when Woo supports it.
+		 *
+		 * @param \Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry $integration_registry Checkout integrations.
+		 * @return void
+		 */
+		public function register_blocks_integration( $integration_registry ) {
+			if ( ! interface_exists( '\Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface' ) ) {
+				return;
+			}
+			require_once __DIR__ . '/blocks/class-wcj-more-button-labels-blocks.php';
+			$integration_registry->register( new WCJ_More_Button_Labels_Blocks() );
 		}
 
 		/**
@@ -63,7 +88,6 @@ if ( ! class_exists( 'WCJ_More_Button_Labels' ) ) :
 			$new_text = wcj_get_option( 'wcj_checkout_place_order_button_text', '' );
 			return ( '' !== ( $new_text ) ) ? $new_text : $current_text;
 		}
-
 	}
 
 endif;

@@ -30,31 +30,66 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_by_cities';
-			$this->short_desc = __( 'Shipping Methods by City or Postcode', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-methods-by-cities';
+			$this->short_desc = 'Shipping Methods by City or Postcode';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Methods by City or Postcode', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set shipping cities or postcodes to include/exclude for shipping methods to show up.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-methods-by-cities';
 
 			$this->condition_options = array(
 				'cities'    => array(
-					'title' => __( 'Cities', 'woocommerce-jetpack' ),
-					'desc'  => __( 'Otherwise enter cities one per line.', 'woocommerce-jetpack' ),
+					'title' => 'Cities',
+					'desc'  => 'Otherwise enter cities one per line.',
 					'type'  => 'textarea',
 					'class' => '',
 					'css'   => 'height:200px;',
 				),
 				'postcodes' => array(
-					'title' => __( 'Postcodes', 'woocommerce-jetpack' ),
-					'desc'  => __( 'Otherwise enter postcodes one per line.', 'woocommerce-jetpack' ) . '<br>' .
-						'<em>' . __( 'Postcodes containing wildcards (e.g. CB23*) and fully numeric ranges (e.g. <code>90210...99000</code>) are also supported.', 'woocommerce' ) . '</em>',
+					'title' => 'Postcodes',
+					'desc'  => 'Otherwise enter postcodes one per line.<br>' .
+						'<em>Postcodes containing wildcards (e.g. CB23*) and fully numeric ranges (e.g. <code>90210...99000</code>) are also supported.</em>',
 					'type'  => 'textarea',
 					'class' => '',
 					'css'   => 'height:200px;',
 				),
 			);
+			wcj_init_presentation(
+				function () {
+					$this->condition_options = array(
+						'cities'    => array(
+							'title' => __( 'Cities', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Otherwise enter cities one per line.', 'woocommerce-jetpack' ),
+							'type'  => 'textarea',
+							'class' => '',
+							'css'   => 'height:200px;',
+						),
+						'postcodes' => array(
+							'title' => __( 'Postcodes', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Otherwise enter postcodes one per line.', 'woocommerce-jetpack' ) . '<br>' .
+								'<em>' . __( 'Postcodes containing wildcards (e.g. CB23*) and fully numeric ranges (e.g. <code>90210...99000</code>) are also supported.', 'woocommerce' ) . '</em>',
+							'type'  => 'textarea',
+							'class' => '',
+							'css'   => 'height:200px;',
+						),
+					);
+				}
+			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -82,9 +117,9 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 
 					$user_city     = WC()->customer->get_shipping_city();
 					$customer_city = strtoupper( ( isset( $_REQUEST['s_city'] ) && $wpnonce ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_city'] ) ) : ( isset( $_REQUEST['calc_shipping_city'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['calc_shipping_city'] ) ) : ( ! empty( $user_city ) ? $user_city : WC()->countries->get_base_city() ) ) );
-					$values        = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
+					$values        = WCJ_Rule_Explanations::shipping_v2_bound( $this, array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) ) );
 
-					return in_array( $customer_city, $values, true );
+					return WCJ_Rule_Explanations::shipping_v2_result( $this, in_array( $customer_city, $values, true ), ( isset( $_REQUEST['s_city'] ) && $wpnonce ) ? 'checkout_request' : ( isset( $_REQUEST['calc_shipping_city'] ) ? 'shipping_calculator' : ( ! empty( $user_city ) ? 'customer_shipping' : 'store_base' ) ) );
 				case 'postcodes':
 					$post_data = array();
 					if ( isset( $_REQUEST['post_data'] ) ) {
@@ -95,8 +130,8 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 					}
 					$customer_shipping_postcode = WC()->customer->get_shipping_postcode();
 					$customer_postcode          = strtoupper( ( isset( $_REQUEST['s_postcode'] ) && $wpnonce ) ? sanitize_text_field( wp_unslash( $_REQUEST['s_postcode'] ) ) : ( ! empty( $customer_shipping_postcode ) ? $customer_shipping_postcode : WC()->countries->get_base_postcode() ) );
-					$postcodes                  = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
-					return wcj_check_postcode( $customer_postcode, $postcodes );
+					$postcodes                  = WCJ_Rule_Explanations::shipping_v2_bound( $this, array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) ) );
+					return WCJ_Rule_Explanations::shipping_v2_result( $this, wcj_check_postcode( $customer_postcode, $postcodes ), ( isset( $_REQUEST['s_postcode'] ) && $wpnonce ) ? 'checkout_request' : ( ! empty( $customer_shipping_postcode ) ? 'customer_shipping' : 'store_base' ) );
 			}
 		}
 
@@ -115,7 +150,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 					return '';
 			}
 		}
-
 	}
 
 endif;

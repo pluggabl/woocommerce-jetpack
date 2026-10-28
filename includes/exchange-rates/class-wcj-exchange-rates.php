@@ -135,7 +135,6 @@ if ( ! class_exists( 'WCJ_Exchange_Rates' ) ) :
 				);
 			}
 		}
-
 	}
 
 endif;

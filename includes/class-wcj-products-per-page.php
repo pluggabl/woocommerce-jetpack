@@ -37,10 +37,25 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 		public function __construct() {
 
 			$this->id         = 'products_per_page';
-			$this->short_desc = __( 'Products per Page', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add "products per page" selector to WooCommerce (Select options available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add "products per page" selector to WooCommerce.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-products-per-page';
+			$this->short_desc = 'Products per Page';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Products per Page', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add "products per page" selector to WooCommerce (Select options available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add "products per page" selector to WooCommerce (Select options available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add "products per page" selector to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add "products per page" selector to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-products-per-page';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -195,7 +210,6 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 					return ( isset( $_COOKIE['wcj_products_per_page'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wcj_products_per_page'] ) ) : false );
 			}
 		}
-
 	}
 
 endif;

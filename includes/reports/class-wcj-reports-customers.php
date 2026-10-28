@@ -92,7 +92,7 @@ if ( ! class_exists( 'WCJ_Reports_Customers' ) ) :
 					if ( ! isset( $result[ $customer_country ]['customer_counter'] ) ) {
 						$result[ $customer_country ]['customer_counter'] = 0;
 					}
-					$result[ $customer_country ]['customer_counter']++;
+					++$result[ $customer_country ]['customer_counter'];
 				} else { // single country.
 					if ( ! isset( $result[ $customer_country ]['total_spent'] ) ) {
 						$result[ $customer_country ]['total_spent'] = array(

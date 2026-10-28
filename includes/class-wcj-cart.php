@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Custom Info
  *
- * @version 
+ * @version
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes.
  */
@@ -28,10 +28,25 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 		public function __construct() {
 
 			$this->id         = 'cart';
-			$this->short_desc = __( 'Cart Custom Info', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add custom info to the cart page (1 cart block allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add custom info to the cart page.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-cart-custom-info';
+			$this->short_desc = 'Cart Custom Info';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Cart Custom Info', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add custom info to the cart page (1 cart block allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add custom info to the cart page (1 cart block allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add custom info to the cart page.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add custom info to the cart page.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-cart-custom-info';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -52,7 +67,7 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 		/**
 		 * Add_custom_info_to_cart_item_name.
 		 *
-		 * @version 
+		 * @version
 		 * @since   2.3.9
 		 * @todo    (maybe) `wc_setup_product_data( $post );`
 		 * @param string $product_title defines the product_title.
@@ -93,7 +108,6 @@ if ( ! class_exists( 'WCJ_Cart' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

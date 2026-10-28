@@ -27,16 +27,40 @@ if ( ! class_exists( 'WCJ_Product_By_User_Role' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_by_user_role';
-			$this->short_desc = __( 'Product Visibility by User Role', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display products by customer\'s user role. Visibility method options (Elite)', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Display products by customer\'s user role.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Product Visibility by User Role';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Visibility by User Role', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Display products by customer\'s user role. Visibility method options (Elite)';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Display products by customer\'s user role. Visibility method options (Elite)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Display products by customer\'s user role.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Display products by customer\'s user role.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-product-visibility-by-user-role';
-			$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
+			$this->extra_desc = 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
+				}
+			);
 
-			$this->title = __( 'User Roles', 'woocommerce-jetpack' );
+			$this->title = 'User Roles';
+			wcj_init_presentation(
+				function () {
+					$this->title = __( 'User Roles', 'woocommerce-jetpack' );
+				}
+			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -92,7 +116,6 @@ if ( ! class_exists( 'WCJ_Product_By_User_Role' ) ) :
 		public function get_check_option() {
 			return wcj_get_current_user_all_roles();
 		}
-
 	}
 
 endif;

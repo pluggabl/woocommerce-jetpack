@@ -41,10 +41,25 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		public function __construct() {
 
 			$this->id         = 'price_by_country';
-			$this->short_desc = __( 'Prices and Currencies by Country', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Change product price and currency automatically by customer\'s country (1 country group allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Change product price and currency automatically by customer\'s country.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-prices-and-currencies-by-country';
+			$this->short_desc = 'Prices and Currencies by Country';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Prices and Currencies by Country', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Change product price and currency automatically by customer\'s country (1 country group allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Change product price and currency automatically by customer\'s country (1 country group allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Change product price and currency automatically by customer\'s country.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Change product price and currency automatically by customer\'s country.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-prices-and-currencies-by-country';
 			parent::__construct();
 
 			global $wcj_notice;
@@ -201,7 +216,6 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		public function update_products_price_by_country_product_saved( $post_id, $post ) {
 			wcj_update_products_price_by_country_for_single_product( $post_id );
 		}
-
 	}
 
 endif;
