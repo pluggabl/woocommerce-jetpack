@@ -462,7 +462,6 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom' ) ) {
 				 * Constructor.
 				 */
 				public function __construct() {
-
 				}
 			}
 

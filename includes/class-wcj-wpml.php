@@ -301,7 +301,6 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 			}
 			return ( $is_type_ok && $is_id_ok );
 		}
-
 	}
 
 endif;

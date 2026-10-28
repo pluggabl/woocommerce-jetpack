@@ -360,7 +360,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		 * @param string | bool $return defines the return.
 		 * @param array         $_product defines the _product.
 		 */
-		public function hide_quantity_input_field( $return, $_product ) {
+		public function hide_quantity_input_field( $return, $_product ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.returnFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			return ( $this->is_open_price_product( $_product ) ) ? true : $return;
 		}
 

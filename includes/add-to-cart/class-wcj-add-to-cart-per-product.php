@@ -76,7 +76,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		 * @param int   $post_id Get post Id.
 		 * @param Array $post Get post.
 		 */
-		public function save_custom_add_to_cart_meta_box( $post_id, $post ) {
+		public function save_custom_add_to_cart_meta_box( $post_id, $post ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$wpnonce = isset( $_POST['woocommerce_meta_nonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ), 'woocommerce_save_data' ) : false;
 			// Check that we are saving with custom add to cart metabox displayed.
 			if ( ! $wpnonce || ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) ) {

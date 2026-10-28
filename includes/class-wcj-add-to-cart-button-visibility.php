@@ -106,7 +106,6 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Button_Visibility' ) ) :
 					add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				}
 			}
-
 		}
 
 		/**
@@ -249,7 +248,6 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Button_Visibility' ) ) :
 				ob_start();
 			}
 		}
-
 	}
 
 endif;

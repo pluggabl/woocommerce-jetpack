@@ -54,6 +54,7 @@ class WCJ_Returns extends WCJ_Module {
 
 	/** Register a capability-protected private merchant queue. */
 	public function menu() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		add_submenu_page( 'woocommerce', __( 'Return Requests', 'woocommerce-jetpack' ), __( 'Return Requests', 'woocommerce-jetpack' ), 'manage_woocommerce', 'wcj-returns', array( $this, 'admin' ) );
 	}
 
@@ -64,6 +65,7 @@ class WCJ_Returns extends WCJ_Module {
 	 * @return string
 	 */
 	private function posted( $key ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		return isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) && strlen( $_POST[ $key ] ) <= 4096 ? wp_unslash( $_POST[ $key ] ) : '';
 	}
 
@@ -100,6 +102,7 @@ class WCJ_Returns extends WCJ_Module {
 
 	/** Display only a bounded finite result on the existing destination. */
 	private function result_feedback() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		$code     = isset( $_GET['wcj_returns_result'] ) && is_string( $_GET['wcj_returns_result'] ) && strlen( $_GET['wcj_returns_result'] ) <= 32 ? $_GET['wcj_returns_result'] : '';
 		$messages = $this->result_messages();
 		if ( isset( $messages[ $code ] ) ) {
@@ -134,10 +137,10 @@ class WCJ_Returns extends WCJ_Module {
 			if ( $order_id > 0 ) {
 				try {
 					$facts = ( new WCJ_Returns_Facts() )->load( $order_id );
-					if ( $facts['owner'] > 0 && $facts['owner'] === (int) get_current_user_id() ) {
+					if ( 0 < $facts['owner'] && (int) get_current_user_id() === $facts['owner'] ) {
 						$url = wc_get_endpoint_url( 'view-order', $order_id, wc_get_page_permalink( 'myaccount' ) );
 					}
-				} catch ( Throwable $error ) {
+				} catch ( Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 					// Unavailable or unsupported facts retain the safe account fallback.
 				}
 			}
@@ -149,7 +152,8 @@ class WCJ_Returns extends WCJ_Module {
 	/** Logged-in intake endpoint. Current nonce/ownership are checked in service. */
 	public function submit() {
 		$selected = array();
-		$posted   = isset( $_POST['quantities'] ) && is_array( $_POST['quantities'] ) ? wp_unslash( $_POST['quantities'] ) : array();
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
+		$posted = isset( $_POST['quantities'] ) && is_array( $_POST['quantities'] ) ? wp_unslash( $_POST['quantities'] ) : array();
 		if ( count( $posted ) > 200 ) {
 			$this->finish( new WP_Error( 'input_invalid', __( 'Too many selected items.', 'woocommerce-jetpack' ) ) );
 		}
@@ -163,11 +167,13 @@ class WCJ_Returns extends WCJ_Module {
 
 	/** Staff decision or owner cancellation, with current revision/nonce. */
 	public function transition() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		$this->finish( ( new WCJ_Returns_Service() )->transition( $this->integer( 'request_id' ), $this->integer( 'revision' ), $this->posted( 'status' ), $this->posted( '_wpnonce' ) ), current_user_can( 'manage_woocommerce' ) );
 	}
 
 	/** Explicit nonce/capability-controlled schema creation, never on a GET. */
 	public function storage() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		if ( ! current_user_can( 'manage_woocommerce' ) || ! in_array( wp_verify_nonce( $this->posted( '_wpnonce' ), 'wcj_returns_storage' ), array( 1, 2 ), true ) || ! $this->is_enabled() ) {
 			wp_die( esc_html__( 'You cannot initialize return-request storage.', 'woocommerce-jetpack' ) );
 		}
@@ -189,7 +195,8 @@ class WCJ_Returns extends WCJ_Module {
 		if ( ! is_user_logged_in() || ! is_account_page() || ! is_wc_endpoint_url( 'view-order' ) || ! $order instanceof WC_Order ) {
 			return;
 		}
-		$id     = (int) $order->get_id();
+		$id = (int) $order->get_id();
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		$before = isset( $_GET['wcj_returns_before'] ) && is_string( $_GET['wcj_returns_before'] ) && preg_match( '/^[1-9][0-9]{0,17}$/D', $_GET['wcj_returns_before'] ) ? (int) $_GET['wcj_returns_before'] : PHP_INT_MAX;
 		$data   = ( new WCJ_Returns_Service() )->customer_view( $id, $before );
 		if ( is_wp_error( $data ) ) {
@@ -266,6 +273,7 @@ class WCJ_Returns extends WCJ_Module {
 
 	/** Best-effort known-plugin warning, only in the authorized merchant context. */
 	private function overlap_warning() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		if ( ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
@@ -314,6 +322,7 @@ class WCJ_Returns extends WCJ_Module {
 	 * @return array|null Configured values, or no admitted guide.
 	 */
 	private function setup_observations() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		if ( ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 			return null;
 		}
@@ -409,13 +418,16 @@ class WCJ_Returns extends WCJ_Module {
 
 	/** Render the bounded private queue and visible notification states. */
 	public function admin() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			wp_die( esc_html__( 'You cannot review return requests.', 'woocommerce-jetpack' ) );
 		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		if ( isset( $_GET['wcj_returns_view'] ) && is_string( $_GET['wcj_returns_view'] ) && 'synthetic' === $_GET['wcj_returns_view'] ) {
 			$this->synthetic_page();
 			return;
 		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		$before = isset( $_GET['before'] ) && is_string( $_GET['before'] ) && preg_match( '/^[1-9][0-9]{0,17}$/D', $_GET['before'] ) ? (int) $_GET['before'] : PHP_INT_MAX;
 		$rows   = ( new WCJ_Returns_Service() )->queue( $before );
 		echo '<div class="wrap"><h1>' . esc_html__( 'Return Requests', 'woocommerce-jetpack' ) . '</h1><p>' . esc_html__( 'Approval records a decision only. Refunds, restocking and payments remain separate merchant actions. Guest access requires a separately enabled, compatible HTTPS verification page and private auth storage.', 'woocommerce-jetpack' ) . '</p>';
@@ -476,7 +488,13 @@ class WCJ_Returns extends WCJ_Module {
 		}
 		$url = admin_url( 'admin.php?page=wcj-returns&wcj_returns_view=synthetic' );
 		if ( ! is_wp_error( $result ) && is_array( $result ) && isset( $result['id'] ) ) {
-			$url = add_query_arg( array( 'request_id' => (int) $result['id'], 'wcj_returns_result' => 'saved' ), $url );
+			$url = add_query_arg(
+				array(
+					'request_id'         => (int) $result['id'],
+					'wcj_returns_result' => 'saved',
+				),
+				$url
+			);
 		} else {
 			$url = add_query_arg( 'wcj_returns_result', 'unavailable', $url );
 		}
@@ -517,6 +535,7 @@ class WCJ_Returns extends WCJ_Module {
 			return;
 		}
 		echo '<div class="wrap"><h1>' . esc_html__( 'Synthetic Returns workflow exercise', 'woocommerce-jetpack' ) . '</h1><p>' . esc_html__( 'Fixed test facts only. This is not a Woo order, a catalogue-policy test, a notification-delivery test or a compatibility test. It creates retained private exercise rows; no customer order, refund, stock, payment or mail is changed.', 'woocommerce-jetpack' ) . '</p>';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		if ( $unknown || ( isset( $_GET['wcj_returns_result'] ) && 'commit_unknown' === $_GET['wcj_returns_result'] ) ) {
 			echo '<p>' . esc_html__( 'The previous outcome is unknown. Use only a fresh read of the original exercise token. An absent result remains unknown. Do not create, retry, choose a new token or delete data to resolve it.', 'woocommerce-jetpack' ) . '</p><form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"><input type="hidden" name="action" value="wcj_returns_synthetic_recover">';
 			wp_nonce_field( 'wcj_returns_synthetic_recover' );
@@ -534,12 +553,16 @@ class WCJ_Returns extends WCJ_Module {
 			echo '</div>';
 			return;
 		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		if ( isset( $_GET['wcj_returns_result'] ) && 'saved' === $_GET['wcj_returns_result'] ) {
 			echo '<p>' . esc_html__( 'The synthetic exercise result was retained. Inspect its history below; no Woo order is involved.', 'woocommerce-jetpack' ) . '</p>';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		} elseif ( isset( $_GET['wcj_returns_result'] ) && 'unavailable' === $_GET['wcj_returns_result'] ) {
 			echo '<p>' . esc_html__( 'The synthetic exercise action was unavailable. No automatic retry was made.', 'woocommerce-jetpack' ) . '</p>';
 		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 		if ( isset( $_GET['request_id'] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input is strictly validated and authorized by Returns service; GET values select read-only views or fixed feedback, not mutations.
 			$value = $_GET['request_id'];
 			$id    = is_string( $value ) && preg_match( '/^[1-9][0-9]{0,17}$/D', $value ) ? (int) $value : 0;
 			$row   = $service->synthetic_view( $id );
@@ -586,7 +609,6 @@ class WCJ_Returns extends WCJ_Module {
 			echo '<p>' . esc_html__( 'Private return storage is unavailable. No initialization or repair was attempted.', 'woocommerce-jetpack' ) . '</p>';
 		}
 	}
-
 }
 
 return new WCJ_Returns();

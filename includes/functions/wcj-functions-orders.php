@@ -69,7 +69,7 @@ if ( ! function_exists( 'wcj_get_adjacent_order_id_hpos' ) ) {
 		$order_number = array();
 		foreach ( $order as $orders ) {
 			$order_number[] = $order[ $i ]->id;
-			$i++;
+			++$i;
 		}
 
 		foreach ( $order_number as $order_id ) {

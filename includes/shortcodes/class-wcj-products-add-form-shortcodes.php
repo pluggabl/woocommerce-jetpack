@@ -210,11 +210,13 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		 * @return bool
 		 */
 		protected function has_product_by_user_uploaded_file( $field_name ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Helper is reached from the nonce-verified product form; uploaded files are normalized and checked for provenance, size and MIME before attachment.
 			if ( empty( $_FILES ) || ! isset( $_FILES[ $field_name ] ) || ! is_array( $_FILES[ $field_name ] ) ) {
 				return false;
 			}
 
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- File arrays are only inspected for upload presence here.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Helper is reached from the nonce-verified product form; uploaded files are normalized and checked for provenance, size and MIME before attachment.
 			$files = $this->normalize_product_by_user_uploads( $_FILES[ $field_name ] );
 			foreach ( $files as $file ) {
 				$error_code = isset( $file['error'] ) ? (int) $file['error'] : UPLOAD_ERR_NO_FILE;
@@ -290,11 +292,13 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				'errors' => array(),
 			);
 
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Helper is reached from the nonce-verified product form; uploaded files are normalized and checked for provenance, size and MIME before attachment.
 			if ( empty( $_FILES ) || ! isset( $_FILES[ $field_name ] ) || ! is_array( $_FILES[ $field_name ] ) ) {
 				return $results;
 			}
 
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- File arrays are normalized and validated below.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Helper is reached from the nonce-verified product form; uploaded files are normalized and checked for provenance, size and MIME before attachment.
 			$files = $this->normalize_product_by_user_uploads( $_FILES[ $field_name ] );
 			foreach ( $files as $file ) {
 				$error_code = isset( $file['error'] ) ? (int) $file['error'] : UPLOAD_ERR_NO_FILE;
@@ -340,8 +344,10 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 			require_once ABSPATH . 'wp-admin/includes/media.php';
 
-			$had_original_file     = isset( $_FILES[ $field_name ] );
-			$original_file         = $had_original_file ? $_FILES[ $field_name ] : null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Helper is reached from the nonce-verified product form; uploaded files are normalized and checked for provenance, size and MIME before attachment.
+			$had_original_file = isset( $_FILES[ $field_name ] );
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Helper is reached from the nonce-verified product form; uploaded files are normalized and checked for provenance, size and MIME before attachment.
+			$original_file         = $had_original_file ? $_FILES[ $field_name ] : null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Preserve the native upload entry after the nonce-verified form and file validation.
 			$_FILES[ $field_name ] = $validated_file;
 
 			$attachment_id = media_handle_upload(

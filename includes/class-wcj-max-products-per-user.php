@@ -221,8 +221,8 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 						$i = 0;
 						foreach ( $order as $order_id ) {
 							$this->save_quantities( $order[ $i ]->id );
-							$total_orders++;
-							$i++;
+							++$total_orders;
+							++$i;
 						}
 					} else {
 						$args = array(
@@ -240,7 +240,7 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 						}
 						foreach ( $loop->posts as $_order_id ) {
 							$this->save_quantities( $_order_id );
-							$total_orders++;
+							++$total_orders;
 						}
 					}
 					$offset += $block_size;
@@ -341,30 +341,28 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 						$order->update_meta_data( '_wcj_max_products_per_user_saved', 'yes' );
 						$order->save();
 					}
-				} else {
+				} elseif ( 'yes' !== get_post_meta( $order_id, '_wcj_max_products_per_user_saved', true ) ) {
 
-					if ( 'yes' !== get_post_meta( $order_id, '_wcj_max_products_per_user_saved', true ) ) {
-						if ( count( $order->get_items() ) > 0 ) {
-							$user_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_user : $order->get_customer_id() );
-							foreach ( $order->get_items() as $item ) {
-								$product = $item->get_product();
-								if ( $item->is_type( 'line_item' ) && ( $product ) ) {
-									$product_id       = wcj_get_product_id_or_variation_parent_id( $product );
-									$product_qty      = $item->get_quantity();
-									$users_quantities = get_post_meta( $product_id, '_wcj_max_products_per_user_report', true );
-									if ( '' === ( $users_quantities ) ) {
-										$users_quantities = array();
-									}
-									if ( isset( $users_quantities[ $user_id ] ) ) {
-										$product_qty += $users_quantities[ $user_id ];
-									}
-									$users_quantities[ $user_id ] = $product_qty;
-									update_post_meta( $product_id, '_wcj_max_products_per_user_report', $users_quantities );
+					if ( count( $order->get_items() ) > 0 ) {
+						$user_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_user : $order->get_customer_id() );
+						foreach ( $order->get_items() as $item ) {
+							$product = $item->get_product();
+							if ( $item->is_type( 'line_item' ) && ( $product ) ) {
+								$product_id       = wcj_get_product_id_or_variation_parent_id( $product );
+								$product_qty      = $item->get_quantity();
+								$users_quantities = get_post_meta( $product_id, '_wcj_max_products_per_user_report', true );
+								if ( '' === ( $users_quantities ) ) {
+									$users_quantities = array();
 								}
+								if ( isset( $users_quantities[ $user_id ] ) ) {
+									$product_qty += $users_quantities[ $user_id ];
+								}
+								$users_quantities[ $user_id ] = $product_qty;
+								update_post_meta( $product_id, '_wcj_max_products_per_user_report', $users_quantities );
 							}
 						}
-						update_post_meta( $order_id, '_wcj_max_products_per_user_saved', 'yes' );
 					}
+						update_post_meta( $order_id, '_wcj_max_products_per_user_saved', 'yes' );
 				}
 			}
 		}
@@ -475,7 +473,6 @@ if ( ! class_exists( 'WCJ_Max_Products_Per_User' ) ) :
 			}
 			return $result;
 		}
-
 	}
 
 endif;

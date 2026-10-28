@@ -451,18 +451,18 @@ if ( ! class_exists( 'WCJ_Order_Quantities' ) ) :
 				return $qty;
 			}
 
-			$depth++;
+			++$depth;
 
 			// If product is variable, let WC handle it.
 			if ( $_product->is_type( 'variable' ) ) {
-				$depth--;
+				--$depth;
 				return $qty;
 			}
 
 			// Apply Booster logic.
 			$plugin_max = $this->get_product_quantity( 'max', $_product, $qty );
 			$wc_max     = $_product->get_max_purchase_quantity();
-			$depth--;
+			--$depth;
 
 			// Return the more restrictive limit if applicable.
 			return ( -1 === $wc_max || $plugin_max < $wc_max ) ? $plugin_max : $wc_max;

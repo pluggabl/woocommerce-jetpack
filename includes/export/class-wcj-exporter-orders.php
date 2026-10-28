@@ -43,7 +43,6 @@ if ( ! class_exists( 'WCJ_Exporter_Orders' ) ) :
 		 * @since   2.5.9
 		 */
 		public function __construct() {
-			return true; 
 		}
 
 		/**

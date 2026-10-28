@@ -208,7 +208,6 @@ if ( ! class_exists( 'WCJ_Product_By_Time' ) ) :
 			}
 			return $purchasable;
 		}
-
 	}
 
 endif;

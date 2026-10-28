@@ -67,7 +67,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Numbering' ) ) :
 				// Keep the original group first, including its relation and named sort clauses.
 				$meta_query[] = $args['meta_query'];
 			}
-			$meta_query[] = array(
+			$meta_query[]       = array(
 				'key'     => '_wcj_invoicing_invoice_number_id',
 				'value'   => $args['s'],
 				'compare' => '=',
@@ -102,7 +102,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Numbering' ) ) :
 			$query->set( 'meta_key', '_wcj_invoicing_invoice_number_id' );
 			$query->set( 'meta_value', $invoice_number );
 		}
-
 	}
 
 endif;

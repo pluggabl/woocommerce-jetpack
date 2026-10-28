@@ -421,6 +421,8 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 == Changelog ==
 
 = 9.0.0 =
+* Settings backups - Export saved Booster settings and restore them after reinstalling the same edition, including general options and grouped settings.
+* Checkout file uploads - Fix uploads with mixed-case file extensions and supported session settings. Keep staged files recoverable when an order attachment cannot be saved.
 * Customer Return Requests - Turn on Return Requests to let signed-in customers request eligible item quantities from completed orders, follow their history and see your decision there. Verified guest access is a separate setup that needs HTTPS. Approval records your decision; it does not refund money, restock products or process a payment.
 * Checkout Blocks - Collect supported checkout file uploads and show your Place order button text in the WooCommerce Checkout block, alongside existing supported custom fields. Existing module and edition limits still apply; this does not make every Booster option or third-party checkout compatible.
 * Order and payment reliability - Use WooCommerce order data in affected HPOS exports and reports. Keep Booster gateway fees in sync when an eligible unpaid order changes payment method, without replacing unrelated custom fees.

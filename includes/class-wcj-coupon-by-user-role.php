@@ -111,10 +111,12 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 			}
 			if ( ! empty( $invalid_user_roles ) && in_array( wcj_get_current_user_first_role(), $invalid_user_roles, true ) ) {
 				throw new Exception(
-					apply_filters(
-						'booster_option',
-						__( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
-						get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) )
+					esc_html(
+						apply_filters(
+							'booster_option',
+							__( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
+							get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) )
+						)
 					),
 					10000
 				);
@@ -141,7 +143,6 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 			}
 			return $message;
 		}
-
 	}
 
 endif;

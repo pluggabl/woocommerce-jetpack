@@ -68,10 +68,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Pdf_Notes' ) ) :
 				}
 			);
 			parent::__construct();
-
 		}
-
-
 	}
 
 endif;

@@ -74,7 +74,6 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Icons' ) ) :
 			$custom_icon_url = wcj_get_option( 'wcj_gateways_icons_' . $key . '_icon', '' );
 			return ( '' === $custom_icon_url ) ? $icon : '<img src="' . $custom_icon_url . '" alt="' . $key . '" />';
 		}
-
 	}
 
 endif;

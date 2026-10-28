@@ -123,9 +123,9 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				$_product_id                     = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_save_single'] ) );
 				$wcj_product_bulk_meta_editor_id = isset( $_POST[ 'wcj_product_bulk_meta_editor_id_' . $_product_id ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wcj_product_bulk_meta_editor_id_' . $_product_id ] ) ) : '';
 				if ( update_post_meta( $_product_id, $meta_name, $wcj_product_bulk_meta_editor_id ) ) {
-					$success++;
+					++$success;
 				} else {
-					$fail++;
+					++$fail;
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
@@ -138,9 +138,9 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 				$fail        = 0;
 				$_product_id = sanitize_text_field( wp_unslash( $_POST['wcj_product_bulk_meta_editor_delete_single'] ) );
 				if ( delete_post_meta( $_product_id, $meta_name ) ) {
-					$success++;
+					++$success;
 				} else {
-					$fail++;
+					++$fail;
 				}
 				$result_message = $this->get_result_message( $success, $fail );
 			} elseif (
@@ -156,9 +156,9 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 					if ( false !== strpos( $key, 'wcj_product_bulk_meta_editor_id_' ) ) {
 						$product_id = substr( $key, $key_start_length - strlen( $key ) );
 						if ( update_post_meta( $product_id, $meta_name, $value ) ) {
-							$success++;
+							++$success;
 						} else {
-							$fail++;
+							++$fail;
 						}
 					}
 				}
@@ -176,9 +176,9 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 					if ( false !== strpos( $key, 'wcj_product_bulk_meta_editor_id_' ) ) {
 						$product_id = substr( $key, $key_start_length - strlen( $key ) );
 						if ( delete_post_meta( $product_id, $meta_name ) ) {
-							$success++;
+							++$success;
 						} else {
-							$fail++;
+							++$fail;
 						}
 					}
 				}
@@ -198,9 +198,9 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 					if ( false !== strpos( $key, 'wcj_product_bulk_meta_editor_id_' ) ) {
 						$product_id = substr( $key, $key_start_length - strlen( $key ) );
 						if ( update_post_meta( $product_id, $meta_name, $set_meta ) ) {
-							$success++;
+							++$success;
 						} else {
-							$fail++;
+							++$fail;
 						}
 					}
 				}
@@ -504,7 +504,6 @@ if ( ! class_exists( 'WCJ_Product_Bulk_Meta_Editor' ) ) :
 			}
 			return $row;
 		}
-
 	}
 
 endif;

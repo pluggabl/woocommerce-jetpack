@@ -107,7 +107,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 * @param string $email_id defines the email_id.
 		 * @param array  $object defines the object.
 		 */
-		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $object ) {
+		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $object ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.objectFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( 'new_order' === $email_id && is_a( $object, 'WC_Order' ) ) {
 				$useremail = $this->getProductOwnerEmail( wcj_get_order_id( $object ) );
 				$headers  .= 'Cc: Name <' . $useremail . '>' . "\r\n";
@@ -304,7 +304,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 				$table_data[] = array( '', __( 'Status', 'woocommerce-jetpack' ), __( 'Title', 'woocommerce-jetpack' ), __( 'Actions', 'woocommerce-jetpack' ) );
 				$i            = 0;
 				foreach ( $products as $_product_id => $_product_data ) {
-					$i++;
+					++$i;
 					$table_data[] = array(
 						/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
 						'<code>' . $_product_data['status'] . '</code>',
@@ -334,7 +334,6 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 				echo wp_kses( wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ), $allowed_tags );
 			}
 		}
-
 	}
 
 endif;

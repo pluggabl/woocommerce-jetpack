@@ -294,14 +294,14 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				if ( is_array( $product_terms ) ) {
 					foreach ( $product_terms as $term ) {
 						$sku_number = $this->sequential_counter_cats[ $term->term_id ];
-						$this->sequential_counter_cats[ $term->term_id ]++;
+						++$this->sequential_counter_cats[ $term->term_id ];
 						return $sku_number;
 					}
 				}
 			}
 			// Cats disabled or no category found.
 			$sku_number = $this->sequential_counter;
-			$this->sequential_counter++;
+			++$this->sequential_counter;
 			return $sku_number;
 		}
 
@@ -336,7 +336,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 					$variation_suffixes = 'abcdefghijklmnopqrstuvwxyz';
 					$abc                = 0;
 					foreach ( $variations as $variation ) {
-						$suffix                       = $variation_suffixes[ $abc ++ ];
+						$suffix                       = $variation_suffixes[ $abc++ ];
 						$sku_object                   = $this->generate_sku( $variation['variation_id'], $suffix, $product_id, wc_get_product( $variation['variation_id'] ) );
 						$variation_id                 = $variation['variation_id'];
 						$variations_excluding_current = array_filter(
@@ -620,7 +620,13 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 			if ( 'sequential' === apply_filters( 'booster_option', 'product_id', wcj_get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 				$this->sequential_counter = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 				if ( 'yes' === wcj_get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
-					$this->product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+					$this->product_categories = get_terms(
+						array(
+							'taxonomy'   => 'product_cat',
+							'orderby'    => 'name',
+							'hide_empty' => false,
+						)
+					);
 					if ( ! empty( $this->product_categories ) && ! is_wp_error( $this->product_categories ) ) {
 						foreach ( $this->product_categories as $product_category ) {
 							$this->sequential_counter_cats[ $product_category->term_id ] = wcj_get_option( 'wcj_sku_counter_cat_' . $product_category->term_id, 1 );
@@ -838,7 +844,6 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				add_filter( 'posts_where', array( $this, 'search_post_where' ) );
 			}
 		}
-
 	}
 
 endif;

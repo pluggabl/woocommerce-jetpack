@@ -80,7 +80,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 *
 		 * @return mixed
 		 */
-		public function add_result_key_param_to_shortcode_result( $result, $atts, $content, $shortcode ) {
+		public function add_result_key_param_to_shortcode_result( $result, $atts, $content, $shortcode ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( is_array( $result ) && isset( $atts['result_key'] ) && ! empty( $atts['result_key'] ) ) {
 				$result = $result[ $atts['result_key'] ];
 			}
@@ -277,15 +277,15 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 			if (
 				'' !== $atts['location'] &&
 				'all' !== $atts['location'] &&
-				( false === strpos( $atts['location'], ',' ) && $atts['location'] !== $this->wcj_get_user_location() ||
-					false !== strpos( $atts['location'], ',' ) && ! in_array( $this->wcj_get_user_location(), array_map( 'trim', explode( ',', $atts['location'] ) ), true ) )
+				( ( ( false === strpos( $atts['location'], ',' ) && $atts['location'] !== $this->wcj_get_user_location() ) ) ||
+					( ( false !== strpos( $atts['location'], ',' ) && ! in_array( $this->wcj_get_user_location(), array_map( 'trim', explode( ',', $atts['location'] ) ), true ) ) ) )
 			) {
 				return '';
 			}
 			if (
 				'' !== $atts['not_location'] &&
-				( false === strpos( $atts['not_location'], ',' ) && $atts['not_location'] === $this->wcj_get_user_location() ||
-					false !== strpos( $atts['not_location'], ',' ) && in_array( $this->wcj_get_user_location(), array_map( 'trim', explode( ',', $atts['not_location'] ) ), true ) )
+				( ( ( false === strpos( $atts['not_location'], ',' ) && $atts['not_location'] === $this->wcj_get_user_location() ) ) ||
+					( ( false !== strpos( $atts['not_location'], ',' ) && in_array( $this->wcj_get_user_location(), array_map( 'trim', explode( ',', $atts['not_location'] ) ), true ) ) ) )
 			) {
 				return '';
 			}
@@ -414,7 +414,7 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 		 * @since   2.6.0
 		 * @param Array $atts Get shortcode attributes.
 		 */
-		public function extra_check( $atts ) {
+		public function extra_check( $atts ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			return true;
 		}
 

@@ -109,7 +109,7 @@ if ( ! class_exists( 'WCJ_Exchange_Rates_Crons' ) ) :
 		 * @todo    get currency pairs from "Currency Exchange Rates" module (see `get_all_currencies_exchange_rates_currencies()`)
 		 * @param int | string $interval Define rate interval.
 		 */
-		public function update_the_exchange_rates( $interval ) {
+		public function update_the_exchange_rates( $interval ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 
 			$currency_pairs = array();
 

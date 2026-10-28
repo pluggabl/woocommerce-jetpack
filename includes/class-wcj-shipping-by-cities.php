@@ -90,7 +90,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -151,7 +150,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_Cities' ) ) :
 					return '';
 			}
 		}
-
 	}
 
 endif;

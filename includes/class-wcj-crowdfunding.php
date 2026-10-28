@@ -142,7 +142,6 @@ if ( ! class_exists( 'WCJ_Crowdfunding' ) ) :
 			}
 			return $purchasable;
 		}
-
 	}
 
 endif;

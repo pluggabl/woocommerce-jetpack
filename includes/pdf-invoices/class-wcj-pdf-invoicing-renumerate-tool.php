@@ -26,7 +26,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 		 * @version 3.2.2
 		 */
 		public function __construct() {
-			return true;
 		}
 
 		/**
@@ -239,13 +238,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 						) {
 							if ( 0 !== $order->get_total() ) {
 								wcj_create_invoice( $order_id, $invoice_type, strtotime( $order->get_date_created() ) );
-								$created_invoices_counter++;
+								++$created_invoices_counter;
 							}
-						} else {
-							if ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
+						} elseif ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
 								wcj_delete_invoice( $order_id, $invoice_type );
-								$deleted_invoices_counter++;
-							}
+								++$deleted_invoices_counter;
 						}
 					}
 				} else {
@@ -277,13 +274,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Renumerate_Tool' ) ) :
 							$the_order = wc_get_order( $order_id );
 							if ( 0 !== $the_order->get_total() ) {
 								wcj_create_invoice( $order_id, $invoice_type, strtotime( $loop->post->post_date ) );
-								$created_invoices_counter++;
+								++$created_invoices_counter;
 							}
-						} else {
-							if ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
+						} elseif ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
 								wcj_delete_invoice( $order_id, $invoice_type );
-								$deleted_invoices_counter++;
-							}
+								++$deleted_invoices_counter;
 						}
 					}
 				}

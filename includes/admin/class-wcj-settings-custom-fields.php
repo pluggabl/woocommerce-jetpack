@@ -56,15 +56,14 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 				foreach ( $value['custom_attributes'] as $attribute => $attribute_value ) {
 					$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
 				}
-			} else {
-				if (
+			} elseif (
 				! w_c_j()->all_modules['currency_exchange_rates']->is_enabled()
 				|| 'yes' !== wcj_get_option( 'wcj_currency_exchange_rates_point_decimal_separator', 'no' )
 				) {
+
 					$custom_attributes = array( 'step="' . sprintf( '%.12f', 1 / pow( 10, 12 ) ) . '"', 'min="0"' );
-				} else {
-					$custom_attributes = array( 'step="0.00000001"', 'min="0"' );
-				}
+			} else {
+				$custom_attributes = array( 'step="0.00000001"', 'min="0"' );
 			}
 			$custom_attributes_button = array();
 			if ( ! empty( $value['custom_attributes_button'] ) && is_array( $value['custom_attributes_button'] ) ) {
@@ -378,7 +377,6 @@ if ( ! class_exists( 'WCJ_Settings_Custom_Fields' ) ) :
 		</tr>
 			<?php
 		}
-
 	}
 
 endif;

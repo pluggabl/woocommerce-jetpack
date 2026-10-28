@@ -100,7 +100,6 @@ if ( ! class_exists( 'WCJ_Empty_Cart_Button' ) ) :
 				WC()->cart->empty_cart();
 			}
 		}
-
 	}
 
 endif;

@@ -78,7 +78,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Templates' ) ) :
 			}
 			return $this->default_template[ $invoice_type_id ];
 		}
-
 	}
 
 endif;

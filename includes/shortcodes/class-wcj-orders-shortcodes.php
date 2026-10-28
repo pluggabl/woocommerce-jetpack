@@ -281,6 +281,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			}
 
 			if ( 'yes' !== wcj_get_option( 'wcj_general_shortcodes_display_order_shortcodes_forcefully' ) ) {
+				// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 				if ( ! current_user_can( 'manage_woocommerce' ) ) {
 					$order = wc_get_order( $atts['order_id'] );
 					if ( isset( $order ) && ! empty( $order ) ) { // Verify that Order exists.
@@ -1807,7 +1808,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @since   2.5.9
 		 * @param string $string The user defined shortcode string.
 		 */
-		public function mb_ucfirst( $string ) {
+		public function mb_ucfirst( $string ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.stringFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			return ucfirst( mb_substr( $string, 0, 1 ) ) . mb_substr( $string, 1 );
 		}
 

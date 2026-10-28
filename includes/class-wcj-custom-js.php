@@ -73,7 +73,6 @@ if ( ! class_exists( 'WCJ_Custom_JS' ) ) :
 		public function custom_backend_js() {
 			echo '<script>' . do_shortcode( wcj_get_option( 'wcj_custom_js_backend', '' ) ) . '</script>';
 		}
-
 	}
 
 endif;

@@ -182,7 +182,6 @@ if ( ! class_exists( 'WCJ_Price_Formats' ) ) :
 
 			return apply_filters( 'woocommerce_price_format', $format, $currency_pos );
 		}
-
 	}
 
 endif;

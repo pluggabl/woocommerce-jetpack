@@ -22,6 +22,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 
 		/** Bounded identifiers for the merchant form, never fee titles or settings. */
 		public function get_scenario_choices() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return new WP_Error( 'booster_forbidden', __( 'You do not have permission to explain Booster rules.', 'woocommerce-jetpack' ) );
 			}
@@ -59,6 +60,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 		 * @return array|WP_Error Safe explanation or current authorization/input failure.
 		 */
 		public function explain( $input ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return new WP_Error( 'booster_forbidden', __( 'You do not have permission to explain Booster rules.', 'woocommerce-jetpack' ) );
 			}
@@ -430,7 +432,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 		 * @param mixed $headers Response header map.
 		 * @param mixed $wp WordPress request argument, left untouched.
 		 */
-		public static function payment_transport_headers( $headers, $wp ) {
+		public static function payment_transport_headers( $headers, $wp ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( ! self::$payment_transport['recognized'] ) {
 				return $headers;
 			}
@@ -801,6 +803,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 		 * @param mixed $input Explicit diagnostic input.
 		 */
 		public function explain_payment_options( $input ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->payment_error( 'booster_forbidden' );
 			}
@@ -867,6 +870,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 		 * @return mixed
 		 */
 		public function compare_payment_options( $input ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->payment_error( 'booster_forbidden' );
 			}
@@ -912,6 +916,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 		 * @param mixed $gateway Gateway identifier.
 		 */
 		public function payment_observation_link( $gateway ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) || ! $this->payment_gateway_valid( $gateway ) ) {
 				return $this->payment_error( 'booster_forbidden' );
 			}
@@ -933,7 +938,8 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 		 */
 		private function payment_identity_valid() {
 			$w = self::$payment_window;
-			return isset( $w['actor'], $w['blog'], $w['gateway'], $w['nonce'] ) && is_user_logged_in() && current_user_can( 'manage_woocommerce' ) && $w['actor'] === get_current_user_id() && $w['blog'] === get_current_blog_id() && wp_verify_nonce( $w['nonce'], 'wcj_payment_observe:' . $w['blog'] . ':' . $w['actor'] . ':' . $w['gateway'] );
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
+			return isset( $w['actor'], $w['blog'], $w['gateway'], $w['nonce'] ) && is_user_logged_in() && current_user_can( 'manage_woocommerce' ) && get_current_user_id() === $w['actor'] && get_current_blog_id() === $w['blog'] && wp_verify_nonce( $w['nonce'], 'wcj_payment_observe:' . $w['blog'] . ':' . $w['actor'] . ':' . $w['gateway'] );
 		}
 
 		/**
@@ -960,10 +966,12 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 			if ( ! self::write_payment_transport_headers() || ! self::payment_transport_headers_valid() ) {
 				self::deny_payment_transport();
 			}
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! isset( $_SERVER['REQUEST_METHOD'] ) || 'GET' !== $_SERVER['REQUEST_METHOD'] || is_admin() || wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! is_checkout() || is_wc_endpoint_url( 'order-pay' ) || is_wc_endpoint_url( 'order-received' ) || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 				self::deny_payment_transport();
 			}
 			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Exact bound nonce checked below before arming.
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 			if ( ! isset( $_GET['wcj_payment_observe'], $_GET['wcj_payment_gateway'], $_GET['wcj_payment_nonce'] ) || '1' !== $_GET['wcj_payment_observe'] || ! $this->payment_gateway_valid( $_GET['wcj_payment_gateway'] ) || ! is_string( $_GET['wcj_payment_nonce'] ) || 1 !== preg_match( '/^[a-zA-Z0-9]{1,64}$/D', $_GET['wcj_payment_nonce'] ) ) {
 				self::deny_payment_transport();
 			}
@@ -971,7 +979,9 @@ if ( ! class_exists( 'WCJ_Rule_Explanations' ) ) :
 				'state'   => 'unarmed',
 				'actor'   => get_current_user_id(),
 				'blog'    => get_current_blog_id(),
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 				'gateway' => $_GET['wcj_payment_gateway'],
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 				'nonce'   => $_GET['wcj_payment_nonce'],
 				'counts'  => array(),
 				'rows'    => array(),
@@ -1576,6 +1586,7 @@ WCJ_PAYMENT_CONTRACT
 		 * @param mixed $input Explicit diagnostic input.
 		 */
 		public function explain_shipping_options( $input ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->shipping_error( 'booster_shipping_capability_required' );
 			}
@@ -1638,6 +1649,7 @@ WCJ_PAYMENT_CONTRACT
 		 * @return mixed
 		 */
 		public function compare_shipping_options( $input ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->shipping_error( 'booster_shipping_capability_required' );
 			}
@@ -1707,6 +1719,7 @@ WCJ_PAYMENT_CONTRACT
 			if ( ! $this->shipping_typed_key_valid( $package ) || ! $this->shipping_typed_key_valid( $rate ) || ! is_int( $blog ) || $blog < 1 || ! is_int( $actor ) || $actor < 1 ) {
 				return false;
 			}
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 			$json = json_encode( array( $package['kind'], $package['value'], $rate['kind'], $rate['value'] ) );
 			return false === $json ? false : 'wcj_shipping_observe:' . $blog . ':' . $actor . ':' . hash( 'sha256', $json );
 		}
@@ -1719,6 +1732,7 @@ WCJ_PAYMENT_CONTRACT
 		 * @return mixed
 		 */
 		public function shipping_observation_link( $package, $rate ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->shipping_error( 'booster_shipping_capability_required' );
 			}
@@ -1769,7 +1783,8 @@ WCJ_PAYMENT_CONTRACT
 		 */
 		private function shipping_identity_valid() {
 			$g = self::$shipping_generation;
-			if ( ! isset( $g['actor'], $g['blog'], $g['package'], $g['rate'], $g['nonce'] ) || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) || $g['actor'] !== get_current_user_id() || $g['blog'] !== get_current_blog_id() ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
+			if ( ! isset( $g['actor'], $g['blog'], $g['package'], $g['rate'], $g['nonce'] ) || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) || get_current_user_id() !== $g['actor'] || get_current_blog_id() !== $g['blog'] ) {
 				return false;
 			}
 			$action = isset( $g['version'] ) ? $this->shipping_v2_nonce_action( $g['package'], $g['rate'], $g['free_instance'], $g['blog'], $g['actor'] ) : $this->shipping_nonce_action( $g['package'], $g['rate'], $g['blog'], $g['actor'] );
@@ -1787,7 +1802,11 @@ WCJ_PAYMENT_CONTRACT
 			$specs = self::shipping_core_sources();
 			foreach ( $specs as $class => $s ) {
 				$file = realpath( ( 'WP_Hook' === $class ? ABSPATH . WPINC . '/' : WC_ABSPATH . 'includes/' ) . $s[0] );
-				if ( false === $file || ! class_exists( $class ) || ( new ReflectionClass( $class ) )->getFileName() !== $file || $s[1] !== hash_file( 'sha256', $file ) ) {
+				if ( false === $file || ! class_exists( $class ) ) {
+					return false;
+				}
+				$class_file = ( new ReflectionClass( $class ) )->getFileName();
+				if ( $file !== $class_file || hash_file( 'sha256', $file ) !== $s[1] ) {
 					return false;
 				}
 			}
@@ -1799,6 +1818,7 @@ WCJ_PAYMENT_CONTRACT
 		 * @return mixed
 		 */
 		public function arm_shipping_observer() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 			if ( array_key_exists( 'wcj_shipping_contract_version', $_GET ) || array_key_exists( 'wcj_shipping_scope', $_GET ) || array_key_exists( 'wcj_shipping_free_instance', $_GET ) ) {
 				$this->arm_shipping_v2();
 				return;
@@ -1809,14 +1829,18 @@ WCJ_PAYMENT_CONTRACT
 			if ( 'unarmed' !== self::$shipping_generation['state'] || self::$shipping_observer !== $this || ! self::write_shipping_transport_headers() || ! self::shipping_transport_headers_valid() ) {
 				self::deny_shipping_transport();
 			}
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! isset( $_SERVER['REQUEST_METHOD'] ) || 'GET' !== $_SERVER['REQUEST_METHOD'] || is_admin() || wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! is_checkout() || is_wc_endpoint_url( 'order-pay' ) || is_wc_endpoint_url( 'order-received' ) || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 				self::deny_shipping_transport();
 			}
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 			if ( ! isset( $_GET['wcj_shipping_observe'], $_GET['wcj_shipping_package_kind'], $_GET['wcj_shipping_package_key'], $_GET['wcj_shipping_rate_kind'], $_GET['wcj_shipping_rate_key'], $_GET['wcj_shipping_nonce'] ) || '1' !== $_GET['wcj_shipping_observe'] || ! is_string( $_GET['wcj_shipping_nonce'] ) || 1 !== preg_match( '/\A[A-Za-z0-9]{1,64}\z/', $_GET['wcj_shipping_nonce'] ) ) {
 				self::deny_shipping_transport();
 			}
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 			$package = $this->shipping_transport_selector( $_GET['wcj_shipping_package_kind'], $_GET['wcj_shipping_package_key'] );
-			$rate    = $this->shipping_transport_selector( $_GET['wcj_shipping_rate_kind'], $_GET['wcj_shipping_rate_key'] );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
+			$rate = $this->shipping_transport_selector( $_GET['wcj_shipping_rate_kind'], $_GET['wcj_shipping_rate_key'] );
 			if ( false === $package || false === $rate ) {
 				self::deny_shipping_transport();
 			}
@@ -1826,6 +1850,7 @@ WCJ_PAYMENT_CONTRACT
 				'blog'     => get_current_blog_id(),
 				'package'  => $package,
 				'rate'     => $rate,
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 				'nonce'    => $_GET['wcj_shipping_nonce'],
 				'passes'   => 0,
 				'ordinal'  => 0,
@@ -1946,7 +1971,7 @@ WCJ_PAYMENT_CONTRACT
 			if ( 'unarmed' === self::$shipping_generation['state'] ) {
 				return $packages;
 			}
-			$trace  = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 );
+			$trace  = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Bounded argument-free callback provenance is an admission check, never a debug log or response.
 			$frames = $this->shipping_trace( $trace, __FUNCTION__, array( array( 'WC_Cart', 'get_shipping_packages' ), array( 'WC_Cart', 'calculate_shipping' ) ) );
 			if ( 'armed' !== self::$shipping_generation['state'] || false === $frames || $frames[0]['object'] !== $frames[1]['object'] ) {
 				self::$shipping_generation['state'] = 'invalid';
@@ -1978,7 +2003,7 @@ WCJ_PAYMENT_CONTRACT
 			if ( 'unarmed' === self::$shipping_generation['state'] ) {
 				return $rates;
 			}
-			$trace                               = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 );
+			$trace                               = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Bounded argument-free callback provenance is an admission check, never a debug log or response.
 			$frames                              = $this->shipping_trace( $trace, __FUNCTION__, array( array( 'WC_Shipping', 'calculate_shipping_for_package' ), array( 'WC_Shipping', 'calculate_shipping' ), array( 'WC_Cart', 'calculate_shipping' ) ) );
 			self::$shipping_generation['passes'] = min( 2, self::$shipping_generation['passes'] + 1 );
 			if ( 'open' !== self::$shipping_generation['state'] || 1 !== self::$shipping_generation['passes'] || false === $frames || $frames[0]['object'] !== $frames[1]['object'] || $frames[2]['object'] !== self::$shipping_generation['cart'] || ! is_array( $rates ) || ! is_array( $package ) || ! array_key_exists( 'package_id', $package ) || $this->shipping_package_id( $package, null ) !== self::$shipping_generation['package_id'] ) {
@@ -2001,7 +2026,7 @@ WCJ_PAYMENT_CONTRACT
 			if ( 'unarmed' === self::$shipping_generation['state'] ) {
 				return $rates;
 			}
-			$trace  = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 );
+			$trace  = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Bounded argument-free callback provenance is an admission check, never a debug log or response.
 			$frames = $this->shipping_trace( $trace, __FUNCTION__, array( array( 'WC_Shipping', 'calculate_shipping_for_package' ), array( 'WC_Shipping', 'calculate_shipping' ), array( 'WC_Cart', 'calculate_shipping' ) ) );
 			if ( 'pass' !== self::$shipping_generation['state'] || ! is_array( $rates ) || false === $frames || $frames[0]['object'] !== $frames[1]['object'] || $frames[0]['object'] !== self::$shipping_generation['shipping'] || $frames[2]['object'] !== self::$shipping_generation['cart'] || ! is_array( $package ) || ! array_key_exists( 'package_id', $package ) || $this->shipping_package_id( $package, null ) !== self::$shipping_generation['package_id'] || ! empty( self::$shipping_generation['captures'] ) ) {
 				self::$shipping_generation['state'] = 'invalid';
@@ -2021,7 +2046,7 @@ WCJ_PAYMENT_CONTRACT
 			if ( 'unarmed' === self::$shipping_generation['state'] ) {
 				return $packages;
 			}
-			$trace  = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 );
+			$trace  = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Bounded argument-free callback provenance is an admission check, never a debug log or response.
 			$frames = $this->shipping_trace( $trace, __FUNCTION__, array( array( 'WC_Shipping', 'calculate_shipping' ), array( 'WC_Cart', 'calculate_shipping' ) ) );
 			$g      = self::$shipping_generation;
 			if ( ! in_array( $g['state'], array( 'open', 'pass_closed' ), true ) || false === $frames || $frames[1]['object'] !== $g['cart'] || ( 1 === $g['passes'] && $frames[0]['object'] !== $g['shipping'] ) || $g['passes'] > 1 || false === $this->shipping_packages_valid( $packages ) ) {
@@ -2267,6 +2292,7 @@ WCJ_PAYMENT_CONTRACT
 		 * @return mixed
 		 */
 		public function render_shipping_rows( $result ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) || ! $this->validate_shipping_output( $result ) ) {
 				return;
 			}
@@ -2315,6 +2341,7 @@ WCJ_PAYMENT_CONTRACT
 			if ( ! self::$shipping_transport['recognized'] ) {
 				return;
 			}
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 			if ( array_key_exists( 'wcj_payment_observe', $_GET ) || array_key_exists( 'wcj_payment_gateway', $_GET ) || array_key_exists( 'wcj_payment_nonce', $_GET ) ) {
 				self::$shipping_transport['failed'] = true;
 			}
@@ -2335,7 +2362,7 @@ WCJ_PAYMENT_CONTRACT
 		 * @param mixed $headers Response header map.
 		 * @param mixed $wp WordPress request argument, left untouched.
 		 */
-		public static function shipping_transport_headers( $headers, $wp ) {
+		public static function shipping_transport_headers( $headers, $wp ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( ! self::$shipping_transport['recognized'] ) {
 				return $headers;
 			}
@@ -2490,6 +2517,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 			}
 			$attempted = true;
 			try {
+				// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Pinned local metadata is read with an exact byte bound and checked length/hash; failure is handled without leaking filesystem details.
 				$json = @file_get_contents( __DIR__ . '/data/wcj-shipping-v2-metadata.json', false, null, 0, 1985527 );
 				if ( false === $json || ! is_string( $json ) || 1985526 !== strlen( $json ) || '4308dc2237678cefb1ffb90b56c3970b2eaa508b916d3d8bf088195de30326c9' !== hash( 'sha256', $json ) ) {
 					return false;
@@ -3399,6 +3427,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 		 * @return mixed
 		 */
 		private function shipping_v2_explain( $input ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->shipping_error( 'booster_shipping_capability_required' );
 			}
@@ -3423,7 +3452,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 				$reason  = $this->shipping_v2_admission( $owner, $module );
 				$detail  = null;
 				$family  = in_array( $owner, array_keys( self::shipping_owners() ), true ) ? 'amount_quantity' : ( 'shipping_by_products' === $owner ? 'products' : ( 'shipping_by_user_role' === $owner ? 'actor' : ( 'shipping_by_cities' === $owner ? 'address' : ( 'shipping_by_time' === $owner ? 'time' : ( 'shipping_options_free_by_product' === $owner ? 'free_grant' : 'ordered_rates' ) ) ) ) );
-				if ( null === $reason && isset( $input['owners'][ $owner ] ) && ( ! isset( $module->use_shipping_instances ) || ! is_bool( $module->use_shipping_instances ) || $module->use_shipping_instances !== ( 'instance' === $input['owners'][ $owner ]['rule_key']['kind'] ) ) ) {
+				if ( null === $reason && isset( $input['owners'][ $owner ] ) && ( ! isset( $module->use_shipping_instances ) || ! is_bool( $module->use_shipping_instances ) || ( 'instance' === $input['owners'][ $owner ]['rule_key']['kind'] ) !== $module->use_shipping_instances ) ) {
 					$reason = 'unsupported_rate_identity';
 				}
 				if ( null === $reason && 'unavailable' === $input['facts'][ $family ]['status'] ) {
@@ -3471,6 +3500,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 		 * @return mixed
 		 */
 		private function shipping_v2_compare( $input ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->shipping_error( 'booster_shipping_capability_required' );
 			}
@@ -3873,6 +3903,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 			if ( ! $this->shipping_typed_key_valid( $package ) || ! $this->shipping_typed_key_valid( $rate ) || ! is_int( $instance ) || $instance < 0 || $instance > 2147483647 || ! is_int( $blog ) || $blog < 1 || ! is_int( $actor ) || $actor < 1 ) {
 				return false;
 			}
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 			$json = json_encode( array( 2, 'shipping_conditions_and_options', $package['kind'], $package['value'], $rate['kind'], $rate['value'], $instance ) );
 			return false === $json ? false : 'wcj_shipping_observe_v2:' . $blog . ':' . $actor . ':' . hash( 'sha256', $json );
 		}
@@ -3886,6 +3917,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 		 * @return mixed
 		 */
 		public function shipping_v2_observation_link( $package, $rate, $instance ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 				return $this->shipping_error( 'booster_shipping_capability_required' );
 			}
@@ -3957,19 +3989,25 @@ WCJ_SHIPPING_CORE_SOURCES;
 		 * @return mixed
 		 */
 		private function arm_shipping_v2() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( self::$shipping_observer !== $this || 'unarmed' !== self::$shipping_generation['state'] || ! self::write_shipping_transport_headers() || ! self::shipping_transport_headers_valid() || ! isset( $_SERVER['REQUEST_METHOD'] ) || 'GET' !== $_SERVER['REQUEST_METHOD'] || is_admin() || wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! is_checkout() || is_wc_endpoint_url( 'order-pay' ) || is_wc_endpoint_url( 'order-received' ) || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 				self::deny_shipping_transport();
 			}
 			foreach ( array( 'wcj_shipping_observe', 'wcj_shipping_contract_version', 'wcj_shipping_scope', 'wcj_shipping_package_kind', 'wcj_shipping_package_key', 'wcj_shipping_rate_kind', 'wcj_shipping_rate_key', 'wcj_shipping_free_instance', 'wcj_shipping_nonce' ) as $key ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 				if ( ! isset( $_GET[ $key ] ) || ! is_string( $_GET[ $key ] ) ) {
 					self::deny_shipping_transport();
 				}
 			}
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 			if ( '1' !== $_GET['wcj_shipping_observe'] || '2' !== $_GET['wcj_shipping_contract_version'] || 'shipping_conditions_and_options' !== $_GET['wcj_shipping_scope'] || 1 !== preg_match( '/\A[A-Za-z0-9]{1,64}\z/', $_GET['wcj_shipping_nonce'] ) ) {
 				self::deny_shipping_transport();
 			}
-			$package  = $this->shipping_transport_selector( $_GET['wcj_shipping_package_kind'], $_GET['wcj_shipping_package_key'] );
-			$rate     = $this->shipping_transport_selector( $_GET['wcj_shipping_rate_kind'], $_GET['wcj_shipping_rate_key'] );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
+			$package = $this->shipping_transport_selector( $_GET['wcj_shipping_package_kind'], $_GET['wcj_shipping_package_key'] );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
+			$rate = $this->shipping_transport_selector( $_GET['wcj_shipping_rate_kind'], $_GET['wcj_shipping_rate_key'] );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 			$instance = $this->shipping_transport_selector( 'int', $_GET['wcj_shipping_free_instance'] );
 			if ( false === $package || false === $rate || false === $instance ) {
 				self::deny_shipping_transport();
@@ -3982,6 +4020,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 				'package'       => $package,
 				'rate'          => $rate,
 				'free_instance' => $instance['value'],
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Strict typed transport and bound payment/shipping nonce are verified by identity_valid before arming; malformed raw selectors must be rejected, not sanitized into acceptance.
 				'nonce'         => $_GET['wcj_shipping_nonce'],
 				'passes'        => 0,
 				'ordinal'       => 0,
@@ -4021,7 +4060,11 @@ WCJ_SHIPPING_CORE_SOURCES;
 			);
 			foreach ( $specs as $class => $spec ) {
 				$file = realpath( WC_ABSPATH . 'includes/' . $spec[0] );
-				if ( false === $file || ! class_exists( $class ) || ( new ReflectionClass( $class ) )->getFileName() !== $file || $spec[1] !== hash_file( 'sha256', $file ) ) {
+				if ( false === $file || ! class_exists( $class ) ) {
+					return false;
+				}
+				$class_file = ( new ReflectionClass( $class ) )->getFileName();
+				if ( $file !== $class_file || hash_file( 'sha256', $file ) !== $spec[1] ) {
 					return false;
 				}
 			}
@@ -4067,7 +4110,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 					return false;
 				}
 				if ( '' !== $expected[0] ) {
-					if ( ! isset( $f['object'] ) || ( 'WC_Shipping_Method' === $expected[0] ? 'WC_Shipping_Free_Shipping' !== get_class( $f['object'] ) : $expected[0] !== get_class( $f['object'] ) ) ) {
+					if ( ! isset( $f['object'] ) || ( 'WC_Shipping_Method' === $expected[0] ? 'WC_Shipping_Free_Shipping' !== get_class( $f['object'] ) : get_class( $f['object'] ) !== $expected[0] ) ) {
 						return false;
 					}
 					$decl = new ReflectionMethod( $f['object'], $expected[1] );
@@ -4108,7 +4151,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 			if ( ! isset( $g['version'] ) || 2 !== $g['version'] || 'open' !== $g['state'] || ! $this->shipping_v2_selected_method( $method ) ) {
 				return;
 			}
-			$trace    = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 );
+			$trace    = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Bounded argument-free callback provenance is an admission check, never a debug log or response.
 			$shipping = $this->shipping_v2_window_trace( $trace, __FUNCTION__, false, $method );
 			if ( false === $shipping || null !== $g['free_window'] || ! is_array( $package ) || ! array_key_exists( 'package_id', $package ) || $this->shipping_package_id( $package, null ) !== $g['package_id'] ) {
 				$g['state'] = 'invalid';
@@ -4132,7 +4175,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 			if ( ! isset( $g['version'] ) || 2 !== $g['version'] || 'open' !== $g['state'] || ! $this->shipping_v2_selected_method( $method ) ) {
 				return $available;
 			}
-			$trace    = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 );
+			$trace    = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Bounded argument-free callback provenance is an admission check, never a debug log or response.
 			$shipping = $this->shipping_v2_window_trace( $trace, __FUNCTION__, true, $method );
 			if ( false === $shipping || 'before' !== $g['free_window'] || $method !== $g['free_method'] || ! is_bool( $available ) || ! is_array( $package ) || ! array_key_exists( 'package_id', $package ) || $this->shipping_package_id( $package, null ) !== $g['package_id'] ) {
 				$g['state'] = 'invalid';
@@ -4154,7 +4197,7 @@ WCJ_SHIPPING_CORE_SOURCES;
 			if ( ! isset( $g['version'] ) || 2 !== $g['version'] || 'open' !== $g['state'] || ! $this->shipping_v2_selected_method( $method ) ) {
 				return;
 			}
-			$trace    = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 );
+			$trace    = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT, 8 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Bounded argument-free callback provenance is an admission check, never a debug log or response.
 			$shipping = $this->shipping_v2_window_trace( $trace, __FUNCTION__, false, $method );
 			if ( false === $shipping || ! in_array( $g['free_window'], array( 'before', 'available' ), true ) || $method !== $g['free_method'] || isset( $g['captures']['shipping_options_free_by_product'] ) || ! is_array( $package ) || ! array_key_exists( 'package_id', $package ) || $this->shipping_package_id( $package, null ) !== $g['package_id'] ) {
 				$g['state'] = 'invalid';

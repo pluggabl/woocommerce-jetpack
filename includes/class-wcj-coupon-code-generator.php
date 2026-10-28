@@ -160,6 +160,7 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 			}
 
 			// Authorization check (only admin or shop manager).
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_die();
 			}
@@ -172,14 +173,13 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 					echo wp_kses_post( $coupon_code );
 					die();
 				}
-				$attempts++;
+				++$attempts;
 				if ( $attempts > 100 ) { // shouldn't happen, but just in case...
 					echo '';
 					die();
 				}
 			}
 		}
-
 	}
 
 endif;

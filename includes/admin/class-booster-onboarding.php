@@ -545,6 +545,7 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 */
 		private function invoice_display_goals( $goals ) {
 			$goals = array_values( array_diff( (array) $goals, array( 'professional_invoices', 'professional_docs_pro' ) ) );
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				return $goals;
 			}

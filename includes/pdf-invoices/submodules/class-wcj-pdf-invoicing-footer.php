@@ -33,7 +33,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Footer' ) ) :
 			$this->desc = '';
 			parent::__construct( 'submodule' );
 		}
-
 	}
 
 endif;

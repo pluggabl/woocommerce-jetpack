@@ -84,8 +84,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 		 * @since   2.9.0
 		 * @param null $args Get null value.
 		 */
-		public function __construct( $args = null ) {
-			return true;
+		public function __construct( $args = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 		}
 
 		/**
@@ -216,7 +215,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 							$this->last_sale_data[ $product_id ]['order_status'] = get_post_status( $order_id );
 						}
 					}
-					$this->total_orders++;
+					++$this->total_orders;
 				}
 				$offset += $block_size;
 			}
@@ -318,7 +317,7 @@ if ( ! class_exists( 'WCJ_Reports_Product_Sales_Daily' ) ) :
 							$this->last_sale_data[ $product_id ]['order_status'] = $order->get_status();
 						}
 					}
-					$this->total_orders++;
+					++$this->total_orders;
 				}
 				$offset += $block_size;
 			}

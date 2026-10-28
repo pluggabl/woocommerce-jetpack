@@ -253,7 +253,7 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 							'offers_sum'   => 0,
 						);
 					}
-					$average_offers[ $price_offer['currency_code'] ]['total_offers']++;
+					++$average_offers[ $price_offer['currency_code'] ]['total_offers'];
 					$average_offers[ $price_offer['currency_code'] ]['offers_sum'] += $price_offer['offered_price'];
 				}
 				echo wp_kses_post( wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) );
@@ -605,7 +605,6 @@ if ( ! class_exists( 'WCJ_Offer_Price' ) ) :
 				update_post_meta( $product_id, '_wcj_price_offers', $price_offers );
 			}
 		}
-
 	}
 
 endif;

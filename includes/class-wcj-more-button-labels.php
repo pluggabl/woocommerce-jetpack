@@ -88,7 +88,6 @@ if ( ! class_exists( 'WCJ_More_Button_Labels' ) ) :
 			$new_text = wcj_get_option( 'wcj_checkout_place_order_button_text', '' );
 			return ( '' !== ( $new_text ) ) ? $new_text : $current_text;
 		}
-
 	}
 
 endif;

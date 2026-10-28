@@ -99,7 +99,6 @@ if ( ! class_exists( 'WCJ_Custom_CSS' ) ) :
 		public function hook_custom_admin_css() {
 			echo '<style>' . wp_kses_post( wcj_get_option( 'wcj_general_custom_admin_css', '' ) ) . '</style>';
 		}
-
 	}
 
 endif;

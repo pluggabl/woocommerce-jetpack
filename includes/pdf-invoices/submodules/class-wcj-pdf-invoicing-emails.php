@@ -100,7 +100,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Emails' ) ) :
 			}
 			return $attachments;
 		}
-
 	}
 
 endif;

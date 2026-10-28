@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Country Switcher
  *
- * @version 
+ * @version
  * @since   2.4.8
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Widget_Country_Switcher' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 
+		 * @version
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */
@@ -115,7 +115,6 @@ if ( ! class_exists( 'WCJ_Widget_Country_Switcher' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;
@@ -124,7 +123,7 @@ if ( ! function_exists( 'register_wcj_widget_country_switcher' ) ) {
 	/**
 	 * Register WCJ_Widget_Country_Switcher widget.
 	 */
-	function register_wcj_widget_country_switcher() {
+	function register_wcj_widget_country_switcher() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Existing WordPress widget registration callback is kept beside its widget class.
 		register_widget( 'WCJ_Widget_Country_Switcher' );
 	}
 }

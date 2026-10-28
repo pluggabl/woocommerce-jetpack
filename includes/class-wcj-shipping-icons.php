@@ -83,7 +83,6 @@ if ( ! class_exists( 'WCJ_Shipping_Icons' ) ) :
 			}
 			return $label;
 		}
-
 	}
 
 endif;

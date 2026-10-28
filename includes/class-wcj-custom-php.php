@@ -78,6 +78,7 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				$wpnonce = isset( $_REQUEST['wcj_disable_custom_php_nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj_disable_custom_php_nonce'] ), 'wcj-disable-custom-php' ) : false;
 
 				if ( isset( $_REQUEST['wcj_disable_custom_php'] ) && $wpnonce ) {
+					// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 					if ( wcj_current_user_can( 'manage_woocommerce' ) ) {
 						// Stop custom PHP execution.
 						return;
@@ -122,12 +123,11 @@ if ( ! class_exists( 'WCJ_Custom_PHP' ) ) :
 				} else {
 					$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
 					if ( file_exists( $file_path ) ) {
-						unlink( $file_path );
+						wp_delete_file( $file_path );
 					}
 				}
 			}
 		}
-
 	}
 
 endif;

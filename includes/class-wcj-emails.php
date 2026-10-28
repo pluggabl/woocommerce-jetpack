@@ -169,7 +169,6 @@ if ( ! class_exists( 'WCJ_Emails' ) ) :
 			}
 			return $emails;
 		}
-
 	}
 
 endif;

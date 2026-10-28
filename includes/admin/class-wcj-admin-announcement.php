@@ -147,6 +147,7 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 
 		/** Display only to WooCommerce managers on Booster-owned screens. */
 		public static function render() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) || ! self::is_booster_page() ) {
 				return;
 			}
@@ -179,6 +180,7 @@ if ( ! class_exists( 'WCJ_Admin_Announcement' ) ) :
 		 * @return bool Whether this user's dismissal is saved.
 		 */
 		public static function dismiss( $id, $nonce ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) || ! self::valid_id( $id ) || ! is_string( $nonce ) || strlen( $nonce ) > 32 || ! wp_verify_nonce( $nonce, 'wcj-dismiss-announcement-' . $id ) ) {
 				return false;
 			}

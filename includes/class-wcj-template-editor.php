@@ -58,7 +58,6 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 				$this->templates_to_edit = wcj_get_option( 'wcj_template_editor_templates_to_edit', array() );
 				add_filter( 'wc_get_template', array( $this, 'replace_template' ), PHP_INT_MAX, 5 );
 			}
-
 		}
 
 		/**
@@ -191,12 +190,11 @@ if ( ! class_exists( 'WCJ_Template_Editor' ) ) :
 				if ( is_dir( $file ) ) {
 					$this->delete_dir( $file );
 				} else {
-					unlink( $file );
+					wp_delete_file( $file );
 				}
 			}
-			rmdir( $dir_path );
+			rmdir( $dir_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir -- Remove only the now-empty local template directory; remote adapters do not represent this local path.
 		}
-
 	}
 
 endif;

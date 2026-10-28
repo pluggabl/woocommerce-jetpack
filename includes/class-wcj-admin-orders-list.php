@@ -157,6 +157,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 						}
 						$orders_count_html = ' <span class="awaiting-mod update-plugins count-' . esc_attr( $order_count ) . ' wcj-order-count-wrapper"><span class="wcj-order-count">' . number_format_i18n( $order_count ) . '</span></span>';
 					}
+					// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 					add_submenu_page( 'woocommerce', $titles[ $i ], $titles[ $i ] . $orders_count_html, 'edit_shop_orders', $menu_slug );
 				}
 			}
@@ -202,6 +203,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 						}
 						$orders_count_html = ' <span class="awaiting-mod update-plugins count-' . esc_attr( $order_count ) . ' wcj-order-count-wrapper"><span class="wcj-order-count">' . number_format_i18n( $order_count ) . '</span></span>';
 					}
+					// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 					add_submenu_page( 'woocommerce', $titles[ $i ], $titles[ $i ] . $orders_count_html, 'edit_shop_orders', $menu_slug );
 				}
 			}
@@ -270,7 +272,6 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 			} else {
 				echo '<style>body.post-type-shop_order ul.subsubsub {display: none !important;}</style>';
 			}
-
 		}
 
 		/**
@@ -410,7 +411,6 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 		public function add_shop_order_multiple_statuses_hpos( $post_type, $which ) {
 
 				echo wp_kses_post( $this->multiple_shop_order_statuses( wcj_get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) ) );
-
 		}
 
 		/**
@@ -535,6 +535,7 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 					continue;
 				}
 				$codes = 'country' === $selector ? wcj_get_countries() : wcj_get_woocommerce_currencies_and_symbols();
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Read-only order-list filter; country/currency values must exactly match the known code map before use.
 				$value = isset( $_GET[ $selector ] ) && is_string( $_GET[ $selector ] ) ? wp_unslash( $_GET[ $selector ] ) : 'all';
 				$value = array_key_exists( $value, $codes ) ? $value : 'all';
 				$label = 'country' === $selector ? __( 'All countries', 'woocommerce-jetpack' ) : __( 'All currencies', 'woocommerce-jetpack' );
@@ -563,9 +564,11 @@ if ( ! class_exists( 'WCJ_Admin_Orders_List' ) ) :
 					'currency' => 'currency',
 				) as $selector => $query_key
 			) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only order-list filter; country/currency values must exactly match the known code map before use.
 				if ( 'yes' !== wcj_get_option( 'wcj_orders_list_custom_columns_' . $selector, 'no' ) || ! isset( $_GET[ $selector ] ) || ! is_string( $_GET[ $selector ] ) ) {
 					continue;
 				}
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Read-only order-list filter; country/currency values must exactly match the known code map before use.
 				$value = wp_unslash( $_GET[ $selector ] );
 				$codes = 'country' === $selector ? wcj_get_countries() : wcj_get_woocommerce_currencies_and_symbols();
 				if ( 'all' !== $value && array_key_exists( $value, $codes ) ) {

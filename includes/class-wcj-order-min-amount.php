@@ -236,7 +236,6 @@ if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 				exit;
 			}
 		}
-
 	}
 
 endif;

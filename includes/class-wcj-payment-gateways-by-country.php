@@ -103,91 +103,118 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Country' ) ) :
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			$ticket = WCJ_Rule_Explanations::payment_start( $this, $_available_gateways );
-			$row = null;
-			$whole = false;
+			$row    = null;
+			$whole  = false;
 			$result = $this->payment_filter_body( $_available_gateways, $ticket, $row, $whole );
-			if ( null !== $ticket ) { WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
+			if ( null !== $ticket ) {
+				WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
 			return $result;
 		}
 
-		/** Original lazy collector, shared with bounded per-gateway decisions. */
+		/**
+		 * Original lazy collector, shared with bounded per-gateway decisions.
+		 *
+		 * @param mixed $_available_gateways Available gateway map.
+		 * @param mixed $ticket Request-local observation ticket.
+		 * @param mixed $row Captured decision row.
+		 * @param mixed $whole Whether the complete decision is requested.
+		 */
 		private function payment_filter_body( $_available_gateways, $ticket, &$row, &$whole ) {
 			$customer_country = $this->get_location( 'country' );
 			$customer_state   = $this->get_location( 'state' );
 			$postcode         = $this->get_location( 'postcode' );
 			foreach ( $_available_gateways as $key => $gateway ) {
 				$decision = $this->payment_decision( $key, $customer_country, $customer_state, $postcode );
-				if ( $ticket === (string) $key ) { $row = $decision; }
-				if ( 'removed' === $decision[0] ) { unset( $_available_gateways[ $key ] ); }
+				if ( $ticket === (string) $key ) {
+					$row = $decision; }
+				if ( 'removed' === $decision[0] ) {
+					unset( $_available_gateways[ $key ] ); }
 			}
 			return $_available_gateways;
-		
 		}
 
+		/**
+		 * Evaluate the configured country restriction for the captured payment context.
+		 *
+		 * @param mixed $key Key.
+		 * @param mixed $customer_country Customer country.
+		 * @param mixed $customer_state Customer state.
+		 * @param mixed $postcode Postcode.
+		 * @return mixed Existing gateway decision or gateway map.
+		 */
 		private function payment_decision( $key, $customer_country, $customer_state, $postcode ) {
 			$configured = false;
-				if ( '' !== $customer_country ) {
-					$include_countries = wcj_maybe_add_european_union_countries( wcj_get_option( 'wcj_gateways_countries_include_' . $key, '' ) );
-					$configured = $configured || ! empty( $include_countries );
-					if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries, true ) ) {
-						return array( 'removed', 'include_miss', 'country' );
-					}
-					$exclude_countries = wcj_get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
-					$configured = $configured || ! empty( $exclude_countries );
-					if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries, true ) ) {
-						return array( 'removed', 'exclude_match', 'country' );
+			if ( '' !== $customer_country ) {
+				$include_countries = wcj_maybe_add_european_union_countries( wcj_get_option( 'wcj_gateways_countries_include_' . $key, '' ) );
+				$configured        = $configured || ! empty( $include_countries );
+				if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries, true ) ) {
+					return array( 'removed', 'include_miss', 'country' );
+				}
+				$exclude_countries = wcj_get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
+				$configured        = $configured || ! empty( $exclude_countries );
+				if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries, true ) ) {
+					return array( 'removed', 'exclude_match', 'country' );
+				}
+			}
+			if ( '' !== $customer_state ) {
+				$include_states = wcj_get_option( 'wcj_gateways_states_include_' . $key, '' );
+				$configured     = $configured || ! empty( $include_states );
+				if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states, true ) ) {
+					return array( 'removed', 'include_miss', 'state' );
+				}
+				$exclude_states = wcj_get_option( 'wcj_gateways_states_exclude_' . $key, '' );
+				$configured     = $configured || ! empty( $exclude_states );
+				if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states, true ) ) {
+					return array( 'removed', 'exclude_match', 'state' );
+				}
+			}
+			if ( '' !== $postcode ) {
+				$include_postcodes = wcj_get_option( 'wcj_gateways_postcodes_include_' . $key, '' );
+				$configured        = $configured || ! empty( $include_postcodes );
+				if ( ! empty( $include_postcodes ) ) {
+					$include_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $include_postcodes ) ) ) );
+					$configured        = $configured || ! empty( $include_postcodes );
+					if ( ! wcj_check_postcode( $postcode, $include_postcodes ) ) {
+						return array( 'removed', 'include_miss', 'postcode' );
 					}
 				}
-				if ( '' !== $customer_state ) {
-					$include_states = wcj_get_option( 'wcj_gateways_states_include_' . $key, '' );
-					$configured = $configured || ! empty( $include_states );
-					if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states, true ) ) {
-						return array( 'removed', 'include_miss', 'state' );
-					}
-					$exclude_states = wcj_get_option( 'wcj_gateways_states_exclude_' . $key, '' );
-					$configured = $configured || ! empty( $exclude_states );
-					if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states, true ) ) {
-						return array( 'removed', 'exclude_match', 'state' );
+				$exclude_postcodes = wcj_get_option( 'wcj_gateways_postcodes_exclude_' . $key, '' );
+				$configured        = $configured || ! empty( $exclude_postcodes );
+				if ( ! empty( $exclude_postcodes ) ) {
+					$exclude_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $exclude_postcodes ) ) ) );
+					$configured        = $configured || ! empty( $exclude_postcodes );
+					if ( wcj_check_postcode( $postcode, $exclude_postcodes ) ) {
+						return array( 'removed', 'exclude_match', 'postcode' );
 					}
 				}
-				if ( '' !== $postcode ) {
-					$include_postcodes = wcj_get_option( 'wcj_gateways_postcodes_include_' . $key, '' );
-					$configured = $configured || ! empty( $include_postcodes );
-					if ( ! empty( $include_postcodes ) ) {
-						$include_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $include_postcodes ) ) ) );
-					$configured = $configured || ! empty( $include_postcodes );
-						if ( ! wcj_check_postcode( $postcode, $include_postcodes ) ) {
-							return array( 'removed', 'include_miss', 'postcode' );
-						}
-					}
-					$exclude_postcodes = wcj_get_option( 'wcj_gateways_postcodes_exclude_' . $key, '' );
-					$configured = $configured || ! empty( $exclude_postcodes );
-					if ( ! empty( $exclude_postcodes ) ) {
-						$exclude_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $exclude_postcodes ) ) ) );
-					$configured = $configured || ! empty( $exclude_postcodes );
-						if ( wcj_check_postcode( $postcode, $exclude_postcodes ) ) {
-							return array( 'removed', 'exclude_match', 'postcode' );
-						}
-					}
-				}
-			
-			if ( '' === $customer_country && '' === $customer_state && '' === $postcode ) { return array( 'not_checked', 'empty_location_facts', null ); }
+			}
+
+			if ( '' === $customer_country && '' === $customer_state && '' === $postcode ) {
+				return array( 'not_checked', 'empty_location_facts', null ); }
 			return array( ! $configured && '' !== $customer_country && '' !== $customer_state && '' !== $postcode ? 'not_configured' : 'retained', ! $configured && '' !== $customer_country && '' !== $customer_state && '' !== $postcode ? 'no_rules' : 'reached_location_rules_pass', null );
 		}
 
+		/**
+		 * Return a bounded explanation of this gateway rule without applying it.
+		 *
+		 * @param mixed $key Key.
+		 * @param mixed $facts Facts.
+		 * @return mixed Existing gateway decision or gateway map.
+		 */
 		public function explain_payment_gateway( $key, $facts ) {
 			$location = array();
 			foreach ( array( 'country', 'state', 'postcode' ) as $type ) {
-				$option = 'postcode' === $type ? 'postcodes' : $type;
+				$option   = 'postcode' === $type ? 'postcodes' : $type;
 				$selector = wcj_get_option( 'wcj_gateways_by_location_' . $option . '_type', 'billing' );
-				if ( 'country' === $type && 'by_ip' === $selector ) { return array( 'unsupported', 'by_ip_location', 'country' ); }
+				if ( 'country' === $type && 'by_ip' === $selector ) {
+					return array( 'unsupported', 'by_ip_location', 'country' ); }
 				$tag = $facts[ 'shipping' === $selector ? 'shipping' : 'billing' ][ $type ];
-				if ( 'unknown' === $tag['state'] ) { return array( 'not_checked', 'missing_fact', $type ); }
+				if ( 'unknown' === $tag['state'] ) {
+					return array( 'not_checked', 'missing_fact', $type ); }
 				$location[ $type ] = 'known_empty' === $tag['state'] ? '' : ( 'postcode' === $type ? strtoupper( $tag['value'] ) : $tag['value'] );
 			}
 			return $this->payment_decision( $key, $location['country'], $location['state'], $location['postcode'] );
 		}
-
 	}
 
 endif;

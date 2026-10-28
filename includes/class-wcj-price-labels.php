@@ -205,12 +205,10 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 						if ( isset( $_POST[ $option_name ] ) ) {
 							! empty( update_post_meta( $post_id, '_' . $option_name, wp_kses_post( wp_unslash( $_POST[ $option_name ] ) ) ) );
 						}
-					} else {
-						if ( isset( $_POST[ $option_name ] ) ) {
+					} elseif ( isset( $_POST[ $option_name ] ) ) {
 							! empty( update_post_meta( $post_id, '_' . $option_name, wp_kses_post( wp_unslash( $_POST[ $option_name ] ) ) ) );
-						} else {
-							update_post_meta( $post_id, '_' . $option_name, 'off' );
-						}
+					} else {
+						update_post_meta( $post_id, '_' . $option_name, 'off' );
 					}
 				}
 			}
@@ -507,7 +505,6 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 
 			return $result;
 		}
-
 	}
 
 endif;

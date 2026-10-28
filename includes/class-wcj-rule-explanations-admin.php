@@ -19,6 +19,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations_Admin' ) ) :
 
 		/** Registers a capability-protected WooCommerce submenu. */
 		public function register_page() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			add_submenu_page( 'woocommerce', __( 'Rule explanations', 'woocommerce-jetpack' ), __( 'Rule explanations', 'woocommerce-jetpack' ), 'manage_woocommerce', 'wcj-rule-explanations', array( $this, 'render_page' ) );
 		}
 
@@ -29,6 +30,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations_Admin' ) ) :
 		 * @return array|null Fixed observations, or null outside the admitted context.
 		 */
 		private function readiness_facts() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! function_exists( 'is_admin' ) || ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'wcj_is_rest' ) || ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) ) {
 				return null;
 			}
@@ -154,6 +156,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations_Admin' ) ) :
 
 		/** Current authorization precedes reads, nonce verification and rendering. */
 		public function render_page() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_die( esc_html__( 'You do not have permission to explain Booster rules.', 'woocommerce-jetpack' ) );
 			}
@@ -311,6 +314,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations_Admin' ) ) :
 
 		/** New diagnostics share the existing private merchant surface, not checkout controls. */
 		private function render_payment_admin() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) || wcj_is_rest() ) {
 				return; }
 			$service = new WCJ_Rule_Explanations();
@@ -407,6 +411,7 @@ if ( ! class_exists( 'WCJ_Rule_Explanations_Admin' ) ) :
 		 * @return void
 		 */
 		public function render_shipping_admin() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_woocommerce' ) || wcj_is_rest() ) {
 				return; }
 			$service = new WCJ_Rule_Explanations();

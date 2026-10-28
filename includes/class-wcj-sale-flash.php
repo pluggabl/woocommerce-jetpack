@@ -184,7 +184,6 @@ if ( ! class_exists( 'WCJ_Sale_Flash' ) ) :
 			}
 			return $sale_flash_html;
 		}
-
 	}
 
 endif;

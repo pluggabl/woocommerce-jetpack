@@ -73,7 +73,6 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -149,7 +148,6 @@ if ( ! class_exists( 'WCJ_Product_Custom_Visibility' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;

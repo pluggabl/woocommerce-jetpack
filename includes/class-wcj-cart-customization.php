@@ -140,7 +140,6 @@ if ( ! class_exists( 'WCJ_Cart_Customization' ) ) :
 		public function hide_coupon_field_on_cart( $enabled ) {
 			return ( is_cart() ) ? false : $enabled;
 		}
-
 	}
 
 	endif;

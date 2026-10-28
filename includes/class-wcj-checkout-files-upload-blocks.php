@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Retain the established include path; the companion adapter/exception is intentionally colocated.
 /**
  * Native WooCommerce Blocks checkout uploads, separate from Classic sessions.
  *
@@ -14,7 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WCJ_Checkout_Files_Upload_Capacity_Exception extends RuntimeException {}
 
 /** Real Store API transfer, private claim and permissioned retrieval. */
+// phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound -- The small internal adapter/exception is coupled to this existing include and is not independently loaded.
+/** WCJ Checkout Files Upload Blocks implementation. */
 class WCJ_Checkout_Files_Upload_Blocks {
+	// phpcs:enable Generic.Files.OneObjectStructurePerFile.MultipleFound
 	const API_NAMESPACE = 'booster-checkout-upload';
 	/**
 	 * Existing module policy owner.
@@ -56,7 +59,12 @@ class WCJ_Checkout_Files_Upload_Blocks {
 		if ( ! function_exists( 'woocommerce_store_api_register_update_callback' ) || ! function_exists( 'woocommerce_store_api_register_endpoint_data' ) ) {
 			return;
 		}
-		woocommerce_store_api_register_update_callback( array( 'namespace' => self::API_NAMESPACE, 'callback' => array( $this, 'update' ) ) );
+		woocommerce_store_api_register_update_callback(
+			array(
+				'namespace' => self::API_NAMESPACE,
+				'callback'  => array( $this, 'update' ),
+			)
+		);
 		woocommerce_store_api_register_endpoint_data(
 			array(
 				'endpoint'        => \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER,
@@ -112,16 +120,48 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	 */
 	public function schema() {
 		return array(
-			'available'        => array( 'type' => 'boolean', 'readonly' => true ),
-			'upload_available' => array( 'type' => 'boolean', 'readonly' => true ),
-			'error'            => array( 'type' => 'string', 'readonly' => true ),
-			'revision'         => array( 'type' => 'integer', 'readonly' => true ),
-			'attempt'          => array( 'type' => 'string', 'readonly' => true ),
-			'state'            => array( 'type' => 'string', 'readonly' => true ),
-			'order_id'         => array( 'type' => 'integer', 'readonly' => true ),
-			'fields'           => array( 'type' => 'array', 'items' => array( 'type' => 'object' ), 'readonly' => true ),
-			'files'            => array( 'type' => 'array', 'items' => array( 'type' => 'object' ), 'readonly' => true ),
-			'max_size'         => array( 'type' => 'integer', 'readonly' => true ),
+			'available'        => array(
+				'type'     => 'boolean',
+				'readonly' => true,
+			),
+			'upload_available' => array(
+				'type'     => 'boolean',
+				'readonly' => true,
+			),
+			'error'            => array(
+				'type'     => 'string',
+				'readonly' => true,
+			),
+			'revision'         => array(
+				'type'     => 'integer',
+				'readonly' => true,
+			),
+			'attempt'          => array(
+				'type'     => 'string',
+				'readonly' => true,
+			),
+			'state'            => array(
+				'type'     => 'string',
+				'readonly' => true,
+			),
+			'order_id'         => array(
+				'type'     => 'integer',
+				'readonly' => true,
+			),
+			'fields'           => array(
+				'type'     => 'array',
+				'items'    => array( 'type' => 'object' ),
+				'readonly' => true,
+			),
+			'files'            => array(
+				'type'     => 'array',
+				'items'    => array( 'type' => 'object' ),
+				'readonly' => true,
+			),
+			'max_size'         => array(
+				'type'     => 'integer',
+				'readonly' => true,
+			),
 		);
 	}
 
@@ -348,6 +388,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 			);
 		} catch ( \Throwable $error ) {
 			if ( $error instanceof WCJ_Checkout_Files_Upload_Capacity_Exception || ( $error instanceof RuntimeException && 'private_staging_capacity' === $error->getMessage() ) ) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Store API RouteException messages are JSON encoded by WooCommerce, not emitted as HTML.
 				throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException( 'wcj_upload_capacity', __( 'The store cannot accept uploads right now. Contact the store.', 'woocommerce-jetpack' ), 409 );
 			}
 			if ( $error instanceof RuntimeException && 'upload_revoked' === $error->getMessage() ) {
@@ -363,6 +404,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	 * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Always signals a revoked upload.
 	 */
 	private function revoked() {
+		// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Store API RouteException messages are JSON encoded by WooCommerce, not emitted as HTML.
 		throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException( 'wcj_upload_revoked', __( 'These provisional files are no longer retained. Choose and upload the files again if needed.', 'woocommerce-jetpack' ), 409 );
 	}
 
@@ -400,8 +442,8 @@ class WCJ_Checkout_Files_Upload_Blocks {
 			throw new RuntimeException( 'upload_size_invalid' );
 		}
 		$name  = sanitize_file_name( $data['name'] );
-		$bytes = base64_decode( $data['content'], true );
-		if ( '' === $name || false === $bytes || strlen( $bytes ) > $limit || base64_encode( $bytes ) !== $data['content'] ) {
+		$bytes = base64_decode( $data['content'], true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode -- Store API file transfer uses canonical base64 with strict decoding and a size bound, not executable obfuscation.
+		if ( '' === $name || false === $bytes || strlen( $bytes ) > $limit || base64_encode( $bytes ) !== $data['content'] ) { // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- Store API file transfer uses canonical base64 with strict decoding and a size bound, not executable obfuscation.
 			throw new RuntimeException( 'upload_content_invalid' );
 		}
 		$ext = strtolower( pathinfo( $name, PATHINFO_EXTENSION ) );
@@ -410,7 +452,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 		}
 		$path = $store->scratch();
 		try {
-			if ( strlen( $bytes ) !== file_put_contents( $path, $bytes ) ) {
+			if ( strlen( $bytes ) !== file_put_contents( $path, $bytes ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 				throw new RuntimeException( 'upload_validation_failure' );
 			}
 			$type = wp_check_filetype_and_ext( $path, $name );
@@ -418,11 +460,17 @@ class WCJ_Checkout_Files_Upload_Blocks {
 				throw new RuntimeException( 'upload_type_invalid' );
 			}
 		} finally {
-			if ( ! unlink( $path ) ) {
+			if ( ! unlink( $path ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 				throw new RuntimeException( 'private_scratch_cleanup_held' );
 			}
 		}
-		return array( 'name' => $name, 'size' => strlen( $bytes ), 'type' => $type['type'], 'sha256' => hash( 'sha256', $bytes ), 'bytes' => $bytes );
+		return array(
+			'name'   => $name,
+			'size'   => strlen( $bytes ),
+			'type'   => $type['type'],
+			'sha256' => hash( 'sha256', $bytes ),
+			'bytes'  => $bytes,
+		);
 	}
 
 	/**
@@ -612,6 +660,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	 * @throws RuntimeException When the native nonce or session is unavailable.
 	 */
 	private function csrf() {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- The Store API nonce is unslashed and verified immediately below before any mutation.
 		$nonce = isset( $_SERVER['HTTP_NONCE'] ) && is_string( $_SERVER['HTTP_NONCE'] ) ? wp_unslash( $_SERVER['HTTP_NONCE'] ) : '';
 		if ( '' === $nonce || ! wp_verify_nonce( $nonce, 'wc_store_api' ) || ! WC()->session || ! WC()->cart || '' === (string) WC()->session->get_customer_id() ) {
 			throw new RuntimeException( 'upload_session_denied' );
@@ -636,7 +685,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	 * @return string Domain-bound owner key, or empty when not begun.
 	 * @throws RuntimeException When the session or existing capability is invalid.
 	 */
-	private function owner_key( $create ) {
+	private function owner_key( $create ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Existing callers all pass false; this private reader never creates a key. Only explicit begin/new_purchase can create one.
 		if ( ! WC()->session || ! WC()->cart || '' === (string) WC()->session->get_customer_id() ) {
 			throw new RuntimeException( 'upload_session_denied' );
 		}
@@ -683,6 +732,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	 * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Always signals an unknown or unavailable upload.
 	 */
 	private function reject() {
+		// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Store API RouteException messages are JSON encoded by WooCommerce, not emitted as HTML.
 		throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException( 'wcj_upload_unavailable', __( 'The upload could not be confirmed. Reload the cart to reconcile its current files. Do not repeat an uncertain checkout.', 'woocommerce-jetpack' ), 409 );
 	}
 
@@ -722,10 +772,17 @@ class WCJ_Checkout_Files_Upload_Blocks {
 				return;
 			}
 			foreach ( $record['files'] as $slot => $file ) {
-				$url = add_query_arg( array( 'wcj_private_checkout_file' => (int) $slot, 'order_id' => $order->get_id(), 'key' => $order->get_order_key() ), home_url( '/' ) );
+				$url = add_query_arg(
+					array(
+						'wcj_private_checkout_file' => (int) $slot,
+						'order_id'                  => $order->get_id(),
+						'key'                       => $order->get_order_key(),
+					),
+					home_url( '/' )
+				);
 				echo '<p><a rel="noreferrer" href="' . esc_url( $url ) . '">' . esc_html( $file['name'] ) . '</a></p>';
 			}
-		} catch ( \Throwable $error ) {
+		} catch ( \Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 			// Never fall back to a public file URL when the private store is unknown.
 		}
 	}
@@ -757,12 +814,12 @@ class WCJ_Checkout_Files_Upload_Blocks {
 				}
 				$path               = $store->scratch();
 				$this->mail_files[] = $path;
-				if ( strlen( $bytes ) !== file_put_contents( $path, $bytes ) ) {
+				if ( strlen( $bytes ) !== file_put_contents( $path, $bytes ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 					throw new RuntimeException( 'private_mail_scratch_invalid' );
 				}
 				$attachments[] = $path;
 			}
-		} catch ( \Throwable $error ) {
+		} catch ( \Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 			// Never attach ciphertext or fall back to a public URL on uncertainty.
 		}
 		return $attachments;
@@ -771,7 +828,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	/** Idempotent cleanup of this request's own private mail scratch only. */
 	public function cleanup_mail_files() {
 		foreach ( $this->mail_files as $index => $path ) {
-			if ( ! is_link( $path ) && ( ! file_exists( $path ) || unlink( $path ) ) ) {
+			if ( ! is_link( $path ) && ( ! file_exists( $path ) || unlink( $path ) ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 				unset( $this->mail_files[ $index ] );
 			}
 		}
@@ -785,6 +842,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	 * @return bool Whether an existing access class admits the download.
 	 */
 	private function can_download( $order, $key ) {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 		return $order instanceof WC_Order && ( wcj_current_user_can( 'manage_woocommerce' ) || wcj_current_user_can( 'edit_shop_orders' ) || wcj_is_user_role( 'administrator' ) || is_shop_manager() || ( wcj_is_user_logged_in() && (int) $order->get_customer_id() !== 0 && (int) $order->get_customer_id() === (int) wcj_get_current_user_id() ) || ( '' !== $key && $order->key_is_valid( $key ) ) );
 	}
 
@@ -794,20 +852,25 @@ class WCJ_Checkout_Files_Upload_Blocks {
 	 * @throws RuntimeException Internally caught when download admission fails.
 	 */
 	public function download() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only download requires can_download() order ownership or order key; numeric selectors cannot authorize access.
 		if ( ! isset( $_GET['wcj_private_checkout_file'] ) ) {
 			return;
 		}
 		try {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended -- Read-only download requires can_download() order ownership or order key; numeric selectors cannot authorize access.
 			if ( 'GET' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || ! isset( $_GET['order_id'] ) || ! is_scalar( $_GET['order_id'] ) || ! is_scalar( $_GET['wcj_private_checkout_file'] ) ) {
 				throw new RuntimeException( 'download_denied' );
 			}
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only download requires can_download() order ownership or order key; numeric selectors cannot authorize access.
 			$order = wc_get_order( absint( $_GET['order_id'] ) );
-			$key   = isset( $_GET['key'] ) && is_string( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['key'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only download requires can_download() order ownership or order key; numeric selectors cannot authorize access.
+			$key = isset( $_GET['key'] ) && is_string( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['key'] ) ) : '';
 			if ( ! $this->can_download( $order, $key ) ) {
 				throw new RuntimeException( 'download_denied' );
 			}
 			$record = $this->order_record( $order );
-			$slot   = absint( $_GET['wcj_private_checkout_file'] );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only download requires can_download() order ownership or order key; numeric selectors cannot authorize access.
+			$slot = absint( $_GET['wcj_private_checkout_file'] );
 			if ( null === $record || ! isset( $record['files'][ $slot ] ) ) {
 				throw new RuntimeException( 'download_denied' );
 			}
@@ -823,6 +886,7 @@ class WCJ_Checkout_Files_Upload_Blocks {
 			header( 'Referrer-Policy: no-referrer' );
 			header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . rawurlencode( $file['name'] ) );
 			header( 'Content-Length: ' . strlen( $bytes ) );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Authenticated octet-stream attachment with nosniff and integrity checks; HTML escaping corrupts its bytes.
 			echo $bytes; // Raw authenticated attachment bytes, never HTML.
 			exit;
 		} catch ( \Throwable $error ) {

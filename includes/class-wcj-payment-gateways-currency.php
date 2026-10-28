@@ -257,7 +257,6 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Currency' ) ) :
 			}
 			wp_enqueue_script( 'wcj-payment-gateways-checkout' );
 		}
-
 	}
 
 endif;

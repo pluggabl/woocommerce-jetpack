@@ -656,7 +656,7 @@ if ( ! function_exists( 'wcj_get_terms' ) ) {
 		} else {
 			$_taxonomy = $args['taxonomy'];
 			unset( $args['taxonomy'] );
-			$_terms = get_terms( $_taxonomy, $args );
+			$_terms = get_terms( array_merge( $args, array( 'taxonomy' => $_taxonomy ) ) );
 		}
 		$_terms_options = array();
 		if ( ! empty( $_terms ) && ! is_wp_error( $_terms ) ) {

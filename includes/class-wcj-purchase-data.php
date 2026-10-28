@@ -472,7 +472,6 @@ if ( ! class_exists( 'WCJ_Purchase_Data' ) ) :
 			}
 			return ( $args['profit'] / $price * 100 );
 		}
-
 	}
 
 endif;

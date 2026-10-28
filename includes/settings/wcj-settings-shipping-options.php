@@ -177,5 +177,3 @@ $settings             = array_merge(
 	)
 );
 return $settings;
-
-

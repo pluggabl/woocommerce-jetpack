@@ -65,7 +65,6 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 			if ( $this->is_enabled() ) {
 				add_filter( 'woocommerce_checkout_update_order_review_expired', array( $this, 'update_order_review_expired' ) );
 			}
-
 		}
 
 		/**
@@ -264,7 +263,6 @@ if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;

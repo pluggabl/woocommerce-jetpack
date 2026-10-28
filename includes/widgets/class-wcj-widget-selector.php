@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Selector
  *
- * @version 
+ * @version
  * @since   3.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Widget_Selector' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 
+		 * @version
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */
@@ -82,7 +82,6 @@ if ( ! class_exists( 'WCJ_Widget_Selector' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;
@@ -94,7 +93,7 @@ if ( ! function_exists( 'register_wcj_widget_selector' ) ) {
 	 * @version 3.1.0
 	 * @since   3.1.0
 	 */
-	function register_wcj_widget_selector() {
+	function register_wcj_widget_selector() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Existing WordPress widget registration callback is kept beside its widget class.
 		register_widget( 'WCJ_Widget_Selector' );
 	}
 }

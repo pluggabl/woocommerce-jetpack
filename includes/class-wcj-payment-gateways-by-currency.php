@@ -56,44 +56,65 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_Currency' ) ) :
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			$ticket = WCJ_Rule_Explanations::payment_start( $this, $_available_gateways );
-			$row = null;
-			$whole = false;
+			$row    = null;
+			$whole  = false;
 			$result = $this->payment_filter_body( $_available_gateways, $ticket, $row, $whole );
-			if ( null !== $ticket ) { WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
+			if ( null !== $ticket ) {
+				WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
 			return $result;
 		}
 
-		/** Original lazy collector, shared with bounded per-gateway decisions. */
+		/**
+		 * Original lazy collector, shared with bounded per-gateway decisions.
+		 *
+		 * @param mixed $_available_gateways Available gateway map.
+		 * @param mixed $ticket Request-local observation ticket.
+		 * @param mixed $row Captured decision row.
+		 * @param mixed $whole Whether the complete decision is requested.
+		 */
 		private function payment_filter_body( $_available_gateways, $ticket, &$row, &$whole ) {
 			$current_currency = get_woocommerce_currency();
 			foreach ( $_available_gateways as $key => $gateway ) {
 				$decision = $this->payment_decision( $key, $current_currency );
-				if ( $ticket === (string) $key ) { $row = $decision; }
-				if ( 'removed' === $decision[0] ) { unset( $_available_gateways[ $key ] ); }
-			} 
+				if ( $ticket === (string) $key ) {
+					$row = $decision; }
+				if ( 'removed' === $decision[0] ) {
+					unset( $_available_gateways[ $key ] ); }
+			}
 			return $_available_gateways;
-		
 		}
 
-		/** Shared original include/exclude short-circuit decision. */
+		/**
+		 * Shared original include/exclude short-circuit decision.
+		 *
+		 * @param mixed $key Validated rule key.
+		 * @param mixed $current_currency Current currency code.
+		 */
 		private function payment_decision( $key, $current_currency ) {
 				$allowed_currencies = wcj_get_option( 'wcj_gateways_by_currency_allowed_' . $key, '' );
-				if ( ! empty( $allowed_currencies ) && ! in_array( $current_currency, $allowed_currencies, true ) ) {
-					return array( 'removed', 'include_miss', 'currency' );
-				}
+			if ( ! empty( $allowed_currencies ) && ! in_array( $current_currency, $allowed_currencies, true ) ) {
+				return array( 'removed', 'include_miss', 'currency' );
+			}
 				$denied_currencies = wcj_get_option( 'wcj_gateways_by_currency_denied_' . $key, '' );
-				if ( ! empty( $denied_currencies ) && in_array( $current_currency, $denied_currencies, true ) ) {
-					return array( 'removed', 'exclude_match', 'currency' );
-				}
-			
+			if ( ! empty( $denied_currencies ) && in_array( $current_currency, $denied_currencies, true ) ) {
+				return array( 'removed', 'exclude_match', 'currency' );
+			}
+
 			return array( empty( $allowed_currencies ) && empty( $denied_currencies ) ? 'not_configured' : 'retained', empty( $allowed_currencies ) && empty( $denied_currencies ) ? 'no_rules' : 'rules_pass', 'currency' );
 		}
 
+		/**
+		 * Return a bounded explanation of this gateway rule without applying it.
+		 *
+		 * @param mixed $key Key.
+		 * @param mixed $facts Facts.
+		 * @return mixed Existing gateway decision or gateway map.
+		 */
 		public function explain_payment_gateway( $key, $facts ) {
-			if ( 'unknown' === $facts['currency']['state'] ) { return array( 'not_checked', 'missing_fact', 'currency' ); }
+			if ( 'unknown' === $facts['currency']['state'] ) {
+				return array( 'not_checked', 'missing_fact', 'currency' ); }
 			return $this->payment_decision( $key, $facts['currency']['value'] );
 		}
-
 	}
 
 endif;

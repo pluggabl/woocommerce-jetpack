@@ -28,7 +28,6 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 		 * @since   2.5.9
 		 */
 		public function __construct() {
-			return true;
 		}
 
 		/**
@@ -141,7 +140,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 					if ( isset( $_billing_email ) && '' !== $_billing_email && ! in_array( $_billing_email, $orders, true ) ) {
 						$emails_to_skip = array(); // `emails_to_skip` is not really used.
 						if ( ! in_array( $_billing_email, $emails_to_skip, true ) ) {
-							$total_customers++;
+							++$total_customers;
 							$row = array();
 							foreach ( $fields_ids as $field_id ) {
 								switch ( $field_id ) {
@@ -243,7 +242,7 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 					if ( isset( $_billing_email ) && '' !== $_billing_email && ! in_array( $_billing_email, $orders, true ) ) {
 						$emails_to_skip = array(); // `emails_to_skip` is not really used.
 						if ( ! in_array( $_billing_email, $emails_to_skip, true ) ) {
-							$total_customers++;
+							++$total_customers;
 							$row = array();
 							foreach ( $fields_ids as $field_id ) {
 								switch ( $field_id ) {
@@ -297,7 +296,6 @@ if ( ! class_exists( 'WCJ_Exporter_Customers' ) ) :
 			}
 			return $data;
 		}
-
 	}
 
 endif;

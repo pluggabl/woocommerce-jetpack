@@ -76,7 +76,6 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 					add_action( 'init', array( $this, 'reposition_upsells' ), PHP_INT_MAX );
 				}
 			}
-
 		}
 
 		/**
@@ -164,7 +163,6 @@ if ( ! class_exists( 'WCJ_Upsells' ) ) :
 			$_limit = wcj_get_option( 'wcj_upsells_total', 0 );
 			return ( 0 !== ( $_limit ) ? $_limit : $limit );
 		}
-
 	}
 
 endif;

@@ -101,7 +101,6 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 					3
 				);
 			}
-
 		}
 
 		/**
@@ -323,7 +322,6 @@ if ( ! class_exists( 'WCJ_Product_MSRP' ) ) :
 			wcj_handle_replacements( $replaced_values, $template ) . $price_html :
 			$price_html . wcj_handle_replacements( $replaced_values, $template ) );
 		}
-
 	}
 
 endif;

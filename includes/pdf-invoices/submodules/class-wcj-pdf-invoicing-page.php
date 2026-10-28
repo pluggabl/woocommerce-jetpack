@@ -261,7 +261,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Page' ) ) :
 			}
 			return $page_formats_options;
 		}
-
 	}
 
 endif;

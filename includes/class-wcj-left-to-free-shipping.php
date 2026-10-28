@@ -107,7 +107,6 @@ if ( ! class_exists( 'WCJ_Left_To_Free_Shipping' ) ) :
 		public function show_left_to_free_shipping_info( $content ) {
 			echo wp_kses_post( wcj_get_left_to_free_shipping( $content ) );
 		}
-
 	}
 
 endif;

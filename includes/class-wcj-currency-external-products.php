@@ -61,7 +61,6 @@ if ( ! class_exists( 'WCJ_Currency_External_Products' ) ) :
 			}
 			return $currency;
 		}
-
 	}
 
 endif;

@@ -148,7 +148,6 @@ if ( ! class_exists( 'WCJ_Stock' ) ) :
 					add_filter( ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_stock_html' : 'woocommerce_get_stock_html' ), '__return_empty_string', PHP_INT_MAX );
 				}
 			}
-
 		}
 		/**
 		 * Custom_availability_for_variable_product.
@@ -205,7 +204,6 @@ if ( ! class_exists( 'WCJ_Stock' ) ) :
 					}
 				}
 			}
-
 		}
 		/**
 		 * Custom_availability_text.
@@ -275,7 +273,7 @@ if ( ! class_exists( 'WCJ_Stock' ) ) :
 		 * @param string | array $class defines the class.
 		 * @param array          $_product defines the _product.
 		 */
-		public function custom_availability_class( $class, $_product ) {
+		public function custom_availability_class( $class, $_product ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.classFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( ! $_product->is_in_stock() ) {
 				if ( $this->is_custom_out_of_stock && $this->is_custom_out_of_stock_class ) {
 					// 'out-of-stock'.
@@ -286,11 +284,9 @@ if ( ! class_exists( 'WCJ_Stock' ) ) :
 					// 'available-on-backorder'.
 					return wcj_get_option( 'wcj_stock_custom_backorder_class', '' );
 				}
-			} else {
-				if ( $this->is_custom_in_stock && $this->is_custom_in_stock_class ) {
+			} elseif ( $this->is_custom_in_stock && $this->is_custom_in_stock_class ) {
 					// 'in-stock'.
 					return wcj_get_option( 'wcj_stock_custom_in_stock_class', '' );
-				}
 			}
 			return $class;
 		}
@@ -349,7 +345,6 @@ if ( ! class_exists( 'WCJ_Stock' ) ) :
 				)
 			);
 		}
-
 	}
 
 endif;

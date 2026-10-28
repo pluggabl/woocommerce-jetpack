@@ -50,7 +50,7 @@ class WCJ_Checkout_Files_Upload_Store {
 		}
 		$given = rtrim( WCJ_CHECKOUT_FILES_PRIVATE_DIR, '/\\' );
 		$root  = realpath( $given );
-		if ( false === $root || is_link( $given ) || ! is_dir( $root ) || ! is_writable( $root ) || strtolower( str_replace( '\\', '/', $given ) ) !== strtolower( str_replace( '\\', '/', $root ) ) ) {
+		if ( false === $root || is_link( $given ) || ! is_dir( $root ) || ! is_writable( $root ) || strtolower( str_replace( '\\', '/', $given ) ) !== strtolower( str_replace( '\\', '/', $root ) ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 			throw new RuntimeException( 'private_storage_unavailable' );
 		}
 		$public = array( ABSPATH );
@@ -58,6 +58,7 @@ class WCJ_Checkout_Files_Upload_Store {
 			$public[] = WP_CONTENT_DIR;
 		}
 		if ( ! empty( $_SERVER['DOCUMENT_ROOT'] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Native server document root is used only to reject private storage under public roots; altering the path would weaken that check.
 			$public[] = $_SERVER['DOCUMENT_ROOT'];
 		}
 		foreach ( $public as $path ) {
@@ -77,11 +78,11 @@ class WCJ_Checkout_Files_Upload_Store {
 		$this->domain = self::current_domain();
 		$this->assert_domain();
 		$scoped = $root . '/' . $this->domain;
-		if ( ! is_dir( $scoped ) && ! mkdir( $scoped, 0700 ) && ! is_dir( $scoped ) ) {
+		if ( ! is_dir( $scoped ) && ! mkdir( $scoped, 0700 ) && ! is_dir( $scoped ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 			throw new RuntimeException( 'private_domain_unavailable' );
 		}
 		$canonical = realpath( $scoped );
-		if ( is_link( $scoped ) || false === $canonical || strtolower( str_replace( '\\', '/', $canonical ) ) !== strtolower( str_replace( '\\', '/', $scoped ) ) || ! is_writable( $scoped ) || ( '\\' !== DIRECTORY_SEPARATOR && 0 !== ( fileperms( $scoped ) & 0077 ) ) ) {
+		if ( is_link( $scoped ) || false === $canonical || strtolower( str_replace( '\\', '/', $canonical ) ) !== strtolower( str_replace( '\\', '/', $scoped ) ) || ! is_writable( $scoped ) || ( '\\' !== DIRECTORY_SEPARATOR && 0 !== ( fileperms( $scoped ) & 0077 ) ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 			throw new RuntimeException( 'private_domain_unavailable' );
 		}
 		$this->root = $canonical;
@@ -132,13 +133,13 @@ class WCJ_Checkout_Files_Upload_Store {
 		if ( is_link( $lock_path ) ) {
 			throw new RuntimeException( 'private_lock_unavailable' );
 		}
-		$lock = fopen( $lock_path, 'c+b' );
+		$lock = fopen( $lock_path, 'c+b' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 		if ( false === $lock ) {
 			throw new RuntimeException( 'private_lock_unavailable' );
 		}
-		chmod( $lock_path, 0600 );
+		chmod( $lock_path, 0600 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_chmod -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 		if ( ! flock( $lock, LOCK_EX | LOCK_NB ) ) {
-			fclose( $lock );
+			fclose( $lock ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 			throw new RuntimeException( 'private_upload_busy' );
 		}
 		try {
@@ -152,7 +153,7 @@ class WCJ_Checkout_Files_Upload_Store {
 			);
 			if ( file_exists( $path ) || is_link( $path ) ) {
 				$catalog = json_decode( $this->read_encrypted( $path, 'catalog', 8388608 ), true );
-				if ( ! is_array( $catalog ) || 2 !== ( $catalog['schema'] ?? null ) || $this->domain !== ( $catalog['domain'] ?? null ) || ! is_array( $catalog['owners'] ?? null ) || ! is_array( $catalog['retired'] ?? null ) ) {
+				if ( ! is_array( $catalog ) || 2 !== ( $catalog['schema'] ?? null ) || ( $catalog['domain'] ?? null ) !== $this->domain || ! is_array( $catalog['owners'] ?? null ) || ! is_array( $catalog['retired'] ?? null ) ) {
 					throw new RuntimeException( 'private_catalog_invalid' );
 				}
 			}
@@ -161,14 +162,14 @@ class WCJ_Checkout_Files_Upload_Store {
 			$this->locked = true;
 			$result       = $callback( $catalog, $this );
 			$this->assert_domain();
-			if ( $write && $before !== wp_json_encode( $catalog ) ) {
+			if ( $write && wp_json_encode( $catalog ) !== $before ) {
 				$this->checkpoint( $catalog );
 			}
 			return $result;
 		} finally {
 			$this->locked = false;
 			flock( $lock, LOCK_UN );
-			fclose( $lock );
+			fclose( $lock ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 		}
 	}
 
@@ -238,7 +239,7 @@ class WCJ_Checkout_Files_Upload_Store {
 		foreach ( $ids as $id ) {
 			$file = $this->root . '/' . $id . '.blob';
 			clearstatcache( true, $file );
-			if ( isset( $catalog['retired'][ $id ] ) && ! isset( $retained[ $id ] ) && ! is_link( $file ) && ( ! file_exists( $file ) || unlink( $file ) ) ) {
+			if ( isset( $catalog['retired'][ $id ] ) && ! isset( $retained[ $id ] ) && ! is_link( $file ) && ( ! file_exists( $file ) || unlink( $file ) ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 				unset( $catalog['retired'][ $id ] );
 			}
 		}
@@ -352,7 +353,7 @@ class WCJ_Checkout_Files_Upload_Store {
 	 * @throws RuntimeException When any catalog metadata is invalid.
 	 */
 	public function active_staging_units( $catalog ) {
-		if ( ! is_array( $catalog ) || 2 !== ( $catalog['schema'] ?? null ) || $this->domain !== ( $catalog['domain'] ?? null ) || ! is_array( $catalog['owners'] ?? null ) || ! is_array( $catalog['retired'] ?? null ) ) {
+		if ( ! is_array( $catalog ) || 2 !== ( $catalog['schema'] ?? null ) || ( $catalog['domain'] ?? null ) !== $this->domain || ! is_array( $catalog['owners'] ?? null ) || ! is_array( $catalog['retired'] ?? null ) ) {
 			throw new RuntimeException( 'private_catalog_invalid' );
 		}
 		$units = count( $catalog['retired'] );
@@ -428,7 +429,7 @@ class WCJ_Checkout_Files_Upload_Store {
 		if ( false === $path || dirname( $path ) !== $this->root ) {
 			throw new RuntimeException( 'private_scratch_unavailable' );
 		}
-		chmod( $path, 0600 );
+		chmod( $path, 0600 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_chmod -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 		return $path;
 	}
 
@@ -464,7 +465,7 @@ class WCJ_Checkout_Files_Upload_Store {
 		if ( is_link( $path ) || ! is_file( $path ) || filesize( $path ) > $limit + 33 ) {
 			throw new RuntimeException( 'private_read_failure' );
 		}
-		$raw = file_get_contents( $path, false, null, 0, $limit + 34 );
+		$raw = file_get_contents( $path, false, null, 0, $limit + 34 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 		if ( false === $raw || strlen( $raw ) > $limit + 33 || strlen( $raw ) < 33 || 'WCJU1' !== substr( $raw, 0, 5 ) ) {
 			throw new RuntimeException( 'private_read_failure' );
 		}
@@ -488,16 +489,16 @@ class WCJ_Checkout_Files_Upload_Store {
 			throw new RuntimeException( 'private_write_failure' );
 		}
 		$tmp = $this->root . '/pending-' . bin2hex( random_bytes( 16 ) );
-		$out = fopen( $tmp, 'x+b' );
+		$out = fopen( $tmp, 'x+b' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 		if ( false === $out ) {
 			throw new RuntimeException( 'private_write_failure' );
 		}
 		try {
-			chmod( $tmp, 0600 );
+			chmod( $tmp, 0600 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_chmod -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 			$length = strlen( $bytes );
 			$offset = 0;
 			while ( $offset < $length ) {
-				$written = fwrite( $out, substr( $bytes, $offset ) );
+				$written = fwrite( $out, substr( $bytes, $offset ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 				if ( false === $written || 0 === $written ) {
 					throw new RuntimeException( 'private_write_failure' );
 				}
@@ -507,9 +508,9 @@ class WCJ_Checkout_Files_Upload_Store {
 				throw new RuntimeException( 'private_flush_unknown' );
 			}
 		} finally {
-			fclose( $out );
+			fclose( $out ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 		}
-		if ( ! rename( $tmp, $path ) ) {
+		if ( ! rename( $tmp, $path ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.rename_rename -- Private local storage requires checked native handles, exact byte counts, permissions and atomic publication; remote filesystem adapters cannot preserve those guarantees.
 			throw new RuntimeException( 'private_commit_unknown' );
 		}
 	}

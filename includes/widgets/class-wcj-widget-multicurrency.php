@@ -130,7 +130,6 @@ if ( ! class_exists( 'WCJ_Widget_Multicurrency' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;
@@ -139,7 +138,7 @@ if ( ! function_exists( 'register_wcj_widget_multicurrency' ) ) {
 	/**
 	 * Register WCJ_Widget_Multicurrency widget.
 	 */
-	function register_wcj_widget_multicurrency() {
+	function register_wcj_widget_multicurrency() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Existing WordPress widget registration callback is kept beside its widget class.
 		register_widget( 'WCJ_Widget_Multicurrency' );
 	}
 }

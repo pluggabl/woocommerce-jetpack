@@ -40,8 +40,8 @@ class WCJ_Returns_Service {
 	 */
 	public function __construct( $store = null, $facts = null, $clock = null ) {
 		$this->store = $store;
-		$this->facts = $facts ?: new WCJ_Returns_Facts();
-		$this->clock = $clock ?: 'time';
+		$this->facts = $facts ? $facts : new WCJ_Returns_Facts();
+		$this->clock = $clock ? $clock : 'time';
 	}
 
 	/**
@@ -49,6 +49,7 @@ class WCJ_Returns_Service {
 	 *
 	 * @param callable $operation Operation.
 	 * @return mixed|WP_Error
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function run( $operation ) {
 		try {
@@ -77,9 +78,11 @@ class WCJ_Returns_Service {
 	 *
 	 * @param array $facts Fresh facts.
 	 * @param bool  $staff Whether staff access is required.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function authorize( $facts, $staff = false ) {
 		if ( $staff ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 			if ( ! get_current_user_id() || ! current_user_can( 'manage_woocommerce' ) ) {
 				throw new RuntimeException( 'forbidden' );
 			}
@@ -93,6 +96,7 @@ class WCJ_Returns_Service {
 	 *
 	 * @param mixed  $nonce Nonce.
 	 * @param string $action Action binding.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function nonce( $nonce, $action ) {
 		if ( ! is_string( $nonce ) || strlen( $nonce ) > 128 || ! in_array( wp_verify_nonce( $nonce, $action ), array( 1, 2 ), true ) ) {
@@ -104,6 +108,7 @@ class WCJ_Returns_Service {
 	 * Reject coercion at service entry, not only in the HTML controller.
 	 *
 	 * @param mixed $id Order, request or revision identifier.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function identifier( $id ) {
 		if ( ! is_int( $id ) || $id < 1 || $id > 999999999999999999 ) {
@@ -115,6 +120,7 @@ class WCJ_Returns_Service {
 	 * Resolve one storewide policy. Invalid saved values never default silently.
 	 *
 	 * @return array
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function policy() {
 		$days = get_option( 'wcj_returns_window_days', '30' );
@@ -134,6 +140,7 @@ class WCJ_Returns_Service {
 	 * @param array $facts Order facts.
 	 * @param array $policy Store policy.
 	 * @param int   $now Current epoch.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function eligible( $facts, $policy, $now ) {
 		if ( 'completed' !== $facts['status'] || $facts['completed'] <= 0 || $now < $facts['completed'] || $now - $facts['completed'] > $policy['days'] * DAY_IN_SECONDS || $facts['amount_only'] ) {
@@ -186,6 +193,7 @@ class WCJ_Returns_Service {
 	 * Reserve final encoded space at intake; a terminal decision must fit too.
 	 *
 	 * @param array $payload Pending payload.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function future_room( $payload ) {
 		$payload['history'][] = array(
@@ -201,6 +209,7 @@ class WCJ_Returns_Service {
 			$event['lease']    = str_repeat( 'f', 64 );
 		}
 		unset( $event );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 		$json = json_encode( $payload );
 		if ( ! is_string( $json ) || strlen( $json ) > 32768 ) {
 			throw new RuntimeException( 'input_invalid' );
@@ -229,7 +238,8 @@ class WCJ_Returns_Service {
 				$initial = $this->facts->load( $order_id );
 				$this->authorize( $initial );
 				$selected = $this->selected( $quantities, $reason, $token );
-				$actor        = (int) get_current_user_id();
+				$actor    = (int) get_current_user_id();
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 				$input        = hash( 'sha256', json_encode( array( $selected, $reason ) ) );
 				$digest       = hash( 'sha256', $token );
 				$now          = call_user_func( $this->clock );
@@ -258,10 +268,11 @@ class WCJ_Returns_Service {
 	/**
 	 * One shared bounded input parser for account and proven guest requests.
 	 *
-	 * @param array $quantities Selected quantities.
+	 * @param array  $quantities Selected quantities.
 	 * @param string $reason Plain text.
 	 * @param string $token Rendered random token.
 	 * @return array Exact fixed-point selections.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function selected( $quantities, $reason, $token ) {
 		if ( ! is_array( $quantities ) || count( $quantities ) < 1 || count( $quantities ) > 20 || ! is_string( $reason ) || strlen( $reason ) > 2000 || false === preg_match_all( '/./us', $reason ) || preg_match_all( '/./us', $reason ) > 500 || sanitize_textarea_field( $reason ) !== $reason || ! is_string( $token ) || ! preg_match( '/^[a-f0-9]{64}$/D', $token ) ) {
@@ -286,18 +297,20 @@ class WCJ_Returns_Service {
 	/**
 	 * One shared private claim engine, entered only after distinct authorization.
 	 *
-	 * @param int $order_id Order.
-	 * @param array $selected Exact quantities.
-	 * @param string $reason Bounded reason.
-	 * @param int $actor Account actor or separately proven guest zero.
-	 * @param string $input Input digest.
-	 * @param string $digest Idempotency digest.
-	 * @param array $initial Fresh Phase A facts.
-	 * @param int $now Captured epoch.
+	 * @param int        $order_id Order.
+	 * @param array      $selected Exact quantities.
+	 * @param string     $reason Bounded reason.
+	 * @param int        $actor Account actor or separately proven guest zero.
+	 * @param string     $input Input digest.
+	 * @param string     $digest Idempotency digest.
+	 * @param array      $initial Fresh Phase A facts.
+	 * @param int        $now Captured epoch.
 	 * @param array|null $policy Captured policy.
-	 * @param string $policy_error Finite policy failure.
-	 * @param string $guest_owner Private immutable binding, never a caller flag.
+	 * @param string     $policy_error Finite policy failure.
+	 * @param string     $guest_owner Private immutable binding, never a caller flag.
 	 * @return array
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
+	 * @param mixed      $synthetic Whether the explicitly synthetic path is selected.
 	 */
 	private function submit_locked( $order_id, $selected, $reason, $actor, $input, $digest, $initial, $now, $policy, $policy_error, $guest_owner = '', $synthetic = null ) {
 		$this->store->lock_claim( $order_id, 0, $initial['hash'] );
@@ -323,6 +336,7 @@ class WCJ_Returns_Service {
 			return array( '_wcj_error' => 'needs_review' );
 		}
 		if ( '' !== $policy_error ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Fixed internal policy error code is caught by the controller and mapped to escaped public feedback, never emitted directly.
 			throw new RuntimeException( $policy_error );
 		}
 		$this->eligible( $facts, $policy, $now );
@@ -347,7 +361,10 @@ class WCJ_Returns_Service {
 			'outbox'  => array(),
 		);
 		if ( $guest_owner ) {
-			$payload['guest'] = array( 'v' => 1, 'owner' => $guest_owner );
+			$payload['guest'] = array(
+				'v'     => 1,
+				'owner' => $guest_owner,
+			);
 		}
 		if ( null !== $synthetic ) {
 			$this->store->assert_purpose( 2 );
@@ -380,16 +397,17 @@ class WCJ_Returns_Service {
 	/**
 	 * One shared private finite transition/reservation-release engine.
 	 *
-	 * @param int $id Request.
-	 * @param int $revision Expected revision.
+	 * @param int    $id Request.
+	 * @param int    $revision Expected revision.
 	 * @param string $status Finite terminal decision.
-	 * @param array $row Initial row.
-	 * @param array $facts Fresh Phase A facts.
-	 * @param bool $staff Captured current capability.
-	 * @param int $actor Proven account/staff identity or guest zero.
-	 * @param int $now Captured epoch.
+	 * @param array  $row Initial row.
+	 * @param array  $facts Fresh Phase A facts.
+	 * @param bool   $staff Captured current capability.
+	 * @param int    $actor Proven account/staff identity or guest zero.
+	 * @param int    $now Captured epoch.
 	 * @param string $guest_owner Private separately proven binding.
 	 * @return array
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function transition_locked( $id, $revision, $status, $row, $facts, $staff, $actor, $now, $guest_owner = '' ) {
 		$order_id = (int) $row['order_id'];
@@ -408,8 +426,8 @@ class WCJ_Returns_Service {
 		if ( 'pending' !== $current['status'] || ! in_array( $status, array( 'approved', 'declined', 'cancelled' ), true ) ) {
 			throw new RuntimeException( 'transition_invalid' );
 		}
-		$drift = $this->drift( $order_id, $fresh );
-		$data = $this->store->payload( $current );
+		$drift         = $this->drift( $order_id, $fresh );
+		$data          = $this->store->payload( $current );
 		$owner_matches = (int) $current['actor_id'] === $fresh['owner'];
 		if ( 0 === (int) $current['actor_id'] ) {
 			$owner_matches = $this->guest_matches( $fresh, $data['guest']['owner'] );
@@ -437,7 +455,7 @@ class WCJ_Returns_Service {
 	/**
 	 * Fresh exact guest identity equality is not itself authentication.
 	 *
-	 * @param array $facts Fresh facts.
+	 * @param array  $facts Fresh facts.
 	 * @param string $owner Stored immutable digest.
 	 * @return bool
 	 */
@@ -448,9 +466,10 @@ class WCJ_Returns_Service {
 	/**
 	 * Require a separately proven binding before guest replay/cancellation.
 	 *
-	 * @param array $row Exact request.
-	 * @param array $facts Fresh facts.
+	 * @param array  $row Exact request.
+	 * @param array  $facts Fresh facts.
 	 * @param string $owner Proven immutable digest.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function guest_binding( $row, $facts, $owner ) {
 		$data = $this->store->payload( $row );
@@ -463,68 +482,86 @@ class WCJ_Returns_Service {
 	 * Submit through the same private engine after cookie, nonce and fresh proof.
 	 *
 	 * @param string $cookie Grant cookie, not actor/order inputs.
-	 * @param array $quantities Selected quantities.
+	 * @param array  $quantities Selected quantities.
 	 * @param string $reason Bounded reason.
 	 * @param string $token Rendered random token.
 	 * @param string $nonce Cookie/operation-bound WP nonce.
 	 * @return array|WP_Error
 	 */
 	public function guest_submit( $cookie, $quantities, $reason, $token, $nonce ) {
-		return $this->run( function () use ( $cookie, $quantities, $reason, $token, $nonce ) {
-			$guest = new WCJ_Returns_Guest( $this->store, $this->facts, $this->clock );
-			$guest->charge_write( $cookie, 'submit', $nonce );
-			$context = $guest->context( $cookie, 'submit', $nonce );
-			$facts = $this->facts->load( $context['order'] );
-			if ( ! $this->guest_matches( $facts, $context['owner'] ) ) {
-				throw new RuntimeException( 'forbidden' );
+		return $this->run(
+			function () use ( $cookie, $quantities, $reason, $token, $nonce ) {
+				$guest = new WCJ_Returns_Guest( $this->store, $this->facts, $this->clock );
+				$guest->charge_write( $cookie, 'submit', $nonce );
+				$context = $guest->context( $cookie, 'submit', $nonce );
+				$facts   = $this->facts->load( $context['order'] );
+				if ( ! $this->guest_matches( $facts, $context['owner'] ) ) {
+						throw new RuntimeException( 'forbidden' );
+				}
+				$selected = $this->selected( $quantities, $reason, $token );
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
+				$input        = hash( 'sha256', json_encode( array( $selected, $reason ) ) );
+				$digest       = hash( 'sha256', $token );
+				$policy       = null;
+				$policy_error = '';
+				try {
+					$policy = $this->policy();
+				} catch ( RuntimeException $error ) {
+							$policy_error = $error->getMessage(); }
+				return $this->store->transaction(
+					function () use ( $guest, $context, $facts, $selected, $reason, $input, $digest, $policy, $policy_error ) {
+						$guest->lock();
+						return $this->submit_locked( $context['order'], $selected, $reason, 0, $input, $digest, $facts, $context['phase']['now'], $policy, $policy_error, $context['owner'] );
+					},
+					$context['phase']['start'],
+					$context['until']
+				);
 			}
-			$selected = $this->selected( $quantities, $reason, $token );
-			$input = hash( 'sha256', json_encode( array( $selected, $reason ) ) );
-			$digest = hash( 'sha256', $token );
-			$policy = null;
-			$policy_error = '';
-			try { $policy = $this->policy(); } catch ( RuntimeException $error ) { $policy_error = $error->getMessage(); }
-			return $this->store->transaction( function () use ( $guest, $context, $facts, $selected, $reason, $input, $digest, $policy, $policy_error ) {
-				$guest->lock();
-				return $this->submit_locked( $context['order'], $selected, $reason, 0, $input, $digest, $facts, $context['phase']['now'], $policy, $policy_error, $context['owner'] );
-			}, $context['phase']['start'], $context['until'] );
-		} );
+		);
 	}
 
 	/**
 	 * Cancel only a bound pending guest request; login or a zero actor is no proof.
 	 *
 	 * @param string $cookie Grant cookie.
-	 * @param int $id Request ID.
-	 * @param int $revision Expected revision.
+	 * @param int    $id Request ID.
+	 * @param int    $revision Expected revision.
 	 * @param string $nonce Cookie/operation-bound nonce.
 	 * @return array|WP_Error
 	 */
 	public function guest_cancel( $cookie, $id, $revision, $nonce ) {
-		return $this->run( function () use ( $cookie, $id, $revision, $nonce ) {
-			$this->identifier( $id );
-			$this->identifier( $revision );
-			$guest = new WCJ_Returns_Guest( $this->store, $this->facts, $this->clock );
-			$guest->charge_write( $cookie, 'cancel', $nonce );
-			$context = $guest->context( $cookie, 'cancel', $nonce );
-			$row = $this->store->get( $id );
-			if ( (int) $row['order_id'] !== $context['order'] ) { throw new RuntimeException( 'forbidden' ); }
-			$facts = $this->facts->load( $context['order'] );
-			$this->guest_binding( $row, $facts, $context['owner'] );
-			return $this->store->transaction( function () use ( $guest, $context, $row, $facts, $id, $revision ) {
-				$guest->lock();
-				return $this->transition_locked( $id, $revision, 'cancelled', $row, $facts, false, 0, $context['phase']['now'], $context['owner'] );
-			}, $context['phase']['start'], $context['until'] );
-		} );
+		return $this->run(
+			function () use ( $cookie, $id, $revision, $nonce ) {
+				$this->identifier( $id );
+				$this->identifier( $revision );
+				$guest = new WCJ_Returns_Guest( $this->store, $this->facts, $this->clock );
+				$guest->charge_write( $cookie, 'cancel', $nonce );
+				$context = $guest->context( $cookie, 'cancel', $nonce );
+				$row     = $this->store->get( $id );
+				if ( (int) $row['order_id'] !== $context['order'] ) {
+					throw new RuntimeException( 'forbidden' ); }
+				$facts = $this->facts->load( $context['order'] );
+				$this->guest_binding( $row, $facts, $context['owner'] );
+				return $this->store->transaction(
+					function () use ( $guest, $context, $row, $facts, $id, $revision ) {
+						$guest->lock();
+						return $this->transition_locked( $id, $revision, 'cancelled', $row, $facts, false, 0, $context['phase']['now'], $context['owner'] );
+					},
+					$context['phase']['start'],
+					$context['until']
+				);
+			}
+		);
 	}
 
 	/**
 	 * Shared read-only availability and policy. Authorization is already proven.
 	 *
-	 * @param int $order_id Order.
+	 * @param int   $order_id Order.
 	 * @param array $facts Fresh facts.
 	 * @param array $rows Exactly authorized history.
 	 * @return array
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function view_data( $order_id, $facts, $rows ) {
 		$policy         = null;
@@ -573,32 +610,37 @@ class WCJ_Returns_Service {
 	 * Cursor records the last scanned row, not the last visible matching row.
 	 *
 	 * @param string $cookie Grant cookie.
-	 * @param int $before Keyset cursor.
+	 * @param int    $before Keyset cursor.
 	 * @return array|WP_Error
 	 */
 	public function guest_view( $cookie, $before = PHP_INT_MAX ) {
-		return $this->run( function () use ( $cookie, $before ) {
-			if ( PHP_INT_MAX !== $before ) { $this->identifier( $before ); }
-			$guest = new WCJ_Returns_Guest( $this->store, $this->facts, $this->clock );
-			$context = $guest->context( $cookie );
-			$facts = $this->facts->load( $context['order'] );
-			if ( ! $this->guest_matches( $facts, $context['owner'] ) ) { throw new RuntimeException( 'forbidden' ); }
-			$scanned = $this->store->guest_listing( $context['order'], $before );
-			$rows = array();
-			foreach ( $scanned as $row ) {
-				$data = $this->store->payload( $row );
-				if ( hash_equals( $data['guest']['owner'], $context['owner'] ) ) { $rows[] = $row; }
+		return $this->run(
+			function () use ( $cookie, $before ) {
+				if ( PHP_INT_MAX !== $before ) {
+					$this->identifier( $before ); }
+				$guest   = new WCJ_Returns_Guest( $this->store, $this->facts, $this->clock );
+				$context = $guest->context( $cookie );
+				$facts   = $this->facts->load( $context['order'] );
+				if ( ! $this->guest_matches( $facts, $context['owner'] ) ) {
+					throw new RuntimeException( 'forbidden' ); }
+				$scanned = $this->store->guest_listing( $context['order'], $before );
+				$rows    = array();
+				foreach ( $scanned as $row ) {
+					$data = $this->store->payload( $row );
+					if ( hash_equals( $data['guest']['owner'], $context['owner'] ) ) {
+						$rows[] = $row; }
+				}
+				$result                  = $this->view_data( $context['order'], $facts, $rows );
+				$actions                 = $guest->actions( $context );
+				$result['submit_action'] = $actions['submit'];
+				$result['cancel_action'] = $actions['cancel'];
+				$result['has_more']      = 50 === count( $scanned );
+				$last                    = $scanned ? end( $scanned ) : null;
+				$result['next_cursor']   = $last ? (int) $last['id'] : 0;
+				$guest->recheck();
+				return $result;
 			}
-			$result = $this->view_data( $context['order'], $facts, $rows );
-			$actions = $guest->actions( $context );
-			$result['submit_action'] = $actions['submit'];
-			$result['cancel_action'] = $actions['cancel'];
-			$result['has_more'] = 50 === count( $scanned );
-			$last = $scanned ? end( $scanned ) : null;
-			$result['next_cursor'] = $last ? (int) $last['id'] : 0;
-			$guest->recheck();
-			return $result;
-		} );
+		);
 	}
 
 	/**
@@ -622,11 +664,12 @@ class WCJ_Returns_Service {
 				}
 				$row   = $this->store->get( $id );
 				$facts = $this->facts->load( (int) $row['order_id'] );
+				// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 				$staff = current_user_can( 'manage_woocommerce' );
 				$this->authorize( $facts, $staff );
 				$actor = (int) get_current_user_id();
 				$now   = call_user_func( $this->clock );
-				if ( ! $staff && ( (int) $row['actor_id'] !== (int) get_current_user_id() || 'cancelled' !== $status ) ) {
+				if ( ! $staff && ( (int) get_current_user_id() !== (int) $row['actor_id'] || 'cancelled' !== $status ) ) {
 					throw new RuntimeException( 'forbidden' );
 				}
 				return $this->store->transaction(
@@ -731,7 +774,7 @@ class WCJ_Returns_Service {
 						if ( 0 === (int) $current['actor_id'] && ! $this->guest_matches( $facts, $data['guest']['owner'] ) ) {
 							throw new RuntimeException( 'recipient_unavailable' );
 						}
-						$event   = $data['outbox'][ $key ] ?? null;
+						$event = $data['outbox'][ $key ] ?? null;
 						if ( ! is_array( $event ) || ! in_array( $event['state'], array( 'pending', 'failed' ), true ) ) {
 								throw new RuntimeException( 'notification_ambiguous' );
 						}
@@ -744,10 +787,10 @@ class WCJ_Returns_Service {
 						$data['outbox'][ $key ] = $event;
 						$this->store->save( $current, $data, $current['status'], $now );
 						return array(
-							'event'  => $event,
-							'owner'  => (int) $current['actor_id'],
+							'event'       => $event,
+							'owner'       => (int) $current['actor_id'],
 							'guest_owner' => $data['guest']['owner'] ?? '',
-							'status' => $current['status'],
+							'status'      => $current['status'],
 						);
 					},
 					$started
@@ -799,7 +842,11 @@ class WCJ_Returns_Service {
 			}
 		);
 	}
-	/** Reviewed module/role admission, source-equivalent to Elite and Summary. */
+	/**
+	 * Reviewed module/role admission, source-equivalent to Elite and Summary.
+	 *
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
+	 */
 	private function filtered_admission() {
 		$plugin = function_exists( 'w_c_j' ) ? w_c_j() : ( function_exists( 'WCJ' ) ? WCJ() : null );
 		$module = isset( $plugin->all_modules['returns'] ) ? $plugin->all_modules['returns'] : null;
@@ -845,6 +892,7 @@ class WCJ_Returns_Service {
 	 *
 	 * @param callable $operation Captured-input operation.
 	 * @return mixed|WP_Error Finite result only.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function synthetic_run( $operation ) {
 		try {
@@ -880,13 +928,13 @@ class WCJ_Returns_Service {
 	 */
 	private function synthetic_snapshot( $witness ) {
 		return array(
-			'owner'      => $witness['creator'],
-			'status'     => 'completed',
-			'completed'  => $witness['birth'],
+			'owner'       => $witness['creator'],
+			'status'      => 'completed',
+			'completed'   => $witness['birth'],
 			'amount_only' => false,
-			'capacities' => array( 1 => 2000000 ),
-			'names'      => array( 1 => WCJ_Returns_Store::SYNTHETIC_NAME ),
-			'hash'       => $this->store->synthetic_binding( $witness ),
+			'capacities'  => array( 1 => 2000000 ),
+			'names'       => array( 1 => WCJ_Returns_Store::SYNTHETIC_NAME ),
+			'hash'        => $this->store->synthetic_binding( $witness ),
 		);
 	}
 
@@ -899,6 +947,7 @@ class WCJ_Returns_Service {
 	 * @param int    $blog Captured blog.
 	 * @param string $digest Full expected digest, empty only for creator-bound ID view.
 	 * @return array Validated header, payload and fixed facts.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function synthetic_retained( $anchor, $target, $actor, $blog, $digest = '' ) {
 		$rows = $this->store->synthetic_requests( $target );
@@ -931,6 +980,7 @@ class WCJ_Returns_Service {
 	 *
 	 * @param mixed $result Shared kernel result.
 	 * @return mixed Successful result.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function synthetic_result( $result ) {
 		if ( is_array( $result ) && isset( $result['_wcj_error'] ) ) {
@@ -948,33 +998,51 @@ class WCJ_Returns_Service {
 	 * @return array|WP_Error Persisted result or finite error.
 	 */
 	public function synthetic_submit( $quantity, $token, $nonce ) {
-		return $this->synthetic_run( function ( $started, $actor, $blog, $now ) use ( $quantity, $token, $nonce ) {
-			$this->nonce( $nonce, 'wcj_returns_synthetic_create' );
-			$reason   = WCJ_Returns_Store::SYNTHETIC_REASON;
-			$selected = $this->selected( array( 1 => $quantity ), $reason, $token );
-			$input    = hash( 'sha256', json_encode( array( $selected, $reason ) ) );
-			$digest   = hash( 'sha256', $token );
-			$target   = WCJ_Returns_Store::synthetic_target( $blog, $actor, $digest );
-			$witness  = array( 'v' => 1, 'blog' => $blog, 'creator' => $actor, 'target' => $target, 'token' => $digest, 'template' => WCJ_Returns_Store::synthetic_template(), 'birth' => $now );
-			$this->store->synthetic_binding( $witness );
-			return $this->store->transaction( function () use ( $actor, $blog, $now, $reason, $selected, $input, $digest, $target, $witness ) {
-				$anchor = $this->store->existing_synthetic_anchor( $target );
-				if ( $anchor ) {
-					list( $old, $facts ) = $this->synthetic_retained( $anchor, $target, $actor, $blog, $digest );
-					// The locked retained witness wins, even after a Phase A absent race.
-					$witness = $old['data']['synthetic'];
-				} else {
-					if ( $this->store->synthetic_requests( $target ) || $this->store->synthetic_claims( $target ) ) {
-						throw new RuntimeException( 'synthetic_conflict' );
-					}
-					$facts = $this->synthetic_snapshot( $witness );
-					$this->store->insert_synthetic_anchor( $target, $facts['hash'] );
-				}
-				$policy = array( 'days' => 30, 'notify' => false, 'version' => 1 );
-				$result = $this->submit_locked( $target, $selected, $reason, $actor, $input, $digest, $facts, $now, $policy, '', '', $witness );
-				return $this->synthetic_result( $result );
-			}, $started );
-		} );
+		return $this->synthetic_run(
+			function ( $started, $actor, $blog, $now ) use ( $quantity, $token, $nonce ) {
+				$this->nonce( $nonce, 'wcj_returns_synthetic_create' );
+				$reason   = WCJ_Returns_Store::SYNTHETIC_REASON;
+				$selected = $this->selected( array( 1 => $quantity ), $reason, $token );
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
+				$input   = hash( 'sha256', json_encode( array( $selected, $reason ) ) );
+				$digest  = hash( 'sha256', $token );
+				$target  = WCJ_Returns_Store::synthetic_target( $blog, $actor, $digest );
+				$witness = array(
+					'v'        => 1,
+					'blog'     => $blog,
+					'creator'  => $actor,
+					'target'   => $target,
+					'token'    => $digest,
+					'template' => WCJ_Returns_Store::synthetic_template(),
+					'birth'    => $now,
+				);
+				$this->store->synthetic_binding( $witness );
+				return $this->store->transaction(
+					function () use ( $actor, $blog, $now, $reason, $selected, $input, $digest, $target, $witness ) {
+						$anchor = $this->store->existing_synthetic_anchor( $target );
+						if ( $anchor ) {
+								list( $old, $facts ) = $this->synthetic_retained( $anchor, $target, $actor, $blog, $digest );
+								// The locked retained witness wins, even after a Phase A absent race.
+								$witness = $old['data']['synthetic'];
+						} else {
+							if ( $this->store->synthetic_requests( $target ) || $this->store->synthetic_claims( $target ) ) {
+								throw new RuntimeException( 'synthetic_conflict' );
+							}
+							$facts = $this->synthetic_snapshot( $witness );
+							$this->store->insert_synthetic_anchor( $target, $facts['hash'] );
+						}
+						$policy = array(
+							'days'    => 30,
+							'notify'  => false,
+							'version' => 1,
+						);
+						$result = $this->submit_locked( $target, $selected, $reason, $actor, $input, $digest, $facts, $now, $policy, '', '', $witness );
+						return $this->synthetic_result( $result );
+					},
+					$started
+				);
+			}
+		);
 	}
 
 	/**
@@ -987,28 +1055,33 @@ class WCJ_Returns_Service {
 	 * @return array|WP_Error Persisted result or finite error.
 	 */
 	public function synthetic_transition( $id, $revision, $status, $nonce ) {
-		return $this->synthetic_run( function ( $started, $actor, $blog, $now ) use ( $id, $revision, $status, $nonce ) {
-			$this->identifier( $id );
-			$this->identifier( $revision );
-			$this->nonce( $nonce, 'wcj_returns_synthetic_transition_' . $id );
-			if ( ! in_array( $status, array( 'approved', 'declined', 'cancelled' ), true ) ) {
-				throw new RuntimeException( 'transition_invalid' );
-			}
-			$row  = $this->store->get( $id );
-			$data = $this->store->payload( $row );
-			if ( $data['synthetic']['creator'] !== $actor || $data['synthetic']['blog'] !== $blog ) {
-				throw new RuntimeException( 'forbidden' );
-			}
-			$target = $data['synthetic']['target'];
-			return $this->store->transaction( function () use ( $id, $revision, $status, $actor, $blog, $now, $target ) {
-				$anchor = $this->store->existing_synthetic_anchor( $target );
-				list( $row, $facts ) = $this->synthetic_retained( $anchor, $target, $actor, $blog );
-				if ( (int) $row['id'] !== $id ) {
-					throw new RuntimeException( 'synthetic_conflict' );
+		return $this->synthetic_run(
+			function ( $started, $actor, $blog, $now ) use ( $id, $revision, $status, $nonce ) {
+				$this->identifier( $id );
+				$this->identifier( $revision );
+				$this->nonce( $nonce, 'wcj_returns_synthetic_transition_' . $id );
+				if ( ! in_array( $status, array( 'approved', 'declined', 'cancelled' ), true ) ) {
+						throw new RuntimeException( 'transition_invalid' );
 				}
-				return $this->synthetic_result( $this->transition_locked( $id, $revision, $status, $row, $facts, true, $actor, $now ) );
-			}, $started );
-		} );
+				$row  = $this->store->get( $id );
+				$data = $this->store->payload( $row );
+				if ( $data['synthetic']['creator'] !== $actor || $data['synthetic']['blog'] !== $blog ) {
+					throw new RuntimeException( 'forbidden' );
+				}
+				$target = $data['synthetic']['target'];
+				return $this->store->transaction(
+					function () use ( $id, $revision, $status, $actor, $blog, $now, $target ) {
+						$anchor              = $this->store->existing_synthetic_anchor( $target );
+						list( $row, $facts ) = $this->synthetic_retained( $anchor, $target, $actor, $blog );
+						if ( (int) $row['id'] !== $id ) {
+								throw new RuntimeException( 'synthetic_conflict' );
+						}
+						return $this->synthetic_result( $this->transition_locked( $id, $revision, $status, $row, $facts, true, $actor, $now ) );
+					},
+					$started
+				);
+			}
+		);
 	}
 
 	/**
@@ -1018,22 +1091,27 @@ class WCJ_Returns_Service {
 	 * @return array|WP_Error Private header/history.
 	 */
 	public function synthetic_view( $id ) {
-		return $this->synthetic_run( function ( $started, $actor, $blog ) use ( $id ) {
-			$this->identifier( $id );
-			$row  = $this->store->get( $id );
-			$data = $this->store->payload( $row );
-			if ( $data['synthetic']['creator'] !== $actor || $data['synthetic']['blog'] !== $blog ) {
-				throw new RuntimeException( 'forbidden' );
-			}
-			$target = $data['synthetic']['target'];
-			return $this->store->transaction( function () use ( $id, $actor, $blog, $target ) {
-				list( $row ) = $this->synthetic_retained( $this->store->existing_synthetic_anchor( $target ), $target, $actor, $blog );
-				if ( (int) $row['id'] !== $id ) {
-					throw new RuntimeException( 'synthetic_conflict' );
+		return $this->synthetic_run(
+			function ( $started, $actor, $blog ) use ( $id ) {
+				$this->identifier( $id );
+				$row  = $this->store->get( $id );
+				$data = $this->store->payload( $row );
+				if ( $data['synthetic']['creator'] !== $actor || $data['synthetic']['blog'] !== $blog ) {
+						throw new RuntimeException( 'forbidden' );
 				}
-				return $row;
-			}, $started );
-		} );
+				$target = $data['synthetic']['target'];
+				return $this->store->transaction(
+					function () use ( $id, $actor, $blog, $target ) {
+						list( $row ) = $this->synthetic_retained( $this->store->existing_synthetic_anchor( $target ), $target, $actor, $blog );
+						if ( (int) $row['id'] !== $id ) {
+							throw new RuntimeException( 'synthetic_conflict' );
+						}
+						return $row;
+					},
+					$started
+				);
+			}
+		);
 	}
 
 	/**
@@ -1044,36 +1122,55 @@ class WCJ_Returns_Service {
 	 * @return array|WP_Error Retained result or still unknown.
 	 */
 	public function synthetic_recover( $token, $nonce ) {
-		return $this->synthetic_run( function ( $started, $actor, $blog ) use ( $token, $nonce ) {
-			$this->nonce( $nonce, 'wcj_returns_synthetic_recover' );
-			if ( ! is_string( $token ) || ! preg_match( '/^[a-f0-9]{64}$/D', $token ) ) {
-				throw new RuntimeException( 'input_invalid' );
-			}
-			$digest = hash( 'sha256', $token );
-			$target = WCJ_Returns_Store::synthetic_target( $blog, $actor, $digest );
-			return $this->store->transaction( function () use ( $actor, $blog, $digest, $target ) {
-				$anchor = $this->store->existing_synthetic_anchor( $target );
-				if ( ! $anchor ) {
-					throw new RuntimeException( 'commit_unknown' );
+		return $this->synthetic_run(
+			function ( $started, $actor, $blog ) use ( $token, $nonce ) {
+				$this->nonce( $nonce, 'wcj_returns_synthetic_recover' );
+				if ( ! is_string( $token ) || ! preg_match( '/^[a-f0-9]{64}$/D', $token ) ) {
+						throw new RuntimeException( 'input_invalid' );
 				}
-				list( $row ) = $this->synthetic_retained( $anchor, $target, $actor, $blog, $digest );
-				return $row;
-			}, $started );
-		} );
+				$digest = hash( 'sha256', $token );
+				$target = WCJ_Returns_Store::synthetic_target( $blog, $actor, $digest );
+				return $this->store->transaction(
+					function () use ( $actor, $blog, $digest, $target ) {
+						$anchor = $this->store->existing_synthetic_anchor( $target );
+						if ( ! $anchor ) {
+							throw new RuntimeException( 'commit_unknown' );
+						}
+						list( $row ) = $this->synthetic_retained( $anchor, $target, $actor, $blog, $digest );
+						return $row;
+					},
+					$started
+				);
+			}
+		);
 	}
 
-	/** @return string|WP_Error Finite admitted synthetic setup observation. */
+	/**
+	 * Finite admitted synthetic setup observation.
+	 *
+	 * @return string|WP_Error Observed setup state or a guarded failure.
+	 */
 	public function synthetic_setup_state() {
-		return $this->synthetic_run( function () { return $this->store->setup_state(); } );
+		return $this->synthetic_run(
+			function () {
+				return $this->store->setup_state();
+			}
+		);
 	}
 
-	/** @return string|WP_Error Finite admitted live setup observation. */
+	/**
+	 * Finite admitted live setup observation.
+	 *
+	 * @return string|WP_Error Observed setup state or a guarded failure.
+	 */
 	public function storage_state() {
-		return $this->run( function () {
-			$this->authorize( array(), true );
-			$this->filtered_admission();
-			return $this->store->setup_state();
-		} );
+		return $this->run(
+			function () {
+				$this->authorize( array(), true );
+				$this->filtered_admission();
+				return $this->store->setup_state();
+			}
+		);
 	}
 
 	/**
@@ -1083,13 +1180,14 @@ class WCJ_Returns_Service {
 	 * @return bool|WP_Error Setup result, never a migration.
 	 */
 	public function initialize_storage( $nonce ) {
-		return $this->run( function () use ( $nonce ) {
-			$this->authorize( array(), true );
-			$this->filtered_admission();
-			$this->nonce( $nonce, 'wcj_returns_storage' );
-			$this->store->install();
-			return true;
-		} );
+		return $this->run(
+			function () use ( $nonce ) {
+				$this->authorize( array(), true );
+				$this->filtered_admission();
+				$this->nonce( $nonce, 'wcj_returns_storage' );
+				$this->store->install();
+				return true;
+			}
+		);
 	}
-
 }

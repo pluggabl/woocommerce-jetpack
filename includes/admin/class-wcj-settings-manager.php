@@ -47,31 +47,28 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 			}
 			$msg = __( 'Your settings have been saved.', 'woocommerce-jetpack' );
 
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-			global $wp_filesystem;
-			WP_Filesystem();
-			$file_name = 'booster_settings.txt';
-			$file_path = wcj_get_wcj_uploads_dir() . DIRECTORY_SEPARATOR . $file_name;
-			if ( $wp_filesystem->exists( $file_path ) ) {
-				$wp_filesystem->delete( $file_path, true );
-			}
-			$wpnonce = isset( $_REQUEST['wcj-verify-manage-settings'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-verify-manage-settings'] ), 'wcj-verify-manage-settings' ) : false;
+			$wpnonce = $this->can_manage_settings();
 
 			if ( $wpnonce ) {
 
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 				if ( isset( $_POST['return_url'] ) ) {
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 					$return_url = sanitize_text_field( wp_unslash( $_POST['return_url'] ) ) . '&msg=' . $msg . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' );
 				} else {
 					$return_url = admin_url( 'admin.php?page=wcj-plugins&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) );
 				}
 
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 				if ( isset( $_POST['booster_export_settings'] ) ) {
 					$this->manage_options_export();
 				}
 
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 				if ( isset( $_POST['booster_import_settings'] ) ) {
-					$msg         = $this->manage_options_import();
-					$return_url .= '&msg=' . $msg;
+					$msg        = $this->manage_options_import();
+					$return_url = add_query_arg( 'msg', $msg, $return_url );
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 					if ( isset( $_POST['wcj_quick_action'] ) ) {
 						$return_url .= '#message';
 					}
@@ -79,12 +76,14 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 					exit();
 				}
 
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 				if ( isset( $_POST['booster_reset_settings'] ) ) {
 					$msg         = $this->manage_options_reset();
 					$return_url .= '&msg=' . $msg;
 					wp_safe_redirect( $return_url );
 					exit();
 				}
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 				if ( isset( $_POST['booster_reset_settings_meta'] ) ) {
 					$msg         = $this->manage_options_reset_meta();
 					$return_url .= '&msg=' . $msg;
@@ -93,10 +92,15 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 				}
 
 				$general_setting_fields = array(
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 					'wcj_autoload_options'       => isset( $_POST['wcj_autoload_options'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_autoload_options'] ) ) : null,
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 					'wcj_load_modules_on_init'   => isset( $_POST['wcj_load_modules_on_init'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_load_modules_on_init'] ) ) : null,
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 					'wcj_list_for_products'      => isset( $_POST['wcj_list_for_products'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_list_for_products'] ) ) : null,
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 					'wcj_list_for_products_cats' => isset( $_POST['wcj_list_for_products_cats'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_list_for_products_cats'] ) ) : null,
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 					'wcj_list_for_products_tags' => isset( $_POST['wcj_list_for_products_tags'] ) ? sanitize_text_field( wp_unslash( $_POST['wcj_list_for_products_tags'] ) ) : null,
 				);
 
@@ -106,6 +110,7 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 					}
 				}
 
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
 				if ( isset( $_POST['wcj_site_key'] ) ) {
 					if ( class_exists( 'WCJ_Plus_Site_Key_Manager' ) ) {
 						$site_key_manager = new WCJ_Plus_Site_Key_Manager();
@@ -120,114 +125,138 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 		}
 
 		/**
-		 * Manage_options_import.
+		 * Authorize both the form handler and direct settings-manager calls.
 		 *
-		 * @version 7.1.0
-		 * @since   2.5.2
+		 * @return bool Whether the current administrator submitted the real form nonce.
 		 */
-		public function manage_options_import() {
-			global $wcj_notice;
-			if ( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' === $_FILES['booster_import_settings_file']['tmp_name'] ) {
-				$wcj_notice     .= __( 'Please upload a file to import!', 'woocommerce-jetpack' );
-				$import_settings = array();
-				$wpnonce         = isset( $_REQUEST['wcj-verify-manage-settings'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-verify-manage-settings'] ), 'wcj-verify-manage-settings' ) : false;
-				if ( $wpnonce ) {
-					unset( $_POST['booster_import_settings'] );
-				}
-				return $wcj_notice;
-			} else {
-				require_once ABSPATH . '/wp-admin/includes/file.php';
-				global $wp_filesystem;
-				WP_Filesystem();
-				$import_counter = 0;
-				if (
-					isset( $_POST['booster_import_nonce'] ) &&
-					wp_verify_nonce(
-						sanitize_text_field( wp_unslash( $_POST['booster_import_nonce'] ) ),
-						'booster_import_action'
-					) &&
-					isset( $_FILES['booster_import_settings_file'] ) &&
-					isset(
-						$_FILES['booster_import_settings_file']['error'],
-						$_FILES['booster_import_settings_file']['tmp_name']
-					)
-				) {
-
-					if ( UPLOAD_ERR_OK !== $_FILES['booster_import_settings_file']['error'] ) {
-						$wcj_notice .= __( 'Upload failed!', 'woocommerce-jetpack' );
-						return $wcj_notice;
-					}
-
-					$tmp_name = sanitize_text_field(
-						wp_unslash( $_FILES['booster_import_settings_file']['tmp_name'] )
-					);
-
-					$import_settings = $wp_filesystem->get_contents( $tmp_name );
-
-				}
-				$bom             = pack( 'H*', 'EFBBBF' );
-				$import_settings = preg_replace( "/^$bom/", '', $import_settings );
-				$import_settings = explode( PHP_EOL, preg_replace( '~(*BSR_ANYCRLF)\R~', PHP_EOL, $import_settings ) );
-				if ( ! is_array( $import_settings ) || 2 !== count( $import_settings ) ) {
-					$wcj_notice .= __( 'Wrong file format!', 'woocommerce-jetpack' );
-					return $wcj_notice;
-				} else {
-					$import_header   = $import_settings[0];
-					$required_header = 'Booster for WooCommerce';
-					if ( substr( $import_header, 0, strlen( $required_header ) ) !== $required_header ) {
-						$wcj_notice .= __( 'Wrong file format!', 'woocommerce-jetpack' );
-						return $wcj_notice;
-					} else {
-						$import_settings = json_decode( $import_settings[1], true );
-						foreach ( $import_settings as $import_key => $import_setting ) {
-							if ( strlen( $import_key ) > 4 && 'wcj_' === substr( $import_key, 0, 4 ) ) {
-								update_option( $import_key, $import_setting );
-								++$import_counter;
-							}
-						}
-						/* translators: %d: translation added */
-						$wcj_notice .= sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), $import_counter );
-						return $wcj_notice;
-					}
-				}
-			}
+		private function can_manage_settings() {
+			return current_user_can( 'manage_options' ) && isset( $_POST['wcj-verify-manage-settings'] ) &&
+				is_string( $_POST['wcj-verify-manage-settings'] ) &&
+				false !== wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wcj-verify-manage-settings'] ) ), 'wcj-verify-manage-settings' );
 		}
 
 		/**
-		 * Manage_options_export.
+		 * Import a validated local upload, using the nonce emitted by both forms.
 		 *
-		 * @version 7.0.0
-		 * @since   2.5.2
-		 * @see     http://php.net/manual/en/function.header.php
+		 * @return string Import result for the administrator.
+		 */
+		public function manage_options_import() {
+			if ( ! $this->can_manage_settings() ) {
+				return __( 'You do not have permission to import settings.', 'woocommerce-jetpack' );
+			}
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
+			if ( ! isset( $_FILES['booster_import_settings_file'] ) ) {
+				return __( 'Please upload a file to import!', 'woocommerce-jetpack' );
+			}
+			// PHP supplies this upload structure. Validate its types and upload provenance before reading it.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- can_manage_settings() verifies the actual POST form nonce and manage_options before this branch or upload read.
+			$file = $_FILES['booster_import_settings_file']; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- can_manage_settings() verified nonce/capability; upload validated below; sanitizing a native temporary path could change its identity.
+			if ( ! is_array( $file ) || ! isset( $file['error'], $file['tmp_name'] ) || UPLOAD_ERR_OK !== $file['error'] || ! is_string( $file['tmp_name'] ) || ! is_uploaded_file( $file['tmp_name'] ) ) {
+				return __( 'Upload failed!', 'woocommerce-jetpack' );
+			}
+			$size = filesize( $file['tmp_name'] );
+			if ( false === $size || $size > wp_max_upload_size() ) {
+				return __( 'Upload failed!', 'woocommerce-jetpack' );
+			}
+			// Uploaded temporary files are local even when WordPress updates use FTP/SSH.
+			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+			$filesystem = new WP_Filesystem_Direct( null );
+			$contents   = $filesystem->get_contents( $file['tmp_name'] );
+			if ( ! is_string( $contents ) ) {
+				return __( 'Upload failed!', 'woocommerce-jetpack' );
+			}
+			$contents = preg_replace( '/^\xEF\xBB\xBF/', '', $contents );
+			$lines    = preg_split( '/\r\n|\n|\r/', rtrim( $contents, "\r\n" ), 2 );
+			if ( 2 !== count( $lines ) || ! preg_match( '/^Booster for WooCommerce(?: v[^\r\n]+)?$/D', $lines[0] ) || '{' !== substr( ltrim( $lines[1] ), 0, 1 ) ) {
+				return __( 'Wrong file format!', 'woocommerce-jetpack' );
+			}
+			$settings = json_decode( $lines[1], true );
+			if ( JSON_ERROR_NONE !== json_last_error() || ! is_array( $settings ) ) {
+				return __( 'Wrong file format!', 'woocommerce-jetpack' );
+			}
+			// Validate the complete document before changing any option. Never import non-Booster options.
+			foreach ( array_keys( $settings ) as $key ) {
+				if ( ! $this->is_backup_setting_key( $key ) ) {
+					return __( 'Wrong file format!', 'woocommerce-jetpack' );
+				}
+			}
+			foreach ( $settings as $key => $value ) {
+				// Older exports used HTML field IDs for array settings. Restore their option instead.
+				if ( preg_match( '/^([^\[]+)\[([^\]]+)\]$/D', $key, $parts ) ) {
+					$option                = isset( $settings[ $parts[1] ] ) && is_array( $settings[ $parts[1] ] ) ? $settings[ $parts[1] ] : (array) get_option( $parts[1], array() );
+					$option[ $parts[2] ]   = $value;
+					$settings[ $parts[1] ] = $option;
+					unset( $settings[ $key ] );
+				}
+			}
+			foreach ( $settings as $key => $value ) {
+				update_option( $key, $value );
+			}
+			/* translators: %d: Number of imported settings. */
+			return sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), count( $settings ) );
+		}
+
+		/**
+		 * Admit the legacy Booster backup option namespace, not arbitrary WordPress options.
+		 *
+		 * @param mixed $key Imported or exported option name.
+		 * @return bool Whether both backup directions support the name.
+		 */
+		private function is_backup_setting_key( $key ) {
+			return is_string( $key ) && ( 1 === preg_match( '/^wcj_[a-zA-Z0-9_-]+(?:\[[a-zA-Z0-9_-]+\])?$/D', $key ) || false );
+		}
+
+		/**
+		 * Stream the backup without a shared, publicly addressable temporary file.
 		 */
 		public function manage_options_export() {
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-			global $wp_filesystem;
-			WP_Filesystem();
+			if ( ! $this->can_manage_settings() ) {
+				return;
+			}
 			$export_settings = array();
-			$export_counter  = array();
-			$wpnonce         = isset( $_REQUEST['wcj-verify-manage-settings'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-verify-manage-settings'] ), 'wcj-verify-manage-settings' ) : false;
+			$missing         = new stdClass();
+			// Back up saved values only: writing UI defaults can change previously unset runtime behavior.
+			// Some module settings render notices. Keep that HTML out of the backup.
+			ob_start();
 			foreach ( w_c_j()->modules as $module ) {
-				$values = $module->get_settings();
-				foreach ( $values as $value ) {
-					if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
-						if ( isset( $_POST['booster_export_settings'] ) ) {
-							$export_settings[ $value['id'] ] = wcj_get_option( $value['id'], $value['default'] );
-							if ( ! isset( $export_counter[ $module->short_desc ] ) ) {
-								$export_counter[ $module->short_desc ] = 0;
-							}
-							++$export_counter[ $module->short_desc ];
+				foreach ( $module->get_settings() as $value ) {
+					if ( isset( $value['default'], $value['id'] ) ) {
+						$id = $value['id'];
+						if ( false !== strpos( $id, '[' ) ) {
+							$id = substr( $id, 0, strpos( $id, '[' ) );
+						}
+						$setting = get_option( $id, $missing );
+						if ( $missing !== $setting ) {
+							$export_settings[ $id ] = $setting;
 						}
 					}
 				}
 			}
-			$export_settings = wp_json_encode( $export_settings );
-			$export_settings = 'Booster for WooCommerce v' . wcj_get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
-			$file_name       = 'booster_settings.txt';
-			$file_path       = wcj_get_wcj_uploads_dir() . DIRECTORY_SEPARATOR . $file_name;
-			$wp_filesystem->put_contents( $file_path, $export_settings, FS_CHMOD_FILE );
-			WC_Download_Handler::download_file_force( $file_path, $file_name );
-			die();
+			foreach ( array( 'wcj_autoload_options', 'wcj_load_modules_on_init', 'wcj_list_for_products', 'wcj_list_for_products_cats', 'wcj_list_for_products_tags' ) as $id ) {
+				$setting = get_option( $id, $missing );
+				if ( $missing !== $setting ) {
+					$export_settings[ $id ] = $setting;
+				}
+			}
+			ob_end_clean();
+			foreach ( array_keys( $export_settings ) as $key ) {
+				if ( ! $this->is_backup_setting_key( $key ) ) {
+					wp_die( esc_html__( 'Settings could not be exported.', 'woocommerce-jetpack' ) );
+				}
+			}
+			$json = wp_json_encode( (object) $export_settings );
+			if ( false === $json ) {
+				wp_die( esc_html__( 'Settings could not be exported.', 'woocommerce-jetpack' ) );
+			}
+			$backup = 'Booster for WooCommerce v' . wcj_get_option( WCJ_VERSION_OPTION, 'NA' ) . "\n" . $json;
+			nocache_headers();
+			header( 'Content-Type: text/plain; charset=UTF-8' );
+			header( 'Content-Disposition: attachment; filename="booster_settings.txt"' );
+			header( 'X-Content-Type-Options: nosniff' );
+			// A text/plain attachment is the backup format, not HTML. Escaping would corrupt saved settings.
+			echo $backup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Authorized, JSON-encoded text/plain download.
+			exit;
 		}
 
 		/**

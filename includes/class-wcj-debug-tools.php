@@ -59,7 +59,6 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 					);
 				}
 			);
-
 		}
 
 		/**
@@ -138,7 +137,6 @@ if ( ! class_exists( 'WCJ_Debug_Tools' ) ) :
 			}
 			return $system_info;
 		}
-
 	}
 
 endif;

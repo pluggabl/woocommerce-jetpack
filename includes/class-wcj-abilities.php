@@ -200,6 +200,7 @@ if ( ! class_exists( 'WCJ_Abilities' ) ) :
 
 		/** Permission is checked again immediately before every execution. */
 		public function check_permission() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			return current_user_can( 'manage_woocommerce' ) ? true : new WP_Error( 'booster_forbidden', __( 'You do not have permission to view Booster operational status.', 'woocommerce-jetpack' ) ); // phpcs:ignore
 		}
 

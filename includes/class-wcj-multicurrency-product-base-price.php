@@ -555,7 +555,6 @@ if ( ! class_exists( 'WCJ_Multicurrency_Product_Base_Price' ) ) :
 			}
 			return $currency_symbol;
 		}
-
 	}
 
 endif;

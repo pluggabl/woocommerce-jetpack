@@ -265,12 +265,10 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 			}
 			$_intersect = array_intersect( $user_role, $_user->roles );
 			return ( ! empty( $_intersect ) );
-		} else {
-			if ( 'administrator' === $user_role ) {
+		} elseif ( 'administrator' === $user_role ) {
 				return ( in_array( 'administrator', $_user->roles, true ) || in_array( 'super_admin', $_user->roles, true ) );
-			} else {
-				return ( in_array( $user_role, $_user->roles, true ) );
-			}
+		} else {
+			return ( in_array( $user_role, $_user->roles, true ) );
 		}
 	}
 }

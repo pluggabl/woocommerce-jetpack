@@ -305,7 +305,7 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 					}
 					$loop->the_post();
 					$xml_items .= $this->process_shortcode( $xml_item_template );
-					$counter++;
+					++$counter;
 				}
 				$offset += $block_size;
 				if ( '-1' !== $max && $counter >= $max ) {
@@ -319,7 +319,6 @@ if ( ! class_exists( 'WCJ_Products_XML' ) ) :
 				FS_CHMOD_FILE
 			);
 		}
-
 	}
 
 endif;

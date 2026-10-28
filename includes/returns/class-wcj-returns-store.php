@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Retain the established include path; the companion adapter/exception is intentionally colocated.
 /**
  * Private transactional storage for Returns, schema version1.
  *
@@ -38,12 +38,12 @@ class WCJ_Returns_Connection {
 	 * @throws RuntimeException When an explicit input, storage or transaction invariant is rejected.
 	 */
 	public function __construct( $database ) {
-		if ( 'wpdb' !== get_class( $database ) || ! extension_loaded( 'mysqli' ) || 0 !== strpos( mysqli_get_client_info(), 'mysqlnd' ) || ! $database->dbh instanceof mysqli ) {
+		if ( 'wpdb' !== get_class( $database ) || ! extension_loaded( 'mysqli' ) || 0 !== strpos( mysqli_get_client_info(), 'mysqlnd' ) || ! $database->dbh instanceof mysqli ) { // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_get_client_info -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 			throw new RuntimeException( 'storage_unavailable' );
 		}
 		$this->db     = $database;
 		$this->handle = $database->dbh;
-		$this->thread = mysqli_thread_id( $this->handle );
+		$this->thread = mysqli_thread_id( $this->handle ); // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_thread_id -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 		$this->identity();
 	}
 
@@ -53,7 +53,7 @@ class WCJ_Returns_Connection {
 	 * @throws RuntimeException When an explicit input, storage or transaction invariant is rejected.
 	 */
 	private function identity() {
-		if ( $this->db->dbh !== $this->handle || mysqli_thread_id( $this->handle ) !== $this->thread || $this->thread < 1 ) {
+		if ( $this->db->dbh !== $this->handle || mysqli_thread_id( $this->handle ) !== $this->thread || $this->thread < 1 ) { // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_thread_id -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 			throw new RuntimeException( 'storage_failure' );
 		}
 	}
@@ -69,12 +69,12 @@ class WCJ_Returns_Connection {
 		try {
 			$this->identity();
 			$sql    = $this->db->remove_placeholder_escape( $sql );
-			$result = mysqli_query( $this->handle, $sql );
+			$result = mysqli_query( $this->handle, $sql ); // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_query -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 			$this->identity();
 			if ( false === $result ) {
 				throw new RuntimeException( 'storage_failure' );
 			}
-			return true === $result ? mysqli_affected_rows( $this->handle ) : $result;
+			return true === $result ? mysqli_affected_rows( $this->handle ) : $result; // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_affected_rows -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 		} catch ( Throwable $error ) {
 			throw new RuntimeException( 'storage_failure' );
 		}
@@ -93,9 +93,9 @@ class WCJ_Returns_Connection {
 			throw new RuntimeException( 'storage_failure' );
 		}
 		try {
-			return mysqli_fetch_all( $result, MYSQLI_ASSOC );
+			return mysqli_fetch_all( $result, MYSQLI_ASSOC ); // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_fetch_all -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 		} finally {
-			mysqli_free_result( $result );
+			mysqli_free_result( $result ); // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_free_result -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 		}
 	}
 
@@ -107,12 +107,15 @@ class WCJ_Returns_Connection {
 	 */
 	public function insert_id() {
 		$this->identity();
-		return (int) mysqli_insert_id( $this->handle );
+		return (int) mysqli_insert_id( $this->handle ); // phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_insert_id -- Use the captured wpdb mysqli session without reconnect/retry; replacing it can replay a transaction with an unknown COMMIT outcome.
 	}
 }
 
 /** Two private tables. No Woo order storage or destructive cleanup. */
+// phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound -- The small internal adapter/exception is coupled to this existing include and is not independently loaded.
+/** WCJ Returns Store implementation. */
 class WCJ_Returns_Store {
+	// phpcs:enable Generic.Files.OneObjectStructurePerFile.MultipleFound
 	/**
 	 * Database connection.
 	 *
@@ -182,7 +185,7 @@ class WCJ_Returns_Store {
 			throw new RuntimeException( 'storage_unavailable' );
 		}
 		$this->purpose = $purpose;
-		$this->db      = $database ?: $wpdb;
+		$this->db      = $database ? $database : $wpdb;
 		if ( ! preg_match( '/^[A-Za-z0-9_]+$/D', $this->db->prefix ) ) {
 			throw new RuntimeException( 'storage_unavailable' );
 		}
@@ -270,6 +273,7 @@ class WCJ_Returns_Store {
 	 * @throws RuntimeException When an explicit input, storage or transaction invariant is rejected.
 	 */
 	public function install() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			throw new RuntimeException( 'forbidden' );
 		}
@@ -515,7 +519,7 @@ class WCJ_Returns_Store {
 				// Same original no-retry handle only. This is cleanup, not evidence
 				// that the COMMIT did not happen, and never permits another send.
 				$this->query( 'ROLLBACK' );
-			} catch ( Throwable $cleanup_error ) {
+			} catch ( Throwable $cleanup_error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 				// Lost/unusable original handle: retain the unknown outcome.
 			}
 			$this->started = null;
@@ -733,6 +737,7 @@ class WCJ_Returns_Store {
 	 * @throws RuntimeException When an explicit input, storage or transaction invariant is rejected.
 	 */
 	private function encode( $data, $row ) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 		$json = json_encode( $data );
 		if ( ! is_string( $json ) || strlen( $json ) > 32768 ) {
 			throw new RuntimeException( 'payload_limit' );
@@ -829,6 +834,7 @@ class WCJ_Returns_Store {
 	 * @return string Hash of the fixed, versioned exercise template.
 	 */
 	public static function synthetic_template() {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 		return hash( 'sha256', json_encode( array( 1, 1, 2000000, self::SYNTHETIC_NAME, self::SYNTHETIC_REASON, 'completed', 30, false ) ) );
 	}
 
@@ -845,6 +851,7 @@ class WCJ_Returns_Store {
 		if ( PHP_INT_SIZE < 8 || ! is_int( $blog ) || $blog < 1 || $blog > 999999999999999999 || ! is_int( $creator ) || $creator < 1 || $creator > 999999999999999999 || ! is_string( $digest ) || ! preg_match( '/^[a-f0-9]{64}$/D', $digest ) ) {
 			throw new RuntimeException( 'input_invalid' );
 		}
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 		$hash = hash( 'sha256', json_encode( array( 'wcj-returns-synthetic-target', 1, 2, $blog, $creator, $digest ) ) );
 		return 1 + (int) hexdec( substr( $hash, 0, 14 ) );
 	}
@@ -862,6 +869,7 @@ class WCJ_Returns_Store {
 		if ( ! is_array( $witness ) || array_keys( $witness ) !== $want || 1 !== $witness['v'] || ! is_int( $witness['birth'] ) || $witness['birth'] < 1 || $witness['birth'] > 253402300799 || ! is_string( $witness['template'] ) || ! hash_equals( self::synthetic_template(), $witness['template'] ) || ! is_int( $witness['target'] ) || self::synthetic_target( $witness['blog'], $witness['creator'], $witness['token'] ) !== $witness['target'] ) {
 			throw new RuntimeException( 'payload_invalid' );
 		}
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 		return hash( 'sha256', json_encode( array( 'wcj-returns-synthetic-binding', 1, 2, $witness['blog'], $witness['creator'], $witness['target'], $witness['token'], $witness['template'], $witness['birth'] ) ) );
 	}
 
@@ -875,18 +883,19 @@ class WCJ_Returns_Store {
 	private function synthetic_payload( $row, $data ) {
 		$witness = $data['synthetic'];
 		$this->synthetic_binding( $witness );
-		if ( (string) $witness['creator'] !== (string) $row['actor_id'] || (string) $witness['target'] !== (string) ( $row['order_id'] ?? '' ) || $witness['token'] !== ( $row['idempotency'] ?? '' )
-			|| $data['policy'] !== array(
+		if ( (string) $witness['creator'] !== (string) $row['actor_id'] || (string) ( $row['order_id'] ?? '' ) !== (string) $witness['target'] || ( $row['idempotency'] ?? '' ) !== $witness['token']
+			|| array(
 				'days'    => 30,
 				'notify'  => false,
 				'version' => 1,
-			) || array() !== $data['outbox'] || self::SYNTHETIC_REASON !== $data['reason']
+			) !== $data['policy'] || array() !== $data['outbox'] || self::SYNTHETIC_REASON !== $data['reason']
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 			|| array( 1 ) !== array_keys( $data['items'] ) || $data['items'][1] > 2000000 || hash( 'sha256', json_encode( array( $data['items'], $data['reason'] ) ) ) !== ( $row['input_hash'] ?? '' )
 			|| gmdate( 'Y-m-d H:i:s', $witness['birth'] ) !== ( $row['created_gmt'] ?? '' ) || $data['history'][0]['time'] !== $witness['birth'] ) {
 			throw new RuntimeException( 'payload_invalid' );
 		}
 		$last = end( $data['history'] );
-		if ( (string) count( $data['history'] ) !== (string) ( $row['revision'] ?? '' ) || $last['status'] !== ( $row['status'] ?? '' ) || $last['time'] < $witness['birth'] || gmdate( 'Y-m-d H:i:s', $last['time'] ) !== ( $row['updated_gmt'] ?? '' ) ) {
+		if ( (string) count( $data['history'] ) !== (string) ( $row['revision'] ?? '' ) || ( $row['status'] ?? '' ) !== $last['status'] || $last['time'] < $witness['birth'] || gmdate( 'Y-m-d H:i:s', $last['time'] ) !== ( $row['updated_gmt'] ?? '' ) ) {
 			throw new RuntimeException( 'payload_invalid' );
 		}
 		foreach ( $data['history'] as $event ) {
@@ -1037,6 +1046,7 @@ class WCJ_Returns_Store {
 	 * @throws RuntimeException When an explicit input, storage or transaction invariant is rejected.
 	 */
 	public function install_auth( $nonce, $now ) {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain the existing least-privilege authorization.
 		if ( ! current_user_can( 'manage_woocommerce' ) || ! is_string( $nonce ) || ! in_array( wp_verify_nonce( $nonce, 'wcj_returns_guest_storage' ), array( 1, 2 ), true ) || ! is_int( $now ) || $now < 1 ) {
 			throw new RuntimeException( 'forbidden' );
 		}
@@ -1057,6 +1067,7 @@ class WCJ_Returns_Store {
 				$key = self::auth_anchor_key();
 				// One fixed-key INSERT only in this explicit admin action. Concurrent
 				// installers serialize on the same durable row before counting.
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 				$data = json_encode(
 					array(
 						'v'    => 1,
@@ -1139,7 +1150,7 @@ class WCJ_Returns_Store {
 			throw new RuntimeException( 'auth_invalid' );
 		}
 		if ( 'anchor' === $row['kind'] ) {
-			if ( $row['row_key'] !== self::auth_anchor_key() || 0 !== (int) $row['order_id'] || '9999-12-31 23:59:59' !== $row['expires_gmt'] || ! is_int( $data['rows'] ) || $data['rows'] < 1 || $data['rows'] > 10000 ) {
+			if ( self::auth_anchor_key() !== $row['row_key'] || 0 !== (int) $row['order_id'] || '9999-12-31 23:59:59' !== $row['expires_gmt'] || ! is_int( $data['rows'] ) || $data['rows'] < 1 || $data['rows'] > 10000 ) {
 				throw new RuntimeException( 'auth_invalid' );
 			}
 			foreach (
@@ -1157,7 +1168,7 @@ class WCJ_Returns_Store {
 				throw new RuntimeException( 'auth_invalid' );
 			}
 		} else {
-			if ( (int) $row['order_id'] < 1 || ! is_int( $data['issued'] ) || $data['issued'] < 1 || $data['issued'] > PHP_INT_MAX - 900 || ! is_string( $data['owner'] ) || ! preg_match( '/^[a-f0-9]{64}$/D', $data['owner'] ) || ! is_string( $data['key_tag'] ) || ! preg_match( '/^[a-f0-9]{64}$/D', $data['key_tag'] ) || $row['expires_gmt'] !== gmdate( 'Y-m-d H:i:s', $data['issued'] + ( 'grant' === $row['kind'] ? 900 : 600 ) ) ) {
+			if ( (int) $row['order_id'] < 1 || ! is_int( $data['issued'] ) || $data['issued'] < 1 || $data['issued'] > PHP_INT_MAX - 900 || ! is_string( $data['owner'] ) || ! preg_match( '/^[a-f0-9]{64}$/D', $data['owner'] ) || ! is_string( $data['key_tag'] ) || ! preg_match( '/^[a-f0-9]{64}$/D', $data['key_tag'] ) || gmdate( 'Y-m-d H:i:s', $data['issued'] + ( 'grant' === $row['kind'] ? 900 : 600 ) ) !== $row['expires_gmt'] ) {
 				throw new RuntimeException( 'auth_invalid' );
 			}
 			if ( 'grant' === $row['kind'] ? ! is_int( $data['writes'] ) || $data['writes'] < 0 || $data['writes'] > 20 : ! is_int( $data['attempts'] ) || $data['attempts'] < 0 || $data['attempts'] > 4 || ! in_array( $data['delivery'], array( 'pending', 'sending', 'accepted', 'ambiguous' ), true ) ) {
@@ -1179,7 +1190,8 @@ class WCJ_Returns_Store {
 		if ( ! $this->owned ) {
 			throw new RuntimeException( 'transaction_required' );
 		}
-		$next            = $row;
+		$next = $row;
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 		$next['payload'] = json_encode( $data );
 		$this->auth_payload( $next );
 		if ( $next['payload'] !== $row['payload'] && 1 !== $this->query( $this->db->prepare( "UPDATE {$this->auth} SET payload=%s WHERE row_key=%s AND payload=%s", $next['payload'], $row['row_key'], $row['payload'] ) ) ) {

@@ -44,7 +44,6 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 			}
 			$plugin_file = defined( 'WCJ_PLUGIN_FILE' ) ? WCJ_PLUGIN_FILE : ( defined( 'WCJ_FREE_PLUGIN_FILE' ) ? WCJ_FREE_PLUGIN_FILE : '' );
 			if ( '' !== $plugin_file ) {
-				// wp_enqueue_style( 'wcj-order-health', plugin_dir_url( $plugin_file ) . 'assets/css/admin/wcj-order-health.css', array(), '8.4.0' );
 				wp_enqueue_style( 'wcj-order-health', plugin_dir_url( $plugin_file ) . 'assets/css/admin/wcj-order-health.css', array(), '8.4.3' );
 			}
 		}
@@ -74,6 +73,7 @@ if ( ! class_exists( 'WCJ_Order_Health_Admin' ) ) :
 
 		/** Renders the read-only dashboard and Morning Store Briefing. */
 		public function render_page() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 				wp_die( esc_html__( 'You do not have permission to view Order Health.', 'woocommerce-jetpack' ) );
 			}

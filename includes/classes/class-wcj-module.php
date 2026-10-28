@@ -219,7 +219,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @return mixed
 		 */
-		public function handle_price( $return, $price, $args, $unformatted_price ) {
+		public function handle_price( $return, $price, $args, $unformatted_price ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed, Universal.NamingConventions.NoReservedKeywordParameterNames.returnFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( isset( $args['add_html_on_price'] ) && ! filter_var( $args['add_html_on_price'], FILTER_VALIDATE_BOOLEAN ) ) {
 				$return = $price;
 			}
@@ -249,7 +249,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @param null $module_id Current Module ID.
 		 */
-		public function restore_wpml_args_on_get_products( $module_id = null ) {
+		public function restore_wpml_args_on_get_products( $module_id = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( 'no' === wcj_get_option( 'wcj_' . $this->id . '_wpml_get_products_all_lang', 'no' ) ) {
 				return;
 			}
@@ -268,7 +268,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 *
 		 * @param null $module_id Module ID for translation.
 		 */
-		public function add_wpml_args_on_get_products( $module_id = null ) {
+		public function add_wpml_args_on_get_products( $module_id = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( 'no' === wcj_get_option( 'wcj_' . $this->id . '_wpml_get_products_all_lang', 'no' ) ) {
 				return;
 			}
@@ -343,7 +343,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   4.6.0
 		 * @param string $module_id Module ID.
 		 */
-		public function remove_wpml_functions_before_get_terms( $module_id = null ) {
+		public function remove_wpml_functions_before_get_terms( $module_id = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( 'no' === wcj_get_option( 'wcj_' . $this->id . '_wpml_get_terms_all_lang', 'no' ) ) {
 				return;
 			}
@@ -363,7 +363,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @since   4.6.0
 		 * @param string $module_id Module ID.
 		 */
-		public function restore_wpml_functions_after_get_terms( $module_id = null ) {
+		public function restore_wpml_functions_after_get_terms( $module_id = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( 'no' === wcj_get_option( 'wcj_' . $this->id . '_wpml_get_terms_all_lang', 'no' ) ) {
 				return;
 			}
@@ -718,7 +718,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		 * @param int   $post_id Get post id.
 		 * @param Array $__post Get post.
 		 */
-		public function save_meta_box( $post_id, $__post ) {
+		public function save_meta_box( $post_id, $__post ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			// Check that we are saving with current metabox displayed.
 			if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
 				return;
@@ -860,7 +860,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						$custom_attributes = '';
 						$the_post_id       = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
 						$the_meta_name     = ( isset( $option['meta_name'] ) ) ? $option['meta_name'] : '_' . $option['name'];
-						if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
+						if ( get_post_meta( $the_post_id, $the_meta_name, false ) ) {
 							$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
 						} else {
 							$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';

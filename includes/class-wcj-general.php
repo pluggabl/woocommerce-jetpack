@@ -365,7 +365,6 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 			}
 			return $load_gateways;
 		}
-
 	}
 
 endif;

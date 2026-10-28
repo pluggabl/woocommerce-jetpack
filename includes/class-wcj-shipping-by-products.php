@@ -107,10 +107,8 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 				if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
 					return false;
 				}
-			} else {
-				if ( ! isset( $package['contents'] ) ) {
+			} elseif ( ! isset( $package['contents'] ) ) {
 					return false;
-				}
 			}
 			return true;
 		}
@@ -267,7 +265,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_Products' ) ) :
 			}
 			return $return;
 		}
-
 	}
 
 endif;

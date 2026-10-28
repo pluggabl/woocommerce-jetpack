@@ -410,7 +410,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 		 * @param array  $delimiter defines the delimiter.
 		 * @param string $string defines the string.
 		 */
-		public function clean_and_explode( $delimiter, $string ) {
+		public function clean_and_explode( $delimiter, $string ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.stringFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			return array_map( 'trim', explode( $delimiter, trim( $string ) ) );
 		}
 
@@ -633,7 +633,7 @@ if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 
 			$addons = array();
 			// All Products.
-			$var = get_post_meta( $product_id, 'wcj_product_addons_per_product_qty_' );
+			$var = get_post_meta( $product_id, 'wcj_product_addons_per_product_qty_', false );
 			if ( 'yes' === wcj_get_option( 'wcj_product_addons_all_products_enabled', 'no' ) ) {
 				$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {

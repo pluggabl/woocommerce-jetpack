@@ -403,7 +403,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 					if ( ! isset( $totals[ $result->country ] ) ) {
 						$totals[ $result->country ] = 1;
 					} else {
-						$totals[ $result->country ]++;
+						++$totals[ $result->country ];
 					}
 				}
 				arsort( $totals );
@@ -435,7 +435,7 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 					$table_data[] = array( '', __( 'Country', 'woocommerce-jetpack' ), __( 'Visits', 'woocommerce-jetpack' ) );
 					$i            = 0;
 					foreach ( $totals as $country_code => $visits ) {
-						$i++;
+						++$i;
 						$country_info = ( '' !== $country_code ? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code ) : 'N/A' );
 						$table_data[] = array( $i, $country_info, $visits );
 					}
@@ -561,7 +561,6 @@ if ( ! class_exists( 'WCJ_Track_Users' ) ) :
 			);
 			die();
 		}
-
 	}
 
 endif;

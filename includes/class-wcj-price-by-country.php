@@ -216,7 +216,6 @@ if ( ! class_exists( 'WCJ_Price_By_Country' ) ) :
 		public function update_products_price_by_country_product_saved( $post_id, $post ) {
 			wcj_update_products_price_by_country_for_single_product( $post_id );
 		}
-
 	}
 
 endif;

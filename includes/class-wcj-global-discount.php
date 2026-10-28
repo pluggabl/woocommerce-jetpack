@@ -65,7 +65,6 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 				add_action( 'admin_init', array( $this, 'regenerate_wcj_sale_products_in_cache' ) );
 				add_filter( 'woocommerce_shortcode_products_query', array( $this, 'add_wcj_sale_ids_to_products_shortcode' ), 10, 3 );
 			}
-
 		}
 
 		/**
@@ -133,7 +132,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 					'fields'         => 'ids',
 				);
 				$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_global_discount_groups_total_number', 1 ) );
-				for ( $i = 1; $i <= $total_number; $i ++ ) {
+				for ( $i = 1; $i <= $total_number; $i++ ) {
 					$enabled = wcj_get_option( 'wcj_global_discount_sale_enabled_' . $i, 'yes' );
 					if ( 'yes' !== $enabled ) {
 						continue;
@@ -379,11 +378,9 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 					if ( 'only_on_sale' === $scope ) {
 						$return = false;
 					}
-				} else {
+				} elseif ( 'only_not_on_sale' === $scope ) {
 					// The product is currently on sale.
-					if ( 'only_not_on_sale' === $scope ) {
-						$return = false;
-					}
+					$return = false;
 				}
 			} else {
 				wcj_remove_change_price_hooks( $this, $this->price_hooks_priority, false );
@@ -443,7 +440,7 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 			if ( empty( $options ) ) {
 				$total_number            = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 				$options['total_number'] = $total_number;
-				for ( $i = 1; $i <= $total_number; $i ++ ) {
+				for ( $i = 1; $i <= $total_number; $i++ ) {
 					$options['enabled'][ $i ]     = wcj_get_option( 'wcj_global_discount_sale_enabled_' . $i, 'yes' );
 					$options['type'][ $i ]        = wcj_get_option( 'wcj_global_discount_sale_coefficient_type_' . $i, 'percent' );
 					$options['value'][ $i ]       = wcj_get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
@@ -476,7 +473,6 @@ if ( ! class_exists( 'WCJ_Global_Discount' ) ) :
 			}
 			return $price_hash;
 		}
-
 	}
 
 endif;

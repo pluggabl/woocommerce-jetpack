@@ -222,7 +222,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			$content                                  = wcj_get_option( 'wcj_my_account_custom_pages_content', array() );
 			$endpoint                                 = wcj_get_option( 'wcj_my_account_custom_pages_endpoint', array() );
 			$wcj_my_account_custom_pages_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_my_account_custom_pages_total_number', 1 ) );
-			for ( $i = 1; $i <= $wcj_my_account_custom_pages_total_number; $i ++ ) {
+			for ( $i = 1; $i <= $wcj_my_account_custom_pages_total_number; $i++ ) {
 				if ( ! empty( $title[ $i ] ) && ! empty( $content[ $i ] ) ) {
 					$endpoint[ $i ]                                       = isset( $endpoint[ $i ] ) ? $endpoint[ $i ] : '';
 					$this->custom_pages[ sanitize_title( $title[ $i ] ) ] = array(
@@ -440,7 +440,6 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			 * @deprecated 2.6.0
 			 */
 			do_action( 'woocommerce_after_my_account' );
-
 		}
 
 		/**
@@ -651,7 +650,6 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

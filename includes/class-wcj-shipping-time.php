@@ -58,9 +58,7 @@ if ( ! class_exists( 'WCJ_Shipping_Time' ) ) :
 			);
 			$this->link_slug = 'woocommerce-shipping-time';
 			parent::__construct();
-
 		}
-
 	}
 
 endif;

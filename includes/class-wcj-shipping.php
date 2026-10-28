@@ -88,7 +88,7 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 				$this->init_template_class();
 			}
 			$total_number = wcj_get_option( 'wcj_shipping_custom_shipping_total_number', 1 );
-			for ( $i = 1; $i <= $total_number; $i ++ ) {
+			for ( $i = 1; $i <= $total_number; $i++ ) {
 				$the_method = new WC_Shipping_WCJ_Custom_Template();
 				$the_method->init( $i );
 				$methods[ $the_method->id ] = $the_method;
@@ -110,7 +110,6 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 			$methods['booster_custom_shipping_w_zones'] = 'WC_Shipping_WCJ_Custom_With_Shipping_Zones';
 			return $methods;
 		}
-
 	}
 
 endif;

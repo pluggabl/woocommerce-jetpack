@@ -114,7 +114,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -146,7 +145,7 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 					$wcj_path = 'cached_roles';
 					if ( empty( $this->customer_roles ) ) {
 						$multi_role_check     = wcj_get_option( 'wcj_' . $this->id . '_check_multiple_roles', 'no' );
-						$wcj_path = 'no' === $multi_role_check ? 'fresh_first_role' : 'fresh_all_roles';
+						$wcj_path             = 'no' === $multi_role_check ? 'fresh_first_role' : 'fresh_all_roles';
 						$this->customer_roles = 'no' === ( $multi_role_check ) ? array( wcj_get_current_user_first_role() ) : wcj_get_current_user_all_roles();
 					}
 					return WCJ_Rule_Explanations::shipping_v2_result( $this, count( array_intersect( WCJ_Rule_Explanations::shipping_v2_bound( $this, $this->customer_roles ), $user_roles_or_ids_or_membership_plans ) ) > 0, $wcj_path );
@@ -209,7 +208,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 					return $membership_plans;
 			}
 		}
-
 	}
 
 endif;

@@ -378,7 +378,6 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 				);
 			}
 		}
-
 	}
 
 endif;

@@ -222,7 +222,6 @@ if ( ! class_exists( 'WCJ_Currencies' ) ) :
 			}
 			return $updated_settings;
 		}
-
 	}
 
 endif;

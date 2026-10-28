@@ -519,7 +519,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing' ) ) :
 			'.zip';
 			$zip_file_path = wcj_get_invoicing_temp_dir() . '/' . $zip_file_name;
 			if ( file_exists( $zip_file_path ) ) {
-				unlink( $zip_file_path );
+				wp_delete_file( $zip_file_path );
 			}
 			if ( $zip->open( $zip_file_path, ZipArchive::CREATE | ZIPARCHIVE::OVERWRITE ) !== true ) {
 				return 'ziparchive_error';

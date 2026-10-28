@@ -210,7 +210,6 @@ if ( ! class_exists( 'WCJ_Products_Per_Page' ) ) :
 					return ( isset( $_COOKIE['wcj_products_per_page'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wcj_products_per_page'] ) ) : false );
 			}
 		}
-
 	}
 
 endif;

@@ -373,7 +373,6 @@ if ( ! class_exists( 'WCJ_Sorting' ) ) :
 
 			return $args;
 		}
-
 	}
 
 endif;

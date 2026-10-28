@@ -61,7 +61,6 @@ if ( ! class_exists( 'WCJ_Product_By_User_Role' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -117,7 +116,6 @@ if ( ! class_exists( 'WCJ_Product_By_User_Role' ) ) :
 		public function get_check_option() {
 			return wcj_get_current_user_all_roles();
 		}
-
 	}
 
 endif;

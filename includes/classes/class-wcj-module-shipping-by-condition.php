@@ -58,7 +58,7 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 		 * @param Array $package Get pakages.
 		 */
 		public function available_shipping_methods( $rates, $package ) {
-			$wcj_ticket = WCJ_Rule_Explanations::shipping_v2_start( $this, $this->id, $rates );
+			$wcj_ticket  = WCJ_Rule_Explanations::shipping_v2_start( $this, $this->id, $rates );
 			$include_arr = array();
 			$exclude_arr = array();
 			foreach ( $rates as $rate_key => $rate ) {
@@ -151,7 +151,6 @@ if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 		public function get_extra_option_desc( $option_id ) {
 			return '';
 		}
-
 	}
 
 endif;

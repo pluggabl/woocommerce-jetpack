@@ -185,6 +185,7 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 		/** Show unsupported-profile notices only to authorized Payments administrators. */
 		public function custom_gateway_blocks_admin_notice() {
 			global $current_tab;
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! is_admin() || ! current_user_can( 'manage_woocommerce' ) ) {
 				return;
 			}
@@ -378,15 +379,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 									$input_fields[ substr( $key, 16 ) ] = $value;
 								}
 							}
-						} else {
-							if ( substr( $key, 16 ) === $payment_method ) {
-								foreach ( $value as $input_name => $input_value ) {
-									$label_value = isset( $input_value['label'] ) ? $input_value['label'] : '';
-									if ( ! empty( $label_value ) ) {
-										$input_fields[ $label_value ] = $input_value['value'];
-									} else {
-										$input_fields[ $input_name ] = $input_value['value'];
-									}
+						} elseif ( substr( $key, 16 ) === $payment_method ) {
+							foreach ( $value as $input_name => $input_value ) {
+								$label_value = isset( $input_value['label'] ) ? $input_value['label'] : '';
+								if ( ! empty( $label_value ) ) {
+									$input_fields[ $label_value ] = $input_value['value'];
+								} else {
+									$input_fields[ $input_name ] = $input_value['value'];
 								}
 							}
 						}
@@ -424,15 +423,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 										$input_fields[ substr( $key, 16 ) ] = $value;
 									}
 								}
-							} else {
-								if ( substr( $key, 16 ) === $payment_method ) {
-									foreach ( $value as $input_name => $input_value ) {
-										$label_value = isset( $input_value['label'] ) ? $input_value['label'] : '';
-										if ( ! empty( $label_value ) ) {
-											$input_fields[ $label_value ] = $input_value['value'];
-										} else {
-											$input_fields[ $input_name ] = $input_value['value'];
-										}
+							} elseif ( substr( $key, 16 ) === $payment_method ) {
+								foreach ( $value as $input_name => $input_value ) {
+									$label_value = isset( $input_value['label'] ) ? $input_value['label'] : '';
+									if ( ! empty( $label_value ) ) {
+										$input_fields[ $label_value ] = $input_value['value'];
+									} else {
+										$input_fields[ $input_name ] = $input_value['value'];
 									}
 								}
 							}
@@ -445,7 +442,6 @@ if ( ! class_exists( 'WCJ_Payment_Gateways' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

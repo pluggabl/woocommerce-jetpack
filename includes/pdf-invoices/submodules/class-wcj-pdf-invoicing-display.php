@@ -138,7 +138,7 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 				$meta_query[] = $args['meta_query'];
 			}
 			$args['_wcj_hpos_invoice_sort'] = '_' . $args['orderby'];
-			$args['meta_query']             = $meta_query;
+			$args['meta_query']             = $meta_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Named HPOS invoice sort clause preserves the existing paginated order query and other filter semantics.
 			$args['orderby']                = 'wcj_invoice_number_sort';
 			return $args;
 		}

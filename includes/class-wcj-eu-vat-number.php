@@ -511,7 +511,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		 */
 		public function enqueue_scripts() {
 			if (
-			'no' === wcj_get_option( 'wcj_eu_vat_number_validate', 'yes' ) && 'no' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'yes' ) ||
+			( 'no' === wcj_get_option( 'wcj_eu_vat_number_validate', 'yes' ) && 'no' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'yes' ) ) ||
 			! $this->restrictive_loading_valid()
 			) {
 				return;
@@ -637,7 +637,7 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			'yes' === wcj_get_option( 'wcj_eu_vat_number_disable_for_valid', 'yes' ) &&
 			(
 				( true === wcj_session_get( 'wcj_is_eu_vat_number_valid' ) && null !== ( $eu_vat_number ) ) ||
-				( 'yes' === wcj_get_option( 'wcj_eu_vat_number_disable_for_valid_by_user_vat', 'no' ) && is_user_logged_in() && ! empty( $eu_vat_number = get_user_meta( get_current_user_id(), 'billing_eu_vat_number', true ) ) && '1' === $this->wcj_validate_eu_vat_number( // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found
+				( 'yes' === wcj_get_option( 'wcj_eu_vat_number_disable_for_valid_by_user_vat', 'no' ) && is_user_logged_in() && ! empty( $eu_vat_number = get_user_meta( get_current_user_id(), 'billing_eu_vat_number', true ) ) && '1' === $this->wcj_validate_eu_vat_number( // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found, Generic.CodeAnalysis.AssignmentInCondition.Found -- Capture the user VAT only inside this short-circuited branch; earlier assignment would change validation inputs.
 					array(
 						'wcj_eu_vat_number_to_check' => $eu_vat_number,
 						'echo'                       => false,
@@ -679,10 +679,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 				} else {
 					return false;
 				}
-			} else {
-				if ( ! function_exists( 'WC' ) || ! empty( WC()->customer ) ) {
+			} elseif ( ! function_exists( 'WC' ) || ! empty( WC()->customer ) ) {
 					return false;
-				}
 			}
 			return false;
 		}
@@ -695,10 +693,8 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 		public function maybe_exclude_vat() {
 			if ( $this->need_to_exclude_vat() ) {
 				WC()->customer->set_is_vat_exempt( true );
-			} else {
-				if ( ! empty( WC()->customer ) ) {
+			} elseif ( ! empty( WC()->customer ) ) {
 					WC()->customer->set_is_vat_exempt( false );
-				}
 			}
 		}
 
@@ -725,14 +721,14 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 					if (
 					( 'yes' === wcj_get_option( 'wcj_eu_vat_number_field_required', 'no' ) && '' === $_posted['billing_eu_vat_number'] ) ||
 					(
-					'' !== $_posted['billing_eu_vat_number'] ) &&
+					'' !== $_posted['billing_eu_vat_number'] &&
 					'1' !== $this->wcj_validate_eu_vat_number(
 						array(
 							'wcj_eu_vat_number_to_check' => $_posted['billing_eu_vat_number'],
 							'wcj_eu_country_to_check'    => $_posted['billing_country'],
 							'echo'                       => false,
 						)
-					)
+					) )
 					) {
 						if ( in_array( $_posted['billing_country'], wcj_get_european_union_countries(), true ) ) {
 							wc_add_notice(
@@ -807,7 +803,6 @@ if ( ! class_exists( 'WCJ_EU_VAT_Number' ) ) :
 			);
 			return $fields;
 		}
-
 	}
 
 endif;

@@ -119,7 +119,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 				exit;
 			}
 		}
-
 	}
 
 endif;

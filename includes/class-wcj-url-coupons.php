@@ -125,7 +125,6 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 				exit;
 			}
 		}
-
 	}
 
 endif;

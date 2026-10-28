@@ -18,6 +18,7 @@ if ( ! class_exists( 'WCJ_Returns_Summary' ) ) :
 		 * @return array|WP_Error Safe counts or a fixed authorization/input error.
 		 */
 		public function get_summary( $input = null ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( get_current_user_id() < 1 || ! current_user_can( 'manage_woocommerce' ) ) {
 				return new WP_Error( 'booster_forbidden', __( 'You do not have permission to view the Returns summary.', 'woocommerce-jetpack' ) );
 			}

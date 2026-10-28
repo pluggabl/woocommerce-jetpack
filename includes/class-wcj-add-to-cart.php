@@ -55,7 +55,6 @@ if ( ! class_exists( 'WCJ_Add_To_Cart' ) ) :
 				include_once 'add-to-cart/class-wcj-add-to-cart-per-product-type.php';
 			}
 		}
-
 	}
 
 endif;

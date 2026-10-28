@@ -96,7 +96,6 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 					add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'remove_from_cart_by_product_id' ) );
 				}
 			}
-
 		}
 
 		/**
@@ -270,7 +269,6 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 			$_limit = wcj_get_option( 'wcj_cross_sells_total', 0 );
 			return ( '0' !== ( $_limit ) ? $_limit : $limit );
 		}
-
 	}
 
 endif;

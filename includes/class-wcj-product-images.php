@@ -54,13 +54,11 @@ if ( ! class_exists( 'WCJ_Product_Images' ) ) :
 				// Single.
 				if ( 'yes' === wcj_get_option( 'wcj_product_images_and_thumbnails_hide_on_single', 'no' ) ) {
 					add_action( 'init', array( $this, 'product_images_and_thumbnails_hide_on_single' ), PHP_INT_MAX );
-				} else {
-					if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+				} elseif ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 						add_filter( 'woocommerce_single_product_image_html', array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 ); // filter doesn't exist in WC3.
 						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_thumbnail_html' ) );
-					} else {
-						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_or_thumbnail_html_wc3' ), PHP_INT_MAX, 2 );
-					}
+				} else {
+					add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_or_thumbnail_html_wc3' ), PHP_INT_MAX, 2 );
 				}
 
 				// Archives.
@@ -282,7 +280,6 @@ if ( ! class_exists( 'WCJ_Product_Images' ) ) :
 		public function change_product_thumbnails_columns_number( $columns_number ) {
 			return wcj_get_option( 'wcj_product_images_thumbnails_columns', 3 );
 		}
-
 	}
 
 endif;

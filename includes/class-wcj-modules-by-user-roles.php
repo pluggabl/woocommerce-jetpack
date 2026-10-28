@@ -41,7 +41,6 @@ if ( ! class_exists( 'WCJ_Modules_By_User_Roles' ) ) :
 			);
 			$this->link_slug = 'woocommerce-booster-modules-by-user-roles';
 			parent::__construct();
-
 		}
 	}
 

@@ -205,7 +205,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 			// Change Related Products.
 			if (
 				'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
-				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) )
+				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( ( ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) ) )
 			) {
 				// Relate per Product (Manual).
 				$related_per_product = get_post_meta( get_the_ID(), '_wcj_product_info_related_products_ids', true );
@@ -357,7 +357,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 				$do_fix = true;
 			} elseif (
 				'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
-				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) &&
+				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( ( ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) ) ) &&
 				'' !== get_post_meta( $product_id, '_wcj_product_info_related_products_ids', true )
 			) {
 				$do_fix = true;
@@ -446,7 +446,7 @@ if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 			// Change Related Products.
 			if (
 				'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
-				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) )
+				( 'yes' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) || ( ( ( 'yes' === wcj_get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_wcj_product_info_related_products_enabled', true ) ) ) )
 			) {
 				// Relate per Product (Manual).
 				$related_per_product = get_post_meta( get_the_ID(), '_wcj_product_info_related_products_ids', true );

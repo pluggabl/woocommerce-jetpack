@@ -35,7 +35,7 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 				'woocommerce',
 				__( 'Booster Status', 'woocommerce-jetpack' ),
 				__( 'Booster Status', 'woocommerce-jetpack' ),
-				'manage_woocommerce',
+				'manage_woocommerce', // phpcs:ignore WordPress.WP.Capabilities.Unknown -- Registered by WooCommerce; preserve the required commerce capability.
 				'wcj-compatibility-status',
 				array( $this, 'render_status_page' )
 			);
@@ -45,6 +45,7 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 		 * Renders a capability-protected, read-only environment and compatibility view.
 		 */
 		public function render_status_page() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_die( esc_html__( 'You do not have permission to view Booster status.', 'woocommerce-jetpack' ) );
 			}
@@ -67,6 +68,7 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 				$job_status     = $status_service->get_background_jobs_status();
 				$health[]       = array(
 					'label'  => __( 'Normalized module inventory', 'woocommerce-jetpack' ),
+					/* translators: %d: Number of available Booster modules. */
 					'status' => sprintf( __( '%d available modules', 'woocommerce-jetpack' ), $module_status['count'] ),
 					'note'   => __( 'This is the same bounded, option-safe service used by Booster read-only abilities.', 'woocommerce-jetpack' ),
 				);

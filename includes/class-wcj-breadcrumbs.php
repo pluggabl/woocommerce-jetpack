@@ -109,7 +109,6 @@ if ( ! class_exists( 'WCJ_Breadcrumbs' ) ) :
 		public function hide_breadcrumbs_by_removing_action() {
 			remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
 		}
-
 	}
 
 endif;

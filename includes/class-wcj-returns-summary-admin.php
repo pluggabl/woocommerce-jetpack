@@ -18,11 +18,13 @@ if ( ! class_exists( 'WCJ_Returns_Summary_Admin' ) ) :
 
 		/** Register the safe WooCommerce submenu. */
 		public function register_page() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			add_submenu_page( 'woocommerce', __( 'Return Requests summary', 'woocommerce-jetpack' ), __( 'Return Requests summary', 'woocommerce-jetpack' ), 'manage_woocommerce', 'wcj-returns-summary', array( $this, 'render_page' ) );
 		}
 
 		/** Current authorization comes before dependency construction or output. */
 		public function render_page() {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( get_current_user_id() < 1 || ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_die( esc_html__( 'You do not have permission to view the Returns summary.', 'woocommerce-jetpack' ) );
 			}

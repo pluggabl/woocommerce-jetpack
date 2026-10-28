@@ -70,6 +70,7 @@ function wcj_set_activation_redirect_free() {
  */
 function wcj_redirect_after_first_activation_free() {
 	// Onboarding belongs to an authorized admin page, never a storefront AJAX request.
+	// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 	if ( wp_doing_ajax() || wp_doing_cron() || ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 		return;
 	}

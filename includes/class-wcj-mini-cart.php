@@ -78,7 +78,6 @@ if ( ! class_exists( 'WCJ_Mini_Cart' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

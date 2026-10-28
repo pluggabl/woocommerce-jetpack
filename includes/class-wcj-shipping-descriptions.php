@@ -104,7 +104,6 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 				return $label;
 			}
 		}
-
 	}
 
 endif;

@@ -94,7 +94,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Advanced' ) ) :
 				'refunds'                       => __( 'Refunds', 'woocommerce-jetpack' ),
 			);
 		}
-
 	}
 
 endif;

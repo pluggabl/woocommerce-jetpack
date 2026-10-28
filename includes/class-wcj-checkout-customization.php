@@ -347,7 +347,6 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		public function checkout_hide_order_again() {
 			remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
 		}
-
 	}
 
 endif;

@@ -787,7 +787,6 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 			$html = '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
 			echo wp_kses_post( $html );
 		}
-
 	}
 
 endif;

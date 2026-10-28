@@ -143,7 +143,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 							}
 						}
 						if ( $item_found ) {
-							$total_orders++;
+							++$total_orders;
 						}
 					}
 					$offset += $block_size;
@@ -181,7 +181,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 							}
 						}
 						if ( $item_found ) {
-							$total_orders++;
+							++$total_orders;
 						}
 					}
 					$offset += $block_size;
@@ -346,7 +346,6 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 			$max_value     = get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_wcj_crowdfunding_goal_sum', true );
 			return '<progress value="' . $current_value . '" max="' . $max_value . '"></progress>';
 		}
-
 	}
 
 endif;

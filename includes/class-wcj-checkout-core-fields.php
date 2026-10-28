@@ -339,7 +339,6 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 			);
 			return $checkout_fields;
 		}
-
 	}
 
 endif;

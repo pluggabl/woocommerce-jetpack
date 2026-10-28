@@ -197,7 +197,6 @@ if ( ! class_exists( 'WCJ_Free_Price' ) ) :
 		public function modify_free_price_variation( $price, $_product ) {
 			return do_shortcode( apply_filters( 'booster_option', __( 'Free!', 'woocommerce' ), wcj_get_option( 'wcj_free_price_variable_variation', __( 'Free!', 'woocommerce' ) ) ) );
 		}
-
 	}
 
 endif;

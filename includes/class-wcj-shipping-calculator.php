@@ -118,7 +118,6 @@ if ( ! class_exists( 'WCJ_Shipping_Calculator' ) ) :
 		public function enable_postcode() {
 			return ( 'yes' === wcj_get_option( 'wcj_shipping_calculator_enable_postcode' ) );
 		}
-
 	}
 
 endif;

@@ -470,7 +470,6 @@ if ( ! class_exists( 'WCJ_Export_Import' ) ) :
 		public function create_export_customers_from_orders_tool() {
 			$this->create_export_tool( 'customers_from_orders' );
 		}
-
 	}
 
 endif;

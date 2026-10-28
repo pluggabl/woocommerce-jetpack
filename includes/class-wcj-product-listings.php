@@ -193,7 +193,6 @@ if ( ! class_exists( 'WCJ_Product_Listings' ) ) :
 
 			return $hide_empty;
 		}
-
 	}
 
 endif;

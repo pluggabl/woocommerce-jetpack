@@ -146,7 +146,6 @@ if ( ! class_exists( 'WCJ_Admin_Products_List' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

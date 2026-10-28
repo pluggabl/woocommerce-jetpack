@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		public function add_custom_order_reports_ranges_by_month_to_admin_bar( $wp_admin_bar ) {
 			// phpcs:disable WordPress.Security.NonceVerification
 			$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
-			$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
+			$is_orders_reports = ( ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] ) || ! isset( $_GET['tab'] ) );
 			// phpcs:enable WordPress.Security.NonceVerification
 			if ( $is_reports && $is_orders_reports ) {
 
@@ -145,7 +145,7 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 		public function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
 			// phpcs:disable WordPress.Security.NonceVerification
 			$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
-			$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) );
+			$is_orders_reports = ( ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] ) || ! isset( $_GET['tab'] ) );
 			// phpcs:enable WordPress.Security.NonceVerification
 			if ( $is_reports && $is_orders_reports ) {
 
@@ -349,7 +349,6 @@ if ( ! class_exists( 'WCJ_Reports' ) ) :
 
 			return $reports;
 		}
-
 	}
 
 endif;

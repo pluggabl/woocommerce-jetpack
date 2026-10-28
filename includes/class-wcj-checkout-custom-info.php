@@ -87,7 +87,6 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Info' ) ) :
 				}
 			}
 		}
-
 	}
 
 	endif;

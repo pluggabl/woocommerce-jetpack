@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Retain the established include path; the companion adapter/exception is intentionally colocated.
 /**
  * Exact quantities and fresh, read-only WooCommerce facts for Returns.
  *
@@ -60,7 +60,10 @@ class WCJ_Returns_Quantity {
 }
 
 /** Woo order data is read only. No order save/refund/stock API is called. */
+// phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound -- The small internal adapter/exception is coupled to this existing include and is not independently loaded.
+/** WCJ Returns Facts implementation. */
 class WCJ_Returns_Facts {
+	// phpcs:enable Generic.Files.OneObjectStructurePerFile.MultipleFound
 	/** Maximum absolute scaled amount for comparison only, never payment math. */
 	const AMOUNT_MAX = 999999999999999999;
 
@@ -70,6 +73,7 @@ class WCJ_Returns_Facts {
 	 *
 	 * @param mixed $value Native stored amount.
 	 * @return int Signed millionths for allocation classification only.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function amount( $value ) {
 		if ( is_float( $value ) ) {
@@ -95,6 +99,7 @@ class WCJ_Returns_Facts {
 	 * @param int $left Existing allocation.
 	 * @param int $right Next signed component.
 	 * @return int Exact bounded sum.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function add_amount( $left, $right ) {
 		if ( ( $right > 0 && $left > self::AMOUNT_MAX - $right ) || ( $right < 0 && $left < -self::AMOUNT_MAX - $right ) ) {
@@ -295,7 +300,7 @@ class WCJ_Returns_Facts {
 	/**
 	 * Stable guest identity comparison, never authentication or a rotating key.
 	 *
-	 * @param int $id Order ID.
+	 * @param int   $id Order ID.
 	 * @param mixed $email Raw persisted billing email.
 	 * @param mixed $key Raw persisted Woo order key.
 	 * @return string Domain-separated immutable identity digest.
@@ -330,6 +335,10 @@ class WCJ_Returns_Facts {
 	 */
 	public function guest_identity( $id ) {
 		$order = $this->fresh_order( $id );
-		return array( 'id' => (int) $order->get_id(), 'owner' => (int) $order->get_customer_id( 'edit' ), 'guest' => $this->binding( $order ) );
+		return array(
+			'id'    => (int) $order->get_id(),
+			'owner' => (int) $order->get_customer_id( 'edit' ),
+			'guest' => $this->binding( $order ),
+		);
 	}
 }

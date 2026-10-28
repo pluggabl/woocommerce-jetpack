@@ -114,7 +114,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -204,7 +203,6 @@ if ( ! class_exists( 'WCJ_Shipping_By_Time' ) ) :
 			}
 			return '';
 		}
-
 	}
 
 endif;

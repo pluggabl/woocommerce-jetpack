@@ -210,7 +210,11 @@ if ( ! class_exists( 'WCJ_Status_Service' ) ) :
 			}
 		}
 
-		/** Returns true only for known Booster-owned job hook families. */
+		/**
+		 * Returns true only for known Booster-owned job hook families.
+		 *
+		 * @param mixed $hook Calling hook name.
+		 */
 		private function is_booster_job_hook( $hook ) {
 			$exact = array(
 				'wcj_cart_abandonment_update_order_status_action',

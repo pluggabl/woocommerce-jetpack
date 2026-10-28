@@ -55,48 +55,70 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_By_User_Role' ) ) :
 		 */
 		public function available_payment_gateways( $_available_gateways ) {
 			$ticket = WCJ_Rule_Explanations::payment_start( $this, $_available_gateways );
-			$row = null;
-			$whole = false;
+			$row    = null;
+			$whole  = false;
 			$result = $this->payment_filter_body( $_available_gateways, $ticket, $row, $whole );
-			if ( null !== $ticket ) { WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
+			if ( null !== $ticket ) {
+				WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
 			return $result;
 		}
 
-		/** Original lazy collector, shared with bounded per-gateway decisions. */
+		/**
+		 * Original lazy collector, shared with bounded per-gateway decisions.
+		 *
+		 * @param mixed $_available_gateways Available gateway map.
+		 * @param mixed $ticket Request-local observation ticket.
+		 * @param mixed $row Captured decision row.
+		 * @param mixed $whole Whether the complete decision is requested.
+		 */
 		private function payment_filter_body( $_available_gateways, $ticket, &$row, &$whole ) {
 			$multi_role_check = wcj_get_option( 'wcj_payment_gateways_by_user_role_multi_role_check', 'no' );
 			$customer_roles   = 'no' === ( $multi_role_check ) ? array( wcj_get_current_user_first_role() ) : wcj_get_current_user_all_roles();
 			foreach ( $_available_gateways as $key => $gateway ) {
 				$decision = $this->payment_decision( $key, $customer_roles );
-				if ( $ticket === (string) $key ) { $row = $decision; }
-				if ( 'removed' === $decision[0] ) { unset( $_available_gateways[ $key ] ); }
-			} 
+				if ( $ticket === (string) $key ) {
+					$row = $decision; }
+				if ( 'removed' === $decision[0] ) {
+					unset( $_available_gateways[ $key ] ); }
+			}
 			return $_available_gateways;
-		
 		}
 
-		/** Shared original include/exclude short-circuit decision. */
+		/**
+		 * Shared original include/exclude short-circuit decision.
+		 *
+		 * @param mixed $key Validated rule key.
+		 * @param mixed $customer_roles Current customer role list.
+		 */
 		private function payment_decision( $key, $customer_roles ) {
 				$include_roles = wcj_get_option( 'wcj_gateways_user_roles_include_' . $key, '' );
-				if ( ! empty( $include_roles ) && ! array_intersect( $customer_roles, $include_roles ) ) {
-					return array( 'removed', 'include_miss', 'role' );
-				}
+			if ( ! empty( $include_roles ) && ! array_intersect( $customer_roles, $include_roles ) ) {
+				return array( 'removed', 'include_miss', 'role' );
+			}
 				$exclude_roles = wcj_get_option( 'wcj_gateways_user_roles_exclude_' . $key, '' );
-				if ( ! empty( $exclude_roles ) && array_intersect( $customer_roles, $exclude_roles ) ) {
-					return array( 'removed', 'exclude_match', 'role' );
-				}
-			
+			if ( ! empty( $exclude_roles ) && array_intersect( $customer_roles, $exclude_roles ) ) {
+				return array( 'removed', 'exclude_match', 'role' );
+			}
+
 			return array( empty( $include_roles ) && empty( $exclude_roles ) ? 'not_configured' : 'retained', empty( $include_roles ) && empty( $exclude_roles ) ? 'no_rules' : 'rules_pass', 'role' );
 		}
 
+		/**
+		 * Return a bounded explanation of this gateway rule without applying it.
+		 *
+		 * @param mixed $key Key.
+		 * @param mixed $facts Facts.
+		 * @return mixed Existing gateway decision or gateway map.
+		 */
 		public function explain_payment_gateway( $key, $facts ) {
-			if ( wcj_is_module_enabled( 'general' ) && 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_general_user_role_changer_enabled', 'no' ) ) ) { return array( 'unsupported', 'dynamic_role_policy', 'role' ); }
+			if ( wcj_is_module_enabled( 'general' ) && 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_general_user_role_changer_enabled', 'no' ) ) ) {
+				return array( 'unsupported', 'dynamic_role_policy', 'role' ); }
 			$multi_role_check = wcj_get_option( 'wcj_payment_gateways_by_user_role_multi_role_check', 'no' );
-			if ( 'unknown' === $facts['roles']['state'] ) { return array( 'not_checked', 'missing_fact', 'role' ); }
+			if ( 'unknown' === $facts['roles']['state'] ) {
+				return array( 'not_checked', 'missing_fact', 'role' ); }
 			$roles = $facts['roles']['value'];
 			return $this->payment_decision( $key, 'no' === $multi_role_check ? array( $roles[0] ) : $roles );
 		}
-
 	}
 
 endif;

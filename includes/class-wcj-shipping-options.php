@@ -141,7 +141,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 		 * @param array         $package defines the package.
 		 */
 		public function free_shipping_by_product( $is_available, $package ) {
-			$wcj_ticket = WCJ_Rule_Explanations::shipping_v2_free_start( $this, $is_available );
+			$wcj_ticket                      = WCJ_Rule_Explanations::shipping_v2_free_start( $this, $is_available );
 			$free_shipping_granting_products = wcj_get_option( 'wcj_shipping_free_shipping_by_product_products', '' );
 			WCJ_Rule_Explanations::shipping_v2_free_values( $wcj_ticket, $free_shipping_granting_products );
 			if ( empty( $free_shipping_granting_products ) ) {
@@ -156,10 +156,8 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 					} elseif ( ! $package_grants_free_shipping ) {
 						$package_grants_free_shipping = true;
 					}
-				} else {
-					if ( 'all' === $free_shipping_granting_products_type ) {
+				} elseif ( 'all' === $free_shipping_granting_products_type ) {
 						return WCJ_Rule_Explanations::shipping_v2_free_result( $wcj_ticket, $is_available, 'all_nonmatch_preserved' );
-					}
 				}
 			}
 			return WCJ_Rule_Explanations::shipping_v2_free_result( $wcj_ticket, ( $package_grants_free_shipping ) ? true : $is_available, $package_grants_free_shipping ? ( 'all' === $free_shipping_granting_products_type ? 'all_items_grant' : 'source_fallback_grant' ) : 'package_no_grant' );
@@ -174,28 +172,27 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 		 * @version 2.9.1
 		 */
 		public function hide_shipping_when_free_is_available( $rates, $package ) {
-			$wcj_ticket = WCJ_Rule_Explanations::shipping_v2_start( $this, 'shipping_options_hide_free', $rates );
+			$wcj_ticket                 = WCJ_Rule_Explanations::shipping_v2_start( $this, 'shipping_options_hide_free', $rates );
 			$free_shipping_rates        = array();
 			$is_free_shipping_available = false;
 			foreach ( $rates as $rate_key => $rate ) {
 				if ( false !== strpos( $rate_key, 'free_shipping' ) ) {
-					$is_free_shipping_available       = true;
+					$is_free_shipping_available = true;
 					WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, 'kept_free_key' );
 					$free_shipping_rates[ $rate_key ] = $rate;
-				} else {
-					if (
+				} elseif (
 					'except_local_pickup' === apply_filters( 'booster_option', 'hide_all', wcj_get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
 					false !== strpos( $rate_key, 'local_pickup' )
 					) {
+
 						WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, 'kept_local_key' );
-					$free_shipping_rates[ $rate_key ] = $rate;
-					} elseif (
+						$free_shipping_rates[ $rate_key ] = $rate;
+				} elseif (
 					'flat_rate_only' === apply_filters( 'booster_option', 'hide_all', wcj_get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
 					false === strpos( $rate_key, 'flat_rate' )
 					) {
-						WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, 'kept_nonflat_key' );
+					WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, 'kept_nonflat_key' );
 					$free_shipping_rates[ $rate_key ] = $rate;
-					}
 				}
 			}
 			WCJ_Rule_Explanations::shipping_v2_options_finish( $wcj_ticket, ( $is_free_shipping_available ) ? $free_shipping_rates : $rates, null, $is_free_shipping_available );
@@ -243,7 +240,6 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 			}
 			return $updated_settings;
 		}
-
 	}
 
 endif;

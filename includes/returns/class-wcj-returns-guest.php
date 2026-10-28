@@ -72,6 +72,7 @@ class WCJ_Returns_Guest {
 	 * Current direct configured roots only. No filterable or database salt fallback.
 	 *
 	 * @return array Fixed-purpose subkeys and rotation tag.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	public static function keys() {
 		$names  = array( 'AUTH_KEY', 'AUTH_SALT', 'SECURE_AUTH_KEY', 'SECURE_AUTH_SALT', 'LOGGED_IN_KEY', 'LOGGED_IN_SALT', 'NONCE_KEY', 'NONCE_SALT' );
@@ -122,6 +123,7 @@ class WCJ_Returns_Guest {
 	 * Published same-origin HTTPS page, with no implicit page creation.
 	 *
 	 * @return array Page ID and trusted URL.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function page() {
 		$id = get_option( 'wcj_returns_guest_page', '' );
@@ -145,6 +147,7 @@ class WCJ_Returns_Guest {
 	 * Phase A admission. Every external API runs before the owned transaction.
 	 *
 	 * @return array Captured keys, epoch, monotonic start and trusted destination.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private function ready() {
 		$started = WCJ_Returns_Clock::read();
@@ -163,7 +166,11 @@ class WCJ_Returns_Guest {
 		return $phase;
 	}
 
-	/** Browser admission is stricter than the private pending-mail callback. */
+	/**
+	 * Browser admission is stricter than the private pending-mail callback.
+	 *
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
+	 */
 	private function gate() {
 		$started = WCJ_Returns_Clock::read();
 		if ( ! is_ssl() || headers_sent() ) {
@@ -218,6 +225,7 @@ class WCJ_Returns_Guest {
 	 *
 	 * @param array $phase Captured Phase A.
 	 * @return int UTC epoch plus elapsed whole seconds.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private static function epoch( $phase ) {
 		$elapsed = WCJ_Returns_Clock::read() - $phase['start'];
@@ -243,6 +251,7 @@ class WCJ_Returns_Guest {
 	 *
 	 * @param mixed $cookie Cookie value.
 	 * @return string Lookup digest.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private static function cookie_key( $cookie ) {
 		if ( ! is_string( $cookie ) || ! preg_match( '/^[a-f0-9]{64}$/D', $cookie ) ) {
@@ -269,6 +278,7 @@ class WCJ_Returns_Guest {
 	 *
 	 * @param mixed  $nonce Submitted nonce.
 	 * @param string $action Captured binding.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private static function nonce( $nonce, $action ) {
 		if ( ! is_string( $nonce ) || strlen( $nonce ) > 128 || ! in_array( wp_verify_nonce( $nonce, $action ), array( 1, 2 ), true ) ) {
@@ -281,6 +291,7 @@ class WCJ_Returns_Guest {
 	 *
 	 * @param mixed $address REMOTE_ADDR only.
 	 * @return string Canonical nonpersisted subject.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	public static function peer( $address ) {
 		$packed = is_string( $address ) && strlen( $address ) <= 45 && filter_var( $address, FILTER_VALIDATE_IP ) ? inet_pton( $address ) : false;
@@ -358,6 +369,7 @@ class WCJ_Returns_Guest {
 						'kind'        => 'rate',
 						'order_id'    => 0,
 						'expires_gmt' => $spec['expiry'],
+						// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 						'payload'     => json_encode(
 							array(
 								'v' => 1,
@@ -376,6 +388,7 @@ class WCJ_Returns_Guest {
 	 *
 	 * @param array  $identity Fresh light/full facts.
 	 * @param string $owner Immutable digest.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private static function identity( $identity, $owner ) {
 		if ( 0 !== $identity['owner'] || empty( $identity['guest']['valid'] ) || ! hash_equals( $identity['guest']['digest'], $owner ) ) {
@@ -389,6 +402,7 @@ class WCJ_Returns_Guest {
 	 * @param array|null $row Strict row.
 	 * @param string     $kind challenge or grant.
 	 * @param array      $phase Current captured keys/clock.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	private static function valid_row( $row, $kind, $phase ) {
 		if ( ! $row || $kind !== $row['kind'] || ! hash_equals( $phase['key_tag'], $row['data']['key_tag'] ) || $row['data']['issued'] > self::epoch( $phase ) || $row['expires_gmt'] <= gmdate( 'Y-m-d H:i:s', self::epoch( $phase ) ) ) {
@@ -438,17 +452,20 @@ class WCJ_Returns_Guest {
 	 * @param mixed $nonce Current guest nonce.
 	 * @param mixed $old_cookie Previous challenge cookie, not authorization.
 	 * @return array Cookie instructions only after known commit, or empty denial.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	public function challenge( $reference, $email, $nonce, $old_cookie = '' ) {
 		try {
 			$phase = $this->gate();
 			self::nonce( $nonce, 'wcj_returns_guest_challenge' );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input, cookie, origin and peer are validated by guest service before authorized work; preserve exact identities rather than normalize invalid input.
 			if ( isset( $_SERVER['HTTP_ORIGIN'] ) && ( ! is_string( $_SERVER['HTTP_ORIGIN'] ) || rtrim( $_SERVER['HTTP_ORIGIN'], '/' ) !== $phase['page']['origin'] ) ) {
 				throw new RuntimeException( 'auth_unavailable' );
 			}
 			if ( isset( $_SERVER['HTTP_SEC_FETCH_SITE'] ) && 'same-origin' !== $_SERVER['HTTP_SEC_FETCH_SITE'] ) {
 				throw new RuntimeException( 'auth_unavailable' );
 			}
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input, cookie, origin and peer are validated by guest service before authorized work; preserve exact identities rather than normalize invalid input.
 			$peer  = self::rate_spec( $phase, 'challenge_peer', self::peer( $_SERVER['REMOTE_ADDR'] ?? '' ), 900, 10 );
 			$allow = $this->store->transaction(
 				function () use ( $phase, $peer ) {
@@ -471,7 +488,7 @@ class WCJ_Returns_Guest {
 						if ( 0 === $identity['owner'] && $identity['guest']['valid'] && strtolower( $email ) === strtolower( $identity['guest']['email'] ) ) {
 							$match = $identity;
 						}
-					} catch ( Throwable $error ) {
+					} catch ( Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 						// Missing/unsupported identity is indistinguishable from mismatch.
 					}
 				}
@@ -500,6 +517,7 @@ class WCJ_Returns_Guest {
 									'kind'        => 'challenge',
 									'order_id'    => $match['id'],
 									'expires_gmt' => gmdate( 'Y-m-d H:i:s', $now + 600 ),
+									// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 									'payload'     => json_encode(
 										array(
 											'v'        => 1,
@@ -527,7 +545,7 @@ class WCJ_Returns_Guest {
 			if ( $created ) {
 				try {
 					as_enqueue_async_action( 'wcj_returns_guest_send_challenge', array( $key ), 'wcj-returns-guest' );
-				} catch ( Throwable $error ) {
+				} catch ( Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 					// Unknown scheduling never permits replay; a new request is recovery.
 				}
 			}
@@ -555,6 +573,7 @@ class WCJ_Returns_Guest {
 			$phase = $this->gate();
 			$key   = self::cookie_key( $cookie );
 			self::nonce( $nonce, self::action( 'verify', 0, $key, $phase ) );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input, cookie, origin and peer are validated by guest service before authorized work; preserve exact identities rather than normalize invalid input.
 			$peer  = self::rate_spec( $phase, 'verify_peer', self::peer( $_SERVER['REMOTE_ADDR'] ?? '' ), 900, 30 );
 			$allow = $this->store->transaction(
 				function () use ( $phase, $peer ) {
@@ -612,6 +631,7 @@ class WCJ_Returns_Guest {
 							'kind'        => 'grant',
 							'order_id'    => $identity['id'],
 							'expires_gmt' => gmdate( 'Y-m-d H:i:s', $now + 900 ),
+							// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Canonical authenticated payload/nonce bytes must reject invalid UTF-8 rather than use the repairing fallback in wp_json_encode.
 							'payload'     => json_encode(
 								array(
 									'v'       => 1,
@@ -647,6 +667,7 @@ class WCJ_Returns_Guest {
 	 * @param string $operation view, submit or cancel.
 	 * @param mixed  $nonce Current nonce for writes.
 	 * @return array Captured verified bearer and identity.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	public function context( $cookie, $operation = 'view', $nonce = null ) {
 		$this->capability = null;
@@ -675,7 +696,11 @@ class WCJ_Returns_Guest {
 		return $this->capability;
 	}
 
-	/** Require the proven private context to remain valid before rendering. */
+	/**
+	 * Require the proven private context to remain valid before rendering.
+	 *
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
+	 */
 	public function recheck() {
 		if ( ! $this->capability || WCJ_Returns_Clock::read() >= $this->capability['until'] ) {
 			throw new RuntimeException( 'auth_unavailable' );
@@ -726,6 +751,7 @@ class WCJ_Returns_Guest {
 	 * All external auth/keys/options/facts were captured outside this TX.
 	 *
 	 * @return array Locked strict grant.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	public function lock() {
 		$context = $this->capability;
@@ -804,7 +830,7 @@ class WCJ_Returns_Guest {
 				$final['start'],
 				$deadline
 			);
-		} catch ( Throwable $error ) {
+		} catch ( Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 			// No transport on failed admission/CAS/unknown commit. A sent message
 			// with lost finalization stays sending and cannot be resent.
 		}
@@ -846,6 +872,7 @@ class WCJ_Returns_Guest {
 	 * @return string Submitted scalar or empty.
 	 */
 	private function posted( $name ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input, cookie, origin and peer are validated by guest service before authorized work; preserve exact identities rather than normalize invalid input.
 		return isset( $_POST[ $name ] ) && is_string( $_POST[ $name ] ) && strlen( $_POST[ $name ] ) <= 4096 ? wp_unslash( $_POST[ $name ] ) : '';
 	}
 
@@ -857,6 +884,7 @@ class WCJ_Returns_Guest {
 	 */
 	private function cookie( $kind ) {
 		$name = self::cookie_name( $kind, get_current_blog_id() );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input, cookie, origin and peer are validated by guest service before authorized work; preserve exact identities rather than normalize invalid input.
 		return isset( $_COOKIE[ $name ] ) && is_string( $_COOKIE[ $name ] ) && strlen( $_COOKIE[ $name ] ) <= 64 ? $_COOKIE[ $name ] : '';
 	}
 
@@ -883,7 +911,7 @@ class WCJ_Returns_Guest {
 					setcookie( self::cookie_name( 'gc', $result['blog'] ), '', $options );
 				}
 			}
-		} catch ( Throwable $error ) {
+		} catch ( Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 			// No untrusted redirect and no cookie on invalid destination admission.
 		}
 		wp_safe_redirect( add_query_arg( 'wcj_returns_guest_result', 'check', $url ) );
@@ -902,6 +930,7 @@ class WCJ_Returns_Guest {
 
 	/** Existing quantity engine receives only a separately verified guest cookie. */
 	public function submit_handler() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input, cookie, origin and peer are validated by guest service before authorized work; preserve exact identities rather than normalize invalid input.
 		$selected = isset( $_POST['quantities'] ) && is_array( $_POST['quantities'] ) && count( $_POST['quantities'] ) <= 200 ? wp_unslash( $_POST['quantities'] ) : array();
 		$selected = array_filter(
 			$selected,
@@ -923,7 +952,11 @@ class WCJ_Returns_Guest {
 		$this->finish();
 	}
 
-	/** Explicit separate auth setup/cleanup, never a public or ordinary GET write. */
+	/**
+	 * Explicit separate auth setup/cleanup, never a public or ordinary GET write.
+	 *
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
+	 */
 	public function storage_handler() {
 		$code = 'unavailable';
 		try {
@@ -933,7 +966,7 @@ class WCJ_Returns_Guest {
 			self::keys();
 			$this->store->install_auth( $this->posted( '_wpnonce' ), call_user_func( $this->clock ) );
 			$code = 'saved';
-		} catch ( Throwable $error ) {
+		} catch ( Throwable $error ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch -- Deliberately retain the safe fallback/held state and never expose private exception details or replay an uncertain mutation.
 			// Merchant sees fixed feedback, never SQL/key data or automatic repair.
 		}
 		wp_safe_redirect( add_query_arg( 'wcj_returns_result', $code, admin_url( 'admin.php?page=wcj-returns' ) ) );
@@ -944,6 +977,7 @@ class WCJ_Returns_Guest {
 	 * Only the configured uncached page renders public proof or private forms.
 	 *
 	 * @return string Escaped bounded HTML, never raw authentication data.
+	 * @throws RuntimeException When the input, authorization, environment or storage guard fails.
 	 */
 	public function render() {
 		try {
@@ -975,6 +1009,7 @@ class WCJ_Returns_Guest {
 
 	/** Read one strict optional history cursor, never a submitted order ID. */
 	private function before() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Bounded raw input, cookie, origin and peer are validated by guest service before authorized work; preserve exact identities rather than normalize invalid input.
 		$value = $_GET['wcj_returns_guest_before'] ?? '';
 		return is_string( $value ) && preg_match( '/^[1-9][0-9]{0,17}$/D', $value ) ? (int) $value : PHP_INT_MAX;
 	}

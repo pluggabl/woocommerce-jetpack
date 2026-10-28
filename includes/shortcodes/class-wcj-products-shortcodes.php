@@ -819,12 +819,10 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 					} else {
 						return wc_price( $purchase_price );
 					}
-				} else {
-					if ( is_array( $purchase_price ) && count( $purchase_price ) === 1 ) {
+				} elseif ( is_array( $purchase_price ) && count( $purchase_price ) === 1 ) {
 						return $purchase_price[0];
-					} elseif ( ! is_array( $purchase_price ) ) {
-						return $purchase_price;
-					}
+				} elseif ( ! is_array( $purchase_price ) ) {
+					return $purchase_price;
 				}
 			}
 		}
@@ -861,12 +859,10 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 					} else {
 						return $purchase_price;
 					}
-				} else {
-					if ( is_array( $purchase_price ) && count( $purchase_price ) === 1 ) {
+				} elseif ( is_array( $purchase_price ) && count( $purchase_price ) === 1 ) {
 						return $purchase_price[0];
-					} elseif ( ! is_array( $purchase_price ) ) {
-						return $purchase_price;
-					}
+				} elseif ( ! is_array( $purchase_price ) ) {
+					return $purchase_price;
 				}
 			}
 		}
@@ -1133,7 +1129,7 @@ if ( ! class_exists( 'WCJ_Products_Shortcodes' ) ) :
 			$columns_styles = array();
 			$i              = -1;
 			foreach ( $wholesale_price_levels as $wholesale_price_level ) {
-				$i++;
+				++$i;
 				if ( '0' === $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
 					continue;
 				}

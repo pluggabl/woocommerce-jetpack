@@ -41,6 +41,5 @@ if ( ! class_exists( 'WCJ_Multicurrency_Price_Updater' ) ) :
 			}
 			return false;
 		}
-
 	}
 endif;

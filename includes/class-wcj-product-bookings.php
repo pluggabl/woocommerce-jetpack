@@ -125,7 +125,7 @@ if ( ! class_exists( 'WCJ_Product_Bookings' ) ) :
 		 * @param string | array $return defines the return.
 		 * @param string | array $_product defines the _product.
 		 */
-		public function sold_individually( $return, $_product ) {
+		public function sold_individually( $return, $_product ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.returnFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			return ( $this->is_bookings_product( $_product ) ) ? true : $return;
 		}
 

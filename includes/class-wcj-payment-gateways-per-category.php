@@ -17,7 +17,17 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 	 * WCJ_Payment_Gateways_Per_Category.
 	 */
 	class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
+		/**
+		 * Payment receipt.
+		 *
+		 * @var mixed
+		 */
 		private $payment_receipt = null;
+		/**
+		 * Payment collect.
+		 *
+		 * @var mixed
+		 */
 		private $payment_collect = false;
 
 		/**
@@ -108,12 +118,13 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			$rules = $this->get_gateway_rules( $gateway_id );
 			if ( ! array_filter( $rules ) ) {
 				$decision = array( 'not_configured', 'no_rules', null );
-				if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
-			return true;
+				if ( $this->payment_collect ) {
+					$this->payment_receipt = $decision; }
+				return true;
 			}
 			$products = array_values( array_unique( array_map( 'strval', $products ) ) );
 
-			$uncertain = false;
+			$uncertain            = false;
 			$product_category_ids = array();
 			if ( ! empty( $rules['categories_in'] ) || ! empty( $rules['categories_excl'] ) ) {
 				foreach ( $products as $product_id ) {
@@ -134,8 +145,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $categories_in ) ) {
 				if ( empty( array_intersect( $product_category_ids, $categories_in ) ) ) {
 					$decision = $uncertain ? array( 'not_checked', 'category_terms_uncertain', 'category' ) : array( 'removed', 'include_miss', 'category' );
-					if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
-			return false;
+					if ( $this->payment_collect ) {
+						$this->payment_receipt = $decision; }
+					return false;
 				}
 			}
 
@@ -144,8 +156,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $categories_excl ) ) {
 				if ( ! empty( array_intersect( $product_category_ids, $categories_excl ) ) ) {
 					$decision = $uncertain ? array( 'not_checked', 'category_terms_uncertain', 'category' ) : array( 'removed', 'exclude_match', 'category' );
-					if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
-			return false;
+					if ( $this->payment_collect ) {
+						$this->payment_receipt = $decision; }
+					return false;
 				}
 			}
 
@@ -154,8 +167,9 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $products_in ) ) {
 				if ( empty( array_intersect( $products, $products_in ) ) ) {
 					$decision = $uncertain ? array( 'not_checked', 'category_terms_uncertain', 'category' ) : array( 'removed', 'include_miss', 'product' );
-					if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
-			return false;
+					if ( $this->payment_collect ) {
+						$this->payment_receipt = $decision; }
+					return false;
 				}
 			}
 
@@ -164,13 +178,15 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			if ( ! empty( $products_excl ) ) {
 				if ( ! empty( array_intersect( $products, $products_excl ) ) ) {
 					$decision = $uncertain ? array( 'not_checked', 'category_terms_uncertain', 'category' ) : array( 'removed', 'exclude_match', 'product' );
-					if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
-			return false;
+					if ( $this->payment_collect ) {
+						$this->payment_receipt = $decision; }
+					return false;
 				}
 			}
 
 			$decision = $uncertain ? array( 'not_checked', 'category_terms_uncertain', 'category' ) : array( 'retained', 'rules_pass', null );
-			if ( $this->payment_collect ) { $this->payment_receipt = $decision; }
+			if ( $this->payment_collect ) {
+				$this->payment_receipt = $decision; }
 			return true;
 		}
 
@@ -182,21 +198,31 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 		 * @param array $available_gateways defines the available_gateways.
 		 */
 		public function filter_available_payment_gateways_per_category( $available_gateways ) {
-			$ticket = WCJ_Rule_Explanations::payment_start( $this, $available_gateways );
+			$ticket                = WCJ_Rule_Explanations::payment_start( $this, $available_gateways );
 			$this->payment_collect = null !== $ticket;
-			if ( $this->payment_collect ) { $this->payment_receipt = null; }
-			$row = null;
-			$whole = false;
-			$result = $this->payment_filter_body( $available_gateways, $ticket, $row, $whole );
+			if ( $this->payment_collect ) {
+				$this->payment_receipt = null; }
+			$row                   = null;
+			$whole                 = false;
+			$result                = $this->payment_filter_body( $available_gateways, $ticket, $row, $whole );
 			$this->payment_collect = false;
-			if ( null !== $ticket ) { WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
+			if ( null !== $ticket ) {
+				WCJ_Rule_Explanations::payment_finish( $this, $ticket, $row, $whole ); }
 			return $result;
 		}
 
-		/** Original lazy collector, shared with bounded per-gateway decisions. */
+		/**
+		 * Original lazy collector, shared with bounded per-gateway decisions.
+		 *
+		 * @param mixed $available_gateways Available gateway map.
+		 * @param mixed $ticket Request-local observation ticket.
+		 * @param mixed $row Captured decision row.
+		 * @param mixed $whole Whether the complete decision is requested.
+		 */
 		private function payment_filter_body( $available_gateways, $ticket, &$row, &$whole ) {
 			if ( empty( $available_gateways ) ) {
-				$whole = true; $row = array( 'not_checked', 'no_gateways', null );
+				$whole = true;
+				$row   = array( 'not_checked', 'no_gateways', null );
 				return $available_gateways;
 			}
 
@@ -211,7 +237,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			// Check if it is on Checkout Page.
 			if ( ( is_checkout() || $is_store_api ) && ! $is_order_pay ) {
 				if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
-					$whole = true; $row = array( 'not_checked', 'missing_cart', null );
+					$whole = true;
+					$row   = array( 'not_checked', 'missing_cart', null );
 					return $available_gateways;
 				}
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
@@ -240,7 +267,8 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			// Check gateways.
 			$unavailable_gateways = array();
 			foreach ( $available_gateways as $gateway_id => $gateway ) {
-				if ( $this->payment_collect ) { $this->payment_receipt = null; }
+				if ( $this->payment_collect ) {
+					$this->payment_receipt = null; }
 				if ( ! empty( $cart_products ) ) {
 					if ( ! $this->is_gateway_allowed( $gateway_id, $cart_products ) ) {
 						$unavailable_gateways[] = $gateway_id;
@@ -249,8 +277,11 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 					if ( ! $this->is_gateway_allowed( $gateway_id, $order_products ) ) {
 						$unavailable_gateways[] = $gateway_id;
 					}
-				} else { if ( $this->payment_collect ) { $this->payment_receipt = array( 'not_checked', 'no_products', null ); } }
-				if ( $ticket === (string) $gateway_id ) { $row = $this->payment_receipt; }
+				} elseif ( $this->payment_collect ) {
+					$this->payment_receipt = array( 'not_checked', 'no_products', null );
+				}
+				if ( $ticket === (string) $gateway_id ) {
+					$row = $this->payment_receipt; }
 			}
 
 			// Remove invalid gateways.
@@ -259,7 +290,6 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 			}
 
 			return $available_gateways;
-		
 		}
 	}
 

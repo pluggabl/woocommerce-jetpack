@@ -324,7 +324,6 @@ if ( ! class_exists( 'WCJ_Currency_Exchange_Rates' ) ) :
 			}
 			return $settings;
 		}
-
 	}
 
 endif;

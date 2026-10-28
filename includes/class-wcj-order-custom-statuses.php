@@ -150,16 +150,14 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 			$orders_custom_statuses = wcj_get_option( 'wcj_orders_custom_statuses_array', '' );
 			if ( empty( $orders_custom_statuses ) ) {
 				return array();
-			} else {
-				if ( $cut_prefix ) {
+			} elseif ( $cut_prefix ) {
 					$orders_custom_statuses_no_prefix = array();
-					foreach ( $orders_custom_statuses as $status => $status_name ) {
-						$orders_custom_statuses_no_prefix[ substr( $status, 3 ) ] = $status_name;
-					}
-					return $orders_custom_statuses_no_prefix;
-				} else {
-					return $orders_custom_statuses;
+				foreach ( $orders_custom_statuses as $status => $status_name ) {
+					$orders_custom_statuses_no_prefix[ substr( $status, 3 ) ] = $status_name;
 				}
+					return $orders_custom_statuses_no_prefix;
+			} else {
+				return $orders_custom_statuses;
 			}
 		}
 
@@ -547,7 +545,6 @@ if ( ! class_exists( 'WCJ_Order_Custom_Statuses' ) ) :
 				<?php
 			}
 		}
-
 	}
 
 endif;

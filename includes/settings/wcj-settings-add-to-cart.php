@@ -61,7 +61,13 @@ $settings           = array(
 	),
 );
 $product_cats       = array();
-$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+$product_categories = get_terms(
+	array(
+		'taxonomy'   => 'product_cat',
+		'orderby'    => 'name',
+		'hide_empty' => false,
+	)
+);
 if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
 	foreach ( $product_categories as $product_category ) {
 		$product_cats[ $product_category->term_id ] = $product_category->name;

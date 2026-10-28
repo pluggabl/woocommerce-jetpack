@@ -184,7 +184,6 @@ if ( ! class_exists( 'WCJ_Tax_Display' ) ) :
 			}
 			return $value;
 		}
-
 	}
 
 endif;
