@@ -28,11 +28,31 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_by_user';
-			$this->short_desc = __( 'User Products', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Let users add new products from the frontend. Image additional field (Elite). Custom Taxonomies (1 allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Let users add new products from the frontend.', 'woocommerce-jetpack' );
+			$this->short_desc = 'User Products';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'User Products', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Let users add new products from the frontend. Image additional field (Elite). Custom Taxonomies (1 allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Let users add new products from the frontend. Image additional field (Elite). Custom Taxonomies (1 allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Let users add new products from the frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Let users add new products from the frontend.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-product-by-user';
-			$this->extra_desc = __( 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.', 'woocommerce-jetpack' );
+			$this->extra_desc = 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = __( 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.', 'woocommerce-jetpack' );
+				}
+			);
 			parent::__construct();
 
 			// My Products endpoint.
@@ -87,7 +107,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 		 * @param string $email_id defines the email_id.
 		 * @param array  $object defines the object.
 		 */
-		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $object ) {
+		public function sendemail_to_productowner_order_place_successfully( $headers, $email_id, $object ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.objectFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if ( 'new_order' === $email_id && is_a( $object, 'WC_Order' ) ) {
 				$useremail = $this->getProductOwnerEmail( wcj_get_order_id( $object ) );
 				$headers  .= 'Cc: Name <' . $useremail . '>' . "\r\n";
@@ -284,7 +304,7 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 				$table_data[] = array( '', __( 'Status', 'woocommerce-jetpack' ), __( 'Title', 'woocommerce-jetpack' ), __( 'Actions', 'woocommerce-jetpack' ) );
 				$i            = 0;
 				foreach ( $products as $_product_id => $_product_data ) {
-					$i++;
+					++$i;
 					$table_data[] = array(
 						/* $i . ' [' . $_product_id . ']' . */ get_the_post_thumbnail( $_product_id, array( 25, 25 ) ),
 						'<code>' . $_product_data['status'] . '</code>',
@@ -314,7 +334,6 @@ if ( ! class_exists( 'WCJ_Product_By_User' ) ) :
 				echo wp_kses( wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive my_account_orders' ) ), $allowed_tags );
 			}
 		}
-
 	}
 
 endif;

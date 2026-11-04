@@ -105,7 +105,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			$_options,
 			$_require_optin = true,
 			$_include_goodbye_form = true,
-			$_marketing = false ) {
+			$_marketing = false
+		) {
 
 			$this->plugin_file = $_plugin_file;
 			$this->home_url    = trailingslashit( $_home_url );
@@ -143,7 +144,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 
 			// Get it going.
 			$this->init();
-
 		}
 
 		/**
@@ -183,7 +183,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			add_filter( 'plugin_action_links_' . plugin_basename( $this->plugin_file ), array( $this, 'filter_action_links' ) );
 			add_action( 'admin_footer-plugins.php', array( $this, 'goodbye_ajax' ) );
 			add_action( 'wp_ajax_goodbye_form', array( $this, 'goodbye_form_callback' ) );
-
 		}
 
 		/**
@@ -239,7 +238,7 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 		 * @since 1.0.0
 		 * @param bool $force Force tracking if it's not time.
 		 */
-		public function do_tracking( $force = false ) {
+		public function do_tracking( $force = false ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 
 			// If the home site hasn't been defined, we just drop out. Nothing much we can do.
 			if ( ! $this->home_url ) {
@@ -262,7 +261,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 
 			// Send the data.
 			$this->send_data( $body );
-
 		}
 
 		/**
@@ -301,7 +299,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			if ( is_wp_error( $request ) ) {
 				return $request;
 			}
-
 		}
 
 		/**
@@ -492,7 +489,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 
 			// Return the data.
 			return $body;
-
 		}
 
 		/**
@@ -550,7 +546,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 				unset( $track_time[ $this->plugin_name ] );
 			}
 			update_option( 'wisdom_last_track_time', $track_time );
-
 		}
 
 		/**
@@ -607,38 +602,29 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			if ( $this->has_user_opted_out() ) {
 				if ( 'theme' === $this->what_am_i ) {
 					set_theme_mod( 'wisdom-allow-tracking', 0 );
-				} else {
-					if ( isset( $allow_tracking[ $plugin ] ) ) {
+				} elseif ( isset( $allow_tracking[ $plugin ] ) ) {
 						unset( $allow_tracking[ $plugin ] );
-					}
 				}
 			} elseif ( $is_allowed || ! $this->require_optin ) {
 				// If the user has agreed to allow tracking or if opt-in is not required.
 
 				if ( 'theme' === $this->what_am_i ) {
 					set_theme_mod( 'wisdom-allow-tracking', 1 );
-				} else {
-					if ( empty( $allow_tracking ) || ! is_array( $allow_tracking ) ) {
+				} elseif ( empty( $allow_tracking ) || ! is_array( $allow_tracking ) ) {
 						// If nothing exists in the option yet, start a new array with the plugin name.
 						$allow_tracking = array( $plugin => $plugin );
-					} else {
-						// Else add the plugin name to the array.
-						$allow_tracking[ $plugin ] = $plugin;
-					}
-				}
-			} else {
-
-				if ( 'theme' === $this->what_am_i ) {
-					set_theme_mod( 'wisdom-allow-tracking', 0 );
 				} else {
-					if ( isset( $allow_tracking[ $plugin ] ) ) {
-						unset( $allow_tracking[ $plugin ] );
-					}
+					// Else add the plugin name to the array.
+					$allow_tracking[ $plugin ] = $plugin;
 				}
+			} elseif ( 'theme' === $this->what_am_i ) {
+
+					set_theme_mod( 'wisdom-allow-tracking', 0 );
+			} elseif ( isset( $allow_tracking[ $plugin ] ) ) {
+					unset( $allow_tracking[ $plugin ] );
 			}
 
 			update_option( 'wisdom_allow_tracking', $allow_tracking );
-
 		}
 
 		/**
@@ -657,16 +643,14 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 					// If the theme mod is not set, then return true - the user has opted out.
 					return true;
 				}
-			} else {
+			} elseif ( ! empty( $this->options ) ) {
 				// Iterate through the options that are being tracked looking for wisdom_opt_out setting.
-				if ( ! empty( $this->options ) ) {
-					foreach ( $this->options as $option_name ) {
-						// Check each option.
-						$options = get_option( $option_name );
-						// If we find the setting, return true.
-						if ( ! empty( $options['wisdom_opt_out'] ) ) {
-							return true;
-						}
+				foreach ( $this->options as $option_name ) {
+					// Check each option.
+					$options = get_option( $option_name );
+					// If we find the setting, return true.
+					if ( ! empty( $options['wisdom_opt_out'] ) ) {
+						return true;
 					}
 				}
 			}
@@ -812,10 +796,8 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 					// Else add the plugin name to the array.
 					$collect_email[ $plugin ] = $plugin;
 				}
-			} else {
-				if ( isset( $collect_email[ $plugin ] ) ) {
+			} elseif ( isset( $collect_email[ $plugin ] ) ) {
 					unset( $collect_email[ $plugin ] );
-				}
 			}
 			update_option( 'wisdom_collect_email', $collect_email );
 		}
@@ -979,7 +961,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 				</div>
 				<?php
 			}
-
 		}
 
 		/**
@@ -1240,7 +1221,6 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 			echo 'success';
 			wp_die();
 		}
-
 	}
 
 }

@@ -44,10 +44,25 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_description';
-			$this->short_desc = __( 'Shipping Descriptions', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add descriptions to shipping methods on frontend. Description visibility (Elite). Description position (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add descriptions to shipping methods on frontend.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-descriptions';
+			$this->short_desc = 'Shipping Descriptions';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Descriptions', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add descriptions to shipping methods on frontend. Description visibility (Elite). Description position (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add descriptions to shipping methods on frontend. Description visibility (Elite). Description position (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add descriptions to shipping methods on frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add descriptions to shipping methods on frontend.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-descriptions';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -89,7 +104,6 @@ if ( ! class_exists( 'WCJ_Shipping_Descriptions' ) ) :
 				return $label;
 			}
 		}
-
 	}
 
 endif;

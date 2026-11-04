@@ -98,7 +98,7 @@ if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 		 * @param string $currency_symbol Get currency symbol.
 		 * @param string $currency Get currency.
 		 */
-		public function change_currency_symbol_reports( $currency_symbol, $currency ) {
+		public function change_currency_symbol_reports( $currency_symbol, $currency ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			// phpcs:disable WordPress.Security.NonceVerification
 			if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 				if ( isset( $_GET['currency'] ) ) {

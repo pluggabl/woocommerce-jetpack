@@ -25,18 +25,38 @@ if ( ! class_exists( 'WCJ_Old_Slugs' ) ) :
 		public function __construct() {
 
 			$this->id         = 'old_slugs';
-			$this->short_desc = __( 'Old Slugs', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Remove old products slugs.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-remove-old-products-slugs';
+			$this->short_desc = 'Old Slugs';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Old Slugs', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Remove old products slugs.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Remove old products slugs.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-remove-old-products-slugs';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'old_slugs' => array(
-						'title' => __( 'Remove Old Slugs', 'woocommerce-jetpack' ),
-						'desc'  => __( 'Tool removes old slugs/permalinks from database.', 'woocommerce-jetpack' ),
+						'title' => 'Remove Old Slugs',
+						'desc'  => 'Tool removes old slugs/permalinks from database.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'old_slugs' => array(
+							'title' => __( 'Remove Old Slugs', 'woocommerce-jetpack' ),
+							'desc'  => __( 'Tool removes old slugs/permalinks from database.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 		}
 

@@ -100,7 +100,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 		 * @param string | null $return_value The user defined shortcode return_value.
 		 * @param array         $atts The user defined shortcode attributes.
 		 */
-		public function get_product_orders_data( string $return_value = null, $atts ) {
+		public function get_product_orders_data( ?string $return_value, $atts ) {
 			$product_ids      = ( $this->the_product->is_type( 'grouped' ) ? $this->the_product->get_children() : array( wcj_get_product_id_or_variation_parent_id( $this->the_product ) ) );
 			$total_orders     = 0;
 			$total_qty        = 0;
@@ -143,7 +143,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 							}
 						}
 						if ( $item_found ) {
-							$total_orders++;
+							++$total_orders;
 						}
 					}
 					$offset += $block_size;
@@ -181,7 +181,7 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 							}
 						}
 						if ( $item_found ) {
-							$total_orders++;
+							++$total_orders;
 						}
 					}
 					$offset += $block_size;
@@ -346,7 +346,6 @@ if ( ! class_exists( 'WCJ_Products_Crowdfunding_Shortcodes' ) ) :
 			$max_value     = get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_wcj_crowdfunding_goal_sum', true );
 			return '<progress value="' . $current_value . '" max="' . $max_value . '"></progress>';
 		}
-
 	}
 
 endif;

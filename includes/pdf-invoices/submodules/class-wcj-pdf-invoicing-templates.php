@@ -34,8 +34,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Templates' ) ) :
 		public function __construct() {
 			$this->id         = 'pdf_invoicing_templates';
 			$this->parent_id  = 'pdf_invoicing';
-			$this->short_desc = __( 'Templates', 'woocommerce-jetpack' );
-			$this->desc       = '';
+			$this->short_desc = 'Templates';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Templates', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = '';
 			parent::__construct( 'submodule' );
 		}
 
@@ -73,7 +78,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Templates' ) ) :
 			}
 			return $this->default_template[ $invoice_type_id ];
 		}
-
 	}
 
 endif;

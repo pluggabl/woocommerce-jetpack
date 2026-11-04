@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	'grow_sales'                           => array(
-		'title'           => __( 'Grow sales now', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Enable sales notifications', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Grow sales now', 'woocommerce-jetpack' ) : 'Grow sales now' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Enable sales notifications', 'woocommerce-jetpack' ) : 'Enable sales notifications' ),
 		'icon'            => 'dashicons-chart-line',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22,6 13.5,15.5 8.5,10.5 2,17"></polyline><polyline points="16,6 22,6 22,12"></polyline></svg>',
 		'modules'         => array(
@@ -38,8 +38,8 @@ return array(
 		'first_win_check' => 'sales_notifications_enabled',
 	),
 	'work_smarter'                         => array(
-		'title'           => __( 'Work smarter (backend)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Enable sequential order numbers and admin enhancements', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Work smarter (backend)', 'woocommerce-jetpack' ) : 'Work smarter (backend)' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Enable sequential order numbers and admin enhancements', 'woocommerce-jetpack' ) : 'Enable sequential order numbers and admin enhancements' ),
 		'icon'            => 'dashicons-admin-tools',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline></svg>',
 		'modules'         => array(
@@ -63,12 +63,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'order_numbers_enabled',
-		'next_step_text'  => __( 'Configure order numbers', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure order numbers', 'woocommerce-jetpack' ) : 'Configure order numbers' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=shipping_and_orders&section=order_numbers&wcj-cat-nonce=',
 	),
 	'go_global'                            => array(
-		'title'           => __( 'Go global (starter)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Add additional currency support', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Go global (starter)', 'woocommerce-jetpack' ) : 'Go global (starter)' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Add additional currency support', 'woocommerce-jetpack' ) : 'Add additional currency support' ),
 		'icon'            => 'dashicons-admin-site',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
 		'modules'         => array(
@@ -82,23 +82,23 @@ return array(
 			),
 		),
 		'first_win_check' => 'extra_currency_added',
-		'next_step_text'  => __( 'Configure currencies', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure currencies', 'woocommerce-jetpack' ) : 'Configure currencies' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=prices_and_currencies&section=currency&wcj-cat-nonce=',
 	),
 	'professional_invoices'                => array(
-		'title'           => __( 'Branded document setup', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Create a starter sample, rehearse an attachment and activate only after review.', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Branded document setup', 'woocommerce-jetpack' ) : 'Branded document setup' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Create a starter sample, rehearse an attachment and activate only after review.', 'woocommerce-jetpack' ) : 'Create a starter sample, rehearse an attachment and activate only after review.' ),
 		'icon'            => 'dashicons-media-document',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
 		'setup_url'       => WCJ_Invoice_Setup::url(),
 		'modules'         => array(),
 		'first_win_check' => 'invoice_setup_completed',
-		'next_step_text'  => __( 'Open starter document guide', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Open starter document guide', 'woocommerce-jetpack' ) : 'Open starter document guide' ),
 		'next_step_link'  => 'admin.php?page=wcj-getting-started&wcj-invoice-setup=1&wcj-cat-nonce=',
 	),
 	'boost_conversions_free'               => array(
-		'title'           => __( 'Boost conversions (free tools)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Enable product add-ons and related products', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Boost conversions (free tools)', 'woocommerce-jetpack' ) : 'Boost conversions (free tools)' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Enable product add-ons and related products', 'woocommerce-jetpack' ) : 'Enable product add-ons and related products' ),
 		'icon'            => 'dashicons-star-filled',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon></svg>',
 		'modules'         => array(
@@ -121,12 +121,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_product_addons_enabled',
-		'next_step_text'  => __( 'Add your first product add-on', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Add your first product add-on', 'woocommerce-jetpack' ) : 'Add your first product add-on' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=products&section=product_addons&wcj-cat-nonce=',
 	),
 	'better_checkout_basics'               => array(
-		'title'           => __( 'Better checkout (basics)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Customize checkout fields and button labels', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Better checkout (basics)', 'woocommerce-jetpack' ) : 'Better checkout (basics)' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Customize checkout fields and button labels', 'woocommerce-jetpack' ) : 'Customize checkout fields and button labels' ),
 		'icon'            => 'dashicons-cart',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>',
 		'modules'         => array(
@@ -147,12 +147,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_checkout_core_fields_enabled',
-		'next_step_text'  => __( 'Customize checkout fields', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Customize checkout fields', 'woocommerce-jetpack' ) : 'Customize checkout fields' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=cart_and_checkout&section=checkout_core_fields&wcj-cat-nonce=',
 	),
 	'store_essentials_quick'               => array(
-		'title'           => __( 'Store essentials (quick setup)', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Enable sequential order numbers and product tabs', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Store essentials (quick setup)', 'woocommerce-jetpack' ) : 'Store essentials (quick setup)' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Enable sequential order numbers and product tabs', 'woocommerce-jetpack' ) : 'Enable sequential order numbers and product tabs' ),
 		'icon'            => 'dashicons-admin-tools',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -177,12 +177,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_order_numbers_enabled',
-		'next_step_text'  => __( 'Configure order numbers', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure order numbers', 'woocommerce-jetpack' ) : 'Configure order numbers' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=shipping_and_orders&section=order_numbers&wcj-cat-nonce=',
 	),
 	'recover_lost_sales_goal'              => array(
-		'title'           => __( 'Recover Lost Sale', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Enable sequential Cart Abandonment', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Recover Lost Sale', 'woocommerce-jetpack' ) : 'Recover Lost Sale' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Enable sequential Cart Abandonment', 'woocommerce-jetpack' ) : 'Enable sequential Cart Abandonment' ),
 		'icon'            => 'dashicons-admin-tools',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -195,12 +195,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_cart_abandonment_enabled',
-		'next_step_text'  => __( 'Configure cart recovery emails', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure cart recovery emails', 'woocommerce-jetpack' ) : 'Configure cart recovery emails' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&tab=jetpack&wcj-cat=cart_and_checkout&section=cart_abandonment&wcj-cat-nonce=',
 	),
 	'b2b_store'                            => array(
-		'title'           => __( 'B2B Store', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Coupon by user role, Gateways by User Role, Shipping Methods by Users, and Business tools', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'B2B Store', 'woocommerce-jetpack' ) : 'B2B Store' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Coupon by user role, Gateways by User Role, Shipping Methods by Users, and Business tools', 'woocommerce-jetpack' ) : 'Coupon by user role, Gateways by User Role, Shipping Methods by Users, and Business tools' ),
 		'icon'            => 'dashicons-store',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -299,12 +299,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_coupon_by_user_role_enabled',
-		'next_step_text'  => __( 'Configure Coupon by User Role', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure Coupon by User Role', 'woocommerce-jetpack' ) : 'Configure Coupon by User Role' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=coupon_by_user_role&wcj-cat-nonce=feca9b5418',
 	),
 	'intl_Store'                           => array(
-		'title'           => __( 'INTL Store', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Currency Exchange Rates, Prices and Currencies by Country, Multicurrency Product Base Price, and International currency tools', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'INTL Store', 'woocommerce-jetpack' ) : 'INTL Store' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Currency Exchange Rates, Prices and Currencies by Country, Multicurrency Product Base Price, and International currency tools', 'woocommerce-jetpack' ) : 'Currency Exchange Rates, Prices and Currencies by Country, Multicurrency Product Base Price, and International currency tools' ),
 		'icon'            => 'dashicons-store',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -332,12 +332,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_currency_exchange_rates_enabled',
-		'next_step_text'  => __( 'Configure Exchange Rates', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure Exchange Rates', 'woocommerce-jetpack' ) : 'Configure Exchange Rates' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=prices_and_currencies&section=currency_exchange_rates&wcj-cat-nonce=feca9b5418',
 	),
 	'merchant_getting_started'             => array(
-		'title'           => __( 'Merchant getting started', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Product input fields, Checkout Custom Info, Product Variation Swatches, and other product tools', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Merchant getting started', 'woocommerce-jetpack' ) : 'Merchant getting started' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Product input fields, Checkout Custom Info, Product Variation Swatches, and other product tools', 'woocommerce-jetpack' ) : 'Product input fields, Checkout Custom Info, Product Variation Swatches, and other product tools' ),
 		'icon'            => 'dashicons-products',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -385,12 +385,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_product_input_fields_enabled',
-		'next_step_text'  => __( 'Configure Product Input Fields', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure Product Input Fields', 'woocommerce-jetpack' ) : 'Configure Product Input Fields' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=products&section=product_input_fields&wcj-cat-nonce=feca9b5418',
 	),
 	'merchant_aov_increase'                => array(
-		'title'           => __( 'Merchant AOV increase', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Coupon Code Generator, URL Coupon, and Sale Flash', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Merchant AOV increase', 'woocommerce-jetpack' ) : 'Merchant AOV increase' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Coupon Code Generator, URL Coupon, and Sale Flash', 'woocommerce-jetpack' ) : 'Coupon Code Generator, URL Coupon, and Sale Flash' ),
 		'icon'            => 'dashicons-admin-links',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -418,12 +418,12 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_coupon_code_generator_enabled',
-		'next_step_text'  => __( 'Configure Coupon Code', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure Coupon Code', 'woocommerce-jetpack' ) : 'Configure Coupon Code' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=coupon_code_generator&wcj-cat-nonce=feca9b5418',
 	),
 	'merchant_run_their_store_efficiently' => array(
-		'title'           => __( 'Merchant run their store efficiently', 'woocommerce-jetpack' ),
-		'subtitle'        => __( 'Export, Admin product List, and Purchase data', 'woocommerce-jetpack' ),
+		'title'           => ( did_action( 'init' ) ? __( 'Merchant run their store efficiently', 'woocommerce-jetpack' ) : 'Merchant run their store efficiently' ),
+		'subtitle'        => ( did_action( 'init' ) ? __( 'Export, Admin product List, and Purchase data', 'woocommerce-jetpack' ) : 'Export, Admin product List, and Purchase data' ),
 		'icon'            => 'dashicons-admin-tools',
 		'svg_icon'        => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
 		'modules'         => array(
@@ -493,7 +493,7 @@ return array(
 			),
 		),
 		'first_win_check' => 'wcj_export_enabled',
-		'next_step_text'  => __( 'Configure Export Tool', 'woocommerce-jetpack' ),
+		'next_step_text'  => ( did_action( 'init' ) ? __( 'Configure Export Tool', 'woocommerce-jetpack' ) : 'Configure Export Tool' ),
 		'next_step_link'  => 'admin.php?page=wcj-plugins&wcj-cat=emails_and_misc&section=export&wcj-cat-nonce=feca9b5418',
 	),
 );

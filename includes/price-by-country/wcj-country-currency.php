@@ -229,7 +229,6 @@ if ( ! function_exists( 'wcj_get_country_currency' ) ) {
 			'RO' => 'RON',
 			'RU' => 'RUB',
 			'RW' => 'RWF',
-			'SH' => 'SHP',
 			'KN' => 'XCD',
 			'LC' => 'XCD',
 			'VC' => 'XCD',

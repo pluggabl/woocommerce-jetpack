@@ -33,10 +33,25 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_tabs';
-			$this->short_desc = __( 'Product Tabs', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-custom-product-tabs';
+			$this->short_desc = 'Product Tabs';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Tabs', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-custom-product-tabs';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -772,7 +787,6 @@ if ( ! class_exists( 'WCJ_Product_Tabs' ) ) :
 			$html = '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
 			echo wp_kses_post( $html );
 		}
-
 	}
 
 endif;

@@ -41,6 +41,5 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Updater' ) ) :
 			}
 			return false;
 		}
-
 	}
 endif;

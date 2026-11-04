@@ -56,32 +56,74 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		public function __construct() {
 
 			$this->id         = 'my_account';
-			$this->short_desc = __( 'My Account', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce "My Account" page customization. Customize Menu Order (Elite). Add Custom Menu Items (Elite). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'WooCommerce "My Account" page customization.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-my-account';
+			$this->short_desc = 'My Account';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'My Account', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce "My Account" page customization. Customize Menu Order (Elite). Add Custom Menu Items (Elite). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce "My Account" page customization. Customize Menu Order (Elite). Add Custom Menu Items (Elite). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'WooCommerce "My Account" page customization.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'WooCommerce "My Account" page customization.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-my-account';
 			parent::__construct();
 
-			$this->account_menu_items     = array(
-				'dashboard'       => __( 'Dashboard', 'woocommerce' ),
-				'orders'          => __( 'Orders', 'woocommerce' ),
-				'downloads'       => __( 'Downloads', 'woocommerce' ),
-				'edit-address'    => __( 'Addresses', 'woocommerce' ),
-				'payment-methods' => __( 'Payment methods', 'woocommerce' ),
-				'edit-account'    => __( 'Account details', 'woocommerce' ),
-				'customer-logout' => __( 'Logout', 'woocommerce' ),
+			$this->account_menu_items = array(
+				'dashboard'       => 'Dashboard',
+				'orders'          => 'Orders',
+				'downloads'       => 'Downloads',
+				'edit-address'    => 'Addresses',
+				'payment-methods' => 'Payment methods',
+				'edit-account'    => 'Account details',
+				'customer-logout' => 'Logout',
+			);
+			wcj_init_presentation(
+				function () {
+					$this->account_menu_items = array(
+						'dashboard'       => __( 'Dashboard', 'woocommerce' ),
+						'orders'          => __( 'Orders', 'woocommerce' ),
+						'downloads'       => __( 'Downloads', 'woocommerce' ),
+						'edit-address'    => __( 'Addresses', 'woocommerce' ),
+						'payment-methods' => __( 'Payment methods', 'woocommerce' ),
+						'edit-account'    => __( 'Account details', 'woocommerce' ),
+						'customer-logout' => __( 'Logout', 'woocommerce' ),
+					);
+				}
 			);
 			$this->account_menu_endpoints = array(
-				'orders'          => __( 'Orders', 'woocommerce' ),
-				'view-order'      => __( 'View order', 'woocommerce' ),
-				'downloads'       => __( 'Downloads', 'woocommerce' ),
-				'edit-account'    => __( 'Edit account', 'woocommerce' ) . ' (' . __( 'Account details', 'woocommerce' ) . ')',
-				'edit-address'    => __( 'Addresses', 'woocommerce' ),
-				'payment-methods' => __( 'Payment methods', 'woocommerce' ),
-				'lost-password'   => __( 'Lost password', 'woocommerce' ),
-				'customer-logout' => __( 'Logout', 'woocommerce' ),
+				'orders'          => 'Orders',
+				'view-order'      => 'View order',
+				'downloads'       => 'Downloads',
+				'edit-account'    => 'Edit account (Account details)',
+				'edit-address'    => 'Addresses',
+				'payment-methods' => 'Payment methods',
+				'lost-password'   => 'Lost password',
+				'customer-logout' => 'Logout',
 			);
-			$this->menu_order_default     = implode( PHP_EOL, array_keys( $this->account_menu_items ) );
+			wcj_init_presentation(
+				function () {
+					$this->account_menu_endpoints = array(
+						'orders'          => __( 'Orders', 'woocommerce' ),
+						'view-order'      => __( 'View order', 'woocommerce' ),
+						'downloads'       => __( 'Downloads', 'woocommerce' ),
+						'edit-account'    => __( 'Edit account', 'woocommerce' ) . ' (' . __( 'Account details', 'woocommerce' ) . ')',
+						'edit-address'    => __( 'Addresses', 'woocommerce' ),
+						'payment-methods' => __( 'Payment methods', 'woocommerce' ),
+						'lost-password'   => __( 'Lost password', 'woocommerce' ),
+						'customer-logout' => __( 'Logout', 'woocommerce' ),
+					);
+				}
+			);
+			$this->menu_order_default = implode( PHP_EOL, array_keys( $this->account_menu_items ) );
 
 			if ( $this->is_enabled() ) {
 				add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'maybe_add_my_account_order_actions' ), 10, 2 );
@@ -180,7 +222,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			$content                                  = wcj_get_option( 'wcj_my_account_custom_pages_content', array() );
 			$endpoint                                 = wcj_get_option( 'wcj_my_account_custom_pages_endpoint', array() );
 			$wcj_my_account_custom_pages_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_my_account_custom_pages_total_number', 1 ) );
-			for ( $i = 1; $i <= $wcj_my_account_custom_pages_total_number; $i ++ ) {
+			for ( $i = 1; $i <= $wcj_my_account_custom_pages_total_number; $i++ ) {
 				if ( ! empty( $title[ $i ] ) && ! empty( $content[ $i ] ) ) {
 					$endpoint[ $i ]                                       = isset( $endpoint[ $i ] ) ? $endpoint[ $i ] : '';
 					$this->custom_pages[ sanitize_title( $title[ $i ] ) ] = array(
@@ -398,7 +440,6 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 			 * @deprecated 2.6.0
 			 */
 			do_action( 'woocommerce_after_my_account' );
-
 		}
 
 		/**
@@ -609,7 +650,6 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

@@ -57,7 +57,13 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 			require_once __DIR__ . '/../admin/class-wcj-admin-announcement.php';
 			WCJ_Admin_Announcement::init();
 
-			$this->cats                     = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php';
+			$this->cats = array();
+
+			wcj_init_presentation(
+				function () {
+					$this->cats = include WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php';
+				}
+			);
 			$this->custom_dashboard_modules = apply_filters( 'wcj_custom_dashboard_modules', array() );
 
 			if ( 'woocommerce-jetpack.php' === basename( WCJ_FREE_PLUGIN_FILE ) ) {
@@ -806,7 +812,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		public function wcj_array_search( array $arr, string $patron ): array {
 			return array_filter(
 				$arr,
-				static function ( mixed $value ) use ( $patron ): bool {
+				static function ( $value ) use ( $patron ): bool {
 					return 1 === preg_match( sprintf( '/^%s$/i', preg_replace( '/(^%)|(%$)/', '.*', $patron ) ), $value );
 				}
 			);

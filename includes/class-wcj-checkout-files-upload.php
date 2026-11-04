@@ -48,14 +48,32 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		public function __construct() {
 
 			$this->id         = 'checkout_files_upload';
-			$this->short_desc = __( 'Checkout Files Upload', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Let customers upload files on (or after) the checkout (1 file allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Let customers upload files on (or after) the checkout.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-checkout-files-upload';
+			$this->short_desc = 'Checkout Files Upload';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Checkout Files Upload', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Let customers upload files on (or after) the checkout (1 file allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Let customers upload files on (or after) the checkout (1 file allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Let customers upload files on (or after) the checkout.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Let customers upload files on (or after) the checkout.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-checkout-files-upload';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
 				$this->init_settings();
+				require_once __DIR__ . '/class-wcj-checkout-files-upload-store.php';
+				require_once __DIR__ . '/class-wcj-checkout-files-upload-blocks.php';
+				new WCJ_Checkout_Files_Upload_Blocks( $this );
 				add_action( 'add_meta_boxes', array( $this, 'add_file_admin_order_meta_box' ) );
 				add_action( 'init', array( $this, 'process_checkout_files_upload' ) );
 				if ( 'yes' === wcj_get_option( 'wcj_checkout_files_upload_remove_on_empty_cart', 'no' ) ) {
@@ -95,20 +113,33 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 * @todo    (dev) (maybe) init settings on demand only
 		 */
 		public function init_settings() {
-			$this->templates_settings                = wcj_get_option( 'wcj_checkout_files_upload_templates', array() );
-			$this->templates_settings                = wp_parse_args(
-				$this->templates_settings,
+			$this->templates_settings = wcj_get_option( 'wcj_checkout_files_upload_templates', array() );
+			$template_overrides       = wp_parse_args( $this->templates_settings, array() );
+			$this->templates_settings = wp_parse_args(
+				$template_overrides,
 				array(
 					'order_before'      => '',
 					/* translators: %s: search term */
-					'order_item'        => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
+					'order_item'        => sprintf( 'File: %s', '%file_name%' ) . '<br>',
 					'order_after'       => '',
 					'order_image_style' => 'width:64px;',
 					'email_before'      => '',
 					/* translators: %s: search term */
-					'email_item'        => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
+					'email_item'        => sprintf( 'File: %s', '%file_name%' ) . '<br>',
 					'email_after'       => '',
 				)
+			);
+			// Localize only absent defaults; preserve stored and pre-init runtime overrides.
+			wcj_init_presentation(
+				function () use ( $template_overrides ) {
+					foreach ( array( 'order_item', 'email_item' ) as $template_key ) {
+						if ( ! array_key_exists( $template_key, $template_overrides ) &&
+							'File: %file_name%<br>' === $this->templates_settings[ $template_key ] ) {
+							/* translators: %s: uploaded file name placeholder. */
+							$this->templates_settings[ $template_key ] = sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>';
+						}
+					}
+				}
 			);
 			$this->additional_admin_emails_settings  = wcj_get_option( 'wcj_checkout_files_upload_additional_admin_emails', array() );
 			$this->additional_admin_emails_settings  = wp_parse_args(
@@ -210,6 +241,10 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		 * @param \WC_Order $order The order object.
 		 */
 		public function add_files_to_order_from_blocks( $order ) {
+			// Private Blocks claims do not use or overwrite the Classic PHP-session bridge.
+			if ( $order instanceof WC_Order && $order->get_meta( '_wcj_blocks_upload_claim' ) ) {
+				return;
+			}
 			if ( ! $order || false === $order ) {
 				return;
 			}
@@ -251,6 +286,7 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 				return false;
 			}
 
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( wcj_current_user_can( 'manage_woocommerce' ) || wcj_current_user_can( 'edit_shop_orders' ) || wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
 				return true;
 			}
@@ -411,11 +447,11 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					}
 					$file_name   = wcj_session_get( 'wcj_checkout_files_upload_' . $i );
 					$file_name   = $file_name['name'];
-					$file_type   = '.' . pathinfo( $file_name, PATHINFO_EXTENSION );
+					$file_type   = '.' . strtolower( pathinfo( $file_name, PATHINFO_EXTENSION ) );
 					$file_accept = wcj_get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' );
 					if ( '' !== $file_accept && null !== $file_accept ) {
 						// Validate file type.
-						$file_accept = explode( ',', $file_accept );
+						$file_accept = array_map( 'trim', explode( ',', strtolower( $file_accept ) ) );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
 							if ( ! in_array( $file_type, $file_accept, true ) ) {
 								$this->add_notice(
@@ -613,42 +649,73 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 		/**
 		 * Add_files_to_order.
 		 *
+		 * @throws Exception When the local order attachment cannot be persisted.
+		 *
 		 * @version 7.2.5
 		 * @since   2.4.5
 		 * @param int    $order_id defines the order_id.
 		 * @param string $posted defines the posted.
 		 */
 		public function add_files_to_order( $order_id, $posted ) {
-			$order = wcj_get_order( $order_id );
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-			global $wp_filesystem;
-			WP_Filesystem();
-
-			$upload_dir = wcj_get_wcj_uploads_dir( 'checkout_files_upload' );
-			if ( ! file_exists( $upload_dir ) ) {
-				wp_mkdir_p( $upload_dir, 0755, true );
-			}
 			$total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+			$staged       = array();
 			for ( $i = 1; $i <= $total_number; $i++ ) {
-				if ( null !== wcj_session_get( 'wcj_checkout_files_upload_' . $i ) ) {
-					$session_data       = wcj_session_get( 'wcj_checkout_files_upload_' . $i );
-					$file_name          = $session_data['name'];
-					$ext                = pathinfo( $file_name, PATHINFO_EXTENSION );
-					$download_file_name = $order_id . '_' . $i . '.' . $ext;
-					$file_path          = $upload_dir . '/' . $download_file_name;
-					$tmp_file_name      = $session_data['tmp_name'];
-					$file_data          = $wp_filesystem->get_contents( $tmp_file_name );
-					if ( ! $this->is_extension_blocked( $ext, $file_path ) ) { // should already be validated earlier, but just in case...
-						$wp_filesystem->put_contents( $file_path, $file_data, FS_CHMOD_FILE );
-					}
-					wp_delete_file( $tmp_file_name );
-					wcj_session_set( 'wcj_checkout_files_upload_' . $i, null );
-					$this->update_order_file_meta( $order, '_wcj_checkout_files_upload_' . $i, $download_file_name );
-					$this->update_order_file_meta( $order, '_wcj_checkout_files_upload_real_name_' . $i, $file_name );
+				$data = wcj_session_get( 'wcj_checkout_files_upload_' . $i );
+				if ( null !== $data ) {
+					$staged[ $i ] = $data;
 				}
 			}
+			// Optional uploads must not make orders without files depend on filesystem access.
+			if ( array() === $staged ) {
+				return;
+			}
+			$order      = wcj_get_order( $order_id );
+			$upload_dir = wcj_get_wcj_uploads_dir( 'checkout_files_upload' );
+			if ( ! $order || ( ! is_dir( $upload_dir ) && ! wp_mkdir_p( $upload_dir ) ) ) {
+				throw new Exception( esc_html__( 'The uploaded file could not be saved with the order. Contact the store before trying again.', 'woocommerce-jetpack' ) );
+			}
+			// PHP uploaded these files locally. Plugin-update FTP/SSH credentials are not involved.
+			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+			$filesystem = new WP_Filesystem_Direct( null );
+			$prepared   = array();
+			try {
+				foreach ( $staged as $i => $session_data ) {
+					$ext       = pathinfo( $session_data['name'], PATHINFO_EXTENSION );
+					$file_name = $order_id . '_' . $i . '_' . wp_generate_uuid4() . '.' . $ext;
+					$file_path = $upload_dir . '/' . $file_name;
+					$file_data = $filesystem->get_contents( $session_data['tmp_name'] );
+					if ( false === $file_data || $this->is_extension_blocked( $ext, $file_path ) || $filesystem->exists( $file_path ) ) {
+						throw new Exception( esc_html__( 'The uploaded file could not be saved with the order. Contact the store before trying again.', 'woocommerce-jetpack' ) );
+					}
+					// These fresh names cannot replace an existing order attachment on a failed replacement.
+					$prepared[ $i ] = array(
+						'name' => $file_name,
+						'path' => $file_path,
+					);
+					$permissions    = defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644;
+					if ( ! $filesystem->put_contents( $file_path, $file_data, $permissions ) ) {
+						throw new Exception( esc_html__( 'The uploaded file could not be saved with the order. Contact the store before trying again.', 'woocommerce-jetpack' ) );
+					}
+				}
+			} catch ( Exception $error ) {
+				foreach ( $prepared as $file ) {
+					wp_delete_file( $file['path'] );
+				}
+				// All original staged files, sessions and prior order attachments remain recoverable.
+				throw $error;
+			}
+			foreach ( $prepared as $i => $file ) {
+				$this->update_order_file_meta( $order, '_wcj_checkout_files_upload_' . $i, $file['name'] );
+				$this->update_order_file_meta( $order, '_wcj_checkout_files_upload_real_name_' . $i, $staged[ $i ]['name'] );
+			}
 			$this->update_order_file_meta( $order, '_wcj_checkout_files_total_files', $total_number );
+			// If saving throws, retain both sets of files and staging for explicit reconciliation, never replay.
 			$this->save_order_if_hpos( $order );
+			foreach ( $staged as $i => $session_data ) {
+				wp_delete_file( $session_data['tmp_name'] );
+				wcj_session_set( 'wcj_checkout_files_upload_' . $i, null );
+			}
 		}
 
 		/**
@@ -819,11 +886,11 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					// Validate.
 					$is_valid       = true;
 					$real_file_name = isset( $_FILES[ $file_name ]['name'] ) ? sanitize_text_field( wp_unslash( $_FILES[ $file_name ]['name'] ) ) : '';
-					$file_type      = '.' . pathinfo( $real_file_name, PATHINFO_EXTENSION );
+					$file_type      = '.' . strtolower( pathinfo( $real_file_name, PATHINFO_EXTENSION ) );
 					$file_accept    = wcj_get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' );
 					if ( '' !== ( $file_accept ) ) {
 						// Validate file type.
-						$file_accept = explode( ',', $file_accept );
+						$file_accept = array_map( 'trim', explode( ',', strtolower( $file_accept ) ) );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
 							if ( ! in_array( $file_type, $file_accept, true ) ) {
 								$this->add_notice(
@@ -872,23 +939,24 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 					if ( $is_valid ) {
 						// To session.
 						$tmp_dest_file = tempnam( wcj_get_wcj_uploads_dir( 'temp' ), 'wcj' );
-						if ( move_uploaded_file( $temp_file_name, $tmp_dest_file ) ) {
-							$session_data = array_merge( array_map( 'sanitize_text_field', wp_unslash( $_FILES[ $file_name ] ) ), array( 'tmp_name' => $tmp_dest_file ) );
-							wcj_session_set( $file_name, $session_data );
+						if ( false === $tmp_dest_file || ! move_uploaded_file( $temp_file_name, $tmp_dest_file ) ) {
+							if ( false !== $tmp_dest_file ) {
+								wp_delete_file( $tmp_dest_file );
+							}
+							$this->add_notice( __( 'The file could not be stored. Please contact the store.', 'woocommerce-jetpack' ), 'error' );
+							continue;
 						}
-						$this->add_notice(
-							sprintf(
-								wcj_get_option(
-									'wcj_checkout_files_upload_notice_success_upload_' . $i,
-									/* translators: %s: search term */
-									__( 'File "%s" was successfully uploaded.', 'woocommerce-jetpack' )
-								),
-								$real_file_name
-							)
-						);
+						$session_data = array_merge( array_map( 'sanitize_text_field', wp_unslash( $_FILES[ $file_name ] ) ), array( 'tmp_name' => $tmp_dest_file ) );
+						wcj_session_set( $file_name, $session_data );
+
 						// To order.
 						if ( 0 !== $order_id ) {
-							$this->add_files_to_order( $order_id, null );
+							try {
+								$this->add_files_to_order( $order_id, null );
+							} catch ( Exception $error ) {
+								$this->add_notice( $error->getMessage(), 'error' );
+								continue;
+							}
 							if ( in_array( 'upload_file', $this->additional_admin_emails_settings['actions'], true ) ) {
 								$attachment  = $this->get_order_full_file_name( $order_id, $i );
 								$attachments = ( 'no' === $this->additional_admin_emails_settings['do_attach'] || false === $attachment ?
@@ -913,6 +981,16 @@ if ( ! class_exists( 'WCJ_Checkout_Files_Upload' ) ) :
 								);
 							}
 						}
+						$this->add_notice(
+							sprintf(
+								wcj_get_option(
+									'wcj_checkout_files_upload_notice_success_upload_' . $i,
+									/* translators: %s: search term */
+									__( 'File "%s" was successfully uploaded.', 'woocommerce-jetpack' )
+								),
+								$real_file_name
+							)
+						);
 						// Action.
 						do_action(
 							'wcj_checkout_files_upload',

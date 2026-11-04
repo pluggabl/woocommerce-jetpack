@@ -35,8 +35,7 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 		 * @since   2.4.7
 		 * @param null $args Get null value.
 		 */
-		public function __construct( $args = null ) {
-			return true;
+		public function __construct( $args = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 		}
 
 		/**
@@ -188,13 +187,13 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 						if ( ! isset( $order_currencies_array[ $i ][ $order_currency ] ) ) {
 							$order_currencies_array[ $i ][ $order_currency ] = 0;
 						}
-						$order_currencies_array[ $i ][ $order_currency ]++;
+						++$order_currencies_array[ $i ][ $order_currency ];
 						// Orders by currency total.
 						if ( ! isset( $order_currencies_array_totals[ $order_currency ] ) ) {
 							$order_currencies_array_totals[ $order_currency ] = 0;
 						}
-						$order_currencies_array_totals[ $order_currency ]++;
-						$total_orders++;
+						++$order_currencies_array_totals[ $order_currency ];
+						++$total_orders;
 						$order_total          = $order->get_total();
 						$order_total_excl_tax = $order->get_total() - $order->get_total_tax();
 						if ( ! isset( $current_months_averages[ $order_currency ][ $report_currency ] ) ) {
@@ -494,13 +493,13 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 						if ( ! isset( $order_currencies_array[ $i ][ $order_currency ] ) ) {
 							$order_currencies_array[ $i ][ $order_currency ] = 0;
 						}
-						$order_currencies_array[ $i ][ $order_currency ]++;
+						++$order_currencies_array[ $i ][ $order_currency ];
 						// Orders by currency total.
 						if ( ! isset( $order_currencies_array_totals[ $order_currency ] ) ) {
 							$order_currencies_array_totals[ $order_currency ] = 0;
 						}
-						$order_currencies_array_totals[ $order_currency ]++;
-						$total_orders++;
+						++$order_currencies_array_totals[ $order_currency ];
+						++$total_orders;
 						$order_total          = $order->get_total();
 						$order_total_excl_tax = $order->get_total() - $order->get_total_tax();
 						if ( ! isset( $current_months_averages[ $order_currency ][ $report_currency ] ) ) {
@@ -704,8 +703,6 @@ if ( ! class_exists( 'WCJ_Reports_Monthly_Sales' ) ) :
 			'</form></div></div></div></div>';
 			return $html;
 		}
-
-
 	}
 
 endif;

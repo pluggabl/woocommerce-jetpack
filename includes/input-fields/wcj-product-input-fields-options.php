@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Options
  *
- * @version 
+ * @version
  * @since   3.1.0
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes

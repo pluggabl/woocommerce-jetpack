@@ -65,11 +65,9 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 				}
 				if ( 'no' === get_option( 'wcj_price_by_country_admin_quick_edit_product_scope', 'no' ) ) {
 					$this->add_hooks();
-				} else {
-					if ( ! wcj_is_admin_product_quick_edit_page() ) {
+				} elseif ( ! wcj_is_admin_product_quick_edit_page() ) {
 
 						$this->add_hooks();
-					}
 				}
 				// `maybe_init_customer_country_by_ip()` executed on `init` hook - in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready.
 				add_action( 'init', array( $this, 'maybe_init_customer_country_by_ip' ) );
@@ -180,7 +178,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 				add_filter( 'posts_clauses', array( $this, 'price_filter_post_clauses_sort' ), 10, 2 );
 				add_action(
 					'woocommerce_product_query',
-					function ( $query ) {
+					function ( $query ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 						$group_id              = $this->get_customer_country_group_id();
 						$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
 						if ( (float) 1 === (float) $country_exchange_rate ) {
@@ -281,7 +279,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 *
 		 * @return mixed
 		 */
-		public function convert_free_shipping_min_amount( $option, $key, $method ) {
+		public function convert_free_shipping_min_amount( $option, $key, $method ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			if (
 			'no' === get_option( 'wcj_price_by_country_compatibility_free_shipping', 'no' )
 			|| 'min_amount' !== $key
@@ -587,7 +585,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 *
 		 * @return float|int
 		 */
-		public function format_price_after_including_excluding_tax( $return_price, $qty, $product ) {
+		public function format_price_after_including_excluding_tax( $return_price, $qty, $product ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$precision    = get_option( 'woocommerce_price_num_decimals', 2 );
 			$return_price = wcj_price_by_country_rounding( $return_price, $precision );
 			if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $return_price >= 0.5 && $precision > 0 ) {
@@ -616,7 +614,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 * @param string $meta_query defines the meta query.
 		 * @param string $_wc_query defines the wc query.
 		 */
-		public function price_filter_meta_query( $meta_query, $_wc_query ) {
+		public function price_filter_meta_query( $meta_query, $_wc_query ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			foreach ( $meta_query as $_key => $_query ) {
 				if ( isset( $_query['price_filter'] ) && true === $_query['price_filter'] && isset( $_query['key'] ) ) {
 					$group_id = $this->get_customer_country_group_id();
@@ -689,7 +687,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 * @param string $package_rates defines the rates of the package.
 		 * @param object $package defines the shipping package object.
 		 */
-		public function change_price_shipping( $package_rates, $package ) {
+		public function change_price_shipping( $package_rates, $package ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$group_id = $this->get_customer_country_group_id();
 			if ( null !== $group_id && '' !== $group_id ) {
 				$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
@@ -774,7 +772,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		public function get_country_group_id( $country ) {
 			// Get the country group id - go through all the groups, first found group is returned.
 			$wcj_price_by_country_total_groups_number = apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
-			for ( $i = 1; $i <= $wcj_price_by_country_total_groups_number; $i ++ ) {
+			for ( $i = 1; $i <= $wcj_price_by_country_total_groups_number; $i++ ) {
 				switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 					case 'comma_list':
 						$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
@@ -820,7 +818,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Core' ) ) :
 		 * @param object $_product object of the product.
 		 * @param bool   $display for_display true/false.
 		 */
-		public function get_variation_prices_hash( $price_hash, $_product, $display ) {
+		public function get_variation_prices_hash( $price_hash, $_product, $display ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$group_id = $this->get_customer_country_group_id();
 			$price_hash['wcj_price_by_country_group_id_data'] = array(
 				$group_id,

@@ -26,10 +26,25 @@ if ( ! class_exists( 'WCJ_Product_Custom_Info' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_custom_info';
-			$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add additional info to category and single product pages (1 block allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add additional info to category and single product pages.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-info';
+			$this->short_desc = 'Product Info';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add additional info to category and single product pages (1 block allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add additional info to category and single product pages (1 block allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add additional info to category and single product pages.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add additional info to category and single product pages.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-info';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -132,7 +147,6 @@ if ( ! class_exists( 'WCJ_Product_Custom_Info' ) ) :
 				}
 			}
 		}
-
 	}
 
 endif;

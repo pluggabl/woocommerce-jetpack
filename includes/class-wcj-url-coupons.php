@@ -30,9 +30,19 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 		public function __construct() {
 
 			$this->id         = 'url_coupons';
-			$this->short_desc = __( 'URL Coupons', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce URL coupons. Redirect after coupon has been applied (Elite).', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-url-coupons';
+			$this->short_desc = 'URL Coupons';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'URL Coupons', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce URL coupons. Redirect after coupon has been applied (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce URL coupons. Redirect after coupon has been applied (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-url-coupons';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -115,7 +125,6 @@ if ( ! class_exists( 'WCJ_URL_Coupons' ) ) :
 				exit;
 			}
 		}
-
 	}
 
 endif;

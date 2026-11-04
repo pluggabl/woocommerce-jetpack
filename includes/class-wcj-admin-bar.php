@@ -41,9 +41,19 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		public function __construct() {
 
 			$this->id         = 'admin_bar';
-			$this->short_desc = __( 'Admin Bar', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce admin bar.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-admin-bar';
+			$this->short_desc = 'Admin Bar';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Admin Bar', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce admin bar.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce admin bar.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-admin-bar';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -257,6 +267,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		 * @param string $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_booster_active_admin_bar( $wp_admin_bar ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return;
 			}
@@ -292,6 +303,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		 * @param string $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_booster_admin_bar( $wp_admin_bar ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return;
 			}
@@ -404,6 +416,7 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 		 * @param string $wp_admin_bar defines the wp_admin_bar.
 		 */
 		public function add_woocommerce_admin_bar( $wp_admin_bar ) {
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				return;
 			}
@@ -682,7 +695,6 @@ if ( ! class_exists( 'WCJ_Admin_Bar' ) ) :
 			);
 			$this->add_woocommerce_admin_bar_nodes( $wp_admin_bar, $nodes, false );
 		}
-
 	}
 
 endif;

@@ -45,10 +45,25 @@ if ( ! class_exists( 'WCJ_Currency_Per_Product' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'currency_per_product';
-			$this->short_desc = __( 'Currency per Product', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display prices for products in different currencies (1 currency allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Display prices for products in different currencies.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-currency-per-product';
+			$this->short_desc = 'Currency per Product';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Currency per Product', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Display prices for products in different currencies (1 currency allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Display prices for products in different currencies (1 currency allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Display prices for products in different currencies.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Display prices for products in different currencies.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-currency-per-product';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

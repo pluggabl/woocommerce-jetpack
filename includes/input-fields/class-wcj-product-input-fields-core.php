@@ -538,7 +538,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param int    $product_id Get product id.
 		 * @param string $default Get default value.
 		 */
-		public function get_value( $option_name, $product_id, $default ) {
+		public function get_value( $option_name, $product_id, $default ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.defaultFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$cache_key = (int) $product_id . '|' . $option_name . '|' . md5( maybe_serialize( $default ) );
 			if ( array_key_exists( $cache_key, $this->value_cache ) ) {
 				return $this->value_cache[ $cache_key ];
@@ -918,7 +918,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param int   $product_id Get product id.
 		 * @param int   $variation_id Get variation id.
 		 */
-		public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
+		public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$nonce   = isset( $_REQUEST['wcj_product_input_fields-nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wcj_product_input_fields-nonce'] ) ) : '';
 			$wpnonce = wp_verify_nonce( $nonce, 'wcj_product_input_fields' );
 			if ( ! $wpnonce ) {
@@ -963,7 +963,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param Array  $values Get values.
 		 * @param string $key Get key value.
 		 */
-		public function get_cart_item_product_input_fields_from_session( $item, $values, $key ) {
+		public function get_cart_item_product_input_fields_from_session( $item, $values, $key ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) ) {
@@ -1038,7 +1038,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param Array  $cart_item Get cart items.
 		 * @param string $cart_item_key Get cart item key value.
 		 */
-		public function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key ) {
+		public function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			return $this->add_product_input_fields_to_order_item_name( $name, $cart_item, true );
 		}
 
@@ -1102,7 +1102,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 * @param Array  $values Get values.
 		 * @param Array  $order Get order data.
 		 */
-		public function add_product_input_fields_to_order_item_meta( $item, $cart_item_key, $values, $order ) {
+		public function add_product_input_fields_to_order_item_meta( $item, $cart_item_key, $values, $order ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			$this->add_input_fields_to_order_item_meta( $item, '', $values, $cart_item_key );
 		}
 
@@ -1131,7 +1131,7 @@ if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 		 *
 		 * @throws Exception Exception.
 		 */
-		public function add_input_fields_to_order_item_meta( $item, $item_id, $values, $cart_item_key ) {
+		public function add_input_fields_to_order_item_meta( $item, $item_id, $values, $cart_item_key ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			require_once ABSPATH . '/wp-admin/includes/file.php';
 			global $wp_filesystem;
 			WP_Filesystem();

@@ -98,6 +98,7 @@ $wcj_module_files = array(
 	'class-wcj-order-numbers.php',
 	'class-wcj-order-custom-statuses.php',
 	'class-wcj-order-quantities.php',
+	'class-wcj-returns.php',
 	'class-wcj-max-products-per-user.php',
 	'class-wcj-emails.php',
 	'class-wcj-email-options.php',

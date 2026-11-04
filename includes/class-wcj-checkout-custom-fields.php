@@ -56,29 +56,68 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		public function __construct() {
 
 			$this->id         = 'checkout_custom_fields';
-			$this->short_desc = __( 'Checkout Custom Fields', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add custom fields to the checkout page (1 field allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add custom fields to the checkout page.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Checkout Custom Fields';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Checkout Custom Fields', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add custom fields to the checkout page (1 field allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add custom fields to the checkout page (1 field allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add custom fields to the checkout page.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add custom fields to the checkout page.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-checkout-custom-fields';
 			$this->extra_desc = sprintf(
 				/* translators: %s: List of shortcode and PHP usage examples. */
-				__( 'After setting Checkout Custom Fields, use the field_id attribute in the shortcode below to display a checkout field value: %s', 'woocommerce-jetpack' ),
+				'After setting Checkout Custom Fields, use the field_id attribute in the shortcode below to display a checkout field value: %s',
 				'<ol>' .
 				'<li>' . sprintf(
 					/* translators: %s: search term */
-					__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<strong>Shortcodes:</strong> %s',
 					'<code>[wcj_order_checkout_field field_id="billing_wcj_checkout_field_1"]</code><br>' .
-					__( 'Replace the example field_id value with the field key shown in the Custom Field settings.', 'woocommerce-jetpack' )
+					'Replace the example field_id value with the field key shown in the Custom Field settings.'
 				) .
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: search term */
-					__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
+					'<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s',
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_checkout_field field_id="billing_wcj_checkout_field_1"]\'&nbsp;);</code>'
 				) .
 				'</li>' .
 				'</ol>'
+			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: List of shortcode and PHP usage examples. */
+						__( 'After setting Checkout Custom Fields, use the field_id attribute in the shortcode below to display a checkout field value: %s', 'woocommerce-jetpack' ),
+						'<ol>' .
+						'<li>' . sprintf(
+							/* translators: %s: search term */
+							__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+							'<code>[wcj_order_checkout_field field_id="billing_wcj_checkout_field_1"]</code><br>' .
+							__( 'Replace the example field_id value with the field key shown in the Custom Field settings.', 'woocommerce-jetpack' )
+						) .
+						'</li>' .
+						'<li>' . sprintf(
+							/* translators: %s: search term */
+							__( '<strong>PHP code:</strong> by using %1$s function,<br> e.g.: %2$s', 'woocommerce-jetpack' ),
+							'<code>do_shortcode()</code>',
+							'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_order_checkout_field field_id="billing_wcj_checkout_field_1"]\'&nbsp;);</code>'
+						) .
+						'</li>' .
+						'</ol>'
+					);
+				}
 			);
 
 			$this->wcj_checkout_custom_fields_total_number = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_checkout_custom_fields_total_number', 1 ) );
@@ -409,7 +448,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields' ) ) :
 		 * @param string $section defines the section.
 		 * @param string $templates defines the templates.
 		 */
-		public function add_custom_fields_to_order_display( $order, string $section = null, $templates ) {
+		public function add_custom_fields_to_order_display( $order, ?string $section, $templates ) {
 			if ( true === wcj_is_hpos_enabled() ) {
 				$post_meta = array();
 				foreach ( $order->get_meta_data() as $meta_data_obj ) {

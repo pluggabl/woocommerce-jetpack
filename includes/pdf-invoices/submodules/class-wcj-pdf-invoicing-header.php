@@ -27,11 +27,15 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Header' ) ) :
 		public function __construct() {
 			$this->id         = 'pdf_invoicing_header';
 			$this->parent_id  = 'pdf_invoicing';
-			$this->short_desc = __( 'Header', 'woocommerce-jetpack' );
-			$this->desc       = '';
+			$this->short_desc = 'Header';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Header', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = '';
 			parent::__construct( 'submodule' );
 		}
-
 	}
 
 endif;

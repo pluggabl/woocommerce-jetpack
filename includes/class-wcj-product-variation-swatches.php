@@ -26,9 +26,19 @@ if ( ! class_exists( 'WCJ_Product_Variation_Swatches' ) ) :
 		 */
 		public function __construct() {
 			$this->id         = 'product_variation_swatches';
-			$this->short_desc = __( 'Product Variation Swatches', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Product Variation Swatches', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-variation-swatches';
+			$this->short_desc = 'Product Variation Swatches';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Variation Swatches', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Product Variation Swatches';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Product Variation Swatches', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-variation-swatches';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

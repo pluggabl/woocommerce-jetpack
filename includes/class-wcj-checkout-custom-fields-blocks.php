@@ -230,43 +230,54 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 		}
 
 		/**
-		 * Get current cart product IDs once per request.
+		 * Read the current parent-product identity set, which can change in a request.
 		 *
 		 * @return array
 		 */
 		private function get_cart_product_ids() {
-			if ( null !== $this->cart_product_ids_cache ) {
-				return $this->cart_product_ids_cache;
-			}
-			$this->cart_product_ids_cache = array();
+			$product_ids = array();
 			if ( function_exists( 'WC' ) && WC()->cart ) {
 				foreach ( WC()->cart->get_cart() as $cart_item ) {
 					if ( isset( $cart_item['product_id'] ) ) {
-						$this->cart_product_ids_cache[] = (string) $cart_item['product_id'];
+						$product_ids[] = (string) $cart_item['product_id'];
 					}
 				}
 			}
-			return array_values( array_unique( $this->cart_product_ids_cache ) );
+			$product_ids = array_values( array_unique( $product_ids ) );
+			sort( $product_ids, SORT_STRING );
+			if ( $product_ids !== $this->cart_product_ids_cache ) {
+				$this->cart_product_ids_cache  = $product_ids;
+				$this->cart_category_ids_cache = null;
+			}
+			return $this->cart_product_ids_cache;
 		}
 
 		/**
-		 * Get current cart category IDs once per request.
+		 * Cache successful category facts only while the product set is unchanged.
 		 *
+		 * @param array|null $product_ids Current snapshot, or read it when called alone.
 		 * @return array
 		 */
-		private function get_cart_category_ids() {
+		private function get_cart_category_ids( $product_ids = null ) {
+			$product_ids = null === $product_ids ? $this->get_cart_product_ids() : $product_ids;
 			if ( null !== $this->cart_category_ids_cache ) {
 				return $this->cart_category_ids_cache;
 			}
-			$this->cart_category_ids_cache = array();
-			foreach ( $this->get_cart_product_ids() as $product_id ) {
+			$categories = array();
+			$complete   = true;
+			foreach ( $product_ids as $product_id ) {
 				$category_ids = wp_get_post_terms( (int) $product_id, 'product_cat', array( 'fields' => 'ids' ) );
-				if ( ! is_wp_error( $category_ids ) ) {
-					$this->cart_category_ids_cache = array_merge( $this->cart_category_ids_cache, array_map( 'strval', $category_ids ) );
+				if ( is_wp_error( $category_ids ) ) {
+					$complete = false;
+				} else {
+					$categories = array_merge( $categories, array_map( 'strval', $category_ids ) );
 				}
 			}
-			$this->cart_category_ids_cache = array_values( array_unique( $this->cart_category_ids_cache ) );
-			return $this->cart_category_ids_cache;
+			$categories = array_values( array_unique( $categories ) );
+			if ( $complete ) {
+				$this->cart_category_ids_cache = $categories;
+			}
+			return $categories;
 		}
 
 		/**
@@ -288,7 +299,7 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Fields_Blocks' ) ) :
 			}
 
 			$product_ids  = $this->get_cart_product_ids();
-			$category_ids = $this->get_cart_category_ids();
+			$category_ids = $this->get_cart_category_ids( $product_ids );
 			if ( ! empty( array_intersect( $config['categories_ex'], $category_ids ) ) ) {
 				return false;
 			}

@@ -30,6 +30,7 @@ return array(
 	),
 	array(
 		'title' => __( 'Place order (Order now) Button', 'woocommerce-jetpack' ),
+		'desc'  => '<a href="' . esc_url( 'https://booster.io/docs/woocommerce-checkout-blocks/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Checkout Blocks setup guide', 'woocommerce-jetpack' ) . '</a>',
 		'type'  => 'title',
 		'id'    => 'wcj_checkout_place_order_button_options',
 	),

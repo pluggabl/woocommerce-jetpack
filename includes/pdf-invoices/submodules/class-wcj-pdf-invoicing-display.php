@@ -28,8 +28,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 
 			$this->id         = 'pdf_invoicing_display';
 			$this->parent_id  = 'pdf_invoicing';
-			$this->short_desc = __( 'Display & Misc.', 'woocommerce-jetpack' );
-			$this->desc       = '';
+			$this->short_desc = 'Display & Misc.';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Display & Misc.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = '';
 			parent::__construct( 'submodule' );
 
 			if ( $this->is_enabled() ) {
@@ -37,6 +42,11 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 				if ( true === wcj_is_hpos_enabled() ) {
 					add_filter( 'woocommerce_shop_order_list_table_columns', array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
 					add_action( 'woocommerce_shop_order_list_table_custom_column', array( $this, 'render_order_columns_hpos' ), PHP_INT_MAX, 2 );
+					if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '7.9', '>=' ) ) {
+						add_filter( 'woocommerce_shop_order_list_table_sortable_columns', array( $this, 'shop_order_sortable_columns' ) );
+						add_filter( 'woocommerce_shop_order_list_table_prepare_items_query_args', array( $this, 'shop_order_hpos_order_by_column' ) );
+						add_filter( 'woocommerce_orders_table_query_clauses', array( $this, 'shop_order_hpos_invoice_sort_clauses' ), 10, 3 );
+					}
 				} else {
 					add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
 					add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), 2 );
@@ -94,6 +104,91 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Display' ) ) :
 				$custom[ $invoice_type_id ] = 'wcj_invoicing_' . $invoice_type_id . '_number_id';
 			}
 			return wp_parse_args( $custom, $columns );
+		}
+
+		/**
+		 * Sort the native HPOS order list by an enabled document's numeric ID.
+		 *
+		 * @since 9.0.0
+		 * @param array $args Native order-list query arguments.
+		 * @return array Query arguments with existing filters preserved.
+		 */
+		public function shop_order_hpos_order_by_column( $args ) {
+			if ( ! is_array( $args ) || ! isset( $args['orderby'] ) || ! is_string( $args['orderby'] )
+				|| ! defined( 'WC_VERSION' ) || version_compare( WC_VERSION, '7.9', '<' )
+				|| ( array_key_exists( 'suppress_filters', $args ) && (bool) $args['suppress_filters'] )
+				|| ( array_key_exists( 'meta_query', $args ) && ! is_array( $args['meta_query'] ) ) ) {
+				return $args;
+			}
+			if ( ( isset( $args['meta_query']['key'] ) || isset( $args['meta_query']['value'] ) )
+				|| ! in_array( $args['orderby'], $this->shop_order_sortable_columns( array() ), true ) ) {
+				return $args;
+			}
+			// A named clause remains bound to the invoice even when Woo prepends shortcut metadata.
+			$meta_query = array(
+				'relation'                => 'AND',
+				'wcj_invoice_number_sort' => array(
+					'key'     => '_' . $args['orderby'],
+					'compare' => 'EXISTS',
+					'type'    => 'CHAR',
+				),
+			);
+			if ( ! empty( $args['meta_query'] ) ) {
+				// Nest the original group so its OR/AND semantics are not changed.
+				$meta_query[] = $args['meta_query'];
+			}
+			$args['_wcj_hpos_invoice_sort'] = '_' . $args['orderby'];
+			$args['meta_query']             = $meta_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Named HPOS invoice sort clause preserves the existing paginated order query and other filter semantics.
+			$args['orderby']                = 'wcj_invoice_number_sort';
+			return $args;
+		}
+
+		/**
+		 * Preserve historical +0 numeric coercion for this adapter's named HPOS sort.
+		 *
+		 * @since 9.0.0
+		 * @param array $clauses Compiled Woo query clauses.
+		 * @param mixed $query   Woo order-table query instance.
+		 * @param array $args    Remapped query arguments.
+		 * @return array Clauses with only the recognized numeric order expression changed.
+		 */
+		public function shop_order_hpos_invoice_sort_clauses( $clauses, $query, $args ) {
+			if ( ! is_array( $clauses ) || ! is_array( $args )
+				|| ! ( $query instanceof \Automattic\WooCommerce\Internal\DataStores\Orders\OrdersTableQuery )
+				|| ! isset( $args['_wcj_hpos_invoice_sort'], $args['orderby'], $args['meta_query'], $clauses['orderby'] )
+				|| ! is_string( $args['_wcj_hpos_invoice_sort'] ) || ! is_array( $args['meta_query'] ) || ! is_string( $clauses['orderby'] )
+				|| 'wcj_invoice_number_sort' !== $args['orderby']
+				|| ( array_key_exists( 'suppress_filters', $args ) && (bool) $args['suppress_filters'] )
+				|| ( isset( $args['type'] ) && 'shop_order' !== $args['type'] ) ) {
+				return $clauses;
+			}
+			if ( ! in_array( substr( $args['_wcj_hpos_invoice_sort'], 1 ), $this->shop_order_sortable_columns( array() ), true ) ) {
+				return $clauses;
+			}
+			$meta_query = $args['meta_query'];
+			if ( ! isset( $meta_query['wcj_invoice_number_sort'] ) ) {
+				// Woo's sole shortcut wrapper: AND(shortcut atomic clause, our original group).
+				if ( array( 'relation', 0, 1 ) !== array_keys( $meta_query ) || 'AND' !== $meta_query['relation']
+					|| ! is_array( $meta_query[0] ) || ! is_array( $meta_query[1] )
+					|| array_diff( array_keys( $meta_query[0] ), array( 'key', 'value', 'compare', 'type', 'compare_key', 'type_key' ) ) ) {
+					return $clauses;
+				}
+				$meta_query = $meta_query[1];
+			}
+			$invoice_clause = array(
+				'key'     => $args['_wcj_hpos_invoice_sort'],
+				'compare' => 'EXISTS',
+				'type'    => 'CHAR',
+			);
+			if ( array( 'relation', 'wcj_invoice_number_sort' ) !== array_slice( array_keys( $meta_query ), 0, 2 )
+				|| 'AND' !== $meta_query['relation'] || $invoice_clause !== $meta_query['wcj_invoice_number_sort'] ) {
+				return $clauses;
+			}
+			// Only compiler-shaped ASCII aliases/directions enter SQL. Never interpolate argument values.
+			if ( 1 === preg_match( '/\ACAST\((meta[0-9]+)\.meta_value AS CHAR\) (ASC|DESC)\z/', $clauses['orderby'], $matches ) ) {
+				$clauses['orderby'] = $matches[1] . '.meta_value+0 ' . $matches[2];
+			}
+			return $clauses;
 		}
 
 		/**

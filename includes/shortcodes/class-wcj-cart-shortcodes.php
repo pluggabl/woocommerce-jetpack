@@ -54,7 +54,6 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 			);
 
 			parent::__construct();
-
 		}
 
 		/**
@@ -68,7 +67,6 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 			$atts['function_name'] = wcj_sanitize_input_attribute_values( $atts['function_name'] );
 			$atts['multiply_by']   = (int) wcj_sanitize_input_attribute_values( $atts['multiply_by'] );
 			return $atts;
-
 		}
 
 		/**
@@ -316,7 +314,6 @@ if ( ! class_exists( 'WCJ_Cart_Shortcodes' ) ) :
 			}
 			return '';
 		}
-
 	}
 
 endif;

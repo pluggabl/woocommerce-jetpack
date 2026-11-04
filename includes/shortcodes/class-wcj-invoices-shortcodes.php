@@ -80,10 +80,8 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 				if ( 'shop_order' !== OrderUtil::get_order_type( $atts['order_id'] ) ) {
 					return false;
 				}
-			} else {
-				if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) {
+			} elseif ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) {
 					return false;
-				}
 			}
 			// phpcs:enable WordPress.Security.NonceVerification
 
@@ -111,7 +109,6 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 				return $img;
 
 			}
-
 		}
 
 		/**
@@ -207,7 +204,6 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 			$invoice_type_id = ( 1 === $atts['doc_nr'] || '1' === $atts['doc_nr'] ) ? 'custom_doc' : 'custom_doc_' . $atts['doc_nr'];
 			return wcj_get_invoice_number( $atts['order_id'], $invoice_type_id );
 		}
-
 	}
 
 endif;

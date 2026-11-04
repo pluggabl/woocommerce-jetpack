@@ -67,32 +67,72 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		public function __construct() {
 
 			$this->id         = 'price_labels';
-			$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Create any custom price label for any product (Just a few positions allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Create any custom price label for any product.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-custom-price-labels';
+			$this->short_desc = 'Custom Price Labels';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Create any custom price label for any product (Just a few positions allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Create any custom price label for any product (Just a few positions allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Create any custom price label for any product.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Create any custom price label for any product.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-custom-price-labels';
 			parent::__construct();
 
 			// Custom Price Labels - fields array.
-			$this->custom_tab_group_name                = 'wcj_price_labels';
-			$this->custom_tab_sections                  = array( '_instead', '_before', '_between', '_after' );
-			$this->custom_tab_sections_titles           = array(
-				'_instead' => __( 'Instead of the price', 'woocommerce-jetpack' ),
-				'_before'  => __( 'Before the price', 'woocommerce-jetpack' ),
-				'_between' => __( 'Between regular and sale prices', 'woocommerce-jetpack' ),
-				'_after'   => __( 'After the price', 'woocommerce-jetpack' ),
+			$this->custom_tab_group_name      = 'wcj_price_labels';
+			$this->custom_tab_sections        = array( '_instead', '_before', '_between', '_after' );
+			$this->custom_tab_sections_titles = array(
+				'_instead' => 'Instead of the price',
+				'_before'  => 'Before the price',
+				'_between' => 'Between regular and sale prices',
+				'_after'   => 'After the price',
+			);
+			wcj_init_presentation(
+				function () {
+					$this->custom_tab_sections_titles = array(
+						'_instead' => __( 'Instead of the price', 'woocommerce-jetpack' ),
+						'_before'  => __( 'Before the price', 'woocommerce-jetpack' ),
+						'_between' => __( 'Between regular and sale prices', 'woocommerce-jetpack' ),
+						'_after'   => __( 'After the price', 'woocommerce-jetpack' ),
+					);
+				}
 			);
 			$this->custom_tab_section_variations        = array( '_text', '_enabled', '_home', '_products', '_single', '_page', '_cart', '_variable', '_variation' );
 			$this->custom_tab_section_variations_titles = array(
 				'_text'      => '', // 'The label'.
-				'_enabled'   => __( 'Enable', 'woocommerce-jetpack' ),
-				'_home'      => __( 'Hide on home page', 'woocommerce-jetpack' ),
-				'_products'  => __( 'Hide on products page', 'woocommerce-jetpack' ),
-				'_single'    => __( 'Hide on single', 'woocommerce-jetpack' ),
-				'_page'      => __( 'Hide on all pages', 'woocommerce-jetpack' ),
-				'_cart'      => __( 'Hide on cart page only', 'woocommerce-jetpack' ),
-				'_variable'  => __( 'Hide for main price', 'woocommerce-jetpack' ),
-				'_variation' => __( 'Hide for all variations', 'woocommerce-jetpack' ),
+				'_enabled'   => 'Enable',
+				'_home'      => 'Hide on home page',
+				'_products'  => 'Hide on products page',
+				'_single'    => 'Hide on single',
+				'_page'      => 'Hide on all pages',
+				'_cart'      => 'Hide on cart page only',
+				'_variable'  => 'Hide for main price',
+				'_variation' => 'Hide for all variations',
+			);
+			wcj_init_presentation(
+				function () {
+					$this->custom_tab_section_variations_titles = array(
+						'_text'      => '', // 'The label'.
+						'_enabled'   => __( 'Enable', 'woocommerce-jetpack' ),
+						'_home'      => __( 'Hide on home page', 'woocommerce-jetpack' ),
+						'_products'  => __( 'Hide on products page', 'woocommerce-jetpack' ),
+						'_single'    => __( 'Hide on single', 'woocommerce-jetpack' ),
+						'_page'      => __( 'Hide on all pages', 'woocommerce-jetpack' ),
+						'_cart'      => __( 'Hide on cart page only', 'woocommerce-jetpack' ),
+						'_variable'  => __( 'Hide for main price', 'woocommerce-jetpack' ),
+						'_variation' => __( 'Hide for all variations', 'woocommerce-jetpack' ),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {
@@ -165,12 +205,10 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 						if ( isset( $_POST[ $option_name ] ) ) {
 							! empty( update_post_meta( $post_id, '_' . $option_name, wp_kses_post( wp_unslash( $_POST[ $option_name ] ) ) ) );
 						}
-					} else {
-						if ( isset( $_POST[ $option_name ] ) ) {
+					} elseif ( isset( $_POST[ $option_name ] ) ) {
 							! empty( update_post_meta( $post_id, '_' . $option_name, wp_kses_post( wp_unslash( $_POST[ $option_name ] ) ) ) );
-						} else {
-							update_post_meta( $post_id, '_' . $option_name, 'off' );
-						}
+					} else {
+						update_post_meta( $post_id, '_' . $option_name, 'off' );
 					}
 				}
 			}
@@ -467,7 +505,6 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 
 			return $result;
 		}
-
 	}
 
 endif;

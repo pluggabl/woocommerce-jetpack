@@ -247,7 +247,7 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 		for ( $i = 0; $i < $php_fo; $i++ ) {
 			$char = $php_format[ $i ];
 			if ( '\\' === $char ) { // PHP date format escaping character.
-				$i++;
+				++$i;
 				$jqueryui_format .= ( $escaping ) ? $php_format[ $i ] : '\'' . $php_format[ $i ];
 				$escaping         = true;
 			} else {
@@ -346,7 +346,7 @@ if ( ! function_exists( 'wcj_get_timestamp_date_from_gmt' ) ) {
 	 * @param string $format get date from gmt.
 	 * @return string
 	 */
-	function wcj_get_timestamp_date_from_gmt( $format = 'Y-m-d H:i:s' ) {
+	function wcj_get_timestamp_date_from_gmt( $format = 'Y-m-d H:i:s' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 		return strtotime( wcj_get_date_from_gmt() );
 	}
 }

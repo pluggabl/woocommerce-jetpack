@@ -48,10 +48,25 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 		public function __construct() {
 
 			$this->id         = 'checkout_core_fields';
-			$this->short_desc = __( 'Checkout Core Fields', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Elite)', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-checkout-core-fields';
+			$this->short_desc = 'Checkout Core Fields';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Checkout Core Fields', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Elite)';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Elite)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-checkout-core-fields';
 			parent::__construct();
 
 			$this->woocommerce_core_checkout_fields = array(
@@ -324,7 +339,6 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 			);
 			return $checkout_fields;
 		}
-
 	}
 
 endif;

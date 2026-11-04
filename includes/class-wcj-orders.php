@@ -28,10 +28,25 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 		public function __construct() {
 
 			$this->id         = 'orders';
-			$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-orders';
+			$this->short_desc = 'Orders';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-orders';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -448,7 +463,10 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 			if ( ! $order_id ) {
 				return;
 			}
-			$order           = wc_get_order( $order_id );
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				return;
+			}
 			$payment_methods = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_order_auto_complete_payment_methods', array() ) );
 			$order_status    = $order->get_status();
 			if ( 'failed' === $order_status ) {

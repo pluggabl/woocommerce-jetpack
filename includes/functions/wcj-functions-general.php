@@ -337,7 +337,16 @@ if ( ! function_exists( 'wcj_session_set' ) ) {
 				}
 				break;
 			default: // standard.
+				// read_and_close releases the native session before callers update it.
+				// Reopen only for this write, then release the lock again.
+				$reopened = false;
+				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_session_read_and_close', 'no' ) && PHP_SESSION_NONE === session_status() && ! headers_sent() ) {
+					$reopened = session_start();
+				}
 				$_SESSION[ $key ] = $value;
+				if ( $reopened ) {
+					session_write_close();
+				}
 				break;
 		}
 	}
@@ -352,11 +361,12 @@ if ( ! function_exists( 'wcj_session_get' ) ) {
 	 * @param   string $key defines the key.
 	 * @param   null   $default defines the default.
 	 */
-	function wcj_session_get( $key, $default = null ) {
+	function wcj_session_get( $key, $default = null ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.defaultFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 		switch ( WCJ_SESSION_TYPE ) {
 			case 'wc':
 				return ( function_exists( 'WC' ) && WC()->session ? WC()->session->get( $key, $default ) : $default );
 			default: // standard.
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Internal server-side session values retain their original types; callers validate and escape at their actual use sites.
 				return ( isset( $_SESSION[ $key ] ) ? $_SESSION[ $key ] : $default );
 		}
 	}
@@ -842,16 +852,16 @@ if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 		$upload_dir = $upload_dir['basedir'];
 		$upload_dir = $upload_dir . '/woocommerce_uploads';
 		if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
-			mkdir( $upload_dir, 0755, true );
+			mkdir( $upload_dir, 0755, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir -- Preserve explicit local 0755 permissions for the existing upload layout, independent of remote update credentials.
 		}
 		$upload_dir = $upload_dir . '/wcj_uploads';
 		if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
-			mkdir( $upload_dir, 0755, true );
+			mkdir( $upload_dir, 0755, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir -- Preserve explicit local 0755 permissions for the existing upload layout, independent of remote update credentials.
 		}
 		if ( '' !== $subdir ) {
 			$upload_dir = $upload_dir . '/' . $subdir;
 			if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
-				mkdir( $upload_dir, 0755, true );
+				mkdir( $upload_dir, 0755, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir -- Preserve explicit local 0755 permissions for the existing upload layout, independent of remote update credentials.
 			}
 		}
 		return $upload_dir;
@@ -1116,7 +1126,7 @@ if ( ! function_exists( 'wcj_add_allowed_html' ) ) {
 	 * @param array  $allowed_html to get default allowed html.
 	 * @param string $context to get default context.
 	 */
-	function wcj_add_allowed_html( $allowed_html, $context ) {
+	function wcj_add_allowed_html( $allowed_html, $context ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 
 		// If Elementor is running (editor, ajax, REST), bail early.
 		$wpnonce = isset( $_REQUEST['wcj-cat-nonce'] ) ? wp_verify_nonce( sanitize_key( $_REQUEST['wcj-cat-nonce'] ), 'wcj-cat-nonce' ) : false;

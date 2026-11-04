@@ -49,8 +49,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 		 * @since   3.6.0
 		 * @param null $args Get null value.
 		 */
-		public function __construct( $args = null ) {
-			return true;
+		public function __construct( $args = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 		}
 
 		/**
@@ -126,7 +125,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 					if ( ! isset( $this->gateways[ $payment_gateway ] ) ) {
 						$this->gateways[ $payment_gateway ] = 0;
 					}
-					$this->gateways[ $payment_gateway ]++;
+					++$this->gateways[ $payment_gateway ];
 				}
 				$offset += $block_size;
 			}
@@ -174,7 +173,7 @@ if ( ! class_exists( 'WCJ_Reports_Sales_Gateways' ) ) :
 					if ( ! isset( $this->gateways[ $payment_gateway ] ) ) {
 						$this->gateways[ $payment_gateway ] = 0;
 					}
-					$this->gateways[ $payment_gateway ]++;
+					++$this->gateways[ $payment_gateway ];
 				}
 				$offset += $block_size;
 			}

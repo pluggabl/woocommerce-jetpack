@@ -409,7 +409,7 @@ $settings = array_merge(
 
 // Default currency.
 $currencies = array();
-for ( $i = 1; $i <= $total_number; $i ++ ) {
+for ( $i = 1; $i <= $total_number; $i++ ) {
 	$currency_to      = wcj_get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
 	$currencies[ $i ] = $all_currencies[ $currency_to ];
 }

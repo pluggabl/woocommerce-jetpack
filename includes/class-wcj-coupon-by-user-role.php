@@ -36,10 +36,25 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 		public function __construct() {
 
 			$this->id         = 'coupon_by_user_role';
-			$this->short_desc = __( 'Coupon by User Role', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Coupons by user roles. Invalidate per Coupon (Elite). Custom coupon invalid messages (Elite)', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Coupons by user roles.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-coupon-by-user-role';
+			$this->short_desc = 'Coupon by User Role';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Coupon by User Role', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Coupons by user roles. Invalidate per Coupon (Elite). Custom coupon invalid messages (Elite)';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Coupons by user roles. Invalidate per Coupon (Elite). Custom coupon invalid messages (Elite)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Coupons by user roles.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Coupons by user roles.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-coupon-by-user-role';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -96,10 +111,12 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 			}
 			if ( ! empty( $invalid_user_roles ) && in_array( wcj_get_current_user_first_role(), $invalid_user_roles, true ) ) {
 				throw new Exception(
-					apply_filters(
-						'booster_option',
-						__( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
-						get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) )
+					esc_html(
+						apply_filters(
+							'booster_option',
+							__( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
+							get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) )
+						)
 					),
 					10000
 				);
@@ -126,7 +143,6 @@ if ( ! class_exists( 'WCJ_Coupon_By_User_Role' ) ) :
 			}
 			return $message;
 		}
-
 	}
 
 endif;

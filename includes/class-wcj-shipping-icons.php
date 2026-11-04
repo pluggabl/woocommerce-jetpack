@@ -30,10 +30,25 @@ if ( ! class_exists( 'WCJ_Shipping_Icons' ) ) :
 		public function __construct() {
 
 			$this->id         = 'shipping_icons';
-			$this->short_desc = __( 'Shipping Icons', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add icons to shipping methods on frontend. Icon Visibility (Elite)', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add icons to shipping methods on frontend.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-shipping-icons';
+			$this->short_desc = 'Shipping Icons';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Shipping Icons', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add icons to shipping methods on frontend. Icon Visibility (Elite)';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add icons to shipping methods on frontend. Icon Visibility (Elite)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add icons to shipping methods on frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add icons to shipping methods on frontend.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-shipping-icons';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -68,7 +83,6 @@ if ( ! class_exists( 'WCJ_Shipping_Icons' ) ) :
 			}
 			return $label;
 		}
-
 	}
 
 endif;

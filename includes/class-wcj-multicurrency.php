@@ -62,34 +62,78 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 		public function __construct() {
 
 			$this->id         = 'multicurrency';
-			$this->short_desc = __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add multiple currencies (currency switcher) to WooCommerce (2 currencies allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add multiple currencies (currency switcher) to WooCommerce.', 'woocommerce-jetpack' );
+			$this->short_desc = 'Multicurrency (Currency Switcher)';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add multiple currencies (currency switcher) to WooCommerce (2 currencies allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add multiple currencies (currency switcher) to WooCommerce (2 currencies allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add multiple currencies (currency switcher) to WooCommerce.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add multiple currencies (currency switcher) to WooCommerce.', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-multicurrency-currency-switcher';
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'After setting currencies in the Currencies Options section below, you can add switcher to the frontend with: %s', 'woocommerce-jetpack' ),
+				'After setting currencies in the Currencies Options section below, you can add switcher to the frontend with: %s',
 				'<ol>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>Widget:</strong> "%s"', 'woocommerce-jetpack' ),
-					__( 'Booster - Multicurrency Switcher', 'woocommerce-jetpack' )
+					'<strong>Widget:</strong> "%s"',
+					'Booster - Multicurrency Switcher'
 				) .
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<strong>Shortcodes:</strong> %s',
 					'<code>[wcj_currency_select_drop_down_list]</code>, <code>[wcj_currency_select_radio_list]</code>, <code>[wcj_currency_select_link_list]</code>'
 				) .
 				'</li>' .
 				'<li>' . sprintf(
 					/* translators: %s: translation added */
-					__( '<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s', 'woocommerce-jetpack' ),
+					'<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s',
 					'<code>do_shortcode()</code>',
 					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_currency_select_drop_down_list]\'&nbsp;);</code>'
 				) .
 				'</li>' .
 				'</ol>'
+			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translation added */
+						__( 'After setting currencies in the Currencies Options section below, you can add switcher to the frontend with: %s', 'woocommerce-jetpack' ),
+						'<ol>' .
+						'<li>' . sprintf(
+							/* translators: %s: translation added */
+							__( '<strong>Widget:</strong> "%s"', 'woocommerce-jetpack' ),
+							__( 'Booster - Multicurrency Switcher', 'woocommerce-jetpack' )
+						) .
+						'</li>' .
+						'<li>' . sprintf(
+							/* translators: %s: translation added */
+							__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+							'<code>[wcj_currency_select_drop_down_list]</code>, <code>[wcj_currency_select_radio_list]</code>, <code>[wcj_currency_select_link_list]</code>'
+						) .
+						'</li>' .
+						'<li>' . sprintf(
+							/* translators: %s: translation added */
+							__( '<strong>PHP code:</strong> by using %1$s function, e.g.: %2$s', 'woocommerce-jetpack' ),
+							'<code>do_shortcode()</code>',
+							'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_currency_select_drop_down_list]\'&nbsp;);</code>'
+						) .
+						'</li>' .
+						'</ol>'
+					);
+				}
 			);
 			parent::__construct();
 

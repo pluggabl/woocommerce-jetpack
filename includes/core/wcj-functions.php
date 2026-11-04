@@ -12,6 +12,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Realize presentation once, at init or immediately when created after init.
+ *
+ * Pre-init callers receive untranslated source labels. Commerce hook registration
+ * and object identities are not deferred by this presentation-only boundary.
+ *
+ * @param callable $callback Presentation initializer.
+ * @param int      $priority Init priority, before ordinary settings consumers.
+ * @return void
+ */
+function wcj_init_presentation( $callback, $priority = -90 ) {
+	$realize = static function () use ( $callback ) {
+		static $done = false;
+		if ( $done ) {
+			return;
+		}
+		$done = true;
+		$callback();
+	};
+	if ( did_action( 'init' ) ) {
+		$realize();
+	} else {
+		add_action( 'init', $realize, $priority, 0 );
+	}
+}
+
 $wcj_function_files = array(
 	'wcj-functions-booster-core.php',
 	'wcj-functions-debug.php',

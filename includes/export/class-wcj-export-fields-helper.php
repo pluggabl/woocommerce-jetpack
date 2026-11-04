@@ -28,7 +28,6 @@ if ( ! class_exists( 'WCJ_Export_Fields_Helper' ) ) :
 		 * @since   2.5.9
 		 */
 		public function __construct() {
-			return true;
 		}
 
 		/**
@@ -350,7 +349,6 @@ if ( ! class_exists( 'WCJ_Export_Fields_Helper' ) ) :
 				'product-url',
 			);
 		}
-
 	}
 
 endif;

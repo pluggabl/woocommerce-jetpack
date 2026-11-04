@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Options
  *
- * @version 
+ * @version
  * @since   2.9.1
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
@@ -28,9 +28,19 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		public function __construct() {
 
 			$this->id         = 'email_options';
-			$this->short_desc = __( 'Email Options', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-email-options';
+			$this->short_desc = 'Email Options';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Email Options', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-email-options';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -53,7 +63,7 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 		/**
 		 * Add_product_info_to_email_order_item_name.
 		 *
-		 * @version 
+		 * @version
 		 * @since   2.7.0
 		 * @param string $item_name defines the item_name.
 		 * @param  array  $item defines the item.
@@ -177,7 +187,6 @@ if ( ! class_exists( 'WCJ_Email_Options' ) ) :
 			}
 			return $updated_settings;
 		}
-
 	}
 
 endif;

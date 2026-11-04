@@ -26,26 +26,49 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Pdf_Notes' ) ) :
 		public function __construct() {
 
 			$this->id         = 'payment_gateways_pdf_notes';
-			$this->short_desc = __( 'Gateways PDF Notes', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add PDF notes for various gateways', 'woocommerce-jetpack' );
+			$this->short_desc = 'Gateways PDF Notes';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Gateways PDF Notes', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add PDF notes for various gateways';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add PDF notes for various gateways', 'woocommerce-jetpack' );
+				}
+			);
 			$this->link_slug  = 'woocommerce-payment-gateways-pdf-notes';
 			$this->extra_desc = sprintf(
 				/* translators: %s: translation added */
-				__( 'After setting Notes in the Gateways PDF Notes Options section below, you can use the below shortcode to the display notes: %s', 'woocommerce-jetpack' ),
+				'After setting Notes in the Gateways PDF Notes Options section below, you can use the below shortcode to the display notes: %s',
 				'<ol>' .
 				'<li>' . sprintf(
 								/* translators: %s: translation added */
-					__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<strong>Shortcodes:</strong> %s',
 					'<code>[wcj_order_payment_method_notes]</code>'
 				) .
 				'</li>' .
 				'</ol>'
 			);
+			wcj_init_presentation(
+				function () {
+					$this->extra_desc = sprintf(
+						/* translators: %s: translation added */
+						__( 'After setting Notes in the Gateways PDF Notes Options section below, you can use the below shortcode to the display notes: %s', 'woocommerce-jetpack' ),
+						'<ol>' .
+						'<li>' . sprintf(
+										/* translators: %s: translation added */
+							__( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+							'<code>[wcj_order_payment_method_notes]</code>'
+						) .
+						'</li>' .
+						'</ol>'
+					);
+				}
+			);
 			parent::__construct();
-
 		}
-
-
 	}
 
 endif;

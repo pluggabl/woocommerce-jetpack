@@ -27,9 +27,19 @@ if ( ! class_exists( 'WCJ_Left_To_Free_Shipping' ) ) :
 		public function __construct() {
 
 			$this->id         = 'left_to_free_shipping';
-			$this->short_desc = __( 'Left to Free Shipping', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display "left to free shipping" info.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-left-to-free-shipping';
+			$this->short_desc = 'Left to Free Shipping';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Left to Free Shipping', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Display "left to free shipping" info.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Display "left to free shipping" info.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-left-to-free-shipping';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -97,7 +107,6 @@ if ( ! class_exists( 'WCJ_Left_To_Free_Shipping' ) ) :
 		public function show_left_to_free_shipping_info( $content ) {
 			echo wp_kses_post( wcj_get_left_to_free_shipping( $content ) );
 		}
-
 	}
 
 endif;

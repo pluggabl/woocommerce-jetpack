@@ -52,10 +52,25 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		public function __construct() {
 
 			$this->id         = 'checkout_fees';
-			$this->short_desc = __( 'Checkout Fees', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Add fees to WooCommerce cart & checkout (1 fee allowed in free version).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Add fees to WooCommerce cart & checkout.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-checkout-fees';
+			$this->short_desc = 'Checkout Fees';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Checkout Fees', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Add fees to WooCommerce cart & checkout (1 fee allowed in free version).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Add fees to WooCommerce cart & checkout (1 fee allowed in free version).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Add fees to WooCommerce cart & checkout.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Add fees to WooCommerce cart & checkout.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-checkout-fees';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -142,12 +157,10 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				return false;
 			}
 
-			// Check checkout fields — only works on classic checkout (POST data).
-			// On Blocks checkout (Store API), checkout-field-conditional fees are skipped.
+			// Classic uses submitted fields; Blocks supports the opted-in company condition.
 			if ( ! empty( $this->checkout_fields[ $fee_id ] ) ) {
 				if ( $this->is_store_api_request() ) {
-					// Checkout-field-conditional fees are not supported on Blocks checkout.
-					return false;
+					return $this->is_store_api_company_field_filled( $this->checkout_fields[ $fee_id ] );
 				}
 				$post_data = array();
 				if ( isset( $_REQUEST['post_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -169,6 +182,37 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 				}
 			}
 			return true;
+		}
+
+		/**
+		 * Read the opted-in native customer company condition without saving data.
+		 *
+		 * Omitted Store API address keys retain current customer values. This is
+		 * not proof of a freshly submitted field. Hidden company fields fail closed.
+		 *
+		 * @since 9.0.0
+		 * @param mixed $field Configured checkout field key.
+		 * @return bool
+		 */
+		private function is_store_api_company_field_filled( $field ) {
+			if ( 'billing_company' !== $field || ! function_exists( 'WC' ) ) {
+				return false;
+			}
+			try {
+				if ( 'yes' !== wcj_get_option( 'wcj_checkout_fees_blocks_billing_company_enabled', 'no' )
+					|| ! in_array( get_option( 'woocommerce_checkout_company_field', 'hidden' ), array( 'optional', 'required' ), true ) ) {
+					return false;
+				}
+				$woocommerce = WC();
+				$customer    = is_object( $woocommerce ) && isset( $woocommerce->customer ) ? $woocommerce->customer : null;
+				if ( ! $customer instanceof WC_Customer ) {
+					return false;
+				}
+				$company = $customer->get_billing_company( 'edit' );
+				return is_string( $company ) && ! empty( $company );
+			} catch ( Throwable $error ) {
+				return false;
+			}
 		}
 
 		/**
@@ -342,7 +386,7 @@ if ( ! class_exists( 'WCJ_Checkout_Fees' ) ) :
 		 *
 		 * Fires on both classic checkout and WooCommerce Blocks checkout (via Store API).
 		 * Simple fees (without checkout field conditions) work on both.
-		 * Checkout-field-conditional fees only work on classic checkout.
+		 * Blocks supports the opted-in billing_company condition; other fields remain Classic-only.
 		 *
 		 * @version 8.0.0
 		 * @since   3.7.0

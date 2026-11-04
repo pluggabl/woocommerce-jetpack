@@ -28,7 +28,6 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 		 * @since   2.5.9
 		 */
 		public function __construct() {
-			return true;
 		}
 
 		/**
@@ -301,7 +300,6 @@ if ( ! class_exists( 'WCJ_Exporter_Products' ) ) :
 			}
 			return $data;
 		}
-
 	}
 
 endif;

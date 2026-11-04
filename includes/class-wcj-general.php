@@ -38,19 +38,40 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 		public function __construct() {
 
 			$this->id         = 'general';
-			$this->short_desc = __( 'General', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Booster for WooCommerce general front-end tools.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-booster-general-tools';
+			$this->short_desc = 'General';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'General', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Booster for WooCommerce general front-end tools.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Booster for WooCommerce general front-end tools.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-booster-general-tools';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'custom_roles' => array(
-						'title'     => __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ),
-						'tab_title' => __( 'Custom Roles', 'woocommerce-jetpack' ),
-						'desc'      => __( 'Manage Custom Roles.', 'woocommerce-jetpack' ),
+						'title'     => 'Add/Manage Custom Roles',
+						'tab_title' => 'Custom Roles',
+						'desc'      => 'Manage Custom Roles.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'custom_roles' => array(
+							'title'     => __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ),
+							'tab_title' => __( 'Custom Roles', 'woocommerce-jetpack' ),
+							'desc'      => __( 'Manage Custom Roles.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			$this->current_php_memory_limit = '';
@@ -64,14 +85,26 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 					ini_set( 'memory_limit', $php_memory_limit . 'M' ); // phpcs:ignore WordPress.PHP.IniSet
 				}
 				/* translators: %s: translation added */
-				$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
+				$this->current_php_memory_limit = sprintf( ' Current PHP memory limit: %s.', ini_get( 'memory_limit' ) );
+				wcj_init_presentation(
+					function () {
+						/* translators: %s: translation added */
+						$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
+					}
+				);
 
 				// PHP Time Limit.
 				if ( '0' !== ( $php_time_limit ) ) {
 					set_time_limit( $php_time_limit );
 				}
 				/* translators: %s: translation added */
-				$this->current_php_time_limit = sprintf( ' ' . __( 'Current PHP time limit: %s seconds.', 'woocommerce-jetpack' ), ini_get( 'max_execution_time' ) );
+				$this->current_php_time_limit = sprintf( ' Current PHP time limit: %s seconds.', ini_get( 'max_execution_time' ) );
+				wcj_init_presentation(
+					function () {
+						/* translators: %s: translation added */
+						$this->current_php_time_limit = sprintf( ' ' . __( 'Current PHP time limit: %s seconds.', 'woocommerce-jetpack' ), ini_get( 'max_execution_time' ) );
+					}
+				);
 
 				// Recalculate cart totals.
 				if ( 'yes' === wcj_get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
@@ -332,7 +365,6 @@ if ( ! class_exists( 'WCJ_General' ) ) :
 			}
 			return $load_gateways;
 		}
-
 	}
 
 endif;

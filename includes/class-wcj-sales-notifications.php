@@ -44,10 +44,25 @@ if ( ! class_exists( 'WCJ_Sales_Notifications' ) ) :
 		public function __construct() {
 
 			$this->id         = 'sales_notifications';
-			$this->short_desc = __( 'Sales Notifications', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Sales Notifications.', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Sales Notifications.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-sales-notifications';
+			$this->short_desc = 'Sales Notifications';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Sales Notifications', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Sales Notifications.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Sales Notifications.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Sales Notifications.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Sales Notifications.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-sales-notifications';
 
 			parent::__construct();
 

@@ -192,7 +192,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_With_Shipping_Zones' ) ) :
 					$settings = self::$wcj_settings[ $settings_name ];
 				}
 				$this->weight_table_total_rows = isset( $settings['weight_table_total_rows'] ) ? $settings['weight_table_total_rows'] : 1;
-				for ( $i = 1; $i <= $this->weight_table_total_rows; $i ++ ) {
+				for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 					if ( ! isset( $instance_form_fields[ 'weight_table_weight_row_' . $i ] ) ) {
 						$instance_form_fields = array_merge(
 							$instance_form_fields,

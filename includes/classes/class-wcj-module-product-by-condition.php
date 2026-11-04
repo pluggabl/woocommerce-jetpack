@@ -328,10 +328,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 				if ( 'no' === wcj_get_option( 'wcj_' . $this->id . '_admin_quick_edit', 'no' ) ) {
 					return $post_id;
 				}
-			} else {
-				if ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ) {
+			} elseif ( 'no' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_' . $this->id . '_admin_bulk_edit', 'no' ) ) ) {
 					return $post_id;
-				}
 			}
 			// Save.
 			if ( 'invisible' !== apply_filters( 'booster_option', 'visible', wcj_get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
@@ -446,10 +444,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 						if ( empty( $the_intersect ) ) {
 							return false;
 						}
-					} else {
-						if ( ! in_array( $option_to_check, $this->maybe_extra_options_process( $visible ), true ) ) {
+					} elseif ( ! in_array( $option_to_check, $this->maybe_extra_options_process( $visible ), true ) ) {
 							return false;
-						}
 					}
 				}
 			}
@@ -461,10 +457,8 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 						if ( ! empty( $the_intersect ) ) {
 							return false;
 						}
-					} else {
-						if ( in_array( $option_to_check, $this->maybe_extra_options_process( $invisible ), true ) ) {
+					} elseif ( in_array( $option_to_check, $this->maybe_extra_options_process( $invisible ), true ) ) {
 							return false;
-						}
 					}
 				}
 			}
@@ -542,7 +536,6 @@ if ( ! class_exists( 'WCJ_Module_Product_By_Condition' ) ) :
 		 * @since   3.6.0
 		 */
 		abstract public function get_check_option();
-
 	}
 
 endif;

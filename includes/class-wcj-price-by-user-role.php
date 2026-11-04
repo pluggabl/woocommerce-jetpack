@@ -57,10 +57,25 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		public function __construct() {
 
 			$this->id         = 'price_by_user_role';
-			$this->short_desc = __( 'Price based on User Role', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-price-by-user-role';
+			$this->short_desc = 'Price based on User Role';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Price based on User Role', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Display products prices by user roles. Price based on User Role by Products Categories or Tags (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Display products prices by user roles. Price based on User Role by Products Categories or Tags.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Display products prices by user roles. Price based on User Role by Products Categories or Tags.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-price-by-user-role';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {

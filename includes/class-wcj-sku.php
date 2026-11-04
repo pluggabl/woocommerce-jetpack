@@ -41,19 +41,44 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 		public function __construct() {
 
 			$this->id         = 'sku';
-			$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Elite); Sequential Number Generation (Elite); Variable Products Variations (Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Generate SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-sku';
+			$this->short_desc = 'SKU';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Elite); Sequential Number Generation (Elite); Variable Products Variations (Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Elite); Sequential Number Generation (Elite); Variable Products Variations (Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Generate SKUs automatically. Search by SKU on frontend.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Generate SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-sku';
 			parent::__construct();
 
 			$this->add_tools(
 				array(
 					'sku' => array(
-						'title' => __( 'Autogenerate SKUs', 'woocommerce-jetpack' ),
-						'desc'  => __( 'The tool generates and sets product SKUs for existing products.', 'woocommerce-jetpack' ),
+						'title' => 'Autogenerate SKUs',
+						'desc'  => 'The tool generates and sets product SKUs for existing products.',
 					),
 				)
+			);
+			wcj_init_presentation(
+				function () {
+					$this->tools_array = array(
+						'sku' => array(
+							'title' => __( 'Autogenerate SKUs', 'woocommerce-jetpack' ),
+							'desc'  => __( 'The tool generates and sets product SKUs for existing products.', 'woocommerce-jetpack' ),
+						),
+					);
+				}
 			);
 
 			if ( $this->is_enabled() ) {
@@ -269,14 +294,14 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				if ( is_array( $product_terms ) ) {
 					foreach ( $product_terms as $term ) {
 						$sku_number = $this->sequential_counter_cats[ $term->term_id ];
-						$this->sequential_counter_cats[ $term->term_id ]++;
+						++$this->sequential_counter_cats[ $term->term_id ];
 						return $sku_number;
 					}
 				}
 			}
 			// Cats disabled or no category found.
 			$sku_number = $this->sequential_counter;
-			$this->sequential_counter++;
+			++$this->sequential_counter;
 			return $sku_number;
 		}
 
@@ -311,7 +336,7 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 					$variation_suffixes = 'abcdefghijklmnopqrstuvwxyz';
 					$abc                = 0;
 					foreach ( $variations as $variation ) {
-						$suffix                       = $variation_suffixes[ $abc ++ ];
+						$suffix                       = $variation_suffixes[ $abc++ ];
 						$sku_object                   = $this->generate_sku( $variation['variation_id'], $suffix, $product_id, wc_get_product( $variation['variation_id'] ) );
 						$variation_id                 = $variation['variation_id'];
 						$variations_excluding_current = array_filter(
@@ -595,7 +620,13 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 			if ( 'sequential' === apply_filters( 'booster_option', 'product_id', wcj_get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 				$this->sequential_counter = apply_filters( 'booster_option', 1, wcj_get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 				if ( 'yes' === wcj_get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
-					$this->product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+					$this->product_categories = get_terms(
+						array(
+							'taxonomy'   => 'product_cat',
+							'orderby'    => 'name',
+							'hide_empty' => false,
+						)
+					);
 					if ( ! empty( $this->product_categories ) && ! is_wp_error( $this->product_categories ) ) {
 						foreach ( $this->product_categories as $product_category ) {
 							$this->sequential_counter_cats[ $product_category->term_id ] = wcj_get_option( 'wcj_sku_counter_cat_' . $product_category->term_id, 1 );
@@ -813,7 +844,6 @@ if ( ! class_exists( 'WCJ_SKU' ) ) :
 				add_filter( 'posts_where', array( $this, 'search_post_where' ) );
 			}
 		}
-
 	}
 
 endif;

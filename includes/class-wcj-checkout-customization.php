@@ -29,10 +29,25 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		public function __construct() {
 
 			$this->id         = 'checkout_customization';
-			$this->short_desc = __( 'Checkout Customization', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP (Elite); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-checkout-customization';
+			$this->short_desc = 'Checkout Customization';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Checkout Customization', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize WooCommerce checkout - restrict countries by customer\'s IP (Elite); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP (Elite); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Customize WooCommerce checkout - restrict countries by customer\'s IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-checkout-customization';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -332,7 +347,6 @@ if ( ! class_exists( 'WCJ_Checkout_Customization' ) ) :
 		public function checkout_hide_order_again() {
 			remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
 		}
-
 	}
 
 endif;

@@ -6,5 +6,3 @@
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/includes
  */
-
-

@@ -30,10 +30,25 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 		public function __construct() {
 
 			$this->id         = 'coupon_code_generator';
-			$this->short_desc = __( 'Coupon Code Generator', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Coupon code generator (Multiple generation algorithms available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Coupon code generator.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-coupon-code-generator';
+			$this->short_desc = 'Coupon Code Generator';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Coupon Code Generator', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Coupon code generator (Multiple generation algorithms available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Coupon code generator (Multiple generation algorithms available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Coupon code generator.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Coupon code generator.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-coupon-code-generator';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -145,6 +160,7 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 			}
 
 			// Authorization check (only admin or shop manager).
+			// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
 				wp_die();
 			}
@@ -157,14 +173,13 @@ if ( ! class_exists( 'WCJ_Coupon_Code_Generator' ) ) :
 					echo wp_kses_post( $coupon_code );
 					die();
 				}
-				$attempts++;
+				++$attempts;
 				if ( $attempts > 100 ) { // shouldn't happen, but just in case...
 					echo '';
 					die();
 				}
 			}
 		}
-
 	}
 
 endif;

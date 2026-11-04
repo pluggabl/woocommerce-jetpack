@@ -282,6 +282,7 @@ if ( ! function_exists( 'wcj_handle_upgrade_block_click' ) ) {
 	 * @return  void
 	 */
 	function wcj_handle_upgrade_block_click() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 		if ( ! current_user_can( 'manage_woocommerce' ) && ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You are not allowed to perform this action.', 'woocommerce-jetpack' ) );
 		}
@@ -345,6 +346,7 @@ if ( ! function_exists( 'wcj_register_upgrade_clicks_log_page' ) ) {
 	 */
 	function wcj_register_upgrade_clicks_log_page() {
 		global $submenu;
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 		if ( ! current_user_can( 'manage_woocommerce' ) && ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
@@ -354,7 +356,7 @@ if ( ! function_exists( 'wcj_register_upgrade_clicks_log_page' ) ) {
 				'wcj-dashboard',
 				__( 'Upgrade Clicks Log', 'woocommerce-jetpack' ),
 				__( 'Upgrade Clicks Log', 'woocommerce-jetpack' ),
-				'manage_woocommerce',
+				'manage_woocommerce', // phpcs:ignore WordPress.WP.Capabilities.Unknown -- Registered by WooCommerce; preserve the required commerce capability.
 				'wcj-upgrade-clicks-log',
 				'wcj_render_upgrade_clicks_log_page'
 			);
@@ -380,6 +382,7 @@ if ( ! function_exists( 'wcj_render_upgrade_clicks_log_page' ) ) {
 	 * @return  void
 	 */
 	function wcj_render_upgrade_clicks_log_page() {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this commerce capability; retain least-privilege access.
 		if ( ! current_user_can( 'manage_woocommerce' ) && ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You are not allowed to view this page.', 'woocommerce-jetpack' ) );
 		}

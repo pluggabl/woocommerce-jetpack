@@ -278,7 +278,13 @@ $taxonomies = array(
 do_action( 'wcj_before_get_terms', $this->id );
 foreach ( $taxonomies as $taxonomy_data ) {
 	$product_taxonomies_options = array();
-	$product_taxonomies         = get_terms( $taxonomy_data['id'], 'orderby=name&hide_empty=0' );
+	$product_taxonomies         = get_terms(
+		array(
+			'taxonomy'   => $taxonomy_data['id'],
+			'orderby'    => 'name',
+			'hide_empty' => false,
+		)
+	);
 	if ( ! empty( $product_taxonomies ) && ! is_wp_error( $product_taxonomies ) ) {
 		foreach ( $product_taxonomies as $product_taxonomy ) {
 			$product_taxonomies_options[ $product_taxonomy->term_id ] = $product_taxonomy->name;

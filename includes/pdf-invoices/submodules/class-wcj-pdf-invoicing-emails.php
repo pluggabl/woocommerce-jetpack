@@ -28,8 +28,13 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Emails' ) ) :
 
 			$this->id         = 'pdf_invoicing_emails';
 			$this->parent_id  = 'pdf_invoicing';
-			$this->short_desc = __( 'Email Options', 'woocommerce-jetpack' );
-			$this->desc       = '';
+			$this->short_desc = 'Email Options';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Email Options', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = '';
 			parent::__construct( 'submodule' );
 
 			if ( $this->is_enabled() ) {
@@ -95,7 +100,6 @@ if ( ! class_exists( 'WCJ_PDF_Invoicing_Emails' ) ) :
 			}
 			return $attachments;
 		}
-
 	}
 
 endif;

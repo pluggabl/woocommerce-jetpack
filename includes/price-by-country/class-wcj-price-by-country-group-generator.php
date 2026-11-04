@@ -98,7 +98,7 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 			update_option( 'wcj_price_by_country_total_groups_number', $number_of_groups );
 			$i = 0;
 			foreach ( $currencies as $group_currency => $countries ) {
-				$i++;
+				++$i;
 				switch ( wcj_get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 					case 'comma_list':
 						update_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, implode( ',', $countries ) );
@@ -117,7 +117,6 @@ if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 			wp_safe_redirect( add_query_arg( 'wcj_generate_country_groups_finished', true, remove_query_arg( 'wcj_generate_country_groups' ) ) );
 			exit;
 		}
-
 	}
 
 endif;

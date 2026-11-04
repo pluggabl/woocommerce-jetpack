@@ -134,7 +134,6 @@ foreach ( $product_terms as $ids => $_product_terms ) {
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			),
 			array(
-				'desc_tip' => __( 'Terms to Modify', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Save changes to see new option fields.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sale_flash_per_' . $ids . '_terms',
 				'default'  => array(),

@@ -2,14 +2,15 @@
 /**
  * Plugin Name: Booster for WooCommerce
  * Requires Plugins: woocommerce
+ * Requires PHP: 7.3
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features.
- * Version: 8.5.1
+ * Version: 9.0.0
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
  * Domain Path: /langs
- * WC tested up to: 11.1.2
+ * WC tested up to: 11.2.1
  * License: GNU General Public License v3.0
  *
  * @package Booster_For_WooCommerce
@@ -17,6 +18,21 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+require_once __DIR__ . '/includes/returns/class-wcj-returns-clock.php';
+try {
+	WCJ_Returns_Clock::read();
+} catch ( Throwable $error ) {
+	add_action(
+		'admin_notices',
+		static function () {
+			if ( current_user_can( 'activate_plugins' ) ) {
+				echo '<div class="notice notice-error"><p>' . esc_html__( 'Booster requires PHP 7.3 or later on a 64-bit build with a working native hrtime() clock. Ask your hosting provider to enable a compatible runtime.', 'woocommerce-jetpack' ) . '</p></div>';
+			}
+		}
+	);
+	return;
 }
 
 // Core functions.
@@ -72,7 +88,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '8.5.1';
+		public $version = '9.0.0';
 
 		/**
 		 * Singleton instance.

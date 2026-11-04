@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Left to Free Shipping
  *
- * @version 
+ * @version
  * @since   2.4.4
  * @author  Pluggabl LLC.
  * @package Booster_For_WooCommerce/Widget
@@ -43,7 +43,7 @@ if ( ! class_exists( 'WCJ_Widget_Left_to_Free_Shipping' ) ) :
 		/**
 		 * Get_content.
 		 *
-		 * @version 
+		 * @version
 		 * @since   3.1.0
 		 * @param array $instance Saved values from database.
 		 */
@@ -78,7 +78,6 @@ if ( ! class_exists( 'WCJ_Widget_Left_to_Free_Shipping' ) ) :
 				),
 			);
 		}
-
 	}
 
 endif;
@@ -87,7 +86,7 @@ if ( ! function_exists( 'register_wcj_widget_left_to_free_shipping' ) ) {
 	/**
 	 * Register WCJ_Widget_Left_to_Free_Shipping widget.
 	 */
-	function register_wcj_widget_left_to_free_shipping() {
+	function register_wcj_widget_left_to_free_shipping() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed -- Existing WordPress widget registration callback is kept beside its widget class.
 		register_widget( 'WCJ_Widget_Left_to_Free_Shipping' );
 	}
 }

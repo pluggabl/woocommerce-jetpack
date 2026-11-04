@@ -52,10 +52,25 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_by_date';
-			$this->short_desc = __( 'Product Availability by Date', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Set product availability by date (Custom frontend messages available in Elite).', 'woocommerce-jetpack' );
-			$this->desc_pro   = __( 'Set product availability by date.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-availability-by-date';
+			$this->short_desc = 'Product Availability by Date';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Availability by Date', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Set product availability by date (Custom frontend messages available in Elite).';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Set product availability by date (Custom frontend messages available in Elite).', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc_pro = 'Set product availability by date.';
+			wcj_init_presentation(
+				function () {
+					$this->desc_pro = __( 'Set product availability by date.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-availability-by-date';
 			parent::__construct();
 			$this->time_now = wcj_get_timestamp_date_from_gmt();
 
@@ -226,7 +241,6 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 			}
 			return $purchasable;
 		}
-
 	}
 
 endif;

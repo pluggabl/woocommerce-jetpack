@@ -78,7 +78,7 @@ if ( ! class_exists( 'WCJ_Product_Variation_Swatches_Term_Meta' ) ) :
 		 * @param object|array $taxonomy defines the taxonomy.
 		 * @param object|array $deleted_term defines the deleted term.
 		 */
-		public function delete_term( $term_id, $tt_id, $taxonomy, $deleted_term ) {
+		public function delete_term( $term_id, $tt_id, $taxonomy, $deleted_term ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			global $wpdb;
 
 			$term_id = absint( $term_id );
@@ -295,6 +295,5 @@ if ( ! class_exists( 'WCJ_Product_Variation_Swatches_Term_Meta' ) ) :
 			$attribute_taxonomy = $wpdb->get_row( 'SELECT * FROM ' . $wpdb->prefix . "woocommerce_attribute_taxonomies WHERE attribute_name='{$attribute_name}'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			return $attribute_taxonomy;
 		}
-
 	}
 endif;

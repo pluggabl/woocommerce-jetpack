@@ -48,9 +48,19 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_open_pricing';
-			$this->short_desc = __( 'Product Open Pricing (Name Your Price)', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Let your store customers enter price for the product manually.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-open-pricing-name-your-price';
+			$this->short_desc = 'Product Open Pricing (Name Your Price)';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Open Pricing (Name Your Price)', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Let your store customers enter price for the product manually.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Let your store customers enter price for the product manually.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-open-pricing-name-your-price';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -350,7 +360,7 @@ if ( ! class_exists( 'WCJ_Product_Open_Pricing' ) ) :
 		 * @param string | bool $return defines the return.
 		 * @param array         $_product defines the _product.
 		 */
-		public function hide_quantity_input_field( $return, $_product ) {
+		public function hide_quantity_input_field( $return, $_product ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.returnFound -- Retain the existing public/hook signature, including argument names and arity, for compatibility.
 			return ( $this->is_open_price_product( $_product ) ) ? true : $return;
 		}
 

@@ -34,9 +34,19 @@ if ( ! class_exists( 'WCJ_Product_Images' ) ) :
 		public function __construct() {
 
 			$this->id         = 'product_images';
-			$this->short_desc = __( 'Product Images', 'woocommerce-jetpack' );
-			$this->desc       = __( 'Customize products images and thumbnails.', 'woocommerce-jetpack' );
-			$this->link_slug  = 'woocommerce-product-images';
+			$this->short_desc = 'Product Images';
+			wcj_init_presentation(
+				function () {
+					$this->short_desc = __( 'Product Images', 'woocommerce-jetpack' );
+				}
+			);
+			$this->desc = 'Customize products images and thumbnails.';
+			wcj_init_presentation(
+				function () {
+					$this->desc = __( 'Customize products images and thumbnails.', 'woocommerce-jetpack' );
+				}
+			);
+			$this->link_slug = 'woocommerce-product-images';
 			parent::__construct();
 
 			if ( $this->is_enabled() ) {
@@ -44,13 +54,11 @@ if ( ! class_exists( 'WCJ_Product_Images' ) ) :
 				// Single.
 				if ( 'yes' === wcj_get_option( 'wcj_product_images_and_thumbnails_hide_on_single', 'no' ) ) {
 					add_action( 'init', array( $this, 'product_images_and_thumbnails_hide_on_single' ), PHP_INT_MAX );
-				} else {
-					if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+				} elseif ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 						add_filter( 'woocommerce_single_product_image_html', array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 ); // filter doesn't exist in WC3.
 						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_thumbnail_html' ) );
-					} else {
-						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_or_thumbnail_html_wc3' ), PHP_INT_MAX, 2 );
-					}
+				} else {
+					add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_or_thumbnail_html_wc3' ), PHP_INT_MAX, 2 );
 				}
 
 				// Archives.
@@ -272,7 +280,6 @@ if ( ! class_exists( 'WCJ_Product_Images' ) ) :
 		public function change_product_thumbnails_columns_number( $columns_number ) {
 			return wcj_get_option( 'wcj_product_images_thumbnails_columns', 3 );
 		}
-
 	}
 
 endif;

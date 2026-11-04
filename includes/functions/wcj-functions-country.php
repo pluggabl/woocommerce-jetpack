@@ -169,7 +169,6 @@ if ( ! function_exists( 'wcj_get_states' ) ) {
 			// Handle case where WooCommerce is not activated.
 			return array(); // or return an error message.
 		}
-
 	}
 }
 
