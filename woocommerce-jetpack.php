@@ -5,7 +5,7 @@
  * Requires PHP: 7.3
  * Plugin URI: https://booster.io
  * Description: Supercharge your WooCommerce site with these awesome powerful features.
- * Version: 9.0.0
+ * Version: 10.0.0
  * Author: Pluggabl LLC
  * Author URI: https://booster.io
  * Text Domain: woocommerce-jetpack
@@ -88,7 +88,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '9.0.0';
+		public $version = '10.0.0';
 
 		/**
 		 * Singleton instance.

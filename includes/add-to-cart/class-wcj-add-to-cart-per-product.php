@@ -110,6 +110,7 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 		 * @version 5.6.2
 		 */
 		public function create_custom_add_to_cart_meta_box() {
+			if ( class_exists( 'WCJ_Label_Job' ) ) { WCJ_Label_Job::product_help( 'add_to_cart' ); }
 
 			$current_post_id = get_the_ID();
 

@@ -49,6 +49,9 @@ require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-rule-explanations.php';
 require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-returns-summary.php';
 
 // Quick Start Admin UI.
+// Cost ownership invalidation must also observe front-end, REST and scheduled WordPress metadata edits.
+require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-missing-cost-job.php';
+
 if ( is_admin() ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-quick-start-admin.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-status-service.php';
@@ -56,7 +59,68 @@ if ( is_admin() ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-order-health-admin.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-rule-explanations-admin.php';
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-returns-summary-admin.php';
+	// Branded invoice job canvas (shared file, identical across editions).
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-invoice-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-task-finder.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-label-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-catalog-job.php';
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-invoice-job.php';
+	}
+	// Checkout question job (shared file, identical across editions).
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-checkout-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-checkout-job.php';
+	}
+	// Native-backed one-product question and complete product-family help.
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-question-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-date-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-order-notes-job.php';
+	// Optional extra job (shared file, identical across editions).
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-extra-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-extra-job.php';
+	}
+	// Payment method fee job (shared file, identical across editions).
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-gateway-fee-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-gateway-fee-job.php';
+	}
 	// Compatibility Status.
+	// Return requests job. Item rules remain enforced only by the native Elite service.
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-returns-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-returns-job.php';
+	}
+	// Optional amount task and complete payment family help; native engines stay unchanged.
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-gateway-amount-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-shipping-description-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-global-discount-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-currency-symbol-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-currency-tax-groups.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-sale-badge-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-promotions-groups.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-account-orders-label-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-order-account-groups.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-document-label-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-document-workspace.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-communication-subject-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-communications-workspace.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-booking-label-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-specialized-selling-workspace.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-toolbar-categories-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-catalog-admin-workspace.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-handoff-job.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-data-exchange-workspace.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-slug-history.php';
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-diagnose-customize-workspace.php';
+	// One payment method country job; native engines and legacy paid controls remain unchanged.
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-gateway-country-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-gateway-country-job.php';
+	}
+	// One plain global product tab; advanced native settings remain untouched.
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-tab-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-product-tab-job.php';
+	}
+	// Guided shipping choice; native paid modes and other shipping rules are preserved.
+	if ( file_exists( WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-shipping-hide-job.php' ) ) {
+		require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/class-wcj-shipping-hide-job.php';
+	}
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-compatibility-status.php';
 }
 

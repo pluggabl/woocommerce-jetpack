@@ -1,0 +1,23 @@
+/* Deliberately scoped desktop owner job, not a global admin restyle. */
+.wcj-gcj { max-width: 940px; }
+.wcj-gcj [hidden] { display: none !important; }
+.wcj-gcj .wcj-gcj-card { background: #fff; padding: 16px 20px; border: 1px solid #dcdcde; margin: 16px 0; max-width: 800px; }
+.wcj-gcj fieldset { border: 0; margin: 16px 0 12px; padding: 0; }
+.wcj-gcj legend { font-weight: 600; margin-bottom: 8px; }
+.wcj-gcj fieldset label { margin-right: 18px; }
+.wcj-gcj #wcj-gcj-search { display: block; width: 100%; margin: 6px 0; }
+.wcj-gcj .wcj-gcj-country-list { max-height: 170px; overflow-y: auto; border: 1px solid #c3c4c7; padding: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; }
+.wcj-gcj .wcj-gcj-country-list label { display: block; }
+.wcj-gcj #wcj-gcj-selected { margin: 8px 0 4px; }
+.wcj-gcj .wcj-gcj-warning { border-left: 4px solid #dba617; background: #fcf9e8; padding: 10px; }
+.wcj-gcj #wcj-gcj-message:not(:empty) { background: #fff; border-left: 4px solid #00a32a; padding: 10px; }
+.wcj-gcj #wcj-gcj-message.is-error { border-left-color: #d63638; }
+.wcj-gcj .widefat { margin-bottom: 12px; }
+.wcj-gcj .wcj-gcj-diff { background: #fcf9e8; font-weight: 600; }
+.wcj-gcj .wcj-gcj-sample-wrap { max-height: 320px; overflow: auto; }
+
+/* A guarded Undo resolution must fit narrow screens without hiding its meaning. */
+#wcj-gcj-resolve { white-space: normal; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box; height: auto; }
+
+/* Required recovery acknowledgement: native disabled state remains visibly unavailable. */
+.wcj-gcj #wcj-gcj-resolve:disabled { color: #646970 !important; border-color: #dcdcde !important; background: #f0f0f1 !important; box-shadow: none !important; text-shadow: none !important; cursor: not-allowed; opacity: 1; }

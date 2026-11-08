@@ -1,0 +1,53 @@
+/* Payment method fee job. Builds on the branded invoice canvas styles (wcj-invoice-job.css). */
+.wcj-gf [hidden] { display: none !important; }
+.wcj-gf-method select { min-width: 260px; }
+.wcj-gf-fs { border: 0; padding: 0; margin: 14px 0 0; }
+.wcj-gf-fs legend { font-weight: 600; padding: 0; margin-bottom: 6px; }
+.wcj-gf-seg { display: inline-flex; flex-wrap: wrap; gap: 0; }
+.wcj-gf-seg .button { border-radius: 0; margin-left: -1px; }
+.wcj-gf-seg .button:first-child { border-radius: 3px 0 0 3px; margin-left: 0; }
+.wcj-gf-seg .button:last-child { border-radius: 0 3px 3px 0; }
+.wcj-gf-seg .button[aria-pressed=true] { background: #2271b1; color: #fff; border-color: #2271b1; position: relative; }
+.wcj-gf-amount { display: flex; align-items: flex-end; gap: 10px; margin-top: 14px; }
+.wcj-gf-amount .wcj-ij-f { flex: 0 0 140px; margin: 0; }
+.wcj-gf-limits { display: flex; gap: 10px; }
+.wcj-gf-limits .wcj-ij-f { flex: 1; margin-top: 0; }
+.wcj-gf-module { margin-top: 18px; padding: 10px 12px; background: #f6f7f7; border-radius: 4px; }
+.wcj-gf-module .wcj-ij-ck { font-weight: 600; }
+.wcj-gf-hint { margin: 4px 0 0; font-size: 12px; color: #50575e; }
+.wcj-gf-kept { list-style: disc; padding-left: 18px; margin: 6px 0; }
+.wcj-gf-locked { background: #fcf9e8; border: 1px solid #f0c33c; border-radius: 4px; padding: 10px 12px; margin-top: 14px; }
+.wcj-gf-locked[hidden], #wcj-gf-fields[hidden] { display: none; }
+.wcj-gf-lock-h { font-weight: 600; margin: 0 0 4px; }
+.wcj-ij-note.is-warn { background: #fcf0e3; color: #8a5a00; }
+#wcj-ij-draftbar.is-review #wcj-gf-primary, #wcj-ij-draftbar.is-review #wcj-gf-discard { display: none; }
+#wcj-gf .wcj-ij-rows .wcj-ij-rl { flex: 0 0 120px; }
+.wcj-gf-review-rows { margin: 0 0 8px; }
+.wcj-gf-inline { margin-left: 4px; }
+
+/* Preview stage: one example cart, two dominant outcome cards. */
+.wcj-gf-stage { border: 1px solid #c3c4c7; border-top: 0; background: #f0f0f1; padding: 18px; }
+.wcj-gf-ctx { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 13px; }
+.wcj-gf-ctx-h { font-weight: 600; }
+.wcj-gf-ctx input { width: 90px; }
+.wcj-gf-ctx-note { color: #646970; font-size: 12px; }
+.wcj-gf-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.wcj-gf-card { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; overflow: hidden; }
+.wcj-gf-card.is-after.is-changed { border-color: #2271b1; box-shadow: 0 0 0 1px #2271b1; }
+.wcj-gf-card.is-stale .wcj-gf-card-b { opacity: .55; }
+.wcj-gf-card-h { padding: 6px 12px; background: #f6f7f7; border-bottom: 1px solid #dcdcde; font-size: 12px; font-weight: 600; color: #50575e; text-transform: uppercase; letter-spacing: .04em; }
+.wcj-gf-card-b { padding: 18px 16px; min-height: 110px; }
+.wcj-gf-big { font-size: 24px; font-weight: 600; margin: 0 0 6px; line-height: 1.25; }
+.wcj-gf-big.is-fee { color: #1e1e1e; }
+.wcj-gf-big.is-discount { color: #00702a; }
+.wcj-gf-big.is-none { color: #50575e; }
+.wcj-gf-small { margin: 2px 0 0; font-size: 13px; color: #50575e; }
+.wcj-gf-small.is-warn { color: #8a5a00; }
+.wcj-gf-inactive { margin: 8px 0 0; font-size: 12px; color: #646970; border-top: 1px dashed #dcdcde; padding-top: 6px; }
+.wcj-gf-est { margin: 12px 0 0; font-size: 12px; color: #50575e; }
+
+/* One current estimate without a draft; amount and unit share a baseline. */
+.wcj-gf-cards.is-current { grid-template-columns: minmax(0, 1fr); }
+.wcj-gf-amount { flex-wrap: wrap; }
+.wcj-gf-amount .wcj-gf-seg { align-self: flex-end; margin-bottom: 0; }
+.wcj-gf-amount input, .wcj-gf-amount .button { min-height: 40px; margin-bottom: 0; box-sizing: border-box; }

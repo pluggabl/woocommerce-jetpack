@@ -21,6 +21,9 @@ if ( function_exists( 'wcj_render_upgrade_block' ) && wcj_has_upgrade_block( 'pd
 if ( class_exists( 'WCJ_Invoice_Setup' ) && current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore
 	echo '<p><a class="button" href="' . esc_url( WCJ_Invoice_Setup::url() ) . '">' . esc_html__( 'Open branded document setup', 'woocommerce-jetpack' ) . '</a></p>';
 }
+if ( class_exists( 'WCJ_Invoice_Job' ) && WCJ_Task_Finder::allowed( 'pdf_invoicing' ) && current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+	echo '<p><a class="button button-primary" href="' . esc_url( WCJ_Invoice_Job::url() ) . '">' . esc_html__( 'Edit the branded invoice with preview', 'woocommerce-jetpack' ) . '</a></p>';
+}
 
 $settings = array(
 	array(

@@ -1,0 +1,63 @@
+/* Optional extra job. Layout, bars, rows and receipt come from wcj-invoice-job.css (.wcj-ij-*). */
+
+/* Rules below set display on some elements; the hidden attribute must still win. */
+.wcj-pe [hidden] { display: none !important; }
+
+.wcj-pe .wcj-ij-envline { margin: 0 0 8px; padding: 6px 10px; border-left: 4px solid #dba617; background: #fff; font-weight: 600; }
+.wcj-pe .wcj-pe-info { margin: 0 0 10px; }
+.wcj-pe .wcj-pe-stale { border-left-color: #dba617; background: #fcf9e8; }
+.wcj-pe .wcj-pe-stale .button { margin-right: 10px; }
+
+.wcj-pe .wcj-pe-fs { border: 0; margin: 14px 0 0; padding: 0; min-width: 0; }
+.wcj-pe .wcj-pe-fs legend { font-weight: 600; padding: 0; margin-bottom: 6px; }
+.wcj-pe .wcj-pe-on { font-weight: 600; font-size: 14px; }
+
+.wcj-pe .wcj-pe-price { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.wcj-pe .wcj-pe-price input { width: 110px; }
+.wcj-pe .wcj-pe-seg { display: inline-flex; }
+.wcj-pe .wcj-pe-seg .button { border-radius: 0; margin: 0; }
+.wcj-pe .wcj-pe-seg .button:first-child { border-radius: 3px 0 0 3px; }
+.wcj-pe .wcj-pe-seg .button:last-child { border-radius: 0 3px 3px 0; margin-left: -1px; }
+.wcj-pe [aria-pressed="true"] { background: #2271b1; border-color: #2271b1; color: #fff; }
+.wcj-pe .wcj-pe-unit { font-weight: 600; }
+
+.wcj-pe .wcj-pe-reach { margin: 0 0 6px; color: #3c434a; }
+.wcj-pe .wcj-pe-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.wcj-pe .wcj-pe-chip { display: inline-flex; align-items: center; gap: 4px; margin: 0; padding: 2px 4px 2px 10px; border: 1px solid #c3c4c7; border-radius: 12px; background: #f6f7f7; }
+.wcj-pe .wcj-pe-chip .button-link { text-decoration: none; font-size: 16px; line-height: 1; padding: 0 4px; }
+.wcj-pe .wcj-pe-results { margin: 2px 0 0; padding: 4px 0; max-height: 220px; overflow: auto; list-style: none; border: 1px solid #c3c4c7; border-radius: 3px; background: #fff; }
+.wcj-pe .wcj-pe-results li { margin: 0; }
+.wcj-pe .wcj-pe-results .button-link { display: block; width: 100%; text-align: left; padding: 4px 10px; text-decoration: none; }
+.wcj-pe .wcj-pe-results .button-link:focus,
+.wcj-pe .wcj-pe-results .button-link:hover { background: #f0f6fc; }
+
+.wcj-pe .wcj-pe-others { padding: 10px 12px; border-left: 4px solid #dba617; background: #fcf9e8; }
+.wcj-pe .wcj-pe-other { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+.wcj-pe .wcj-pe-oname { font-weight: 600; min-width: 140px; }
+
+.wcj-pe .wcj-pe-locked,
+.wcj-pe .wcj-pe-parked { margin: 0 0 12px; padding: 10px 12px; border-left: 4px solid #72aee6; background: #f0f6fc; }
+.wcj-pe .wcj-pe-locked { border-left-color: #d63638; background: #fcf0f1; }
+.wcj-pe .wcj-pe-lockhead { font-weight: 600; margin: 0 0 4px; }
+.wcj-pe .wcj-pe-locked ul { margin: 0 0 8px 18px; list-style: disc; }
+.wcj-pe .wcj-pe-parked p { margin: 0 0 6px; }
+.wcj-pe .wcj-pe-parked .button { margin-right: 10px; }
+.wcj-pe .wcj-pe-kept { margin: 6px 0 6px 18px; list-style: disc; }
+
+.wcj-pe .wcj-pe-sample select { max-width: 280px; }
+.wcj-pe .wcj-pe-bar { display: inline-flex; align-items: center; gap: 10px; }
+
+/* The stage: a neutral product summary around Booster's own markup. Not the store theme. */
+.wcj-pe .wcj-pe-stage { margin-top: 12px; padding: 24px; border: 1px solid #dcdcde; border-radius: 4px; background: #fff; }
+.wcj-pe .wcj-pe-product { max-width: 460px; }
+.wcj-pe .wcj-pe-pname { margin: 0; font-size: 20px; font-weight: 600; }
+.wcj-pe .wcj-pe-pprice { margin: 4px 0 14px; font-size: 18px; color: #3c434a; }
+.wcj-pe .wcj-pe-frame { display: block; width: 100%; min-height: 120px; border: 0; border-top: 1px dashed #dcdcde; border-bottom: 1px dashed #dcdcde; }
+.wcj-pe .wcj-pe-cartbtn { display: inline-block; margin: 14px 0 0; padding: 8px 18px; border-radius: 3px; background: #50575e; color: #fff; }
+.wcj-pe .wcj-pe-sum { margin: 16px 0 0; font-size: 14px; font-weight: 600; }
+.wcj-pe .wcj-pe-notes { margin: 8px 0 0 18px; list-style: disc; color: #50575e; }
+.wcj-pe .wcj-pe-note { margin: 6px 0; }
+
+.wcj-pe .wcj-ij-rows li.is-consequential .wcj-ij-rl { font-weight: 600; }
+.wcj-pe .wcj-ij-status.is-error { color: #b32d2e; }
+.wcj-pe .wcj-ij-status.is-ok { color: #00702a; }
