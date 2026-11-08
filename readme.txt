@@ -9,29 +9,29 @@ Stable tag: 10.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Guided WooCommerce setup for PDF invoices, checkout fields, product add-ons, returns, labels and catalog tools, with full settings still in reach.
+Booster 10 makes common WooCommerce changes easier: find a task by store area, follow a guided editor, and use full settings for expert work.
 
 == Description ==
 
 Booster 10.0.0 is a pre-release and has not yet been published.
 
-Booster 10.0.0 starts with the task, not the settings page. Use the task finder to pick what you want to change, such as a button label, an invoice or a return window, and Booster opens a guided editor for it. Browsing the task finder is read-only. Each task identifies the specific change it saves and any separate step needed to activate it; saving and activation are not always the same.
+Booster brings PDF invoices, checkout fields, product add-ons, payment rules, returns and dozens of other store tools into one plugin. Booster 10 makes that power much easier to use.
 
-In the free edition, guided tasks cover:
+Start with what you want to do. Search the task finder, or browse store areas named for the work: payments and fees, shipping, prices and discounts, order documents, customer emails and more. Open a guided editor written in plain language. Guided tasks show what they save and whether a separate step is needed to switch a feature on, and you save when you are ready. Browsing the task finder does not turn anything on.
 
-* invoice setup with a synthetic sample
-* product input fields, checkout fields and priced product add-ons, each as a separate choice
-* gateway fees
-* a storewide return window
-* bank transfer (BACS) rules by billing country and cart amount
-* one shared product tab
-* shipping wording
-* Place order and Add to cart labels, and price text
-* catalog display areas such as breadcrumbs, related products, swatches and sorting
+Keep detailed control. Full module settings remain available for expert work, and guides link to them where relevant.
 
-The guides have set limits. They do not make every expert option simple, previewable or undoable, and the full module settings are still there. What shoppers see still depends on your theme, your WooCommerce setup and your other plugins.
+With the free edition you can:
 
-Booster Plus and Booster Elite include more options. Compare editions at https://booster.io/free-vs-elite/
+* brand your invoices and check a sample before you go live
+* ask shoppers a question per product or per order, or offer a priced optional extra such as gift wrapping
+* add a payment gateway fee, and limit bank transfer (BACS) by billing country or cart amount
+* set a storewide return window
+* add a shared product tab and set up supported shipping and its descriptions
+* rename Place order, Add to cart, price text and sale badges
+* tune breadcrumbs, related products, swatches, sorting and products per page
+
+Guides cover common jobs, not every option. Some show a sample or a before-and-after view; others explain the change in words. What shoppers see still depends on your theme and setup. Booster Plus and Booster Elite include more. Compare editions at https://booster.io/free-vs-elite/
 
 ### New in 9.0.0 - Handle returns and understand gateway fees
 
@@ -223,6 +223,14 @@ While the free version of Booster provides a massive toolkit, **Booster Elite** 
 
 == Frequently Asked Questions ==
 
+= What is new in Booster 10? =
+
+Booster 10 changes how you work with Booster. Instead of hunting through module pages, you start from the change you want and open a guided editor. Guided tasks show what they save and whether a separate step is needed. Full module settings remain available.
+
+= Which edition do I need for a task? =
+
+Free and Plus include the core guided tasks. Elite adds fuller controls, such as payment rules for each supported payment method and return rules for specific items. See https://booster.io/free-vs-elite/
+
 = How to install Booster for WooCommerce (free version)? =
 The easiest way to install Booster is via your site’s Dashboard. Please follow these instructions:
 1. Log in to your site’s Dashboard (e.g. www.yourdomain.com/wp-admin).
@@ -242,8 +250,9 @@ Many common changes can be made with settings and guided tasks, without code. Ad
 = What does Booster add to WooCommerce? =
 Booster brings many WooCommerce store tools into one plugin, organized as modules you turn on when you need them. Examples include <strong>PDF invoices</strong>, <strong>currency tools</strong>, <strong>dynamic pricing</strong>, <strong>checkout and product fields</strong>, payment gateway fees and customer return requests. Version 10 adds guided tasks for common changes, while full module settings remain available. See <a href="https://booster.io/features/">booster.io/features/</a>.
 
-= How do I find the right setting among so many modules? =
-Use the task finder. Search for the change you want, such as Add to cart text, a return window or an invoice, and open the guide. Browsing the task finder is read-only, and each task identifies what it saves and any separate activation step. Task search covers a defined set of tasks, not every setting, and each module’s full settings remain available.
+= How do I find the right setting? =
+
+Open Booster and use Find a task. Search for something like “invoice”, “gift”, “fee” or “returns”, or browse the store areas listed below the search. Looking does not turn anything on. Search covers guided tasks, not every setting, and links to full settings and module search remain.
 
 = Will Booster slow down my site? =
 Booster is modular, so you choose which modules to enable. Site speed depends on your host, theme, other plugins, and the modules and settings you use. When you enable new modules, test performance on a staging copy of your store.
@@ -293,14 +302,17 @@ Yes. Apply one, then use Pick another to layer more quick wins.
 = Are you sending any data off my site? =
 No. Onboarding analytics are local-only (apply/undo/mode views) to improve the experience. No external services are called.
 
-= Can I still use the full settings? =
-Yes. Every module keeps its full settings screen. Guides cover common changes. Expert options, custom templates and advanced rules stay in the module settings.
+= Do guides replace the full settings? =
+
+No. Guides cover common changes, and full module settings remain available for expert options, custom templates and advanced rules.
 
 = What can I preview, save and undo? =
-It depends on the task. Some guides show a sample or let you check a change before you save, and some tasks offer Undo, which covers only that task and works only when its recovery checks allow. Undo is not a full site backup. Not every option can be previewed or undone. The invoice sample is synthetic: it uses no invoice number, sends no email and does not check legal or tax requirements. Read-only explanations, such as gateway fee checks, do not change a shopper’s cart and do not predict the final checkout total.
 
-= How should I back up and upgrade? =
-Before you update, take a full site backup and export your Booster settings with Settings backups. A settings backup can be restored after reinstalling the same edition. We recommend testing the update on a staging copy of your store first. Booster requires PHP 7.3 or later on a 64-bit build with native integer hrtime() enabled. Use a maintained PHP release supported by your WordPress and WooCommerce versions.
+It depends on the task. Some guides show a sample or a before-and-after view. A few offer Undo for that task’s own change when its recovery checks allow. Undo is not a site backup, and not every option can be previewed or undone. The invoice sample issues no invoice and sends no email.
+
+= How should I prepare for the update? =
+
+Take a full site backup and export your Booster settings with Settings backups. Test on a staging copy first. Booster needs PHP 7.3 or later on a 64-bit build with native integer hrtime(), on a maintained PHP release supported by your WordPress and WooCommerce versions.
 
 = Does approving a return refund the customer? =
 No. Approving a return records your decision. It does not refund money, restock products or process a payment.
@@ -309,7 +321,8 @@ No. Approving a return records your decision. It does not refund money, restock 
 Version 10 adds no AI engine, no chatbot and no connection to an AI service. Guided tasks do not take automatic financial or customer actions. The CSV download builds a file for you to download. Booster does not send it, schedule it or store it on the site. The communication guidance helps you review email settings but does not send email or confirm delivery.
 
 = Does Booster 10 include security improvements? =
-Yes. This release hardens how untrusted product description content is processed and how date format output is handled in the affected editions. Once 10.0.0 is officially released, test it on a staging copy of your store before updating your live site.
+
+Yes. Booster 10 includes security hardening and fixes carried forward from earlier work. Test on staging before updating your live site.
 
 == Detailed List of Features ==
 
@@ -457,31 +470,16 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 == Changelog ==
 
 = 10.0.0 - Unreleased =
-
-* Task finder - Find common store changes by task and open the matching guide or settings. Browsing the task finder is read-only. Each task identifies the specific change it saves and any separate activation step.
-* Task search and shortcuts - Search a defined set of tasks, see your saved task changes separately from recently opened module settings, and jump between six available related workspaces. This is not a search of every Booster setting and does not link every settings screen.
-* Invoice guide - Set up invoices in a guided flow and review a synthetic sample. The sample uses no invoice number, sends no email and does not check legal or tax requirements.
-* Product and checkout inputs - Separate guided flows: a product input collects an answer for each product cart item and order line, a checkout field collects one answer per order, and a priced product add-on is set up on its own.
-* Gateway fees - Set up a payment gateway fee in a guided flow. Full fee settings remain in the module.
-* Returns - Set a storewide return window in a guided flow. Approving a request records your decision; it does not refund money, restock products or process a payment.
-* Payment rules - Limit bank transfer (BACS) by billing country or cart amount in guided flows. Other gateway rules stay in the module settings.
-* Shared product tab - Create one shared product tab with a guided flow.
-* Shipping - Work through supported shipping settings in a guided flow and edit shipping method description text. The text task does not change rates or turn methods on.
-* Button and price labels - Edit Place order and Add to cart text, price prefix and suffix, and free price text.
-* Catalog tasks - Guided tasks for breadcrumbs, cross-sells, product images, listings, swatches, products per page, related products, sorting and upsells. Storefront results depend on the module, your theme and your configuration.
-* Wording tasks - Edit the order notes label, placeholder and description; the currency symbol; sale badge text; and the My Account Orders label and heading. These change text only. They do not change currency conversion, taxes, sale prices, account endpoints or permissions.
-* Percentage discounts - Edit an existing percentage discount within a limited guide. Not every pricing combination is covered.
-* Documents and communications - New workspaces group document and email settings with help on the same screen, including limited email subject editing and guidance on recipients and consent. Booster does not confirm email delivery or scheduled task timing.
-* Abandoned cart emails - In automated abandoned-cart email body text, the %admin_email% placeholder now uses the site administrator email from your WordPress settings instead of a fixed example address. If that setting is missing, empty or not stored as text, the placeholder is left blank. Booster does not check whether the address is valid. This changes body text only. It does not change recipients, the From address, scheduling, consent or coupons, and it does not confirm that email is delivered.
-* Specialized selling - A label task and help for existing booking settings. This does not add subscriptions or guarantee revenue or capacity.
-* Catalog administration - Two new tasks. Admin toolbar category links sets a global preference for category links in the admin toolbar; the Admin Bar module and WooCommerce menu prerequisites must already be in place, and the task does not activate them. Fill missing purchase costs adds costs to up to 20 distinct, explicitly selected simple products, with a preview and an Undo for that task only when its recovery checks allow. The existing SKU, Product Bulk Meta Editor, Bulk Price Converter and Admin Orders and Products List tools keep their full editors with expanded help; they do not gain new preview or Undo.
-* CSV download - Download a CSV from up to 20 non-blank ID entries. Duplicate and invalid entries are counted, and blank separators are ignored. Every file includes ID and Status. Published items are included by default; non-public items are included only when you explicitly choose them. Booster does not import, send, schedule or store the file on the site.
-* Diagnostics and customization - Help in existing settings, inspection of saved old-slug history records, and metadata title tools. Old-slug inspection does not test redirects or create URLs.
-* Help and guides - Adds help inside the existing full General and role settings (these are not new guided tasks).
-* Security - Hardens processing of untrusted product description content and date format output in affected editions. Install 10.0.0 only once it is officially released, and test it on a staging site first.
-* Edition scope - The free edition includes the guided tasks above. Booster Plus and Booster Elite add more options. Existing module and edition limits still apply, and full module settings remain available.
-* Compatibility - Checkout Blocks and HPOS support stays module-specific. This release does not certify every block, gateway, theme, integration, subscription service or PHP version.
-* Hosting requirements - Requires PHP 7.3 or later on a 64-bit build with native integer hrtime() enabled. Use a maintained PHP release supported by your WordPress and WooCommerce versions.
+* New way to work - Find a task by what you want to change, or browse store areas named for the work. Guided tasks show what they save and whether a separate step is needed. Browsing the task finder turns nothing on. Full module settings remain available.
+* Selling setup - Guided invoice branding with a sample (no real invoice issued or sent), separate product and checkout questions, priced optional extras, gateway fees, shared product tabs and supported shipping setup.
+* Checkout and payments - Clearer wording and help for cart and checkout text, payment choices, shipping descriptions, an existing percentage discount, currency and tax wording, and sale badges. Payment rules for bank transfer (BACS) by billing country and cart amount.
+* Returns - Guided storewide return window. Approving a return records your decision; it does not refund or restock.
+* Orders, documents and messages - New workspaces group order, account, document and customer email settings, with prerequisites and help on the same screen. Saving email wording does not send email. Specialized selling adds a booking label task and help for existing booking settings.
+* Catalog and admin - Guided catalog display tasks. Admin toolbar category links, and fill missing purchase costs for up to 20 selected simple products, with preview and task-only Undo when recovery checks allow. A CSV download for up to 20 products and a readable old-slug history. Native bulk tools keep their full editors without new preview or Undo.
+* Help - Updated in-plugin help, including General and role settings. Booster’s feature and documentation pages are being updated for version 10.
+* Security and fixes - Hardened handling of product description content and date format output, plus inherited fixes, including the abandoned-cart %admin_email% placeholder now using your site administrator email.
+* Compatibility - Checkout Blocks and HPOS support remains module-specific.
+* Requirements - PHP 7.3 or later on a 64-bit build with native integer hrtime(), on a maintained release supported by your WordPress and WooCommerce versions.
 
 = 9.0.0 - 04/11/2026 =
 * Settings backups - Export saved Booster settings and restore them after reinstalling the same edition, including general options and grouped settings.
@@ -4598,7 +4596,8 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 == Upgrade Notice ==
 
 = 10.0.0 =
-10.0.0 adds guided tasks for common store changes; full module settings remain. Back up your site and export Booster settings before updating. Requires PHP 7.3+ on a 64-bit build with native integer hrtime().
+
+Booster 10 makes common store changes easier: find a task, use a guided editor, keep full module settings. Take a site backup and export Booster settings first. Needs PHP 7.3+ on 64-bit with native integer hrtime().
 
 = 9.0.0 =
 Back up and test the exact package on staging before enabling new workflows. Review the PHP 7.3, 64-bit native-clock requirements and edition-specific limits.
