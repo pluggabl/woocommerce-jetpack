@@ -89,6 +89,7 @@ if ( isset( $GLOBALS['wcj_getting_started_hub'] ) ) {
 	</div>
 </div>
 
+<?php WCJ_Task_Finder::render(); ?>
 <!-- Quick Setup Presets Section -->
 <div class="wcj-presets-section">
 	<div class="wcj-container">

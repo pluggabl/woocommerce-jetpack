@@ -12,6 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+if ( class_exists( 'WCJ_Catalog_Job' ) ) { WCJ_Catalog_Job::object_help( 'related_products', 'related-product', 'Help for manual related products: enabled and empty intentionally hides' ); }
+
 $product_id       = get_the_ID();
 $products         = wcj_get_products( array(), 'publish' );
 $is_chosen_select = ( 'chosen_select' === wcj_get_option( 'wcj_product_info_related_products_per_product_box_type', 'chosen_select' ) );

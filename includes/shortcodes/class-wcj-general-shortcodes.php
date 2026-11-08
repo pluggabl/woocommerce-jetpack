@@ -716,7 +716,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_time( $atts ) {
-			return date_i18n( $atts['time_format'], wcj_get_timestamp_date_from_gmt() );
+			return wp_kses_post( date_i18n( $atts['time_format'], wcj_get_timestamp_date_from_gmt() ) );
 		}
 
 		/**
@@ -727,7 +727,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_datetime( $atts ) {
-			return date_i18n( $atts['datetime_format'], wcj_get_timestamp_date_from_gmt() );
+			return wp_kses_post( date_i18n( $atts['datetime_format'], wcj_get_timestamp_date_from_gmt() ) );
 		}
 
 		/**
@@ -1195,7 +1195,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_date( $atts ) {
-			return date_i18n( $atts['date_format'], wcj_get_timestamp_date_from_gmt() );
+			return wp_kses_post( date_i18n( $atts['date_format'], wcj_get_timestamp_date_from_gmt() ) );
 		}
 
 		/**

@@ -30,7 +30,7 @@ return array(
 	),
 	array(
 		'title' => __( 'Place order (Order now) Button', 'woocommerce-jetpack' ),
-		'desc'  => '<a href="' . esc_url( 'https://booster.io/docs/woocommerce-checkout-blocks/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Checkout Blocks setup guide', 'woocommerce-jetpack' ) . '</a>',
+		'desc'  => '<a href="' . esc_url( 'https://booster.io/docs/woocommerce-checkout-blocks/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Checkout Blocks setup guide', 'woocommerce-jetpack' ) . '</a>' . ( class_exists( 'WCJ_Label_Job' ) ? WCJ_Label_Job::specialist_help( 'more_button_labels', array( 'gateway' => __( 'Understand the separate gateway override', 'woocommerce-jetpack' ) ) ) : '' ),
 		'type'  => 'title',
 		'id'    => 'wcj_checkout_place_order_button_options',
 	),

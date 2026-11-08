@@ -35,6 +35,7 @@ return array(
 	array(
 		'title' => __( 'Custom Price Labels - Per Product', 'woocommerce-jetpack' ),
 		'type'  => 'title',
+		'desc'  => ( class_exists( 'WCJ_Label_Job' ) ? WCJ_Label_Job::specialist_help( 'price_labels', array( 'price-product' => __( 'Choose a position on one product', 'woocommerce-jetpack' ), 'price-hide' => __( 'Hide the label in selected contexts', 'woocommerce-jetpack' ) ) ) : '' ),
 		'id'    => 'wcj_local_price_labels_options',
 	),
 	array(
@@ -60,7 +61,7 @@ return array(
 	array(
 		'title' => __( 'Custom Price Labels - Globally', 'woocommerce-jetpack' ),
 		'type'  => 'title',
-		'desc'  => __( 'This section lets you set price labels for all products globally.', 'woocommerce-jetpack' ),
+		'desc'  => __( 'This section lets you set price labels for all products globally.', 'woocommerce-jetpack' ) . ( class_exists( 'WCJ_Label_Job' ) ? WCJ_Label_Job::specialist_help( 'price_labels', array( 'price-global' => __( 'Replace or remove price text', 'woocommerce-jetpack' ), 'price-inclusion' => __( 'Choose product and category filters', 'woocommerce-jetpack' ) ) ) : '' ),
 		'id'    => 'wcj_global_price_labels_options',
 	),
 	array(

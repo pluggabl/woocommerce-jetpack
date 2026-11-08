@@ -135,7 +135,7 @@ return array(
 	array(
 		'title'             => __( 'JSON Product Search Limit', 'woocommerce-jetpack' ),
 		'desc_tip'          => __( 'This will set the maximum number of products to return on JSON search (e.g. when setting Upsells and Cross-sells on product edit page).', 'woocommerce-jetpack' ) . ' ' .
-			__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
+			__( 'A saved 0 is still passed to WooCommerce as its search limit. Enter an explicit number for a specific limit.', 'woocommerce-jetpack' ),
 		'id'                => 'wcj_product_json_search_limit',
 		'default'           => 0,
 		'type'              => 'number',

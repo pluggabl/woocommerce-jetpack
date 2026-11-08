@@ -33,7 +33,7 @@ $settings           = array(
 	array(
 		'title' => __( 'Per Category Options', 'woocommerce-jetpack' ),
 		'type'  => 'title',
-		'desc'  => __( 'This sections lets you set Add to Cart button text on per category basis.', 'woocommerce-jetpack' ),
+		'desc'  => __( 'This sections lets you set Add to Cart button text on per category basis.', 'woocommerce-jetpack' ) . ( class_exists( 'WCJ_Label_Job' ) ? WCJ_Label_Job::specialist_help( 'add_to_cart', array( 'cart-category' => __( 'Choose categories and group order', 'woocommerce-jetpack' ) ) ) : '' ),
 		'id'    => 'wcj_add_to_cart_per_category_options',
 	),
 	array(
@@ -127,7 +127,7 @@ $settings               = array_merge(
 		array(
 			'title' => __( 'Per Product Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
-			'desc'  => __( 'This section lets you set Add to Cart button text on per product basis. When enabled, label for each product can be changed in "Edit Product".', 'woocommerce-jetpack' ),
+			'desc'  => __( 'This section lets you set Add to Cart button text on per product basis. When enabled, label for each product can be changed in "Edit Product".', 'woocommerce-jetpack' ) . ( class_exists( 'WCJ_Label_Job' ) ? WCJ_Label_Job::specialist_help( 'add_to_cart', array( 'cart-product' => __( 'Set wording on one product', 'woocommerce-jetpack' ) ) ) : '' ),
 			'id'    => 'wcj_add_to_cart_per_product_options',
 		),
 		array(
@@ -153,7 +153,7 @@ $settings               = array_merge(
 		array(
 			'title' => __( 'Per Product Type Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
-			'desc'  => 'This sections lets you set text for add to cart button for various products types and various conditions.',
+			'desc'  => 'This sections lets you set text for add to cart button for various products types and various conditions.' . ( class_exists( 'WCJ_Label_Job' ) ? WCJ_Label_Job::specialist_help( 'add_to_cart', array( 'cart-condition' => __( 'Choose a product type and condition', 'woocommerce-jetpack' ) ) ) : '' ),
 			'id'    => 'wcj_add_to_cart_text_options',
 		),
 		array(

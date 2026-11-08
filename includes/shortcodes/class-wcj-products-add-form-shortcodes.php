@@ -370,6 +370,29 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		}
 
 		/**
+		 * Keep frontend product text literal, including inactive shortcode names.
+		 *
+		 * @param mixed $value Unslashed frontend text.
+		 * @return string
+		 */
+		private function sanitize_product_by_user_text( $value ) {
+			if ( ! is_string( $value ) ) {
+				return '';
+			}
+			return strtr( sanitize_text_field( $value ), array( '[' => '&#091;', ']' => '&#093;' ) );
+		}
+
+		/**
+		 * Restore only our literal bracket entities before contextual form escaping.
+		 *
+		 * @param string $value Saved or submitted product text.
+		 * @return string
+		 */
+		private function product_by_user_text_for_form( $value ) {
+			return strtr( $value, array( '&#091;' => '[', '&#093;' => ']' ) );
+		}
+
+		/**
 		 * Wc_add_new_product.
 		 *
 		 * @version 2.8.0
@@ -381,18 +404,24 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 		public function wc_add_new_product( $args, $shortcode_atts ) {
 
 			$product_post = array(
-				'post_title'   => $args['title'],
-				'post_content' => $args['desc'],
-				'post_excerpt' => $args['short_desc'],
+				'post_title'  => $this->sanitize_product_by_user_text( $args['title'] ),
 				'post_type'    => 'product',
 				'post_status'  => 'draft',
 			);
 
+			// Omit disabled fields on update so existing merchant content is preserved.
+			if ( 'yes' === $shortcode_atts['desc_enabled'] ) {
+				$product_post['post_content'] = $this->sanitize_product_by_user_text( $args['desc'] );
+			}
+			if ( 'yes' === $shortcode_atts['short_desc_enabled'] ) {
+				$product_post['post_excerpt'] = $this->sanitize_product_by_user_text( $args['short_desc'] );
+			}
+
 			if ( 0 === $shortcode_atts['product_id'] ) {
-				$product_id = wp_insert_post( $product_post );
+				$product_id = wp_insert_post( wp_slash( $product_post ) );
 			} else {
 				$product_id = $shortcode_atts['product_id'];
-				wp_update_post( array_merge( array( 'ID' => $product_id ), $product_post ) );
+				wp_update_post( wp_slash( array_merge( array( 'ID' => $product_id ), $product_post ) ) );
 			}
 
 			// Insert the post into the database.
@@ -467,7 +496,10 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				if ( ! function_exists( 'post_exists' ) ) {
 					require_once ABSPATH . 'wp-admin/includes/post.php';
 				}
-				if ( post_exists( $args['title'] ) ) {
+				$current_title = $this->sanitize_product_by_user_text( $args['title'] );
+				// C83 stored attribute-escaped text without slashing the post array.
+				$legacy_title = wp_unslash( esc_attr( sanitize_text_field( $this->product_by_user_text_for_form( $current_title ) ) ) );
+				if ( post_exists( wp_slash( $current_title ) ) || ( $legacy_title !== $current_title && post_exists( wp_slash( $legacy_title ) ) ) ) {
 					$errors .= '<li>' . __( 'Product exists!', 'woocommerce-jetpack' ) . '</li>';
 				}
 			}
@@ -646,9 +678,9 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			}
 
 			$args = array(
-				'title'                       => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) ) : '',
-				'desc'                        => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_desc'] ) ) ) : '',
-				'short_desc'                  => isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_short_desc'] ) ) ) : '',
+				'title'                       => ( isset( $_REQUEST['wcj_add_new_product_title'] ) ) ? $this->sanitize_product_by_user_text( wp_unslash( $_REQUEST['wcj_add_new_product_title'] ) ) : '',
+				'desc'                        => ( 'yes' === $atts['desc_enabled'] && isset( $_REQUEST['wcj_add_new_product_desc'] ) ) ? $this->sanitize_product_by_user_text( wp_unslash( $_REQUEST['wcj_add_new_product_desc'] ) ) : '',
+				'short_desc'                  => ( 'yes' === $atts['short_desc_enabled'] && isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ) ? $this->sanitize_product_by_user_text( wp_unslash( $_REQUEST['wcj_add_new_product_short_desc'] ) ) : '',
 				'regular_price'               => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_regular_price'] ) ) ) : '',
 				'sale_price'                  => isset( $_REQUEST['wcj_add_new_product_sale_price'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_sale_price'] ) ) ) : '',
 				'external_url'                => isset( $_REQUEST['wcj_add_new_product_external_url'] ) ? esc_url( sanitize_text_field( wp_unslash( $_REQUEST['wcj_add_new_product_external_url'] ) ) ) : '',
@@ -678,7 +710,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 						$notice_html .= '<div class="woocommerce"><div class="woocommerce-message">' .
 							str_replace(
 								'%product_title%',
-								$args['title'],
+								esc_html( $args['title'] ),
 								get_option(
 									'wcj_product_by_user_message_product_successfully_added',
 									__( '"%product_title%" successfully added!', 'woocommerce-jetpack' )
@@ -690,7 +722,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 						$notice_html .= '<div class="woocommerce"><div class="woocommerce-message">' .
 							str_replace(
 								'%product_title%',
-								$args['title'],
+								esc_html( $args['title'] ),
 								get_option(
 									'wcj_product_by_user_message_product_successfully_edited',
 									__( '"%product_title%" successfully edited!', 'woocommerce-jetpack' )
@@ -733,16 +765,16 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			$input_style  = 'width:100%;';
 			$table_data[] = array(
 				'<label for="wcj_add_new_product_title">' . __( 'Title', 'woocommerce-jetpack' ) . $required_mark_html_template . '</label>',
-				'<input required type="text" style="' . $input_style . '" id="wcj_add_new_product_title" name="wcj_add_new_product_title" value="' . ( ( 0 !== $atts['product_id'] ) ?
-					$this->the_product->get_title() : $args['title'] ) . '">',
+				'<input required type="text" style="' . $input_style . '" id="wcj_add_new_product_title" name="wcj_add_new_product_title" value="' . esc_attr( $this->product_by_user_text_for_form( ( 0 !== $atts['product_id'] ) ?
+					$this->the_product->get_title() : $args['title'] ) ) . '">',
 			);
 			if ( 'yes' === $atts['desc_enabled'] ) {
 				$required_html      = ( 'yes' === $atts['desc_required'] ) ? ' required' : '';
 				$required_mark_html = ( 'yes' === $atts['desc_required'] ) ? $required_mark_html_template : '';
 				$table_data[]       = array(
 					'<label for="wcj_add_new_product_desc">' . __( 'Description', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
-					'<textarea' . $required_html . ' style="' . $input_style . '" id="wcj_add_new_product_desc" name="wcj_add_new_product_desc">' . ( ( 0 !== $atts['product_id'] ) ?
-						get_post_field( 'post_content', $atts['product_id'] ) : $args['desc'] ) . '</textarea>',
+					'<textarea' . $required_html . ' style="' . $input_style . '" id="wcj_add_new_product_desc" name="wcj_add_new_product_desc">' . esc_textarea( wp_specialchars_decode( $this->product_by_user_text_for_form( ( 0 !== $atts['product_id'] ) ?
+						get_post_field( 'post_content', $atts['product_id'] ) : $args['desc'] ), ENT_QUOTES ) ) . '</textarea>',
 				);
 			}
 			if ( 'yes' === $atts['short_desc_enabled'] ) {
@@ -751,7 +783,7 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 				$table_data[]       = array(
 					'<label for="wcj_add_new_product_short_desc">' . __( 'Short Description', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
 					'<textarea' . $required_html . ' style="' . $input_style . '" id="wcj_add_new_product_short_desc" name="wcj_add_new_product_short_desc">' .
-					( ( 0 !== $atts['product_id'] ) ? get_post_field( 'post_excerpt', $atts['product_id'] ) : $args['short_desc'] ) . '</textarea>',
+					esc_textarea( wp_specialchars_decode( $this->product_by_user_text_for_form( ( 0 !== $atts['product_id'] ) ? get_post_field( 'post_excerpt', $atts['product_id'] ) : $args['short_desc'] ), ENT_QUOTES ) ) . '</textarea>',
 				);
 			}
 			if ( 'yes' === $atts['image_enabled'] ) {

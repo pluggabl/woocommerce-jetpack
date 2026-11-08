@@ -93,7 +93,7 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 				}
 				if ( 'yes' === apply_filters( 'booster_option', 'no', wcj_get_option( 'wcj_cross_sells_replace_with_cross_sells', 'no' ) ) ) {
 					add_filter( 'woocommerce_product_add_to_cart_url', array( $this, 'replace_with_cross_sells_to_url' ), PHP_INT_MAX, 2 );
-					add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'remove_from_cart_by_product_id' ) );
+					add_action( 'woocommerce_add_to_cart', array( $this, 'remove_from_cart_by_product_id' ), 9, 2 );
 				}
 			}
 		}
@@ -109,29 +109,40 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 */
 		public function replace_with_cross_sells_to_url( $url, $product ) {
 			$_cart = WC()->cart;
-			if ( is_cart() && $_cart ) {
-				$product_id            = $product->get_id();
-				$product_ids_to_remove = array();
-				foreach ( $_cart->get_cart() as $cart_item_key => $values ) {
-					$_product       = wc_get_product( $values['product_id'] );
-					$cross_sell_ids = $_product->get_cross_sell_ids();
-					if ( in_array( $product_id, $cross_sell_ids, true ) ) {
-						$product_ids_to_remove[] = $values['product_id'];
+			if ( ! is_cart() || ! $_cart || ! $product->is_type( 'simple' ) || ! $product->is_purchasable() || ! $product->is_in_stock() ) {
+				return $url;
+			}
+			$product_id = absint( $product->get_id() );
+			$query = array();
+			parse_str( (string) wp_parse_url( $url, PHP_URL_QUERY ), $query );
+			if ( ! isset( $query['add-to-cart'] ) || ! is_scalar( $query['add-to-cart'] ) || absint( $query['add-to-cart'] ) !== $product_id ) {
+				return $url; // Selecting options or visiting an external product is not a successful add.
+			}
+			$product_ids_to_remove = array();
+			try {
+				foreach ( $_cart->get_cart() as $values ) {
+					$source_id = absint( $values['product_id'] );
+					$_product = wc_get_product( $source_id );
+					if ( $_product && $source_id !== $product_id && in_array( $product_id, array_map( 'absint', $_product->get_cross_sell_ids() ), true ) ) {
+						$product_ids_to_remove[] = $source_id;
 					}
 				}
-				if ( ! empty( $product_ids_to_remove ) ) {
-					$url = esc_url_raw(
-						add_query_arg(
-							array(
-								'wcj-remove-from-cart' => implode( ',', array_unique( $product_ids_to_remove ) ),
-								'wcj-remove-from-cart-nonce' => wp_create_nonce( 'wcj-remove-from-cart' ),
-							),
-							$url
-						)
-					);
-				}
+			} catch ( Throwable $e ) {
+				return $url; // A stale native relationship must not create removal intent.
 			}
-			return $url;
+			if ( ! $product_ids_to_remove ) {
+				return $url;
+			}
+			return esc_url_raw(
+				add_query_arg(
+					array(
+						'wcj-remove-from-cart' => implode( ',', array_unique( $product_ids_to_remove ) ),
+						'wcj-cross-sell-product' => $product_id,
+						'wcj-remove-from-cart-nonce' => wp_create_nonce( 'wcj-remove-from-cart-' . $product_id ),
+					),
+					$url
+				)
+			);
 		}
 
 		/**
@@ -141,21 +152,47 @@ if ( ! class_exists( 'WCJ_Cross_Sells' ) ) :
 		 * @since   3.9.0
 		 * @todo    [dev] AJAX
 		 */
-		public function remove_from_cart_by_product_id() {
-			$_cart   = WC()->cart;
-			$wpnonce = isset( $_GET['wcj-remove-from-cart-nonce'] ) ? wp_verify_nonce( sanitize_key( $_GET['wcj-remove-from-cart-nonce'] ), 'wcj-remove-from-cart' ) : false;
-			if ( isset( $_GET['wcj-remove-from-cart'] ) && $wpnonce ) {
-				if ( isset( $_cart ) ) {
-					$product_ids_to_remove = explode( ',', sanitize_text_field( wp_unslash( $_GET['wcj-remove-from-cart'] ) ) );
-					foreach ( $_cart->get_cart() as $cart_item_key => $values ) {
-						if ( in_array( $values['product_id'], $product_ids_to_remove, true ) ) {
-							$_cart->remove_cart_item( $cart_item_key );
-						}
+		public function remove_from_cart_by_product_id( $added_cart_item_key = '', $added_product_id = 0 ) {
+			$_cart = WC()->cart;
+			$added_product_id = absint( $added_product_id );
+			if ( ! $_cart || ! $added_cart_item_key || ! $added_product_id ) {
+				return;
+			}
+			foreach ( array( 'wcj-remove-from-cart', 'wcj-cross-sell-product', 'wcj-remove-from-cart-nonce' ) as $key ) {
+				if ( ! isset( $_GET[ $key ] ) || ! is_string( $_GET[ $key ] ) ) {
+					return;
+				}
+			}
+			$target_id = absint( wp_unslash( $_GET['wcj-cross-sell-product'] ) );
+			$nonce = sanitize_key( wp_unslash( $_GET['wcj-remove-from-cart-nonce'] ) );
+			if ( $target_id !== $added_product_id || ! wp_verify_nonce( $nonce, 'wcj-remove-from-cart-' . $target_id ) ) {
+				return;
+			}
+			$added = $_cart->get_cart_item( $added_cart_item_key );
+			$target = wc_get_product( $target_id );
+			if ( ! $added || absint( $added['product_id'] ) !== $target_id || ! $target || ! $target->is_type( 'simple' ) ) {
+				return;
+			}
+			$product_ids_to_remove = array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_GET['wcj-remove-from-cart'] ) ) ) );
+			$keys_to_remove = array();
+			try {
+				foreach ( $_cart->get_cart() as $cart_item_key => $values ) {
+					$source_id = absint( $values['product_id'] );
+					if ( $cart_item_key === $added_cart_item_key || $source_id === $target_id || ! in_array( $source_id, $product_ids_to_remove, true ) ) {
+						continue;
+					}
+					$source = wc_get_product( $source_id );
+					if ( $source && in_array( $target_id, array_map( 'absint', $source->get_cross_sell_ids() ), true ) ) {
+						$keys_to_remove[] = $cart_item_key;
 					}
 				}
-				wp_safe_redirect( remove_query_arg( array( 'wcj-remove-from-cart', 'wcj-remove-from-cart-nonce' ) ) );
-				exit;
+			} catch ( Throwable $e ) {
+				return; // Resolve every current relationship before changing any original cart line.
 			}
+			foreach ( $keys_to_remove as $cart_item_key ) {
+				$_cart->remove_cart_item( $cart_item_key );
+			}
+			// WooCommerce continues its normal successful-add totals, session and redirect lifecycle.
 		}
 
 		/**

@@ -190,11 +190,20 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 					unset( $settings[ $key ] );
 				}
 			}
+			// Branded invoice job: drop site-local runtime state; accept seller identity only when consistent.
+			$job = class_exists( 'WCJ_Invoice_Job' ) ? WCJ_Invoice_Job::import_settings( $settings ) : null;
+			if ( $job ) {
+				$settings = $job['settings'];
+			}
 			foreach ( $settings as $key => $value ) {
 				update_option( $key, $value );
 			}
+			if ( $job ) {
+				WCJ_Invoice_Job::after_import( $job['identity'] );
+			}
 			/* translators: %d: Number of imported settings. */
-			return sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), count( $settings ) );
+			$message = sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), count( $settings ) );
+			return $job && $job['notes'] ? $message . ' ' . implode( ' ', $job['notes'] ) : $message;
 		}
 
 		/**
@@ -240,6 +249,9 @@ if ( ! class_exists( 'WCJ_Settings_Manager' ) ) :
 				}
 			}
 			ob_end_clean();
+			if ( class_exists( 'WCJ_Invoice_Job' ) ) {
+				$export_settings = WCJ_Invoice_Job::export_settings( $export_settings );
+			}
 			foreach ( array_keys( $export_settings ) as $key ) {
 				if ( ! $this->is_backup_setting_key( $key ) ) {
 					wp_die( esc_html__( 'Settings could not be exported.', 'woocommerce-jetpack' ) );

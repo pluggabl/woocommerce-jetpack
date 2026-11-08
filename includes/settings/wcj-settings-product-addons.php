@@ -81,7 +81,7 @@ $settings     = array_merge(
 	array(
 		array(
 			'title'     => __( 'Enable All Products Addons', 'woocommerce-jetpack' ),
-			'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Enable', 'woocommerce-jetpack' ) . ( class_exists( 'WCJ_Product_Extra_Job' ) && WCJ_Task_Finder::allowed( 'product_addons' ) ? ' &middot; <a href="' . esc_url( WCJ_Product_Extra_Job::url() ) . '">' . esc_html__( 'Set up one optional extra with a preview', 'woocommerce-jetpack' ) . '</a>' : '' ),
 			'desc_tip'  => __( 'When enabled, this will add addons below to all products.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_product_addons_all_products_enabled',
 			'default'   => 'no',

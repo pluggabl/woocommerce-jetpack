@@ -464,6 +464,7 @@ if ( ! class_exists( 'WC_Settings_Jetpack' ) ) :
 				$settings = $this->get_settings( $current_section );
 
 				if ( ! $is_dashboard ) {
+					WCJ_Task_Finder::native_help( $current_section );
 					WC_Admin_Settings::output_fields( $settings );
 				} else {
 					$this->output_dashboard( $current_section );
