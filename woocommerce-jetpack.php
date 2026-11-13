@@ -163,6 +163,11 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 }
 
 // Hooks.
+// Explicit internal preview only. Guard binds before native module construction.
+if ( defined( 'WCJ_AI_PREVIEW' ) && true === WCJ_AI_PREVIEW ) {
+	require_once __DIR__ . '/includes/admin/class-wcj-ai-preview.php';
+	require_once __DIR__ . '/includes/class-wcj-ai-capture.php';
+}
 add_action( 'plugins_loaded', 'w_c_j' );
 register_uninstall_hook( __FILE__, 'wcj_delete_free_plugin_database_option' );
 register_activation_hook( __FILE__, 'wcj_set_activation_redirect_free' );
