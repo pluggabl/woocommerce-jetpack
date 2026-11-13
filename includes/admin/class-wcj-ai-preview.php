@@ -29,6 +29,7 @@ final class WCJ_AI_Preview {
 	 */
 	private static function operations() {
 		return array(
+			'initialize'    => array( 'confirm' ),
 			'create'        => array( 'changes' ),
 			'capture'       => array( 'product' ),
 			'report'        => array(),
@@ -183,6 +184,9 @@ final class WCJ_AI_Preview {
 		echo '<h2>' . esc_html__( '1. Review an invoice colour proposal', 'woocommerce-jetpack' ) . '</h2>';
 		try {
 			WCJ_Invoice_Job::authorize();
+			echo '<details><summary>' . esc_html__( 'First-use proposal journal setup', 'woocommerce-jetpack' ) . '</summary><p>' . esc_html__( 'Only initialize a known fresh synthetic test store or migrate its retained local preview journal. This does not reset capacity, repair lost history, change invoice settings or connect an AI client. Do not use after deleting or restoring proposal history. Stop older preview writers before migration.', 'woocommerce-jetpack' ) . '</p>';
+			self::form( 'initialize' );
+			echo '<p><label><input type="checkbox" name="confirm" value="1" required> ' . esc_html__( 'I confirm this synthetic store has known, retained proposal history and no older preview writer is running.', 'woocommerce-jetpack' ) . '</label></p><button class="button" type="submit">' . esc_html__( 'Initialize or preserve the journal', 'woocommerce-jetpack' ) . '</button></form></details>';
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Read-only opaque lookup, independently owner-authorized by the plan service.
 			$id = isset( $_GET['plan'] ) && is_string( $_GET['plan'] ) ? wp_unslash( $_GET['plan'] ) : '';
 			if ( $id ) {
@@ -289,10 +293,13 @@ final class WCJ_AI_Preview {
 			}
 			$id = $plan['id'] ?? '';
 			if ( ! wp_verify_nonce( $input['_wpnonce'], 'wcj_ai_preview_' . $op . '_' . $id . '_' . ( $plan['revision'] ?? 0 ) ) ||
-				( in_array( $op, array( 'apply', 'recover' ), true ) && ( $input['confirm'] ?? null ) !== '1' ) ) {
+				( in_array( $op, array( 'initialize', 'apply', 'recover' ), true ) && ( $input['confirm'] ?? null ) !== '1' ) ) {
 				self::deny();
 			}
-			if ( 'create' === $op ) {
+			if ( 'initialize' === $op ) {
+				require_once __DIR__ . '/class-wcj-ai-invoice-plans.php';
+				WCJ_AI_Invoice_Plans::initialize();
+			} elseif ( 'create' === $op ) {
 				require_once __DIR__ . '/class-wcj-ai-invoice-plans.php';
 				$changes = $input['changes'] ?? null;
 				if ( ! is_array( $changes ) || count( $changes ) > 4 || array_diff( array_keys( $changes ), WCJ_AI_Invoice_Presentation::FIELDS ) ) {
