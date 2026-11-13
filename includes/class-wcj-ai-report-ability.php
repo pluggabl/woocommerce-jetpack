@@ -246,7 +246,12 @@ final class WCJ_AI_Report_Ability extends WP_Ability {
 					'enum' => array( array( 'cohort_refund_allocation', 'product_variation_breakdown', 'return_requests', 'net_revenue' ) ),
 				),
 				'periods'                => self::nullable( $calendar ),
-				'storage'                => self::nullable( self::fixed( 'legacy_native_uncached' ) ),
+				'storage'                => self::nullable(
+					array(
+						'type' => 'string',
+						'enum' => array( 'legacy_native_uncached', 'hpos_native_uncached' ),
+					)
+				),
 				'streams'                => self::object_schema( $streams ),
 				'reason'                 => $reason,
 				'observed_until_utc'     => $instant,

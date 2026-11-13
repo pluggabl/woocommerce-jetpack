@@ -49,6 +49,13 @@ $wcj_ai_created  = $wcj_ai_start + 7;
 $wcj_ai_bytes    = WCJ_AI_Report_Receipt::build( $wcj_ai_source, $wcj_ai_start, $wcj_ai_expiry, $wcj_ai_created );
 $wcj_ai_decoded  = WCJ_AI_Report_Receipt::decode( $wcj_ai_bytes, $wcj_ai_start, $wcj_ai_expiry );
 wcj_ai_receipt_check( 'source_unchanged', $wcj_ai_source === $wcj_ai_original );
+$wcj_ai_hpos            = $wcj_ai_source;
+$wcj_ai_hpos['storage'] = 'hpos_native_uncached';
+$wcj_ai_hpos_bytes      = WCJ_AI_Report_Receipt::build( $wcj_ai_hpos, $wcj_ai_start, $wcj_ai_expiry, $wcj_ai_created );
+$wcj_ai_hpos_decoded    = WCJ_AI_Report_Receipt::decode( $wcj_ai_hpos_bytes, $wcj_ai_start, $wcj_ai_expiry );
+wcj_ai_receipt_check( 'hpos_codec_exact_roundtrip', json_encode( $wcj_ai_hpos_decoded ) === $wcj_ai_hpos_bytes && 'hpos_native_uncached' === $wcj_ai_hpos_decoded['snapshot']['storage'] );
+wcj_ai_receipt_check( 'hpos_does_not_rewrite_legacy', WCJ_AI_Report_Receipt::decode( $wcj_ai_bytes, $wcj_ai_start, $wcj_ai_expiry ) === $wcj_ai_decoded );
+
 wcj_ai_receipt_check( 'exact_canonical_roundtrip', json_encode( $wcj_ai_decoded ) === $wcj_ai_bytes );
 wcj_ai_receipt_check( 'new_codec_version', 2 === $wcj_ai_decoded['schema_version'] );
 wcj_ai_receipt_check( 'default_codec_escapes_timezone_slash', str_contains( $wcj_ai_bytes, 'America\/New_York' ) && json_encode( $wcj_ai_decoded, JSON_UNESCAPED_SLASHES ) !== $wcj_ai_bytes );
@@ -73,7 +80,7 @@ foreach ( array( '0', '0.000001', '1800000000000', '9223372036854.775807' ) as $
 	$wcj_ai_value = WCJ_AI_Report_Receipt::decode( WCJ_AI_Report_Receipt::build( $wcj_ai_copy, $wcj_ai_start, $wcj_ai_expiry, $wcj_ai_created ), $wcj_ai_start, $wcj_ai_expiry );
 	wcj_ai_receipt_check( 'exact_amount_' . $wcj_ai_amount, $wcj_ai_value['snapshot']['streams']['paid_cohort_order_totals']['groups'][0]['amount'] === $wcj_ai_amount );
 }
-foreach ( array( null, 'legacy_native_uncached' ) as $wcj_ai_storage ) {
+foreach ( array( null, 'legacy_native_uncached', 'hpos_native_uncached' ) as $wcj_ai_storage ) {
 	$wcj_ai_copy            = $wcj_ai_source;
 	$wcj_ai_copy['storage'] = $wcj_ai_storage;
 	$wcj_ai_copy['periods'] = null;

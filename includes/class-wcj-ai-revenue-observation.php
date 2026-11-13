@@ -45,29 +45,80 @@ final class WCJ_AI_Revenue_Observation {
 			self::fail( 'freshness_unverified' );
 		}
 		$hpos = $util::custom_orders_table_usage_is_enabled();
-		if ( $hpos || has_filter( 'get_post_metadata' ) || has_filter( 'default_post_metadata' ) ) {
+		if ( ! $hpos && ( has_filter( 'get_post_metadata' ) || has_filter( 'default_post_metadata' ) ) ) {
 			self::fail( 'freshness_unverified' );
 		}
 		$order           = WC_Data_Store::load( 'order' )->get_current_class_name();
 		$refund          = WC_Data_Store::load( 'order-refund' )->get_current_class_name();
 		$expected_order  = $hpos ? 'Automattic\\WooCommerce\\Internal\\DataStores\\Orders\\OrdersTableDataStore' : 'WC_Order_Data_Store_CPT';
-		$expected_refund = $hpos ? 'Automattic\\WooCommerce\\Internal\\DataStores\\Orders\\OrdersTableDataStore' : 'WC_Order_Refund_Data_Store_CPT';
+		$expected_refund = $hpos ? 'Automattic\\WooCommerce\\Internal\\DataStores\\Orders\\OrdersTableRefundDataStore' : 'WC_Order_Refund_Data_Store_CPT';
 		if ( $order !== $expected_order || $refund !== $expected_refund ) {
 			self::fail( 'freshness_unverified' );
 		}
+		if ( $hpos ) {
+			// Initial qualified native dependency; other versions remain unsupported, not silently equivalent.
+			if ( ! defined( 'WC_VERSION' ) || '11.1.0' !== WC_VERSION ||
+				! method_exists( $util, 'custom_orders_table_data_sync_is_enabled' ) || $util::custom_orders_table_data_sync_is_enabled() ) {
+				self::fail( 'freshness_unverified' );
+			}
+			self::native_query_filter();
+			foreach ( array( 'woocommerce_order_query_args', 'woocommerce_order_query', 'woocommerce_orders_table_datastore_get_orders_query', 'woocommerce_hpos_pre_query', 'woocommerce_orders_table_query_clauses', 'woocommerce_orders_table_query_sql', 'woocommerce_orders_table_query_count_sql', 'get_date_sql', 'date_query_valid_columns', 'wc_order_statuses', 'all' ) as $hook ) {
+				if ( has_filter( $hook ) ) {
+					self::fail( 'freshness_unverified' );
+				}
+			}
+		}
 		return $hpos ? 'hpos_native_uncached' : 'legacy_native_uncached';
+	}
+
+
+	/**
+	 * Permit only core wpdb's necessary placeholder unescape, never query rewrites.
+	 *
+	 * WordPress prepare() registers this exact callback at priority zero. No hooks
+	 * are removed or suppressed. An arbitrary/custom wpdb path is not qualified.
+	 */
+	private static function native_query_filter() {
+		global $wpdb, $wp_filter;
+		if ( ! is_object( $wpdb ) || 'wpdb' !== get_class( $wpdb ) || ! is_array( $wp_filter ) ) {
+			self::fail( 'freshness_unverified' );
+		}
+		if ( ! array_key_exists( 'query', $wp_filter ) ) {
+			return;
+		}
+		if ( ! isset( $wp_filter['query'] ) || ! is_object( $wp_filter['query'] ) || 'WP_Hook' !== get_class( $wp_filter['query'] ) ) {
+			self::fail( 'freshness_unverified' );
+		}
+		$callbacks = $wp_filter['query']->callbacks;
+		if ( array() === $callbacks ) {
+			return;
+		}
+		if ( ! is_array( $callbacks ) || array( 0 ) !== array_keys( $callbacks ) || ! is_array( $callbacks[0] ) || 1 !== count( $callbacks[0] ) ) {
+			self::fail( 'freshness_unverified' );
+		}
+		$entry = reset( $callbacks[0] );
+		if ( array(
+			'function'      => array( $wpdb, 'remove_placeholder_escape' ),
+			'accepted_args' => 1,
+		) !== $entry ) {
+			self::fail( 'freshness_unverified' );
+		}
 	}
 
 	/**
 	 * Query one fixed page plus a sentinel. All query arguments are server-owned.
 	 *
-	 * @param bool  $refund Refund stream selector.
-	 * @param int   $start Inclusive UTC timestamp.
-	 * @param int   $end Exclusive UTC timestamp.
-	 * @param float $started Monotonic start.
+	 * @param bool   $refund Refund stream selector.
+	 * @param int    $start Inclusive UTC timestamp.
+	 * @param int    $end Exclusive UTC timestamp.
+	 * @param float  $started Monotonic start.
+	 * @param string $storage Frozen native storage mode.
 	 * @return array Up to 26 ordered IDs; raw IDs never leave this class.
 	 */
-	private static function ids( $refund, $start, $end, $started ) {
+	private static function ids( $refund, $start, $end, $started, $storage ) {
+		if ( self::storage() !== $storage ) {
+			self::fail( 'stale_membership_or_context' );
+		}
 		self::budget( $started );
 		global $wpdb;
 		$wpdb->last_error = '';
@@ -87,7 +138,7 @@ final class WCJ_AI_Revenue_Observation {
 		}
 		$last = 0;
 		foreach ( $ids as $index => $id ) {
-			if ( ! ( is_int( $id ) || ( is_string( $id ) && ctype_digit( $id ) ) ) || (int) $id <= $last ) {
+			if ( self::identifier( $id ) <= $last ) {
 				self::fail( 'query_unavailable' );
 			}
 			$ids[ $index ] = (int) $id;
@@ -99,14 +150,21 @@ final class WCJ_AI_Revenue_Observation {
 	/**
 	 * Hydrate minimal current persisted facts, never customer text or line objects.
 	 *
-	 * @param int   $id Internal ID.
-	 * @param bool  $refund Stream selector.
-	 * @param int   $start Inclusive timestamp.
-	 * @param int   $end Exclusive timestamp.
-	 * @param float $started Monotonic start.
+	 * @param int    $id Internal ID.
+	 * @param bool   $refund Stream selector.
+	 * @param int    $start Inclusive timestamp.
+	 * @param int    $end Exclusive timestamp.
+	 * @param float  $started Monotonic start.
+	 * @param string $storage Frozen native storage mode.
 	 * @return array Minimal local semantic contribution.
 	 */
-	private static function fact( $id, $refund, $start, $end, $started ) {
+	private static function fact( $id, $refund, $start, $end, $started, $storage ) {
+		if ( self::storage() !== $storage ) {
+			self::fail( 'stale_membership_or_context' );
+		}
+		if ( 'hpos_native_uncached' === $storage ) {
+			return self::hpos_fact( $id, $refund, $start, $end, $started );
+		}
 		self::budget( $started );
 		global $wpdb;
 		$wpdb->last_error = '';
@@ -149,6 +207,155 @@ final class WCJ_AI_Revenue_Observation {
 			self::fail( 'unsupported_amount' );
 		}
 		return array( $date->getTimestamp(), $status, $currency, $units, $refund ? $entity->get_parent_id( 'edit' ) : 0 );
+	}
+
+
+	/**
+	 * Reject identifier coercion/overflow before a database query or integer cast.
+	 *
+	 * @param mixed $value Native identifier.
+	 * @return int Positive representable ID.
+	 */
+	private static function identifier( $value ) {
+		$text = is_int( $value ) ? (string) $value : $value;
+		$max  = (string) PHP_INT_MAX;
+		if ( ! is_string( $text ) || ! preg_match( '/^[1-9][0-9]*$/D', $text ) ||
+			strlen( $text ) > strlen( $max ) || ( strlen( $text ) === strlen( $max ) && strcmp( $text, $max ) > 0 ) ) {
+			self::fail( 'unsupported_persisted_facts' );
+		}
+		return (int) $text;
+	}
+
+	/**
+	 * Accept SQL decimal(26,8) formatting without widening exact arithmetic.
+	 *
+	 * @param mixed $value SQL/native decimal text, never a float.
+	 * @return int Exact millionths.
+	 */
+	private static function sql_decimal( $value ) {
+		if ( ! is_string( $value ) || strlen( $value ) > 28 ||
+			! preg_match( '/^-?(0|[1-9][0-9]{0,17})(?:\.[0-9]{1,8})?$/D', $value ) ) {
+			self::fail( 'unsupported_amount' );
+		}
+		if ( false !== strpos( $value, '.' ) ) {
+			$value = rtrim( rtrim( $value, '0' ), '.' );
+		}
+		try {
+			return WCJ_AI_Report_Values::decimal( $value );
+		} catch ( InvalidArgumentException $exception ) {
+			self::fail( 'unsupported_amount' );
+		}
+	}
+
+	/**
+	 * Reject invalid/normalized SQL dates; never replace missing paid dates.
+	 *
+	 * @param mixed $value SQL UTC datetime text.
+	 * @return int UTC timestamp.
+	 */
+	private static function sql_timestamp( $value ) {
+		if ( ! is_string( $value ) || ! preg_match( '/^[1-9][0-9]{3}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/D', $value ) ) {
+			self::fail( 'unsupported_persisted_facts' );
+		}
+		$date = DateTimeImmutable::createFromFormat( '!Y-m-d H:i:s', $value, new DateTimeZone( 'UTC' ) );
+		if ( ! $date || $date->format( 'Y-m-d H:i:s' ) !== $value ) {
+			self::fail( 'unsupported_persisted_facts' );
+		}
+		return $date->getTimestamp();
+	}
+
+	/**
+	 * Read only selected HPOS authoritative facts; no posts fallback or repair.
+	 *
+	 * Native object hydration can itself load additional data, so this is not a
+	 * bound on native memory or query duration. Raw values/IDs never leave here.
+	 *
+	 * @param int   $id Internal exact ID.
+	 * @param bool  $refund Stream selector.
+	 * @param int   $start Inclusive timestamp.
+	 * @param int   $end Exclusive timestamp.
+	 * @param float $started Monotonic start.
+	 * @return array Minimal local semantic contribution.
+	 */
+	private static function hpos_fact( $id, $refund, $start, $end, $started ) {
+		self::budget( $started );
+		$id    = self::identifier( $id );
+		$store = '\Automattic\WooCommerce\Internal\DataStores\Orders\OrdersTableDataStore';
+		global $wpdb;
+		$wpdb->last_error = '';
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Selected authoritative fields, prepared native table/ID; no cached success.
+		$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT id, type, status, currency, total_amount, date_created_gmt, parent_order_id FROM %i WHERE id = %d LIMIT 2', $store::get_orders_table_name(), $id ), ARRAY_A );
+		if ( '' !== $wpdb->last_error ) {
+			self::fail( 'query_unavailable' );
+		}
+		if ( ! is_array( $rows ) || 1 !== count( $rows ) ) {
+			self::fail( 'unsupported_persisted_facts' );
+		}
+		$row = $rows[0];
+		if ( self::identifier( $row['id'] ) !== $id || ( $refund ? 'shop_order_refund' : 'shop_order' ) !== $row['type'] ||
+			! in_array( $row['status'], $refund ? array( 'wc-completed' ) : array( 'wc-processing', 'wc-completed', 'wc-refunded' ), true ) ) {
+			self::fail( 'stale_or_missing_entity' );
+		}
+		if ( ! is_string( $row['currency'] ) || ! preg_match( '/^[A-Z]{3}$/D', $row['currency'] ) ) {
+			self::fail( 'unsupported_currency' );
+		}
+		$total            = self::sql_decimal( $row['total_amount'] );
+		$parent           = 0;
+		$wpdb->last_error = '';
+		if ( $refund ) {
+			$parent = self::identifier( $row['parent_order_id'] );
+			if ( $parent === $id ) {
+				self::fail( 'unsupported_persisted_facts' );
+			}
+			$stamp = self::sql_timestamp( $row['date_created_gmt'] );
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Bounded scalar length and duplicate detection, no unserialization or customer fields.
+			$amounts = $wpdb->get_col( $wpdb->prepare( 'SELECT CASE WHEN OCTET_LENGTH(meta_value) <= 28 THEN meta_value ELSE NULL END FROM %i WHERE order_id = %d AND meta_key = %s LIMIT 2', $store::get_meta_table_name(), $id, '_refund_amount' ) );
+			if ( '' !== $wpdb->last_error ) {
+				self::fail( 'query_unavailable' );
+			}
+			if ( ! is_array( $amounts ) || 1 !== count( $amounts ) ) {
+				self::fail( 'unsupported_persisted_facts' );
+			}
+			$units = self::sql_decimal( $amounts[0] );
+			if ( $units < 0 || -$units !== $total ) {
+				self::fail( 'unsupported_amount' );
+			}
+		} else {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Exact operational row for the paid date; never creation-date fallback.
+			$dates = $wpdb->get_results( $wpdb->prepare( 'SELECT order_id, date_paid_gmt FROM %i WHERE order_id = %d LIMIT 2', $store::get_operational_data_table_name(), $id ), ARRAY_A );
+			if ( '' !== $wpdb->last_error ) {
+				self::fail( 'query_unavailable' );
+			}
+			if ( ! is_array( $dates ) || 1 !== count( $dates ) || self::identifier( $dates[0]['order_id'] ) !== $id ) {
+				self::fail( 'unsupported_persisted_facts' );
+			}
+			$stamp = self::sql_timestamp( $dates[0]['date_paid_gmt'] );
+			$units = $total;
+			if ( $units < 0 ) {
+				self::fail( 'unsupported_amount' );
+			}
+		}
+		if ( $stamp < $start || $stamp >= $end ) {
+			self::fail( 'stale_or_missing_entity' );
+		}
+		if ( 'hpos_native_uncached' !== self::storage() ) {
+			self::fail( 'stale_membership_or_context' );
+		}
+		$wpdb->last_error = '';
+		// Fresh constructor deliberately bypasses WooCommerce's factory order-object cache.
+		$entity = $refund ? new WC_Order_Refund( $id ) : new WC_Order( $id );
+		$date   = $refund ? $entity->get_date_created( 'edit' ) : $entity->get_date_paid( 'edit' );
+		$amount = $refund ? $entity->get_amount( 'edit' ) : $entity->get_total( 'edit' );
+		if ( '' !== $wpdb->last_error ) {
+			self::fail( 'query_unavailable' );
+		}
+		if ( $entity->get_id() !== $id || $entity->get_type() !== $row['type'] || ! $date || $date->getTimestamp() !== $stamp ||
+			'wc-' . $entity->get_status( 'edit' ) !== $row['status'] || $entity->get_currency( 'edit' ) !== $row['currency'] ||
+			self::sql_decimal( $amount ) !== $units || self::sql_decimal( $entity->get_total( 'edit' ) ) !== $total ||
+			( $refund && self::identifier( $entity->get_parent_id( 'edit' ) ) !== $parent ) ) {
+			self::fail( 'unsupported_persisted_facts' );
+		}
+		return array( $stamp, substr( $row['status'], 3 ), $row['currency'], $units, $parent );
 	}
 
 	/**
@@ -203,11 +410,11 @@ final class WCJ_AI_Revenue_Observation {
 					'groups'       => null,
 				);
 				try {
-					$ids    = self::ids( $refund, $start, $end, $started );
+					$ids    = self::ids( $refund, $start, $end, $started, $out['storage'] );
 					$facts  = array();
 					$groups = array();
 					foreach ( array_slice( $ids, 0, 25 ) as $id ) {
-						$fact         = self::fact( $id, $refund, $start, $end, $started );
+						$fact         = self::fact( $id, $refund, $start, $end, $started, $out['storage'] );
 						$facts[ $id ] = $fact;
 						$period       = $fact[0] < $middle ? 0 : 1;
 						$key          = $period . ':' . $fact[2];
@@ -223,11 +430,11 @@ final class WCJ_AI_Revenue_Observation {
 						$groups[ $key ]['units'] = WCJ_AI_Report_Values::add( $groups[ $key ]['units'], $fact[3] );
 					}
 					foreach ( $facts as $id => $fact ) {
-						if ( self::fact( $id, $refund, $start, $end, $started ) !== $fact ) {
+						if ( self::fact( $id, $refund, $start, $end, $started, $out['storage'] ) !== $fact ) {
 							self::fail( 'stale_or_missing_entity' );
 						}
 					}
-					if ( self::ids( $refund, $start, $end, $started ) !== $ids || self::storage() !== $out['storage'] || wp_timezone_string() !== $timezone ) {
+					if ( self::ids( $refund, $start, $end, $started, $out['storage'] ) !== $ids || self::storage() !== $out['storage'] || wp_timezone_string() !== $timezone ) {
 						self::fail( 'stale_membership_or_context' );
 					}
 					ksort( $groups, SORT_STRING );

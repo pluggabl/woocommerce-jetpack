@@ -163,7 +163,7 @@ final class WCJ_AI_Observation_Projection {
 			self::same( $source[ $key ], $value );
 		}
 		$finished = self::instant( $source['observed_until_utc'] );
-		if ( ! in_array( $source['storage'], array( null, 'legacy_native_uncached' ), true ) ) {
+		if ( ! in_array( $source['storage'], array( null, 'legacy_native_uncached', 'hpos_native_uncached' ), true ) ) {
 			self::reject();
 		}
 		$periods = null;
@@ -176,7 +176,7 @@ final class WCJ_AI_Observation_Projection {
 				self::reject();
 			}
 			self::same( $source['periods'], $periods );
-			if ( $finished < $cutoff || 'legacy_native_uncached' !== $source['storage'] ) {
+			if ( $finished < $cutoff || ! in_array( $source['storage'], array( 'legacy_native_uncached', 'hpos_native_uncached' ), true ) ) {
 				self::reject();
 			}
 		}

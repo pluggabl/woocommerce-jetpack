@@ -253,7 +253,7 @@ final class WCJ_AI_Preview {
 		echo '<h2>' . esc_html__( '2. Observe native role pricing', 'woocommerce-jetpack' ) . '</h2><p>' . esc_html__( 'Open a published product as your current merchant account. Only actual role-price callbacks during that page render are observed. No customer impersonation; no saved or shared report.', 'woocommerce-jetpack' ) . '</p>';
 		self::form( 'capture' );
 		echo '<label for="ai-product">' . esc_html__( 'Product ID', 'woocommerce-jetpack' ) . '</label> <input id="ai-product" name="product" type="text" inputmode="numeric" pattern="[1-9][0-9]{0,9}" maxlength="10" required> <button class="button" type="submit">' . esc_html__( 'Open observed product render', 'woocommerce-jetpack' ) . '</button></form>';
-		echo '<h2>' . esc_html__( '3. Inspect recorded amounts', 'woocommerce-jetpack' ) . '</h2><p>' . esc_html__( 'Last seven completed local days and the preceding seven. A bounded, non-atomic subset only, currently limited to supported legacy order storage. Not a complete revenue report.', 'woocommerce-jetpack' ) . '</p>';
+		echo '<h2>' . esc_html__( '3. Inspect recorded amounts', 'woocommerce-jetpack' ) . '</h2><p>' . esc_html__( 'Last seven completed local days and the preceding seven. A bounded, non-atomic subset only, currently limited to supported native legacy storage or WooCommerce 11.1.0 HPOS with synchronization and data-store caching off. Not a complete revenue report.', 'woocommerce-jetpack' ) . '</p>';
 		self::form( 'report' );
 		echo '<button class="button" type="submit">' . esc_html__( 'Run local comparison', 'woocommerce-jetpack' ) . '</button></form>';
 		WCJ_AI_Report_Receipt_View::catalog();
