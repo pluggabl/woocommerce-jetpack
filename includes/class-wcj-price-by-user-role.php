@@ -13,6 +13,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Optional observations must never prevent native pricing when unavailable.
+if ( is_readable( __DIR__ . '/class-wcj-ai-role-observation.php' ) ) {
+	try {
+		require_once __DIR__ . '/class-wcj-ai-role-observation.php';
+	} catch ( Throwable $exception ) {
+		unset( $exception ); /* Native pricing remains available. */ }
+}
+
 if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 	/**
 	 * WCJ_Price_By_User_Role.
@@ -420,24 +428,81 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			$product_changes = ( $_product && is_callable( array( $_product, 'get_changes' ) ) ) ? $_product->get_changes() : array();
 			$use_cache       = empty( $product_changes ) && apply_filters( 'wcj_price_by_user_role_use_request_cache', true, $price, $_product, $current_filter );
 
+			$observation = $this->begin_observation( $product_id, $price, $current_filter );
+
 			if ( ! $use_cache ) {
-				return $this->calculate_price( $price, $_product );
+				return self::finish_observation( $observation, $this->calculate_price( $price, $_product, $observation ), 'bypass' );
 			}
 
-			$cache_key = md5(
+			$cache_role = wcj_get_current_user_first_role();
+			$cache_key  = md5(
 				wp_json_encode(
 					array(
 						'product_id' => $product_id,
-						'user_role'  => wcj_get_current_user_first_role(),
+						'user_role'  => $cache_role,
 						'filter'     => $current_filter,
 						'price'      => $price,
 					)
 				)
 			);
-			if ( ! array_key_exists( $cache_key, $this->price_decision_cache ) ) {
-				$this->price_decision_cache[ $cache_key ] = $this->calculate_price( $price, $_product );
+			$cache_hit  = array_key_exists( $cache_key, $this->price_decision_cache );
+			if ( ! $cache_hit ) {
+				$this->price_decision_cache[ $cache_key ] = $this->calculate_price( $price, $_product, $observation );
 			}
-			return $this->price_decision_cache[ $cache_key ];
+			return self::finish_observation( $observation, $this->price_decision_cache[ $cache_key ], $cache_hit ? 'hit' : 'miss', $cache_role, $cache_key );
+		}
+
+		/**
+		 * Optional, failure-contained collector admission from already-read locals.
+		 *
+		 * @param int    $id Product ID.
+		 * @param mixed  $value Original value.
+		 * @param string $hook Native filter name.
+		 * @return int|null Observation ticket.
+		 */
+		private function begin_observation( $id, $value, $hook ) {
+			try {
+				return class_exists( 'WCJ_AI_Role_Observation', false ) ? WCJ_AI_Role_Observation::begin( $id, $value, $hook, $this->price_hooks_priority, $this ) : null;
+			} catch ( Throwable $exception ) {
+				return null; }
+		}
+
+		/**
+		 * Preserve a native result even when the optional collector is unavailable.
+		 *
+		 * @param int|null $ticket Observation ticket.
+		 * @param mixed    $value Original result.
+		 * @param string   $mode Native cache mode.
+		 * @param mixed    $role Native cache-key role.
+		 * @param string   $key Native private cache key.
+		 * @return mixed Original result.
+		 */
+		private static function finish_observation( $ticket, $value, $mode, $role = null, $key = '' ) {
+			try {
+				if ( class_exists( 'WCJ_AI_Role_Observation', false ) ) {
+					WCJ_AI_Role_Observation::finish( $ticket, $value, $mode, $role, $key ); }
+			} catch ( Throwable $exception ) {
+				return $value; }
+			return $value;
+		}
+
+		/**
+		 * Observe an already-evaluated return without any dependency on telemetry.
+		 *
+		 * @param int|null $ticket Observation ticket.
+		 * @param mixed    $value Original result.
+		 * @param string   $reason Fixed native branch.
+		 * @param mixed    $role Native evaluator role.
+		 * @param mixed    $factor Native multiplier, if consumed.
+		 * @return mixed Original result.
+		 */
+		private static function observe_decision( $ticket, $value, $reason, $role, $factor = null ) {
+			try {
+				if ( class_exists( 'WCJ_AI_Role_Observation', false ) ) {
+					WCJ_AI_Role_Observation::decision( $ticket, $value, $reason, $role, $factor ); }
+			} catch ( Throwable $exception ) {
+				return $value; }
+			return $value;
 		}
 
 		/**
@@ -445,9 +510,10 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 		 *
 		 * @param int        $price Product price.
 		 * @param WC_Product $_product Product object.
+		 * @param int|null   $observation Internal observation ticket.
 		 * @return mixed
 		 */
-		private function calculate_price( $price, $_product ) {
+		private function calculate_price( $price, $_product, $observation = null ) {
 
 			$current_user_role = wcj_get_current_user_first_role();
 
@@ -458,20 +524,20 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 			$_current_filter = current_filter();
 
 			if ( ! apply_filters( 'wcj_price_by_user_role_do_change_price', true, $price, $_product, $current_user_role, $_current_filter ) ) {
-				return $price;
+				return self::observe_decision( $observation, $price, 'extension_veto', $current_user_role );
 			}
 
 			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_check_for_product_changes_price', 'no' ) && $_product ) {
 				$product_changes = $_product->get_changes();
 				if ( ! empty( $product_changes ) && isset( $product_changes['price'] ) ) {
-					return $price;
+					return self::observe_decision( $observation, $price, 'changed_product', $current_user_role );
 				}
 			}
 
 			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_compatibility_product_addon', 'no' ) && 'fixed' === wcj_get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) && $_product ) {
 				$product_changes = $_product->get_changes();
 				if ( ! empty( $product_changes ) && isset( $product_changes['price'] ) ) {
-					return $price;
+					return self::observe_decision( $observation, $price, 'addon_guard', $current_user_role );
 				}
 			}
 
@@ -480,7 +546,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				if ( 'yes' === get_post_meta( wcj_maybe_get_product_id_wpml( wcj_get_product_id_or_variation_parent_id( $_product ) ), '_wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
 					$_product_id = wcj_maybe_get_product_id_wpml( wcj_get_product_id( $_product ) );
 					if ( 'yes' === get_post_meta( $_product_id, '_wcj_price_by_user_role_empty_price_' . $current_user_role, true ) ) {
-						return '';
+						return self::observe_decision( $observation, '', 'product_empty', $current_user_role );
 					}
 					$regular_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_regular_price_' . $current_user_role, true );
 					if ( 'multiplier' === wcj_get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) ) {
@@ -496,9 +562,9 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 								),
 								true
 							) ) {
-								return $price;
+								return self::observe_decision( $observation, $price, 'regular_skip', $current_user_role );
 							}
-							return ( '' === $price ) ? $price : $price * $multiplier_per_product;
+							return self::observe_decision( $observation, ( '' === $price ) ? $price : $price * $multiplier_per_product, 'product_multiplier', $current_user_role, $multiplier_per_product );
 						}
 					} elseif ( '' !== $regular_price_per_product ) {
 						if ( in_array(
@@ -509,7 +575,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 							),
 							true
 						) ) {
-							return wcj_get_product_display_price( $_product );
+							return self::observe_decision( $observation, wcj_get_product_display_price( $_product ), 'display_delegate', $current_user_role );
 						} elseif ( in_array(
 							$_current_filter,
 							array(
@@ -521,7 +587,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 						) ) {
 							$sale_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_sale_price_' . $current_user_role, true );
 							$return                 = ( '' !== $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
-							return apply_filters( 'wcj_price_by_user_role_get_price', $return, $_product );
+							return self::observe_decision( $observation, apply_filters( 'wcj_price_by_user_role_get_price', $return, $_product ), 'product_fixed_extension', $current_user_role );
 						} elseif ( in_array(
 							$_current_filter,
 							array(
@@ -531,7 +597,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 							),
 							true
 						) ) {
-							return $regular_price_per_product;
+							return self::observe_decision( $observation, $regular_price_per_product, 'product_regular', $current_user_role );
 						} elseif ( in_array(
 							$_current_filter,
 							array(
@@ -542,7 +608,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 							true
 						) ) {
 							$sale_price_per_product = get_post_meta( $_product_id, '_wcj_price_by_user_role_sale_price_' . $current_user_role, true );
-							return ( '' !== $sale_price_per_product ) ? $sale_price_per_product : $price;
+							return self::observe_decision( $observation, ( '' !== $sale_price_per_product ) ? $sale_price_per_product : $price, 'product_sale', $current_user_role );
 						}
 					}
 				}
@@ -553,7 +619,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				wcj_remove_change_price_hooks( $this, $this->price_hooks_priority );
 				if ( $_product && $_product->is_on_sale() ) {
 					wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
-					return $price;
+					return self::observe_decision( $observation, $price, 'on_sale_skip', $current_user_role );
 				} else {
 					wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 				}
@@ -569,7 +635,7 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 				),
 				true
 			) ) {
-				return $price;
+				return self::observe_decision( $observation, $price, 'regular_skip', $current_user_role );
 			}
 
 			// By category.
@@ -592,11 +658,11 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 							)
 							) {
 								if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $current_user_role, 'no' ) ) {
-									return '';
+									return self::observe_decision( $observation, '', 'category_empty', $current_user_role );
 								}
 								$koef_category = wcj_get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, -1 );
 								if ( $koef_category >= 0 ) {
-									return ( '' === $price ) ? $price : $price * (float) $koef_category;
+									return self::observe_decision( $observation, ( '' === $price ) ? $price : $price * (float) $koef_category, 'category_multiplier', $current_user_role, $koef_category );
 								}
 							}
 						}
@@ -618,11 +684,11 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 						foreach ( $tags as $tag ) {
 							if ( (string) $product_tag->term_id === $tag ) {
 								if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $current_user_role, 'no' ) ) {
-									return '';
+									return self::observe_decision( $observation, '', 'tag_empty', $current_user_role );
 								}
 								$koef_tag = wcj_get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $current_user_role, -1 );
 								if ( $koef_tag >= 0 ) {
-									return ( '' === $price ) ? $price : $price * (float) $koef_tag;
+									return self::observe_decision( $observation, ( '' === $price ) ? $price : $price * (float) $koef_tag, 'tag_multiplier', $current_user_role, $koef_tag );
 								}
 							}
 						}
@@ -632,17 +698,16 @@ if ( ! class_exists( 'WCJ_Price_By_User_Role' ) ) :
 
 			// Global.
 			if ( 'yes' === wcj_get_option( 'wcj_price_by_user_role_empty_price_' . $current_user_role, 'no' ) ) {
-				return '';
+				return self::observe_decision( $observation, '', 'global_empty', $current_user_role );
 			}
 			$koef = wcj_get_option( 'wcj_price_by_user_role_' . $current_user_role, 1 );
 			if ( 1 !== ( $koef ) ) {
-				return ( '' === $price ) ? $price : $price * (float) $koef;
+				return self::observe_decision( $observation, ( '' === $price ) ? $price : $price * (float) $koef, 'global_multiplier', $current_user_role, $koef );
 			}
 
 			// No changes.
-			return $price;
+			return self::observe_decision( $observation, $price, 'unchanged', $current_user_role );
 		}
-
 		/**
 		 * Get_variation_prices_hash.
 		 *
