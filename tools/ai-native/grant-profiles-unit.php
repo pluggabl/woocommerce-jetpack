@@ -309,7 +309,7 @@ WCJ_AI_Abilities::server( $adapter );
 wcj_ai_check( 'server_uses_transport_not_task_predicate', array( 'WCJ_AI_Connection', 'transport_authenticated' ) === $adapter->args[12] );
 WCJ_AI_Abilities::register();
 wcj_ai_check( 'invoice_callbacks_stay_invoice_scoped', array( 'WCJ_AI_Connection', 'allowed' ) === $wcj_ai_registered['booster-ai/schema']['permission_callback'] && array( 'WCJ_AI_Connection', 'allowed' ) === $wcj_ai_registered['booster-ai/context']['permission_callback'] );
-wcj_ai_check( 'report_reader_not_yet_registered', array_keys( $wcj_ai_registered ) === array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare' ) );
+wcj_ai_check( 'report_reader_separately_registered', array_keys( $wcj_ai_registered ) === array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare', 'booster-ai/read-shared-report' ) && array( 'WCJ_AI_Connection', 'report_allowed' ) === $wcj_ai_registered['booster-ai/read-shared-report']['permission_callback'] );
 wcj_ai_check( 'rest_auth_transport_accepts_report_without_invoice', null === WCJ_AI_Connection::rest_errors( null ) && ! WCJ_AI_Connection::allowed() );
 $request = new class() {
 	public function get_route() {

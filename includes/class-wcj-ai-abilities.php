@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 require_once __DIR__ . '/class-wcj-ai-invoice-presentation.php';
 
-/** No generic executor, remote business execution or diagnostic export. */
+/** No generic executor or remote business execution; exact shared receipts only. */
 final class WCJ_AI_Abilities {
 
 	/** Precise distinction between pending proposals and business execution. */
@@ -173,7 +173,7 @@ final class WCJ_AI_Abilities {
 		}
 	}
 
-	/** Register two read abilities and one separately authorized typed preparation. */
+	/** Register invoice tools and a separately authorized exact shared-receipt read. */
 	public static function register() {
 		if ( ! WCJ_AI_Connection::enabled() || ! function_exists( 'wp_register_ability' ) || ! class_exists( 'WP_Ability' ) ) {
 			return;
@@ -214,6 +214,32 @@ final class WCJ_AI_Abilities {
 				)
 			);
 		}
+		require_once __DIR__ . '/class-wcj-ai-report-ability.php';
+		wp_register_ability(
+			'booster-ai/read-shared-report',
+			array(
+				'ability_class'       => 'WCJ_AI_Report_Ability',
+				'label'               => 'Read owner-shared report receipt',
+				'description'         => 'Read one exact receipt ID provided by the owner after separate local capture, review and explicit sharing. Requires report:read_shared, never invoice scopes. Returns the immutable bounded observed subset with its original expiry and limitations. Not complete revenue; unavailable data is not zero. No query, listing, capture, refresh, sharing or business changes. Ask the owner to inspect retained receipts in WordPress when unavailable.',
+				'category'            => 'booster-ai-preview',
+				'input_schema'        => WCJ_AI_Report_Ability::input_schema(),
+				'output_schema'       => WCJ_AI_Report_Ability::output_schema(),
+				'permission_callback' => array( 'WCJ_AI_Connection', 'report_allowed' ),
+				'execute_callback'    => array( 'WCJ_AI_Report_Ability', 'read' ),
+				'meta'                => array(
+					'public'      => false,
+					'mcp'         => array(
+						'public' => false,
+						'type'   => 'tool',
+					),
+					'annotations' => array(
+						'readonly'    => true,
+						'destructive' => false,
+						'idempotent'  => true,
+					),
+				),
+			)
+		);
 	}
 
 	/**
@@ -223,7 +249,7 @@ final class WCJ_AI_Abilities {
 	 */
 	public static function server( $adapter ) {
 		if ( WCJ_AI_Connection::enabled() ) {
-			$adapter->create_server( 'booster-ai-preview', 'booster-ai/v1', 'mcp', 'Booster private preview', 'Saved invoice colours and separately scoped pending proposals. Settings apply only through deliberate local WordPress owner approval. No remote execution or diagnostic export.', '0.2.0', array( '\WP\MCP\Transport\HttpTransport' ), null, null, array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare' ), array(), array(), array( 'WCJ_AI_Connection', 'transport_authenticated' ) );
+			$adapter->create_server( 'booster-ai-preview', 'booster-ai/v1', 'mcp', 'Booster private preview', 'Separate least-privilege invoice or owner-shared report profiles, never combined. Invoice proposals require deliberate local approval to apply. Report access reads only an exact already-shared receipt; no live query, capture, refresh or listing. No remote business execution.', '0.3.0', array( '\WP\MCP\Transport\HttpTransport' ), null, null, array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare', 'booster-ai/read-shared-report' ), array(), array(), array( 'WCJ_AI_Connection', 'transport_authenticated' ) );
 		}
 	}
 

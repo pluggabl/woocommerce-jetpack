@@ -1,8 +1,8 @@
 <?php
 /**
- * Dormant, internal exact-byte receipt journal. NOT an authorization service.
+ * Internal exact-byte receipt journal. NOT an authorization service.
  *
- * No bootstrap, route, hook or ability includes this file. Future callers must
+ * The owner and exact-ID read service include this file. Callers must
  * establish fresh native owner or application-password authority under the same
  * gate, supply server-derived bindings/times, and successfully release the gate
  * before observing a store or emitting any copied receipt. A token or tuple alone
@@ -608,6 +608,120 @@ final class WCJ_AI_Report_Journal {
 		self::owner( $value['entries'][ $index ], $owner );
 		if ( $value['entries'][ $index ]['revision'] !== $revision ) {
 			self::fail();
+		}
+		array_splice( $value['entries'], $index, 1 );
+		self::save( $gate, $before, $value );
+	}
+
+	/**
+	 * A capture intent consumes the displayed journal revision under one gate.
+	 * Stale forms cannot recapture after an entry has been deliberately purged.
+	 *
+	 * @param array $gate Held gate.
+	 * @param array $binding Server-derived original binding.
+	 * @param int   $now Server timestamp.
+	 * @param int   $revision Displayed global journal revision, not authority.
+	 * @return array Reservation, never permission to bypass successful release.
+	 */
+	public static function reserve_at( array $gate, array $binding, $now, $revision ) {
+		self::integer( $revision, 0 );
+		if ( self::load( $gate )[1]['revision'] !== $revision ) {
+			self::fail( 'ai_report_view_changed' );
+		}
+		return self::reserve( $gate, $binding, $now );
+	}
+
+	/**
+	 * Fresh-owner identity for recovery, deliberately independent of old sessions.
+	 * Native cookie/capability authorization is required in the enclosing service.
+	 *
+	 * @param array $owner Server-derived current owner and site only.
+	 */
+	private static function owner_identity( array $owner ) {
+		self::keys( $owner, array( 'owner', 'site' ) );
+		self::integer( $owner['owner'] );
+		self::integer( $owner['site'] );
+	}
+
+	/**
+	 * Match retained ownership without rebinding capture/session/share consent.
+	 *
+	 * @param array $entry Validated retained entry.
+	 * @param array $owner Fresh server-derived owner identity.
+	 */
+	private static function owned( array $entry, array $owner ) {
+		self::owner_identity( $owner );
+		if ( $entry['binding']['recipient']['owner'] !== $owner['owner'] || $entry['binding']['recipient']['site'] !== $owner['site'] ) {
+			self::fail();
+		}
+	}
+
+	/**
+	 * Bounded local recovery index. Never expose it through a client tool.
+	 * No UUID, session/build binding, payload or arbitrary principal metadata.
+	 *
+	 * @param array $gate Held gate after fresh owner authorization.
+	 * @param array $owner Server-derived owner identity.
+	 * @return array Global revision and at most sixteen same-owner summaries.
+	 */
+	public static function owner_index( array $gate, array $owner ) {
+		self::owner_identity( $owner );
+		$value = self::load( $gate )[1];
+		$out   = array(
+			'revision' => $value['revision'],
+			'entries'  => array(),
+		);
+		foreach ( $value['entries'] as $entry ) {
+			$recipient = $entry['binding']['recipient'];
+			if ( $recipient['owner'] !== $owner['owner'] || $recipient['site'] !== $owner['site'] ) {
+				continue;
+			}
+			$out['entries'][] = array(
+				'id'              => $entry['id'],
+				'revision'        => $entry['revision'],
+				'state'           => $entry['state'],
+				'kind'            => $recipient['kind'],
+				'principal'       => $recipient['principal'],
+				'generation'      => $recipient['grant_generation'],
+				'review_deadline' => $entry['review_deadline'],
+				'expires'         => $entry['expires'],
+				'payload_bytes'   => $entry['payload_bytes'],
+				'payload_sha256'  => $entry['payload_sha256'],
+			);
+		}
+		return $out;
+	}
+
+	/**
+	 * Current same-owner inspection, even after relogin or old grant loss.
+	 *
+	 * @param array  $gate Held gate.
+	 * @param array  $owner Fresh server-derived owner identity.
+	 * @param string $id Exact locator, not bearer authority.
+	 * @return array Internal entry; caller must not export its binding.
+	 */
+	public static function inspect_owned( array $gate, array $owner, $id ) {
+		$value = self::load( $gate )[1];
+		$entry = $value['entries'][ self::index( $value, $id ) ];
+		self::owned( $entry, $owner );
+		return $entry;
+	}
+
+	/**
+	 * Deliberate same-owner cleanup; never recover, rebind or reshare old consent.
+	 *
+	 * @param array  $gate Held gate after cookie/session/nonce/confirmation checks.
+	 * @param array  $owner Fresh server-derived current owner identity.
+	 * @param string $id Exact receipt locator.
+	 * @param int    $revision Expected entry revision.
+	 */
+	public static function purge_owned( array $gate, array $owner, $id, $revision ) {
+		self::integer( $revision );
+		list( $before, $value ) = self::load( $gate );
+		$index                  = self::index( $value, $id );
+		self::owned( $value['entries'][ $index ], $owner );
+		if ( $value['entries'][ $index ]['revision'] !== $revision ) {
+			self::fail( 'ai_report_view_changed' );
 		}
 		array_splice( $value['entries'], $index, 1 );
 		self::save( $gate, $before, $value );

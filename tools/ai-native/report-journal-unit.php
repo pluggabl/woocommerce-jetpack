@@ -6,7 +6,7 @@
  * @package Booster_For_WooCommerce/tools
  */
 
-// phpcs:disable WordPress.Files.FileName.InvalidClassFileName, Universal.Files.SeparateFunctionsFromOO.Mixed, Generic.CodeAnalysis.UnusedFunctionParameter, WordPress.WP.GlobalVariablesOverride -- Standalone fake native seams, never a runtime bootstrap.
+// phpcs:disable Generic.Classes.DuplicateClassName.Found, WordPress.Files.FileName.InvalidClassFileName, Universal.Files.SeparateFunctionsFromOO.Mixed, Generic.CodeAnalysis.UnusedFunctionParameter, WordPress.WP.GlobalVariablesOverride -- Standalone fake native seams, never a runtime bootstrap.
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals, Squiz.Commenting.FunctionComment, Squiz.Commenting.VariableComment, Generic.Files.OneObjectStructurePerFile, WordPress.WP.AlternativeFunctions -- CLI-only deterministic fault harness with native-shaped test doubles.
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode, WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode -- Test only: exact JSON payload equality, not code execution.
 if ( 'cli' !== PHP_SAPI ) {
@@ -548,9 +548,70 @@ foreach ( array( 'reject', 'lost_ack' ) as $fault ) {
 	}
 }
 
+$gate          = fresh();
+$minimal_owner = array(
+	'owner' => 1,
+	'site'  => 1,
+);
+$index         = WCJ_AI_Report_Journal::owner_index( $gate, $minimal_owner );
+check( 'owner_index_initial_revision', 0 === $index['revision'] && array() === $index['entries'] );
+$reservation = WCJ_AI_Report_Journal::reserve_at( $gate, $binding, $time, 0 );
+$entry       = $reservation['entry'];
+$index       = WCJ_AI_Report_Journal::owner_index( $gate, $minimal_owner );
+check( 'lost_id_owner_index_recovers_locator', 1 === $index['revision'] && $entry['id'] === $index['entries'][0]['id'] );
+check( 'owner_index_closed_no_private_binding', array_keys( $index['entries'][0] ) === array( 'id', 'revision', 'state', 'kind', 'principal', 'generation', 'review_deadline', 'expires', 'payload_bytes', 'payload_sha256' ) );
+check(
+	'other_owner_index_empty',
+	array() === WCJ_AI_Report_Journal::owner_index(
+		$gate,
+		array(
+			'owner' => 4,
+			'site'  => 1,
+		)
+	)['entries']
+);
+check(
+	'other_site_index_empty',
+	array() === WCJ_AI_Report_Journal::owner_index(
+		$gate,
+		array(
+			'owner' => 1,
+			'site'  => 2,
+		)
+	)['entries']
+);
+check( 'minimal_owner_inspects_without_original_session', WCJ_AI_Report_Journal::inspect_owned( $gate, $minimal_owner, $entry['id'] ) === $entry );
+denied( 'stale_capture_revision_denied', fn() => WCJ_AI_Report_Journal::reserve_at( $gate, $binding, $time, 0 ), 'ai_report_view_changed' );
+foreach ( array(
+	array(
+		'owner' => 4,
+		'site'  => 1,
+	),
+	array(
+		'owner' => 1,
+		'site'  => 2,
+	),
+) as $n => $wrong_owner ) {
+	denied( 'owned_inspect_idor_' . $n, fn() => WCJ_AI_Report_Journal::inspect_owned( $gate, $wrong_owner, $entry['id'] ) );
+	denied( 'owned_purge_idor_' . $n, fn() => WCJ_AI_Report_Journal::purge_owned( $gate, $wrong_owner, $entry['id'], 1 ) );
+}
+denied( 'owned_purge_stale_revision', fn() => WCJ_AI_Report_Journal::purge_owned( $gate, $minimal_owner, $entry['id'], 2 ), 'ai_report_view_changed' );
+WCJ_AI_Report_Journal::purge_owned( $gate, $minimal_owner, $entry['id'], 1 );
+check( 'purge_keeps_revision_and_marker', 2 === journal()['revision'] && array() === journal()['entries'] && isset( $wpdb->rows[ WCJ_AI_Report_Journal::MARKER ] ) );
+denied( 'purged_capture_form_no_reallocation', fn() => WCJ_AI_Report_Journal::reserve_at( $gate, $binding, $time, 0 ), 'ai_report_view_changed' );
+$entry                    = WCJ_AI_Report_Journal::reserve_at( $gate, $binding, $time, 2 )['entry'];
+$legacy                   = json_decode( $bytes, true );
+$legacy['schema_version'] = 1;
+$legacy_bytes             = json_encode( $legacy, JSON_UNESCAPED_SLASHES );
+WCJ_AI_Report_Journal::finish( $gate, $binding, $entry['id'], 1, $legacy_bytes, $time + 7 );
+$legacy_entry = WCJ_AI_Report_Journal::inspect_owned( $gate, $minimal_owner, $entry['id'] );
+check( 'legacy_bytes_cleanup_not_reencoded', base64_decode( $legacy_entry['payload_b64'], true ) === $legacy_bytes );
+WCJ_AI_Report_Journal::purge_owned( $gate, $minimal_owner, $entry['id'], 2 );
+check( 'legacy_receipt_purge_supported', array() === journal()['entries'] );
+
 echo json_encode(
 	array(
-		'scope'  => 'fake DB/CAS only; no native SQL/auth/consent/client or runtime inclusion',
+		'scope'  => 'fake DB/CAS only; no native SQL/auth/consent/client evidence',
 		'php'    => PHP_VERSION,
 		'cases'  => $cases,
 		'passed' => count( $cases ),

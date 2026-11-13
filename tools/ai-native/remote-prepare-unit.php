@@ -43,6 +43,19 @@ final class WCJ_AI_Prepare_DB {
 	}
 	public function get_results( $query, $format ) {
 		$GLOBALS['wcj_ai_reads'][] = $query[1][0];
+		if ( str_contains( $query[0], 'CASE WHEN OCTET_LENGTH(option_value) <= %d' ) ) {
+			list( $cap, $key ) = $query[1];
+			if ( ! isset( $GLOBALS['wcj_ai_db'][ $key ] ) ) {
+				return array(); }
+			$raw = $GLOBALS['wcj_ai_db'][ $key ];
+			return array(
+				array(
+					'bytes'    => (string) strlen( $raw ),
+					'raw'      => strlen( $raw ) <= $cap ? $raw : null,
+					'autoload' => $GLOBALS['wcj_ai_autoload'][ $key ] ?? 'yes',
+				),
+			);
+		}
 		if ( str_contains( $query[0], 'CASE WHEN OCTET_LENGTH(option_value) <= 4096' ) ) {
 			if ( isset( $GLOBALS['wcj_ai_read_fault'] ) ) {
 				return $GLOBALS['wcj_ai_read_fault']( $query[1][0], $this );
@@ -81,7 +94,8 @@ final class WCJ_Job_Store {
 		}
 		$wcj_ai_writes[] = $key;
 		if ( $after['exists'] ) {
-			$wcj_ai_db[ $key ] = $after['raw'];
+			$wcj_ai_db[ $key ]                  = $after['raw'];
+			$GLOBALS['wcj_ai_autoload'][ $key ] = $GLOBALS['wcj_ai_autoload'][ $key ] ?? ( in_array( $key, $no_autoload, true ) ? 'no' : 'yes' );
 		} else {
 			unset( $wcj_ai_db[ $key ] );
 		}
@@ -193,7 +207,7 @@ function get_userdata( $id ) {
 		),
 	); }
 function rest_get_authenticated_app_password() {
-	return $GLOBALS['wcj_ai_uuid']; }
+	return array_key_exists( 'wcj_ai_current_app', $GLOBALS ) ? $GLOBALS['wcj_ai_current_app'] : $GLOBALS['wcj_ai_uuid']; }
 function add_action( ...$args ) {}
 function add_filter( ...$args ) {}
 require_once dirname( __DIR__, 2 ) . '/includes/class-wcj-ai-connection.php';
@@ -211,7 +225,7 @@ function wcj_ai_denied( $callback ) {
 	return false;
 }
 function wcj_ai_reset() {
-	foreach ( array( 'wcj_ai_owner_ids', 'wcj_ai_principal_ids', 'wcj_ai_site_id', 'wcj_ai_read_fault', 'wcj_ai_multisite', 'wcj_ai_ext_cache', 'wcj_ai_filters', 'wcj_ai_denied_owners', 'wcj_ai_user_override' ) as $key ) {
+	foreach ( array( 'wcj_ai_owner_ids', 'wcj_ai_principal_ids', 'wcj_ai_site_id', 'wcj_ai_read_fault', 'wcj_ai_multisite', 'wcj_ai_ext_cache', 'wcj_ai_filters', 'wcj_ai_denied_owners', 'wcj_ai_user_override', 'wcj_ai_current_app', 'wcj_ai_autoload' ) as $key ) {
 		unset( $GLOBALS[ $key ] ); }
 	unset( $GLOBALS['wcj_ai_on_lock'] );
 	unset( $GLOBALS['wcj_ai_invoice_denied'] );
@@ -538,8 +552,8 @@ foreach ( array( 'grant_expires', 'ap_removed' ) as $wcj_ai_mode ) {
 
 wcj_ai_fixture( false );
 WCJ_AI_Abilities::register();
-wcj_ai_check( 'three_named_abilities_no_generic_executor', array_keys( $wcj_ai_registered ) === array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare' ) );
-wcj_ai_check( 'only_prepare_uses_finite_error_boundary', 'WCJ_AI_Prepare_Ability' === $wcj_ai_registered['booster-ai/prepare']['ability_class'] && 'WP_Ability' === $wcj_ai_registered['booster-ai/schema']['ability_class'] && 'WP_Ability' === $wcj_ai_registered['booster-ai/context']['ability_class'] );
+wcj_ai_check( 'four_named_abilities_no_generic_executor', array_keys( $wcj_ai_registered ) === array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare', 'booster-ai/read-shared-report' ) );
+wcj_ai_check( 'invoice_prepare_uses_finite_error_boundary', 'WCJ_AI_Prepare_Ability' === $wcj_ai_registered['booster-ai/prepare']['ability_class'] && 'WP_Ability' === $wcj_ai_registered['booster-ai/schema']['ability_class'] && 'WP_Ability' === $wcj_ai_registered['booster-ai/context']['ability_class'] );
 $boundary = new WCJ_AI_Prepare_Ability();
 $finite   = $boundary->execute( new WP_Error( 'private_code', 'SYNTHETIC_PRIVATE_MARKER' ) );
 wcj_ai_check( 'failed_parent_result_replaced_without_reflection', 'wcj_ai_prepare_unavailable' === $finite->code && false === strpos( $finite->message, 'SYNTHETIC_PRIVATE_MARKER' ) );

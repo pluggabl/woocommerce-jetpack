@@ -1,9 +1,9 @@
 <?php
 /**
- * Pure exact-byte revenue receipt envelope. Dormant: no route, storage or grants.
+ * Pure exact-byte revenue receipt envelope; versioned canonical codecs.
  *
  * Shape validation never establishes native origin, consent or access authority.
- * The future owner service must bind one direct observation and its reservation.
+ * The owner service must bind one direct observation and its reservation.
  *
  * @package Booster_For_WooCommerce/includes
  */
@@ -16,6 +16,8 @@ final class WCJ_AI_Report_Receipt {
 
 	/** Engineering transport cap, not a commercial entitlement. */
 	const MAX_BYTES = 32768;
+	/** Version 2 uses the pinned adapter default JSON codec. */
+	const SCHEMA = 2;
 	/** Review closes five minutes after the original reservation, never renewed. */
 	const REVIEW_SECONDS = 300;
 	/** Access closes ten minutes after reservation, or at earlier grant expiry. */
@@ -75,7 +77,7 @@ final class WCJ_AI_Report_Receipt {
 	 */
 	private static function encode( array $envelope ) {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Pure canonical serialization of already validated scalars and bounded arrays; no callbacks.
-		$json = json_encode( $envelope, JSON_UNESCAPED_SLASHES );
+		$json = json_encode( $envelope, 1 === $envelope['schema_version'] ? JSON_UNESCAPED_SLASHES : 0 );
 		if ( ! is_string( $json ) || strlen( $json ) > self::MAX_BYTES ) {
 			self::reject();
 		}
@@ -89,12 +91,13 @@ final class WCJ_AI_Report_Receipt {
 	 * @param int   $reserved Original reservation timestamp.
 	 * @param int   $grant_expires Immutable grant expiry.
 	 * @param int   $created Private review construction timestamp.
+	 * @param int   $schema Explicit retained codec version.
 	 * @return array Complete closed envelope.
 	 */
-	private static function envelope( array $snapshot, $reserved, $grant_expires, $created ) {
+	private static function envelope( array $snapshot, $reserved, $grant_expires, $created, $schema = self::SCHEMA ) {
 		self::times( $reserved, $grant_expires, $created, self::instant( $snapshot['observed_until_utc'] ) );
 		return array(
-			'schema_version'         => 1,
+			'schema_version'         => $schema,
 			'kind'                   => 'revenue_observation',
 			'captured_closed_at_utc' => $snapshot['observed_until_utc'],
 			'review_created_at_utc'  => gmdate( 'Y-m-d\TH:i:s\Z', $created ),
@@ -137,10 +140,10 @@ final class WCJ_AI_Report_Receipt {
 		}
 		try {
 			$input = json_decode( $bytes, true, 16, JSON_THROW_ON_ERROR );
-			if ( ! is_array( $input ) || array_keys( $input ) !== array( 'schema_version', 'kind', 'captured_closed_at_utc', 'review_created_at_utc', 'expires_at_utc', 'source_schema', 'snapshot' ) ) {
+			if ( ! is_array( $input ) || ! in_array( $input['schema_version'] ?? null, array( 1, self::SCHEMA ), true ) || array_keys( $input ) !== array( 'schema_version', 'kind', 'captured_closed_at_utc', 'review_created_at_utc', 'expires_at_utc', 'source_schema', 'snapshot' ) ) {
 				self::reject();
 			}
-			$out = self::envelope( WCJ_AI_Observation_Projection::revenue_payload( $input['snapshot'] ), $reserved, $grant_expires, self::instant( $input['review_created_at_utc'] ) );
+			$out = self::envelope( WCJ_AI_Observation_Projection::revenue_payload( $input['snapshot'] ), $reserved, $grant_expires, self::instant( $input['review_created_at_utc'] ), $input['schema_version'] );
 			// Re-encoding detects duplicate keys, reordered/noncanonical JSON, invalid
 			// constants/times, and hidden fields; the original bytes never get repaired.
 			if ( self::encode( $out ) !== $bytes ) {

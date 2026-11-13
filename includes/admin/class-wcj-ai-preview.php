@@ -6,6 +6,7 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+require_once __DIR__ . '/class-wcj-ai-report-receipt-view.php';
 
 /** Cookie-only local integration for the three incomplete AI feature slices. */
 final class WCJ_AI_Preview {
@@ -28,19 +29,23 @@ final class WCJ_AI_Preview {
 	 * @return array Operation-specific keys, never other native form commands.
 	 */
 	private static function operations() {
-		return array(
-			'connection_read'    => array( 'principal', 'digest', 'confirm' ),
-			'connection_prepare' => array( 'principal', 'digest', 'confirm' ),
-			'connection_revoke'  => array( 'principal', 'digest', 'confirm' ),
-			'initialize'         => array( 'confirm' ),
-			'create'             => array( 'changes' ),
-			'capture'            => array( 'product' ),
-			'report'             => array(),
-			'cancel'             => array( 'plan' ),
-			'apply'              => array( 'plan', 'confirm' ),
-			'recover'            => array( 'plan', 'confirm' ),
-			'preview_now'        => array( 'plan' ),
-			'preview_after'      => array( 'plan' ),
+		return array_merge(
+			WCJ_AI_Report_Receipt_View::operations(),
+			array(
+				'connection_read'    => array( 'principal', 'digest', 'confirm' ),
+				'connection_prepare' => array( 'principal', 'digest', 'confirm' ),
+				'connection_report'  => array( 'principal', 'digest', 'confirm' ),
+				'connection_revoke'  => array( 'principal', 'digest', 'confirm' ),
+				'initialize'         => array( 'confirm' ),
+				'create'             => array( 'changes' ),
+				'capture'            => array( 'product' ),
+				'report'             => array(),
+				'cancel'             => array( 'plan' ),
+				'apply'              => array( 'plan', 'confirm' ),
+				'recover'            => array( 'plan', 'confirm' ),
+				'preview_now'        => array( 'plan' ),
+				'preview_after'      => array( 'plan' ),
+			)
 		);
 	}
 
@@ -93,7 +98,9 @@ final class WCJ_AI_Preview {
 		}
 		if ( $page ) {
 			if ( $action || 'wcj-ai-preview' !== $_GET['page'] || 'GET' !== $method || '' !== $body || $_POST || ! self::request_matches( $_GET ) ||
-				wp_parse_url( admin_url( 'admin.php' ), PHP_URL_PATH ) !== $path || array_diff( array_keys( $_GET ), array( 'page', 'plan', 'connection' ) ) ) {
+				wp_parse_url( admin_url( 'admin.php' ), PHP_URL_PATH ) !== $path || array_diff( array_keys( $_GET ), array( 'page', 'plan', 'connection', 'receipt' ) ) ||
+				count( array_intersect( array_keys( $_GET ), array( 'plan', 'connection', 'receipt' ) ) ) > 1 ||
+				( isset( $_GET['receipt'] ) && ( ! is_string( $_GET['receipt'] ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $_GET['receipt'] ) ) ) ) {
 				self::deny();
 			}
 		} else {
@@ -198,16 +205,18 @@ final class WCJ_AI_Preview {
 			$view = WCJ_AI_Connection::owner_view( (int) $principal );
 			echo '<p>' . esc_html__( 'Grant enabled:', 'woocommerce-jetpack' ) . ' ' . esc_html( $view['active'] ? __( 'Yes', 'woocommerce-jetpack' ) : __( 'No', 'woocommerce-jetpack' ) ) . ' — ' . esc_html__( 'Expired:', 'woocommerce-jetpack' ) . ' ' . esc_html( $view['expired'] ? __( 'Yes', 'woocommerce-jetpack' ) : __( 'No', 'woocommerce-jetpack' ) ) . '</p>';
 			echo '<p>' . esc_html__( 'Granted scopes:', 'woocommerce-jetpack' ) . ' ' . esc_html( implode( ', ', $view['scopes'] ) ) . ' — ' . esc_html__( 'Native application-password record present:', 'woocommerce-jetpack' ) . ' ' . esc_html( $view['native_password_present'] ? __( 'Yes', 'woocommerce-jetpack' ) : __( 'No', 'woocommerce-jetpack' ) ) . '</p>';
-			echo '<p>' . esc_html__( 'Initialize the proposal journal before enabling proposals. Changing access creates a new grant generation and invalidates unapplied proposals from the old generation. Disconnect disables Booster access but does not delete the native application password. Unknown or busy outcomes require reviewing current state, not blind retries.', 'woocommerce-jetpack' ) . '</p>';
+			echo '<p>' . esc_html__( 'Initialize the proposal journal before enabling proposals. Changing access replaces, never combines, invoice and report scopes. It creates a new grant generation and invalidates unapplied proposals and shared report access from the old generation. A report grant never authorizes capture, listing or sharing; separate owner consent is required. Disconnect disables Booster access but does not delete the native application password. Unknown or busy outcomes require reviewing current state, not blind retries.', 'woocommerce-jetpack' ) . '</p>';
 			foreach ( array(
 				'connection_read'    => __( 'Allow saved colours only — one hour', 'woocommerce-jetpack' ),
 				'connection_prepare' => __( 'Allow saved colours and pending proposals — one hour', 'woocommerce-jetpack' ),
+				'connection_report'  => __( 'Allow only owner-shared report receipts — one hour', 'woocommerce-jetpack' ),
 				'connection_revoke'  => __( 'Disconnect this Booster client', 'woocommerce-jetpack' ),
 			) as $op => $label ) {
 				echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"><input type="hidden" name="action" value="wcj_ai_preview"><input type="hidden" name="op" value="' . esc_attr( $op ) . '"><input type="hidden" name="principal" value="' . esc_attr( $principal ) . '"><input type="hidden" name="digest" value="' . esc_attr( $view['digest'] ) . '">';
 				wp_nonce_field( 'wcj_ai_connection_' . $op . '_' . $principal . '_' . $view['digest'], '_wpnonce', false );
 				echo '<p><label><input type="checkbox" name="confirm" value="1" required> ' . esc_html__( 'I deliberately authorize this access change for this synthetic test account. Proposals never authorize remote settings changes.', 'woocommerce-jetpack' ) . '</label></p><button class="button" type="submit">' . esc_html( $label ) . '</button></form>';
 			}
+			WCJ_AI_Report_Receipt_View::capture_form( (int) $principal );
 		} catch ( Throwable $exception ) {
 			echo '<p>' . esc_html__( 'Client access details are unavailable for this owner. No success or repair is assumed.', 'woocommerce-jetpack' ) . '</p>';
 		}
@@ -246,7 +255,14 @@ final class WCJ_AI_Preview {
 		echo '<label for="ai-product">' . esc_html__( 'Product ID', 'woocommerce-jetpack' ) . '</label> <input id="ai-product" name="product" type="text" inputmode="numeric" pattern="[1-9][0-9]{0,9}" maxlength="10" required> <button class="button" type="submit">' . esc_html__( 'Open observed product render', 'woocommerce-jetpack' ) . '</button></form>';
 		echo '<h2>' . esc_html__( '3. Inspect recorded amounts', 'woocommerce-jetpack' ) . '</h2><p>' . esc_html__( 'Last seven completed local days and the preceding seven. A bounded, non-atomic subset only, currently limited to supported legacy order storage. Not a complete revenue report.', 'woocommerce-jetpack' ) . '</p>';
 		self::form( 'report' );
-		echo '<button class="button" type="submit">' . esc_html__( 'Run local comparison', 'woocommerce-jetpack' ) . '</button></form></div>';
+		echo '<button class="button" type="submit">' . esc_html__( 'Run local comparison', 'woocommerce-jetpack' ) . '</button></form>';
+		WCJ_AI_Report_Receipt_View::catalog();
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Opaque read-only locator; service independently validates current cookie owner and journal.
+		$receipt = isset( $_GET['receipt'] ) && is_string( $_GET['receipt'] ) ? wp_unslash( $_GET['receipt'] ) : '';
+		if ( '' !== $receipt ) {
+			WCJ_AI_Report_Receipt_View::receipt( $receipt );
+		}
+		echo '</div>';
 	}
 
 	/**
@@ -333,7 +349,7 @@ final class WCJ_AI_Preview {
 		// phpcs:enable WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
 		try {
 			$plan          = array();
-			$connection_op = in_array( $op, array( 'connection_read', 'connection_prepare', 'connection_revoke' ), true );
+			$connection_op = in_array( $op, array( 'connection_read', 'connection_prepare', 'connection_report', 'connection_revoke' ), true );
 			if ( $connection_op ) {
 				$principal = $input['principal'] ?? null;
 				$digest    = $input['digest'] ?? null;
@@ -344,11 +360,16 @@ final class WCJ_AI_Preview {
 				}
 				if ( 'connection_revoke' === $op ) {
 					WCJ_AI_Connection::revoke( (int) $principal, $digest );
+				} elseif ( 'connection_report' === $op ) {
+					WCJ_AI_Connection::owner_rotate_report( (int) $principal, $digest );
 				} else {
 					WCJ_AI_Connection::owner_rotate( (int) $principal, $digest, 'connection_prepare' === $op );
 				}
 				wp_safe_redirect( add_query_arg( 'connection', $principal, self::url() ), 303 );
 				exit;
+			}
+			if ( isset( WCJ_AI_Report_Receipt_View::operations()[ $op ] ) ) {
+				WCJ_AI_Report_Receipt_View::handle( $op, $input );
 			}
 			if ( in_array( 'plan', $keys[ $op ], true ) ) {
 				require_once __DIR__ . '/class-wcj-ai-invoice-plans.php';
