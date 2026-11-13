@@ -300,22 +300,96 @@ final class WCJ_AI_Connection {
 	}
 
 	/**
+	 * Read only a structurally valid grant belonging to the current native owner.
+	 * Revoked/expired records remain visible for explicit local management.
+	 *
+	 * @param int $principal Pre-provisioned dedicated principal ID.
+	 * @return array Exact state and closed grant; never an external tool response.
+	 * @throws RuntimeException On absent, malformed or other-owner state.
+	 */
+	private static function owner_record( $principal ) {
+		self::authorize_owner();
+		if ( ! self::enabled() || is_multisite() || ! is_int( $principal ) || $principal < 1 ||
+			self::principal( get_current_user_id() ) || ! self::principal( $principal ) ) {
+			throw new RuntimeException( 'connection_unavailable' );
+		}
+		$raw   = self::raw( 'wcj_ai_client_grant_' . $principal );
+		$grant = $raw && $raw['exists'] && strlen( $raw['raw'] ) <= 4096 ? json_decode( $raw['raw'], true ) : null;
+		if ( ! is_array( $grant ) || array_keys( $grant ) !== array( 'schema', 'id', 'principal', 'owner', 'site', 'app_uuid', 'scopes', 'created', 'expires', 'active' ) ||
+			1 !== $grant['schema'] || ! is_string( $grant['id'] ) || 1 !== preg_match( '/^[a-f0-9]{32}$/D', $grant['id'] ) ||
+			$principal !== $grant['principal'] || get_current_user_id() !== $grant['owner'] || $principal === $grant['owner'] || get_current_blog_id() !== $grant['site'] ||
+			! is_string( $grant['app_uuid'] ) || 1 !== preg_match( '/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/D', $grant['app_uuid'] ) ||
+			! in_array( $grant['scopes'], array( array( 'invoice:read' ), array( 'invoice:read', 'invoice:prepare' ) ), true ) ||
+			! is_int( $grant['created'] ) || ! is_int( $grant['expires'] ) || $grant['created'] < 1 || $grant['expires'] <= $grant['created'] || $grant['expires'] > $grant['created'] + 3600 || ! is_bool( $grant['active'] ) ) {
+			throw new RuntimeException( 'connection_unavailable' );
+		}
+		return array( $raw, $grant );
+	}
+
+	/**
+	 * Grant management is not an invoice settings write. A native owner must
+	 * still be able to disconnect after the invoice module policy changes.
+	 *
+	 * @throws RuntimeException On missing native owner capability.
+	 */
+	private static function authorize_owner() {
+		if ( ! get_current_user_id() || self::principal( get_current_user_id() ) || ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown -- Native WooCommerce owner capability, no user substitution.
+			throw new RuntimeException( 'connection_unavailable' );
+		}
+	}
+
+	/**
+	 * Minimal owner connection card. No AP password, UUID or arbitrary user data.
+	 *
+	 * @param int $principal Dedicated principal.
+	 * @return array Native-owner-only management view.
+	 */
+	public static function owner_view( $principal ) {
+		list( $raw, $grant ) = self::owner_record( $principal );
+		return array(
+			'principal'               => $principal,
+			'digest'                  => hash( 'sha256', $raw['raw'] ),
+			'active'                  => $grant['active'],
+			'expired'                 => time() >= $grant['expires'],
+			'expires'                 => $grant['expires'],
+			'scopes'                  => $grant['scopes'],
+			'native_password_present' => self::app_exists( $principal, $grant['app_uuid'] ),
+		);
+	}
+
+	/**
+	 * Deliberate owner scope rotation, bound to the exact reviewed grant bytes.
+	 * Resolve the native UUID on the server, never from a hidden request field.
+	 *
+	 * @param int    $principal Dedicated principal.
+	 * @param string $digest Expected owner-view digest.
+	 * @param bool   $prepare Explicit proposal scope selection.
+	 * @return bool New generation verified by issue.
+	 */
+	public static function owner_rotate( $principal, $digest, $prepare ) {
+		list( $raw, $grant ) = self::owner_record( $principal );
+		return self::issue( $principal, $grant['app_uuid'], $prepare, $digest );
+	}
+
+	/**
 	 * Explicit local-owner grant rotation for a pre-provisioned dedicated account.
 	 * No route/UI is registered here. The local controller must bind its nonce.
 	 *
-	 * @param int    $principal Dedicated principal, never the owner account.
-	 * @param string $uuid Existing native AP UUID (not the password).
-	 * @param bool   $prepare Explicit opt-in, never inferred from invoice:read.
+	 * @param int         $principal Dedicated principal, never the owner account.
+	 * @param string      $uuid Existing native AP UUID (not the password).
+	 * @param bool        $prepare Explicit opt-in, never inferred from invoice:read.
+	 * @param string|null $expected_digest Optional exact owner-view binding for UI commands.
 	 * @return bool Verified new generation stored, not a credential response.
 	 * @throws RuntimeException On unavailable authority or persistence.
 	 */
-	public static function issue( $principal, $uuid, $prepare = false ) {
+	public static function issue( $principal, $uuid, $prepare = false, $expected_digest = null ) {
 		require_once __DIR__ . '/admin/class-wcj-invoice-job.php';
 		require_once __DIR__ . '/admin/class-wcj-ai-mutation-gate.php';
 		WCJ_Invoice_Job::authorize();
 		if ( ! self::enabled() || is_multisite() || ! is_int( $principal ) || $principal < 1 || ! is_bool( $prepare ) ||
 			! is_string( $uuid ) || 1 !== preg_match( '/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/D', $uuid ) ||
-			get_current_user_id() === $principal || self::principal( get_current_user_id() ) || ! self::owner_policy() ) {
+			get_current_user_id() === $principal || self::principal( get_current_user_id() ) || ! self::owner_policy() ||
+			( null !== $expected_digest && ( ! is_string( $expected_digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $expected_digest ) ) ) ) {
 			throw new RuntimeException( 'connection_unavailable' );
 		}
 		$gate = WCJ_AI_Mutation_Gate::acquire();
@@ -326,9 +400,12 @@ final class WCJ_AI_Connection {
 			}
 			$key      = 'wcj_ai_client_grant_' . $principal;
 			$before   = self::raw( $key );
-			$previous = $before && $before['exists'] ? json_decode( $before['raw'], true ) : null;
+			$previous = $before && $before['exists'] && strlen( $before['raw'] ) <= 4096 ? json_decode( $before['raw'], true ) : null;
 			if ( ! $before || ( $before['exists'] && ( ! is_array( $previous ) || ( $previous['owner'] ?? null ) !== get_current_user_id() || ( $previous['site'] ?? null ) !== get_current_blog_id() ) ) ) {
 				throw new RuntimeException( 'connection_unavailable' );
+			}
+			if ( null !== $expected_digest && ( ! $before['exists'] || hash( 'sha256', $before['raw'] ) !== $expected_digest ) ) {
+				throw new RuntimeException( 'connection_view_changed' );
 			}
 			$now   = time();
 			$grant = array(
@@ -361,15 +438,16 @@ final class WCJ_AI_Connection {
 	 * Supported serialized disconnect; inactive grant is authoritative even if
 	 * native AP bookkeeping races a separate core password deletion.
 	 *
-	 * @param int $principal Dedicated principal bound to the current owner.
+	 * @param int         $principal Dedicated principal bound to the current owner.
+	 * @param string|null $expected_digest Optional exact owner-view binding.
 	 * @return bool Verified inactive grant.
 	 * @throws RuntimeException On busy/unknown state; never report false success.
 	 */
-	public static function revoke( $principal ) {
-		require_once __DIR__ . '/admin/class-wcj-invoice-job.php';
+	public static function revoke( $principal, $expected_digest = null ) {
 		require_once __DIR__ . '/admin/class-wcj-ai-mutation-gate.php';
-		WCJ_Invoice_Job::authorize();
-		if ( ! is_int( $principal ) || $principal < 1 || self::principal( get_current_user_id() ) ) {
+		self::authorize_owner();
+		if ( ! is_int( $principal ) || $principal < 1 || self::principal( get_current_user_id() ) ||
+			( null !== $expected_digest && ( ! is_string( $expected_digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $expected_digest ) ) ) ) {
 			throw new RuntimeException( 'connection_unavailable' );
 		}
 		$gate = WCJ_AI_Mutation_Gate::acquire();
@@ -380,6 +458,9 @@ final class WCJ_AI_Connection {
 			if ( ! is_array( $grant ) || array_keys( $grant ) !== array( 'schema', 'id', 'principal', 'owner', 'site', 'app_uuid', 'scopes', 'created', 'expires', 'active' ) ||
 				1 !== $grant['schema'] || $principal !== $grant['principal'] || get_current_user_id() !== $grant['owner'] || get_current_blog_id() !== $grant['site'] || ! is_bool( $grant['active'] ) ) {
 				throw new RuntimeException( 'connection_unavailable' );
+			}
+			if ( null !== $expected_digest && hash( 'sha256', $before['raw'] ) !== $expected_digest ) {
+				throw new RuntimeException( 'connection_view_changed' );
 			}
 			$grant['active'] = false;
 			$after           = array(

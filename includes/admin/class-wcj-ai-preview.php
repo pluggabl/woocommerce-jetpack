@@ -29,15 +29,18 @@ final class WCJ_AI_Preview {
 	 */
 	private static function operations() {
 		return array(
-			'initialize'    => array( 'confirm' ),
-			'create'        => array( 'changes' ),
-			'capture'       => array( 'product' ),
-			'report'        => array(),
-			'cancel'        => array( 'plan' ),
-			'apply'         => array( 'plan', 'confirm' ),
-			'recover'       => array( 'plan', 'confirm' ),
-			'preview_now'   => array( 'plan' ),
-			'preview_after' => array( 'plan' ),
+			'connection_read'    => array( 'principal', 'digest', 'confirm' ),
+			'connection_prepare' => array( 'principal', 'digest', 'confirm' ),
+			'connection_revoke'  => array( 'principal', 'digest', 'confirm' ),
+			'initialize'         => array( 'confirm' ),
+			'create'             => array( 'changes' ),
+			'capture'            => array( 'product' ),
+			'report'             => array(),
+			'cancel'             => array( 'plan' ),
+			'apply'              => array( 'plan', 'confirm' ),
+			'recover'            => array( 'plan', 'confirm' ),
+			'preview_now'        => array( 'plan' ),
+			'preview_after'      => array( 'plan' ),
 		);
 	}
 
@@ -90,7 +93,7 @@ final class WCJ_AI_Preview {
 		}
 		if ( $page ) {
 			if ( $action || 'wcj-ai-preview' !== $_GET['page'] || 'GET' !== $method || '' !== $body || $_POST || ! self::request_matches( $_GET ) ||
-				wp_parse_url( admin_url( 'admin.php' ), PHP_URL_PATH ) !== $path || array_diff( array_keys( $_GET ), array( 'page', 'plan' ) ) ) {
+				wp_parse_url( admin_url( 'admin.php' ), PHP_URL_PATH ) !== $path || array_diff( array_keys( $_GET ), array( 'page', 'plan', 'connection' ) ) ) {
 				self::deny();
 			}
 		} else {
@@ -175,15 +178,52 @@ final class WCJ_AI_Preview {
 		);
 	}
 
+	/**
+	 * Local management of an operator-provisioned private synthetic client.
+	 *
+	 * @throws RuntimeException Internally raised and caught for an unsupported ID.
+	 */
+	private static function connection() {
+		echo '<h2>' . esc_html__( 'Private test client access', 'woocommerce-jetpack' ) . '</h2><p>' . esc_html__( 'Manage a pre-provisioned dedicated synthetic test account. This preview does not create accounts or ask for an API key or password. A grant is not proof that a client is online. Real-store use is not authorized by this preview.', 'woocommerce-jetpack' ) . '</p>';
+		echo '<form method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '"><input type="hidden" name="page" value="wcj-ai-preview"><label for="ai-connection">' . esc_html__( 'Dedicated test account ID', 'woocommerce-jetpack' ) . '</label> <input id="ai-connection" name="connection" type="text" inputmode="numeric" pattern="[1-9][0-9]{0,9}" maxlength="10" required> <button class="button">' . esc_html__( 'Review client access', 'woocommerce-jetpack' ) . '</button></form>';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Read-only bounded ID, separately current-owner authorized in owner_view.
+		$principal = isset( $_GET['connection'] ) && is_string( $_GET['connection'] ) ? wp_unslash( $_GET['connection'] ) : '';
+		if ( '' === $principal ) {
+			return;
+		}
+		try {
+			if ( 1 !== preg_match( '/^[1-9][0-9]{0,9}$/D', $principal ) ) {
+				throw new RuntimeException( 'connection_unavailable' );
+			}
+			$view = WCJ_AI_Connection::owner_view( (int) $principal );
+			echo '<p>' . esc_html__( 'Grant enabled:', 'woocommerce-jetpack' ) . ' ' . esc_html( $view['active'] ? __( 'Yes', 'woocommerce-jetpack' ) : __( 'No', 'woocommerce-jetpack' ) ) . ' — ' . esc_html__( 'Expired:', 'woocommerce-jetpack' ) . ' ' . esc_html( $view['expired'] ? __( 'Yes', 'woocommerce-jetpack' ) : __( 'No', 'woocommerce-jetpack' ) ) . '</p>';
+			echo '<p>' . esc_html__( 'Granted scopes:', 'woocommerce-jetpack' ) . ' ' . esc_html( implode( ', ', $view['scopes'] ) ) . ' — ' . esc_html__( 'Native application-password record present:', 'woocommerce-jetpack' ) . ' ' . esc_html( $view['native_password_present'] ? __( 'Yes', 'woocommerce-jetpack' ) : __( 'No', 'woocommerce-jetpack' ) ) . '</p>';
+			echo '<p>' . esc_html__( 'Initialize the proposal journal before enabling proposals. Changing access creates a new grant generation and invalidates unapplied proposals from the old generation. Disconnect disables Booster access but does not delete the native application password. Unknown or busy outcomes require reviewing current state, not blind retries.', 'woocommerce-jetpack' ) . '</p>';
+			foreach ( array(
+				'connection_read'    => __( 'Allow saved colours only — one hour', 'woocommerce-jetpack' ),
+				'connection_prepare' => __( 'Allow saved colours and pending proposals — one hour', 'woocommerce-jetpack' ),
+				'connection_revoke'  => __( 'Disconnect this Booster client', 'woocommerce-jetpack' ),
+			) as $op => $label ) {
+				echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"><input type="hidden" name="action" value="wcj_ai_preview"><input type="hidden" name="op" value="' . esc_attr( $op ) . '"><input type="hidden" name="principal" value="' . esc_attr( $principal ) . '"><input type="hidden" name="digest" value="' . esc_attr( $view['digest'] ) . '">';
+				wp_nonce_field( 'wcj_ai_connection_' . $op . '_' . $principal . '_' . $view['digest'], '_wpnonce', false );
+				echo '<p><label><input type="checkbox" name="confirm" value="1" required> ' . esc_html__( 'I deliberately authorize this access change for this synthetic test account. Proposals never authorize remote settings changes.', 'woocommerce-jetpack' ) . '</label></p><button class="button" type="submit">' . esc_html( $label ) . '</button></form>';
+			}
+		} catch ( Throwable $exception ) {
+			echo '<p>' . esc_html__( 'Client access details are unavailable for this owner. No success or repair is assumed.', 'woocommerce-jetpack' ) . '</p>';
+		}
+	}
+
 	/** Render controls only; a GET never prepares a plan or runs a report. */
 	public static function page() {
 		self::authorize();
 		require_once __DIR__ . '/class-wcj-ai-invoice-plans.php';
 		echo '<div class="wrap"><h1>' . esc_html__( 'Booster AI — local preview', 'woocommerce-jetpack' ) . '</h1>';
-		echo '<p><strong>' . esc_html__( 'Internal preview. No AI client is connected. These are incomplete feature slices, not a released product.', 'woocommerce-jetpack' ) . '</strong></p>';
+		echo '<p><strong>' . esc_html__( 'Private preview. Client access is optional and scoped. These are incomplete feature slices, not a released product.', 'woocommerce-jetpack' ) . '</strong></p>';
+		self::connection();
 		echo '<h2>' . esc_html__( '1. Review an invoice colour proposal', 'woocommerce-jetpack' ) . '</h2>';
 		try {
 			WCJ_Invoice_Job::authorize();
+			echo '<form method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '"><input type="hidden" name="page" value="wcj-ai-preview"><label for="ai-plan-id">' . esc_html__( 'Saved proposal ID from your client', 'woocommerce-jetpack' ) . '</label> <input id="ai-plan-id" name="plan" type="text" pattern="[a-f0-9]{32}" minlength="32" maxlength="32" required> <button class="button">' . esc_html__( 'Open saved proposal', 'woocommerce-jetpack' ) . '</button></form>';
 			echo '<details><summary>' . esc_html__( 'First-use proposal journal setup', 'woocommerce-jetpack' ) . '</summary><p>' . esc_html__( 'Only initialize a known fresh synthetic test store or migrate its retained local preview journal. This does not reset capacity, repair lost history, change invoice settings or connect an AI client. Do not use after deleting or restoring proposal history. Stop older preview writers before migration.', 'woocommerce-jetpack' ) . '</p>';
 			self::form( 'initialize' );
 			echo '<p><label><input type="checkbox" name="confirm" value="1" required> ' . esc_html__( 'I confirm this synthetic store has known, retained proposal history and no older preview writer is running.', 'woocommerce-jetpack' ) . '</label></p><button class="button" type="submit">' . esc_html__( 'Initialize or preserve the journal', 'woocommerce-jetpack' ) . '</button></form></details>';
@@ -216,6 +256,12 @@ final class WCJ_AI_Preview {
 	 */
 	private static function plan( array $plan ) {
 		echo '<h3>' . esc_html__( 'Saved proposal', 'woocommerce-jetpack' ) . '</h3><p>' . esc_html__( 'State:', 'woocommerce-jetpack' ) . ' <strong>' . esc_html( $plan['status'] ) . '</strong></p>';
+		if ( 'remote' === $plan['origin']['kind'] ) {
+			echo '<p><strong>' . esc_html__( 'Origin: remote client request', 'woocommerce-jetpack' ) . '</strong></p><p>' . esc_html__( 'Bound connection account ID:', 'woocommerce-jetpack' ) . ' ' . esc_html( $plan['origin']['principal'] ) . '<br>' . esc_html__( 'Saved grant generation:', 'woocommerce-jetpack' ) . ' <code>' . esc_html( $plan['origin']['generation'] ) . '</code></p>';
+			echo '<p>' . esc_html__( 'This saved origin does not identify the client application or prove the connection is still authorized. Review the proposed changes independently; current authority is checked again before applying.', 'woocommerce-jetpack' ) . '</p>';
+		} else {
+			echo '<p><strong>' . esc_html__( 'Origin: local owner preparation', 'woocommerce-jetpack' ) . '</strong></p>';
+		}
 		echo '<p>' . esc_html__( 'Writes are conditional per setting, not a transaction. Current values are a new readback, not proof of an atomic snapshot.', 'woocommerce-jetpack' ) . '</p>';
 		if ( $plan['expired'] ) {
 			echo '<p><strong>' . esc_html__( 'The preparation window has expired; this proposal cannot be applied.', 'woocommerce-jetpack' ) . '</strong></p>';
@@ -286,7 +332,24 @@ final class WCJ_AI_Preview {
 		}
 		// phpcs:enable WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
 		try {
-			$plan = array();
+			$plan          = array();
+			$connection_op = in_array( $op, array( 'connection_read', 'connection_prepare', 'connection_revoke' ), true );
+			if ( $connection_op ) {
+				$principal = $input['principal'] ?? null;
+				$digest    = $input['digest'] ?? null;
+				if ( ! is_string( $principal ) || 1 !== preg_match( '/^[1-9][0-9]{0,9}$/D', $principal ) ||
+					! is_string( $digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $digest ) || '1' !== ( $input['confirm'] ?? null ) ||
+					! wp_verify_nonce( $input['_wpnonce'], 'wcj_ai_connection_' . $op . '_' . $principal . '_' . $digest ) ) {
+					self::deny();
+				}
+				if ( 'connection_revoke' === $op ) {
+					WCJ_AI_Connection::revoke( (int) $principal, $digest );
+				} else {
+					WCJ_AI_Connection::owner_rotate( (int) $principal, $digest, 'connection_prepare' === $op );
+				}
+				wp_safe_redirect( add_query_arg( 'connection', $principal, self::url() ), 303 );
+				exit;
+			}
 			if ( in_array( 'plan', $keys[ $op ], true ) ) {
 				require_once __DIR__ . '/class-wcj-ai-invoice-plans.php';
 				$plan = WCJ_AI_Invoice_Plans::inspect( $input['plan'] ?? null );

@@ -114,10 +114,41 @@ final class WCJ_Job_Store {
 final class WCJ_Invoice_Job {
 	const LOCK = 'wcj_invoice_job_lock';
 	public static function authorize() {
-		if ( ! in_array( get_current_user_id(), array( 1, 4 ), true ) ) {
+		if ( ! empty( $GLOBALS['wcj_ai_invoice_denied'] ) || ! in_array( get_current_user_id(), array( 1, 4 ), true ) ) {
 			throw new RuntimeException( 'owner_only' );
 		}
 	}
+}
+/** Minimal error DTO for testing closed tool failures, not native error behavior. */
+final class WP_Error {
+	public $code;
+	public $message;
+	public function __construct( $code, $message ) {
+		$this->code    = $code;
+		$this->message = $message;
+	}
+}
+/** Parent result model only; native validation is tested separately in WordPress. */
+class WP_Ability {
+	public function check_permissions( $input = null ) {
+		if ( $input instanceof Throwable ) {
+			throw $input;
+		}
+		return $input;
+	}
+	public function execute( $input = null ) {
+		if ( $input instanceof Throwable ) {
+			throw $input;
+		}
+		return $input;
+	}
+}
+function is_wp_error( $value ) {
+	return $value instanceof WP_Error;
+}
+function wp_register_ability( $name, $args ) {
+	$GLOBALS['wcj_ai_registered'][ $name ] = $args;
+	return true;
 }
 function esc_html( $value ) {
 	return $value; }
@@ -137,6 +168,8 @@ function wcj_is_module_enabled( $name ) {
 	return false; }
 function user_can( $id, $cap ) {
 	return in_array( $id, array( 1, 4 ), true ); }
+function current_user_can( $cap ) {
+	return user_can( get_current_user_id(), $cap ); }
 function get_user_meta( $id, $key, $single ) {
 	return in_array( $id, array( 2, 3 ), true ) && '_wcj_ai_principal' === $key ? '1' : ''; }
 function get_userdata( $id ) {
@@ -154,6 +187,7 @@ function add_action( ...$args ) {}
 function add_filter( ...$args ) {}
 require_once dirname( __DIR__, 2 ) . '/includes/class-wcj-ai-connection.php';
 require_once dirname( __DIR__, 2 ) . '/includes/admin/class-wcj-ai-invoice-plans.php';
+require_once dirname( __DIR__, 2 ) . '/includes/class-wcj-ai-abilities.php';
 
 function wcj_ai_check( $name, $value ) {
 	$GLOBALS['wcj_ai_cases'][ $name ] = true === $value;
@@ -167,6 +201,7 @@ function wcj_ai_denied( $callback ) {
 }
 function wcj_ai_reset() {
 	unset( $GLOBALS['wcj_ai_on_lock'] );
+	unset( $GLOBALS['wcj_ai_invoice_denied'] );
 	$GLOBALS['wcj_ai_db']     = array();
 	$GLOBALS['wcj_ai_user']   = 1;
 	$GLOBALS['wcj_ai_fault']  = null;
@@ -229,6 +264,14 @@ wcj_ai_check(
 wcj_ai_check( 'initialize_reentry_preserves_bytes', WCJ_AI_Invoice_Plans::initialize() && array() === wcj_ai_index()['entries'] );
 $wcj_ai_plan = wcj_ai_local();
 wcj_ai_check( 'local_allocation_integrated', 1 === count( wcj_ai_index()['entries'] ) && 'pending' === $wcj_ai_plan['status'] && ! isset( $wcj_ai_db['wcj_invoicing_invoice_header_text_color'] ) );
+wcj_ai_check(
+	'local_origin_has_no_connection_identity',
+	array(
+		'kind'       => 'local',
+		'principal'  => null,
+		'generation' => null,
+	) === $wcj_ai_plan['origin']
+);
 wcj_ai_check( 'local_apply_and_recover', 'applied' === WCJ_AI_Invoice_Plans::apply( $wcj_ai_plan['id'] )['status'] && 'recovered' === WCJ_AI_Invoice_Plans::recover( $wcj_ai_plan['id'] )['status'] );
 
 foreach ( array( 'marker_without_index', 'orphan_without_index', 'v2_without_marker', 'duplicate_legacy', 'marker_with_legacy', 'orphan_with_legacy', 'malformed_index' ) as $wcj_ai_bad ) {
@@ -474,6 +517,74 @@ foreach ( array( 'grant_expires', 'ap_removed' ) as $wcj_ai_mode ) {
 	};
 	wcj_ai_check( $wcj_ai_mode . '_after_native_lock_before_intent_denied', wcj_ai_denied( static fn() => WCJ_AI_Invoice_Plans::apply( $wcj_ai_plan['plan_id'] ) ) && $reached_lock && $grant_before === $wcj_ai_db['wcj_ai_client_grant_2'] && 'pending' === WCJ_AI_Invoice_Plans::inspect( $wcj_ai_plan['plan_id'] )['status'] && ! isset( $wcj_ai_db['wcj_invoicing_invoice_header_text_color'] ) );
 }
+
+wcj_ai_fixture( false );
+WCJ_AI_Abilities::register();
+wcj_ai_check( 'three_named_abilities_no_generic_executor', array_keys( $wcj_ai_registered ) === array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare' ) );
+wcj_ai_check( 'only_prepare_uses_finite_error_boundary', 'WCJ_AI_Prepare_Ability' === $wcj_ai_registered['booster-ai/prepare']['ability_class'] && 'WP_Ability' === $wcj_ai_registered['booster-ai/schema']['ability_class'] && 'WP_Ability' === $wcj_ai_registered['booster-ai/context']['ability_class'] );
+$boundary = new WCJ_AI_Prepare_Ability();
+$finite   = $boundary->execute( new WP_Error( 'private_code', 'SYNTHETIC_PRIVATE_MARKER' ) );
+wcj_ai_check( 'failed_parent_result_replaced_without_reflection', 'wcj_ai_prepare_unavailable' === $finite->code && false === strpos( $finite->message, 'SYNTHETIC_PRIVATE_MARKER' ) );
+$finite = $boundary->execute( new RuntimeException( 'SYNTHETIC_EXCEPTION_MARKER' ) );
+wcj_ai_check( 'thrown_parent_result_replaced_without_reflection', 'wcj_ai_prepare_unavailable' === $finite->code && false === strpos( $finite->message, 'SYNTHETIC_EXCEPTION_MARKER' ) );
+wcj_ai_check( 'successful_parent_result_unchanged', array( 'synthetic_success' => true ) === $boundary->execute( array( 'synthetic_success' => true ) ) );
+wcj_ai_check( 'permission_error_maps_to_false', false === $boundary->check_permissions( new WP_Error( 'private_permission', 'SYNTHETIC_PERMISSION_MARKER' ) ) );
+wcj_ai_check( 'permission_exception_maps_to_false', false === $boundary->check_permissions( new RuntimeException( 'SYNTHETIC_PERMISSION_MARKER' ) ) );
+wcj_ai_check( 'permission_only_strict_true_preserved', true === $boundary->check_permissions( true ) && false === $boundary->check_permissions( false ) && false === $boundary->check_permissions( 'yes' ) );
+wcj_ai_check( 'prepare_not_annotated_readonly', false === $wcj_ai_registered['booster-ai/prepare']['meta']['annotations']['readonly'] && true === $wcj_ai_registered['booster-ai/prepare']['meta']['annotations']['idempotent'] );
+$schema = WCJ_AI_Abilities::schema();
+wcj_ai_check( 'read_grant_capability_disclosure', 2 === $schema['schema_version'] && ! in_array( 'prepare', $schema['available'], true ) && in_array( 'prepare', $schema['unavailable'], true ) );
+wcj_ai_check( 'prepare_contract_closed_with_idempotency', false === $schema['prepare_schema']['additionalProperties'] && in_array( 'idempotency_key', $schema['prepare_schema']['required'], true ) && 64 === $schema['prepare_schema']['properties']['idempotency_key']['maxLength'] );
+$before = $wcj_ai_db;
+$denial = WCJ_AI_Abilities::prepare( wcj_ai_input() );
+wcj_ai_check( 'read_grant_tool_denied_without_reservation', $denial instanceof WP_Error && 'wcj_ai_prepare_unavailable' === $denial->code && $wcj_ai_db === $before );
+wcj_ai_fixture();
+$schema = WCJ_AI_Abilities::schema();
+wcj_ai_check( 'prepare_scope_capability_disclosure', in_array( 'prepare', $schema['available'], true ) && ! in_array( 'prepare', $schema['unavailable'], true ) && in_array( 'apply', $schema['unavailable'], true ) );
+$input          = wcj_ai_input();
+$input['owner'] = 99;
+$denial         = WCJ_AI_Abilities::prepare( $input );
+wcj_ai_check( 'tool_extra_authority_field_finite_denial', $denial instanceof WP_Error && ! str_contains( $denial->message, '99' ) && 0 === count( wcj_ai_index()['entries'] ) );
+$tool_plan = WCJ_AI_Abilities::prepare( wcj_ai_input() );
+wcj_ai_check( 'typed_tool_pending_not_applied', is_array( $tool_plan ) && 'pending' === $tool_plan['status'] && true === $tool_plan['requires_local_approval'] && 2 === get_current_user_id() && ! isset( $wcj_ai_db['wcj_invoicing_invoice_header_text_color'] ) );
+wcj_ai_check( 'typed_tool_retry_same_plan', WCJ_AI_Abilities::prepare( wcj_ai_input() ) === $tool_plan );
+wcj_ai_check( 'client_cannot_owner_view_or_rotate', wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_view( 2 ) ) && wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_rotate( 2, str_repeat( 'a', 64 ), false ) ) );
+$wcj_ai_user = 1;
+$plan_view   = WCJ_AI_Invoice_Plans::inspect( $tool_plan['plan_id'] );
+$grant       = json_decode( $wcj_ai_db['wcj_ai_client_grant_2'], true );
+wcj_ai_check(
+	'owner_sees_validated_remote_origin_without_secrets',
+	array(
+		'kind'       => 'remote',
+		'principal'  => 2,
+		'generation' => $grant['id'],
+	) === $plan_view['origin'] && false === strpos( wp_json_encode( $plan_view ), $wcj_ai_uuid ) && false === strpos( wp_json_encode( $plan_view ), hash( 'sha256', $wcj_ai_db['wcj_ai_client_grant_2'] ) )
+);
+$view = WCJ_AI_Connection::owner_view( 2 );
+wcj_ai_check( 'owner_card_closed_no_native_uuid_or_password', array_keys( $view ) === array( 'principal', 'digest', 'active', 'expired', 'expires', 'scopes', 'native_password_present' ) && true === $view['native_password_present'] );
+$before = $wcj_ai_db['wcj_ai_client_grant_2'];
+wcj_ai_check( 'owner_wrong_view_digest_cannot_rotate', wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_rotate( 2, str_repeat( 'a', 64 ), false ) ) && $before === $wcj_ai_db['wcj_ai_client_grant_2'] );
+wcj_ai_check( 'owner_explicit_readonly_rotation', WCJ_AI_Connection::owner_rotate( 2, $view['digest'], false ) && array( 'invoice:read' ) === WCJ_AI_Connection::owner_view( 2 )['scopes'] );
+wcj_ai_check( 'stale_owner_view_cannot_revoke_new_generation', wcj_ai_denied( static fn() => WCJ_AI_Connection::revoke( 2, $view['digest'] ) ) && WCJ_AI_Connection::owner_view( 2 )['active'] );
+wcj_ai_check( 'rotation_invalidates_old_pending_plan', wcj_ai_denied( static fn() => WCJ_AI_Invoice_Plans::apply( $tool_plan['plan_id'] ) ) );
+$view = WCJ_AI_Connection::owner_view( 2 );
+wcj_ai_check( 'owner_view_bound_disconnect', WCJ_AI_Connection::revoke( 2, $view['digest'] ) && ! WCJ_AI_Connection::owner_view( 2 )['active'] );
+wcj_ai_check( 'pre_disconnect_view_cannot_silently_reactivate', wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_rotate( 2, $view['digest'], true ) ) && ! WCJ_AI_Connection::owner_view( 2 )['active'] );
+$view = WCJ_AI_Connection::owner_view( 2 );
+wcj_ai_check( 'fresh_owner_view_explicit_reconnect', WCJ_AI_Connection::owner_rotate( 2, $view['digest'], true ) && WCJ_AI_Connection::owner_view( 2 )['active'] );
+$wcj_ai_user = 4;
+wcj_ai_check( 'other_authorized_owner_cannot_inspect_connection', wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_view( 2 ) ) );
+$wcj_ai_user    = 1;
+$wcj_ai_apps[2] = array();
+$view           = WCJ_AI_Connection::owner_view( 2 );
+wcj_ai_check( 'missing_native_password_visible_and_rotation_denied', false === $view['native_password_present'] && wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_rotate( 2, $view['digest'], true ) ) );
+
+wcj_ai_fixture();
+$wcj_ai_user           = 1;
+$wcj_ai_invoice_denied = true;
+$view                  = WCJ_AI_Connection::owner_view( 2 );
+wcj_ai_check( 'changed_invoice_policy_blocks_new_grant_rotation', wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_rotate( 2, $view['digest'], true ) ) );
+wcj_ai_check( 'owner_can_still_disconnect_after_invoice_policy_change', WCJ_AI_Connection::revoke( 2, $view['digest'] ) && ! WCJ_AI_Connection::owner_view( 2 )['active'] );
 
 echo json_encode(
 	array(

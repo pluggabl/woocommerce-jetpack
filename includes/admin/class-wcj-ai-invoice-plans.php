@@ -611,6 +611,11 @@ final class WCJ_AI_Invoice_Plans {
 		}
 		return array(
 			'id'                => $id,
+			'origin'            => array(
+				'kind'       => 2 === $doc['schema'] ? 'remote' : 'local',
+				'principal'  => 2 === $doc['schema'] ? $doc['connection']['principal'] : null,
+				'generation' => 2 === $doc['schema'] ? $doc['connection']['grant'] : null,
+			),
 			'status'            => $doc['status'],
 			'revision'          => $doc['revision'],
 			'expired'           => time() >= $doc['expires'],
