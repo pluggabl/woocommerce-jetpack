@@ -62,7 +62,13 @@ final class WCJ_AI_Revenue_Observation {
 				self::fail( 'freshness_unverified' );
 			}
 			self::native_query_filter();
-			foreach ( array( 'woocommerce_order_query_args', 'woocommerce_order_query', 'woocommerce_orders_table_datastore_get_orders_query', 'woocommerce_hpos_pre_query', 'woocommerce_orders_table_query_clauses', 'woocommerce_orders_table_query_sql', 'woocommerce_orders_table_query_count_sql', 'get_date_sql', 'date_query_valid_columns', 'wc_order_statuses', 'all' ) as $hook ) {
+			self::native_status_filter();
+			$query = '\\Automattic\\WooCommerce\\Internal\\DataStores\\Orders\\OrdersTableQuery';
+			if ( ! class_exists( 'WC_Order_Query' ) || ! method_exists( 'WC_Order_Query', 'get_query_vars' ) ||
+				! class_exists( $query ) || ! method_exists( $query, '__construct' ) || ! method_exists( $query, '__get' ) ) {
+				self::fail( 'freshness_unverified' );
+			}
+			foreach ( array( 'woocommerce_order_query_args', 'woocommerce_order_query', 'woocommerce_orders_table_datastore_get_orders_query', 'woocommerce_hpos_pre_query', 'woocommerce_orders_table_query_clauses', 'woocommerce_orders_table_query_sql', 'woocommerce_orders_table_query_count_sql', 'get_date_sql', 'date_query_valid_columns', 'all' ) as $hook ) {
 				if ( has_filter( $hook ) ) {
 					self::fail( 'freshness_unverified' );
 				}
@@ -106,6 +112,100 @@ final class WCJ_AI_Revenue_Observation {
 	}
 
 	/**
+	 * Qualify the existing native draft-status callback without initializing it.
+	 *
+	 * Its translated label can still throw; direct query execution catches that.
+	 */
+	private static function native_status_filter() {
+		global $wp_filter;
+		if ( ! is_array( $wp_filter ) ) {
+			self::fail( 'freshness_unverified' );
+		}
+		if ( ! array_key_exists( 'wc_order_statuses', $wp_filter ) ) {
+			return;
+		}
+		$hook = $wp_filter['wc_order_statuses'];
+		if ( ! is_object( $hook ) || 'WP_Hook' !== get_class( $hook ) ) {
+			self::fail( 'freshness_unverified' );
+		}
+		$callbacks = $hook->callbacks;
+		if ( array() === $callbacks ) {
+			return;
+		}
+		if ( ! is_array( $callbacks ) || array( 10 ) !== array_keys( $callbacks ) || ! is_array( $callbacks[10] ) || 1 !== count( $callbacks[10] ) ) {
+			self::fail( 'freshness_unverified' );
+		}
+		$entry = reset( $callbacks[10] );
+		if ( ! is_array( $entry ) || array( 'function', 'accepted_args' ) !== array_keys( $entry ) || 1 !== $entry['accepted_args'] ||
+			! is_array( $entry['function'] ) || array( 0, 1 ) !== array_keys( $entry['function'] ) ||
+			! is_object( $entry['function'][0] ) || 'Automattic\\WooCommerce\\Blocks\\Domain\\Services\\DraftOrders' !== get_class( $entry['function'][0] ) ||
+			'register_draft_order_status' !== $entry['function'][1] ) {
+			self::fail( 'freshness_unverified' );
+		}
+	}
+
+	/**
+	 * Use pinned native HPOS mappings without the exception-to-empty wrapper.
+	 *
+	 * SQL and raw IDs remain ephemeral. A returned object alone is not success:
+	 * require a new native SELECT and matching bounded raw/native result rows.
+	 * At most four direct membership attempts occur per observation, not four SQL
+	 * statements overall; defaults, translation and fact hydration may read more.
+	 *
+	 * @param array $args Server-owned fixed membership criteria.
+	 * @return array Native integer IDs, already checked against raw result IDs.
+	 */
+	private static function hpos_ids( $args ) {
+		global $wpdb;
+		try {
+			if ( 'hpos_native_uncached' !== self::storage() ) {
+				self::fail( 'query_unavailable' );
+			}
+			$normalized                  = ( new WC_Order_Query( $args ) )->get_query_vars();
+			$normalized['page']          = 1;
+			$normalized['offset']        = 0;
+			$normalized['paginate']      = false;
+			$normalized['no_found_rows'] = true;
+			if ( 'hpos_native_uncached' !== self::storage() ) {
+				self::fail( 'query_unavailable' );
+			}
+			$before           = $wpdb->num_queries;
+			$previous_result  = $wpdb->result;
+			$wpdb->last_error = '';
+			$query            = new \Automattic\WooCommerce\Internal\DataStores\Orders\OrdersTableQuery( $normalized );
+			$error            = $wpdb->last_error;
+			$after            = $wpdb->num_queries;
+			$sql              = $wpdb->last_query;
+			$count            = $wpdb->num_rows;
+			$rows             = $wpdb->last_result;
+			$result           = $wpdb->result;
+			// Native query attempts can fail before last_error is assigned. Require
+			// a fresh successful SELECT handle; later eligibility reads can free it.
+			$result_valid  = is_object( $result ) && 'mysqli_result' === get_class( $result ) && $result !== $previous_result;
+			$result_rows   = $result_valid ? $result->num_rows : null;
+			$result_fields = $result_valid ? $result->field_count : null;
+			$ids           = $query->orders;
+			$request       = $query->request;
+			if ( 'hpos_native_uncached' !== self::storage() || '' !== $error || ! is_int( $before ) || ! is_int( $after ) || $after <= $before ||
+				! is_string( $request ) || '' === $request || $sql !== $wpdb->remove_placeholder_escape( $request ) ||
+				! is_array( $ids ) || array_values( $ids ) !== $ids || count( $ids ) > 26 ||
+				! $result_valid || 1 !== $result_fields || $result_rows !== $count ||
+				! is_array( $rows ) || array_values( $rows ) !== $rows || count( $rows ) !== count( $ids ) || count( $rows ) !== $count ) {
+				self::fail( 'query_unavailable' );
+			}
+			foreach ( $rows as $index => $row ) {
+				if ( ! is_object( $row ) || 'stdClass' !== get_class( $row ) || array( 'id' ) !== array_keys( get_object_vars( $row ) ) ||
+					! is_string( $row->id ) || ! is_int( $ids[ $index ] ) || self::identifier( $row->id ) !== $ids[ $index ] ) {
+					self::fail( 'query_unavailable' );
+				}
+			}
+			return $ids;
+		} catch ( Throwable $exception ) {
+			self::fail( 'query_unavailable' );
+		}
+	}
+
+	/**
 	 * Query one fixed page plus a sentinel. All query arguments are server-owned.
 	 *
 	 * @param bool   $refund Refund stream selector.
@@ -132,7 +232,7 @@ final class WCJ_AI_Revenue_Observation {
 			'cache_results' => false,
 		);
 		$args[ $refund ? 'date_created' : 'date_paid' ] = $start . '...' . ( $end - 1 );
-		$ids = wc_get_orders( $args );
+		$ids = 'hpos_native_uncached' === $storage ? self::hpos_ids( $args ) : wc_get_orders( $args );
 		if ( '' !== $wpdb->last_error || ! is_array( $ids ) || array_values( $ids ) !== $ids || count( $ids ) > 26 ) {
 			self::fail( 'query_unavailable' );
 		}

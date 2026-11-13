@@ -23,6 +23,66 @@ namespace Automattic\WooCommerce\Utilities {
 
 namespace Automattic\WooCommerce\Internal\DataStores\Orders {
 
+	final class OrdersTableQuery {
+		private $ids;
+		public function __construct( $args ) {
+			++$GLOBALS['queries'];
+			$GLOBALS['arguments'][] = $args;
+			$fault                  = $GLOBALS['model']['query_fault'] ?? '';
+			if ( 'exception' === $fault ) {
+				throw new \RuntimeException( 'PRIVATE_FAULT_MARKER' ); }
+			if ( 'error' === $fault ) {
+				throw new \Error( 'PRIVATE_FAULT_MARKER' ); }
+			$this->ids = 'shop_order' === $args['type'] ? $GLOBALS['model']['orders'] : $GLOBALS['model']['refunds'];
+			if ( $GLOBALS['model']['membership_drift'] && 2 === $GLOBALS['queries'] ) {
+				$this->ids = array(); }
+			$db = $GLOBALS['wpdb'];
+			if ( 'no_query' !== $fault ) {
+				++$db->num_queries; }
+			$db->last_error  = $GLOBALS['model']['query_error'] ? 'FAKE SQL failure' : '';
+			$db->last_query  = 'wrong_query' === $fault ? 'FAKE other SELECT' : 'FAKE membership SELECT';
+			$db->last_result = array_map( static fn( $id ) => (object) array( 'id' => (string) $id ), $this->ids );
+			$db->num_rows    = count( $this->ids );
+			if ( 'stale_handle' !== $fault ) {
+				$db->result = new \mysqli_result( count( $this->ids ) ); } // phpcs:ignore WordPress.DB.RestrictedFunctions -- Fake result object; no DB or extension in this model.
+			if ( 'silent_failure' === $fault || ( 'second_pass_silent_failure' === $fault && 2 === $GLOBALS['queries'] ) ) {
+				$db->result = false; }
+			if ( 'null_handle' === $fault ) {
+				$db->result = null; }
+			if ( 'true_handle' === $fault ) {
+				$db->result = true; }
+			if ( 'custom_handle' === $fault ) {
+				$db->result = (object) array(
+					'num_rows'    => count( $this->ids ),
+					'field_count' => 1,
+				); }
+			if ( 'handle_fields' === $fault ) {
+				$db->result->field_count = 2; }
+			if ( 'handle_rows' === $fault ) {
+				++$db->result->num_rows; }
+			if ( 'row_count' === $fault ) {
+				++$db->num_rows; }
+			if ( 'row_mismatch' === $fault ) {
+				$db->last_result = array(); }
+			if ( 'raw_overflow' === $fault && $db->last_result ) {
+				$db->last_result[0]->id = '9223372036854775808'; }
+			if ( 'raw_leading_zero' === $fault && $db->last_result ) {
+				$db->last_result[0]->id = '01'; }
+			if ( 'raw_float' === $fault && $db->last_result ) {
+				$db->last_result[0]->id = 101.0; }
+			if ( 'raw_different' === $fault && $db->last_result ) {
+				$db->last_result[0]->id = '999'; }
+			if ( 'raw_extra_field' === $fault && $db->last_result ) {
+				$db->last_result[0]->secret = 'PRIVATE_FAULT_MARKER'; }
+			if ( 'native_string' === $fault && $this->ids ) {
+				$this->ids[0] = (string) $this->ids[0]; }
+			if ( 'post_hook' === $fault ) {
+				$GLOBALS['wp_filter']['wc_order_statuses'] = new \stdClass(); }
+		}
+		public function __get( $name ) {
+			return 'orders' === $name ? $this->ids : 'FAKE membership SELECT'; }
+	}
+
 	final class OrdersTableDataStore {
 		public static function get_orders_table_name() {
 			return 'fake_wc_orders'; }
@@ -33,7 +93,18 @@ namespace Automattic\WooCommerce\Internal\DataStores\Orders {
 	}
 }
 
+namespace Automattic\WooCommerce\Blocks\Domain\Services {
+	class DraftOrders {}
+}
+
 namespace {
+	// phpcs:ignore PEAR.NamingConventions.ValidClassName -- Exact extension-class double; CLI model runs without mysqli.
+	final class mysqli_result {
+		public $num_rows;
+		public $field_count = 1;
+		public function __construct( $count ) {
+			$this->num_rows = $count; }
+	}
 	if ( 'cli' !== PHP_SAPI ) {
 		exit( 1 ); }
 	define( 'ABSPATH', __DIR__ );
@@ -53,12 +124,20 @@ namespace {
 	function has_filter( $hook ) {
 		return in_array( $hook, $GLOBALS['model']['hooks'], true ); }
 	function wc_get_orders( $args ) {
-		++$GLOBALS['queries'];
-		$GLOBALS['arguments'][] = $args;
-		$ids                    = 'shop_order' === $args['type'] ? $GLOBALS['model']['orders'] : $GLOBALS['model']['refunds'];
-		if ( $GLOBALS['model']['query_error'] ) {
-			$GLOBALS['wpdb']->last_error = 'FAKE SQL failure'; }
-		return $GLOBALS['model']['membership_drift'] && 2 === $GLOBALS['queries'] ? array() : $ids;
+		++$GLOBALS['wrapper_calls'];
+		throw new RuntimeException( 'Wrapper must not be used for HPOS' );
+	}
+	final class WC_Order_Query {
+		private $args;
+		public function __construct( $args ) {
+			if ( ! empty( $GLOBALS['model']['defaults_fault'] ) ) {
+				throw new Error( 'PRIVATE_FAULT_MARKER' ); }
+			if ( ! empty( $GLOBALS['model']['defaults_hook'] ) ) {
+				$GLOBALS['wp_filter']['wc_order_statuses'] = new stdClass(); }
+			$this->args = $args;
+		}
+		public function get_query_vars() {
+			return $this->args; }
 	}
 	final class WC_Data_Store {
 		private $kind;
@@ -105,7 +184,14 @@ namespace {
 	}
 	// phpcs:ignore PEAR.NamingConventions.ValidClassName.StartWithCapital -- Deliberate exact native class-name double.
 	final class wpdb {
-		public $last_error = '';
+		public $result;
+		public $last_error  = '';
+		public $num_queries = 7;
+		public $last_query  = 'FAKE membership SELECT';
+		public $last_result = array();
+		public $num_rows    = 0;
+		public function remove_placeholder_escape( $query ) {
+			return $query; }
 		public function prepare( $query, ...$args ) {
 			return array( $query, $args ); }
 		public function get_results( $request, $format ) {
@@ -168,14 +254,16 @@ namespace {
 	);
 	$cases    = array();
 	function reset_model() {
-		$GLOBALS['wp_filter']   = array();
-		$GLOBALS['model']       = $GLOBALS['baseline'];
-		$GLOBALS['wp_filter']   = array();
-		$GLOBALS['wpdb']        = new wpdb();
-		$GLOBALS['queries']     = 0;
-		$GLOBALS['hydrations']  = 0;
-		$GLOBALS['arguments']   = array();
-		$GLOBALS['raw_queries'] = array();
+		$GLOBALS['wp_filter']     = array();
+		$GLOBALS['model']         = $GLOBALS['baseline'];
+		$GLOBALS['wp_filter']     = array();
+		$GLOBALS['wpdb']          = new wpdb();
+		$GLOBALS['wpdb']->result  = new mysqli_result( 0 );
+		$GLOBALS['queries']       = 0;
+		$GLOBALS['wrapper_calls'] = 0;
+		$GLOBALS['hydrations']    = 0;
+		$GLOBALS['arguments']     = array();
+		$GLOBALS['raw_queries']   = array();
 	}
 	function check( $name, $ok ) {
 		$GLOBALS['cases'][ $name ] = true === $ok; }
@@ -216,6 +304,7 @@ namespace {
 	check( 'model_two_fact_passes_four_membership_queries', 4 === $hydrations && 4 === $queries && 8 === count( $raw_queries ) );
 	check( 'model_no_mutation', $before === $model );
 	check( 'model_fixed_query', 26 === $arguments[0]['limit'] && 'ids' === $arguments[0]['return'] && false === $arguments[0]['cache_results'] && 'ASC' === $arguments[0]['order'] );
+	check( 'hpos_no_wrapper_first_page_no_count', 0 === $wrapper_calls && 1 === $arguments[0]['page'] && 0 === $arguments[0]['offset'] && false === $arguments[0]['paginate'] && true === $arguments[0]['no_found_rows'] );
 	foreach ( array( 'cache', 'sync', 'external', 'wrong_store' ) as $fault ) {
 		reset_model();
 		$model[ $fault ] = true;
@@ -225,9 +314,9 @@ namespace {
 	foreach ( array( 'woocommerce_order_query_args', 'woocommerce_order_query', 'woocommerce_orders_table_datastore_get_orders_query', 'woocommerce_hpos_pre_query', 'woocommerce_orders_table_query_clauses', 'woocommerce_orders_table_query_sql', 'woocommerce_orders_table_query_count_sql', 'get_date_sql', 'date_query_valid_columns', 'wc_order_statuses', 'all', 'query' ) as $hook ) {
 		reset_model();
 		$model['hooks'] = array( $hook );
-		if ( 'query' === $hook ) {
-			$wp_filter['query']            = new WP_Hook();
-			$wp_filter['query']->callbacks = array(
+		if ( in_array( $hook, array( 'query', 'wc_order_statuses' ), true ) ) {
+			$wp_filter[ $hook ]            = new WP_Hook();
+			$wp_filter[ $hook ]->callbacks = array(
 				10 => array(
 					'custom' => array(
 						'function'      => static fn( $sql ) => 'REWRITE_MARKER',
@@ -292,6 +381,72 @@ namespace {
 		$wp_filter['query']->callbacks = $malformed;
 		$out                           = WCJ_AI_Revenue_Observation::observe();
 		check( 'malformed_callback_registry_' . $n, isset( $out['reason'] ) && 'freshness_unverified' === $out['reason'] && 0 === $queries );
+	}
+	foreach ( array( 'native', 'empty', 'wrong_class', 'subclass', 'wrong_method', 'wrong_priority', 'wrong_arity', 'string_arity', 'extra_callback', 'extra_key', 'custom_container', 'malformed_callbacks', 'malformed_entry', 'malformed_function' ) as $fault ) {
+		reset_model();
+		$wp_filter['wc_order_statuses'] = new WP_Hook();
+		$entry                          = array(
+			'function'      => array( new \Automattic\WooCommerce\Blocks\Domain\Services\DraftOrders(), 'register_draft_order_status' ),
+			'accepted_args' => 1,
+		);
+		if ( 'wrong_class' === $fault ) {
+			$entry['function'][0] = new stdClass(); }
+		if ( 'subclass' === $fault ) {
+			$entry['function'][0] = new class() extends \Automattic\WooCommerce\Blocks\Domain\Services\DraftOrders {}; }
+		if ( 'wrong_method' === $fault ) {
+			$entry['function'][1] = 'init'; }
+		if ( 'wrong_arity' === $fault ) {
+			$entry['accepted_args'] = 2; }
+		if ( 'string_arity' === $fault ) {
+			$entry['accepted_args'] = '1'; }
+		if ( 'extra_key' === $fault ) {
+			$entry['extra'] = true; }
+		if ( 'malformed_entry' === $fault ) {
+			$entry = null; }
+		if ( 'malformed_function' === $fault ) {
+			$entry['function'] = 'fake'; }
+		$wp_filter['wc_order_statuses']->callbacks = array( 'wrong_priority' === $fault ? 11 : 10 => array( 'native' => $entry ) );
+		if ( 'empty' === $fault ) {
+			$wp_filter['wc_order_statuses']->callbacks = array(); }
+		if ( 'extra_callback' === $fault ) {
+			$wp_filter['wc_order_statuses']->callbacks[10]['extra'] = $entry; }
+		if ( 'malformed_callbacks' === $fault ) {
+			$wp_filter['wc_order_statuses']->callbacks = false; }
+		if ( 'custom_container' === $fault ) {
+			$wp_filter['wc_order_statuses'] = new class() { public function has_filter() {
+					throw new Error( 'must not invoke' );
+			} }; }
+		$out = WCJ_AI_Revenue_Observation::observe();
+		check( 'status_registry_' . $fault, in_array( $fault, array( 'native', 'empty' ), true ) ? ( 'observed_subset' === ( $out['streams']['paid_cohort_order_totals']['status'] ?? null ) && 4 === $queries ) : ( 'freshness_unverified' === ( $out['reason'] ?? null ) && 0 === $queries ) );
+	}
+	foreach ( array( 'exception', 'error', 'no_query', 'wrong_query', 'row_count', 'row_mismatch', 'raw_overflow', 'raw_leading_zero', 'raw_float', 'raw_different', 'raw_extra_field', 'native_string', 'post_hook' ) as $fault ) {
+		reset_model();
+		$model['query_fault'] = $fault;
+		$out                  = WCJ_AI_Revenue_Observation::observe();
+		$reason               = $out['streams']['paid_cohort_order_totals']['reason'] ?? null;
+		check( 'native_completion_' . $fault, 'query_unavailable' === $reason && null === $out['streams']['paid_cohort_order_totals']['groups'] && ! str_contains( json_encode( $out ), 'PRIVATE_FAULT_MARKER' ) );
+	}
+	foreach ( array( 'defaults_fault', 'defaults_hook' ) as $fault ) {
+		reset_model();
+		$model[ $fault ] = true;
+		$out             = WCJ_AI_Revenue_Observation::observe();
+		$reason          = $out['streams']['paid_cohort_order_totals']['reason'] ?? null;
+		check( 'native_defaults_' . $fault, 'query_unavailable' === $reason && 0 === $queries );
+	}
+	reset_model();
+	$model['orders']      = array();
+	$model['refunds']     = array();
+	$model['query_fault'] = 'no_query';
+	$out                  = WCJ_AI_Revenue_Observation::observe();
+	check( 'stale_matching_empty_state_not_success', 'query_unavailable' === ( $out['streams']['paid_cohort_order_totals']['reason'] ?? null ) && null === $out['streams']['paid_cohort_order_totals']['groups'] );
+	foreach ( array( 'silent_failure', 'second_pass_silent_failure', 'null_handle', 'true_handle', 'custom_handle', 'stale_handle', 'handle_fields', 'handle_rows' ) as $fault ) {
+		reset_model();
+		$model['orders']      = array();
+		$model['refunds']     = array();
+		$model['query_fault'] = $fault;
+		$out                  = WCJ_AI_Revenue_Observation::observe();
+		$reason               = $out['streams']['paid_cohort_order_totals']['reason'] ?? null;
+		check( 'successful_select_handle_' . $fault, 'query_unavailable' === $reason && null === $out['streams']['paid_cohort_order_totals']['groups'] );
 	}
 	foreach ( array( 'query_error', 'raw_error', 'membership_drift', 'fact_drift' ) as $fault ) {
 		reset_model();
