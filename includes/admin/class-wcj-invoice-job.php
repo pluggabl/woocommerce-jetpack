@@ -956,10 +956,30 @@ if ( ! class_exists( 'WCJ_Invoice_Job' ) ) :
 		public static function preview() {
 			self::authorize();
 			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in handle().
-			$side    = isset( $_POST['side'] ) && 'after' === $_POST['side'] ? 'after' : 'now';
+			$side = isset( $_POST['side'] ) && 'after' === $_POST['side'] ? 'after' : 'now';
+			return self::preview_draft( 'after' === $side ? self::posted_json( 'changes' ) : array(), $side );
+		}
+
+		/**
+		 * Preview explicit values without manufacturing an admin request.
+		 *
+		 * This is an internal merchant service, not a remote authorization boundary.
+		 * Callers must keep their transport nonce/session checks. Native permissions
+		 * are deliberately rechecked here. No invoice is issued or emailed.
+		 *
+		 * @param array  $changes Explicit presentation values.
+		 * @param string $side Either now or after.
+		 * @return array
+		 * @throws RuntimeException When the arguments are not supported.
+		 */
+		public static function preview_draft( $changes, $side = 'after' ) {
+			self::authorize();
+			if ( ! is_array( $changes ) || ! in_array( $side, array( 'now', 'after' ), true ) ) {
+				throw new RuntimeException( esc_html__( 'Invalid invoice preview.', 'woocommerce-jetpack' ) );
+			}
 			$overlay = array();
 			if ( 'after' === $side ) {
-				$check = self::validate( self::posted_json( 'changes' ), true );
+				$check = self::validate( $changes, true );
 				if ( $check['issues'] ) {
 					return array(
 						'error'  => __( 'Fix the highlighted fields before previewing.', 'woocommerce-jetpack' ),
@@ -1002,12 +1022,35 @@ if ( ! class_exists( 'WCJ_Invoice_Job' ) ) :
 			self::authorize();
 			$changes = self::posted_json( 'changes' );
 			$base    = self::posted_json( 'base' );
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in handle().
+			$confirm = isset( $_POST['confirm'] ) && '1' === $_POST['confirm'];
+			return self::apply_draft( $changes, $base, $confirm );
+		}
+
+		/**
+		 * Apply explicit values through the existing native write/readback service.
+		 *
+		 * This does not grant an AI connection approval rights. A future proposal
+		 * controller must verify its immutable proposal, cookie session, nonce,
+		 * actor/site binding and expiry before calling this merchant-only seam.
+		 * Conditional per-option writes are not a transaction.
+		 *
+		 * @param array $changes Explicit values by native field identifier.
+		 * @param array $base Exact persisted-state fingerprints.
+		 * @param bool  $confirm Explicit confirmation for creation/email changes.
+		 * @return array
+		 * @throws RuntimeException On unsupported input or missing permission.
+		 */
+		public static function apply_draft( $changes, $base, $confirm = false ) {
+			self::authorize();
+			if ( ! is_array( $changes ) || ! is_array( $base ) || ! is_bool( $confirm ) ) {
+				throw new RuntimeException( esc_html__( 'Invalid invoice draft. Nothing was changed.', 'woocommerce-jetpack' ) );
+			}
 			if ( ! $changes ) {
 				throw new RuntimeException( esc_html__( 'The draft is empty. Nothing was changed.', 'woocommerce-jetpack' ) );
 			}
 			// Creation and email changes need the explicit confirmation shown in review, not only a click on Apply.
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in handle().
-			if ( ( isset( $changes['create_on'] ) || isset( $changes['attach_to_emails'] ) ) && ( ! isset( $_POST['confirm'] ) || '1' !== $_POST['confirm'] ) ) {
+			if ( ( isset( $changes['create_on'] ) || isset( $changes['attach_to_emails'] ) ) && ! $confirm ) {
 				throw new RuntimeException( esc_html__( 'Confirm the invoice and email changes before applying. Nothing was changed.', 'woocommerce-jetpack' ) );
 			}
 			$lock = self::lock();
