@@ -51,7 +51,7 @@ final class WCJ_AI_Preview {
 
 	/**
 	 * Before wp_magic_quotes, PHP may include cookies in REQUEST. Permit only
-	 * exact ordinary session-cookie entries; never cookie-supplied commands.
+	 * exact ordinary session/Booster wishlist cookies; never cookie commands.
 	 *
 	 * @param array $input The selected GET or POST input.
 	 * @return bool Whether REQUEST contains only that input and known cookies.
@@ -67,7 +67,7 @@ final class WCJ_AI_Preview {
 			if ( array_key_exists( $key, $input ) ) {
 				continue;
 			}
-			if ( ! is_string( $key ) || 1 !== preg_match( '/^(?:wordpress_(?:logged_in_|sec_)?[a-f0-9]{32}|wordpress_test_cookie|wp-settings-(?:time-)?[0-9]+|PHPSESSID|woocommerce_items_in_cart|woocommerce_cart_hash|wp_woocommerce_session_[a-f0-9]{32})$/D', $key ) ||
+			if ( ! is_string( $key ) || 1 !== preg_match( '/^(?:wordpress_(?:logged_in_|sec_)?[a-f0-9]{32}|wordpress_test_cookie|wp-settings-(?:time-)?[0-9]+|PHPSESSID|woocommerce_items_in_cart|woocommerce_cart_hash|wp_woocommerce_session_[a-f0-9]{32}|wcj_guest_wishlist_str)$/D', $key ) ||
 				! isset( $_COOKIE[ $key ] ) || $_COOKIE[ $key ] !== $value ) {
 				return false;
 			}
