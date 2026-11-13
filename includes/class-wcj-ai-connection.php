@@ -6,6 +6,7 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+require_once __DIR__ . '/class-wcj-ai-grant-profile.php';
 
 /** Quarantine stays registered even when the preview and its tools are off. */
 final class WCJ_AI_Connection {
@@ -172,6 +173,39 @@ final class WCJ_AI_Connection {
 		) : null;
 	}
 
+
+	/**
+	 * Bounded uncached grant read; oversized values never cross into PHP.
+	 *
+	 * @param int $principal Server-derived native user ID.
+	 * @return array|null Exact state or unavailable, never repaired/reset.
+	 */
+	private static function grant_raw( $principal ) {
+		global $wpdb;
+		if ( ! is_int( $principal ) || $principal < 1 ) {
+			return null;
+		}
+		$wpdb->last_error = '';
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Core table, fixed prefix and checked integer, bounded authoritative read.
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT CASE WHEN OCTET_LENGTH(option_value) <= 4096 THEN option_value ELSE NULL END AS option_value FROM {$wpdb->options} WHERE option_name = %s LIMIT 2", 'wcj_ai_client_grant_' . $principal ), ARRAY_A );
+		if ( '' !== $wpdb->last_error || ! is_array( $rows ) || count( $rows ) > 1 ) {
+			return null;
+		}
+		if ( array() === $rows ) {
+			return array(
+				'exists' => false,
+				'raw'    => '',
+			);
+		}
+		if ( ! is_array( $rows[0] ) || array_keys( $rows[0] ) !== array( 'option_value' ) || ! is_string( $rows[0]['option_value'] ) || strlen( $rows[0]['option_value'] ) > WCJ_AI_Grant_Profile::MAX_BYTES ) {
+			return null;
+		}
+		return array(
+			'exists' => true,
+			'raw'    => $rows[0]['option_value'],
+		);
+	}
+
 	/**
 	 * One-hour server-owned grant. No current-user substitution.
 	 *
@@ -195,21 +229,15 @@ final class WCJ_AI_Connection {
 			return null;
 		}
 		$user = get_userdata( $id );
-		if ( ! $user || $user->roles || count( $user->caps ) !== 2 ||
-			true !== ( $user->caps['read'] ?? null ) || true !== ( $user->caps['wcj_ai_client'] ?? null ) ) {
+		if ( ! $user || $user->roles || count( $user->caps ) !== 2 || true !== ( $user->caps['read'] ?? null ) || true !== ( $user->caps['wcj_ai_client'] ?? null ) ) {
 			return null;
 		}
-		$raw   = self::raw( 'wcj_ai_client_grant_' . $id );
-		$grant = $raw && $raw['exists'] && strlen( $raw['raw'] ) <= 4096 ? json_decode( $raw['raw'], true ) : null;
-		$keys  = array( 'schema', 'id', 'principal', 'owner', 'site', 'app_uuid', 'scopes', 'created', 'expires', 'active' );
-		if ( ! is_array( $grant ) || array_keys( $grant ) !== $keys || 1 !== $grant['schema'] ||
-			! is_string( $grant['id'] ) || ! preg_match( '/^[a-f0-9]{32}$/D', $grant['id'] ) ||
-			$id !== $grant['principal'] || ! is_int( $grant['owner'] ) || $id === $grant['owner'] ||
-			get_current_blog_id() !== $grant['site'] || ! is_string( $uuid ) || '' === $uuid || $uuid !== $grant['app_uuid'] ||
-			! in_array( $grant['scopes'], array( array( 'invoice:read' ), array( 'invoice:read', 'invoice:prepare' ) ), true ) || true !== $grant['active'] ||
-			! is_int( $grant['created'] ) || ! is_int( $grant['expires'] ) || $grant['created'] > time() ||
-			$grant['created'] < 1 || $grant['expires'] > $grant['created'] + 3600 || $grant['expires'] <= time() ||
-			self::principal( $grant['owner'] ) || ! user_can( $grant['owner'], 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce native capability, checked on explicit bound owner.
+		$raw   = self::grant_raw( $id );
+		$grant = $raw && $raw['exists'] ? WCJ_AI_Grant_Profile::decode( $raw['raw'] ) : null;
+		$now   = time();
+		if ( ! $grant || $id !== $grant['principal'] || get_current_blog_id() !== $grant['site'] || ! is_string( $uuid ) || $uuid !== $grant['app_uuid'] ||
+			true !== $grant['active'] || $grant['created'] > $now || $grant['expires'] <= $now ||
+			self::principal( $grant['owner'] ) || ! user_can( $grant['owner'], 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown -- Explicit bound native owner, never user substitution.
 			return null;
 		}
 		return $grant;
@@ -279,7 +307,7 @@ final class WCJ_AI_Connection {
 			return null;
 		}
 		$grant = self::grant( self::$authenticated['id'], self::$authenticated['uuid'] );
-		return $grant && in_array( 'invoice:prepare', $grant['scopes'], true ) && self::app_exists( $grant['principal'], $grant['app_uuid'] ) ? self::context( $grant ) : null;
+		return $grant && WCJ_AI_Grant_Profile::INVOICE_PREPARE === WCJ_AI_Grant_Profile::profile( $grant ) && self::app_exists( $grant['principal'], $grant['app_uuid'] ) ? self::context( $grant ) : null;
 	}
 
 	/**
@@ -295,7 +323,7 @@ final class WCJ_AI_Connection {
 			return false;
 		}
 		$grant = self::stored_grant( $context['principal'], $context['app_uuid'] );
-		return $grant && in_array( 'invoice:prepare', $grant['scopes'], true ) && self::context( $grant ) === $context &&
+		return $grant && WCJ_AI_Grant_Profile::INVOICE_PREPARE === WCJ_AI_Grant_Profile::profile( $grant ) && self::context( $grant ) === $context &&
 			self::owner_policy() && self::app_exists( $grant['principal'], $grant['app_uuid'] );
 	}
 
@@ -309,18 +337,12 @@ final class WCJ_AI_Connection {
 	 */
 	private static function owner_record( $principal ) {
 		self::authorize_owner();
-		if ( ! self::enabled() || is_multisite() || ! is_int( $principal ) || $principal < 1 ||
-			self::principal( get_current_user_id() ) || ! self::principal( $principal ) ) {
+		if ( ! self::enabled() || is_multisite() || ! is_int( $principal ) || $principal < 1 || self::principal( get_current_user_id() ) || ! self::principal( $principal ) ) {
 			throw new RuntimeException( 'connection_unavailable' );
 		}
-		$raw   = self::raw( 'wcj_ai_client_grant_' . $principal );
-		$grant = $raw && $raw['exists'] && strlen( $raw['raw'] ) <= 4096 ? json_decode( $raw['raw'], true ) : null;
-		if ( ! is_array( $grant ) || array_keys( $grant ) !== array( 'schema', 'id', 'principal', 'owner', 'site', 'app_uuid', 'scopes', 'created', 'expires', 'active' ) ||
-			1 !== $grant['schema'] || ! is_string( $grant['id'] ) || 1 !== preg_match( '/^[a-f0-9]{32}$/D', $grant['id'] ) ||
-			$principal !== $grant['principal'] || get_current_user_id() !== $grant['owner'] || $principal === $grant['owner'] || get_current_blog_id() !== $grant['site'] ||
-			! is_string( $grant['app_uuid'] ) || 1 !== preg_match( '/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/D', $grant['app_uuid'] ) ||
-			! in_array( $grant['scopes'], array( array( 'invoice:read' ), array( 'invoice:read', 'invoice:prepare' ) ), true ) ||
-			! is_int( $grant['created'] ) || ! is_int( $grant['expires'] ) || $grant['created'] < 1 || $grant['expires'] <= $grant['created'] || $grant['expires'] > $grant['created'] + 3600 || ! is_bool( $grant['active'] ) ) {
+		$raw   = self::grant_raw( $principal );
+		$grant = $raw && $raw['exists'] ? WCJ_AI_Grant_Profile::decode( $raw['raw'] ) : null;
+		if ( ! $grant || $principal !== $grant['principal'] || get_current_user_id() !== $grant['owner'] || get_current_blog_id() !== $grant['site'] ) {
 			throw new RuntimeException( 'connection_unavailable' );
 		}
 		return array( $raw, $grant );
@@ -348,6 +370,8 @@ final class WCJ_AI_Connection {
 		list( $raw, $grant ) = self::owner_record( $principal );
 		return array(
 			'principal'               => $principal,
+			'profile'                 => WCJ_AI_Grant_Profile::profile( $grant ),
+			'generation'              => $grant['id'],
 			'digest'                  => hash( 'sha256', $raw['raw'] ),
 			'active'                  => $grant['active'],
 			'expired'                 => time() >= $grant['expires'],
@@ -365,8 +389,12 @@ final class WCJ_AI_Connection {
 	 * @param string $digest Expected owner-view digest.
 	 * @param bool   $prepare Explicit proposal scope selection.
 	 * @return bool New generation verified by issue.
+	 * @throws RuntimeException On invalid digest or unavailable connection.
 	 */
 	public static function owner_rotate( $principal, $digest, $prepare ) {
+		if ( ! is_string( $digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $digest ) ) {
+			throw new RuntimeException( 'connection_unavailable' );
+		}
 		list( $raw, $grant ) = self::owner_record( $principal );
 		return self::issue( $principal, $grant['app_uuid'], $prepare, $digest );
 	}
@@ -383,25 +411,82 @@ final class WCJ_AI_Connection {
 	 * @throws RuntimeException On unavailable authority or persistence.
 	 */
 	public static function issue( $principal, $uuid, $prepare = false, $expected_digest = null ) {
-		require_once __DIR__ . '/admin/class-wcj-invoice-job.php';
+		if ( ! is_bool( $prepare ) ) {
+			throw new RuntimeException( 'connection_unavailable' );
+		}
+		return self::issue_profile( $principal, $uuid, $prepare ? WCJ_AI_Grant_Profile::INVOICE_PREPARE : WCJ_AI_Grant_Profile::INVOICE_READ, $expected_digest );
+	}
+
+	/**
+	 * Internal report-only issuance; no controller or remote issuance route.
+	 * A future owner controller must require native cookie/session/nonce/consent.
+	 *
+	 * @param int         $principal Pre-provisioned report principal.
+	 * @param string      $uuid Native existing AP UUID, never a browser-posted value.
+	 * @param string|null $expected_digest Exact prior owner view, if rotating.
+	 * @return bool Verified new report-only generation.
+	 */
+	public static function issue_report( $principal, $uuid, $expected_digest = null ) {
+		return self::issue_profile( $principal, $uuid, WCJ_AI_Grant_Profile::REPORT_READ, $expected_digest );
+	}
+
+	/**
+	 * Explicit replacement, not additive scope; no AP credential is returned.
+	 *
+	 * @param int    $principal Dedicated principal.
+	 * @param string $digest Expected raw owner-view digest.
+	 * @return bool Verified report-only generation.
+	 * @throws RuntimeException On invalid digest or unavailable connection.
+	 */
+	public static function owner_rotate_report( $principal, $digest ) {
+		if ( ! is_string( $digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $digest ) ) {
+			throw new RuntimeException( 'connection_unavailable' );
+		}
+		list( $raw, $grant ) = self::owner_record( $principal );
+		return self::issue_report( $principal, $grant['app_uuid'], $digest );
+	}
+
+	/**
+	 * One closed-profile writer with shared gate/CAS and distinct native task policy.
+	 *
+	 * @param int         $principal Dedicated principal.
+	 * @param string      $uuid Native AP UUID.
+	 * @param string      $profile Fixed private enum from explicit public wrappers.
+	 * @param string|null $expected_digest Optional exact prior view.
+	 * @return bool Verified new generation.
+	 * @throws RuntimeException On unavailable authority or uncertain persistence.
+	 */
+	private static function issue_profile( $principal, $uuid, $profile, $expected_digest ) {
 		require_once __DIR__ . '/admin/class-wcj-ai-mutation-gate.php';
-		WCJ_Invoice_Job::authorize();
-		if ( ! self::enabled() || is_multisite() || ! is_int( $principal ) || $principal < 1 || ! is_bool( $prepare ) ||
+		self::authorize_owner();
+		$report = WCJ_AI_Grant_Profile::REPORT_READ === $profile;
+		if ( ! in_array( $profile, array( WCJ_AI_Grant_Profile::INVOICE_READ, WCJ_AI_Grant_Profile::INVOICE_PREPARE, WCJ_AI_Grant_Profile::REPORT_READ ), true ) ) {
+			throw new RuntimeException( 'connection_unavailable' );
+		}
+		if ( ! $report ) {
+			require_once __DIR__ . '/admin/class-wcj-invoice-job.php';
+			WCJ_Invoice_Job::authorize();
+		}
+		if ( ! self::enabled() || is_multisite() || ! is_int( $principal ) || $principal < 1 || ( $report && $principal > 2147483647 ) ||
 			! is_string( $uuid ) || 1 !== preg_match( '/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/D', $uuid ) ||
-			get_current_user_id() === $principal || self::principal( get_current_user_id() ) || ! self::owner_policy() ||
+			get_current_user_id() === $principal || ( $report ? ! self::report_policy() : ! self::owner_policy() ) ||
 			( null !== $expected_digest && ( ! is_string( $expected_digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $expected_digest ) ) ) ) {
 			throw new RuntimeException( 'connection_unavailable' );
 		}
 		$gate = WCJ_AI_Mutation_Gate::acquire();
 		try {
+			self::authorize_owner();
 			$user = get_userdata( $principal );
-			if ( ! self::principal( $principal ) || ! $user || $user->roles || ( count( $user->caps ) !== 2 || true !== ( $user->caps['read'] ?? null ) || true !== ( $user->caps['wcj_ai_client'] ?? null ) ) || ! self::app_exists( $principal, $uuid ) ) {
+			if ( ( $report ? ! self::report_policy() : ! self::owner_policy() ) || ! self::principal( $principal ) || ! $user || $user->roles || count( $user->caps ) !== 2 || true !== ( $user->caps['read'] ?? null ) || true !== ( $user->caps['wcj_ai_client'] ?? null ) || ! self::app_exists( $principal, $uuid ) ) {
 				throw new RuntimeException( 'connection_unavailable' );
 			}
+			if ( ! $report ) {
+				WCJ_Invoice_Job::authorize();
+			}
 			$key      = 'wcj_ai_client_grant_' . $principal;
-			$before   = self::raw( $key );
-			$previous = $before && $before['exists'] && strlen( $before['raw'] ) <= 4096 ? json_decode( $before['raw'], true ) : null;
-			if ( ! $before || ( $before['exists'] && ( ! is_array( $previous ) || ( $previous['owner'] ?? null ) !== get_current_user_id() || ( $previous['site'] ?? null ) !== get_current_blog_id() ) ) ) {
+			$before   = self::grant_raw( $principal );
+			$previous = $before && $before['exists'] ? WCJ_AI_Grant_Profile::decode( $before['raw'] ) : null;
+			if ( ! $before || ( $before['exists'] && ( ! $previous || $previous['principal'] !== $principal || get_current_user_id() !== $previous['owner'] || get_current_blog_id() !== $previous['site'] ) ) ) {
 				throw new RuntimeException( 'connection_unavailable' );
 			}
 			if ( null !== $expected_digest && ( ! $before['exists'] || hash( 'sha256', $before['raw'] ) !== $expected_digest ) ) {
@@ -409,13 +494,13 @@ final class WCJ_AI_Connection {
 			}
 			$now   = time();
 			$grant = array(
-				'schema'    => 1,
+				'schema'    => $report ? 2 : 1,
 				'id'        => bin2hex( random_bytes( 16 ) ),
 				'principal' => $principal,
 				'owner'     => get_current_user_id(),
 				'site'      => get_current_blog_id(),
 				'app_uuid'  => $uuid,
-				'scopes'    => $prepare ? array( 'invoice:read', 'invoice:prepare' ) : array( 'invoice:read' ),
+				'scopes'    => $report ? array( 'report:read_shared' ) : ( WCJ_AI_Grant_Profile::INVOICE_PREPARE === $profile ? array( 'invoice:read', 'invoice:prepare' ) : array( 'invoice:read' ) ),
 				'created'   => $now,
 				'expires'   => $now + 3600,
 				'active'    => true,
@@ -424,8 +509,11 @@ final class WCJ_AI_Connection {
 				'exists' => true,
 				'raw'    => wp_json_encode( $grant ),
 			);
+			if ( ! WCJ_AI_Grant_Profile::decode( $after['raw'] ) ) {
+				throw new RuntimeException( 'connection_unavailable' );
+			}
 			WCJ_AI_Mutation_Gate::assert_held( $gate );
-			if ( ! WCJ_Job_Store::compare_exchange( $key, $before, $after, array( $key ) ) || self::raw( $key ) !== $after ) {
+			if ( ! WCJ_Job_Store::compare_exchange( $key, $before, $after, array( $key ) ) || self::grant_raw( $principal ) !== $after ) {
 				throw new RuntimeException( 'connection_outcome_unknown' );
 			}
 		} finally {
@@ -446,17 +534,16 @@ final class WCJ_AI_Connection {
 	public static function revoke( $principal, $expected_digest = null ) {
 		require_once __DIR__ . '/admin/class-wcj-ai-mutation-gate.php';
 		self::authorize_owner();
-		if ( ! is_int( $principal ) || $principal < 1 || self::principal( get_current_user_id() ) ||
-			( null !== $expected_digest && ( ! is_string( $expected_digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $expected_digest ) ) ) ) {
+		if ( ! is_int( $principal ) || $principal < 1 || ( null !== $expected_digest && ( ! is_string( $expected_digest ) || 1 !== preg_match( '/^[a-f0-9]{64}$/D', $expected_digest ) ) ) ) {
 			throw new RuntimeException( 'connection_unavailable' );
 		}
 		$gate = WCJ_AI_Mutation_Gate::acquire();
 		try {
+			self::authorize_owner();
 			$key    = 'wcj_ai_client_grant_' . $principal;
-			$before = self::raw( $key );
-			$grant  = $before && $before['exists'] && strlen( $before['raw'] ) <= 4096 ? json_decode( $before['raw'], true ) : null;
-			if ( ! is_array( $grant ) || array_keys( $grant ) !== array( 'schema', 'id', 'principal', 'owner', 'site', 'app_uuid', 'scopes', 'created', 'expires', 'active' ) ||
-				1 !== $grant['schema'] || $principal !== $grant['principal'] || get_current_user_id() !== $grant['owner'] || get_current_blog_id() !== $grant['site'] || ! is_bool( $grant['active'] ) ) {
+			$before = self::grant_raw( $principal );
+			$grant  = $before && $before['exists'] ? WCJ_AI_Grant_Profile::decode( $before['raw'] ) : null;
+			if ( ! $grant || $principal !== $grant['principal'] || get_current_user_id() !== $grant['owner'] || get_current_blog_id() !== $grant['site'] ) {
 				throw new RuntimeException( 'connection_unavailable' );
 			}
 			if ( null !== $expected_digest && hash( 'sha256', $before['raw'] ) !== $expected_digest ) {
@@ -468,7 +555,8 @@ final class WCJ_AI_Connection {
 				'raw'    => wp_json_encode( $grant ),
 			);
 			WCJ_AI_Mutation_Gate::assert_held( $gate );
-			if ( ! WCJ_Job_Store::compare_exchange( $key, $before, $after, array( $key ) ) || self::raw( $key ) !== $after ) {
+			// Exact already-inactive replay uses bounded readback, not Job Store's no-op read.
+			if ( ( $before !== $after && ! WCJ_Job_Store::compare_exchange( $key, $before, $after, array( $key ) ) ) || self::grant_raw( $principal ) !== $after ) {
 				throw new RuntimeException( 'connection_outcome_unknown' );
 			}
 		} finally {
@@ -589,10 +677,122 @@ final class WCJ_AI_Connection {
 	 * @return bool Per-request and per-tool native authentication and grant check.
 	 */
 	public static function allowed() {
+		if ( ! self::transport_authenticated() ) {
+			return false;
+		}
+		$grant = self::grant( self::$authenticated['id'], self::$authenticated['uuid'] );
+		return $grant && in_array( WCJ_AI_Grant_Profile::profile( $grant ), array( WCJ_AI_Grant_Profile::INVOICE_READ, WCJ_AI_Grant_Profile::INVOICE_PREPARE ), true ) && self::owner_policy();
+	}
+
+	/**
+	 * Common transport identity is not permission to invoke any task callback.
+	 *
+	 * @return bool Native AP identity, supported active grant and profile environment.
+	 */
+	public static function transport_authenticated() {
 		$id = get_current_user_id();
-		return ! self::$rejected && self::$authenticated && self::$authenticated['id'] === $id &&
-			function_exists( 'rest_get_authenticated_app_password' ) && rest_get_authenticated_app_password() === self::$authenticated['uuid'] &&
-			self::grant( $id, self::$authenticated['uuid'] ) && self::owner_policy();
+		if ( self::$rejected || ! self::$authenticated || self::$authenticated['id'] !== $id || ! function_exists( 'rest_get_authenticated_app_password' ) || rest_get_authenticated_app_password() !== self::$authenticated['uuid'] ) {
+			return false;
+		}
+		$grant = self::grant( $id, self::$authenticated['uuid'] );
+		return $grant && ( WCJ_AI_Grant_Profile::REPORT_READ === WCJ_AI_Grant_Profile::profile( $grant ) ? ( self::report_policy() && self::app_exists( $grant['principal'], $grant['app_uuid'] ) ) : self::owner_policy() );
+	}
+
+	/**
+	 * Qualified report environment; native owner capability is checked separately.
+	 * No invoice module/task policy is weakened or borrowed for reporting.
+	 *
+	 * @return bool Supported site/cache environment.
+	 */
+	private static function report_policy() {
+		return self::enabled() && ! is_multisite() && ! wp_using_ext_object_cache();
+	}
+
+	/**
+	 * Exact report recipient stored by the journal; not accepted from remote input.
+	 *
+	 * @param array $grant Validated report-only grant.
+	 * @return array Closed immutable recipient.
+	 */
+	private static function report_context( array $grant ) {
+		return array(
+			'grant_schema'     => 2,
+			'owner'            => $grant['owner'],
+			'site'             => $grant['site'],
+			'principal'        => $grant['principal'],
+			'app_uuid'         => $grant['app_uuid'],
+			'grant_generation' => $grant['id'],
+			'grant_digest'     => hash( 'sha256', wp_json_encode( $grant ) ),
+			'grant_expires'    => $grant['expires'],
+			'kind'             => 'revenue_observation',
+			'scope'            => 'report:read_shared',
+		);
+	}
+
+	/**
+	 * Report request precheck only, not receipt access or a gate substitute.
+	 *
+	 * @return bool Fresh supported report grant and native AP membership snapshot.
+	 */
+	public static function report_allowed() {
+		if ( ! self::transport_authenticated() ) {
+			return false;
+		}
+		$grant = self::grant( self::$authenticated['id'], self::$authenticated['uuid'] );
+		return $grant && WCJ_AI_Grant_Profile::REPORT_READ === WCJ_AI_Grant_Profile::profile( $grant ) && self::report_policy() && self::app_exists( $grant['principal'], $grant['app_uuid'] );
+	}
+
+	/**
+	 * Fresh native request binding under the caller's already-held gate.
+	 * No receipt data is read; caller must revalidate and release before emitting it.
+	 *
+	 * @param array $gate Internal acquired token, never request input.
+	 * @return array|null Server-derived report recipient.
+	 */
+	public static function report_read_context( array $gate ) {
+		require_once __DIR__ . '/admin/class-wcj-ai-mutation-gate.php';
+		WCJ_AI_Mutation_Gate::assert_held( $gate );
+		if ( ! self::report_allowed() ) {
+			return null;
+		}
+		$grant = self::grant( self::$authenticated['id'], self::$authenticated['uuid'] );
+		return $grant && WCJ_AI_Grant_Profile::REPORT_READ === WCJ_AI_Grant_Profile::profile( $grant ) && self::report_policy() && self::app_exists( $grant['principal'], $grant['app_uuid'] ) ? self::report_context( $grant ) : null;
+	}
+
+	/**
+	 * Validate a saved report recipient without fabricating remote authentication.
+	 *
+	 * @param array $context Server-retained recipient.
+	 * @param array $gate Held token, shared with the enclosing operation.
+	 * @return bool Fresh report grant, explicit owner, policy and AP membership.
+	 */
+	public static function report_context_eligible( array $context, array $gate ) {
+		require_once __DIR__ . '/admin/class-wcj-ai-mutation-gate.php';
+		WCJ_AI_Mutation_Gate::assert_held( $gate );
+		if ( array_keys( $context ) !== array( 'grant_schema', 'owner', 'site', 'principal', 'app_uuid', 'grant_generation', 'grant_digest', 'grant_expires', 'kind', 'scope' ) || ! is_int( $context['principal'] ) || ! is_string( $context['app_uuid'] ) ) {
+			return false;
+		}
+		$grant = self::stored_grant( $context['principal'], $context['app_uuid'] );
+		return $grant && WCJ_AI_Grant_Profile::REPORT_READ === WCJ_AI_Grant_Profile::profile( $grant ) && self::report_context( $grant ) === $context && self::report_policy() && self::app_exists( $grant['principal'], $grant['app_uuid'] );
+	}
+
+	/**
+	 * Owner-service binding. Future controller must separately bind current cookie,
+	 * session/nonce/explicit consent; this internal method never impersonates a user.
+	 *
+	 * @param int   $principal Dedicated report principal.
+	 * @param array $gate Held token after the controller's owner authorization.
+	 * @return array|null Exact active report recipient owned by the native user.
+	 */
+	public static function owner_report_context( $principal, array $gate ) {
+		require_once __DIR__ . '/admin/class-wcj-ai-mutation-gate.php';
+		WCJ_AI_Mutation_Gate::assert_held( $gate );
+		list( $raw, $grant ) = self::owner_record( $principal );
+		if ( WCJ_AI_Grant_Profile::REPORT_READ !== WCJ_AI_Grant_Profile::profile( $grant ) ) {
+			return null;
+		}
+		$context = self::report_context( $grant );
+		return self::report_context_eligible( $context, $gate ) ? $context : null;
 	}
 
 	/**
@@ -605,7 +805,7 @@ final class WCJ_AI_Connection {
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
-		return ( self::$admitted || self::$hinted || self::$rejected || self::principal( get_current_user_id() ) ) && ! self::allowed() ? self::error() : $result;
+		return ( self::$admitted || self::$hinted || self::$rejected || self::principal( get_current_user_id() ) ) && ! self::transport_authenticated() ? self::error() : $result;
 	}
 
 	/**
@@ -618,7 +818,7 @@ final class WCJ_AI_Connection {
 	 */
 	public static function rest_dispatch( $result, $server, $request ) {
 		if ( self::$admitted || self::$hinted || self::$rejected || self::principal( get_current_user_id() ) ) {
-			if ( self::ROUTE !== $request->get_route() || ! self::allowed() ) {
+			if ( self::ROUTE !== $request->get_route() || ! self::transport_authenticated() ) {
 				return self::error();
 			}
 		}

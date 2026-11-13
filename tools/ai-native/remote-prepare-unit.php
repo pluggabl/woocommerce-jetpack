@@ -34,6 +34,7 @@ final class WCJ_AI_Prepare_DB {
 		return $value;
 	}
 	public function get_row( $query, $format ) {
+		$GLOBALS['wcj_ai_reads'][] = $query[1][0];
 		if ( str_contains( $query[0], ' LIKE ' ) ) {
 			$rows = $this->get_results( $query, $format );
 			return $rows[0] ?? null;
@@ -41,6 +42,14 @@ final class WCJ_AI_Prepare_DB {
 		return isset( $GLOBALS['wcj_ai_db'][ $query[1][0] ] ) ? array( 'option_value' => $GLOBALS['wcj_ai_db'][ $query[1][0] ] ) : null;
 	}
 	public function get_results( $query, $format ) {
+		$GLOBALS['wcj_ai_reads'][] = $query[1][0];
+		if ( str_contains( $query[0], 'CASE WHEN OCTET_LENGTH(option_value) <= 4096' ) ) {
+			if ( isset( $GLOBALS['wcj_ai_read_fault'] ) ) {
+				return $GLOBALS['wcj_ai_read_fault']( $query[1][0], $this );
+			}
+			$key = $query[1][0];
+			return isset( $GLOBALS['wcj_ai_db'][ $key ] ) ? array( array( 'option_value' => strlen( $GLOBALS['wcj_ai_db'][ $key ] ) <= 4096 ? $GLOBALS['wcj_ai_db'][ $key ] : null ) ) : array();
+		}
 		if ( str_contains( $query[0], 'meta_value' ) ) {
 			return isset( $GLOBALS['wcj_ai_apps'][ $query[1][0] ] ) ? array( array( 'meta_value' => serialize( $GLOBALS['wcj_ai_apps'][ $query[1][0] ] ) ) ) : array();
 		}
@@ -114,7 +123,7 @@ final class WCJ_Job_Store {
 final class WCJ_Invoice_Job {
 	const LOCK = 'wcj_invoice_job_lock';
 	public static function authorize() {
-		if ( ! empty( $GLOBALS['wcj_ai_invoice_denied'] ) || ! in_array( get_current_user_id(), array( 1, 4 ), true ) ) {
+		if ( ! empty( $GLOBALS['wcj_ai_invoice_denied'] ) || ! in_array( get_current_user_id(), $GLOBALS['wcj_ai_owner_ids'] ?? array( 1, 4 ), true ) ) {
 			throw new RuntimeException( 'owner_only' );
 		}
 	}
@@ -157,22 +166,24 @@ function wp_json_encode( $value ) {
 function get_current_user_id() {
 	return $GLOBALS['wcj_ai_user']; }
 function get_current_blog_id() {
-	return 1; }
+	return $GLOBALS['wcj_ai_site_id'] ?? 1; }
 function is_multisite() {
-	return false; }
+	return ! empty( $GLOBALS['wcj_ai_multisite'] ); }
 function wp_using_ext_object_cache() {
-	return false; }
+	return ! empty( $GLOBALS['wcj_ai_ext_cache'] ); }
 function has_filter( $name ) {
-	return false; }
+	return $GLOBALS['wcj_ai_filters'][ $name ] ?? false; }
 function wcj_is_module_enabled( $name ) {
 	return false; }
 function user_can( $id, $cap ) {
-	return in_array( $id, array( 1, 4 ), true ); }
+	return in_array( $id, $GLOBALS['wcj_ai_owner_ids'] ?? array( 1, 4 ), true ) && ! in_array( $id, $GLOBALS['wcj_ai_denied_owners'] ?? array(), true ); }
 function current_user_can( $cap ) {
 	return user_can( get_current_user_id(), $cap ); }
 function get_user_meta( $id, $key, $single ) {
-	return in_array( $id, array( 2, 3 ), true ) && '_wcj_ai_principal' === $key ? '1' : ''; }
+	return in_array( $id, $GLOBALS['wcj_ai_principal_ids'] ?? array( 2, 3 ), true ) && '_wcj_ai_principal' === $key ? '1' : ''; }
 function get_userdata( $id ) {
+	if ( isset( $GLOBALS['wcj_ai_user_override'][ $id ] ) ) {
+		return $GLOBALS['wcj_ai_user_override'][ $id ]; }
 	return (object) array(
 		'ID'    => $id,
 		'roles' => array(),
@@ -200,8 +211,11 @@ function wcj_ai_denied( $callback ) {
 	return false;
 }
 function wcj_ai_reset() {
+	foreach ( array( 'wcj_ai_owner_ids', 'wcj_ai_principal_ids', 'wcj_ai_site_id', 'wcj_ai_read_fault', 'wcj_ai_multisite', 'wcj_ai_ext_cache', 'wcj_ai_filters', 'wcj_ai_denied_owners', 'wcj_ai_user_override' ) as $key ) {
+		unset( $GLOBALS[ $key ] ); }
 	unset( $GLOBALS['wcj_ai_on_lock'] );
 	unset( $GLOBALS['wcj_ai_invoice_denied'] );
+	$GLOBALS['wcj_ai_reads']  = array();
 	$GLOBALS['wcj_ai_db']     = array();
 	$GLOBALS['wcj_ai_user']   = 1;
 	$GLOBALS['wcj_ai_fault']  = null;
@@ -251,6 +265,10 @@ function wcj_ai_set_index( $index ) {
 function wcj_ai_writes_without_gate() {
 	return array_values( array_filter( $GLOBALS['wcj_ai_writes'], static fn( $key ) => WCJ_AI_Mutation_Gate::KEY !== $key ) );
 }
+
+// Test-only shared fixture mode, not a runtime or external request switch.
+if ( defined( 'WCJ_AI_TEST_BOOTSTRAP_ONLY' ) && true === WCJ_AI_TEST_BOOTSTRAP_ONLY ) {
+	return; }
 
 wcj_ai_reset();
 wcj_ai_check( 'local_create_requires_explicit_initialize', wcj_ai_denied( 'wcj_ai_local' ) && ! isset( $wcj_ai_db[ WCJ_AI_Invoice_Plans::INITIALIZED ] ) );
@@ -561,7 +579,7 @@ wcj_ai_check(
 	) === $plan_view['origin'] && false === strpos( wp_json_encode( $plan_view ), $wcj_ai_uuid ) && false === strpos( wp_json_encode( $plan_view ), hash( 'sha256', $wcj_ai_db['wcj_ai_client_grant_2'] ) )
 );
 $view = WCJ_AI_Connection::owner_view( 2 );
-wcj_ai_check( 'owner_card_closed_no_native_uuid_or_password', array_keys( $view ) === array( 'principal', 'digest', 'active', 'expired', 'expires', 'scopes', 'native_password_present' ) && true === $view['native_password_present'] );
+wcj_ai_check( 'owner_card_closed_no_native_uuid_or_password', array_keys( $view ) === array( 'principal', 'profile', 'generation', 'digest', 'active', 'expired', 'expires', 'scopes', 'native_password_present' ) && WCJ_AI_Grant_Profile::INVOICE_PREPARE === $view['profile'] && $grant['id'] === $view['generation'] && true === $view['native_password_present'] );
 $before = $wcj_ai_db['wcj_ai_client_grant_2'];
 wcj_ai_check( 'owner_wrong_view_digest_cannot_rotate', wcj_ai_denied( static fn() => WCJ_AI_Connection::owner_rotate( 2, str_repeat( 'a', 64 ), false ) ) && $before === $wcj_ai_db['wcj_ai_client_grant_2'] );
 wcj_ai_check( 'owner_explicit_readonly_rotation', WCJ_AI_Connection::owner_rotate( 2, $view['digest'], false ) && array( 'invoice:read' ) === WCJ_AI_Connection::owner_view( 2 )['scopes'] );

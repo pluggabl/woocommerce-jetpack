@@ -223,7 +223,7 @@ final class WCJ_AI_Abilities {
 	 */
 	public static function server( $adapter ) {
 		if ( WCJ_AI_Connection::enabled() ) {
-			$adapter->create_server( 'booster-ai-preview', 'booster-ai/v1', 'mcp', 'Booster private preview', 'Saved invoice colours and separately scoped pending proposals. Settings apply only through deliberate local WordPress owner approval. No remote execution or diagnostic export.', '0.2.0', array( '\WP\MCP\Transport\HttpTransport' ), null, null, array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare' ), array(), array(), array( 'WCJ_AI_Connection', 'allowed' ) );
+			$adapter->create_server( 'booster-ai-preview', 'booster-ai/v1', 'mcp', 'Booster private preview', 'Saved invoice colours and separately scoped pending proposals. Settings apply only through deliberate local WordPress owner approval. No remote execution or diagnostic export.', '0.2.0', array( '\WP\MCP\Transport\HttpTransport' ), null, null, array( 'booster-ai/schema', 'booster-ai/context', 'booster-ai/prepare' ), array(), array(), array( 'WCJ_AI_Connection', 'transport_authenticated' ) );
 		}
 	}
 
