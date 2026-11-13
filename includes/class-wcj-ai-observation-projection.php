@@ -279,6 +279,55 @@ final class WCJ_AI_Observation_Projection {
 	}
 
 	/**
+	 * Revalidate a stored projection without querying, refreshing or authorizing it.
+	 * Reconstruct the closed producer shape, then require its exact projection.
+	 *
+	 * @param mixed $payload Previously projected revenue data.
+	 * @return array Canonical closed projection, not proof of consent or origin.
+	 */
+	public static function revenue_payload( $payload ) {
+		self::keys( $payload, array( 'schema_version', 'overall_complete', 'non_atomic', 'membership_complete', 'query_basis', 'resumable', 'cohort_refunds', 'product_breakdown', 'return_requests', 'net_revenue', 'unavailable_components', 'periods', 'storage', 'streams', 'reason', 'observed_until_utc', 'limits' ) );
+		self::same( $payload['schema_version'], 1 );
+		self::same(
+			$payload['limits'],
+			array(
+				'ids_per_stream'                    => 25,
+				'wc_get_orders_calls_max'           => 4,
+				'hydrations_max'                    => 100,
+				'soft_seconds'                      => 2,
+				'native_operation_duration_bounded' => false,
+			)
+		);
+		$source = $payload;
+		unset( $source['schema_version'], $source['reason'] );
+		$source['schema'] = 1;
+		$source['limits'] = array(
+			'ids_per_stream'                    => 25,
+			'queries'                           => 4,
+			'hydrations'                        => 100,
+			'soft_seconds'                      => 2,
+			'native_operation_duration_bounded' => false,
+		);
+		if ( null !== $payload['reason'] ) {
+			$source['reason']  = self::reason( $payload['reason'] );
+			$source['streams'] = array();
+		} else {
+			self::keys( $payload['streams'], array( 'paid_cohort_order_totals', 'recorded_refund_events' ) );
+			foreach ( $payload['streams'] as $name => $stream ) {
+				self::keys( $stream, array( 'status', 'amount_basis', 'groups', 'cap_reached', 'reason' ) );
+				if ( 'observed_subset' === $stream['status'] ) {
+					unset( $source['streams'][ $name ]['reason'] );
+				} else {
+					unset( $source['streams'][ $name ]['cap_reached'] );
+				}
+			}
+		}
+		$out = self::revenue( $source );
+		self::same( $payload, $out );
+		return $out;
+	}
+
+	/**
 	 * Validate an already projected scalar; never coerce unsupported source data.
 	 *
 	 * @param mixed $value Scalar record.
