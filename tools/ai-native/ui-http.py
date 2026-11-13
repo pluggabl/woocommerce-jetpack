@@ -32,7 +32,7 @@ def docker(*args):
 
 def php(code):
     prelude = "define('WP_ADMIN',true);$_SERVER['REQUEST_METHOD']='GET';require '/var/www/html/wp-load.php';if(DB_NAME!=='synthetic_ai'||getenv('AI_ORIGIN')!==home_url())exit(3);"
-    return docker('exec', wp, 'php', '-r', prelude + code).decode()
+    return docker('exec', '--user', 'www-data', wp, 'php', '-r', prelude + code).decode()
 
 
 def check(name, condition):
@@ -133,7 +133,8 @@ with sync_playwright() as pw:
     check('other modules explicitly unobserved', 'multicurrency' in view['unobserved'] and view['persistence'] == 'none')
     (out / 'capture-dto.json').write_text(json.dumps(view, indent=2))
     page.screenshot(path=str(out / 'capture.png'), full_page=True)
-    for name, url in [('extra cart argument', capture_url + '&add-to-cart=10'), ('duplicate argument', capture_url + '&p=10'), ('rewritten path', capture_url.replace(origin + '/?', origin + '/wp-json/?'))]:
+    # A real WordPress entry point tests our path guard; /wp-json/ can 404 in Apache before WordPress on a plain-permalink fixture.
+    for name, url in [('extra cart argument', capture_url + '&add-to-cart=10'), ('duplicate argument', capture_url + '&p=10'), ('alternate WordPress path', capture_url.replace(origin + '/?', origin + '/wp-login.php?'))]:
         check(name + ' refused', context.request.get(url).status == 403)
     check('GET body refused', context.request.fetch(capture_url, method='GET', data='{"mutation":true}', headers={'Content-Type':'application/json'}).status == 403)
     def sentinel_request(url, data=None, extra_headers=None):
@@ -143,6 +144,8 @@ with sync_playwright() as pw:
         return response.status, php("echo file_get_contents('/tmp/ai-ui-sentinel');")
     page.goto(page_url, wait_until='domcontentloaded')
     launch = payload('capture')
+    status, hits = sentinel_request(capture_url)
+    check('positive phase control before negative assertions', status == 200 and 'construction_reached' in hits and 'wp_loaded_reached' in hits)
     for action in ['wcj_ai_preview', ' wcj_ai_preview ', '<b>wcj_ai_preview</b>', 'wcj_ai_preview%20']:
         status, hits = sentinel_request(post_url, dict(launch, action=action, product='10', **{'wcj-currency':'EUR','wcj-currency-nonce':'synthetic'}))
         check('action normalization denied before construction: ' + action.replace('<','[').replace('>',']'), status == 403 and hits == '')
@@ -151,6 +154,8 @@ with sync_playwright() as pw:
     status, hits = sentinel_request(capture_url + '&wcj-currency=EUR')
     check('capture command denied before construction', status == 403 and hits == '')
     cookies = '; '.join(c['name']+'='+c['value'] for c in context.cookies())
+    status, hits = sentinel_request(capture_url, extra_headers={'Cookie':cookies})
+    check('manual cookie positive control', status == 200 and 'construction_reached' in hits and 'wp_loaded_reached' in hits)
     for injected in ['wcj-currency=EUR', 'p=999']:
         status, hits = sentinel_request(capture_url, extra_headers={'Cookie':cookies+'; '+injected})
         check('cookie command/conflict denied before construction: '+injected, status == 403 and hits == '')
@@ -163,9 +168,10 @@ with sync_playwright() as pw:
     app = json.loads(php("$u=get_user_by('login','store_owner');$r=WP_Application_Passwords::create_new_application_password($u->ID,['name'=>'Synthetic UI gate']);if(is_wp_error($r))exit(5);echo json_encode(['password'=>$r[0],'uuid'=>$r[1]['uuid'],'uid'=>$u->ID]);"))
     try:
         api = pw.request.new_context(http_credentials={'username':'store_owner','password':app['password'],'send':'always'})
-        check('real Application Password authenticates REST', api.get(origin+'/?rest_route=/wp/v2/users/me').status == 200)
+        authenticated = api.get(origin+'/?rest_route=/wp/v2/users/me')
+        check('real Application Password authenticates REST identity', authenticated.status == 200 and authenticated.json().get('id') == app['uid'])
         check('Application Password cannot enter cookie-only page (no plan or nonce involved)', api.get(page_url).status == 403)
-        check('Application Password alone cannot approve', api.post(post_url, form=dict(stale_apply, confirm='1')).status == 403)
+        check('Application Password stale apply is rejected (layered corroboration only)', api.post(post_url, form=dict(stale_apply, confirm='1')).status == 403)
         api.dispose()
     finally:
         php("WP_Application_Passwords::delete_application_password("+str(app['uid'])+",'"+app['uuid']+"');")
