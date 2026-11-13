@@ -163,6 +163,9 @@ if ( ! class_exists( 'Plugin_Usage_Tracker' ) ) {
 }
 
 // Hooks.
+// Keep dedicated-principal quarantine active even when preview tools are off.
+require_once __DIR__ . '/includes/class-wcj-ai-connection.php';
+require_once __DIR__ . '/includes/class-wcj-ai-abilities.php';
 // Explicit internal preview only. Guard binds before native module construction.
 if ( defined( 'WCJ_AI_PREVIEW' ) && true === WCJ_AI_PREVIEW ) {
 	require_once __DIR__ . '/includes/admin/class-wcj-ai-preview.php';
