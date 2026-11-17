@@ -466,7 +466,7 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 
 == Changelog ==
 
-= 10.0.0 - Unreleased =
+= 10.0.0 - 18/11/2026 =
 * Guided setup - Find a job by search or store area and follow a plain-language guided screen that shows what it saves and any separate step. Browsing turns nothing on. Full module settings remain.
 * Invoices - Guided invoice branding with a rendered sample PDF that issues, numbers and emails nothing.
 * Extras and questions - Separate guided tasks for a question per product, a question per order and a priced optional extra such as gift wrapping.

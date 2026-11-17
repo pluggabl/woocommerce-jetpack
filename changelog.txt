@@ -1,4 +1,4 @@
-= 10.0.0 - Unreleased =
+= 10.0.0 - 18/11/2026 =
 
 * Task finder - Find common store changes by task and open the matching guide or settings. Browsing the task finder is read-only. Each task identifies the specific change it saves and any separate activation step.
 * Task search and shortcuts - Search a defined set of tasks, see your saved task changes separately from recently opened module settings, and jump between six available related workspaces. This is not a search of every Booster setting and does not link every settings screen.
