@@ -42,11 +42,12 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				$user_details_billing_first_name = isset( $user_details['billing_first_name'] ) ? $user_details['billing_first_name'] : '';
 				$user_details_billing_last_name  = isset( $user_details['billing_last_name'] ) ? $user_details['billing_last_name'] : '';
 
+				$admin_email = get_option( 'admin_email', '' );
 				$replaced_values = array(
 					'%coupon_code%'   => $coupon_code,
 					'%checkout_link%' => $checkout_url,
 					'%customer_name%' => $user_details_billing_first_name . ' ' . $user_details_billing_last_name,
-					'%admin_email%'   => 'admin@test.com',
+					'%admin_email%'   => is_string( $admin_email ) ? $admin_email : '',
 				);
 
 				$email_content = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $message );

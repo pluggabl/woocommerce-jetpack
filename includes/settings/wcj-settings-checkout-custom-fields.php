@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Guided job entry, printed only while the settings page itself renders (never during export or option setup).
+if ( class_exists( 'WCJ_Checkout_Job' ) && WCJ_Task_Finder::allowed( 'checkout_custom_fields' ) && did_action( 'in_admin_header' ) && current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+	echo '<p><a class="button button-primary" href="' . esc_url( WCJ_Checkout_Job::url() ) . '">' . esc_html__( 'Edit a checkout question with preview', 'woocommerce-jetpack' ) . '</a></p>';
+}
+
 $product_cats        = wcj_get_terms( 'product_cat' );
 $products            = wcj_get_products();
 $settings            = array(

@@ -222,12 +222,12 @@ if ( ! class_exists( 'WCJ_Product_By_Date' ) ) :
 			if ( $purchasable ) {
 				$direct_date = $this->maybe_get_direct_date( wcj_get_product_id_or_variation_parent_id( $_product ) );
 				if ( false !== ( $direct_date ) ) {
-					$date = DateTime::createFromFormat( wcj_get_option( 'wcj_product_by_date_direct_date_format', 'm/d/Y' ), $direct_date, wcj_timezone() );
+					$date = DateTime::createFromFormat( '!' . wcj_get_option( 'wcj_product_by_date_direct_date_format', 'm/d/Y' ), $direct_date, wcj_timezone() );
 					if ( false === $date ) {
 						return false;
 					}
 					$timestamp = $date->getTimestamp();
-					return ( $this->time_now >= $timestamp );
+					return ( time() >= $timestamp );
 				} else {
 					$_date = $this->get_product_availability_this_month( $_product );
 					if ( '-' === $_date ) {

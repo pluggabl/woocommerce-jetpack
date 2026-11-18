@@ -259,6 +259,7 @@ if ( ! class_exists( 'WCJ_Product_Variation_Swatches' ) ) :
 				</select>
 				<p class="description">
 					<?php echo wp_kses_post( "Determines how this attribute's values are displayed like Color Box or As Image", 'woocommerce-jetpack' ); ?>
+					<?php if ( class_exists( 'WCJ_Catalog_Job' ) && WCJ_Catalog_Job::object_allowed( 'product_variation_swatches', false ) ) { echo WCJ_Catalog_Job::guide( 'product_variation_swatches', 'swatches-attributes', 'Help for this attribute type' ); } ?>
 				</p>
 				<p class="description">
 					<?php
@@ -296,6 +297,7 @@ if ( ! class_exists( 'WCJ_Product_Variation_Swatches' ) ) :
 					</select>
 					<p class="description">
 						<?php echo wp_kses_post( "Determines how this attribute's values are displayed like Color Box, As Image, As Button", 'woocommerce-jetpack' ); ?>
+					<?php if ( class_exists( 'WCJ_Catalog_Job' ) && WCJ_Catalog_Job::object_allowed( 'product_variation_swatches', false ) ) { echo WCJ_Catalog_Job::guide( 'product_variation_swatches', 'swatches-attributes', 'Help for this attribute type' ); } ?>
 					</p> 
 				</td>
 			</tr>

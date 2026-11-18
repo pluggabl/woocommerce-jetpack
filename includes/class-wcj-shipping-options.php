@@ -171,32 +171,34 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 		 *
 		 * @version 2.9.1
 		 */
-		public function hide_shipping_when_free_is_available( $rates, $package ) {
-			$wcj_ticket                 = WCJ_Rule_Explanations::shipping_v2_start( $this, 'shipping_options_hide_free', $rates );
-			$free_shipping_rates        = array();
-			$is_free_shipping_available = false;
+		/** Native key-containment algorithm. Reader stays lazy at the original option sites; preview has no observer. */
+		public static function hide_free_rate_projection( $rates, $read_type, $note = null ) {
+			$free_shipping_rates = array(); $is_free_shipping_available = false;
 			foreach ( $rates as $rate_key => $rate ) {
 				if ( false !== strpos( $rate_key, 'free_shipping' ) ) {
 					$is_free_shipping_available = true;
-					WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, 'kept_free_key' );
+					if ( $note ) { $note( $rate, 'kept_free_key' ); }
 					$free_shipping_rates[ $rate_key ] = $rate;
-				} elseif (
-					'except_local_pickup' === apply_filters( 'booster_option', 'hide_all', wcj_get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
-					false !== strpos( $rate_key, 'local_pickup' )
-					) {
-
-						WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, 'kept_local_key' );
-						$free_shipping_rates[ $rate_key ] = $rate;
-				} elseif (
-					'flat_rate_only' === apply_filters( 'booster_option', 'hide_all', wcj_get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
-					false === strpos( $rate_key, 'flat_rate' )
-					) {
-					WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, 'kept_nonflat_key' );
+				} elseif ( 'except_local_pickup' === $read_type() && false !== strpos( $rate_key, 'local_pickup' ) ) {
+					if ( $note ) { $note( $rate, 'kept_local_key' ); }
+					$free_shipping_rates[ $rate_key ] = $rate;
+				} elseif ( 'flat_rate_only' === $read_type() && false === strpos( $rate_key, 'flat_rate' ) ) {
+					if ( $note ) { $note( $rate, 'kept_nonflat_key' ); }
 					$free_shipping_rates[ $rate_key ] = $rate;
 				}
 			}
-			WCJ_Rule_Explanations::shipping_v2_options_finish( $wcj_ticket, ( $is_free_shipping_available ) ? $free_shipping_rates : $rates, null, $is_free_shipping_available );
-			return ( $is_free_shipping_available ) ? $free_shipping_rates : $rates;
+			return array( 'rates' => $is_free_shipping_available ? $free_shipping_rates : $rates, 'free' => $is_free_shipping_available );
+		}
+
+		public function hide_shipping_when_free_is_available( $rates, $package ) {
+			$wcj_ticket = WCJ_Rule_Explanations::shipping_v2_start( $this, 'shipping_options_hide_free', $rates );
+			$result = self::hide_free_rate_projection(
+				$rates,
+				static function() { return apply_filters( 'booster_option', 'hide_all', wcj_get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ); },
+				static function( $rate, $reason ) use ( $wcj_ticket ) { WCJ_Rule_Explanations::shipping_v2_note( $wcj_ticket, $rate, $reason ); }
+			);
+			WCJ_Rule_Explanations::shipping_v2_options_finish( $wcj_ticket, $result['rates'], null, $result['free'] );
+			return $result['rates'];
 		}
 
 		/**
@@ -216,7 +218,7 @@ if ( ! class_exists( 'WCJ_Shipping_Options' ) ) :
 						array(
 							array(
 								'title'   => __( 'Booster: Hide when free is available', 'woocommerce-jetpack' ),
-								'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
+								'desc'    => __( 'Enable', 'woocommerce-jetpack' ) . ( class_exists( 'WCJ_Task_Finder' ) ? WCJ_Task_Finder::shipping_link() : '' ),
 								'id'      => 'wcj_shipping_hide_if_free_available_all',
 								'default' => 'no',
 								'type'    => 'checkbox',

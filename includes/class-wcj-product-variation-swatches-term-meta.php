@@ -169,6 +169,7 @@ if ( ! class_exists( 'WCJ_Product_Variation_Swatches_Term_Meta' ) ) :
 				$field['size'] = isset( $field['size'] ) ? $field['size'] : '40';
 
 				self::field_start( $field, $term );
+				if ( class_exists( 'WCJ_Catalog_Job' ) ) { WCJ_Catalog_Job::object_help( 'product_variation_swatches', 'swatches-terms', 'Help for this term color or image', false ); }
 				switch ( $field['type'] ) {
 
 					case 'wcj_color':

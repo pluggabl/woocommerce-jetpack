@@ -236,6 +236,7 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 		 * @version 5.6.8
 		 */
 		public function create_price_label_meta_box() {
+			if ( class_exists( 'WCJ_Label_Job' ) ) { WCJ_Label_Job::product_help( 'price_labels' ); }
 			$current_post_id = get_the_ID();
 			echo '<table style="width:100%;">';
 			echo '<tr>';

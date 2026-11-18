@@ -56,7 +56,7 @@ foreach ( $product_types as $product_type => $product_type_desc ) {
 		array(
 			array(
 				'title' => $product_type_desc,
-				'desc'  => __( 'Labels can contain shortcodes.', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Labels can contain shortcodes.', 'woocommerce-jetpack' ) . ( class_exists( 'WCJ_Label_Job' ) ? WCJ_Label_Job::specialist_help( 'free_price', array( 'zero-type' => __( 'Choose the zero-price product type', 'woocommerce-jetpack' ), 'zero-location' => __( 'Choose where the free label appears', 'woocommerce-jetpack' ) ) ) : '' ),
 				'type'  => 'title',
 				'id'    => 'wcj_free_price_' . $product_type . 'options',
 			),

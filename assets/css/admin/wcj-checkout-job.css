@@ -1,0 +1,52 @@
+/* Checkout question job. Builds on the branded invoice canvas styles (wcj-invoice-job.css). */
+.wcj-cq-slot select { min-width: 260px; }
+.wcj-cq-on { font-weight: 600; font-size: 14px; margin-top: 14px; }
+.wcj-cq-fs { border: 0; padding: 0; margin: 14px 0 0; }
+.wcj-cq-fs { min-inline-size: 0; }
+.wcj-cq-fs legend { max-inline-size: 100%; box-sizing: border-box; white-space: normal; overflow-wrap: anywhere; font-weight: 600; padding: 0; margin-bottom: 6px; }
+.wcj-cq-seg { display: inline-flex; flex-wrap: wrap; gap: 0; }
+.wcj-cq-seg .button { border-radius: 0; margin-left: -1px; }
+.wcj-cq-seg .button:first-child { border-radius: 3px 0 0 3px; margin-left: 0; }
+.wcj-cq-seg .button:last-child { border-radius: 0 3px 3px 0; }
+.wcj-cq-seg .button[aria-pressed=true] { background: #2271b1; color: #fff; border-color: #2271b1; position: relative; }
+.wcj-cq-seg .button.is-limited:not([aria-pressed=true]) { color: #8c8f94; border-style: dashed; }
+/* Answer type: four separate buttons in a balanced 2x2 grid instead of a wrapped joined row. */
+#wcj-cq .wcj-cq-seg[data-group="type"] { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+#wcj-cq .wcj-cq-seg[data-group="type"] .button,
+#wcj-cq .wcj-cq-seg[data-group="type"] .button:first-child,
+#wcj-cq .wcj-cq-seg[data-group="type"] .button:last-child { margin: 0; border-radius: 3px; text-align: center; }
+.wcj-cq-kept { list-style: disc; padding-left: 18px; margin: 6px 0; }
+#wcj-ij-draftbar.is-review #wcj-cq-primary, #wcj-ij-draftbar.is-review #wcj-cq-discard { display: none; }
+.wcj-cq-review-rows { margin: 0 0 8px; }
+/* Change rows: one label column wide enough for long labels and their scope tag, so values line up. */
+#wcj-cq .wcj-ij-rows .wcj-ij-rl { flex: 0 0 200px; min-width: 0; }
+#wcj-cq #wcj-cq-rows li, #wcj-cq .wcj-cq-review-rows li { align-items: baseline; }
+#wcj-cq .wcj-cq-scope { display: block; margin-top: 2px; font-size: 12px; color: #646970; }
+.wcj-cq-parked { margin: 12px 0 4px; }
+.wcj-cq-parked[hidden] { display: none; }
+.wcj-cq-park { background: #fcf9e8; border: 1px solid #f0c33c; border-radius: 4px; padding: 8px 10px; margin-bottom: 8px; }
+.wcj-cq-park-h { margin: 0 0 4px; font-weight: 600; }
+.wcj-cq-park input, .wcj-cq-park textarea { width: 100%; background: #fff; }
+.wcj-cq-park-a { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 6px 0 0; }
+.wcj-cq-note.is-warn { background: #fcf0e3; color: #8a5a00; }
+
+/* Preview stage: dominant, one or two labelled surfaces. */
+.wcj-cq-stage { border: 1px solid #c3c4c7; border-top: 0; background: #f0f0f1; padding: 18px; display: grid; gap: 18px; min-height: 420px; align-content: start; }
+.wcj-cq-surface { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; overflow: hidden; }
+.wcj-cq-shead { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: #f6f7f7; border-bottom: 1px solid #dcdcde; font-size: 12px; color: #50575e; }
+.wcj-cq-tier { border-radius: 10px; padding: 1px 8px; font-weight: 600; }
+.wcj-cq-tier.is-real { background: #e7f5ec; color: #00702a; }
+.wcj-cq-tier.is-ill { background: #fcf0e3; color: #8a5a00; }
+.wcj-cq-surface iframe { width: 100%; height: 360px; border: 0; display: block; background: #fff; }
+.wcj-cq-surface.is-stale iframe { opacity: .55; }
+.wcj-cq-empty { padding: 40px 20px; text-align: center; color: #50575e; font-size: 14px; }
+
+/* Blocks illustration: a sketch, deliberately plain. */
+.wcj-cq-ill { padding: 18px 22px 22px; font-size: 14px; color: #1e1e1e; }
+.wcj-cq-ill h4 { font-size: 16px; margin: 0 0 12px; font-weight: 600; }
+.wcj-cq-ill .ghost { border: 1px dashed #c3c4c7; border-radius: 4px; padding: 12px; color: #8c8f94; margin-bottom: 10px; }
+.wcj-cq-ill .box { border: 1px solid #8c8f94; border-radius: 4px; padding: 12px; color: #50575e; margin-bottom: 10px; background: #fff; }
+.wcj-cq-ill .box.is-new, .wcj-cq-ill .cbx.is-new { outline: 2px solid #2271b1; outline-offset: 3px; }
+.wcj-cq-ill .cbx { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.wcj-cq-ill .cbx i { width: 16px; height: 16px; border: 1px solid #50575e; border-radius: 2px; display: inline-block; }
+.wcj-cq-ill .off { border: 1px dashed #b32d2e; color: #b32d2e; border-radius: 4px; padding: 10px; margin-bottom: 10px; }

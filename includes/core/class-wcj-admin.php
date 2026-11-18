@@ -990,6 +990,7 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 		 * @param   array $current_section defines the current section.
 		 */
 		public function output_settings( $current_section = '' ) {
+			WCJ_Task_Finder::native_help( $current_section );
 
 			$settings = $this->get_settings( $current_section );
 
@@ -1107,8 +1108,15 @@ if ( ! class_exists( 'WCJ_Admin' ) ) :
 								$active_tab  = esc_attr( $active_tab );
 								foreach ( $setting['tab_ids'] as $key => $option ) {
 									$tab_ids_titles[] = $option;
+									// Preserve existing full-settings bookmarks with a focusable native tab target.
+									$task_anchor = '';
+									if ( 'product_tabs' === $current_section && 'wcj_product_tab_for_all_product_tab' === $key ) {
+										$task_anchor = ' id="wcj_product_tab_options"';
+									} elseif ( 'shipping_options' === $current_section && 'shipping_general_options_tab' === $key ) {
+										$task_anchor = ' id="wcj_shipping_hide_if_free_available_options"';
+									}
 									$final_html      .= '<li class="wcj-nav-item">
-                                        <a href="#" class="wcj-nav-link ' . ( $active_tab === $key ? 'active' : '' ) . '" data-rel="' . $key . '">' . $option . '</a>
+                                        <a href="#"' . $task_anchor . ' class="wcj-nav-link ' . ( $active_tab === $key ? 'active' : '' ) . '" data-rel="' . $key . '">' . $option . '</a>
                                     </li>';
 								}
 								$final_html .= '<input type="hidden" class="wcj_setting_active_tab" name="wcj_setting_active_tab" value="' . $active_tab . '">';

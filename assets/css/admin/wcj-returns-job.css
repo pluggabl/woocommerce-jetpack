@@ -1,0 +1,26 @@
+/* Returns job: small additions on top of wcj-invoice-job.css. */
+.wcj-rj .wcj-rj-lede { max-width: 640px; }
+.wcj-rj .wcj-rj-card { max-width: 720px; background: #fff; border: 1px solid #dcdcde; padding: 12px 16px; margin: 12px 0; }
+.wcj-rj fieldset { border: 0; padding: 0; margin: 0 0 12px; }
+.wcj-rj legend { font-weight: 600; margin-bottom: 6px; }
+.wcj-rj .wcj-rj-presets { margin-right: 8px; }
+.wcj-rj #wcj-rj-window { width: 5em; }
+.wcj-rj .wcj-rj-hint { display: block; color: #646970; font-size: 12px; }
+.wcj-rj .wcj-rj-issue { display: block; color: #b32d2e; }
+.wcj-rj .wcj-rj-note { background: #f6f7f7; border-left: 4px solid #72aee6; padding: 8px 10px; }
+.wcj-rj .wcj-rj-note.is-error { border-left-color: #d63638; }
+.wcj-rj .wcj-rj-msg:empty { display: none; }
+.wcj-rj .wcj-rj-msg { padding: 8px 10px; border-left: 4px solid #00a32a; background: #fff; max-width: 720px; }
+.wcj-rj .wcj-rj-msg.is-error { border-left-color: #d63638; }
+.wcj-rj .wcj-rj-warn { color: #8a4b00; font-weight: 600; }
+.wcj-rj .wcj-rj-diff { background: #fcf9e8; font-weight: 600; }
+.wcj-rj .wcj-rj-caveats { list-style: disc; margin-left: 20px; color: #50575e; }
+.wcj-rj table.widefat { margin: 6px 0 12px; }
+.wcj-rj #wcj-rj-rule { margin: 0 0 12px; }
+.wcj-rj #wcj-rj-rule summary { cursor: pointer; font-weight: 600; }
+.wcj-rj .wcj-rj-rule-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0 4px; }
+.wcj-rj #wcj-rj-rule-id { width: 8em; }
+.wcj-rj #wcj-rj-rule-days { width: 5em; }
+.wcj-rj #wcj-rj-pending { margin: 8px 0; }
+/* Preserve the hidden contract against local display utilities. */
+.wcj-rj [hidden] { display: none !important; }

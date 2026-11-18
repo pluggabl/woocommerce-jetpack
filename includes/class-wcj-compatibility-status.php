@@ -172,7 +172,8 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 					'info',
 					__( 'Booster HPOS compatibility status', 'woocommerce-jetpack' ),
 					__( 'High-Performance Order Storage is enabled. These active order modules use WooCommerce order APIs in the maintained paths, but custom order workflows should still be tested in staging.', 'woocommerce-jetpack' ),
-					$hpos_modules
+					$hpos_modules,
+					$this->is_guided_task_screen()
 				);
 			}
 		}
@@ -433,13 +434,18 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 		 * @param string $title defines the notice title.
 		 * @param string $intro defines the notice intro.
 		 * @param array  $modules defines active module rows.
+		 * @param bool   $compact whether informational module details use a disclosure.
 		 */
-		protected function render_notice( $type, $title, $intro, $modules ) {
+		protected function render_notice( $type, $title, $intro, $modules, $compact = false ) {
 			$notice_class = ( 'warning' === $type ) ? 'notice-warning' : 'notice-info';
 
-			echo '<div class="notice ' . esc_attr( $notice_class ) . ' wcj-compatibility-status">';
+			$compact = $compact && 'info' === $type;
+			echo '<div class="notice ' . esc_attr( $notice_class ) . ' wcj-compatibility-status' . ( $compact ? ' inline wcj-guided-compact-notice' : '' ) . '">';
 			echo '<p><strong>' . esc_html( $title ) . '</strong></p>';
 			echo '<p>' . esc_html( $intro ) . '</p>';
+			if ( $compact ) {
+				echo '<details><summary>' . esc_html__( 'Active modules and guidance', 'woocommerce-jetpack' ) . '</summary>';
+			}
 			echo '<table class="widefat striped" style="margin:8px 0 12px;max-width:1100px;">';
 			echo '<thead><tr><th>' . esc_html__( 'Module', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Status', 'woocommerce-jetpack' ) . '</th><th>' . esc_html__( 'Guidance', 'woocommerce-jetpack' ) . '</th></tr></thead><tbody>';
 
@@ -449,6 +455,9 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 
 			echo '</tbody></table>';
 			echo '<p>' . esc_html( $this->get_tier_note() ) . '</p>';
+			if ( $compact ) {
+				echo '</details>';
+			}
 			echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wcj-compatibility-status' ) ) . '">' . esc_html__( 'View Booster status', 'woocommerce-jetpack' ) . '</a></p>';
 			echo '</div>';
 		}
@@ -477,6 +486,45 @@ if ( ! class_exists( 'WCJ_Compatibility_Status' ) ) :
 			}
 
 			return __( 'Tier note: compatibility guidance is module-specific and does not change enabled features or limits.', 'woocommerce-jetpack' );
+		}
+
+		/** Keeps only this informational notice compact on the implemented guided task routes. */
+		protected function is_guided_task_screen() {
+			// This read-only route choice changes presentation, never permissions or settings.
+			$page = filter_input( INPUT_GET, 'page', FILTER_UNSAFE_RAW );
+			return is_string( $page ) && in_array( $page, array(
+				'wcj-dashboard',
+				'wcj-invoice-job',
+				'wcj-checkout-job',
+				'wcj-product-extra-job',
+				'wcj-product-question-job',
+				'wcj-product-date-job',
+				'wcj-order-notes-job',
+				'wcj-cart-checkout-tasks',
+				'wcj-gateway-fee-job',
+				'wcj-returns-job',
+				'wcj-gateway-country-job',
+				'wcj-gateway-amount-job',
+				'wcj-shipping-description-job',
+				'wcj-shipping-delivery-tasks', 'wcj-global-discount-job', 'wcj-pricing-discount-tasks', 'wcj-currency-symbol-job', 'wcj-currency-tax-tasks', 'wcj-sale-badge-job', 'wcj-promotions-tasks', 'wcj-account-orders-label-job', 'wcj-order-account-tasks',
+				'wcj-payment-choice-tasks',
+				'wcj-product-tab-job',
+				'wcj-shipping-hide-job',
+				'wcj-place-order-label-job',
+				'wcj-add-to-cart-label-job',
+				'wcj-price-label-job',
+				'wcj-free-price-label-job',
+				'wcj-catalog-breadcrumbs-job',
+				'wcj-catalog-cross_sells-job',
+				'wcj-catalog-frequently_bought_together-job',
+				'wcj-catalog-product_images-job',
+				'wcj-catalog-product_listings-job',
+				'wcj-catalog-product_variation_swatches-job',
+				'wcj-catalog-products_per_page-job',
+				'wcj-catalog-related_products-job',
+				'wcj-catalog-sorting-job',
+				'wcj-catalog-upsells-job',
+			), true );
 		}
 
 		/**

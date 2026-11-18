@@ -1,0 +1,13 @@
+/* Scoped layout only; no shared page, body clipping or sticky overlay. */
+.wcj-product-date { max-width: 940px; }
+.wcj-product-date [hidden] { display:none !important; }
+.wcj-product-date label { font-weight:600; }
+.wcj-product-date input[type=text], .wcj-product-date input[type=search], .wcj-product-date select { max-width:100%; box-sizing:border-box; }
+.wcj-product-date #wcj-pd-editor { margin-top:1.5rem; padding:1rem; background:#fff; border:1px solid #c3c4c7; }
+.wcj-product-date #wcj-pd-review { border:2px solid #996800; padding:1rem; margin:1rem 0; }
+.wcj-product-date #wcj-pd-status, .wcj-product-date #wcj-pd-draft-note, .wcj-product-date #wcj-pd-lock { overflow-wrap:anywhere; }
+.wcj-product-date pre { white-space:pre-wrap; overflow-wrap:anywhere; }
+.wcj-product-date .button { white-space:normal; height:auto; margin:0.2rem 0; }
+.wcj-product-date #wcj-pd-title, .wcj-product-date #wcj-pd-review-title { scroll-margin-top:100px; }
+.wcj-product-date .wcj-availability-groups li { margin:1rem 0; }
+@media (max-width:480px) { .wcj-product-date #wcj-pd-editor { padding:0.65rem; } .wcj-product-date select { width:100%; } .wcj-product-date #wcj-pd-search { width:100%; } }

@@ -1,0 +1,51 @@
+.wcj-task-finder{box-sizing:border-box;max-width:76rem;margin:1.5rem auto;padding:clamp(.875rem,3vw,2rem);background:#fff;border:1px solid #c3c4c7;border-radius:.375rem;color:#1d2327;overflow-wrap:anywhere}
+.wcj-task-finder h2,.wcj-task-finder h3,.wcj-task-finder h4{line-height:1.3;color:#1d2327}.wcj-task-finder h2{font-size:1.6rem;margin-top:0}.wcj-task-finder label{display:block;font-weight:600;margin:.6rem 0 .25rem}.wcj-task-finder form>div,.wcj-task-actions{display:flex;flex-wrap:wrap;gap:.5rem .875rem;align-items:center}.wcj-task-finder input[type=search]{min-width:0;width:min(100%,25rem);max-width:100%}.wcj-task-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:.85rem;list-style:none;margin:0}.wcj-task-list>li{box-sizing:border-box;margin:0;border:1px solid #c3c4c7;padding:.875rem 1rem;min-width:0}.wcj-task-list h4{font-size:1.05rem;margin:0}.wcj-task-actions a,.wcj-task-finder p>a,.wcj-task-help a{color:#135e96;text-decoration:underline}.wcj-task-help{margin:.5rem 0 1rem}.wcj-task-help summary{cursor:pointer}.wcj-task-help p,.wcj-task-help ul{margin:.45em 0}.wcj-task-help li{margin:0 0 .35em}.wcj-task-finder :focus-visible,.wcj-task-help :focus-visible{outline:2px solid #135e96;outline-offset:2px}
+
+
+/* Preserve the import control and stacked task previews on narrow admin screens. */
+@media screen and (max-width: 782px) {
+	.wcj-ij .wcj-ij-cx { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+	.wcj-ij .wcj-ij-cx > *, .wcj-ij .wcj-ij-bar > *, .wcj-ij fieldset { min-width: 0; }
+	.wcj-ij .wcj-ij-pv { position: static; }
+	.wcj-ij .wcj-ij-bar, .wcj-ij .wcj-ij-logo, .wcj-ij .wcj-ij-ra, .wcj-ij .wcj-ij-under,
+	.wcj-ij .wcj-ij-row, .wcj-ij .wcj-ij-rows li, .wcj-ij .wcj-pe-bar, .wcj-ij .wcj-cq-shead,
+	.wcj-ij .wcj-gf-amount, .wcj-ij .wcj-gf-limits, .wcj-ij .wcj-ij-inline { flex-wrap: wrap; }
+	.wcj-ij .wcj-ij-bar .wcj-ij-adv { margin-left: 0; }
+	.wcj-ij .wcj-ij-cx, .wcj-ij .wcj-ij-bar { overflow-wrap: anywhere; }
+	.wcj-ij :is(input:not([type=checkbox]):not([type=radio]), select, textarea, iframe, img, .button, .wcj-ij-thumb),
+	.wcj-ij .wcj-pe-sample select { box-sizing: border-box; min-width: 0; max-width: 100%; }
+	.wcj-ij select, .wcj-ij .button { white-space: normal; }
+	.wcj-ij .wcj-ij-ed, .wcj-ij .wcj-ij-pv, .wcj-ij .wcj-cq-stage { min-width: 0; }
+	.wcj-ij .wcj-gf-cards { grid-template-columns: minmax(0, 1fr); }
+	.wcj-ij .wcj-ij-rows li > span { min-width: 0; max-width: 100%; }
+	.wcj-dash-sing-part .wcj-dash-sing-icon-dtl { flex: 1 1 9rem; min-width: 0; }
+	.wcj-dash-sing-part input[name=booster_import_settings_file] { box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; }
+	.wcj-license-box .wcj-license-box-bg, .wcj-license-box .wcj-license-box-lf,
+	.wcj-license-box .wcj-rounded-btn-main, .wcj-license-box .wcj-license-social-button,
+	.wcj-license-box .wcj-license-social-button ul { min-width: 0; max-width: 100%; box-sizing: border-box; flex-wrap: wrap; }
+	.wcj-license-box .wcj-rounded-btn, .wcj-license-box .wcj-license-box-lf-icn-dtl { max-width: 100%; min-width: 0; box-sizing: border-box; overflow-wrap: anywhere; }
+}
+@media screen and (max-width: 480px) {
+	.wcj-ij .wcj-ij-bar { align-items: start; }
+	.wcj-ij .wcj-ij-bar label { flex-basis: 100%; }
+	.wcj-ij .wcj-pe-stage, .wcj-ij .wcj-cq-stage, .wcj-ij .wcj-gf-stage { padding: .75rem; }
+	.wcj-license-box .wcj-rounded-btn-main, .wcj-license-box .wcj-license-social-button { flex: 1 1 100%; margin-inline: 0; }
+	.wcj-dash-sing-part:has(input[name=booster_import_settings_file]) { flex-wrap: wrap; }
+}
+@media screen and (max-width: 480px) {
+	.wcj-license-social-bottom .wcj-row.wcj-row-flex { width: 100%; margin-inline: 0; }
+	.wcj-license-social-bottom .wcj-row-flex > .wcj-col-lg-6 { flex: 1 1 100%; width: 100%; min-width: 0; padding-inline: 0; box-sizing: border-box; }
+	.wcj-dash-sing-part .wcj-dash-sing-icon-dtl { box-sizing: border-box; }
+}
+
+
+/* Keep intrinsic long sample labels and promotional chip rows inside their panels. */
+@media screen and (max-width: 782px) {
+	.wcj-ij .wcj-pe-sample { min-width: 0; max-width: 100%; width: 100%; flex: 1 1 100%; }
+	.wcj-ij .wcj-pe-sample select { display: block; width: 100%; max-width: 100%; min-width: 0; }
+	#wcj-promo-chips.wcj-promo-chips { box-sizing: border-box; min-width: 0; max-width: 100%; flex-wrap: wrap; margin-left: 0 !important; }
+	#wcj-promo-chips .wcj-btn-chip { box-sizing: border-box; min-width: 0; max-width: 100%; margin-right: 0; white-space: normal; overflow-wrap: anywhere; }
+}
+
+/* Leave the submitted search heading below the sticky Booster and WordPress bars at every viewport. */
+#wcj-find-task { scroll-margin-top: 96px; }

@@ -528,7 +528,7 @@ if ( ! function_exists( 'wcj_get_invoice_date' ) ) {
 		$invoice_date_timestamp = $the_invoice->get_invoice_date();
 		if ( $invoice_date_timestamp ) {
 			$extra_days_in_sec = $extra_days * 24 * 60 * 60;
-			return date_i18n( $date_format, $invoice_date_timestamp + $extra_days_in_sec );
+			return wp_kses_post( date_i18n( $date_format, $invoice_date_timestamp + $extra_days_in_sec ) );
 		} else {
 			return '';
 		}
