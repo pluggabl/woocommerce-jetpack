@@ -1322,7 +1322,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_date( $atts ) {
-			return date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) + $atts['days'] * 24 * 60 * 60 );
+			return wp_kses_post( date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) + $atts['days'] * 24 * 60 * 60 ) );
 		}
 
 		/**
@@ -1333,7 +1333,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 */
 		public function wcj_order_time( $atts ) {
 			$order_date = wcj_get_order_date( $this->the_order )->format( 'Y-m-d H:i:s' );
-			return wcj_pretty_utc_date( $order_date, $atts['time_format'] );
+			return wp_kses_post( wcj_pretty_utc_date( $order_date, $atts['time_format'] ) );
 		}
 
 		/**

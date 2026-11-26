@@ -58,6 +58,17 @@ if ( is_admin() ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-returns-summary-admin.php';
 	// Compatibility Status.
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-compatibility-status.php';
+	// Booster True V10 admin shell (zero frontend cost, zero WC submenus).
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/v10/class-wcj-v10-bootstrap.php';
+	WCJ_V10_Bootstrap::init();
+} else {
+	add_action(
+		'rest_api_init',
+		static function () {
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/v10/class-wcj-v10-bootstrap.php';
+			WCJ_V10_Bootstrap::register_rest();
+		}
+	);
 }
 
 // WordPress 6.9+ Abilities API. Older WordPress versions do not load these frontend classes.
