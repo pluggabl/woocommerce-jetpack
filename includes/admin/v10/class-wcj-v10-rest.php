@@ -797,7 +797,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					}
 
 					$default_label = ( 'needs_label' === $reason )
-						? __( 'Gateway Fee (add label to publish)', 'woocommerce-jetpack' )
+						? __( 'Gateway Fee (needs label)', 'woocommerce-jetpack' )
 						: __( 'Gateway Fee', 'woocommerce-jetpack' );
 
 					return array(

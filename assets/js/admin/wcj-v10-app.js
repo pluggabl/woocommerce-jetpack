@@ -34,6 +34,7 @@
     busy: false,
     previewBusy: false,
     previewTimer: null,
+    lastPreviewSignature: '',
     editorSeq: 0,
     previewSeq: 0,
     previewAbort: null,
@@ -210,7 +211,7 @@
         gateway: d.gateway,
         subtotal: roundNum(subtotal),
         shipping: roundNum(shipping),
-        fee_label: label || (reason === 'needs_label' ? 'Gateway Fee (add label to publish)' : 'Gateway Fee'),
+        fee_label: label || (reason === 'needs_label' ? 'Gateway Fee (needs label)' : 'Gateway Fee'),
         fee_amount: feeAmount,
         total: roundNum(baseTotal + feeAmount),
         reason,
@@ -260,10 +261,21 @@
     return {};
   }
 
+  function previewSignature() {
+    return JSON.stringify({
+      slug: state.editorSlug,
+      mode: state.previewContext.invoicePreviewMode,
+      preview: state.preview,
+      enabled: state.draft ? !!state.draft.enabled : false,
+      autoEnabled: state.autoEnabled,
+    });
+  }
+
   function renderPreviewPaneOnly() {
     const pvSlot = document.getElementById('wcj-v10-preview-pane');
     if (pvSlot) {
       pvSlot.innerHTML = renderEditorPreviewHtml();
+      state.lastPreviewSignature = previewSignature();
       bindPreviewAndActionEvents();
     }
   }
@@ -449,6 +461,7 @@
     }
     state.banner = null;
     state.autoEnabled = {};
+    state.lastPreviewSignature = '';
     state.historyOpen = false;
     state.editorSlug = slug;
     state.view = 'editor';
@@ -514,10 +527,6 @@
       clearTimeout(state.previewTimer);
     }
     state.previewBusy = true;
-    const statusEl = document.getElementById('wcj-v10-preview-status');
-    if (statusEl) {
-      statusEl.textContent = 'Syncing preview...';
-    }
     state.previewTimer = setTimeout(async () => {
       try {
         const updated = await refreshPreview();
@@ -874,14 +883,7 @@
     const meta = (state.editorData && state.editorData.meta) || {};
     const items = Array.isArray(meta.diagnostics) ? meta.diagnostics.slice() : [];
     const d = state.draft || {};
-    const a = (state.preview && state.preview.after) || {};
 
-    if (state.editorSlug === 'payment_gateways_fees' && a.reason === 'needs_label') {
-      items.unshift({
-        level: 'warning',
-        text: 'Checkout Line Label is required before a fee can be saved cleanly to WooCommerce.',
-      });
-    }
     if (state.editorSlug === 'pdf_invoicing' && d.attach_completed && !d.create_on_completed) {
       items.unshift({
         level: 'warning',
@@ -963,11 +965,26 @@
     const isOff = !state.draft.enabled;
     const autoBadge = state.autoEnabled.enabled ? '<span class="wcj-v10-auto-pill">Auto-enabled in draft</span>' : '';
 
+    let slotClass = 'wcj-v10-delta-slot';
+    let slotText = 'No change to cart total yet.';
+    if (isOff) {
+      slotText = 'Module is Off in draft — no fee applies at checkout.';
+    } else if (a.reason === 'needs_label') {
+      slotClass += ' is-warn';
+      slotText = 'Add a Checkout Line Label to publish this fee.';
+    } else if (delta !== 0) {
+      slotClass += ' is-changed';
+      slotText = `Order total changes by ${delta > 0 ? '+' : ''}${fmtMoney(delta, sym)} for this cart.`;
+    }
+
     return `
       <div class="wcj-v10-section-head">
         <div>
-          <h2>Live Before &amp; After Cart Simulator ${autoBadge}</h2>
-          <span id="wcj-v10-preview-status" class="wcj-v10-updating">${state.previewBusy ? 'Syncing preview...' : ''}</span>
+          <h2>Live Before &amp; After Cart Simulator</h2>
+          <div class="wcj-v10-preview-meta">
+            <span>Live store vs draft</span>
+            ${autoBadge}
+          </div>
         </div>
         <div class="wcj-v10-chips" style="margin-top:0;">
           ${[25, 75, 250].map((v) => `<button type="button" class="wcj-v10-chip ${Number(state.previewContext.subtotal) === v ? 'is-active' : ''}" data-sample-sub="${v}">${esc(sym + v)}</button>`).join('')}
@@ -975,17 +992,22 @@
       </div>
       <div class="wcj-v10-ba-grid">
         <div class="wcj-v10-ba-box">
-          <span class="wcj-v10-ba-tag">BEFORE (Live Store)</span>
+          <div class="wcj-v10-ba-tag-row">
+            <span class="wcj-v10-ba-tag">BEFORE (Live Store)</span>
+          </div>
           <div class="wcj-v10-ba-content">
             <div class="wcj-v10-line"><span>Items Subtotal</span><span>${esc(fmtMoney(b.subtotal, sym))}</span></div>
             <div class="wcj-v10-line"><span>Shipping</span><span>${esc(fmtMoney(b.shipping, sym))}</span></div>
             <div class="wcj-v10-line"><span>${esc(b.fee_label || 'Gateway Fee')}</span><span>${Number(b.fee_amount) !== 0 ? esc(fmtMoney(b.fee_amount, sym)) : 'None'}</span></div>
             <div class="wcj-v10-total"><span>Total</span><span>${esc(fmtMoney(b.total, sym))}</span></div>
+            <div class="wcj-v10-delta-slot">${b.module_enabled ? 'Current live checkout fee.' : 'Currently Off on live store.'}</div>
           </div>
         </div>
         <div class="wcj-v10-ba-box is-after ${isOff ? 'is-dimmed' : ''}">
-          <span class="wcj-v10-ba-tag">AFTER (Your Draft)</span>
-          ${isOff ? '<div class="wcj-v10-off-banner">Module is Off in draft &mdash; no fee will apply at checkout.</div>' : ''}
+          <div class="wcj-v10-ba-tag-row">
+            <span class="wcj-v10-ba-tag">AFTER (Your Draft)</span>
+            <span class="wcj-v10-badge ${isOff ? '' : 'is-on'}">${isOff ? 'Off in draft' : 'Active in draft'}</span>
+          </div>
           <div class="wcj-v10-ba-content">
             <div class="wcj-v10-line"><span>Items Subtotal</span><span>${esc(fmtMoney(a.subtotal, sym))}</span></div>
             <div class="wcj-v10-line"><span>Shipping</span><span>${esc(fmtMoney(a.shipping, sym))}</span></div>
@@ -994,7 +1016,7 @@
               <span>${Number(a.fee_amount) !== 0 ? esc(fmtMoney(a.fee_amount, sym)) : 'None'}</span>
             </div>
             <div class="wcj-v10-total"><span>Total</span><span>${esc(fmtMoney(a.total, sym))}</span></div>
-            ${delta !== 0 ? `<div class="wcj-v10-delta">Order total changes by ${delta > 0 ? '+' : ''}${esc(fmtMoney(delta, sym))} for this cart.</div>` : ''}
+            <div class="${slotClass}">${esc(slotText)}</div>
           </div>
         </div>
       </div>
@@ -1064,8 +1086,10 @@
 
     return `
       <div class="wcj-v10-ba-box ${isAfter ? 'is-after' : ''} ${isOff ? 'is-dimmed' : ''}">
-        <span class="wcj-v10-ba-tag">${esc(label)}</span>
-        ${isOff ? '<div class="wcj-v10-off-banner">PDF Invoicing is Off in draft &mdash; documents stay paused.</div>' : ''}
+        <div class="wcj-v10-ba-tag-row">
+          <span class="wcj-v10-ba-tag">${esc(label)}</span>
+          ${isAfter ? `<span class="wcj-v10-badge ${isOff ? '' : 'is-on'}">${isOff ? 'Off in draft' : 'Active in draft'}</span>` : ''}
+        </div>
         <div class="wcj-v10-ba-content">
           <div class="wcj-v10-sheet">
             <div class="wcj-v10-sheet-head" style="border-color:${esc(color)}">
@@ -1109,8 +1133,11 @@
     return `
       <div class="wcj-v10-section-head">
         <div>
-          <h2>Live Before &amp; After Document Preview ${autoBadge}</h2>
-          <span id="wcj-v10-preview-status" class="wcj-v10-updating">${state.previewBusy ? 'Syncing preview...' : ''}</span>
+          <h2>Live Before &amp; After Document Preview</h2>
+          <div class="wcj-v10-preview-meta">
+            <span>Live store vs draft</span>
+            ${autoBadge}
+          </div>
         </div>
         <div class="wcj-v10-tabs">
           <button type="button" class="wcj-v10-tab ${mode === 'split' ? 'is-active' : ''}" data-inv-pv="split">Side-by-Side</button>
@@ -1200,7 +1227,9 @@
 
     return `
       <div class="wcj-v10-ba-box ${isAfter ? 'is-after' : ''}">
-        <span class="wcj-v10-ba-tag">${esc(label)}</span>
+        <div class="wcj-v10-ba-tag-row">
+          <span class="wcj-v10-ba-tag">${esc(label)}</span>
+        </div>
         <div class="wcj-v10-pcard">
           <div class="wcj-v10-pimg">
             ${showOnSale ? `<span class="wcj-v10-sale-pill ${badgeDiff ? 'wcj-v10-highlight' : ''}">${esc(badgeText)}</span>` : ''}
@@ -1235,8 +1264,11 @@
     return `
       <div class="wcj-v10-section-head">
         <div>
-          <h2>Live Before &amp; After Storefront Card ${autoBadge}</h2>
-          <span id="wcj-v10-preview-status" class="wcj-v10-updating">${state.previewBusy ? 'Syncing preview...' : ''}</span>
+          <h2>Live Before &amp; After Storefront Card</h2>
+          <div class="wcj-v10-preview-meta">
+            <span>Live store vs draft</span>
+            ${autoBadge}
+          </div>
         </div>
       </div>
       <div class="wcj-v10-ba-grid">
@@ -1373,7 +1405,9 @@
   }
 
   function updateEditorPreviewAndBar() {
-    renderPreviewPaneOnly();
+    if (previewSignature() !== state.lastPreviewSignature) {
+      renderPreviewPaneOnly();
+    }
     const barSlot = document.getElementById('wcj-v10-action-bar');
     if (barSlot && state.editorData) {
       const revCount = (state.editorData.revisions && state.editorData.revisions.length) || 0;
@@ -1402,6 +1436,11 @@
       `;
 
     root.innerHTML = renderTopBar() + body + `<div id="wcj-v10-modal-slot">${renderModalHtml()}</div>`;
+    if (state.view === 'editor' && state.editorData) {
+      state.lastPreviewSignature = previewSignature();
+    } else {
+      state.lastPreviewSignature = '';
+    }
     bindAllEvents();
   }
 
