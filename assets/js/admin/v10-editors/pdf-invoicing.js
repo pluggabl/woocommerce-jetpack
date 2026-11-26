@@ -58,8 +58,16 @@
         : '';
     },
 
+    buildContextPayload(draft) {
+      return draft && draft.doc_type ? { doc_type: draft.doc_type } : {};
+    },
+
     initContext(cfg) {
       return cfg.initialDocType ? { doc_type: cfg.initialDocType } : {};
+    },
+
+    nonDiffKeys() {
+      return ['doc_type'];
     },
 
     isLiveOn(live) {
@@ -80,7 +88,8 @@
     getPresets(meta) {
       const defaults = (meta && meta.store_defaults) || {};
       const storeAddr = defaults.address || 'Acme Commerce Co.\n100 Market St\nSan Francisco, CA';
-      return [
+      const locked = !!(meta && meta.doc_type_auto_locked);
+      const list = [
         {
           id: 'inv_blue',
           label: 'Modern Blue',
@@ -107,7 +116,9 @@
             numbering_prefix: 'INV-',
           },
         },
-        {
+      ];
+      if (!locked) {
+        list.push({
           id: 'inv_auto',
           label: 'Auto-Email on Completed',
           patch: {
@@ -116,12 +127,25 @@
             create_on_completed: true,
             attach_completed: true,
           },
-        },
-      ];
+        });
+      }
+      return list;
     },
 
     getValidationError() {
       return '';
+    },
+
+    getExtraDiagnostics(draft) {
+      if (draft && draft.attach_completed && !draft.create_on_completed && !draft.create_on_processing) {
+        return [
+          {
+            level: 'warning',
+            text: 'Attach PDF to Completed Order emails is checked, but Auto-create PDF on Completed/Processing orders is off.',
+          },
+        ];
+      }
+      return [];
     },
 
     renderClassicMenu(ed, deps) {
@@ -151,13 +175,15 @@
       const esc = deps.esc;
       const swatches = ['#cccccc', '#0073aa', '#00507c', '#2f5d50', '#1a1a2e', '#ff5722'];
       const docTypes = (meta && meta.doc_types) || [{ id: 'invoice', title: 'Invoice' }];
+      const autoLocked = !!(meta && meta.doc_type_auto_locked);
+      const upgradeUrl = (deps && deps.upgradeUrl) || 'https://booster.io/buy-booster/';
 
       return `
         <div class="wcj-v10-section-head">
           <h2>Simple Setup</h2>
           <label class="wcj-v10-check">
             <input type="checkbox" data-field="enabled" ${draft.enabled ? 'checked' : ''} />
-            <span>Module Active</span>
+            <span>Module Active (all document types)</span>
           </label>
         </div>
         ${deps.renderPresetsHtml('pdf_invoicing')}
@@ -195,18 +221,24 @@
           <label for="wcj-i-text">Business Name &amp; Address Header</label>
           <textarea id="wcj-i-text" rows="3" data-field="header_text">${esc(draft.header_text)}</textarea>
         </div>
-        <div class="wcj-v10-field">
-          <label class="wcj-v10-check">
-            <input type="checkbox" data-field="create_on_completed" ${draft.create_on_completed ? 'checked' : ''} />
-            <span>Auto-create PDF when Order is Completed</span>
-          </label>
-        </div>
-        <div class="wcj-v10-field">
-          <label class="wcj-v10-check">
-            <input type="checkbox" data-field="attach_completed" ${draft.attach_completed ? 'checked' : ''} />
-            <span>Attach PDF to Completed Order emails</span>
-          </label>
-        </div>
+        ${autoLocked
+          ? `<div class="wcj-v10-elite-sample-box">
+              <strong>Elite adds automated multi-document workflows</strong>
+              <p>Booster Free generates standard <strong>Invoices</strong> automatically. Upgrade to Elite when you want auto-created Packing Slips, Proforma Invoices, or Credit Notes emailed with orders.</p>
+              <a class="wcj-v10-nav-link" href="${esc(upgradeUrl + '?utm_source=booster_free&utm_medium=editor&utm_campaign=pdf_invoicing')}" target="_blank" rel="noopener">Explore Elite &#8599;</a>
+            </div>`
+          : `<div class="wcj-v10-field">
+              <label class="wcj-v10-check">
+                <input type="checkbox" data-field="create_on_completed" ${draft.create_on_completed ? 'checked' : ''} />
+                <span>Auto-create PDF when Order is Completed</span>
+              </label>
+            </div>
+            <div class="wcj-v10-field">
+              <label class="wcj-v10-check">
+                <input type="checkbox" data-field="attach_completed" ${draft.attach_completed ? 'checked' : ''} />
+                <span>Attach PDF to Completed Order emails</span>
+              </label>
+            </div>`}
         <details class="wcj-v10-more-rules">
           <summary>More Rules &amp; Options</summary>
           <div class="wcj-v10-more-rules-body">
@@ -218,12 +250,14 @@
               <label for="wcj-i-footer">Document Footer Text</label>
               <textarea id="wcj-i-footer" rows="2" data-field="footer_text" placeholder="Thank you for your business!">${esc(draft.footer_text)}</textarea>
             </div>
-            <div class="wcj-v10-field">
-              <label class="wcj-v10-check">
-                <input type="checkbox" data-field="create_on_processing" ${draft.create_on_processing ? 'checked' : ''} />
-                <span>Also auto-create when Order is Processing</span>
-              </label>
-            </div>
+            ${!autoLocked ? `
+              <div class="wcj-v10-field">
+                <label class="wcj-v10-check">
+                  <input type="checkbox" data-field="create_on_processing" ${draft.create_on_processing ? 'checked' : ''} />
+                  <span>Also auto-create when Order is Processing</span>
+                </label>
+              </div>
+            ` : ''}
             <div class="wcj-v10-field">
               <label class="wcj-v10-check">
                 <input type="checkbox" data-field="customer_my_account" ${draft.customer_my_account ? 'checked' : ''} />
@@ -269,38 +303,44 @@
       }
     },
 
-    bindCustomEvents(form, state, actions) {
-      form.querySelectorAll('[data-inv-swatch]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const hex = btn.dataset.invSwatch;
-          state.draft.header_text_color = hex;
-          state.draft.header_line_color = hex;
-          state.draft.header_enabled = true;
-          actions.autoEnableForField('header_text_color', form);
-          const colorInput = form.querySelector('input[data-field="header_text_color"]');
-          if (colorInput) colorInput.value = hex;
-          form.querySelectorAll('[data-inv-swatch]').forEach((s) => s.classList.toggle('is-selected', s === btn));
-          actions.onDraftMutated();
-        });
-      });
+    handleClick(target, state, actions) {
+      const form = document.getElementById('wcj-v10-editor-form');
+      const swatchBtn = target.closest('[data-inv-swatch]');
+      if (swatchBtn && form && state.draft) {
+        const hex = swatchBtn.dataset.invSwatch;
+        state.draft.header_text_color = hex;
+        state.draft.header_line_color = hex;
+        state.draft.header_enabled = true;
+        actions.autoEnableForField('header_text_color', form);
+        const colorInput = form.querySelector('input[data-field="header_text_color"]');
+        if (colorInput) colorInput.value = hex;
+        form.querySelectorAll('[data-inv-swatch]').forEach((s) => s.classList.toggle('is-selected', s === swatchBtn));
+        actions.onDraftMutated();
+        return;
+      }
 
-      const pickLogo = form.querySelector('[data-action="pick-logo"]');
-      if (pickLogo && window.wp && wp.media) {
-        pickLogo.addEventListener('click', () => {
-          const frame = wp.media({ title: 'Select Document Logo', multiple: false, library: { type: 'image' } });
-          frame.on('select', () => {
-            const att = frame.state().get('selection').first().toJSON();
-            if (att && att.url) {
-              state.draft.header_image = att.url;
-              state.draft.header_enabled = true;
-              actions.autoEnableForField('header_image', form);
-              const inp = form.querySelector('input[data-field="header_image"]');
-              if (inp) inp.value = att.url;
-              actions.onDraftMutated();
-            }
-          });
-          frame.open();
+      const pickLogo = target.closest('[data-action="pick-logo"]');
+      if (pickLogo && form && window.wp && wp.media && state.draft) {
+        const frame = wp.media({ title: 'Select Document Logo', multiple: false, library: { type: 'image' } });
+        frame.on('select', () => {
+          const att = frame.state().get('selection').first().toJSON();
+          if (att && att.url) {
+            state.draft.header_image = att.url;
+            state.draft.header_enabled = true;
+            actions.autoEnableForField('header_image', form);
+            const inp = form.querySelector('input[data-field="header_image"]');
+            if (inp) inp.value = att.url;
+            actions.onDraftMutated();
+          }
         });
+        frame.open();
+        return;
+      }
+
+      const pvTab = target.closest('[data-inv-pv]');
+      if (pvTab) {
+        state.previewContext.invoicePreviewMode = pvTab.dataset.invPv;
+        actions.renderPreviewPaneOnly();
       }
     },
 
@@ -337,7 +377,7 @@
           <div>
             <h2>Live Before &amp; After Document Preview</h2>
             <div class="wcj-v10-preview-meta">
-              <span>Live store vs draft</span>
+              <span>Live store vs draft &bull; Schematic layout</span>
               ${autoBadge}
             </div>
           </div>

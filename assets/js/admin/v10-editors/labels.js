@@ -57,8 +57,16 @@
       return '';
     },
 
+    buildContextPayload() {
+      return {};
+    },
+
     initContext() {
       return {};
+    },
+
+    nonDiffKeys() {
+      return ['sale_flash_html'];
     },
 
     isLiveOn(live) {
@@ -77,7 +85,7 @@
         return ['price_labels_enabled'];
       }
       if (['sale_badge_text', 'sale_flash_hide_everywhere'].includes(key)) {
-        return ['sale_flash_enabled', 'sale_flash_global_enabled'];
+        return ['sale_flash_enabled'];
       }
       if (['place_order_text', 'place_order_override'].includes(key)) {
         return ['more_button_enabled'];
@@ -109,7 +117,6 @@
           label: 'Save 20% Badge',
           patch: {
             sale_flash_enabled: true,
-            sale_flash_global_enabled: true,
             sale_badge_text: 'Save 20%',
           },
         },
@@ -117,6 +124,13 @@
     },
 
     getValidationError() {
+      return '';
+    },
+
+    getPostPublishTip(meta) {
+      if (meta && meta.price_prefix_locked) {
+        return 'Live on your store! Booster Elite also adds price prefixes (like "From") and per-category badges.';
+      }
       return '';
     },
 
@@ -142,6 +156,9 @@
     renderForm(draft, meta, deps) {
       const esc = deps.esc;
       const prefixLocked = !!(meta && meta.price_prefix_locked);
+      const sampleActive = !!(deps && deps.eliteSamplePrefix);
+      const upgradeUrl = (deps && deps.upgradeUrl) || 'https://booster.io/buy-booster/';
+
       return `
         <div class="wcj-v10-section-head">
           <h2>Simple Setup</h2>
@@ -170,16 +187,30 @@
             <span>Enable Price Labels</span>
           </label>
         </div>
-        <div class="wcj-v10-row-2">
-          <div class="wcj-v10-field">
-            <label for="wcj-l-prefix">Before Price ${prefixLocked ? '<span class="wcj-v10-badge">Plus / Elite</span>' : ''}</label>
-            <input id="wcj-l-prefix" type="text" data-field="price_prefix" value="${esc(draft.price_prefix)}" ${prefixLocked ? 'disabled' : ''} />
-          </div>
-          <div class="wcj-v10-field">
-            <label for="wcj-l-suffix">After Price</label>
-            <input id="wcj-l-suffix" type="text" data-field="price_suffix" value="${esc(draft.price_suffix)}" placeholder=" incl. VAT" />
-          </div>
-        </div>
+        ${prefixLocked
+          ? `<div class="wcj-v10-field">
+              <label for="wcj-l-suffix">After Price</label>
+              <input id="wcj-l-suffix" type="text" data-field="price_suffix" value="${esc(draft.price_suffix)}" placeholder=" incl. VAT" />
+            </div>
+            <div class="wcj-v10-elite-sample-box">
+              <strong>Elite adds Price Prefix (&ldquo;From &rdquo;) &amp; Per-Category Labels</strong>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px;">
+                <button type="button" class="wcj-v10-btn" data-action="toggle-elite-sample">
+                  ${sampleActive ? 'Hide sample prefix preview' : 'Show &ldquo;From &rdquo; on my product'}
+                </button>
+                <a class="wcj-v10-nav-link" href="${esc(upgradeUrl + '?utm_source=booster_free&utm_medium=editor&utm_campaign=price_prefix')}" target="_blank" rel="noopener">Explore Elite &#8599;</a>
+              </div>
+            </div>`
+          : `<div class="wcj-v10-row-2">
+              <div class="wcj-v10-field">
+                <label for="wcj-l-prefix">Before Price</label>
+                <input id="wcj-l-prefix" type="text" data-field="price_prefix" value="${esc(draft.price_prefix)}" placeholder="From " />
+              </div>
+              <div class="wcj-v10-field">
+                <label for="wcj-l-suffix">After Price</label>
+                <input id="wcj-l-suffix" type="text" data-field="price_suffix" value="${esc(draft.price_suffix)}" placeholder=" incl. VAT" />
+              </div>
+            </div>`}
 
         <div class="wcj-v10-field">
           <label class="wcj-v10-check">
@@ -209,7 +240,7 @@
             <div class="wcj-v10-field">
               <label class="wcj-v10-check">
                 <input type="checkbox" data-field="apply_to_variable" ${draft.apply_to_variable ? 'checked' : ''} />
-                <span>Also apply Add to Cart button labels to Variable products</span>
+                <span>Also apply Add to Cart button labels to Variable, Grouped &amp; External products</span>
               </label>
             </div>
             <div class="wcj-v10-field">
@@ -233,10 +264,12 @@
       `;
     },
 
-    onFieldChange(key, value, state) {
-      if (key === 'sale_flash_enabled') {
-        state.draft.sale_flash_global_enabled = !!value;
-        delete state.autoEnabled.sale_flash_global_enabled;
+    handleClick(target, state, actions) {
+      const sampleBtn = target.closest('[data-action="toggle-elite-sample"]');
+      if (sampleBtn) {
+        state.eliteSamplePrefix = !state.eliteSamplePrefix;
+        sampleBtn.innerHTML = state.eliteSamplePrefix ? 'Hide sample prefix preview' : 'Show &ldquo;From &rdquo; on my product';
+        actions.applyLocalPreviewImmediate();
       }
     },
 
@@ -244,20 +277,19 @@
       const sym = meta.currency_symbol || '$';
       const prod = meta.sample_product || {};
       const before = (state.preview && state.preview.before) || {};
-      const saleOn = !!draft.sale_flash_enabled && (draft.sale_flash_global_enabled !== false);
       const hideSale = !!draft.sale_flash_enabled && !!draft.sale_flash_hide_everywhere;
+      const samplePrefix = (meta.price_prefix_locked && state.eliteSamplePrefix) ? 'From ' : '';
 
       return {
         add_to_cart_enabled: !!draft.add_to_cart_enabled,
         more_button_enabled: !!draft.more_button_enabled,
         price_labels_enabled: !!draft.price_labels_enabled,
         sale_flash_enabled: !!draft.sale_flash_enabled,
-        sale_flash_global_enabled: saleOn,
         sale_flash_hide_everywhere: hideSale,
         add_to_cart_text: (draft.add_to_cart_enabled && String(draft.add_to_cart_single || '').trim()) ? draft.add_to_cart_single : 'Add to cart',
         archive_text: (draft.add_to_cart_enabled && String(draft.add_to_cart_archive || '').trim()) ? draft.add_to_cart_archive : 'Add to cart',
         place_order_text: (draft.more_button_enabled && String(draft.place_order_text || '').trim()) ? draft.place_order_text : 'Place order',
-        price_prefix: draft.price_labels_enabled ? (draft.price_prefix || '') : '',
+        price_prefix: samplePrefix || (draft.price_labels_enabled ? (draft.price_prefix || '') : ''),
         price_suffix: draft.price_labels_enabled ? (draft.price_suffix || '') : '',
         price_instead: draft.price_labels_enabled ? String(draft.price_instead || '').trim() : '',
         sample_name: prod.name || before.sample_name || 'Sample Storefront Product',
@@ -265,7 +297,7 @@
         sample_regular: prod.regular_price || before.sample_regular || (sym + '95.00'),
         sample_sale: prod.sale_price !== undefined ? prod.sale_price : (before.sample_sale || (sym + '76.00')),
         sample_on_sale: prod.on_sale !== undefined ? !!prod.on_sale : (before.sample_on_sale !== undefined ? !!before.sample_on_sale : true),
-        sale_badge_text: (saleOn && String(draft.sale_badge_text || '').trim()) ? draft.sale_badge_text : 'Sale!',
+        sale_badge_text: (draft.sale_flash_enabled && String(draft.sale_badge_text || '').trim()) ? draft.sale_badge_text : 'Sale!',
       };
     },
 
@@ -280,7 +312,7 @@
           <div>
             <h2>Live Before &amp; After Storefront Card</h2>
             <div class="wcj-v10-preview-meta">
-              <span>Live store vs draft</span>
+              <span>Live store vs draft &bull; Approximate preview for your theme</span>
               ${autoBadge}
             </div>
           </div>

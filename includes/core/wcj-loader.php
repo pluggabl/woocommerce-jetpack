@@ -68,6 +68,11 @@ if ( is_admin() ) {
 			if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
 				return;
 			}
+			$req_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$rest_q  = isset( $_GET['rest_route'] ) ? (string) wp_unslash( $_GET['rest_route'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			if ( false === strpos( $req_uri, '/booster/v1' ) && false === strpos( $rest_q, '/booster/v1' ) ) {
+				return;
+			}
 			require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/v10/class-wcj-v10-bootstrap.php';
 			WCJ_V10_Bootstrap::register_rest();
 		}

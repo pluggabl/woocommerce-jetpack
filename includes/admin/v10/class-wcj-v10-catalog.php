@@ -44,10 +44,10 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 			return array(
 				'pdf_invoicing'          => 'invoice pdf packing slip logo branding header tax vat receipt email attachment proforma credit note',
 				'payment_gateways_fees'  => 'fee surcharge discount paypal stripe credit card cod cash on delivery bacs bank transfer gateway payment method checkout min max',
-				'add_to_cart'            => 'button label add to cart buy now product text wording rename button',
+				'add_to_cart'            => 'button label add to cart buy now product text wording rename add to cart',
 				'more_button_labels'     => 'place order checkout button wording text override rename button',
 				'price_labels'           => 'price prefix suffix label text vat gst tax before after excl incl',
-				'sale_flash'             => 'sale badge flash discount tag wording save off',
+				'sale_flash'             => 'sale badge flash discount tag wording save off hide sale',
 				'price_by_user_role'     => 'role wholesale vip customer tier price b2b bulk',
 				'checkout_custom_fields' => 'checkout field gift note delivery message custom',
 				'product_addons'         => 'addon extra gift wrap paid option',
@@ -121,7 +121,6 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 				'checkout_custom_fields',
 				'checkout_files_upload',
 				'checkout_core_fields',
-				'payment_gateways_fees',
 			);
 
 			$modules = array();
@@ -153,7 +152,6 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 					'category_label'  => $cat_info['label'],
 					'enabled'         => (bool) $enabled,
 					'flagship_editor' => isset( $flagships[ $mod_id ] ) ? $flagships[ $mod_id ] : '',
-					'hpos_ready'      => true,
 					'blocks_status'   => in_array( $mod_id, $blocks_limited, true ) ? 'classic' : 'blocks',
 					'classic_url'     => $classic,
 					'keywords'        => isset( $intents[ $mod_id ] ) ? $intents[ $mod_id ] : '',

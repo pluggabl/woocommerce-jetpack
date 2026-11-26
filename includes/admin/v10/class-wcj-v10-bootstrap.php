@@ -26,17 +26,28 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 		const VERSION      = '10.0.0-phase1';
 
 		/**
-		 * Initialize admin and REST hooks (never loaded on frontend).
+		 * Initialize admin hooks (never loaded on frontend or Store API REST requests).
 		 *
 		 * @return void
 		 */
 		public static function init() {
-			add_action( 'rest_api_init', array( __CLASS__, 'register_rest' ) );
-
 			if ( is_admin() ) {
 				add_action( 'admin_post_wcj_v10_toggle_ui', array( __CLASS__, 'handle_toggle_ui' ) );
 				add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ), 30 );
 			}
+		}
+
+		/**
+		 * Detect whether the store already has existing Booster options in wp_options.
+		 *
+		 * @return bool
+		 */
+		public static function is_existing_store() {
+			global $wpdb;
+			$found = $wpdb->get_var(
+				"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE 'wcj\\_%' AND option_name NOT LIKE 'wcj\\_v10\\_%' LIMIT 1"
+			); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			return ! empty( $found );
 		}
 
 		/**
@@ -112,7 +123,8 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 		 * @return void
 		 */
 		public static function handle_toggle_ui() {
-			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+			$admin_only = 'yes' === get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' );
+			if ( ! current_user_can( 'manage_woocommerce' ) || ( $admin_only && ! current_user_can( 'manage_options' ) ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
 				wp_die( esc_html__( 'Permission denied.', 'woocommerce-jetpack' ), '', array( 'response' => 403 ) );
 			}
 			check_admin_referer( 'wcj_v10_toggle_ui' );
@@ -131,8 +143,10 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 					$dest = admin_url( 'admin.php?page=wcj-dashboard' );
 				}
 			} else {
-				if ( 'button_price_labels' === $section ) {
-					$section = 'add_to_cart';
+				require_once __DIR__ . '/class-wcj-v10-registry.php';
+				$primary = WCJ_V10_Registry::primary_classic_section( $section );
+				if ( '' !== $primary ) {
+					$section = $primary;
 				}
 				if ( '' !== $section && 'active' !== $section ) {
 					$dest = admin_url( 'admin.php?page=wcj-plugins&section=' . rawurlencode( $section ) . '&wcj-cat-nonce=' . wp_create_nonce( 'wcj-cat-nonce' ) );
@@ -165,7 +179,7 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 
 			if ( ! self::is_v10_mode() ) {
 				$url = self::toggle_url( 'v10', $section, $page );
-				echo '<li class="wcj-v10-classic-switch"><a class="wcj-v10-header-pill wcj-v10-header-pill-primary" href="' . esc_url( $url ) . '">' . esc_html__( 'Switch to New UI', 'woocommerce-jetpack' ) . '</a></li>';
+				echo '<li class="wcj-v10-classic-switch"><a class="wcj-v10-header-pill wcj-v10-header-pill-primary" href="' . esc_url( $url ) . '">' . esc_html__( 'Switch to Guided View', 'woocommerce-jetpack' ) . '</a></li>';
 				return;
 			}
 
@@ -180,7 +194,7 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 
 			echo '<li class="wcj-v10-classic-switch">';
 			echo '<a class="wcj-v10-header-pill wcj-v10-header-pill-primary" href="' . esc_url( $back_url ) . '">&larr; ' . esc_html( $back_label ) . '</a>';
-			echo '<a class="wcj-v10-header-pill wcj-v10-header-pill-ghost" href="' . esc_url( $classic_url ) . '">&#8644; ' . esc_html__( 'Switch to Classic v9', 'woocommerce-jetpack' ) . '</a>';
+			echo '<a class="wcj-v10-header-pill wcj-v10-header-pill-ghost" href="' . esc_url( $classic_url ) . '">&#8644; ' . esc_html__( 'Classic View', 'woocommerce-jetpack' ) . '</a>';
 			echo '</li>';
 		}
 
@@ -246,7 +260,7 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
 			$v10_editor = isset( $_GET['v10_editor'] ) ? sanitize_key( wp_unslash( $_GET['v10_editor'] ) ) : '';
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
-			$v10_gateway = isset( $_GET['gateway'] ) ? sanitize_key( wp_unslash( $_GET['gateway'] ) ) : '';
+			$v10_gateway = isset( $_GET['gateway'] ) ? sanitize_text_field( wp_unslash( $_GET['gateway'] ) ) : '';
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
 			$v10_doc_type = isset( $_GET['doc_type'] ) ? sanitize_key( wp_unslash( $_GET['doc_type'] ) ) : '';
 
@@ -270,12 +284,8 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 				$css_ver
 			);
 
-			$editor_scripts = array(
-				'wcj-v10-ed-fees'     => '/assets/js/admin/v10-editors/gateway-fees.js',
-				'wcj-v10-ed-invoicing'=> '/assets/js/admin/v10-editors/pdf-invoicing.js',
-				'wcj-v10-ed-labels'   => '/assets/js/admin/v10-editors/labels.js',
-			);
-			$app_deps = array();
+			$editor_scripts = WCJ_V10_Registry::editor_scripts();
+			$app_deps       = array();
 			foreach ( $editor_scripts as $handle => $rel ) {
 				$abs = $plugin_root . $rel;
 				$ver = file_exists( $abs ) ? self::VERSION . '.' . (string) filemtime( $abs ) : self::VERSION;
@@ -304,16 +314,18 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 					'restUrl'           => esc_url_raw( rest_url( 'booster/v1' ) ),
 					'nonce'             => wp_create_nonce( 'wp_rest' ),
 					'edition'           => WCJ_V10_Store::edition(),
+					'isExistingStore'   => self::is_existing_store(),
+					'upgradeUrl'        => 'https://booster.io/buy-booster/',
 					'initialEditor'     => $initial_editor,
 					'initialGateway'    => $v10_gateway,
 					'initialDocType'    => $v10_doc_type,
 					'initialTab'        => $initial_tab,
 					'classicBaseUrl'    => self::toggle_url( 'classic', $initial_editor ? $initial_editor : $section, $page ),
 					'classicToggleBase' => self::toggle_url( 'classic', '', $page ),
-					'dashboardUrl'   => admin_url( 'admin.php?page=wcj-dashboard' ),
-					'generalUrl'     => admin_url( 'admin.php?page=wcj-general-settings' ),
-					'toolsUrl'       => admin_url( 'admin.php?page=wcj-tools&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) ),
-					'logoUrl'        => wcj_plugin_url() . '/assets/images/booster-header-logo.svg',
+					'dashboardUrl'      => admin_url( 'admin.php?page=wcj-dashboard' ),
+					'generalUrl'        => admin_url( 'admin.php?page=wcj-general-settings' ),
+					'toolsUrl'          => admin_url( 'admin.php?page=wcj-tools&wcj_tools_nonce=' . wp_create_nonce( 'wcj_tools' ) ),
+					'logoUrl'           => wcj_plugin_url() . '/assets/images/booster-header-logo.svg',
 				)
 			);
 		}

@@ -22,9 +22,13 @@
     editorSlug: cfg.initialEditor || '',
     editorData: null,
     draft: null,
+    baseHashes: {},
     preview: null,
     diffs: [],
+    selectedDiffKeys: [],
+    localDirtyCount: 0,
     autoEnabled: {},
+    eliteSamplePrefix: false,
     previewContext: {
       subtotal: 25,
       shipping: 10,
@@ -51,7 +55,8 @@
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
   function clone(obj) {
@@ -77,9 +82,28 @@
       options || {},
     );
     const res = await fetch(cfg.restUrl.replace(/\/$/, '') + path, opts);
-    const json = await res.json();
+    const ct = (res.headers && res.headers.get('content-type')) || '';
+    let json = null;
+    let rawText = '';
+
+    if (ct.indexOf('application/json') !== -1) {
+      json = await res.json();
+    } else {
+      rawText = await res.text();
+      try {
+        json = JSON.parse(rawText);
+      } catch (parseErr) {
+        json = null;
+      }
+    }
+
     if (!res.ok) {
-      const msg = (json && json.message) ? json.message : 'Request failed.';
+      if (json && json.code === 'rest_cookie_invalid_nonce') {
+        throw new Error('Your WordPress session expired. Reload the page to continue safely.');
+      }
+      const msg = (json && json.message)
+        ? json.message
+        : (rawText ? 'Server returned an unexpected response.' : 'Request failed.');
       throw new Error(msg);
     }
     return json;
@@ -111,8 +135,37 @@
     return base + (base.indexOf('?') === -1 ? '?' : '&') + 'section=' + encodeURIComponent(state.editorSlug);
   }
 
+  function computeLocalDirtyKeys() {
+    if (!state.editorData || !state.editorData.live || !state.draft) {
+      return [];
+    }
+    const edMod = getEditor();
+    const skip = edMod && edMod.nonDiffKeys ? edMod.nonDiffKeys() : [];
+    const live = state.editorData.live;
+    const keys = [];
+    Object.keys(live).forEach((k) => {
+      if (skip.indexOf(k) !== -1) {
+        return;
+      }
+      const oldVal = live[k];
+      const newVal = state.draft[k];
+      if (typeof oldVal === 'boolean' || typeof newVal === 'boolean') {
+        if (Boolean(oldVal) !== Boolean(newVal)) {
+          keys.push(k);
+        }
+      } else if (String(oldVal === undefined || oldVal === null ? '' : oldVal) !== String(newVal === undefined || newVal === null ? '' : newVal)) {
+        keys.push(k);
+      }
+    });
+    return keys;
+  }
+
+  function hasPendingChanges() {
+    return state.localDirtyCount > 0 || state.diffs.length > 0;
+  }
+
   function confirmDiscardIfDirty(customMsg) {
-    if (state.view === 'editor' && state.diffs.length > 0) {
+    if (state.view === 'editor' && hasPendingChanges()) {
       return window.confirm(customMsg || 'You have unpublished draft changes. Discard them and continue?');
     }
     return true;
@@ -153,6 +206,7 @@
     return JSON.stringify({
       slug: state.editorSlug,
       mode: state.previewContext.invoicePreviewMode,
+      eliteSample: !!state.eliteSamplePrefix,
       preview: state.preview,
       enabled: state.draft ? !!state.draft.enabled : false,
       autoEnabled: state.autoEnabled,
@@ -164,7 +218,19 @@
     if (pvSlot) {
       pvSlot.innerHTML = renderEditorPreviewHtml();
       state.lastPreviewSignature = previewSignature();
-      bindPreviewAndActionEvents();
+    }
+  }
+
+  function updateActionBarOnly() {
+    const barSlot = document.getElementById('wcj-v10-action-bar');
+    if (barSlot && state.editorData) {
+      const revCount = (state.editorData.revisions && state.editorData.revisions.length) || 0;
+      const isOn = (() => {
+        const edMod = getEditor();
+        return edMod && edMod.isLiveOn ? edMod.isLiveOn(state.editorData.live) : !!state.editorData.live.enabled;
+      })();
+      const displayCount = Math.max(state.localDirtyCount, state.diffs.length);
+      barSlot.innerHTML = renderActionButtonsHtml(displayCount, revCount, isOn);
     }
   }
 
@@ -178,7 +244,9 @@
     }
     const meta = (state.editorData && state.editorData.meta) || {};
     state.preview.after = edMod.computeLocalAfter(state.draft, meta, state.previewContext, state);
+    state.localDirtyCount = computeLocalDirtyKeys().length;
     renderPreviewPaneOnly();
+    updateActionBarOnly();
   }
 
   function applyPreset(presetId) {
@@ -240,8 +308,13 @@
       clearTimeout(state.previewTimer);
       state.previewTimer = null;
     }
+    state.previewBusy = false;
     state.banner = null;
     state.autoEnabled = {};
+    state.eliteSamplePrefix = false;
+    state.diffs = [];
+    state.selectedDiffKeys = [];
+    state.localDirtyCount = 0;
     state.lastPreviewSignature = '';
     state.historyOpen = false;
     state.modalOpen = false;
@@ -250,11 +323,12 @@
     syncBrowserUrl(ctxObj);
 
     const params = [];
-    if (ctxObj && ctxObj.gateway) {
-      params.push('gateway=' + encodeURIComponent(ctxObj.gateway));
-    }
-    if (ctxObj && ctxObj.doc_type) {
-      params.push('doc_type=' + encodeURIComponent(ctxObj.doc_type));
+    if (ctxObj) {
+      Object.keys(ctxObj).forEach((k) => {
+        if (ctxObj[k]) {
+          params.push(encodeURIComponent(k) + '=' + encodeURIComponent(ctxObj[k]));
+        }
+      });
     }
     const qs = params.length ? '?' + params.join('&') : '';
 
@@ -262,8 +336,13 @@
     if (seq !== state.editorSeq) {
       return;
     }
+    const edMod = getEditor(slug);
     state.editorData = data;
+    state.baseHashes = data.base_hashes || {};
     state.draft = clone(data.live);
+    if (edMod && edMod.initPreviewState) {
+      edMod.initPreviewState(data.meta || {}, state.previewContext);
+    }
     syncBrowserUrl();
     await refreshPreview();
     if (seq !== state.editorSeq) {
@@ -303,8 +382,12 @@
       state.previewBusy = false;
       state.preview = { before: res.before, after: res.after };
       state.diffs = res.diffs || [];
+      state.localDirtyCount = state.diffs.length;
       return true;
     } catch (err) {
+      if (seq === state.previewSeq) {
+        state.previewBusy = false;
+      }
       if (err && err.name === 'AbortError') {
         return false;
       }
@@ -318,6 +401,7 @@
     }
     state.previewBusy = true;
     state.previewTimer = setTimeout(async () => {
+      state.previewTimer = null;
       try {
         const updated = await refreshPreview();
         if (updated) {
@@ -331,14 +415,36 @@
     }, 100);
   }
 
+  async function openPublishModal() {
+    if (state.busy) {
+      return;
+    }
+    if (state.previewTimer) {
+      clearTimeout(state.previewTimer);
+      state.previewTimer = null;
+    }
+    try {
+      await refreshPreview();
+    } catch (err) {
+      state.banner = { type: 'error', text: err.message };
+      renderBannerOnly();
+      return;
+    }
+    if (!state.diffs.length) {
+      updateEditorPreviewAndBar();
+      return;
+    }
+    state.selectedDiffKeys = state.diffs.map((d) => d.key);
+    state.historyOpen = false;
+    state.modalOpen = true;
+    renderModalOnly();
+  }
+
   async function publishDraft() {
     const edMod = getEditor();
     const validationErr = edMod && edMod.getValidationError ? edMod.getValidationError(state.draft) : '';
-    if (validationErr) {
+    if (validationErr || state.busy || !state.diffs.length || !state.selectedDiffKeys.length) {
       renderModalOnly();
-      return;
-    }
-    if (state.busy || !state.diffs.length) {
       return;
     }
     state.busy = true;
@@ -346,17 +452,28 @@
     try {
       const res = await api('/publish/' + encodeURIComponent(state.editorSlug), {
         method: 'POST',
-        body: JSON.stringify({ draft: state.draft }),
+        body: JSON.stringify({
+          draft: state.draft,
+          base_hashes: state.baseHashes,
+          selected_keys: state.selectedDiffKeys,
+        }),
       });
       state.modalOpen = false;
       state.autoEnabled = {};
+      state.eliteSamplePrefix = false;
       state.editorData.live = clone(res.live);
       state.editorData.meta = res.meta || state.editorData.meta;
       state.editorData.revisions = res.revisions || [];
+      state.baseHashes = res.base_hashes || state.baseHashes;
       state.draft = clone(res.live);
+      state.diffs = [];
+      state.selectedDiffKeys = [];
+      state.localDirtyCount = 0;
+      const tip = edMod && edMod.getPostPublishTip ? edMod.getPostPublishTip(state.editorData.meta) : '';
       state.banner = {
         type: 'success',
         text: 'Published to your live store. A rollback snapshot was saved automatically.',
+        tip: tip || '',
         verifyUrl: (state.editorData.meta && state.editorData.meta.verify_url) || '',
         verifyLabel: (state.editorData.meta && state.editorData.meta.verify_label) || 'Verify on Live Store',
       };
@@ -378,23 +495,24 @@
     state.busy = true;
     renderModalOnly();
     try {
-      const payload = { revision_id: revisionId || '' };
-      if (state.draft && state.draft.gateway) {
-        payload.gateway = state.draft.gateway;
-      }
-      if (state.draft && state.draft.doc_type) {
-        payload.doc_type = state.draft.doc_type;
-      }
+      const edMod = getEditor();
+      const ctxPayload = edMod && edMod.buildContextPayload ? edMod.buildContextPayload(state.draft) : {};
+      const payload = Object.assign({ revision_id: revisionId || '' }, ctxPayload);
       const res = await api('/rollback/' + encodeURIComponent(state.editorSlug), {
         method: 'POST',
         body: JSON.stringify(payload),
       });
       state.historyOpen = false;
       state.autoEnabled = {};
+      state.eliteSamplePrefix = false;
       state.editorData.live = clone(res.live);
       state.editorData.meta = res.meta || state.editorData.meta;
       state.editorData.revisions = res.revisions || [];
+      state.baseHashes = res.base_hashes || state.baseHashes;
       state.draft = clone(res.live);
+      state.diffs = [];
+      state.selectedDiffKeys = [];
+      state.localDirtyCount = 0;
       state.banner = {
         type: 'success',
         text: revisionId
@@ -405,6 +523,47 @@
       await loadCatalog();
     } catch (err) {
       state.historyOpen = false;
+      state.banner = { type: 'error', text: err.message };
+    } finally {
+      state.busy = false;
+      render();
+    }
+  }
+
+  async function emergencyTurnOff() {
+    if (state.busy) {
+      return;
+    }
+    if (!window.confirm('Turn off this module on your live store immediately? A rollback snapshot will be saved so you can Undo anytime.')) {
+      return;
+    }
+    state.busy = true;
+    try {
+      const edMod = getEditor();
+      const ctxPayload = edMod && edMod.buildContextPayload ? edMod.buildContextPayload(state.draft) : {};
+      const res = await api('/emergency-off/' + encodeURIComponent(state.editorSlug), {
+        method: 'POST',
+        body: JSON.stringify(ctxPayload),
+      });
+      state.autoEnabled = {};
+      state.eliteSamplePrefix = false;
+      state.editorData.live = clone(res.live);
+      state.editorData.meta = res.meta || state.editorData.meta;
+      state.editorData.revisions = res.revisions || [];
+      state.baseHashes = res.base_hashes || state.baseHashes;
+      state.draft = clone(res.live);
+      state.diffs = [];
+      state.selectedDiffKeys = [];
+      state.localDirtyCount = 0;
+      state.banner = {
+        type: 'success',
+        text: res.disabled
+          ? 'Turned off on your live store immediately. Use Undo Now anytime to re-enable.'
+          : (res.message || 'Already inactive on your live store.'),
+      };
+      await refreshPreview();
+      await loadCatalog();
+    } catch (err) {
       state.banner = { type: 'error', text: err.message };
     } finally {
       state.busy = false;
@@ -452,7 +611,7 @@
           <a class="wcj-v10-nav-link" href="${esc(cfg.generalUrl)}">General Settings</a>
           <a class="wcj-v10-nav-link" href="${esc(cfg.toolsUrl)}">Tools</a>
           <a class="wcj-v10-mode-pill" data-classic-switch="1" href="${esc(getClassicToggleHref())}">
-            &#8644; Switch to Classic v9
+            &#8644; Classic View
           </a>
         </div>
       </div>
@@ -468,9 +627,15 @@
     const verifyBtn = state.banner.verifyUrl
       ? `<a class="wcj-v10-btn wcj-v10-btn-primary" href="${esc(state.banner.verifyUrl)}" target="_blank" rel="noopener">${esc(state.banner.verifyLabel || 'Verify on Live Store')} &#8599;</a>`
       : '';
+    const tipRow = state.banner.tip
+      ? `<div class="wcj-v10-banner-tip">${esc(state.banner.tip)} ${cfg.upgradeUrl ? `<a href="${esc(cfg.upgradeUrl + '?utm_source=booster_free&utm_medium=post_publish&utm_campaign=' + encodeURIComponent(state.editorSlug || 'guided'))}" target="_blank" rel="noopener">Explore Elite &#8599;</a>` : ''}</div>`
+      : '';
     return `
       <div class="wcj-v10-banner ${cls}">
-        <span>${esc(state.banner.text)}</span>
+        <div style="flex:1;min-width:220px;">
+          <div>${esc(state.banner.text)}</div>
+          ${tipRow}
+        </div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;">
           ${verifyBtn}
           ${canUndo ? '<button type="button" class="wcj-v10-btn" data-action="undo">Undo Now</button>' : ''}
@@ -500,6 +665,32 @@
             </div>
           </div>
         `).join('')}
+      </div>
+    `;
+  }
+
+  function renderModuleCardHtml(m) {
+    return `
+      <div class="wcj-v10-mod-card">
+        <div>
+          <div class="wcj-v10-mod-head">
+            <h3 class="wcj-v10-mod-title">${esc(m.name)}</h3>
+            <span class="wcj-v10-badge ${m.enabled ? 'is-on' : ''}">${m.enabled ? 'Active' : 'Inactive'}</span>
+          </div>
+          <p class="wcj-v10-mod-desc">${esc(m.desc)}</p>
+          <div class="wcj-v10-badges">
+            <span class="wcj-v10-badge">${esc(m.category_label)}</span>
+            <span class="wcj-v10-badge">${m.blocks_status === 'blocks' ? 'Checkout Blocks' : 'Classic Checkout'}</span>
+            ${m.flagship_editor ? '<span class="wcj-v10-badge is-flagship">Guided Preview</span>' : ''}
+          </div>
+        </div>
+        <div class="wcj-v10-mod-foot">
+          ${m.flagship_editor
+            ? `<button type="button" class="wcj-v10-btn wcj-v10-btn-primary" data-open-editor="${esc(m.flagship_editor)}">Configure &amp; Preview &rarr;</button>
+               <a class="wcj-v10-nav-link" href="${esc(m.classic_url)}">Classic Settings</a>`
+            : `<a class="wcj-v10-btn" href="${esc(m.classic_url)}">Configure Settings &rarr;</a>`
+          }
+        </div>
       </div>
     `;
   }
@@ -534,32 +725,19 @@
         ${renderRecipesHtml()}`
       : '';
 
-    const cardsHtml = filtered.length
-      ? filtered.map(({ mod: m }) => `
-          <div class="wcj-v10-mod-card">
-            <div>
-              <div class="wcj-v10-mod-head">
-                <h3 class="wcj-v10-mod-title">${esc(m.name)}</h3>
-                <span class="wcj-v10-badge ${m.enabled ? 'is-on' : ''}">${m.enabled ? 'Active' : 'Inactive'}</span>
-              </div>
-              <p class="wcj-v10-mod-desc">${esc(m.desc)}</p>
-              <div class="wcj-v10-badges">
-                <span class="wcj-v10-badge">${esc(m.category_label)}</span>
-                <span class="wcj-v10-badge">HPOS Ready</span>
-                <span class="wcj-v10-badge">${m.blocks_status === 'blocks' ? 'Checkout Blocks' : 'Classic Checkout'}</span>
-                ${m.flagship_editor ? '<span class="wcj-v10-badge is-flagship">Live Before/After Preview</span>' : ''}
-              </div>
-            </div>
-            <div class="wcj-v10-mod-foot">
-              ${m.flagship_editor
-                ? `<button type="button" class="wcj-v10-btn wcj-v10-btn-primary" data-open-editor="${esc(m.flagship_editor)}">Configure &amp; Preview &rarr;</button>
-                   <a class="wcj-v10-nav-link" href="${esc(m.classic_url)}">All Classic Options</a>`
-                : `<a class="wcj-v10-btn" href="${esc(m.classic_url)}">Configure Settings &rarr;</a>`
-              }
-            </div>
-          </div>
-        `).join('')
-      : '<div class="wcj-v10-card">No matching modules found. Try "fee", "paypal", "invoice", "vat", or "button".</div>';
+    let cardsHtml = '';
+    if (filtered.length) {
+      cardsHtml = filtered.map(({ mod: m }) => renderModuleCardHtml(m)).join('');
+    } else {
+      const closest = state.modules.filter((m) => m.flagship_editor).slice(0, 3);
+      cardsHtml = `
+        <div class="wcj-v10-empty-search">
+          <strong>No exact match for &ldquo;${esc(state.search.trim())}&rdquo;.</strong>
+          <span>Here are popular Booster modules to get started (try &ldquo;fee&rdquo;, &ldquo;invoice&rdquo;, &ldquo;button&rdquo;, &ldquo;vat&rdquo;, or &ldquo;currency&rdquo;):</span>
+        </div>
+        ${closest.map((m) => renderModuleCardHtml(m)).join('')}
+      `;
+    }
 
     return `
       <div class="wcj-v10-toolbar">
@@ -618,21 +796,18 @@
     return `
       <div class="wcj-v10-presets">
         <strong>Starter Presets:</strong>
-        ${presets.map((p) => `<button type="button" class="wcj-v10-preset-chip" data-apply-preset="${esc(p.id)}">${esc(p.label)}</button>`).join('')}
+        ${presets.map((p) => `<button type="button" class="wcj-v10-preset-chip" data-apply-preset="${esc(p.id)}" title="Applies sample values to your draft preview only">${esc(p.label)}</button>`).join('')}
       </div>
     `;
   }
 
   function renderDiagnosticsHtml() {
+    const edMod = getEditor();
     const meta = (state.editorData && state.editorData.meta) || {};
     const items = Array.isArray(meta.diagnostics) ? meta.diagnostics.slice() : [];
-    const d = state.draft || {};
-
-    if (state.editorSlug === 'pdf_invoicing' && d.attach_completed && !d.create_on_completed) {
-      items.unshift({
-        level: 'warning',
-        text: 'Attach PDF to Completed Order emails is checked, but Auto-create PDF when Order is Completed is off.',
-      });
+    if (edMod && edMod.getExtraDiagnostics && state.draft) {
+      const extra = edMod.getExtraDiagnostics(state.draft, meta) || [];
+      extra.forEach((item) => items.unshift(item));
     }
 
     if (!items.length) {
@@ -656,7 +831,7 @@
     const edMod = getEditor();
     const isOn = edMod && edMod.isLiveOn ? edMod.isLiveOn(ed.live) : !!ed.live.enabled;
     const revCount = (ed.revisions && ed.revisions.length) || 0;
-    const diffCount = state.diffs.length;
+    const diffCount = Math.max(state.localDirtyCount, state.diffs.length);
     const classicLinks = edMod && edMod.renderClassicMenu
       ? edMod.renderClassicMenu(ed, { esc })
       : `<a class="wcj-v10-nav-link" href="${esc(ed.classic_url)}">All Classic Options &rarr;</a>`;
@@ -674,14 +849,15 @@
           </div>
         </div>
         <div class="wcj-v10-editor-actions" id="wcj-v10-action-bar">
-          ${renderActionButtonsHtml(diffCount, revCount)}
+          ${renderActionButtonsHtml(diffCount, revCount, isOn)}
         </div>
       </div>
     `;
   }
 
-  function renderActionButtonsHtml(diffCount, revCount) {
+  function renderActionButtonsHtml(diffCount, revCount, isOn) {
     return `
+      ${isOn ? '<button type="button" class="wcj-v10-btn wcj-v10-btn-danger" data-action="emergency-off">Turn Off Now</button>' : ''}
       ${revCount > 0 ? `<button type="button" class="wcj-v10-btn" data-action="open-history">History (${revCount})</button>` : ''}
       ${revCount > 0 ? '<button type="button" class="wcj-v10-btn" data-action="undo">&#8630; Undo Last Publish</button>' : ''}
       ${diffCount > 0 ? '<button type="button" class="wcj-v10-btn" data-action="discard">Discard</button>' : ''}
@@ -699,6 +875,8 @@
     return edMod.renderForm(state.draft, state.editorData.meta || {}, {
       esc,
       renderPresetsHtml,
+      eliteSamplePrefix: state.eliteSamplePrefix,
+      upgradeUrl: cfg.upgradeUrl || 'https://booster.io/buy-booster/',
     });
   }
 
@@ -715,6 +893,27 @@
       state,
       { esc, fmtMoney, renderDiagnosticsHtml },
     );
+  }
+
+  function renderDiffGroupRows(rows) {
+    return rows.map((d) => {
+      const checked = state.selectedDiffKeys.indexOf(d.key) !== -1;
+      return `
+        <label class="wcj-v10-diff-row wcj-v10-diff-check">
+          <input type="checkbox" data-diff-toggle="${esc(d.key)}" ${checked ? 'checked' : ''} />
+          <div style="flex:1;min-width:180px;">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;">
+              <strong>${esc(d.label)}</strong>
+              <div>
+                <span class="wcj-v10-diff-old">${esc(d.from)}</span> &rarr;
+                <span class="wcj-v10-diff-new">${esc(d.to)}</span>
+              </div>
+            </div>
+            ${d.impact ? `<div class="wcj-v10-diff-impact">${esc(d.impact)}</div>` : ''}
+          </div>
+        </label>
+      `;
+    }).join('');
   }
 
   function renderModalHtml() {
@@ -758,6 +957,10 @@
     }
     const edMod = getEditor();
     const validationErr = edMod && edMod.getValidationError ? edMod.getValidationError(state.draft) : '';
+    const goesLive = state.diffs.filter((d) => d.goes_live);
+    const configOnly = state.diffs.filter((d) => !d.goes_live);
+    const selectedCount = state.selectedDiffKeys.length;
+
     return `
       <div class="wcj-v10-modal-backdrop" id="wcj-v10-modal-backdrop">
         <div class="wcj-v10-modal" role="dialog" aria-modal="true">
@@ -766,24 +969,23 @@
             <button type="button" class="wcj-v10-btn" data-action="close-modal">Close</button>
           </div>
           <div class="wcj-v10-modal-body">
-            ${state.diffs.map((d) => `
-              <div class="wcj-v10-diff-row">
-                <strong>${esc(d.label)}</strong>
-                <div>
-                  <span class="wcj-v10-diff-old">${esc(d.from)}</span> &rarr;
-                  <span class="wcj-v10-diff-new">${esc(d.to)}</span>
-                </div>
-              </div>
-            `).join('')}
+            ${goesLive.length ? `
+              <div class="wcj-v10-diff-group-title">Goes live for customers</div>
+              ${renderDiffGroupRows(goesLive)}
+            ` : ''}
+            ${configOnly.length ? `
+              <div class="wcj-v10-diff-group-title" style="margin-top:12px;">Configuration details</div>
+              ${renderDiffGroupRows(configOnly)}
+            ` : ''}
             ${validationErr ? `<div class="wcj-v10-modal-error">${esc(validationErr)}</div>` : ''}
             <p style="font-size:12px;color:#50575e;margin:10px 0 0;">
-              A snapshot of your previous values is saved automatically so you can Undo in one click.
+              Uncheck anything you are not ready to push live. A rollback snapshot is saved automatically on publish.
             </p>
           </div>
           <div class="wcj-v10-modal-foot">
             <button type="button" class="wcj-v10-btn" data-action="close-modal">Keep Editing</button>
-            <button type="button" class="wcj-v10-btn wcj-v10-btn-primary" data-action="confirm-publish" ${(state.busy || !!validationErr) ? 'disabled' : ''}>
-              ${state.busy ? 'Publishing...' : 'Confirm & Publish'}
+            <button type="button" class="wcj-v10-btn wcj-v10-btn-primary" id="wcj-v10-confirm-publish-btn" data-action="confirm-publish" ${(state.busy || !!validationErr || selectedCount === 0) ? 'disabled' : ''}>
+              ${state.busy ? 'Publishing...' : `Confirm & Publish (${selectedCount})`}
             </button>
           </div>
         </div>
@@ -795,7 +997,6 @@
     const slot = document.getElementById('wcj-v10-banner-slot');
     if (slot) {
       slot.innerHTML = renderBannerHtml();
-      bindChromeEvents();
     }
   }
 
@@ -803,7 +1004,6 @@
     const slot = document.getElementById('wcj-v10-modal-slot');
     if (slot) {
       slot.innerHTML = renderModalHtml();
-      bindChromeEvents();
     }
   }
 
@@ -811,7 +1011,6 @@
     const bodyEl = document.getElementById('wcj-v10-catalog-body');
     if (bodyEl) {
       bodyEl.innerHTML = renderCatalogBodyHtml();
-      bindCatalogBodyEvents();
     }
     const chipsEl = document.getElementById('wcj-v10-quick-chips');
     if (chipsEl) {
@@ -820,7 +1019,6 @@
         ${['fee', 'invoice', 'button', 'sale'].map((term) => `<button type="button" class="wcj-v10-chip" data-quick-search="${term}">"${term}"</button>`).join('')}
         ${state.search ? '<button type="button" class="wcj-v10-chip" data-quick-search="">Clear</button>' : ''}
       `;
-      bindQuickChips();
     }
   }
 
@@ -828,12 +1026,7 @@
     if (previewSignature() !== state.lastPreviewSignature) {
       renderPreviewPaneOnly();
     }
-    const barSlot = document.getElementById('wcj-v10-action-bar');
-    if (barSlot && state.editorData) {
-      const revCount = (state.editorData.revisions && state.editorData.revisions.length) || 0;
-      barSlot.innerHTML = renderActionButtonsHtml(state.diffs.length, revCount);
-      bindPreviewAndActionEvents();
-    }
+    updateActionBarOnly();
   }
 
   function render() {
@@ -861,146 +1054,152 @@
     } else {
       state.lastPreviewSignature = '';
     }
-    bindAllEvents();
   }
 
   // =========================================================================
-  // EVENT BINDING
+  // SINGLE DELEGATED ROOT EVENT LISTENERS (ZERO ACCUMULATION)
   // =========================================================================
-  function bindChromeEvents() {
-    root.querySelectorAll('[data-nav]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (!confirmDiscardIfDirty()) return;
-        const target = btn.dataset.nav;
+  function bindDelegatedEventsOnce() {
+    root.addEventListener('click', async (e) => {
+      const target = e.target;
+      if (!target || !target.closest) {
+        return;
+      }
+
+      if (target.id === 'wcj-v10-modal-backdrop' || target.closest('[data-action="close-modal"]')) {
+        state.modalOpen = false;
+        state.historyOpen = false;
+        renderModalOnly();
+        return;
+      }
+
+      const classicSwitch = target.closest('[data-classic-switch]');
+      if (classicSwitch) {
+        if (!confirmDiscardIfDirty()) {
+          e.preventDefault();
+        }
+        return;
+      }
+
+      const navBtn = target.closest('[data-nav]');
+      if (navBtn) {
+        if (!confirmDiscardIfDirty()) {
+          return;
+        }
+        const dest = navBtn.dataset.nav;
         state.view = 'catalog';
-        state.catalogTab = target === 'all' ? 'all' : 'active';
+        state.catalogTab = dest === 'all' ? 'all' : 'active';
         state.editorSlug = '';
         state.banner = null;
         state.autoEnabled = {};
+        state.eliteSamplePrefix = false;
+        state.diffs = [];
+        state.selectedDiffKeys = [];
+        state.localDirtyCount = 0;
         state.lastPreviewSignature = '';
         state.historyOpen = false;
         state.modalOpen = false;
         syncBrowserUrl();
         render();
         window.scrollTo(0, 0);
-      });
-    });
+        return;
+      }
 
-    root.querySelectorAll('[data-classic-switch]').forEach((link) => {
-      link.addEventListener('click', (e) => {
-        if (!confirmDiscardIfDirty()) {
-          e.preventDefault();
+      const actionEl = target.closest('[data-action]');
+      if (actionEl) {
+        const act = actionEl.dataset.action;
+        if (act === 'dismiss-banner') {
+          state.banner = null;
+          renderBannerOnly();
+          return;
         }
-      });
-    });
-
-    root.querySelectorAll('[data-action="dismiss-banner"]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.banner = null;
-        renderBannerOnly();
-      });
-    });
-
-    root.querySelectorAll('[data-action="close-modal"]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.modalOpen = false;
-        state.historyOpen = false;
-        renderModalOnly();
-      });
-    });
-
-    const backdrop = document.getElementById('wcj-v10-modal-backdrop');
-    if (backdrop) {
-      backdrop.addEventListener('click', (e) => {
-        if (e.target === backdrop) {
+        if (act === 'open-publish') {
+          await openPublishModal();
+          return;
+        }
+        if (act === 'open-history') {
           state.modalOpen = false;
-          state.historyOpen = false;
+          state.historyOpen = true;
           renderModalOnly();
+          return;
         }
-      });
-    }
+        if (act === 'confirm-publish') {
+          await publishDraft();
+          return;
+        }
+        if (act === 'undo') {
+          await undoLastPublish('');
+          return;
+        }
+        if (act === 'emergency-off') {
+          await emergencyTurnOff();
+          return;
+        }
+        if (act === 'discard') {
+          state.autoEnabled = {};
+          state.eliteSamplePrefix = false;
+          state.draft = clone(state.editorData.live);
+          state.diffs = [];
+          state.selectedDiffKeys = [];
+          state.localDirtyCount = 0;
+          applyLocalPreviewImmediate();
+          render();
+          try {
+            const updated = await refreshPreview();
+            if (updated) {
+              updateEditorPreviewAndBar();
+            }
+          } catch (err) {
+            state.banner = { type: 'error', text: err.message };
+            renderBannerOnly();
+          }
+          return;
+        }
+      }
 
-    root.querySelectorAll('[data-action="confirm-publish"]').forEach((btn) => {
-      btn.addEventListener('click', publishDraft);
-    });
+      const revBtn = target.closest('[data-restore-rev]');
+      if (revBtn) {
+        await undoLastPublish(revBtn.dataset.restoreRev);
+        return;
+      }
 
-    root.querySelectorAll('[data-restore-rev]').forEach((btn) => {
-      btn.addEventListener('click', () => undoLastPublish(btn.dataset.restoreRev));
-    });
-  }
-
-  function bindPreviewAndActionEvents() {
-    root.querySelectorAll('[data-action="open-publish"]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.historyOpen = false;
-        state.modalOpen = true;
-        renderModalOnly();
-      });
-    });
-
-    root.querySelectorAll('[data-action="open-history"]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.modalOpen = false;
-        state.historyOpen = true;
-        renderModalOnly();
-      });
-    });
-
-    root.querySelectorAll('[data-action="discard"]').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        state.autoEnabled = {};
-        state.draft = clone(state.editorData.live);
-        state.diffs = [];
+      const subBtn = target.closest('[data-sample-sub]');
+      if (subBtn) {
+        state.previewContext.subtotal = Number(subBtn.dataset.sampleSub);
         applyLocalPreviewImmediate();
-        render();
-        const updated = await refreshPreview();
-        if (updated) {
-          updateEditorPreviewAndBar();
+        try {
+          const updated = await refreshPreview();
+          if (updated) {
+            updateEditorPreviewAndBar();
+          }
+        } catch (err) {
+          state.banner = { type: 'error', text: err.message };
+          renderBannerOnly();
         }
-      });
-    });
+        return;
+      }
 
-    root.querySelectorAll('[data-action="undo"]').forEach((btn) => {
-      btn.addEventListener('click', () => undoLastPublish(''));
-    });
+      const presetBtn = target.closest('[data-apply-preset]');
+      if (presetBtn) {
+        applyPreset(presetBtn.dataset.applyPreset);
+        return;
+      }
 
-    root.querySelectorAll('[data-sample-sub]').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        state.previewContext.subtotal = Number(btn.dataset.sampleSub);
-        applyLocalPreviewImmediate();
-        const updated = await refreshPreview();
-        if (updated) {
-          updateEditorPreviewAndBar();
-        }
-      });
-    });
-
-    root.querySelectorAll('[data-inv-pv]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.previewContext.invoicePreviewMode = btn.dataset.invPv;
-        renderPreviewPaneOnly();
-      });
-    });
-  }
-
-  function bindQuickChips() {
-    root.querySelectorAll('[data-quick-search]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.search = btn.dataset.quickSearch;
+      const quickBtn = target.closest('[data-quick-search]');
+      if (quickBtn) {
+        state.search = quickBtn.dataset.quickSearch;
         const inp = document.getElementById('wcj-v10-search');
         if (inp) {
           inp.value = state.search;
           inp.focus();
         }
         updateCatalogBodyOnly();
-      });
-    });
-  }
+        return;
+      }
 
-  function bindCatalogBodyEvents() {
-    root.querySelectorAll('[data-catalog-tab]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.catalogTab = btn.dataset.catalogTab;
+      const tabBtn = target.closest('[data-catalog-tab]');
+      if (tabBtn) {
+        state.catalogTab = tabBtn.dataset.catalogTab;
         if (state.search) {
           state.search = '';
           const inp = document.getElementById('wcj-v10-search');
@@ -1008,84 +1207,122 @@
         }
         syncBrowserUrl();
         updateCatalogBodyOnly();
-        root.querySelectorAll('[data-nav]').forEach((navBtn) => {
+        root.querySelectorAll('[data-nav]').forEach((btn) => {
           const isHome = state.catalogTab === 'active';
-          navBtn.classList.toggle('is-active', (navBtn.dataset.nav === 'home' && isHome) || (navBtn.dataset.nav === 'all' && !isHome));
+          btn.classList.toggle('is-active', (btn.dataset.nav === 'home' && isHome) || (btn.dataset.nav === 'all' && !isHome));
         });
-      });
-    });
+        return;
+      }
 
-    root.querySelectorAll('[data-cat]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.selectedCategory = btn.dataset.cat;
+      const catBtn = target.closest('[data-cat]');
+      if (catBtn) {
+        state.selectedCategory = catBtn.dataset.cat;
         updateCatalogBodyOnly();
-      });
-    });
+        return;
+      }
 
-    root.querySelectorAll('[data-open-editor]').forEach((btn) => {
-      btn.addEventListener('click', () => openEditor(btn.dataset.openEditor));
-    });
-  }
+      const openBtn = target.closest('[data-open-editor]');
+      if (openBtn) {
+        try {
+          await openEditor(openBtn.dataset.openEditor);
+        } catch (err) {
+          state.banner = { type: 'error', text: err.message };
+          render();
+        }
+        return;
+      }
 
-  function bindAllEvents() {
-    bindChromeEvents();
-    bindPreviewAndActionEvents();
-    bindQuickChips();
-    bindCatalogBodyEvents();
-
-    const searchInput = document.getElementById('wcj-v10-search');
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        state.search = e.target.value;
-        updateCatalogBodyOnly();
-      });
-    }
-
-    const form = document.getElementById('wcj-v10-editor-form');
-    const edMod = getEditor();
-    if (form && state.draft && edMod) {
-      form.querySelectorAll('[data-apply-preset]').forEach((btn) => {
-        btn.addEventListener('click', () => applyPreset(btn.dataset.applyPreset));
-      });
-
-      form.querySelectorAll('[data-field]').forEach((el) => {
-        const key = el.dataset.field;
-        const evt = el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input';
-        el.addEventListener(evt, () => {
-          if (edMod.onFieldSwitch && edMod.onFieldSwitch(key, el, state, { confirmDiscardIfDirty, openEditor })) {
-            return;
-          }
-          const val = el.type === 'checkbox' ? el.checked : el.value;
-          state.draft[key] = val;
-          if (el.type === 'checkbox') {
-            delete state.autoEnabled[key];
-            if (el.checked) {
-              autoEnableForField(key, form);
-            }
-          } else {
-            autoEnableForField(key, form);
-          }
-          if (edMod.onFieldChange) {
-            edMod.onFieldChange(key, val, state);
-          }
-          applyLocalPreviewImmediate();
-          schedulePreviewUpdate();
-        });
-      });
-
-      if (edMod.bindCustomEvents) {
-        edMod.bindCustomEvents(form, state, {
+      const edMod = getEditor();
+      if (edMod && edMod.handleClick) {
+        edMod.handleClick(target, state, {
+          esc,
           autoEnableForField,
+          renderPreviewPaneOnly,
+          applyLocalPreviewImmediate,
+          render,
           onDraftMutated: () => {
             applyLocalPreviewImmediate();
             schedulePreviewUpdate();
           },
         });
       }
+    });
+
+    function handleFieldEvent(el) {
+      const edMod = getEditor();
+      const form = document.getElementById('wcj-v10-editor-form');
+      if (!edMod || !state.draft || !form) {
+        return;
+      }
+      const key = el.dataset.field;
+      if (edMod.onFieldSwitch && edMod.onFieldSwitch(key, el, state, { confirmDiscardIfDirty, openEditor })) {
+        return;
+      }
+      const val = el.type === 'checkbox' ? el.checked : el.value;
+      state.draft[key] = val;
+      if (el.type === 'checkbox') {
+        delete state.autoEnabled[key];
+        if (el.checked) {
+          autoEnableForField(key, form);
+        }
+      } else {
+        autoEnableForField(key, form);
+      }
+      if (edMod.onFieldChange) {
+        edMod.onFieldChange(key, val, state);
+      }
+      applyLocalPreviewImmediate();
+      schedulePreviewUpdate();
     }
+
+    root.addEventListener('input', (e) => {
+      const target = e.target;
+      if (!target) {
+        return;
+      }
+      if (target.id === 'wcj-v10-search') {
+        state.search = target.value;
+        updateCatalogBodyOnly();
+        return;
+      }
+      const fieldEl = target.closest && target.closest('#wcj-v10-editor-form [data-field]');
+      if (fieldEl && fieldEl.type !== 'checkbox' && fieldEl.tagName !== 'SELECT') {
+        handleFieldEvent(fieldEl);
+      }
+    });
+
+    root.addEventListener('change', (e) => {
+      const target = e.target;
+      if (!target) {
+        return;
+      }
+      if (target.dataset && target.dataset.diffToggle) {
+        const diffKey = target.dataset.diffToggle;
+        if (target.checked) {
+          if (state.selectedDiffKeys.indexOf(diffKey) === -1) {
+            state.selectedDiffKeys.push(diffKey);
+          }
+        } else {
+          state.selectedDiffKeys = state.selectedDiffKeys.filter((k) => k !== diffKey);
+        }
+        const confirmBtn = document.getElementById('wcj-v10-confirm-publish-btn');
+        if (confirmBtn) {
+          const edMod = getEditor();
+          const validationErr = edMod && edMod.getValidationError ? edMod.getValidationError(state.draft) : '';
+          confirmBtn.textContent = `Confirm & Publish (${state.selectedDiffKeys.length})`;
+          confirmBtn.disabled = state.busy || !!validationErr || state.selectedDiffKeys.length === 0;
+        }
+        return;
+      }
+      const fieldEl = target.closest && target.closest('#wcj-v10-editor-form [data-field]');
+      if (fieldEl && (fieldEl.type === 'checkbox' || fieldEl.tagName === 'SELECT')) {
+        handleFieldEvent(fieldEl);
+      }
+    });
   }
 
   async function init() {
+    bindDelegatedEventsOnce();
     try {
       await loadCatalog();
       if (state.editorSlug) {
@@ -1127,7 +1364,7 @@
   });
 
   window.addEventListener('beforeunload', (e) => {
-    if (state.view === 'editor' && state.diffs.length > 0 && !state.busy) {
+    if (state.view === 'editor' && hasPendingChanges() && !state.busy) {
       e.preventDefault();
       e.returnValue = '';
     }

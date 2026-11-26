@@ -28,11 +28,12 @@ if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 		 * @return array<string, string>
 		 */
 		public static function all() {
-			return array(
+			$editors = array(
 				'payment_gateways_fees' => 'WCJ_V10_Editor_Gateway_Fees',
 				'pdf_invoicing'         => 'WCJ_V10_Editor_PDF_Invoicing',
 				'button_price_labels'   => 'WCJ_V10_Editor_Labels',
 			);
+			return apply_filters( 'wcj_v10_editors', $editors );
 		}
 
 		/**
@@ -44,6 +45,63 @@ if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 		public static function get( $slug ) {
 			$all = self::all();
 			return isset( $all[ $slug ] ) ? $all[ $slug ] : null;
+		}
+
+		/**
+		 * Enqueueable script map (handle => plugin-relative path) across all editors.
+		 *
+		 * @return array<string, string>
+		 */
+		public static function editor_scripts() {
+			$scripts = array();
+			foreach ( self::all() as $slug => $cls ) {
+				if ( method_exists( $cls, 'script' ) ) {
+					$scripts[ 'wcj-v10-ed-' . sanitize_key( $slug ) ] = $cls::script();
+				}
+			}
+			return $scripts;
+		}
+
+		/**
+		 * Context query parameter keys accepted by an editor (for example gateway or doc_type).
+		 *
+		 * @param string $slug Editor slug.
+		 * @return array<int, string>
+		 */
+		public static function context_keys( $slug ) {
+			$cls = self::get( $slug );
+			if ( $cls && method_exists( $cls, 'context_keys' ) ) {
+				return (array) $cls::context_keys();
+			}
+			return array();
+		}
+
+		/**
+		 * Primary Classic module section fallback when returning to Classic from a multi-module editor.
+		 *
+		 * @param string $slug_or_section Editor or section slug.
+		 * @return string
+		 */
+		public static function primary_classic_section( $slug_or_section ) {
+			$cls = self::get( $slug_or_section );
+			if ( $cls && method_exists( $cls, 'primary_classic_section' ) ) {
+				return (string) $cls::primary_classic_section();
+			}
+			return '';
+		}
+
+		/**
+		 * Underlying Booster module IDs controlled by an editor (for allowlist and role enforcement).
+		 *
+		 * @param string $slug Editor slug.
+		 * @return array<int, string>
+		 */
+		public static function required_module_ids( $slug ) {
+			$cls = self::get( $slug );
+			if ( $cls && method_exists( $cls, 'required_module_ids' ) ) {
+				return (array) $cls::required_module_ids();
+			}
+			return array();
 		}
 
 		/**

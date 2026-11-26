@@ -111,13 +111,14 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 		/**
 		 * Compare-and-swap option update; clears WP option caches and Booster singleton cache.
 		 *
-		 * @param string $key         Option name.
-		 * @param array  $before      Expected current state.
-		 * @param array  $after       Target state.
-		 * @param array  $no_autoload Keys that should insert with autoload='no'.
+		 * @param string $key              Option name.
+		 * @param array  $before           Expected current state.
+		 * @param array  $after            Target state.
+		 * @param array  $no_autoload      Keys that should insert with autoload='no'.
+		 * @param bool   $flush_alloptions Whether to delete the 'alloptions' cache group entry.
 		 * @return bool
 		 */
-		public static function compare_exchange( $key, $before, $after, $no_autoload = array() ) {
+		public static function compare_exchange( $key, $before, $after, $no_autoload = array(), $flush_alloptions = true ) {
 			global $wpdb;
 			if ( $before === $after ) {
 				return self::read_state( $key ) === $before;
@@ -150,19 +151,22 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 					)
 				); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			}
-			self::flush_option_caches( $key );
+			self::flush_option_caches( $key, $flush_alloptions );
 			return 1 === $result;
 		}
 
 		/**
 		 * Flush WordPress and Booster caches for an option key.
 		 *
-		 * @param string $key Option name.
+		 * @param string $key              Option name.
+		 * @param bool   $flush_alloptions Whether to also delete 'alloptions'.
 		 * @return void
 		 */
-		public static function flush_option_caches( $key ) {
+		public static function flush_option_caches( $key, $flush_alloptions = true ) {
 			wp_cache_delete( $key, 'options' );
-			wp_cache_delete( 'alloptions', 'options' );
+			if ( $flush_alloptions ) {
+				wp_cache_delete( 'alloptions', 'options' );
+			}
 			wp_cache_delete( 'notoptions', 'options' );
 			$core = self::core();
 			if ( $core && isset( $core->options ) && is_array( $core->options ) && array_key_exists( $key, $core->options ) ) {
@@ -197,7 +201,7 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 			if ( $held['exists'] && is_array( $data ) && isset( $data['t'] ) && (int) $data['t'] < time() - 600 && self::compare_exchange( $key, $held, $mine, array( $key ) ) ) {
 				return $mine;
 			}
-			throw new RuntimeException( esc_html( $busy ), 409 );
+			throw new RuntimeException( (string) $busy, 409 );
 		}
 
 		/**
@@ -243,7 +247,21 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 		}
 
 		/**
-		 * Compare-and-swap write a batch of options atomically; rolls back prior writes on conflict.
+		 * Compute deterministic state_hash map from an option state snapshot.
+		 *
+		 * @param array<string, array> $states Snapshot map from snapshot_options().
+		 * @return array<string, string>
+		 */
+		public static function hashes_from_snapshot( $states ) {
+			$hashes = array();
+			foreach ( $states as $key => $st ) {
+				$hashes[ $key ] = self::state_hash( $st );
+			}
+			return $hashes;
+		}
+
+		/**
+		 * Compare-and-swap write a batch of options atomically; rolls back prior writes against expected after-states on conflict.
 		 *
 		 * @param array<string, array> $before_states Pre-write option state tuples keyed by option name.
 		 * @param array<string, mixed> $option_writes Map of option name => new PHP value.
@@ -252,24 +270,35 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 		 */
 		public static function atomic_write_batch( $before_states, $option_writes, $no_autoload = array() ) {
 			$written_before = array();
+			$written_after  = array();
 			$after_states   = array();
 
 			foreach ( $option_writes as $opt_key => $new_val ) {
 				$before_st = isset( $before_states[ $opt_key ] ) ? $before_states[ $opt_key ] : self::read_state( $opt_key );
 				$after_st  = self::value_state( $new_val );
-				if ( ! self::compare_exchange( $opt_key, $before_st, $after_st, $no_autoload ) ) {
-					// Revert any options already mutated in this loop to keep publish all-or-nothing.
+				if ( ! self::compare_exchange( $opt_key, $before_st, $after_st, $no_autoload, false ) ) {
+					// Revert only keys matching what we wrote so concurrent mutations are never clobbered.
 					foreach ( array_reverse( $written_before, true ) as $undo_key => $undo_before ) {
-						$undo_cur = self::read_state( $undo_key );
-						self::compare_exchange( $undo_key, $undo_cur, $undo_before, $no_autoload );
+						self::compare_exchange( $undo_key, $written_after[ $undo_key ], $undo_before, $no_autoload, false );
 					}
+					wp_cache_delete( 'alloptions', 'options' );
 					return array(
 						'ok'           => false,
 						'after_states' => array(),
 					);
 				}
 				$written_before[ $opt_key ] = $before_st;
+				$written_after[ $opt_key ]  = $after_st;
 				$after_states[ $opt_key ]   = self::read_state( $opt_key );
+			}
+
+			if ( ! empty( $option_writes ) ) {
+				wp_cache_delete( 'alloptions', 'options' );
+				foreach ( $option_writes as $opt_key => $new_val ) {
+					$old_val = self::state_value( isset( $written_before[ $opt_key ] ) ? $written_before[ $opt_key ] : array( 'exists' => false, 'raw' => '' ) );
+					do_action( "update_option_{$opt_key}", $old_val, $new_val, $opt_key );
+					do_action( 'updated_option', $opt_key, $old_val, $new_val );
+				}
 			}
 
 			return array(
@@ -352,7 +381,7 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 					: array();
 
 				if ( empty( $revs ) ) {
-					throw new RuntimeException( esc_html__( 'No saved revision available to undo.', 'woocommerce-jetpack' ), 404 );
+					throw new RuntimeException( __( 'No saved revision available to undo.', 'woocommerce-jetpack' ), 404 );
 				}
 
 				$target_idx = count( $revs ) - 1;
@@ -366,66 +395,66 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 						}
 					}
 					if ( ! $found ) {
-						throw new RuntimeException( esc_html__( 'Selected revision could not be found.', 'woocommerce-jetpack' ), 404 );
+						throw new RuntimeException( __( 'Selected revision could not be found.', 'woocommerce-jetpack' ), 404 );
 					}
 				}
 
-				$latest         = $revs[ count( $revs ) - 1 ];
-				$current_states = array();
-				foreach ( $latest['after_hashes'] as $opt_key => $expected_hash ) {
-					$cur                        = self::read_state( $opt_key );
-					$current_states[ $opt_key ] = $cur;
-					if ( self::state_hash( $cur ) !== $expected_hash ) {
-						throw new RuntimeException(
-							esc_html__( 'Settings were modified externally after this publish. Reload to review current live values before changing.', 'woocommerce-jetpack' ),
-							409
-						);
-					}
-				}
+				// Verify per-key continuity across every step from newest down to target_idx (catches non-adjacent gaps).
+				$current_states     = array();
+				$expected_next_hash = array();
+				$target_restore     = array();
 
-				// Verify the LIFO chain from latest down to target_idx and collect target restore states.
-				$target_restore = array();
 				for ( $idx = count( $revs ) - 1; $idx >= $target_idx; $idx-- ) {
 					$step = $revs[ $idx ];
-					if ( $idx < count( $revs ) - 1 ) {
-						$newer = $revs[ $idx + 1 ];
-						foreach ( $step['after_hashes'] as $opt_key => $expected_hash ) {
-							if ( isset( $newer['before'][ $opt_key ] ) && self::state_hash( $newer['before'][ $opt_key ] ) !== $expected_hash ) {
-								throw new RuntimeException(
-									esc_html__( 'Settings were modified between these revisions (for example in Classic View). Undo the newest step or review live settings first.', 'woocommerce-jetpack' ),
-									409
-								);
-							}
-						}
-					}
 					foreach ( $step['before'] as $opt_key => $before_state ) {
-						if ( ! isset( $current_states[ $opt_key ] ) ) {
-							$cur = self::read_state( $opt_key );
+						if ( ! array_key_exists( $opt_key, $current_states ) ) {
+							$cur                        = self::read_state( $opt_key );
+							$current_states[ $opt_key ] = $cur;
 							if ( isset( $step['after_hashes'][ $opt_key ] ) && self::state_hash( $cur ) !== $step['after_hashes'][ $opt_key ] ) {
 								throw new RuntimeException(
-									esc_html__( 'Settings were modified externally after an earlier publish. Reload to review live values first.', 'woocommerce-jetpack' ),
+									__( 'Settings were modified externally after this publish. Reload to review current live values before changing.', 'woocommerce-jetpack' ),
 									409
 								);
 							}
-							$current_states[ $opt_key ] = $cur;
+						} elseif ( isset( $expected_next_hash[ $opt_key ], $step['after_hashes'][ $opt_key ] ) && $step['after_hashes'][ $opt_key ] !== $expected_next_hash[ $opt_key ] ) {
+							throw new RuntimeException(
+								__( 'Settings were modified between these revisions (for example in Classic View). Undo the newest step or review live settings first.', 'woocommerce-jetpack' ),
+								409
+							);
 						}
-						$target_restore[ $opt_key ] = $before_state;
+
+						$expected_next_hash[ $opt_key ] = self::state_hash( $before_state );
+						$target_restore[ $opt_key ]     = $before_state;
 					}
 				}
 
-				$written_Undo = array();
+				$written_undo = array();
 				foreach ( $target_restore as $opt_key => $before_state ) {
 					$cur = isset( $current_states[ $opt_key ] ) ? $current_states[ $opt_key ] : self::read_state( $opt_key );
-					if ( ! self::compare_exchange( $opt_key, $cur, $before_state ) ) {
-						foreach ( array_reverse( $written_Undo, true ) as $revert_key => $revert_cur ) {
-							self::compare_exchange( $revert_key, self::read_state( $revert_key ), $revert_cur );
+					if ( ! self::compare_exchange( $opt_key, $cur, $before_state, array(), false ) ) {
+						foreach ( array_reverse( $written_undo, true ) as $revert_key => $pair ) {
+							self::compare_exchange( $revert_key, $pair['after'], $pair['before'], array(), false );
 						}
+						wp_cache_delete( 'alloptions', 'options' );
 						throw new RuntimeException(
-							esc_html__( 'Concurrent setting change detected during undo. Please reload.', 'woocommerce-jetpack' ),
+							__( 'Concurrent setting change detected during undo. Please reload.', 'woocommerce-jetpack' ),
 							409
 						);
 					}
-					$written_Undo[ $opt_key ] = $cur;
+					$written_undo[ $opt_key ] = array(
+						'before' => $cur,
+						'after'  => $before_state,
+					);
+				}
+
+				if ( ! empty( $written_undo ) ) {
+					wp_cache_delete( 'alloptions', 'options' );
+					foreach ( $written_undo as $opt_key => $pair ) {
+						$old_val = self::state_value( $pair['before'] );
+						$new_val = self::state_value( $pair['after'] );
+						do_action( "update_option_{$opt_key}", $old_val, $new_val, $opt_key );
+						do_action( 'updated_option', $opt_key, $old_val, $new_val );
+					}
 				}
 
 				$remaining      = array_slice( $revs, 0, $target_idx );

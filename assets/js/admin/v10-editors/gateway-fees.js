@@ -12,8 +12,22 @@
         : '';
     },
 
+    buildContextPayload(draft) {
+      return draft && draft.gateway ? { gateway: draft.gateway } : {};
+    },
+
     initContext(cfg) {
       return cfg.initialGateway ? { gateway: cfg.initialGateway } : {};
+    },
+
+    nonDiffKeys() {
+      return ['gateway'];
+    },
+
+    initPreviewState(meta, previewContext) {
+      if (meta && Array.isArray(meta.sample_amounts) && meta.sample_amounts.length) {
+        previewContext.subtotal = Number(meta.sample_amounts[0]);
+      }
     },
 
     isLiveOn(live) {
@@ -31,18 +45,9 @@
       return [];
     },
 
-    getPresets() {
+    getPresets(meta) {
+      const sym = (meta && meta.currency_symbol) || '$';
       return [
-        {
-          id: 'fee_card_3',
-          label: '+3% Processing Fee',
-          patch: {
-            enabled: true,
-            fee_type: 'percent',
-            amount: '3',
-            label: 'Card Processing Fee',
-          },
-        },
         {
           id: 'disc_bank_5',
           label: '-5% Bank Discount',
@@ -54,8 +59,18 @@
           },
         },
         {
+          id: 'fee_card_3',
+          label: '+3% Processing Fee',
+          patch: {
+            enabled: true,
+            fee_type: 'percent',
+            amount: '3',
+            label: 'Card Processing Fee',
+          },
+        },
+        {
           id: 'fee_cod_5',
-          label: '$5 COD Handling',
+          label: `${sym}5 COD Handling`,
           patch: {
             enabled: true,
             fee_type: 'fixed',
@@ -85,14 +100,14 @@
           <h2>Simple Setup</h2>
           <label class="wcj-v10-check">
             <input type="checkbox" data-field="enabled" ${draft.enabled ? 'checked' : ''} />
-            <span>Module Active</span>
+            <span>Module Active (all payment methods)</span>
           </label>
         </div>
         ${deps.renderPresetsHtml('payment_gateways_fees')}
         <div class="wcj-v10-field">
           <label for="wcj-f-gateway">Payment Method</label>
           <select id="wcj-f-gateway" data-field="gateway">
-            ${gateways.map((g) => `<option value="${esc(g.id)}" ${draft.gateway === g.id ? 'selected' : ''}>${esc(g.title)}${g.enabled ? '' : ' (Disabled in Woo)'}</option>`).join('')}
+            ${gateways.map((g) => `<option value="${esc(g.id)}" ${draft.gateway === g.id ? 'selected' : ''}>${esc(g.title)}${g.has_rule ? ' &bull; Rule active' : ''}${g.enabled ? '' : ' (Disabled in Woo)'}</option>`).join('')}
           </select>
         </div>
         <div class="wcj-v10-row-2">
@@ -134,7 +149,7 @@
             <div class="wcj-v10-field">
               <label class="wcj-v10-check">
                 <input type="checkbox" data-field="round" ${draft.round ? 'checked' : ''} />
-                <span>Round fee to nearest whole unit</span>
+                <span>Round fee to nearest whole unit (precision = 0)</span>
               </label>
             </div>
             <div class="wcj-v10-field" style="margin-bottom:0;">
@@ -218,6 +233,7 @@
       const b = (pv && pv.before) || {};
       const a = (pv && pv.after) || {};
       const sym = (meta && meta.currency_symbol) || '$';
+      const amounts = (meta && Array.isArray(meta.sample_amounts) && meta.sample_amounts.length) ? meta.sample_amounts : [25, 75, 250];
       const feeChanged = Number(b.fee_amount) !== Number(a.fee_amount) || b.fee_label !== a.fee_label;
       const delta = Number(a.total || 0) - Number(b.total || 0);
       const isOff = !draft.enabled;
@@ -242,12 +258,12 @@
           <div>
             <h2>Live Before &amp; After Cart Simulator</h2>
             <div class="wcj-v10-preview-meta">
-              <span>Live store vs draft${a.exclude_shipping ? ' &bull; Shipping excluded' : ''}</span>
+              <span>Live store vs draft${a.exclude_shipping ? ' &bull; Shipping excluded' : ''} &bull; Approximate preview</span>
               ${autoBadge}
             </div>
           </div>
           <div class="wcj-v10-chips" style="margin-top:0;">
-            ${[25, 75, 250].map((v) => `<button type="button" class="wcj-v10-chip ${Number(previewCtx.subtotal) === v ? 'is-active' : ''}" data-sample-sub="${v}">${esc(sym + v)}</button>`).join('')}
+            ${amounts.map((v) => `<button type="button" class="wcj-v10-chip ${Number(previewCtx.subtotal) === Number(v) ? 'is-active' : ''}" data-sample-sub="${v}">${esc(sym + v)}</button>`).join('')}
           </div>
         </div>
         <div class="wcj-v10-ba-grid">
