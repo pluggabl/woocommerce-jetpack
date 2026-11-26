@@ -414,37 +414,37 @@ if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 			}
 			if ( $do_apply_global ) {
 				// Global price labels - Add text before price.
-				$text_to_add_before = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_add_before_text' ) );
+				$text_to_add_before = (string) apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_add_before_text', '' ) );
 				if ( '' !== $text_to_add_before ) {
 					if ( apply_filters( 'wcj_price_labels_check_on_applying_label', true, $price, $text_to_add_before ) ) {
 						$price = $text_to_add_before . $price;
 					}
 				}
 				// Global price labels - Add text after price.
-				$text_to_add_after = wcj_get_option( 'wcj_global_price_labels_add_after_text' );
+				$text_to_add_after = (string) wcj_get_option( 'wcj_global_price_labels_add_after_text', '' );
 				if ( '' !== $text_to_add_after ) {
 					if ( apply_filters( 'wcj_price_labels_check_on_applying_label', true, $price, $text_to_add_after ) ) {
 						$price = $price . $text_to_add_after;
 					}
 				}
 				// Global price labels - Between regular and sale prices.
-				$text_to_add_between_regular_and_sale = wcj_get_option( 'wcj_global_price_labels_between_regular_and_sale_text' );
+				$text_to_add_between_regular_and_sale = (string) wcj_get_option( 'wcj_global_price_labels_between_regular_and_sale_text', '' );
 				if ( '' !== $text_to_add_between_regular_and_sale ) {
-					$price = apply_filters( 'booster_option', $price, str_replace( '</del> <ins>', '</del>' . $text_to_add_between_regular_and_sale . '<ins>', $price ) );
+					$price = apply_filters( 'booster_option', $price, str_replace( '</del> <ins>', '</del>' . $text_to_add_between_regular_and_sale . '<ins>', (string) $price ) );
 				}
 				// Global price labels - Remove text from price.
-				$text_to_remove = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_remove_text' ) );
+				$text_to_remove = (string) apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_remove_text', '' ) );
 				if ( '' !== $text_to_remove ) {
-					$price = str_replace( $text_to_remove, '', $price );
+					$price = str_replace( $text_to_remove, '', (string) $price );
 				}
 				// Global price labels - Replace in price.
-				$text_to_replace      = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_replace_text' ) );
-				$text_to_replace_with = apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_replace_with_text' ) );
+				$text_to_replace      = (string) apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_replace_text', '' ) );
+				$text_to_replace_with = (string) apply_filters( 'booster_option', '', wcj_get_option( 'wcj_global_price_labels_replace_with_text', '' ) );
 				if ( '' !== $text_to_replace && '' !== $text_to_replace_with ) {
-					$price = str_replace( $text_to_replace, $text_to_replace_with, $price );
+					$price = str_replace( $text_to_replace, $text_to_replace_with, (string) $price );
 				}
 				// Global price labels - Instead of the price.
-				$text_instead = wcj_get_option( 'wcj_global_price_labels_instead_text', '' );
+				$text_instead = (string) wcj_get_option( 'wcj_global_price_labels_instead_text', '' );
 				if ( '' !== ( $text_instead ) ) {
 					$price = $text_instead;
 				}

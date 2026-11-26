@@ -65,6 +65,9 @@ if ( is_admin() ) {
 	add_action(
 		'rest_api_init',
 		static function () {
+			if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
+				return;
+			}
 			require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/v10/class-wcj-v10-bootstrap.php';
 			WCJ_V10_Bootstrap::register_rest();
 		}

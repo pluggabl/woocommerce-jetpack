@@ -153,29 +153,54 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 		}
 
 		/**
-		 * Render a quiet toggle pill in the Classic v9 header bar so switching is always 1 click away.
+		 * Render persistent UI toggle pills in the Classic header bar so switching is always 1 click away.
 		 *
 		 * @return void
 		 */
 		public static function render_header_toggle() {
-			if ( ! current_user_can( 'manage_woocommerce' ) || self::is_v10_mode() ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+			if ( ! current_user_can( 'manage_woocommerce' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
 				return;
 			}
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only context link builder.
 			$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : 'wcj-dashboard';
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only context link builder.
 			$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : '';
-			$url     = self::toggle_url( 'v10', $section, $page );
-			echo '<li class="wcj-v10-classic-switch"><a href="' . esc_url( $url ) . '" style="background:#0073aa;color:#fff;border-radius:999px;padding:6px 14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">' . esc_html__( 'Switch to New UI', 'woocommerce-jetpack' ) . '</a></li>';
+
+			echo '<style>.wcj-menubar ul{row-gap:8px;}.wcj-v10-classic-switch{display:inline-flex;align-items:center;gap:8px;}.wcj-v10-header-pill{display:inline-flex!important;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;line-height:1.25;text-decoration:none!important;}.wcj-v10-header-pill-primary{background:#fff!important;color:#00507c!important;}.wcj-v10-header-pill-ghost{background:rgba(255,255,255,0.16)!important;color:#fff!important;border:1px solid rgba(255,255,255,0.4);}</style>';
+
+			if ( ! self::is_v10_mode() ) {
+				$url = self::toggle_url( 'v10', $section, $page );
+				echo '<li class="wcj-v10-classic-switch"><a class="wcj-v10-header-pill wcj-v10-header-pill-primary" href="' . esc_url( $url ) . '">' . esc_html__( 'Switch to New UI', 'woocommerce-jetpack' ) . '</a></li>';
+				return;
+			}
+
+			$mapped_editor = self::map_section_to_editor( $section );
+			$back_url      = '' !== $mapped_editor
+				? admin_url( 'admin.php?page=wcj-dashboard&v10_editor=' . rawurlencode( $mapped_editor ) )
+				: admin_url( 'admin.php?page=wcj-dashboard' );
+			$back_label    = '' !== $mapped_editor
+				? __( 'Guided Preview', 'woocommerce-jetpack' )
+				: __( 'Command Center', 'woocommerce-jetpack' );
+			$classic_url   = self::toggle_url( 'classic', $section, $page );
+
+			echo '<li class="wcj-v10-classic-switch">';
+			echo '<a class="wcj-v10-header-pill wcj-v10-header-pill-primary" href="' . esc_url( $back_url ) . '">&larr; ' . esc_html( $back_label ) . '</a>';
+			echo '<a class="wcj-v10-header-pill wcj-v10-header-pill-ghost" href="' . esc_url( $classic_url ) . '">&#8644; ' . esc_html__( 'Switch to Classic v9', 'woocommerce-jetpack' ) . '</a>';
+			echo '</li>';
 		}
 
 		/**
 		 * Check if current request is on a Booster page eligible for V10 rendering.
+		 * Never intercepts individual module sections (?page=wcj-plugins&section=...) so All Classic Options always works.
 		 *
 		 * @return bool
 		 */
 		public static function is_v10_screen() {
 			if ( ! is_admin() || ! self::is_v10_mode() ) {
+				return false;
+			}
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only screen check.
+			if ( isset( $_GET['wcj_classic'] ) ) {
 				return false;
 			}
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only screen check.
@@ -189,7 +214,7 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 				return true;
 			}
 			if ( 'wcj-plugins' === $page ) {
-				return '' === $section || 'active' === $section || '' !== $v10_editor || '' !== self::map_section_to_editor( $section );
+				return '' === $section || 'active' === $section || '' !== $v10_editor;
 			}
 			return false;
 		}
@@ -224,6 +249,8 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 			$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : '';
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
 			$v10_editor = isset( $_GET['v10_editor'] ) ? sanitize_key( wp_unslash( $_GET['v10_editor'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
+			$v10_gateway = isset( $_GET['gateway'] ) ? sanitize_key( wp_unslash( $_GET['gateway'] ) ) : '';
 
 			$initial_editor = '' !== $v10_editor ? $v10_editor : self::map_section_to_editor( $section );
 			$initial_tab    = 'wcj-plugins' === $page ? 'all' : 'active';
@@ -232,18 +259,24 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 				wp_enqueue_media();
 			}
 
+			$plugin_root = dirname( __DIR__, 3 );
+			$css_path    = $plugin_root . '/assets/css/admin/wcj-v10-app.css';
+			$js_path     = $plugin_root . '/assets/js/admin/wcj-v10-app.js';
+			$css_ver     = file_exists( $css_path ) ? self::VERSION . '.' . (string) filemtime( $css_path ) : self::VERSION;
+			$js_ver      = file_exists( $js_path ) ? self::VERSION . '.' . (string) filemtime( $js_path ) : self::VERSION;
+
 			wp_enqueue_style(
 				'wcj-v10-app',
 				wcj_plugin_url() . '/assets/css/admin/wcj-v10-app.css',
 				array(),
-				self::VERSION
+				$css_ver
 			);
 
 			wp_enqueue_script(
 				'wcj-v10-app',
 				wcj_plugin_url() . '/assets/js/admin/wcj-v10-app.js',
 				array(),
-				self::VERSION,
+				$js_ver,
 				true
 			);
 
@@ -251,11 +284,12 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 				'wcj-v10-app',
 				'wcjV10Config',
 				array(
-					'restUrl'        => esc_url_raw( rest_url( 'booster/v1' ) ),
-					'nonce'          => wp_create_nonce( 'wp_rest' ),
-					'edition'        => WCJ_V10_Store::edition(),
-					'initialEditor'  => $initial_editor,
-					'initialTab'     => $initial_tab,
+					'restUrl'           => esc_url_raw( rest_url( 'booster/v1' ) ),
+					'nonce'             => wp_create_nonce( 'wp_rest' ),
+					'edition'           => WCJ_V10_Store::edition(),
+					'initialEditor'     => $initial_editor,
+					'initialGateway'    => $v10_gateway,
+					'initialTab'        => $initial_tab,
 					'classicBaseUrl'    => self::toggle_url( 'classic', $initial_editor ? $initial_editor : $section, $page ),
 					'classicToggleBase' => self::toggle_url( 'classic', '', $page ),
 					'dashboardUrl'   => admin_url( 'admin.php?page=wcj-dashboard' ),

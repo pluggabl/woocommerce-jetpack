@@ -357,7 +357,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				return array(
 					'slug'        => $slug,
 					'edition'     => $edition,
-					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=payment_gateways&section=payment_gateways_fees&wcj-cat-nonce=' . $nonce ),
+					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=payment_gateways&section=payment_gateways_fees&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
 					'live'        => array(
 						'enabled'  => 'yes' === get_option( 'wcj_payment_gateways_fees_enabled', 'no' ),
 						'gateway'  => $gateway,
@@ -377,22 +377,24 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			}
 
 			if ( 'pdf_invoicing' === $slug ) {
-				$emails   = (array) get_option( 'wcj_invoicing_invoice_attach_to_emails', array() );
-				$currency = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
+				$emails    = (array) get_option( 'wcj_invoicing_invoice_attach_to_emails', array() );
+				$create_on = (array) get_option( 'wcj_invoicing_invoice_create_on', array() );
+				$currency  = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
 				return array(
 					'slug'        => $slug,
 					'edition'     => $edition,
-					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=pdf_invoicing&section=pdf_invoicing&wcj-cat-nonce=' . $nonce ),
+					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=pdf_invoicing&section=pdf_invoicing&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
 					'live'        => array(
-						'enabled'           => 'yes' === get_option( 'wcj_pdf_invoicing_enabled', 'no' ),
-						'header_enabled'    => 'yes' === get_option( 'wcj_invoicing_invoice_header_enabled', 'yes' ),
-						'header_image'      => (string) get_option( 'wcj_invoicing_invoice_header_image', '' ),
-						'header_title'      => (string) get_option( 'wcj_invoicing_invoice_header_title_text', __( 'Invoice', 'woocommerce-jetpack' ) ),
-						'header_text'       => (string) get_option( 'wcj_invoicing_invoice_header_text', __( 'Company Name', 'woocommerce-jetpack' ) ),
-						'header_text_color' => (string) get_option( 'wcj_invoicing_invoice_header_text_color', '#cccccc' ),
-						'header_line_color' => (string) get_option( 'wcj_invoicing_invoice_header_line_color', '#cccccc' ),
-						'numbering_prefix'  => (string) get_option( 'wcj_invoicing_invoice_numbering_prefix', '' ),
-						'attach_completed'  => in_array( 'customer_completed_order', $emails, true ),
+						'enabled'             => 'yes' === get_option( 'wcj_pdf_invoicing_enabled', 'no' ),
+						'header_enabled'      => 'yes' === get_option( 'wcj_invoicing_invoice_header_enabled', 'yes' ),
+						'header_image'        => (string) get_option( 'wcj_invoicing_invoice_header_image', '' ),
+						'header_title'        => (string) get_option( 'wcj_invoicing_invoice_header_title_text', __( 'Invoice', 'woocommerce-jetpack' ) ),
+						'header_text'         => (string) get_option( 'wcj_invoicing_invoice_header_text', __( 'Company Name', 'woocommerce-jetpack' ) ),
+						'header_text_color'   => (string) get_option( 'wcj_invoicing_invoice_header_text_color', '#cccccc' ),
+						'header_line_color'   => (string) get_option( 'wcj_invoicing_invoice_header_line_color', '#cccccc' ),
+						'numbering_prefix'    => (string) get_option( 'wcj_invoicing_invoice_numbering_prefix', '' ),
+						'create_on_completed' => in_array( 'woocommerce_order_status_completed', $create_on, true ),
+						'attach_completed'    => in_array( 'customer_completed_order', $emails, true ),
 					),
 					'meta'        => array(
 						'currency_symbol' => $currency,
@@ -403,13 +405,15 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			}
 
 			if ( 'button_price_labels' === $slug ) {
-				$currency = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
+				$currency      = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
+				$raw_sale_html = (string) get_option( 'wcj_product_images_sale_flash_html', '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' );
+				$sale_text     = self::extract_sale_badge_text( $raw_sale_html );
 				return array(
 					'slug'        => $slug,
 					'edition'     => $edition,
-					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=labels&section=add_to_cart&wcj-cat-nonce=' . $nonce ),
+					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=labels&section=add_to_cart&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
 					'live'        => array(
-						'add_to_cart_enabled'       => 'yes' === get_option( 'wcj_add_to_cart_enabled', 'no' ),
+						'add_to_cart_enabled'       => 'yes' === get_option( 'wcj_add_to_cart_enabled', 'no' ) && 'yes' === get_option( 'wcj_add_to_cart_text_enabled', 'no' ),
 						'add_to_cart_single'        => (string) get_option( 'wcj_add_to_cart_text_on_single_simple', __( 'Add to cart', 'woocommerce-jetpack' ) ),
 						'add_to_cart_archive'       => (string) get_option( 'wcj_add_to_cart_text_on_archives_simple', __( 'Add to cart', 'woocommerce-jetpack' ) ),
 						'more_button_enabled'       => 'yes' === get_option( 'wcj_more_button_labels_enabled', 'no' ),
@@ -419,17 +423,41 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 						'price_suffix'              => (string) get_option( 'wcj_global_price_labels_add_after_text', '' ),
 						'sale_flash_enabled'        => 'yes' === get_option( 'wcj_sale_flash_enabled', 'no' ),
 						'sale_flash_global_enabled' => 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ),
-						'sale_flash_html'           => (string) get_option( 'wcj_product_images_sale_flash_html', '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' ),
+						'sale_badge_text'           => $sale_text,
+						'sale_flash_html'           => $raw_sale_html,
 					),
 					'meta'        => array(
 						'currency_symbol'     => $currency,
 						'price_prefix_locked' => 'free' === $edition,
+						'classic_sections'    => array(
+							'add_to_cart'        => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=labels&section=add_to_cart&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
+							'price_labels'       => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=labels&section=price_labels&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
+							'sale_flash'         => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=products&section=sale_flash&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
+							'more_button_labels' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=labels&section=more_button_labels&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
+						),
 					),
 					'revisions'   => $revisions,
 				);
 			}
 
 			return new WP_Error( 'wcj_v10_unknown_editor', __( 'Unknown Booster editor.', 'woocommerce-jetpack' ), array( 'status' => 404 ) );
+		}
+
+		/**
+		 * Extract plain sale badge label from standard WooCommerce/Booster span markup.
+		 *
+		 * @param string $raw_html Stored sale flash HTML.
+		 * @return string
+		 */
+		private static function extract_sale_badge_text( $raw_html ) {
+			$raw = trim( (string) $raw_html );
+			if ( '' === $raw ) {
+				return __( 'Sale!', 'woocommerce' );
+			}
+			if ( preg_match( '/^\s*<span\s+class=(["\'])onsale\1\s*>(.*?)<\/span>\s*$/is', $raw, $matches ) ) {
+				return html_entity_decode( wp_strip_all_tags( $matches[2] ), ENT_QUOTES, 'UTF-8' );
+			}
+			return html_entity_decode( wp_strip_all_tags( $raw ), ENT_QUOTES, 'UTF-8' );
 		}
 
 		/**
@@ -463,20 +491,28 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				$image_url  = isset( $draft['header_image'] ) ? esc_url_raw( trim( (string) $draft['header_image'] ) ) : '';
 
 				return array(
-					'enabled'           => ! empty( $draft['enabled'] ),
-					'header_enabled'    => ! empty( $draft['header_enabled'] ),
-					'header_image'      => $image_url,
-					'header_title'      => isset( $draft['header_title'] ) ? sanitize_text_field( (string) $draft['header_title'] ) : '',
-					'header_text'       => isset( $draft['header_text'] ) ? sanitize_textarea_field( (string) $draft['header_text'] ) : '',
-					'header_text_color' => $text_color ? $text_color : '#cccccc',
-					'header_line_color' => $line_color ? $line_color : '#cccccc',
-					'numbering_prefix'  => isset( $draft['numbering_prefix'] ) ? sanitize_text_field( (string) $draft['numbering_prefix'] ) : '',
-					'attach_completed'  => ! empty( $draft['attach_completed'] ),
+					'enabled'             => ! empty( $draft['enabled'] ),
+					'header_enabled'      => ! empty( $draft['header_enabled'] ),
+					'header_image'        => $image_url,
+					'header_title'        => isset( $draft['header_title'] ) ? sanitize_text_field( (string) $draft['header_title'] ) : '',
+					'header_text'         => isset( $draft['header_text'] ) ? sanitize_textarea_field( (string) $draft['header_text'] ) : '',
+					'header_text_color'   => $text_color ? $text_color : '#cccccc',
+					'header_line_color'   => $line_color ? $line_color : ( $text_color ? $text_color : '#cccccc' ),
+					'numbering_prefix'    => isset( $draft['numbering_prefix'] ) ? sanitize_text_field( (string) $draft['numbering_prefix'] ) : '',
+					'create_on_completed' => ! empty( $draft['create_on_completed'] ),
+					'attach_completed'    => ! empty( $draft['attach_completed'] ),
 				);
 			}
 
 			if ( 'button_price_labels' === $slug ) {
-				$edition = WCJ_V10_Store::edition();
+				$edition   = WCJ_V10_Store::edition();
+				$sale_text = isset( $draft['sale_badge_text'] ) ? sanitize_text_field( (string) $draft['sale_badge_text'] ) : '';
+				if ( '' !== $sale_text ) {
+					$sale_html = '<span class="onsale">' . esc_html( $sale_text ) . '</span>';
+				} else {
+					$sale_html = isset( $draft['sale_flash_html'] ) ? wp_kses_post( (string) $draft['sale_flash_html'] ) : '';
+					$sale_text = self::extract_sale_badge_text( $sale_html );
+				}
 				return array(
 					'add_to_cart_enabled'       => ! empty( $draft['add_to_cart_enabled'] ),
 					'add_to_cart_single'        => isset( $draft['add_to_cart_single'] ) ? sanitize_text_field( (string) $draft['add_to_cart_single'] ) : '',
@@ -488,7 +524,8 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'price_suffix'              => isset( $draft['price_suffix'] ) ? wp_kses_post( (string) $draft['price_suffix'] ) : '',
 					'sale_flash_enabled'        => ! empty( $draft['sale_flash_enabled'] ),
 					'sale_flash_global_enabled' => ! empty( $draft['sale_flash_global_enabled'] ),
-					'sale_flash_html'           => isset( $draft['sale_flash_html'] ) ? wp_kses_post( (string) $draft['sale_flash_html'] ) : '',
+					'sale_badge_text'           => $sale_text,
+					'sale_flash_html'           => $sale_html,
 				);
 			}
 
@@ -536,13 +573,14 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					}
 
 					return array(
-						'gateway'    => $cfg['gateway'],
-						'subtotal'   => round( $subtotal, $decimals ),
-						'shipping'   => round( $shipping, $decimals ),
-						'fee_label'  => '' !== trim( (string) $cfg['label'] ) ? $cfg['label'] : __( 'Gateway Fee', 'woocommerce-jetpack' ),
-						'fee_amount' => $fee_amount,
-						'total'      => round( $base_total + $fee_amount, $decimals ),
-						'reason'     => $reason,
+						'module_enabled' => ! empty( $cfg['enabled'] ),
+						'gateway'        => $cfg['gateway'],
+						'subtotal'       => round( $subtotal, $decimals ),
+						'shipping'       => round( $shipping, $decimals ),
+						'fee_label'      => '' !== trim( (string) $cfg['label'] ) ? $cfg['label'] : __( 'Gateway Fee', 'woocommerce-jetpack' ),
+						'fee_amount'     => $fee_amount,
+						'total'          => round( $base_total + $fee_amount, $decimals ),
+						'reason'         => $reason,
 					);
 				};
 
@@ -555,15 +593,16 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			if ( 'pdf_invoicing' === $slug ) {
 				$project = static function ( $cfg ) {
 					return array(
-						'enabled'          => ! empty( $cfg['enabled'] ),
-						'header_enabled'   => ! empty( $cfg['header_enabled'] ),
-						'header_image'     => $cfg['header_image'],
-						'header_title'     => '' !== trim( $cfg['header_title'] ) ? $cfg['header_title'] : __( 'Invoice', 'woocommerce-jetpack' ),
-						'header_text'      => '' !== trim( $cfg['header_text'] ) ? $cfg['header_text'] : __( 'Company Name', 'woocommerce-jetpack' ),
-						'header_text_color'=> $cfg['header_text_color'],
-						'header_line_color'=> $cfg['header_line_color'],
-						'invoice_number'   => $cfg['numbering_prefix'] . '1042',
-						'email_status'     => ! empty( $cfg['attach_completed'] )
+						'enabled'             => ! empty( $cfg['enabled'] ),
+						'header_enabled'      => ! empty( $cfg['header_enabled'] ),
+						'header_image'        => $cfg['header_image'],
+						'header_title'        => '' !== trim( $cfg['header_title'] ) ? $cfg['header_title'] : __( 'Invoice', 'woocommerce-jetpack' ),
+						'header_text'         => '' !== trim( $cfg['header_text'] ) ? $cfg['header_text'] : __( 'Company Name', 'woocommerce-jetpack' ),
+						'header_text_color'   => $cfg['header_text_color'],
+						'header_line_color'   => $cfg['header_line_color'],
+						'invoice_number'      => $cfg['numbering_prefix'] . '1042',
+						'create_on_completed' => ! empty( $cfg['create_on_completed'] ),
+						'email_status'        => ! empty( $cfg['attach_completed'] )
 							? __( 'Attaches to Completed Order email', 'woocommerce-jetpack' )
 							: __( 'Manual download only', 'woocommerce-jetpack' ),
 					);
@@ -578,22 +617,27 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				$project = static function ( $cfg ) use ( $meta ) {
 					$sym = isset( $meta['currency_symbol'] ) ? $meta['currency_symbol'] : '$';
 					return array(
-						'add_to_cart_text' => ( ! empty( $cfg['add_to_cart_enabled'] ) && '' !== trim( $cfg['add_to_cart_single'] ) )
+						'add_to_cart_enabled'       => ! empty( $cfg['add_to_cart_enabled'] ),
+						'more_button_enabled'       => ! empty( $cfg['more_button_enabled'] ),
+						'price_labels_enabled'      => ! empty( $cfg['price_labels_enabled'] ),
+						'sale_flash_enabled'        => ! empty( $cfg['sale_flash_enabled'] ),
+						'sale_flash_global_enabled' => ! empty( $cfg['sale_flash_global_enabled'] ),
+						'add_to_cart_text'          => ( ! empty( $cfg['add_to_cart_enabled'] ) && '' !== trim( $cfg['add_to_cart_single'] ) )
 							? $cfg['add_to_cart_single']
 							: __( 'Add to cart', 'woocommerce-jetpack' ),
-						'archive_text'     => ( ! empty( $cfg['add_to_cart_enabled'] ) && '' !== trim( $cfg['add_to_cart_archive'] ) )
+						'archive_text'              => ( ! empty( $cfg['add_to_cart_enabled'] ) && '' !== trim( $cfg['add_to_cart_archive'] ) )
 							? $cfg['add_to_cart_archive']
 							: __( 'Add to cart', 'woocommerce-jetpack' ),
-						'place_order_text' => ( ! empty( $cfg['more_button_enabled'] ) && '' !== trim( $cfg['place_order_text'] ) )
+						'place_order_text'          => ( ! empty( $cfg['more_button_enabled'] ) && '' !== trim( $cfg['place_order_text'] ) )
 							? $cfg['place_order_text']
 							: __( 'Place order', 'woocommerce-jetpack' ),
-						'price_prefix'     => ! empty( $cfg['price_labels_enabled'] ) ? $cfg['price_prefix'] : '',
-						'price_suffix'     => ! empty( $cfg['price_labels_enabled'] ) ? $cfg['price_suffix'] : '',
-						'sample_regular'   => $sym . '95.00',
-						'sample_sale'      => $sym . '76.00',
-						'sale_badge_html'  => ( ! empty( $cfg['sale_flash_enabled'] ) && ! empty( $cfg['sale_flash_global_enabled'] ) && '' !== trim( $cfg['sale_flash_html'] ) )
-							? $cfg['sale_flash_html']
-							: '<span class="onsale">' . esc_html__( 'Sale!', 'woocommerce' ) . '</span>',
+						'price_prefix'              => ! empty( $cfg['price_labels_enabled'] ) ? $cfg['price_prefix'] : '',
+						'price_suffix'              => ! empty( $cfg['price_labels_enabled'] ) ? $cfg['price_suffix'] : '',
+						'sample_regular'            => $sym . '95.00',
+						'sample_sale'               => $sym . '76.00',
+						'sale_badge_text'           => ( ! empty( $cfg['sale_flash_enabled'] ) && ! empty( $cfg['sale_flash_global_enabled'] ) && '' !== trim( (string) $cfg['sale_badge_text'] ) )
+							? $cfg['sale_badge_text']
+							: __( 'Sale!', 'woocommerce' ),
 					);
 				};
 				return array(
@@ -627,15 +671,16 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'max_cart' => __( 'Maximum Cart Subtotal', 'woocommerce-jetpack' ),
 				),
 				'pdf_invoicing'         => array(
-					'enabled'           => __( 'PDF Invoicing Module', 'woocommerce-jetpack' ),
-					'header_enabled'    => __( 'Invoice Header', 'woocommerce-jetpack' ),
-					'header_image'      => __( 'Header Logo URL', 'woocommerce-jetpack' ),
-					'header_title'      => __( 'Header Title', 'woocommerce-jetpack' ),
-					'header_text'       => __( 'Business Header Text', 'woocommerce-jetpack' ),
-					'header_text_color' => __( 'Header Text Color', 'woocommerce-jetpack' ),
-					'header_line_color' => __( 'Header Line Color', 'woocommerce-jetpack' ),
-					'numbering_prefix'  => __( 'Invoice Prefix', 'woocommerce-jetpack' ),
-					'attach_completed'  => __( 'Attach to Completed Email', 'woocommerce-jetpack' ),
+					'enabled'             => __( 'PDF Invoicing Module', 'woocommerce-jetpack' ),
+					'header_enabled'      => __( 'Invoice Header', 'woocommerce-jetpack' ),
+					'header_image'        => __( 'Header Logo URL', 'woocommerce-jetpack' ),
+					'header_title'        => __( 'Header Title', 'woocommerce-jetpack' ),
+					'header_text'         => __( 'Business Header Text', 'woocommerce-jetpack' ),
+					'header_text_color'   => __( 'Header Text Color', 'woocommerce-jetpack' ),
+					'header_line_color'   => __( 'Header Line Color', 'woocommerce-jetpack' ),
+					'numbering_prefix'    => __( 'Invoice Prefix', 'woocommerce-jetpack' ),
+					'create_on_completed' => __( 'Create on Completed Order', 'woocommerce-jetpack' ),
+					'attach_completed'    => __( 'Attach to Completed Email', 'woocommerce-jetpack' ),
 				),
 				'button_price_labels'   => array(
 					'add_to_cart_enabled'       => __( 'Add to Cart Labels Module', 'woocommerce-jetpack' ),
@@ -648,7 +693,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'price_suffix'              => __( 'Text After Price', 'woocommerce-jetpack' ),
 					'sale_flash_enabled'        => __( 'Sale Flash Module', 'woocommerce-jetpack' ),
 					'sale_flash_global_enabled' => __( 'Global Sale Badge Override', 'woocommerce-jetpack' ),
-					'sale_flash_html'           => __( 'Sale Badge Text/HTML', 'woocommerce-jetpack' ),
+					'sale_badge_text'           => __( 'Sale Badge Text', 'woocommerce-jetpack' ),
 				),
 			);
 
@@ -723,6 +768,15 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					$emails = array_values( array_diff( $emails, array( 'customer_completed_order' ) ) );
 				}
 
+				$create_on = array_values( array_filter( (array) get_option( 'wcj_invoicing_invoice_create_on', array() ), 'is_string' ) );
+				if ( ! empty( $draft['create_on_completed'] ) ) {
+					if ( ! in_array( 'woocommerce_order_status_completed', $create_on, true ) ) {
+						$create_on[] = 'woocommerce_order_status_completed';
+					}
+				} else {
+					$create_on = array_values( array_diff( $create_on, array( 'woocommerce_order_status_completed' ) ) );
+				}
+
 				return array(
 					'wcj_pdf_invoicing_enabled'               => $draft['enabled'] ? 'yes' : 'no',
 					'wcj_invoicing_invoice_header_enabled'    => $draft['header_enabled'] ? 'yes' : 'no',
@@ -732,6 +786,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'wcj_invoicing_invoice_header_text_color' => $draft['header_text_color'],
 					'wcj_invoicing_invoice_header_line_color' => $draft['header_line_color'],
 					'wcj_invoicing_invoice_numbering_prefix'  => $draft['numbering_prefix'],
+					'wcj_invoicing_invoice_create_on'         => $create_on,
 					'wcj_invoicing_invoice_attach_to_emails'  => $emails,
 				);
 			}

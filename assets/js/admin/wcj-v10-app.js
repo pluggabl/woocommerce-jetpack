@@ -29,7 +29,11 @@
     banner: null,
     modalOpen: false,
     busy: false,
+    previewBusy: false,
     previewTimer: null,
+    editorSeq: 0,
+    previewSeq: 0,
+    previewAbort: null,
   };
 
   function esc(str) {
@@ -71,6 +75,22 @@
     return json;
   }
 
+  function syncBrowserUrl() {
+    if (!window.history || !window.history.replaceState || !cfg.dashboardUrl) {
+      return;
+    }
+    let nextUrl = cfg.dashboardUrl;
+    if (state.view === 'editor' && state.editorSlug) {
+      nextUrl = cfg.dashboardUrl + '&v10_editor=' + encodeURIComponent(state.editorSlug);
+      if (state.editorSlug === 'payment_gateways_fees' && state.draft && state.draft.gateway) {
+        nextUrl += '&gateway=' + encodeURIComponent(state.draft.gateway);
+      }
+    } else if (state.catalogTab === 'all') {
+      nextUrl = cfg.dashboardUrl + '&tab=all';
+    }
+    window.history.replaceState(null, '', nextUrl);
+  }
+
   function getClassicToggleHref() {
     const base = cfg.classicToggleBase || cfg.classicBaseUrl || '#';
     if (!state.editorSlug || base.indexOf('section=') !== -1) {
@@ -94,23 +114,51 @@
   }
 
   async function openEditor(slug, gateway) {
+    const seq = ++state.editorSeq;
+    if (state.previewAbort) {
+      state.previewAbort.abort();
+      state.previewAbort = null;
+    }
+    if (state.previewTimer) {
+      clearTimeout(state.previewTimer);
+      state.previewTimer = null;
+    }
     state.banner = null;
     state.editorSlug = slug;
     state.view = 'editor';
+    syncBrowserUrl();
+
     const qs = gateway ? '?gateway=' + encodeURIComponent(gateway) : '';
     const data = await api('/editor/' + encodeURIComponent(slug) + qs);
+    if (seq !== state.editorSeq) {
+      return;
+    }
     state.editorData = data;
     state.draft = clone(data.live);
+    syncBrowserUrl();
     await refreshPreview();
+    if (seq !== state.editorSeq) {
+      return;
+    }
     render();
+    window.scrollTo(0, 0);
   }
 
   async function refreshPreview() {
     if (!state.editorSlug || !state.draft) {
       return;
     }
+    const seq = ++state.previewSeq;
+    if (state.previewAbort) {
+      state.previewAbort.abort();
+    }
+    const controller = new AbortController();
+    state.previewAbort = controller;
+    state.previewBusy = true;
+
     const res = await api('/preview/' + encodeURIComponent(state.editorSlug), {
       method: 'POST',
+      signal: controller.signal,
       body: JSON.stringify({
         draft: state.draft,
         context: {
@@ -119,6 +167,10 @@
         },
       }),
     });
+    if (seq !== state.previewSeq) {
+      return;
+    }
+    state.previewBusy = false;
     state.preview = { before: res.before, after: res.after };
     state.diffs = res.diffs || [];
   }
@@ -127,15 +179,24 @@
     if (state.previewTimer) {
       clearTimeout(state.previewTimer);
     }
+    state.previewBusy = true;
+    const statusEl = document.getElementById('wcj-v10-preview-status');
+    if (statusEl) {
+      statusEl.textContent = 'Updating preview...';
+    }
     state.previewTimer = setTimeout(async () => {
       try {
         await refreshPreview();
         updateEditorPreviewAndBar();
       } catch (err) {
+        if (err && err.name === 'AbortError') {
+          return;
+        }
+        state.previewBusy = false;
         state.banner = { type: 'error', text: err.message };
         renderBannerOnly();
       }
-    }, 120);
+    }, 100);
   }
 
   async function publishDraft() {
@@ -199,6 +260,28 @@
   }
 
   // =========================================================================
+  // SEARCH & CATALOG RANKING
+  // =========================================================================
+  function scoreModuleMatch(mod, query) {
+    if (!query) {
+      return 1;
+    }
+    const name = mod.name.toLowerCase();
+    const keywords = (mod.keywords || '').toLowerCase();
+    const cat = (mod.category_label || '').toLowerCase();
+    const desc = (mod.desc || '').toLowerCase();
+    const escQ = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const wordStart = new RegExp('(?:^|\\b)' + escQ, 'i');
+
+    if (wordStart.test(name)) return 100;
+    if (wordStart.test(keywords)) return 80;
+    if (name.indexOf(query) !== -1) return 50;
+    if (wordStart.test(cat) || wordStart.test(desc)) return 30;
+    if (keywords.indexOf(query) !== -1 || cat.indexOf(query) !== -1 || desc.indexOf(query) !== -1) return 10;
+    return 0;
+  }
+
+  // =========================================================================
   // RENDERING
   // =========================================================================
   function renderTopBar() {
@@ -240,17 +323,21 @@
     `;
   }
 
-  function renderCatalogView() {
+  function renderCatalogBodyHtml() {
     const q = state.search.trim().toLowerCase();
     const activeMods = state.modules.filter((m) => m.enabled);
-    const showAll = state.catalogTab === 'all' || q.length > 0;
+    const isSearching = q.length > 0;
+    const showAll = state.catalogTab === 'all' || isSearching;
     const baseList = showAll ? state.modules : (activeMods.length ? activeMods : state.modules.filter((m) => m.flagship_editor));
 
-    const filtered = baseList.filter((m) => {
-      const catOk = !showAll || state.selectedCategory === 'all' || m.category_id === state.selectedCategory;
-      const text = (m.name + ' ' + m.desc + ' ' + m.keywords + ' ' + m.category_label).toLowerCase();
-      return catOk && (!q || text.indexOf(q) !== -1);
-    });
+    const filtered = baseList
+      .filter((m) => !showAll || state.selectedCategory === 'all' || m.category_id === state.selectedCategory)
+      .map((m) => ({ mod: m, score: scoreModuleMatch(m, q) }))
+      .filter((row) => row.score > 0);
+
+    if (isSearching) {
+      filtered.sort((a, b) => b.score - a.score || (b.mod.enabled ? 1 : 0) - (a.mod.enabled ? 1 : 0));
+    }
 
     const catPills = showAll
       ? `<div class="wcj-v10-chips" style="margin-bottom:14px;">
@@ -259,8 +346,14 @@
         </div>`
       : '';
 
+    const emptyActiveNotice = !showAll && activeMods.length === 0
+      ? `<div class="wcj-v10-empty-note">
+          <strong>No active modules yet.</strong> Start with one of the guided editors below to preview changes Before &amp; After, or browse <strong>All Modules (${state.modules.length})</strong>.
+        </div>`
+      : '';
+
     const cardsHtml = filtered.length
-      ? filtered.map((m) => `
+      ? filtered.map(({ mod: m }) => `
           <div class="wcj-v10-mod-card">
             <div>
               <div class="wcj-v10-mod-head">
@@ -277,15 +370,35 @@
             </div>
             <div class="wcj-v10-mod-foot">
               ${m.flagship_editor
-                ? `<button type="button" class="wcj-v10-btn wcj-v10-btn-primary" data-open-editor="${esc(m.flagship_editor)}">Configure &amp; Preview &rarr;</button>`
+                ? `<button type="button" class="wcj-v10-btn wcj-v10-btn-primary" data-open-editor="${esc(m.flagship_editor)}">Configure &amp; Preview &rarr;</button>
+                   <a class="wcj-v10-nav-link" href="${esc(m.classic_url)}">All Classic Options</a>`
                 : `<a class="wcj-v10-btn" href="${esc(m.classic_url)}">Configure Settings &rarr;</a>`
               }
-              <a class="wcj-v10-nav-link" href="${esc(m.classic_url)}">Classic view</a>
             </div>
           </div>
         `).join('')
       : '<div class="wcj-v10-card">No matching modules found. Try "fee", "invoice", or "button".</div>';
 
+    return `
+      <div class="wcj-v10-toolbar">
+        <div class="wcj-v10-tabs">
+          <button type="button" class="wcj-v10-tab ${!isSearching && state.catalogTab === 'active' ? 'is-active' : ''}" data-catalog-tab="active">
+            My Active Modules (${activeMods.length})
+          </button>
+          <button type="button" class="wcj-v10-tab ${isSearching || state.catalogTab === 'all' ? 'is-active' : ''}" data-catalog-tab="all">
+            All Modules (${state.modules.length})
+          </button>
+        </div>
+        ${isSearching ? `<span class="wcj-v10-sub">${filtered.length} matching module${filtered.length === 1 ? '' : 's'}</span>` : ''}
+      </div>
+      ${emptyActiveNotice}
+      ${catPills}
+      <div class="wcj-v10-grid">${cardsHtml}</div>
+    `;
+  }
+
+  function renderCatalogView() {
+    const activeMods = state.modules.filter((m) => m.enabled);
     return `
       <div class="wcj-v10-card">
         <div class="wcj-v10-hero">
@@ -294,14 +407,14 @@
             <p class="wcj-v10-sub">
               ${activeMods.length
                 ? `Showing your ${activeMods.length} active modules first. Preview changes safely before publishing.`
-                : 'Start with one of Booster\'s flagship guided editors with live Before &amp; After previews.'}
+                : 'Preview changes side-by-side before anything affects your live store.'}
             </p>
           </div>
         </div>
         <div class="wcj-v10-search-wrap">
           <input id="wcj-v10-search" class="wcj-v10-search" type="search" value="${esc(state.search)}"
             placeholder="What do you want to set up? (try: fee, invoice, button, sale, checkout...)" />
-          <div class="wcj-v10-chips">
+          <div class="wcj-v10-chips" id="wcj-v10-quick-chips">
             <span>Quick searches:</span>
             ${['fee', 'invoice', 'button', 'sale'].map((term) => `<button type="button" class="wcj-v10-chip" data-quick-search="${term}">"${term}"</button>`).join('')}
             ${state.search ? '<button type="button" class="wcj-v10-chip" data-quick-search="">Clear</button>' : ''}
@@ -309,19 +422,7 @@
         </div>
       </div>
 
-      <div class="wcj-v10-toolbar">
-        <div class="wcj-v10-tabs">
-          <button type="button" class="wcj-v10-tab ${state.catalogTab === 'active' ? 'is-active' : ''}" data-catalog-tab="active">
-            My Active Modules (${activeMods.length})
-          </button>
-          <button type="button" class="wcj-v10-tab ${state.catalogTab === 'all' ? 'is-active' : ''}" data-catalog-tab="all">
-            All Modules (${state.modules.length})
-          </button>
-        </div>
-      </div>
-
-      ${catPills}
-      <div class="wcj-v10-grid">${cardsHtml}</div>
+      <div id="wcj-v10-catalog-body">${renderCatalogBodyHtml()}</div>
     `;
   }
 
@@ -338,14 +439,28 @@
     const hasRev = ed.revisions && ed.revisions.length > 0;
     const diffCount = state.diffs.length;
 
+    let classicLinks = `<a class="wcj-v10-nav-link" href="${esc(ed.classic_url)}">All Classic Options &rarr;</a>`;
+    if (state.editorSlug === 'button_price_labels' && ed.meta && ed.meta.classic_sections) {
+      const cs = ed.meta.classic_sections;
+      classicLinks = `
+        <span style="font-size:12px;color:#50575e;">Classic Settings:</span>
+        <a class="wcj-v10-nav-link" href="${esc(cs.add_to_cart)}">Add to Cart</a>
+        <a class="wcj-v10-nav-link" href="${esc(cs.price_labels)}">Price Labels</a>
+        <a class="wcj-v10-nav-link" href="${esc(cs.sale_flash)}">Sale Flash</a>
+        <a class="wcj-v10-nav-link" href="${esc(cs.more_button_labels)}">Place Order</a>
+      `;
+    }
+
     return `
       <div class="wcj-v10-editor-head">
         <div class="wcj-v10-editor-title">
           <button type="button" class="wcj-v10-btn" data-nav="home">&larr; Home</button>
           <div>
             <h1>${esc(titleMap[state.editorSlug] || state.editorSlug)}</h1>
-            <span class="wcj-v10-badge ${isOn ? 'is-on' : ''}">${isOn ? 'Live: Active' : 'Live: Off'}</span>
-            <a class="wcj-v10-nav-link" href="${esc(ed.classic_url)}">All Classic Options &rarr;</a>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:4px;">
+              <span class="wcj-v10-badge ${isOn ? 'is-on' : ''}">${isOn ? 'Live: Active' : 'Live: Off'}</span>
+              ${classicLinks}
+            </div>
           </div>
         </div>
         <div class="wcj-v10-editor-actions" id="wcj-v10-action-bar">
@@ -419,10 +534,19 @@
     const sym = (state.editorData.meta && state.editorData.meta.currency_symbol) || '$';
     const feeChanged = Number(b.fee_amount) !== Number(a.fee_amount) || b.fee_label !== a.fee_label;
     const delta = Number(a.total || 0) - Number(b.total || 0);
+    const disabledHint = !state.draft.enabled && Number(state.draft.amount || 0) !== 0
+      ? `<div class="wcj-v10-hint-box">
+          <span><strong>Module is currently Off in draft</strong> — fee won't apply until enabled.</span>
+          <button type="button" class="wcj-v10-btn" data-enable-field="enabled">Enable in Draft</button>
+        </div>`
+      : '';
 
     return `
       <div class="wcj-v10-section-head">
-        <h2>Live Before &amp; After Cart Simulator</h2>
+        <div>
+          <h2>Live Before &amp; After Cart Simulator</h2>
+          <span id="wcj-v10-preview-status" class="wcj-v10-updating">${state.previewBusy ? 'Updating preview...' : ''}</span>
+        </div>
         <div class="wcj-v10-chips" style="margin-top:0;">
           ${[25, 75, 250].map((v) => `<button type="button" class="wcj-v10-chip ${Number(state.previewContext.subtotal) === v ? 'is-active' : ''}" data-sample-sub="${v}">${esc(sym + v)}</button>`).join('')}
         </div>
@@ -445,6 +569,7 @@
           </div>
           <div class="wcj-v10-total"><span>Total</span><span>${esc(fmtMoney(a.total, sym))}</span></div>
           ${delta !== 0 ? `<div class="wcj-v10-delta">Order total changes by ${delta > 0 ? '+' : ''}${esc(fmtMoney(delta, sym))} for this cart.</div>` : ''}
+          ${disabledHint}
         </div>
       </div>
     `;
@@ -491,6 +616,12 @@
       </div>
       <div class="wcj-v10-field">
         <label class="wcj-v10-check">
+          <input type="checkbox" data-field="create_on_completed" ${d.create_on_completed ? 'checked' : ''} />
+          <span>Auto-create PDF when Order is Completed</span>
+        </label>
+      </div>
+      <div class="wcj-v10-field">
+        <label class="wcj-v10-check">
           <input type="checkbox" data-field="attach_completed" ${d.attach_completed ? 'checked' : ''} />
           <span>Attach PDF to Completed Order emails</span>
         </label>
@@ -501,6 +632,13 @@
   function renderInvoiceSheetHtml(doc, label, isAfter) {
     const color = doc.header_text_color || '#cccccc';
     const sym = (state.editorData.meta && state.editorData.meta.currency_symbol) || '$';
+    const disabledHint = isAfter && !state.draft.enabled
+      ? `<div class="wcj-v10-hint-box">
+          <span><strong>PDF Invoicing is Off in draft</strong> — branding won't generate invoices until enabled.</span>
+          <button type="button" class="wcj-v10-btn" data-enable-field="enabled">Enable in Draft</button>
+        </div>`
+      : '';
+
     return `
       <div class="wcj-v10-ba-box ${isAfter ? 'is-after' : ''}">
         <span class="wcj-v10-ba-tag">${esc(label)}</span>
@@ -508,14 +646,17 @@
           <div class="wcj-v10-sheet-head" style="border-color:${esc(color)}">
             <div>
               ${doc.header_image ? `<img src="${esc(doc.header_image)}" alt="" style="max-height:32px;margin-bottom:4px;display:block;" />` : ''}
-              <div style="font-weight:700;font-size:13px;">${esc(doc.header_text || 'Company Name')}</div>
+              <div class="wcj-v10-sheet-biz">${esc(doc.header_text || 'Company Name')}</div>
             </div>
-            <div style="text-align:right;">
+            <div style="text-align:right;flex-shrink:0;">
               <div style="font-weight:700;font-size:15px;color:${esc(color)}">${esc(doc.header_title || 'Invoice')}</div>
-              <div>#${esc(doc.invoice_number || '1042')}</div>
+              <div style="white-space:nowrap;">#${esc(doc.invoice_number || '1042')}</div>
             </div>
           </div>
-          <div style="color:#50575e;margin-bottom:6px;">${esc(doc.email_status || '')}</div>
+          <div style="color:#50575e;margin-bottom:6px;">
+            ${doc.create_on_completed ? 'Auto-creates on Completed &bull; ' : 'Manual creation &bull; '}
+            ${esc(doc.email_status || '')}
+          </div>
           <table class="wcj-v10-sheet-table">
             <thead>
               <tr style="background:${esc(color)}">
@@ -530,6 +671,7 @@
           </table>
           <div style="text-align:right;font-weight:700;">Total: ${esc(sym)}86.00</div>
         </div>
+        ${disabledHint}
       </div>
     `;
   }
@@ -539,7 +681,10 @@
     const mode = state.previewContext.invoicePreviewMode || 'split';
     return `
       <div class="wcj-v10-section-head">
-        <h2>Live Before &amp; After Document Preview</h2>
+        <div>
+          <h2>Live Before &amp; After Document Preview</h2>
+          <span id="wcj-v10-preview-status" class="wcj-v10-updating">${state.previewBusy ? 'Updating preview...' : ''}</span>
+        </div>
         <div class="wcj-v10-tabs">
           <button type="button" class="wcj-v10-tab ${mode === 'split' ? 'is-active' : ''}" data-inv-pv="split">Side-by-Side</button>
           <button type="button" class="wcj-v10-tab ${mode === 'single' ? 'is-active' : ''}" data-inv-pv="single">After Only</button>
@@ -606,8 +751,8 @@
         </label>
       </div>
       <div class="wcj-v10-field">
-        <label for="wcj-l-sale">Sale Badge HTML / Text</label>
-        <input id="wcj-l-sale" type="text" data-field="sale_flash_html" value="${esc(d.sale_flash_html)}" />
+        <label for="wcj-l-sale">Sale Badge Text</label>
+        <input id="wcj-l-sale" type="text" data-field="sale_badge_text" value="${esc(d.sale_badge_text)}" placeholder="Sale!" />
       </div>
 
       <div class="wcj-v10-field">
@@ -626,8 +771,8 @@
   function renderProductCardHtml(card, label, isAfter, compare) {
     const btnDiff = compare && card.add_to_cart_text !== compare.add_to_cart_text;
     const priceDiff = compare && (card.price_prefix !== compare.price_prefix || card.price_suffix !== compare.price_suffix);
-    const badgeDiff = compare && card.sale_badge_html !== compare.sale_badge_html;
-    const badgeText = String(card.sale_badge_html || 'Sale!').replace(/<[^>]+>/g, '') || 'Sale!';
+    const badgeDiff = compare && card.sale_badge_text !== compare.sale_badge_text;
+    const badgeText = card.sale_badge_text || 'Sale!';
 
     return `
       <div class="wcj-v10-ba-box ${isAfter ? 'is-after' : ''}">
@@ -654,14 +799,50 @@
 
   function renderLabelsPreviewHtml() {
     const pv = state.preview || { before: {}, after: {} };
+    const b = pv.before || {};
+    const a = pv.after || {};
+    const d = state.draft;
+
+    const hints = [];
+    if (!d.add_to_cart_enabled && (d.add_to_cart_single !== 'Add to cart' || d.add_to_cart_archive !== 'Add to cart')) {
+      hints.push('<button type="button" class="wcj-v10-btn" data-enable-field="add_to_cart_enabled">Enable Add to Cart Labels</button>');
+    }
+    if (!d.price_labels_enabled && (d.price_prefix || d.price_suffix)) {
+      hints.push('<button type="button" class="wcj-v10-btn" data-enable-field="price_labels_enabled">Enable Price Labels</button>');
+    }
+    if ((!d.sale_flash_enabled || !d.sale_flash_global_enabled) && d.sale_badge_text && d.sale_badge_text !== 'Sale!') {
+      hints.push('<button type="button" class="wcj-v10-btn" data-enable-sale="1">Enable Sale Badge Override</button>');
+    }
+    if (!d.more_button_enabled && d.place_order_text) {
+      hints.push('<button type="button" class="wcj-v10-btn" data-enable-field="more_button_enabled">Enable Place Order Label</button>');
+    }
+
+    const hintBar = hints.length
+      ? `<div class="wcj-v10-hint-box"><span>Some edited labels are off in draft:</span><div style="display:flex;flex-wrap:wrap;gap:6px;">${hints.join('')}</div></div>`
+      : '';
+
     return `
       <div class="wcj-v10-section-head">
-        <h2>Live Before &amp; After Storefront Card</h2>
+        <div>
+          <h2>Live Before &amp; After Storefront Card</h2>
+          <span id="wcj-v10-preview-status" class="wcj-v10-updating">${state.previewBusy ? 'Updating preview...' : ''}</span>
+        </div>
       </div>
       <div class="wcj-v10-ba-grid">
-        ${renderProductCardHtml(pv.before || {}, 'BEFORE (Live Store)', false, null)}
-        ${renderProductCardHtml(pv.after || {}, 'AFTER (Your Draft)', true, pv.before || {})}
+        ${renderProductCardHtml(b, 'BEFORE (Live Store)', false, null)}
+        ${renderProductCardHtml(a, 'AFTER (Your Draft)', true, b)}
       </div>
+      <div class="wcj-v10-extra-preview">
+        <div class="wcj-v10-extra-row">
+          <strong>Shop / Archive Button:</strong>
+          <span>${esc(b.archive_text || 'Add to cart')} &rarr; <strong>${esc(a.archive_text || 'Add to cart')}</strong></span>
+        </div>
+        <div class="wcj-v10-extra-row">
+          <strong>Checkout Place Order Button:</strong>
+          <span>${esc(b.place_order_text || 'Place order')} &rarr; <strong>${esc(a.place_order_text || 'Place order')}</strong></span>
+        </div>
+      </div>
+      ${hintBar}
     `;
   }
 
@@ -731,6 +912,23 @@
     }
   }
 
+  function updateCatalogBodyOnly() {
+    const bodyEl = document.getElementById('wcj-v10-catalog-body');
+    if (bodyEl) {
+      bodyEl.innerHTML = renderCatalogBodyHtml();
+      bindCatalogBodyEvents();
+    }
+    const chipsEl = document.getElementById('wcj-v10-quick-chips');
+    if (chipsEl) {
+      chipsEl.innerHTML = `
+        <span>Quick searches:</span>
+        ${['fee', 'invoice', 'button', 'sale'].map((term) => `<button type="button" class="wcj-v10-chip" data-quick-search="${term}">"${term}"</button>`).join('')}
+        ${state.search ? '<button type="button" class="wcj-v10-chip" data-quick-search="">Clear</button>' : ''}
+      `;
+      bindQuickChips();
+    }
+  }
+
   function updateEditorPreviewAndBar() {
     const pvSlot = document.getElementById('wcj-v10-preview-pane');
     if (pvSlot) {
@@ -776,7 +974,9 @@
         state.catalogTab = target === 'all' ? 'all' : 'active';
         state.editorSlug = '';
         state.banner = null;
+        syncBrowserUrl();
         render();
+        window.scrollTo(0, 0);
       });
     });
 
@@ -841,50 +1041,89 @@
         updateEditorPreviewAndBar();
       });
     });
-  }
 
-  function bindAllEvents() {
-    bindChromeEvents();
-    bindPreviewAndActionEvents();
-
-    const searchInput = document.getElementById('wcj-v10-search');
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        state.search = e.target.value;
-        const pos = e.target.selectionStart;
-        render();
-        const again = document.getElementById('wcj-v10-search');
-        if (again) {
-          again.focus();
-          again.setSelectionRange(pos, pos);
-        }
-      });
-    }
-
-    root.querySelectorAll('[data-quick-search]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        state.search = btn.dataset.quickSearch;
-        render();
+    root.querySelectorAll('[data-enable-field]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const key = btn.dataset.enableField;
+        state.draft[key] = true;
+        const cb = root.querySelector(`input[data-field="${key}"]`);
+        if (cb) cb.checked = true;
+        await refreshPreview();
+        updateEditorPreviewAndBar();
       });
     });
 
+    root.querySelectorAll('[data-enable-sale]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        state.draft.sale_flash_enabled = true;
+        state.draft.sale_flash_global_enabled = true;
+        const c1 = root.querySelector('input[data-field="sale_flash_enabled"]');
+        const c2 = root.querySelector('input[data-field="sale_flash_global_enabled"]');
+        if (c1) c1.checked = true;
+        if (c2) c2.checked = true;
+        await refreshPreview();
+        updateEditorPreviewAndBar();
+      });
+    });
+  }
+
+  function bindQuickChips() {
+    root.querySelectorAll('[data-quick-search]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.search = btn.dataset.quickSearch;
+        const inp = document.getElementById('wcj-v10-search');
+        if (inp) {
+          inp.value = state.search;
+          inp.focus();
+        }
+        updateCatalogBodyOnly();
+      });
+    });
+  }
+
+  function bindCatalogBodyEvents() {
     root.querySelectorAll('[data-catalog-tab]').forEach((btn) => {
       btn.addEventListener('click', () => {
         state.catalogTab = btn.dataset.catalogTab;
-        render();
+        if (state.search) {
+          state.search = '';
+          const inp = document.getElementById('wcj-v10-search');
+          if (inp) inp.value = '';
+        }
+        syncBrowserUrl();
+        updateCatalogBodyOnly();
+        root.querySelectorAll('[data-nav]').forEach((navBtn) => {
+          const isHome = state.catalogTab === 'active';
+          navBtn.classList.toggle('is-active', (navBtn.dataset.nav === 'home' && isHome) || (navBtn.dataset.nav === 'all' && !isHome));
+        });
       });
     });
 
     root.querySelectorAll('[data-cat]').forEach((btn) => {
       btn.addEventListener('click', () => {
         state.selectedCategory = btn.dataset.cat;
-        render();
+        updateCatalogBodyOnly();
       });
     });
 
     root.querySelectorAll('[data-open-editor]').forEach((btn) => {
       btn.addEventListener('click', () => openEditor(btn.dataset.openEditor));
     });
+  }
+
+  function bindAllEvents() {
+    bindChromeEvents();
+    bindPreviewAndActionEvents();
+    bindQuickChips();
+    bindCatalogBodyEvents();
+
+    const searchInput = document.getElementById('wcj-v10-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        state.search = e.target.value;
+        updateCatalogBodyOnly();
+      });
+    }
 
     const form = document.getElementById('wcj-v10-editor-form');
     if (form && state.draft) {
@@ -901,6 +1140,9 @@
             return;
           }
           state.draft[key] = el.type === 'checkbox' ? el.checked : el.value;
+          if (key === 'header_text_color') {
+            state.draft.header_line_color = el.value;
+          }
           schedulePreviewUpdate();
         });
       });
@@ -909,6 +1151,7 @@
         btn.addEventListener('click', () => {
           const hex = btn.dataset.invSwatch;
           state.draft.header_text_color = hex;
+          state.draft.header_line_color = hex;
           const colorInput = form.querySelector('input[data-field="header_text_color"]');
           if (colorInput) colorInput.value = hex;
           form.querySelectorAll('[data-inv-swatch]').forEach((s) => s.classList.toggle('is-selected', s === btn));
@@ -939,7 +1182,7 @@
     try {
       await loadCatalog();
       if (state.editorSlug) {
-        await openEditor(state.editorSlug);
+        await openEditor(state.editorSlug, cfg.initialGateway || '');
       } else {
         render();
       }

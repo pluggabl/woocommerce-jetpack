@@ -132,10 +132,12 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 
 				$cat_info  = isset( $mod_to_cat[ $mod_id ] ) ? $mod_to_cat[ $mod_id ] : array( 'id' => 'emails_and_misc', 'label' => __( 'Emails & Misc.', 'woocommerce-jetpack' ) );
 				$title     = isset( $mod_obj->short_desc ) ? wp_strip_all_tags( (string) $mod_obj->short_desc ) : $mod_id;
-				$desc      = isset( $mod_obj->desc ) ? wp_strip_all_tags( (string) $mod_obj->desc ) : '';
+				$is_paid   = 'free' !== WCJ_V10_Store::edition();
+				$raw_desc  = ( $is_paid && ! empty( $mod_obj->desc_pro ) ) ? $mod_obj->desc_pro : ( isset( $mod_obj->desc ) ? $mod_obj->desc : '' );
+				$desc      = wp_strip_all_tags( (string) $raw_desc );
 				$enabled   = function_exists( 'wcj_is_module_enabled' ) ? wcj_is_module_enabled( $mod_id ) : ( 'yes' === wcj_get_option( 'wcj_' . $mod_id . '_enabled', 'no' ) );
 				$nonce     = wp_create_nonce( 'wcj-cat-nonce' );
-				$classic   = admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . rawurlencode( $cat_info['id'] ) . '&section=' . rawurlencode( $mod_id ) . '&wcj-cat-nonce=' . $nonce );
+				$classic   = admin_url( 'admin.php?page=wcj-plugins&wcj-cat=' . rawurlencode( $cat_info['id'] ) . '&section=' . rawurlencode( $mod_id ) . '&wcj_classic=1&wcj-cat-nonce=' . $nonce );
 
 				$modules[] = array(
 					'id'              => $mod_id,
