@@ -571,16 +571,22 @@ if ( ! class_exists( 'WCJ_V10_Editor_Product_Addons' ) ) :
 				}
 
 				return array(
-					'active'          => $active,
-					'title'           => $cfg['addon_title'],
-					'type'            => $cfg['addon_type'],
-					'required'        => ! empty( $cfg['addon_required'] ),
-					'default_checked' => $def_chk,
-					'selected_idx'    => $chosen_idx,
-					'options'         => $options,
-					'base_price'      => round( $base_num, $decimals ),
-					'addon_fee'       => round( $chosen_extra, $decimals ),
-					'cart_total'      => round( $base_num + $chosen_extra, $decimals ),
+					'active'              => $active,
+					'title'               => $cfg['addon_title'],
+					'type'                => $cfg['addon_type'],
+					'required'            => ! empty( $cfg['addon_required'] ),
+					'default_checked'     => $def_chk,
+					'selected_idx'        => $chosen_idx,
+					'options'             => $options,
+					'tooltip'             => (string) ( $cfg['addon_tooltip'] ?? '' ),
+					'placeholder'         => (string) ( $cfg['addon_placeholder'] ?? '' ),
+					'position'            => (string) ( $cfg['position'] ?? 'woocommerce_before_add_to_cart_button' ),
+					'ajax_enabled'        => ! empty( $cfg['ajax_enabled'] ),
+					'per_product_enabled' => ! empty( $cfg['per_product_enabled'] ),
+					'count_mismatch'      => in_array( $cfg['addon_type'], array( 'radio', 'select' ), true ) && count( $labels ) !== count( $prices ),
+					'base_price'          => round( $base_num, $decimals ),
+					'addon_fee'           => round( $chosen_extra, $decimals ),
+					'cart_total'          => round( $base_num + $chosen_extra, $decimals ),
 				);
 			};
 

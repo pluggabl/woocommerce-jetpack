@@ -229,20 +229,34 @@ if ( ! class_exists( 'WCJ_V10_Editor_Order_Numbers' ) ) :
 			} else {
 				$core = (string) $num;
 			}
-			$prefix = (string) $cfg['prefix'];
-			if ( false !== strpos( $prefix, '[' ) ) {
-				$prefix = wp_strip_all_tags( do_shortcode( $prefix ) );
-			}
-			if ( ! $is_pro ) {
-				return $prefix . $core;
-			}
 			$ts     = time();
 			$fmt_dt = static function ( $fmt ) use ( $ts ) {
 				if ( '' === (string) $fmt ) {
 					return '';
 				}
+				if ( function_exists( 'wp_date' ) ) {
+					return (string) wp_date( (string) $fmt, $ts );
+				}
 				return function_exists( 'date_i18n' ) ? date_i18n( (string) $fmt, $ts ) : gmdate( (string) $fmt, $ts );
 			};
+			$prefix = (string) $cfg['prefix'];
+			if ( false !== strpos( $prefix, '[' ) ) {
+				$wp_def = (string) get_option( 'date_format', 'Y-m-d' );
+				$prefix = (string) preg_replace_callback(
+					'/\[wcj_(?:order|current)_date([^\]]*)\]/i',
+					static function ( $m ) use ( $fmt_dt, $wp_def ) {
+						$tok = preg_match( '/(?:date_)?format\s*=\s*["\']([^"\']+)["\']/i', $m[1], $fm ) ? $fm[1] : $wp_def;
+						return $fmt_dt( $tok );
+					},
+					$prefix
+				);
+				if ( false !== strpos( $prefix, '[' ) ) {
+					$prefix = wp_strip_all_tags( do_shortcode( $prefix ) );
+				}
+			}
+			if ( ! $is_pro ) {
+				return $prefix . $core;
+			}
 			$dp     = $fmt_dt( $cfg['date_prefix'] );
 			$ds     = $fmt_dt( $cfg['date_suffix'] );
 			$width  = max( 0, (int) $cfg['min_width'] );
@@ -306,6 +320,15 @@ if ( ! class_exists( 'WCJ_V10_Editor_Order_Numbers' ) ) :
 				);
 			}
 
+			$date_tokens = array();
+			$letters     = str_split( 'dDjlnNSwzWFmMntLoYyaAgGhHis' );
+			$now_ts      = time();
+			foreach ( $letters as $ltr ) {
+				$date_tokens[ $ltr ] = function_exists( 'wp_date' )
+					? (string) wp_date( $ltr, $now_ts )
+					: ( function_exists( 'date_i18n' ) ? (string) date_i18n( $ltr, $now_ts ) : gmdate( $ltr, $now_ts ) );
+			}
+
 			return array(
 				'slug'        => self::slug(),
 				'edition'     => WCJ_V10_Store::edition(),
@@ -327,6 +350,8 @@ if ( ! class_exists( 'WCJ_V10_Editor_Order_Numbers' ) ) :
 					'is_pro'          => $is_pro,
 					'last_order_id'   => ! empty( $store_ctx['last_order_id'] ) ? (int) $store_ctx['last_order_id'] : 1041,
 					'current_counter' => $counter,
+					'date_tokens'     => $date_tokens,
+					'date_format'     => (string) get_option( 'date_format', 'Y-m-d' ),
 					'verify_url'      => $store_ctx['orders_url'],
 					'verify_label'    => __( 'Open WooCommerce Orders', 'woocommerce-jetpack' ),
 					'diagnostics'     => $diagnostics,
@@ -391,7 +416,53 @@ if ( ! class_exists( 'WCJ_V10_Editor_Order_Numbers' ) ) :
 		}
 
 		/**
-		 * Guard against duplicate order numbers from lowering counter or resetting without a dynamic date token.
+		 * Check whether a PHP date format string changes across the requested reset period.
+		 *
+		 * @param string $fmt    PHP date format tokens.
+		 * @param string $period Reset period ('daily', 'monthly', 'yearly').
+		 * @return bool
+		 */
+		private static function date_format_covers_period( $fmt, $period ) {
+			$clean     = preg_replace( '/\\\\./', '', (string) $fmt );
+			$has_year  = (bool) preg_match( '/[Yyo]/', $clean );
+			$has_month = (bool) preg_match( '/[mnMF]/', $clean );
+			$has_day   = (bool) preg_match( '/[dj]/', $clean );
+			$has_yday  = false !== strpos( $clean, 'z' );
+			if ( 'yearly' === $period ) {
+				return $has_year;
+			}
+			if ( 'monthly' === $period ) {
+				return $has_year && $has_month;
+			}
+			if ( 'daily' === $period ) {
+				return $has_year && ( ( $has_month && $has_day ) || $has_yday );
+			}
+			return true;
+		}
+
+		/**
+		 * Extract date format tokens from [wcj_order_date] or [wcj_current_date] shortcodes in prefix.
+		 *
+		 * @param string $prefix Raw prefix string.
+		 * @return string
+		 */
+		private static function shortcode_date_formats( $prefix ) {
+			$formats = '';
+			if ( preg_match_all( '/\[wcj_(?:order|current)_date([^\]]*)\]/i', (string) $prefix, $matches ) ) {
+				$wp_def = (string) get_option( 'date_format', 'Y-m-d' );
+				foreach ( $matches[1] as $attr_str ) {
+					if ( preg_match( '/(?:date_)?format\s*=\s*["\']([^"\']+)["\']/i', $attr_str, $fm ) ) {
+						$formats .= $fm[1];
+					} else {
+						$formats .= $wp_def;
+					}
+				}
+			}
+			return $formats;
+		}
+
+		/**
+		 * Guard against duplicate order numbers from lowering counter or resetting without a period-safe date format.
 		 *
 		 * @param array $draft        Sanitized draft.
 		 * @param array $live         Live state before publish.
@@ -414,17 +485,18 @@ if ( ! class_exists( 'WCJ_V10_Editor_Order_Numbers' ) ) :
 			}
 
 			if ( ! empty( $draft['enabled'] ) && 'no' !== $draft['counter_reset'] ) {
-				$prefix_str         = (string) $draft['prefix'];
-				$has_date_shortcode = ( false !== stripos( $prefix_str, '[wcj_order_date' ) || false !== stripos( $prefix_str, '[wcj_current_date' ) );
-				$has_date           = self::is_pro()
-					? ( '' !== trim( (string) $draft['date_prefix'] ) || '' !== trim( (string) $draft['date_suffix'] ) || $has_date_shortcode )
-					: $has_date_shortcode;
-				if ( ! $has_date ) {
+				$combined = self::shortcode_date_formats( (string) $draft['prefix'] );
+				if ( self::is_pro() ) {
+					$combined .= (string) $draft['date_prefix'] . (string) $draft['date_suffix'];
+				}
+				if ( ! self::date_format_covers_period( $combined, (string) $draft['counter_reset'] ) ) {
 					return new WP_Error(
 						'wcj_v10_reset_needs_date',
-						self::is_pro()
-							? __( 'Counter reset requires a Date Prefix/Suffix (or a [wcj_order_date] shortcode in Prefix) so reset numbers never collide with prior periods.', 'woocommerce-jetpack' )
-							: __( 'Counter reset in Free requires a dynamic date shortcode like [wcj_order_date] in Prefix (static prefixes would produce duplicate numbers on reset).', 'woocommerce-jetpack' ),
+						sprintf(
+							/* translators: %s: Counter reset frequency */
+							__( 'A %s counter reset needs matching year/month/day date tokens (for example Y-m-d for daily, Y-m- for monthly, or Y for yearly) in Date Format or [wcj_order_date date_format="Y-m-d"] so numbers never repeat.', 'woocommerce-jetpack' ),
+							$draft['counter_reset']
+						),
 						array( 'status' => 400 )
 					);
 				}
@@ -455,12 +527,14 @@ if ( ! class_exists( 'WCJ_V10_Editor_Order_Numbers' ) ) :
 					$second_display = '#' . self::format_order_num( $cfg, $next_raw + 1, $is_pro );
 				}
 				return array(
-					'enabled'        => ! empty( $cfg['enabled'] ),
-					'mode'           => $cfg['mode'],
-					'last_order_id'  => $last_id,
-					'next_order'     => $next_display,
+					'enabled'         => ! empty( $cfg['enabled'] ),
+					'mode'            => $cfg['mode'],
+					'last_order_id'   => $last_id,
+					'next_order'      => $next_display,
 					'following_order' => $second_display,
-					'reset_label'    => $cfg['counter_reset'],
+					'reset_label'     => $cfg['counter_reset'],
+					'min_order_id'    => (int) ( $cfg['min_order_id'] ?? 0 ),
+					'order_tracking'  => ! empty( $cfg['order_tracking'] ),
 				);
 			};
 

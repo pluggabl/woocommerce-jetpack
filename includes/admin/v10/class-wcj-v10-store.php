@@ -457,7 +457,7 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 					$hash_unchanged = isset( $newest_after_hash[ $opt_key ] ) && self::state_hash( $cur_st ) === $newest_after_hash[ $opt_key ];
 					$cur_val        = self::state_value( $cur_st );
 					$before_val     = ! empty( $before_st['exists'] ) ? self::state_value( $before_st ) : null;
-					$counter_drop   = false !== strpos( $opt_key, 'counter' ) && is_numeric( $cur_val ) && ( empty( $before_st['exists'] ) || ( is_numeric( $before_val ) && (int) $before_val < (int) $cur_val ) );
+					$counter_drop   = false !== strpos( $opt_key, 'counter' ) && is_numeric( $cur_val ) && ( empty( $before_st['exists'] ) || ! is_numeric( $before_val ) || (int) $before_val < (int) $cur_val );
 
 					if ( ! $hash_unchanged || $counter_drop ) {
 						unset( $target_restore[ $opt_key ] );

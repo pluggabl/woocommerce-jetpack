@@ -3,14 +3,120 @@
 
   window.wcjV10Editors = window.wcjV10Editors || {};
 
-  function formatLocalNum(cfg, num, isPro, sampleElite) {
-    const raw = cfg.mode === 'hash_crc32' ? '2849104215' : String(num);
-    const prefix = String(cfg.prefix || '');
-    const useWidth = isPro ? Number(cfg.min_width || 0) : (sampleElite ? 4 : 0);
-    const useDateP = isPro ? (cfg.date_prefix ? new Date().toISOString().slice(0, 4) + '-' : '') : (sampleElite ? new Date().toISOString().slice(0, 4) + '-' : '');
+  function crc32Unsigned(str) {
+    let c;
+    let crc = 0 ^ (-1);
+    const s = String(str);
+    for (let i = 0; i < s.length; i++) {
+      c = s.charCodeAt(i);
+      crc = (crc >>> 8) ^ CRC_TABLE[(crc ^ c) & 0xFF];
+    }
+    return ((crc ^ (-1)) >>> 0).toString(10);
+  }
+
+  const CRC_TABLE = (() => {
+    const t = [];
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) {
+        c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+      }
+      t[n] = c;
+    }
+    return t;
+  })();
+
+  function formatPhpDate(fmt, tokens) {
+    const f = String(fmt || '');
+    if (!f) return '';
+    if (tokens && typeof tokens === 'object') {
+      let out = '';
+      for (let i = 0; i < f.length; i++) {
+        if (f[i] === '\\' && i + 1 < f.length) {
+          out += f[++i];
+        } else if (Object.prototype.hasOwnProperty.call(tokens, f[i])) {
+          out += tokens[f[i]];
+        } else {
+          out += f[i];
+        }
+      }
+      return out;
+    }
+    const d = new Date();
+    const monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthsLong = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const pad2 = (n) => String(n).padStart(2, '0');
+    const yr = d.getFullYear();
+    const mo = d.getMonth();
+    const day = d.getDate();
+    const map = {
+      Y: String(yr),
+      y: String(yr).slice(-2),
+      m: pad2(mo + 1),
+      n: String(mo + 1),
+      M: monthsShort[mo],
+      F: monthsLong[mo],
+      d: pad2(day),
+      j: String(day),
+      H: pad2(d.getHours()),
+      i: pad2(d.getMinutes()),
+    };
+    let out = '';
+    for (let i = 0; i < f.length; i++) {
+      if (f[i] === '\\' && i + 1 < f.length) {
+        out += f[++i];
+      } else if (Object.prototype.hasOwnProperty.call(map, f[i])) {
+        out += map[f[i]];
+      } else {
+        out += f[i];
+      }
+    }
+    return out;
+  }
+
+  function renderPrefixShortcodes(rawPrefix, meta) {
+    const tokens = meta && meta.date_tokens;
+    const defFmt = (meta && meta.date_format) || 'Y-m-d';
+    let s = String(rawPrefix || '').replace(/\[wcj_(?:order|current)_date([^\]]*)\]/gi, (_, attrs) => {
+      const m = String(attrs || '').match(/(?:date_)?format\s*=\s*["']([^"']+)["']/i);
+      return formatPhpDate(m ? m[1] : defFmt, tokens);
+    });
+    s = s.replace(/\[[^\]]+\]/g, '');
+    return s;
+  }
+
+  function shortcodeDateFormats(rawPrefix, defFmt) {
+    let out = '';
+    String(rawPrefix || '').replace(/\[wcj_(?:order|current)_date([^\]]*)\]/gi, (_, attrs) => {
+      const m = String(attrs || '').match(/(?:date_)?format\s*=\s*["']([^"']+)["']/i);
+      out += m ? m[1] : (defFmt || 'Y-m-d');
+      return '';
+    });
+    return out;
+  }
+
+  function dateFormatCoversPeriod(fmt, period) {
+    const clean = String(fmt || '').replace(/\\./g, '');
+    const hasYear = /[Yyo]/.test(clean);
+    const hasMonth = /[mnMF]/.test(clean);
+    const hasDay = /[dj]/.test(clean);
+    const hasYday = clean.indexOf('z') !== -1;
+    if (period === 'yearly') return hasYear;
+    if (period === 'monthly') return hasYear && hasMonth;
+    if (period === 'daily') return hasYear && ((hasMonth && hasDay) || hasYday);
+    return true;
+  }
+
+  function formatLocalNum(cfg, num, isPro, sampleElite, meta) {
+    const raw = cfg.mode === 'hash_crc32' ? crc32Unsigned(String(num)) : String(num);
+    const prefix = renderPrefixShortcodes(cfg.prefix, meta);
+    const tokens = meta && meta.date_tokens;
+    const useWidth = isPro ? Math.min(16, Math.max(0, Number(cfg.min_width || 0))) : (sampleElite ? 4 : 0);
+    const useDateP = isPro ? formatPhpDate(cfg.date_prefix, tokens) : (sampleElite ? `${formatPhpDate('Y', tokens)}-` : '');
+    const useDateS = isPro ? formatPhpDate(cfg.date_suffix, tokens) : '';
     const useSuffix = isPro ? String(cfg.suffix || '') : (sampleElite ? '-PRO' : '');
     const padded = useWidth > 0 ? raw.padStart(useWidth, '0') : raw;
-    return prefix + useDateP + padded + useSuffix;
+    return prefix + useDateP + padded + useSuffix + useDateS;
   }
 
   window.wcjV10Editors.order_numbers = {
@@ -97,15 +203,13 @@
         return `Next Counter Value must be at least ${curCounter} (current live counter) to prevent duplicate order numbers.`;
       }
       if (draft.counter_reset && draft.counter_reset !== 'no') {
-        const prefixStr = String(draft.prefix || '');
-        const hasDateShortcode = /\[wcj_(?:order|current)_date/i.test(prefixStr);
-        const hasDate = (meta && meta.is_pro)
-          ? (String(draft.date_prefix || '').trim() || String(draft.date_suffix || '').trim() || hasDateShortcode)
-          : hasDateShortcode;
-        if (!hasDate) {
-          return (meta && meta.is_pro)
-            ? 'Counter reset requires a Date Prefix/Suffix (or a [wcj_order_date] shortcode in Prefix) to avoid duplicate numbers.'
-            : 'Counter reset in Free requires a [wcj_order_date] shortcode in Prefix (static prefixes collide on reset).';
+        const isPro = !!(meta && meta.is_pro);
+        let combined = shortcodeDateFormats(draft.prefix, meta && meta.date_format);
+        if (isPro) {
+          combined += String(draft.date_prefix || '') + String(draft.date_suffix || '');
+        }
+        if (!dateFormatCoversPeriod(combined, draft.counter_reset)) {
+          return `A ${draft.counter_reset} counter reset needs matching year/month/day date tokens (e.g. Y-m-d for daily, Y-m- for monthly, Y for yearly) in Date Format or [wcj_order_date date_format="Y-m-d"].`;
         }
       }
       return '';
@@ -262,14 +366,18 @@
           next_order: '#' + (lastId + 1),
           following_order: '#' + (lastId + 2),
           reset_label: draft.counter_reset || 'no',
+          min_order_id: Number(draft.min_order_id || 0),
+          order_tracking: !!draft.order_tracking,
         };
       }
       return {
         enabled: !!draft.enabled,
         last_order_id: lastId,
-        next_order: '#' + formatLocalNum(draft, nextRaw, isPro, sampleElite),
-        following_order: '#' + formatLocalNum(draft, nextRaw + 1, isPro, sampleElite),
+        next_order: '#' + formatLocalNum(draft, nextRaw, isPro, sampleElite, meta),
+        following_order: '#' + formatLocalNum(draft, nextRaw + 1, isPro, sampleElite, meta),
         reset_label: draft.counter_reset || 'no',
+        min_order_id: Number(draft.min_order_id || 0),
+        order_tracking: !!draft.order_tracking,
       };
     },
 
@@ -281,13 +389,20 @@
       const isOff = !draft.enabled && !sampleElite;
       const autoBadge = state.autoEnabled.enabled ? '<span class="wcj-v10-auto-pill">Auto-enabled in draft</span>' : '';
       const changed = b.next_order !== a.next_order;
+      const ruleMeta = (row) => {
+        const parts = [];
+        if (row.reset_label && row.reset_label !== 'no') parts.push(`Reset: ${row.reset_label}`);
+        if (Number(row.min_order_id || 0) > 0) parts.push(`After ID #${row.min_order_id}`);
+        parts.push(row.order_tracking ? 'Tracking lookup: On' : 'Tracking lookup: Off');
+        return parts.join(' \u2022 ');
+      };
 
       return `
         <div class="wcj-v10-section-head">
           <div>
             <h2>Live Before &amp; After Order Sequence</h2>
             <div class="wcj-v10-preview-meta">
-              <span>Live store vs draft &bull; UTC date formatting</span>
+              <span>Live store vs draft &bull; Store timezone date tokens</span>
               ${autoBadge}
             </div>
           </div>
@@ -301,6 +416,7 @@
               <div class="wcj-v10-line"><span>Last order (unchanged)</span><span>#${esc(b.last_order_id || 1041)}</span></div>
               <div class="wcj-v10-line"><span>Next order</span><strong>${esc(b.next_order || '#1042')}</strong></div>
               <div class="wcj-v10-line"><span>Order after that</span><span>${esc(b.following_order || '#1043')}</span></div>
+              <div style="font-size:11px;color:#50575e;margin-top:6px;">${esc(ruleMeta(b))}</div>
               <div class="wcj-v10-delta-slot">${b.enabled ? 'Custom numbering live.' : 'Using default WooCommerce IDs.'}</div>
             </div>
           </div>
@@ -313,6 +429,7 @@
               <div class="wcj-v10-line"><span>Last order (unchanged)</span><span>#${esc(a.last_order_id || 1041)}</span></div>
               <div class="wcj-v10-line ${changed ? 'is-changed' : ''}"><span>Next order</span><strong>${esc(a.next_order || '#1042')}</strong></div>
               <div class="wcj-v10-line"><span>Order after that</span><span>${esc(a.following_order || '#1043')}</span></div>
+              <div style="font-size:11px;color:#50575e;margin-top:6px;">${esc(ruleMeta(a))}</div>
               <div class="wcj-v10-delta-slot ${changed ? 'is-changed' : ''}">
                 ${isOff ? 'Module Off — default WooCommerce IDs.' : (sampleElite ? 'Zero-save Elite preview (upgrade for padding &amp; date tokens).' : 'New orders store custom number permanently.')}
               </div>

@@ -500,14 +500,18 @@ if ( ! class_exists( 'WCJ_V10_Editor_Checkout_Fields' ) ) :
 				$choices = array_values( array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) $cfg['select_options'] ) ) ) );
 				$sec     = $is_blocks ? 'order' : $cfg['field_section'];
 				return array(
-					'active'      => $active,
-					'label'       => '' !== trim( (string) $cfg['field_label'] ) ? $cfg['field_label'] : __( 'Custom Checkout Field', 'woocommerce-jetpack' ),
-					'type'        => $cfg['field_type'],
-					'section'     => $sec,
-					'required'    => ! empty( $cfg['field_required'] ),
-					'placeholder' => $cfg['field_placeholder'],
-					'choices'     => $choices,
-					'description' => $cfg['field_description'],
+					'active'            => $active,
+					'label'             => '' !== trim( (string) $cfg['field_label'] ) ? $cfg['field_label'] : __( 'Custom Checkout Field', 'woocommerce-jetpack' ),
+					'type'              => $cfg['field_type'],
+					'section'            => $sec,
+					'configured_section' => '' !== (string) $cfg['field_section'] ? $cfg['field_section'] : 'billing',
+					'required'           => ! empty( $cfg['field_required'] ),
+					'placeholder'       => $cfg['field_placeholder'],
+					'choices'           => $choices,
+					'description'       => $cfg['field_description'],
+					'email_to_admin'    => ! empty( $cfg['email_to_admin'] ),
+					'email_to_customer' => ! empty( $cfg['email_to_customer'] ),
+					'show_thankyou'     => ! empty( $cfg['show_thankyou'] ),
 				);
 			};
 

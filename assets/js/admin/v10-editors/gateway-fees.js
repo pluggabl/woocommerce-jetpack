@@ -230,8 +230,11 @@
     renderPreview(pv, draft, meta, previewCtx, state, deps) {
       const esc = deps.esc;
       const fmtMoney = deps.fmtMoney;
-      const b = (pv && pv.before) || {};
+      const rawBefore = (pv && pv.before) || {};
       const a = (pv && pv.after) || {};
+      const b = (Number(rawBefore.subtotal) !== Number(a.subtotal) && state && state.editorData && state.editorData.live)
+        ? this.computeLocalAfter(state.editorData.live, meta || {}, previewCtx || {})
+        : rawBefore;
       const sym = (meta && meta.currency_symbol) || '$';
       const amounts = (meta && Array.isArray(meta.sample_amounts) && meta.sample_amounts.length) ? meta.sample_amounts : [25, 75, 250];
       const feeChanged = Number(b.fee_amount) !== Number(a.fee_amount) || b.fee_label !== a.fee_label;
@@ -274,7 +277,10 @@
             <div class="wcj-v10-ba-content">
               <div class="wcj-v10-line"><span>Items Subtotal</span><span>${esc(fmtMoney(b.subtotal, sym))}</span></div>
               <div class="wcj-v10-line"><span>Shipping</span><span>${esc(fmtMoney(b.shipping, sym))}</span></div>
-              <div class="wcj-v10-line"><span>${esc(b.fee_label || 'Gateway Fee')}</span><span>${Number(b.fee_amount) !== 0 ? esc(fmtMoney(b.fee_amount, sym)) : 'None'}</span></div>
+              <div class="wcj-v10-line">
+                <span>${esc(b.fee_label || 'Gateway Fee')}${b.is_taxable ? ' (taxable)' : ''}${b.round ? ' (rounded)' : ''}</span>
+                <span>${Number(b.fee_amount) !== 0 ? esc(fmtMoney(b.fee_amount, sym)) : 'None'}</span>
+              </div>
               <div class="wcj-v10-total"><span>Total</span><span>${esc(fmtMoney(b.total, sym))}</span></div>
               <div class="wcj-v10-delta-slot">${b.module_enabled ? 'Current live checkout fee.' : 'Currently Off on live store.'}</div>
             </div>
@@ -288,7 +294,7 @@
               <div class="wcj-v10-line"><span>Items Subtotal</span><span>${esc(fmtMoney(a.subtotal, sym))}</span></div>
               <div class="wcj-v10-line"><span>Shipping</span><span>${esc(fmtMoney(a.shipping, sym))}</span></div>
               <div class="wcj-v10-line ${feeChanged ? 'is-changed' : ''}">
-                <span>${esc(a.fee_label || 'Gateway Fee')}</span>
+                <span>${esc(a.fee_label || 'Gateway Fee')}${a.is_taxable ? ' (taxable)' : ''}${a.round ? ' (rounded)' : ''}</span>
                 <span>${Number(a.fee_amount) !== 0 ? esc(fmtMoney(a.fee_amount, sym)) : 'None'}</span>
               </div>
               <div class="wcj-v10-total"><span>Total</span><span>${esc(fmtMoney(a.total, sym))}</span></div>

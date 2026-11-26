@@ -332,6 +332,11 @@
         role_enabled: !!draft.role_enabled,
         wholesale_enabled: !!draft.wholesale_enabled || sampleTier2,
         stacks_both: roleOn && roleMult !== 1 && !!draft.wholesale_enabled && disc1 > 0,
+        qty_scope: draft.wholesale_qty_scope || 'no',
+        show_cart_info: !!draft.wholesale_show_cart_info,
+        rounding: !!draft.wholesale_rounding,
+        no_other_discounts: !!draft.wholesale_no_other_discounts,
+        disable_on_sale: !!draft.role_disable_on_sale,
         tiers: qtys.map((q) => {
           const u = calcUnit(q);
           return {
@@ -360,16 +365,29 @@
       const b = (pv && pv.before) || {};
       const viewAs = previewCtx.pricingRoleView || 'role';
       const isGuestView = viewAs === 'guest';
+      const curRow = isGuestView ? b : a;
       const roleName = (meta && meta.role_label) || draft.role || 'Customer';
-      const tiers = isGuestView ? (b.tiers || []) : (a.tiers || []);
-      const baseNum = Number((isGuestView ? b.base_price : a.base_price) || prod.price_num || 76);
-      const afterRoleVal = isGuestView ? baseNum : a.after_role;
+      const tiers = curRow.tiers || [];
+      const baseNum = Number(curRow.base_price || prod.price_num || 76);
+      const afterRoleVal = curRow.after_role !== undefined ? curRow.after_role : baseNum;
       const autoBadge = (state.autoEnabled.role_enabled || state.autoEnabled.wholesale_enabled)
         ? '<span class="wcj-v10-auto-pill">Auto-enabled in draft</span>'
         : '';
       const stacksNote = !isGuestView && a.stacks_both
         ? `<div class="wcj-v10-delta-slot is-changed">${esc(roleName)} customers buying ${esc(draft.wholesale_min_qty || 1)}+ get BOTH role and bulk discounts stacked.</div>`
         : `<div class="wcj-v10-delta-slot">${isGuestView ? 'Viewing baseline Before (live store).' : 'Catalog price applies per role; bulk tiers apply in Cart.'}</div>`;
+      const scopeLabels = {
+        no: 'Same product',
+        total_wholesale: 'Combined wholesale items',
+        yes: 'Total cart items',
+      };
+      const ruleChips = [
+        `Qty scope: ${scopeLabels[curRow.qty_scope || 'no'] || 'Same product'}`,
+        curRow.show_cart_info ? 'Cart savings badge: On' : 'Cart savings badge: Off',
+        curRow.rounding ? 'Rounding: On' : 'Rounding: Off',
+        curRow.disable_on_sale ? 'Skip role % on sale items' : '',
+        curRow.no_other_discounts ? 'Skip bulk with coupons' : '',
+      ].filter(Boolean);
 
       return `
         <div class="wcj-v10-section-head">
@@ -403,15 +421,19 @@
               </tr>
             </thead>
             <tbody>
-              ${tiers.map((t) => `
+              ${tiers.map((t) => {
+                const showOld = !!(curRow.show_cart_info && afterRoleVal !== null && t.unit_price !== null && Number(t.unit_price) < Number(afterRoleVal));
+                return `
                 <tr>
                   <td><strong>Qty ${esc(t.qty)}</strong></td>
-                  <td>${t.unit_price === null ? 'Hidden' : esc(fmtMoney(t.unit_price, sym))}</td>
+                  <td>${t.unit_price === null ? 'Hidden' : `${showOld ? `<span style="text-decoration:line-through;color:#8c8f94;margin-right:4px;">${esc(fmtMoney(afterRoleVal, sym))}</span>` : ''}${esc(fmtMoney(t.unit_price, sym))}`}</td>
                   <td style="text-align:right;"><strong>${t.line_total === null ? '&mdash;' : esc(fmtMoney(t.line_total, sym))}</strong></td>
                 </tr>
-              `).join('')}
+              `;
+              }).join('')}
             </tbody>
           </table>
+          <div style="font-size:11px;color:#50575e;margin-top:6px;">${esc(ruleChips.join(' \u2022 '))}</div>
           ${stacksNote}
         </div>
         ${deps.renderDiagnosticsHtml()}

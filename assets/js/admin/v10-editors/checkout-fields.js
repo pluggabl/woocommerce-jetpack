@@ -11,18 +11,55 @@
       order: 'Additional information',
       account: 'Account details',
     };
-    const secTitle = (meta && meta.is_blocks_checkout) ? 'Additional information (Checkout Block)' : (secNames[box.section] || 'Billing details');
+    const isBlocks = !!(meta && meta.is_blocks_checkout);
+    const cfgSec = box.configured_section || box.section || 'billing';
+    const secLabel = secNames[cfgSec] || 'Billing details';
+    const secTitle = isBlocks
+      ? (cfgSec !== 'order' ? `Additional information (Checkout Block \u2022 rule: ${secLabel})` : 'Additional information (Checkout Block)')
+      : secLabel;
     const choices = Array.isArray(box.choices) ? box.choices : [];
-    const unsupportedOnBlocks = !!(meta && meta.is_blocks_checkout) && !['text', 'select', 'checkbox', 'radio'].includes(box.type);
+    const unsupportedOnBlocks = isBlocks && !['text', 'select', 'checkbox', 'radio'].includes(box.type);
+    const typeLabels = {
+      text: 'Text',
+      tel: 'Phone (Tel)',
+      email: 'Email',
+      number: 'Number',
+      datepicker: 'Date Picker',
+      textarea: 'Textarea',
+      checkbox: 'Checkbox',
+      select: 'Dropdown',
+      radio: 'Radio',
+    };
+    const typeBadge = typeLabels[box.type] || `Classic: ${box.type || 'text'}`;
 
     let inputHtml = `<input type="text" readonly value="" placeholder="${esc(box.placeholder || '')}" style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;" />`;
     if (box.type === 'textarea') {
       inputHtml = `<textarea rows="2" readonly placeholder="${esc(box.placeholder || '')}" style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;"></textarea>`;
+    } else if (box.type === 'tel') {
+      inputHtml = `<input type="tel" readonly value="" placeholder="${esc(box.placeholder || '(555) 123-4567')}" style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;" />`;
+    } else if (box.type === 'email') {
+      inputHtml = `<input type="email" readonly value="" placeholder="${esc(box.placeholder || 'name@example.com')}" style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;" />`;
+    } else if (box.type === 'number') {
+      inputHtml = `<input type="number" readonly value="" placeholder="${esc(box.placeholder || '0')}" style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;" />`;
+    } else if (box.type === 'datepicker') {
+      inputHtml = `<input type="date" readonly value="" placeholder="YYYY-MM-DD" style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;" />`;
     } else if (box.type === 'checkbox') {
-      inputHtml = `<label style="display:flex;align-items:center;gap:6px;font-size:12px;"><input type="checkbox" disabled /> <span>${esc(box.label || 'Custom Field')}</span></label>`;
-    } else if (box.type === 'select' || box.type === 'radio') {
+      inputHtml = `<label style="display:flex;align-items:center;gap:6px;font-size:12px;"><input type="checkbox" disabled /> <span>${esc(box.label || 'Custom Field')}${box.required ? ' <span style="color:#d63638;">*</span>' : ''}</span></label>`;
+    } else if (box.type === 'select') {
       inputHtml = `<select disabled style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;">${choices.length ? choices.map((c) => `<option>${esc(c)}</option>`).join('') : '<option>(Add choices below)</option>'}</select>`;
+    } else if (box.type === 'radio') {
+      const radioOpts = choices.length ? choices : ['(Add choices below)'];
+      inputHtml = `<div style="display:flex;flex-direction:column;gap:4px;">${radioOpts.map((c) => `<label style="display:flex;align-items:center;gap:6px;font-size:12px;"><input type="radio" disabled /> <span>${esc(c)}</span></label>`).join('')}</div>`;
+    } else if (box.type && box.type !== 'text') {
+      inputHtml = `<input type="text" readonly value="" placeholder="${esc(box.placeholder || `[${typeBadge}]`)}" style="width:100%;padding:7px 9px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;" />`;
     }
+
+    const visItems = [
+      'Order Admin \u2713',
+      `Admin Email ${box.email_to_admin !== false ? '\u2713' : 'Off'}`,
+      `Customer Email ${box.email_to_customer !== false ? '\u2713' : 'Off'}`,
+      `Thank You ${box.show_thankyou !== false ? '\u2713' : 'Off'}`,
+    ];
 
     return `
       <div class="wcj-v10-ba-box ${isAfter ? 'is-after' : ''} ${isDimmed ? 'is-dimmed' : ''}">
@@ -30,7 +67,7 @@
           <span class="wcj-v10-ba-tag">${esc(heading)}</span>
           ${isAfter ? `<span class="wcj-v10-badge ${isDimmed ? '' : 'is-on'}">${isDimmed ? 'Hidden in draft' : 'Shown at checkout'}</span>` : ''}
         </div>
-        <div class="wcj-v10-ba-content">
+        <div class="wcj-v10-ba-content" ${isAfter ? '' : 'inert'}>
           <div class="wcj-v10-sheet">
             <div style="font-size:12px;font-weight:700;color:#1d2327;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e2e4e7;">
               ${esc(secTitle)}
@@ -38,13 +75,16 @@
             <div style="font-size:12px;color:#50575e;margin-bottom:8px;">Standard WooCommerce checkout fields&hellip;</div>
             ${box.active
               ? `<div style="padding:8px 10px;border-radius:8px;border:1px dashed ${unsupportedOnBlocks ? '#d63638' : '#0073aa'};background:#f6f9fc;">
-                  <div style="font-size:12px;font-weight:600;margin-bottom:4px;">
-                    ${esc(box.label || 'Custom Field')}
-                    ${box.required ? '<span style="color:#d63638;">*</span>' : ''}
-                    ${unsupportedOnBlocks ? '<span class="wcj-v10-badge" style="margin-left:6px;color:#8a2424;">Classic Only</span>' : ''}
-                  </div>
+                  ${box.type !== 'checkbox'
+                    ? `<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:12px;font-weight:600;margin-bottom:4px;">
+                        <span>${esc(box.label || 'Custom Field')}${box.required ? ' <span style="color:#d63638;">*</span>' : ''}</span>
+                        <span class="wcj-v10-badge">${esc(typeBadge)}</span>
+                      </div>`
+                    : `<div style="display:flex;justify-content:flex-end;margin-bottom:4px;"><span class="wcj-v10-badge">${esc(typeBadge)}</span></div>`}
+                  ${unsupportedOnBlocks ? '<div style="margin-bottom:4px;"><span class="wcj-v10-badge" style="color:#8a2424;">Classic Checkout Only (hidden on Block Checkout)</span></div>' : ''}
                   ${inputHtml}
                   ${box.description ? `<div style="font-size:11px;color:#50575e;margin-top:4px;">${esc(box.description)}</div>` : ''}
+                  <div style="font-size:11px;color:#50575e;margin-top:6px;">${esc(visItems.join(' \u2022 '))}</div>
                 </div>`
               : '<div style="padding:10px;border:1px dashed #dcdcde;border-radius:8px;font-size:12px;color:#646970;">No custom field active in this slot.</div>'}
           </div>
@@ -238,8 +278,8 @@
             <span>Required (shoppers must fill before placing order)</span>
           </label>
         </div>
-        <div class="wcj-v10-calm-note">
-          Answers appear in: <strong>Order Admin &#10003;</strong> &bull; Emails ${draft.email_to_customer ? '&#10003;' : 'Off'} &bull; Thank You Page ${draft.show_thankyou ? '&#10003;' : 'Off'}
+        <div class="wcj-v10-calm-note wcj-v10-cf-vis-summary">
+          Answers appear in: <strong>Order Admin &#10003;</strong> &bull; Admin Email ${draft.email_to_admin ? '&#10003;' : 'Off'} &bull; Customer Email ${draft.email_to_customer ? '&#10003;' : 'Off'} &bull; Thank You Page ${draft.show_thankyou ? '&#10003;' : 'Off'}
         </div>
         ${!isPro
           ? `<div class="wcj-v10-elite-sample-box" style="margin-top:12px;">
@@ -315,16 +355,20 @@
 
     onFieldChange(key, value, state) {
       if (key === 'field_type') {
-        // Trigger form visibility update for Choices vs Placeholder seamlessly without full shell reset.
         const form = document.getElementById('wcj-v10-editor-form');
         const optsWrap = form && form.querySelector('#wcj-cf-opts');
         const needOpts = ['select', 'radio'].includes(value);
         if ((needOpts && !optsWrap) || (!needOpts && optsWrap)) {
-          // Will show correctly; keeping DOM non-destructive during typing.
           const ph = form && form.querySelector('#wcj-cf-ph');
           if (ph && needOpts) {
             state.draft.select_options = state.draft.select_options || "Option 1\nOption 2";
           }
+        }
+      }
+      if (['email_to_admin', 'email_to_customer', 'show_thankyou'].includes(key)) {
+        const sumEl = document.querySelector('#wcj-v10-editor-form .wcj-v10-cf-vis-summary');
+        if (sumEl && state.draft) {
+          sumEl.innerHTML = `Answers appear in: <strong>Order Admin &#10003;</strong> &bull; Admin Email ${state.draft.email_to_admin ? '&#10003;' : 'Off'} &bull; Customer Email ${state.draft.email_to_customer ? '&#10003;' : 'Off'} &bull; Thank You Page ${state.draft.show_thankyou ? '&#10003;' : 'Off'}`;
         }
       }
     },
@@ -346,10 +390,14 @@
         label: String(draft.field_label || '').trim() || 'Custom Checkout Field',
         type: draft.field_type || 'text',
         section: isBlocks ? 'order' : (draft.field_section || 'billing'),
+        configured_section: draft.field_section || 'billing',
         required: !!draft.field_required,
         placeholder: draft.field_placeholder || '',
         choices,
         description: draft.field_description || '',
+        email_to_admin: !!draft.email_to_admin,
+        email_to_customer: !!draft.email_to_customer,
+        show_thankyou: !!draft.show_thankyou,
       };
     },
 

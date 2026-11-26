@@ -217,10 +217,44 @@
     });
   }
 
+  function rerenderPreservingFocus(container, html) {
+    if (!container) return;
+    const active = document.activeElement;
+    let selector = '';
+    if (active && container.contains(active)) {
+      if (active.dataset && active.dataset.field) {
+        selector = `[data-field="${active.dataset.field}"]`;
+      } else if (active.dataset && active.dataset.applyPreset) {
+        selector = `[data-apply-preset="${active.dataset.applyPreset}"]`;
+      } else if (active.dataset && active.dataset.addonSelect) {
+        selector = `[data-addon-select="${active.dataset.addonSelect}"]`;
+      } else if (active.id) {
+        selector = `#${active.id}`;
+      }
+    }
+    const openDetailsIdx = [];
+    container.querySelectorAll('details').forEach((d, idx) => {
+      if (d.hasAttribute('open')) openDetailsIdx.push(idx);
+    });
+    container.innerHTML = html;
+    if (openDetailsIdx.length) {
+      const nextDetails = container.querySelectorAll('details');
+      openDetailsIdx.forEach((idx) => {
+        if (nextDetails[idx]) nextDetails[idx].setAttribute('open', '');
+      });
+    }
+    if (selector) {
+      const target = container.querySelector(selector);
+      if (target && target.focus) {
+        target.focus();
+      }
+    }
+  }
+
   function renderPreviewPaneOnly() {
     const pvSlot = document.getElementById('wcj-v10-preview-pane');
     if (pvSlot) {
-      pvSlot.innerHTML = renderEditorPreviewHtml();
+      rerenderPreservingFocus(pvSlot, renderEditorPreviewHtml());
       state.lastPreviewSignature = previewSignature();
     }
   }
@@ -265,12 +299,16 @@
       return;
     }
     const form = document.getElementById('wcj-v10-editor-form');
+    let needRerender = false;
     Object.keys(preset.patch).forEach((key) => {
       const nextVal = preset.patch[key];
       if (typeof nextVal === 'boolean' && nextVal && !state.draft[key]) {
         state.autoEnabled[key] = true;
       }
       state.draft[key] = nextVal;
+      if (edMod.shouldRerenderForm && edMod.shouldRerenderForm(key)) {
+        needRerender = true;
+      }
       if (form) {
         const el = form.querySelector(`[data-field="${key}"]`);
         if (el) {
@@ -282,7 +320,12 @@
         }
       }
     });
-    if (form && preset.patch.header_text_color) {
+    if (preset.patch && preset.patch.addon_type !== undefined) {
+      state.previewContext.addonPreviewIdx = 0;
+    }
+    if (form && needRerender) {
+      rerenderPreservingFocus(form, renderEditorFormHtml());
+    } else if (form && preset.patch.header_text_color) {
       form.querySelectorAll('[data-inv-swatch]').forEach((s) => {
         s.classList.toggle('is-selected', s.dataset.invSwatch === preset.patch.header_text_color);
       });
@@ -1290,6 +1333,7 @@
           autoEnableForField,
           renderPreviewPaneOnly,
           applyLocalPreviewImmediate,
+          schedulePreviewUpdate,
           render,
           onDraftMutated: () => {
             applyLocalPreviewImmediate();
@@ -1323,7 +1367,7 @@
         edMod.onFieldChange(key, val, state);
       }
       if (edMod.shouldRerenderForm && edMod.shouldRerenderForm(key)) {
-        form.innerHTML = renderEditorFormHtml();
+        rerenderPreservingFocus(form, renderEditorFormHtml());
       }
       applyLocalPreviewImmediate();
       schedulePreviewUpdate();
@@ -1365,6 +1409,12 @@
           confirmBtn.textContent = `Confirm & Publish (${state.selectedDiffKeys.length})`;
           confirmBtn.disabled = state.busy || !!validationErr || state.selectedDiffKeys.length === 0;
         }
+        return;
+      }
+      if (target.dataset && target.dataset.addonSelect) {
+        state.previewContext.addonPreviewIdx = Number(target.value);
+        applyLocalPreviewImmediate();
+        schedulePreviewUpdate();
         return;
       }
       const fieldEl = target.closest && target.closest('#wcj-v10-editor-form [data-field]');

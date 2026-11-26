@@ -282,7 +282,9 @@
 
       return {
         add_to_cart_enabled: !!draft.add_to_cart_enabled,
+        apply_to_variable: !!draft.apply_to_variable,
         more_button_enabled: !!draft.more_button_enabled,
+        place_order_override: !!draft.place_order_override,
         price_labels_enabled: !!draft.price_labels_enabled,
         sale_flash_enabled: !!draft.sale_flash_enabled,
         sale_flash_hide_everywhere: hideSale,
@@ -324,11 +326,11 @@
         <div class="wcj-v10-extra-preview">
           <div class="wcj-v10-extra-row">
             <strong>Shop / Archive Button:</strong>
-            <span>${esc(b.archive_text || 'Add to cart')} &rarr; <strong>${esc(a.archive_text || 'Add to cart')}</strong></span>
+            <span>${esc(b.archive_text || 'Add to cart')} &rarr; <strong>${esc(a.archive_text || 'Add to cart')}</strong> <span class="wcj-v10-badge">${a.apply_to_variable ? 'All product types' : 'Simple only'}</span></span>
           </div>
           <div class="wcj-v10-extra-row">
             <strong>Checkout Place Order Button:</strong>
-            <span>${esc(b.place_order_text || 'Place order')} &rarr; <strong>${esc(a.place_order_text || 'Place order')}</strong></span>
+            <span>${esc(b.place_order_text || 'Place order')} &rarr; <strong>${esc(a.place_order_text || 'Place order')}</strong>${a.place_order_override ? ' <span class="wcj-v10-badge">Force gateway override</span>' : ''}</span>
           </div>
         </div>
         ${deps.renderDiagnosticsHtml()}

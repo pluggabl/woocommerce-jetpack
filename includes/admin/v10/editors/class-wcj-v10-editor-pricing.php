@@ -588,13 +588,18 @@ if ( ! class_exists( 'WCJ_V10_Editor_Pricing' ) ) :
 				}
 
 				return array(
-					'base_price'        => round( $base_num, $decimals ),
-					'after_role'        => $role_empty ? null : round( $after_role, $decimals ),
-					'role_empty'        => $role_empty,
-					'role_enabled'      => ! empty( $cfg['role_enabled'] ),
-					'wholesale_enabled' => ! empty( $cfg['wholesale_enabled'] ),
-					'stacks_both'       => $role_on && ( 1.0 !== $role_mult ) && ! empty( $cfg['wholesale_enabled'] ) && $disc1 > 0,
-					'tiers'             => $tiers,
+					'base_price'         => round( $base_num, $decimals ),
+					'after_role'         => $role_empty ? null : round( $after_role, $decimals ),
+					'role_empty'         => $role_empty,
+					'role_enabled'       => ! empty( $cfg['role_enabled'] ),
+					'wholesale_enabled'  => ! empty( $cfg['wholesale_enabled'] ),
+					'stacks_both'        => $role_on && ( 1.0 !== $role_mult ) && ! empty( $cfg['wholesale_enabled'] ) && $disc1 > 0,
+					'qty_scope'          => (string) ( $cfg['wholesale_qty_scope'] ?? 'no' ),
+					'show_cart_info'     => ! empty( $cfg['wholesale_show_cart_info'] ),
+					'rounding'           => ! empty( $cfg['wholesale_rounding'] ),
+					'no_other_discounts' => ! empty( $cfg['wholesale_no_other_discounts'] ),
+					'disable_on_sale'    => ! empty( $cfg['role_disable_on_sale'] ),
+					'tiers'              => $tiers,
 				);
 			};
 

@@ -37,7 +37,7 @@
             <span>${esc(opt.label)} (+${esc(fmtMoney(opt.extra, sym))})</span>
           </label>
         `;
-      } else if (card.type === 'radio' || card.type === 'select') {
+      } else if (card.type === 'radio') {
         const activeIdx = isAfter ? selIdx : Number(card.selected_idx !== undefined ? card.selected_idx : 0);
         controlsHtml = options.map((opt, idx) => `
           <label class="wcj-v10-addon-opt ${activeIdx === idx ? 'is-selected' : ''}" ${isAfter ? `data-addon-opt="${idx}"` : ''}>
@@ -45,15 +45,38 @@
             <span>${esc(opt.label)} (+${esc(fmtMoney(opt.extra, sym))})</span>
           </label>
         `).join('');
+      } else if (card.type === 'select') {
+        const activeIdx = isAfter ? selIdx : Number(card.selected_idx !== undefined ? card.selected_idx : 0);
+        const noMatch = activeIdx < 0 || activeIdx >= options.length;
+        controlsHtml = `
+          <select ${isAfter ? 'data-addon-select="1"' : 'disabled'} style="width:100%;padding:6px 8px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;">
+            <option value="-1" ${noMatch ? 'selected' : ''}>&mdash; Choose &mdash;</option>
+            ${options.map((opt, idx) => `<option value="${esc(idx)}" ${activeIdx === idx ? 'selected' : ''}>${esc(opt.label)} (+${esc(fmtMoney(opt.extra, sym))})</option>`).join('')}
+          </select>
+        `;
       } else {
         const opt = options[0];
         controlsHtml = `
-          <div class="wcj-v10-addon-opt">
-            <span>${esc(opt.label)} (+${esc(fmtMoney(opt.extra, sym))})</span>
-          </div>
+          <div style="font-size:12px;font-weight:500;margin-bottom:4px;">${esc(opt.label)} ${Number(opt.extra) > 0 ? `(+${esc(fmtMoney(opt.extra, sym))})` : '(Free)'}</div>
+          <input type="text" readonly value="" placeholder="${esc(card.placeholder || 'Customer text input...')}" style="width:100%;padding:6px 8px;border:1px solid #c3c4c7;border-radius:6px;background:#fff;" />
         `;
       }
     }
+
+    const posAfterBtn = card.position === 'woocommerce_after_add_to_cart_button';
+    const addonBoxHtml = `
+      <div class="wcj-v10-addon-box">
+        ${card.title ? `<div style="font-weight:600;font-size:12px;margin-bottom:4px;">${esc(card.title)} ${card.required ? '<span style="color:#d63638;">*</span>' : ''}</div>` : ''}
+        ${controlsHtml}
+        ${card.tooltip ? `<div style="font-size:11px;color:#50575e;font-style:italic;margin-top:4px;">${esc(card.tooltip)}</div>` : ''}
+      </div>
+    `;
+    const btnText = (active && card.required) ? 'Select Options / Add to Cart' : 'Add to cart';
+    const mockBtnHtml = `<div style="margin:${posAfterBtn ? '0 0 8px' : '8px 0 0'};padding:6px 10px;border-radius:6px;background:#0073aa;color:#fff;font-size:12px;font-weight:600;text-align:center;">${esc(btnText)}</div>`;
+    const ruleBadges = [
+      card.ajax_enabled ? 'Ajax price live' : '',
+      card.per_product_enabled ? 'Per-product enabled' : '',
+    ].filter(Boolean);
 
     return `
       <div class="wcj-v10-ba-box ${isAfter ? 'is-after' : ''} ${isDimmed ? 'is-dimmed' : ''}">
@@ -66,10 +89,8 @@
             <div class="wcj-v10-pbody">
               <div style="font-weight:700;font-size:13px;margin-bottom:6px;">${esc(prod.name || 'Sample Product')}</div>
               <div style="font-size:12px;color:#50575e;margin-bottom:8px;">Base price: <strong>${esc(fmtMoney(card.base_price || 76, sym))}</strong></div>
-              <div class="wcj-v10-addon-box">
-                ${card.title ? `<div style="font-weight:600;font-size:12px;margin-bottom:4px;">${esc(card.title)} ${card.required ? '<span style="color:#d63638;">*</span>' : ''}</div>` : ''}
-                ${controlsHtml}
-              </div>
+              ${posAfterBtn ? mockBtnHtml + addonBoxHtml : addonBoxHtml + mockBtnHtml}
+              ${ruleBadges.length ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;">${ruleBadges.map((rb) => `<span class="wcj-v10-badge">${esc(rb)}</span>`).join('')}</div>` : ''}
               <div class="wcj-v10-total" style="margin-top:10px;">
                 <span>Cart Item Total</span>
                 <span>${esc(fmtMoney(card.cart_total || card.base_price || 76, sym))}</span>
@@ -300,6 +321,12 @@
       return key === 'addon_type';
     },
 
+    onFieldChange(key, value, state) {
+      if (key === 'addon_type' && state && state.previewContext) {
+        state.previewContext.addonPreviewIdx = 0;
+      }
+    },
+
     onFieldSwitch(key, el, state, actions) {
       if (key === 'addon_index') {
         if (!actions.confirmDiscardIfDirty('Switch add-on and discard unsaved draft changes?')) {
@@ -322,6 +349,9 @@
           state.previewContext.addonPreviewIdx = Number(val);
         }
         actions.applyLocalPreviewImmediate();
+        if (actions.schedulePreviewUpdate) {
+          actions.schedulePreviewUpdate();
+        }
         return;
       }
       const sampleBtn = target.closest('[data-action="toggle-elite-sample"]');
@@ -360,6 +390,12 @@
         type: draft.addon_type || 'checkbox',
         required: !!draft.addon_required,
         options,
+        tooltip: draft.addon_tooltip || '',
+        placeholder: draft.addon_placeholder || '',
+        position: draft.position || 'woocommerce_before_add_to_cart_button',
+        ajax_enabled: !!draft.ajax_enabled,
+        per_product_enabled: !!draft.per_product_enabled,
+        count_mismatch: ['radio', 'select'].includes(draft.addon_type) && labels.length !== prices.length,
         base_price: r(baseNum),
         addon_fee: r(addonFee),
         cart_total: r(baseNum + addonFee),
@@ -384,6 +420,7 @@
             </div>
           </div>
         </div>
+        ${a.count_mismatch ? '<div class="wcj-v10-calm-note" style="border-color:#d63638;color:#8a2424;margin-bottom:10px;">Match Option Label lines and Price lines in the form before publishing — WooCommerce skips mismatched choices.</div>' : ''}
         <div class="wcj-v10-ba-grid">
           ${renderAddonCard(b, 'BEFORE (Live Store)', false, draft, meta, previewCtx, deps)}
           ${renderAddonCard(a, 'AFTER (Your Draft)', true, draft, meta, previewCtx, deps)}

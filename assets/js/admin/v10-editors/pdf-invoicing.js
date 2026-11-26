@@ -27,7 +27,12 @@
               </div>
             </div>
             <div style="color:#50575e;margin-bottom:6px;font-size:11px;">
-              ${esc(doc.email_status || '')}
+              <div>${esc(doc.email_status || '')}</div>
+              <div>${esc([
+                doc.customer_my_account ? 'My Account download' : '',
+                doc.thankyou_page ? 'Thank You link' : '',
+                doc.skip_zero_total ? 'Skip $0 orders' : '',
+              ].filter(Boolean).join(' \u2022 ') || 'Admin-only download')}</div>
             </div>
             <table class="wcj-v10-sheet-table">
               <thead>
@@ -363,6 +368,9 @@
         invoice_number: (draft.numbering_prefix || '') + '1042' + (draft.numbering_suffix || ''),
         footer_text: String(draft.footer_text || '').trim(),
         create_on_completed: !!draft.create_on_completed,
+        customer_my_account: !!draft.customer_my_account,
+        thankyou_page: !!draft.thankyou_page,
+        skip_zero_total: !!draft.skip_zero_total,
         email_status: triggerStr + ' • ' + emailStr,
       };
     },

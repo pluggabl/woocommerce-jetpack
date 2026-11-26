@@ -449,7 +449,9 @@ if ( ! class_exists( 'WCJ_V10_Editor_Labels' ) ) :
 
 				return array(
 					'add_to_cart_enabled'        => ! empty( $cfg['add_to_cart_enabled'] ),
+					'apply_to_variable'          => ! empty( $cfg['apply_to_variable'] ),
 					'more_button_enabled'        => ! empty( $cfg['more_button_enabled'] ),
+					'place_order_override'       => ! empty( $cfg['place_order_override'] ),
 					'price_labels_enabled'       => ! empty( $cfg['price_labels_enabled'] ),
 					'sale_flash_enabled'         => ! empty( $cfg['sale_flash_enabled'] ),
 					'sale_flash_hide_everywhere' => $hide,

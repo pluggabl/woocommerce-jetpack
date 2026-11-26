@@ -531,6 +531,9 @@ if ( ! class_exists( 'WCJ_V10_Editor_PDF_Invoicing' ) ) :
 					'invoice_number'      => $cfg['numbering_prefix'] . '1042' . $cfg['numbering_suffix'],
 					'footer_text'         => trim( wp_strip_all_tags( (string) $cfg['footer_text'] ) ),
 					'create_on_completed' => ! empty( $cfg['create_on_completed'] ),
+					'customer_my_account' => ! empty( $cfg['customer_my_account'] ),
+					'thankyou_page'       => ! empty( $cfg['thankyou_page'] ),
+					'skip_zero_total'     => ! empty( $cfg['skip_zero_total'] ),
 					'email_status'        => $trigger_str . ' • ' . $email_str,
 				);
 			};
