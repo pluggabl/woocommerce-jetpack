@@ -46,6 +46,7 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 		 */
 		public static function register_rest() {
 			require_once __DIR__ . '/class-wcj-v10-store.php';
+			require_once __DIR__ . '/class-wcj-v10-registry.php';
 			require_once __DIR__ . '/class-wcj-v10-catalog.php';
 			require_once __DIR__ . '/class-wcj-v10-rest.php';
 			WCJ_V10_REST::register_routes();
@@ -77,14 +78,8 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 		 * @return string
 		 */
 		public static function map_section_to_editor( $section ) {
-			$map = array(
-				'pdf_invoicing'         => 'pdf_invoicing',
-				'payment_gateways_fees' => 'payment_gateways_fees',
-				'add_to_cart'           => 'button_price_labels',
-				'more_button_labels'    => 'button_price_labels',
-				'price_labels'          => 'button_price_labels',
-				'sale_flash'            => 'button_price_labels',
-			);
+			require_once __DIR__ . '/class-wcj-v10-registry.php';
+			$map = WCJ_V10_Registry::section_to_editor_map();
 			return isset( $map[ $section ] ) ? $map[ $section ] : '';
 		}
 
@@ -242,6 +237,7 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 				return;
 			}
 			require_once __DIR__ . '/class-wcj-v10-store.php';
+			require_once __DIR__ . '/class-wcj-v10-registry.php';
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
 			$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : 'wcj-dashboard';
@@ -251,6 +247,8 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 			$v10_editor = isset( $_GET['v10_editor'] ) ? sanitize_key( wp_unslash( $_GET['v10_editor'] ) ) : '';
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
 			$v10_gateway = isset( $_GET['gateway'] ) ? sanitize_key( wp_unslash( $_GET['gateway'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
+			$v10_doc_type = isset( $_GET['doc_type'] ) ? sanitize_key( wp_unslash( $_GET['doc_type'] ) ) : '';
 
 			$initial_editor = '' !== $v10_editor ? $v10_editor : self::map_section_to_editor( $section );
 			$initial_tab    = 'wcj-plugins' === $page ? 'all' : 'active';
@@ -272,10 +270,29 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 				$css_ver
 			);
 
+			$editor_scripts = array(
+				'wcj-v10-ed-fees'     => '/assets/js/admin/v10-editors/gateway-fees.js',
+				'wcj-v10-ed-invoicing'=> '/assets/js/admin/v10-editors/pdf-invoicing.js',
+				'wcj-v10-ed-labels'   => '/assets/js/admin/v10-editors/labels.js',
+			);
+			$app_deps = array();
+			foreach ( $editor_scripts as $handle => $rel ) {
+				$abs = $plugin_root . $rel;
+				$ver = file_exists( $abs ) ? self::VERSION . '.' . (string) filemtime( $abs ) : self::VERSION;
+				wp_enqueue_script(
+					$handle,
+					wcj_plugin_url() . $rel,
+					array(),
+					$ver,
+					true
+				);
+				$app_deps[] = $handle;
+			}
+
 			wp_enqueue_script(
 				'wcj-v10-app',
 				wcj_plugin_url() . '/assets/js/admin/wcj-v10-app.js',
-				array(),
+				$app_deps,
 				$js_ver,
 				true
 			);
@@ -289,6 +306,7 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 					'edition'           => WCJ_V10_Store::edition(),
 					'initialEditor'     => $initial_editor,
 					'initialGateway'    => $v10_gateway,
+					'initialDocType'    => $v10_doc_type,
 					'initialTab'        => $initial_tab,
 					'classicBaseUrl'    => self::toggle_url( 'classic', $initial_editor ? $initial_editor : $section, $page ),
 					'classicToggleBase' => self::toggle_url( 'classic', '', $page ),

@@ -22,6 +22,9 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 		 * @return array<string, string>
 		 */
 		public static function flagship_map() {
+			if ( class_exists( 'WCJ_V10_Registry' ) ) {
+				return WCJ_V10_Registry::section_to_editor_map();
+			}
 			return array(
 				'pdf_invoicing'         => 'pdf_invoicing',
 				'payment_gateways_fees' => 'payment_gateways_fees',

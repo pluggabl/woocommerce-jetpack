@@ -243,6 +243,42 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 		}
 
 		/**
+		 * Compare-and-swap write a batch of options atomically; rolls back prior writes on conflict.
+		 *
+		 * @param array<string, array> $before_states Pre-write option state tuples keyed by option name.
+		 * @param array<string, mixed> $option_writes Map of option name => new PHP value.
+		 * @param array<string>        $no_autoload   Optional option keys inserted with autoload='no'.
+		 * @return array{ok: bool, after_states: array<string, array>}
+		 */
+		public static function atomic_write_batch( $before_states, $option_writes, $no_autoload = array() ) {
+			$written_before = array();
+			$after_states   = array();
+
+			foreach ( $option_writes as $opt_key => $new_val ) {
+				$before_st = isset( $before_states[ $opt_key ] ) ? $before_states[ $opt_key ] : self::read_state( $opt_key );
+				$after_st  = self::value_state( $new_val );
+				if ( ! self::compare_exchange( $opt_key, $before_st, $after_st, $no_autoload ) ) {
+					// Revert any options already mutated in this loop to keep publish all-or-nothing.
+					foreach ( array_reverse( $written_before, true ) as $undo_key => $undo_before ) {
+						$undo_cur = self::read_state( $undo_key );
+						self::compare_exchange( $undo_key, $undo_cur, $undo_before, $no_autoload );
+					}
+					return array(
+						'ok'           => false,
+						'after_states' => array(),
+					);
+				}
+				$written_before[ $opt_key ] = $before_st;
+				$after_states[ $opt_key ]   = self::read_state( $opt_key );
+			}
+
+			return array(
+				'ok'           => true,
+				'after_states' => $after_states,
+			);
+		}
+
+		/**
 		 * Return stored revisions (oldest to newest), capped to MAX_REVISIONS.
 		 *
 		 * @param string $slug Module or editor slug.
@@ -297,10 +333,10 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 		}
 
 		/**
-		 * Roll back the latest revision only if no external edit modified any tracked option.
+		 * Roll back to the target revision (unwinding LIFO cleanly) only if no external edit occurred.
 		 *
 		 * @param string $slug        Module or editor slug.
-		 * @param string $revision_id Optional specific revision ID (must match latest).
+		 * @param string $revision_id Optional specific revision ID (defaults to latest).
 		 * @return array Remaining revisions after rollback.
 		 * @throws RuntimeException On missing revision (404) or external conflict (409).
 		 */
@@ -319,11 +355,22 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 					throw new RuntimeException( esc_html__( 'No saved revision available to undo.', 'woocommerce-jetpack' ), 404 );
 				}
 
-				$latest = $revs[ count( $revs ) - 1 ];
-				if ( '' !== $revision_id && $latest['id'] !== $revision_id ) {
-					throw new RuntimeException( esc_html__( 'Only the most recent published change can be undone directly.', 'woocommerce-jetpack' ), 409 );
+				$target_idx = count( $revs ) - 1;
+				if ( '' !== $revision_id ) {
+					$found = false;
+					for ( $i = count( $revs ) - 1; $i >= 0; $i-- ) {
+						if ( isset( $revs[ $i ]['id'] ) && $revs[ $i ]['id'] === $revision_id ) {
+							$target_idx = $i;
+							$found      = true;
+							break;
+						}
+					}
+					if ( ! $found ) {
+						throw new RuntimeException( esc_html__( 'Selected revision could not be found.', 'woocommerce-jetpack' ), 404 );
+					}
 				}
 
+				$latest         = $revs[ count( $revs ) - 1 ];
 				$current_states = array();
 				foreach ( $latest['after_hashes'] as $opt_key => $expected_hash ) {
 					$cur                        = self::read_state( $opt_key );
@@ -336,26 +383,61 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 					}
 				}
 
-				foreach ( $latest['before'] as $opt_key => $before_state ) {
+				// Verify the LIFO chain from latest down to target_idx and collect target restore states.
+				$target_restore = array();
+				for ( $idx = count( $revs ) - 1; $idx >= $target_idx; $idx-- ) {
+					$step = $revs[ $idx ];
+					if ( $idx < count( $revs ) - 1 ) {
+						$newer = $revs[ $idx + 1 ];
+						foreach ( $step['after_hashes'] as $opt_key => $expected_hash ) {
+							if ( isset( $newer['before'][ $opt_key ] ) && self::state_hash( $newer['before'][ $opt_key ] ) !== $expected_hash ) {
+								throw new RuntimeException(
+									esc_html__( 'Settings were modified between these revisions (for example in Classic View). Undo the newest step or review live settings first.', 'woocommerce-jetpack' ),
+									409
+								);
+							}
+						}
+					}
+					foreach ( $step['before'] as $opt_key => $before_state ) {
+						if ( ! isset( $current_states[ $opt_key ] ) ) {
+							$cur = self::read_state( $opt_key );
+							if ( isset( $step['after_hashes'][ $opt_key ] ) && self::state_hash( $cur ) !== $step['after_hashes'][ $opt_key ] ) {
+								throw new RuntimeException(
+									esc_html__( 'Settings were modified externally after an earlier publish. Reload to review live values first.', 'woocommerce-jetpack' ),
+									409
+								);
+							}
+							$current_states[ $opt_key ] = $cur;
+						}
+						$target_restore[ $opt_key ] = $before_state;
+					}
+				}
+
+				$written_Undo = array();
+				foreach ( $target_restore as $opt_key => $before_state ) {
 					$cur = isset( $current_states[ $opt_key ] ) ? $current_states[ $opt_key ] : self::read_state( $opt_key );
 					if ( ! self::compare_exchange( $opt_key, $cur, $before_state ) ) {
+						foreach ( array_reverse( $written_Undo, true ) as $revert_key => $revert_cur ) {
+							self::compare_exchange( $revert_key, self::read_state( $revert_key ), $revert_cur );
+						}
 						throw new RuntimeException(
 							esc_html__( 'Concurrent setting change detected during undo. Please reload.', 'woocommerce-jetpack' ),
 							409
 						);
 					}
+					$written_Undo[ $opt_key ] = $cur;
 				}
 
-				array_pop( $revs );
-				$next_rev_state = empty( $revs )
+				$remaining      = array_slice( $revs, 0, $target_idx );
+				$next_rev_state = empty( $remaining )
 					? array(
 						'exists' => false,
 						'raw'    => '',
 					)
-					: self::value_state( $revs );
+					: self::value_state( $remaining );
 				self::compare_exchange( $rev_key, $rev_state, $next_rev_state, array( $rev_key ) );
 
-				return $revs;
+				return $remaining;
 			} finally {
 				self::unlock( $lock_key, $mine );
 			}

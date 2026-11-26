@@ -942,3 +942,40 @@
   font-size: 12px;
   color: #50575e;
 }
+.wcj-v10-more-rules {
+  margin-top: 14px;
+  border: 1px solid #dcdcde;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fafafa;
+}
+.wcj-v10-more-rules summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #00507c;
+  user-select: none;
+}
+.wcj-v10-more-rules-body {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e2e4e7;
+}
+.wcj-v10-sheet-footer {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed #dcdcde;
+  font-size: 11px;
+  color: #50575e;
+  white-space: pre-line;
+}
+.wcj-v10-modal-error {
+  margin-top: 10px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  background: #fcf0f1;
+  border: 1px solid #f1aeb5;
+  color: #8a2424;
+  font-size: 12px;
+  font-weight: 600;
+}
