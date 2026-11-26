@@ -49,14 +49,14 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 				'price_labels'           => 'price prefix suffix label text vat gst tax before after excl incl',
 				'sale_flash'             => 'sale badge flash discount tag wording save off hide sale',
 				'price_by_user_role'     => 'role wholesale vip customer tier price b2b bulk',
-				'checkout_custom_fields' => 'checkout field gift note delivery message custom',
-				'product_addons'         => 'addon extra gift wrap paid option',
+				'checkout_custom_fields' => 'checkout field gift note delivery message custom additional information',
+				'product_addons'         => 'addon extra gift wrap paid option checkbox radio upsell',
 				'shipping_options'       => 'hide shipping flat rate free shipping delivery',
 				'multicurrency'          => 'currency exchange rate switcher usd eur eu',
 				'returns'                => 'returns rma refund request window',
 				'cart_abandonment'       => 'abandoned cart recovery reminder email lost sales',
-				'order_numbers'          => 'order number sequential invoice prefix receipt',
-				'wholesale_price'        => 'wholesale bulk b2b quantity discount tier',
+				'order_numbers'          => 'order number sequential invoice prefix receipt custom counter',
+				'wholesale_price'        => 'wholesale bulk b2b quantity discount tier customer pricing',
 			);
 		}
 

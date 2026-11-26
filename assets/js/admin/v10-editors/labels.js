@@ -156,7 +156,7 @@
     renderForm(draft, meta, deps) {
       const esc = deps.esc;
       const prefixLocked = !!(meta && meta.price_prefix_locked);
-      const sampleActive = !!(deps && deps.eliteSamplePrefix);
+      const sampleActive = !!(deps && deps.eliteSample && deps.eliteSample.price_prefix);
       const upgradeUrl = (deps && deps.upgradeUrl) || 'https://booster.io/buy-booster/';
 
       return `
@@ -267,8 +267,8 @@
     handleClick(target, state, actions) {
       const sampleBtn = target.closest('[data-action="toggle-elite-sample"]');
       if (sampleBtn) {
-        state.eliteSamplePrefix = !state.eliteSamplePrefix;
-        sampleBtn.innerHTML = state.eliteSamplePrefix ? 'Hide sample prefix preview' : 'Show &ldquo;From &rdquo; on my product';
+        state.eliteSample.price_prefix = !state.eliteSample.price_prefix;
+        sampleBtn.innerHTML = state.eliteSample.price_prefix ? 'Hide sample prefix preview' : 'Show &ldquo;From &rdquo; on my product';
         actions.applyLocalPreviewImmediate();
       }
     },
@@ -278,7 +278,7 @@
       const prod = meta.sample_product || {};
       const before = (state.preview && state.preview.before) || {};
       const hideSale = !!draft.sale_flash_enabled && !!draft.sale_flash_hide_everywhere;
-      const samplePrefix = (meta.price_prefix_locked && state.eliteSamplePrefix) ? 'From ' : '';
+      const samplePrefix = (meta.price_prefix_locked && state.eliteSample && state.eliteSample.price_prefix) ? 'From ' : '';
 
       return {
         add_to_cart_enabled: !!draft.add_to_cart_enabled,

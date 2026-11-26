@@ -292,6 +292,9 @@
   text-decoration: none;
   line-height: 1.25;
 }
+.wcj-v10-mod-foot .wcj-v10-btn {
+  white-space: nowrap;
+}
 .wcj-v10-btn:hover:not(:disabled) {
   border-color: #0073aa;
   color: #0073aa;
@@ -1042,4 +1045,43 @@
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
+}
+.wcj-v10-diff-group-title.is-orders {
+  color: #8a2424;
+}
+.wcj-v10-diff-group-note {
+  font-size: 12px;
+  color: #50575e;
+  margin-bottom: 6px;
+}
+.wcj-v10-calm-note {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f6f7f7;
+  border: 1px solid #e2e4e7;
+  font-size: 12px;
+  color: #3c434a;
+}
+.wcj-v10-ledger-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: #eef6fb;
+  border-radius: 6px;
+  font-size: 13px;
+}
+.wcj-v10-addon-box {
+  padding: 8px 10px;
+  border: 1px dashed #b6ddf2;
+  border-radius: 8px;
+  background: #f6f9fc;
+}
+.wcj-v10-addon-opt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  padding: 4px 0;
+  cursor: pointer;
 }

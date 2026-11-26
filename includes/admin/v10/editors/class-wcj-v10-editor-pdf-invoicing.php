@@ -14,7 +14,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_PDF_Invoicing' ) ) :
 	/**
 	 * PDF Invoicing guided editor supporting multiple document types and Tier-2 rules.
 	 */
-	class WCJ_V10_Editor_PDF_Invoicing {
+	class WCJ_V10_Editor_PDF_Invoicing extends WCJ_V10_Editor_Base {
 
 		/**
 		 * Unique editor slug.
@@ -312,7 +312,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_PDF_Invoicing' ) ) :
 			$doc_types        = self::doc_types();
 			$doc_type         = self::normalize_doc_type( isset( $context['doc_type'] ) ? $context['doc_type'] : 'invoice' );
 			$prefix           = 'wcj_invoicing_' . $doc_type . '_';
-			$doc_auto_locked  = ( 'free' === $edition && 'invoice' !== $doc_type );
+			$doc_auto_locked  = ( ! self::is_pro() && 'invoice' !== $doc_type );
 			$emails           = array_values( array_filter( (array) get_option( $prefix . 'attach_to_emails', array() ), 'is_string' ) );
 			$create_on        = array_values( array_filter( (array) get_option( $prefix . 'create_on', array() ), 'is_string' ) );
 			$default_title    = isset( $doc_types[ $doc_type ] ) ? $doc_types[ $doc_type ] : __( 'Invoice', 'woocommerce-jetpack' );
@@ -412,7 +412,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_PDF_Invoicing' ) ) :
 		 */
 		public static function sanitize_draft( $draft, $live ) {
 			$doc_type        = self::normalize_doc_type( isset( $draft['doc_type'] ) ? $draft['doc_type'] : $live['doc_type'] );
-			$doc_auto_locked = ( 'free' === WCJ_V10_Store::edition() && 'invoice' !== $doc_type );
+			$doc_auto_locked = ( ! self::is_pro() && 'invoice' !== $doc_type );
 
 			$header_image = ( ! array_key_exists( 'header_image', $draft ) || (string) $draft['header_image'] === (string) $live['header_image'] )
 				? $live['header_image']

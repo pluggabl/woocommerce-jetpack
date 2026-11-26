@@ -11,14 +11,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once __DIR__ . '/class-wcj-v10-editor-base.php';
 require_once __DIR__ . '/editors/class-wcj-v10-editor-gateway-fees.php';
 require_once __DIR__ . '/editors/class-wcj-v10-editor-pdf-invoicing.php';
 require_once __DIR__ . '/editors/class-wcj-v10-editor-labels.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-order-numbers.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-pricing.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-checkout-fields.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-product-addons.php';
 
 if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 
 	/**
-	 * Registry of all V10 guided editor classes.
+	 * Registry of all V10 guided editor classes implementing WCJ_V10_Editor_Base.
 	 */
 	class WCJ_V10_Registry {
 
@@ -29,11 +34,32 @@ if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 		 */
 		public static function all() {
 			$editors = array(
-				'payment_gateways_fees' => 'WCJ_V10_Editor_Gateway_Fees',
-				'pdf_invoicing'         => 'WCJ_V10_Editor_PDF_Invoicing',
-				'button_price_labels'   => 'WCJ_V10_Editor_Labels',
+				'payment_gateways_fees'  => 'WCJ_V10_Editor_Gateway_Fees',
+				'pdf_invoicing'          => 'WCJ_V10_Editor_PDF_Invoicing',
+				'button_price_labels'    => 'WCJ_V10_Editor_Labels',
+				'order_numbers'          => 'WCJ_V10_Editor_Order_Numbers',
+				'customer_bulk_pricing'  => 'WCJ_V10_Editor_Pricing',
+				'checkout_custom_fields' => 'WCJ_V10_Editor_Checkout_Fields',
+				'product_addons'         => 'WCJ_V10_Editor_Product_Addons',
 			);
-			return apply_filters( 'wcj_v10_editors', $editors );
+			$filtered = apply_filters( 'wcj_v10_editors', $editors );
+			$valid    = array();
+			if ( is_array( $filtered ) ) {
+				foreach ( $filtered as $slug => $cls ) {
+					if (
+						is_string( $cls )
+						&& class_exists( $cls )
+						&& is_subclass_of( $cls, 'WCJ_V10_Editor_Base' )
+						&& method_exists( $cls, 'load_state' )
+						&& method_exists( $cls, 'sanitize_draft' )
+						&& method_exists( $cls, 'compute_preview' )
+						&& method_exists( $cls, 'build_option_writes' )
+					) {
+						$valid[ sanitize_key( (string) $slug ) ] = $cls;
+					}
+				}
+			}
+			return $valid;
 		}
 
 		/**
@@ -55,25 +81,35 @@ if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 		public static function editor_scripts() {
 			$scripts = array();
 			foreach ( self::all() as $slug => $cls ) {
-				if ( method_exists( $cls, 'script' ) ) {
-					$scripts[ 'wcj-v10-ed-' . sanitize_key( $slug ) ] = $cls::script();
+				$rel = $cls::script();
+				if ( '' !== $rel ) {
+					$scripts[ 'wcj-v10-ed-' . sanitize_key( $slug ) ] = $rel;
 				}
 			}
 			return $scripts;
 		}
 
 		/**
-		 * Context query parameter keys accepted by an editor (for example gateway or doc_type).
+		 * Context query parameter keys accepted by an editor.
 		 *
 		 * @param string $slug Editor slug.
 		 * @return array<int, string>
 		 */
 		public static function context_keys( $slug ) {
 			$cls = self::get( $slug );
-			if ( $cls && method_exists( $cls, 'context_keys' ) ) {
-				return (array) $cls::context_keys();
-			}
-			return array();
+			return $cls ? (array) $cls::context_keys() : array();
+		}
+
+		/**
+		 * Volatile option keys excluded from stale base_hashes conflict checks.
+		 *
+		 * @param string $slug    Editor slug.
+		 * @param array  $context Context params.
+		 * @return array<int, string>
+		 */
+		public static function volatile_options( $slug, $context = array() ) {
+			$cls = self::get( $slug );
+			return $cls ? (array) $cls::volatile_options( $context ) : array();
 		}
 
 		/**
@@ -84,10 +120,7 @@ if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 		 */
 		public static function primary_classic_section( $slug_or_section ) {
 			$cls = self::get( $slug_or_section );
-			if ( $cls && method_exists( $cls, 'primary_classic_section' ) ) {
-				return (string) $cls::primary_classic_section();
-			}
-			return '';
+			return $cls ? (string) $cls::primary_classic_section() : '';
 		}
 
 		/**
@@ -98,10 +131,7 @@ if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 		 */
 		public static function required_module_ids( $slug ) {
 			$cls = self::get( $slug );
-			if ( $cls && method_exists( $cls, 'required_module_ids' ) ) {
-				return (array) $cls::required_module_ids();
-			}
-			return array();
+			return $cls ? (array) $cls::required_module_ids() : array();
 		}
 
 		/**

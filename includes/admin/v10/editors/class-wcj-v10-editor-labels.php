@@ -16,7 +16,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_Labels' ) ) :
 	/**
 	 * Unified Labels guided editor supporting Simple + Variable/Grouped/External buttons, price overrides, and sale badges.
 	 */
-	class WCJ_V10_Editor_Labels {
+	class WCJ_V10_Editor_Labels extends WCJ_V10_Editor_Base {
 
 		/**
 		 * Unique editor slug.
@@ -347,7 +347,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_Labels' ) ) :
 				),
 				'meta'        => array(
 					'currency_symbol'     => $store_ctx['currency_symbol'],
-					'price_prefix_locked' => 'free' === $edition,
+					'price_prefix_locked' => ! self::is_pro(),
 					'sample_product'      => $sample_product,
 					'verify_url'          => $sample_product['permalink'],
 					'verify_label'        => __( 'View on Live Product Page', 'woocommerce-jetpack' ),
@@ -371,7 +371,6 @@ if ( ! class_exists( 'WCJ_V10_Editor_Labels' ) ) :
 		 * @return array<string, mixed>
 		 */
 		public static function sanitize_draft( $draft, $live ) {
-			$edition   = WCJ_V10_Store::edition();
 			$sale_text = ( ! array_key_exists( 'sale_badge_text', $draft ) || (string) $draft['sale_badge_text'] === (string) $live['sale_badge_text'] )
 				? $live['sale_badge_text']
 				: sanitize_text_field( (string) $draft['sale_badge_text'] );
@@ -400,7 +399,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_Labels' ) ) :
 					: sanitize_text_field( (string) $draft['place_order_text'] ),
 				'place_order_override'       => array_key_exists( 'place_order_override', $draft ) ? ! empty( $draft['place_order_override'] ) : ! empty( $live['place_order_override'] ),
 				'price_labels_enabled'       => array_key_exists( 'price_labels_enabled', $draft ) ? ! empty( $draft['price_labels_enabled'] ) : ! empty( $live['price_labels_enabled'] ),
-				'price_prefix'               => ( 'free' === $edition || ! array_key_exists( 'price_prefix', $draft ) || (string) $draft['price_prefix'] === (string) $live['price_prefix'] )
+				'price_prefix'               => ( ! self::is_pro() || ! array_key_exists( 'price_prefix', $draft ) || (string) $draft['price_prefix'] === (string) $live['price_prefix'] )
 					? $live['price_prefix']
 					: wp_kses_post( (string) $draft['price_prefix'] ),
 				'price_suffix'               => ( ! array_key_exists( 'price_suffix', $draft ) || (string) $draft['price_suffix'] === (string) $live['price_suffix'] )
@@ -541,7 +540,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_Labels' ) ) :
 			if ( isset( $changed['price_labels_enabled'] ) ) {
 				$writes['wcj_price_labels_enabled'] = ! empty( $draft['price_labels_enabled'] ) ? 'yes' : 'no';
 			}
-			if ( isset( $changed['price_prefix'] ) && 'free' !== WCJ_V10_Store::edition() ) {
+			if ( isset( $changed['price_prefix'] ) && self::is_pro() ) {
 				$writes['wcj_global_price_labels_add_before_text'] = $draft['price_prefix'];
 			}
 			if ( isset( $changed['price_suffix'] ) ) {

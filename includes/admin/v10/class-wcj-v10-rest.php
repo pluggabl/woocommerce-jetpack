@@ -137,7 +137,6 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		 */
 		public static function get_modules() {
 			$catalog = WCJ_V10_Catalog::get_catalog();
-			$nonce   = wp_create_nonce( 'wcj-cat-nonce' );
 			$recipes = array(
 				array(
 					'id'          => 'brand_invoices',
@@ -147,25 +146,25 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'cta'         => __( 'Open Guided Preview', 'woocommerce-jetpack' ),
 				),
 				array(
+					'id'          => 'customer_bulk_pricing',
+					'title'       => __( 'Offer Customer & Bulk Discounts', 'woocommerce-jetpack' ),
+					'description' => __( 'Set VIP/role % discounts or "Buy 5+ save 10%" volume tiers with a live price ledger.', 'woocommerce-jetpack' ),
+					'editor_slug' => 'customer_bulk_pricing',
+					'cta'         => __( 'Open Pricing Simulator', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'          => 'product_addons',
+					'title'       => __( 'Add Gift Wrap & Product Options', 'woocommerce-jetpack' ),
+					'description' => __( 'Offer optional paid add-ons or gift notes directly on product pages.', 'woocommerce-jetpack' ),
+					'editor_slug' => 'product_addons',
+					'cta'         => __( 'Preview Product Add-ons', 'woocommerce-jetpack' ),
+				),
+				array(
 					'id'          => 'gateway_fees',
 					'title'       => __( 'Add Payment Gateway Discounts or Fees', 'woocommerce-jetpack' ),
 					'description' => __( 'Reward bank transfer choices or add COD handling rules with live checkout math.', 'woocommerce-jetpack' ),
 					'editor_slug' => 'payment_gateways_fees',
 					'cta'         => __( 'Open Cart Simulator', 'woocommerce-jetpack' ),
-				),
-				array(
-					'id'          => 'storefront_labels',
-					'title'       => __( 'Boost Button, Price & Sale Labels', 'woocommerce-jetpack' ),
-					'description' => __( 'Customize Add to cart, Place order, tax suffixes, and sale flash badges.', 'woocommerce-jetpack' ),
-					'editor_slug' => 'button_price_labels',
-					'cta'         => __( 'Preview Storefront Card', 'woocommerce-jetpack' ),
-				),
-				array(
-					'id'          => 'cart_recovery',
-					'title'       => __( 'Recover Lost Sales', 'woocommerce-jetpack' ),
-					'description' => __( 'Configure automated abandoned cart follow-ups in Classic settings.', 'woocommerce-jetpack' ),
-					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=cart_abandonment&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
-					'cta'         => __( 'Configure Cart Recovery', 'woocommerce-jetpack' ),
 				),
 			);
 
@@ -182,21 +181,22 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		}
 
 		/**
-		 * Extract editor context keys defined by WCJ_V10_Registry::context_keys().
-		 * Preserves exact case for gateway IDs while normalizing doc_type.
+		 * Extract typed editor context keys defined by WCJ_V10_Registry::context_keys().
 		 *
 		 * @param string $slug   Editor slug.
 		 * @param array  $source Key/value map.
-		 * @return array<string, string>
+		 * @return array<string, mixed>
 		 */
 		private static function extract_context( $slug, $source ) {
 			$out = array();
 			foreach ( WCJ_V10_Registry::context_keys( $slug ) as $key ) {
-				if ( ! isset( $source[ $key ] ) ) {
+				if ( ! isset( $source[ $key ] ) || '' === (string) $source[ $key ] ) {
 					$out[ $key ] = '';
 					continue;
 				}
-				if ( 'gateway' === $key ) {
+				if ( 'field_index' === $key || 'addon_index' === $key ) {
+					$out[ $key ] = max( 1, absint( $source[ $key ] ) );
+				} elseif ( 'gateway' === $key || 'role' === $key ) {
 					$out[ $key ] = sanitize_text_field( (string) $source[ $key ] );
 				} else {
 					$out[ $key ] = sanitize_key( (string) $source[ $key ] );
@@ -290,13 +290,15 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 
 			try {
 				$owned_keys    = $editor_cls::owned_options( $ed_ctx );
+				$volatile_keys = $editor_cls::volatile_options( $ed_ctx );
+				$hash_keys     = array_values( array_diff( $owned_keys, $volatile_keys ) );
 				$live_snapshot = WCJ_V10_Store::snapshot_options( $owned_keys );
 
-				// Optimistic concurrency guard: reject publish if another tab or Classic View mutated options since editor load.
+				// Optimistic concurrency guard: reject publish if another tab or Classic View mutated non-volatile options since editor load.
 				if ( null !== $client_hashes ) {
 					$current_hashes = WCJ_V10_Store::hashes_from_snapshot( $live_snapshot );
-					foreach ( $owned_keys as $opt_key ) {
-						if ( isset( $client_hashes[ $opt_key ] ) && (string) $client_hashes[ $opt_key ] !== (string) $current_hashes[ $opt_key ] ) {
+					foreach ( $hash_keys as $opt_key ) {
+						if ( ! array_key_exists( $opt_key, $client_hashes ) || (string) $client_hashes[ $opt_key ] !== (string) $current_hashes[ $opt_key ] ) {
 							return new WP_Error(
 								'wcj_v10_stale_client',
 								__( 'Live settings changed (for example in Classic View or another tab) after you opened this editor. Reload to review live values before publishing.', 'woocommerce-jetpack' ),
@@ -317,7 +319,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					$allowed         = array_flip( $selected_keys );
 					$effective_draft = $state['live'];
 					foreach ( $ed_ctx as $ck => $cv ) {
-						if ( '' !== $cv ) {
+						if ( '' !== (string) $cv ) {
 							$effective_draft[ $ck ] = $cv;
 						}
 					}
@@ -326,19 +328,32 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 							$effective_draft[ $dk ] = $dv;
 						}
 					}
+					if ( array_key_exists( 'counter_base', $draft ) && ! isset( $allowed['counter'] ) ) {
+						$effective_draft['counter_base'] = $draft['counter_base'];
+					}
 				}
 
-				$clean_draft = $editor_cls::sanitize_draft( $effective_draft, $state['live'] );
-				$valid       = $editor_cls::validate_publish( $clean_draft );
+				$clean_draft  = $editor_cls::sanitize_draft( $effective_draft, $state['live'] );
+				$diffs        = self::compute_diffs( $editor_cls, $state['live'], $clean_draft );
+				$changed_keys = wp_list_pluck( $diffs, 'key' );
+				$valid        = $editor_cls::validate_publish( $clean_draft, $state['live'], $changed_keys );
 				if ( is_wp_error( $valid ) ) {
 					return $valid;
 				}
 
-				$diffs        = self::compute_diffs( $editor_cls, $state['live'], $clean_draft );
-				$changed_keys = wp_list_pluck( $diffs, 'key' );
 				$option_writes = ! empty( $changed_keys )
 					? $editor_cls::build_option_writes( $clean_draft, $changed_keys, $live_snapshot )
 					: array();
+
+				// Enforce strict write ownership: editors may only mutate options declared in owned_options().
+				$unowned = array_diff( array_keys( $option_writes ), $owned_keys );
+				if ( ! empty( $unowned ) ) {
+					return new WP_Error(
+						'wcj_v10_unowned_write',
+						__( 'Editor attempted to write undeclared options.', 'woocommerce-jetpack' ),
+						array( 'status' => 500 )
+					);
+				}
 
 				if ( empty( $diffs ) || empty( $option_writes ) ) {
 					$current = self::load_editor_state( $slug, $ed_ctx, true );
@@ -402,13 +417,16 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		 * @return WP_REST_Response|WP_Error
 		 */
 		public static function post_rollback( $request ) {
-			$slug   = sanitize_key( (string) $request->get_param( 'slug' ) );
-			$params = (array) $request->get_json_params();
-			$rev_id = isset( $params['revision_id'] ) ? sanitize_text_field( (string) $params['revision_id'] ) : '';
-			$ed_ctx = self::extract_context( $slug, $params );
+			$slug             = sanitize_key( (string) $request->get_param( 'slug' ) );
+			$params           = (array) $request->get_json_params();
+			$rev_id           = isset( $params['revision_id'] ) ? sanitize_text_field( (string) $params['revision_id'] ) : '';
+			$ed_ctx           = self::extract_context( $slug, $params );
+			$editor_cls       = WCJ_V10_Registry::get( $slug );
+			$volatile_keys    = $editor_cls ? $editor_cls::volatile_options( $ed_ctx ) : array();
+			$skipped_volatile = array();
 
 			try {
-				WCJ_V10_Store::rollback_revision( $slug, $rev_id );
+				WCJ_V10_Store::rollback_revision( $slug, $rev_id, $volatile_keys, $skipped_volatile );
 			} catch ( RuntimeException $e ) {
 				$status = in_array( (int) $e->getCode(), array( 404, 409 ), true ) ? (int) $e->getCode() : 500;
 				return new WP_Error( 'wcj_v10_rollback_error', $e->getMessage(), array( 'status' => $status ) );
@@ -418,11 +436,12 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			$updated = self::load_editor_state( $slug, $ed_ctx, true );
 			return rest_ensure_response(
 				array(
-					'rolled_back' => true,
-					'live'        => $updated['live'],
-					'meta'        => $updated['meta'],
-					'revisions'   => $updated['revisions'],
-					'base_hashes' => $updated['base_hashes'],
+					'rolled_back'      => true,
+					'skipped_volatile' => $skipped_volatile,
+					'live'             => $updated['live'],
+					'meta'             => $updated['meta'],
+					'revisions'        => $updated['revisions'],
+					'base_hashes'      => $updated['base_hashes'],
 				)
 			);
 		}
@@ -519,11 +538,12 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		 * @return array<string, mixed>
 		 */
 		public static function get_store_sample_data() {
-			$cached = get_transient( 'wcj_v10_store_ctx_v1' );
-			if ( is_array( $cached ) && isset( $cached['product'], $cached['store_defaults'] ) ) {
+			$cached = get_transient( 'wcj_v10_store_ctx_v3' );
+			if ( is_array( $cached ) && isset( $cached['product'], $cached['store_defaults'], $cached['roles'], $cached['third_party_checkout'] ) ) {
 				return $cached;
 			}
 
+			global $wpdb;
 			$currency  = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
 			$decimals  = (int) get_option( 'woocommerce_price_num_decimals', 2 );
 			$dec_sep   = function_exists( 'wc_get_price_decimal_separator' ) ? wc_get_price_decimal_separator() : '.';
@@ -535,6 +555,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			$sale_ids          = function_exists( 'wc_get_product_ids_on_sale' ) ? array_filter( (array) wc_get_product_ids_on_sale() ) : array();
 			$has_sale_products = ! empty( $sale_ids );
 			$sample_price_num  = 76.0;
+			$sample_reg_num    = 95.0;
 			$sample_product    = array(
 				'id'                => 0,
 				'name'              => __( 'Sample Storefront Product', 'woocommerce-jetpack' ),
@@ -542,7 +563,10 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				'image_url'         => '',
 				'regular_price'     => $fmt_price( 95 ),
 				'sale_price'        => $fmt_price( 76 ),
+				'price_num'         => 76.0,
+				'regular_num'       => 95.0,
 				'on_sale'           => true,
+				'is_variable'       => false,
 				'has_sale_products' => $has_sale_products,
 			);
 
@@ -580,7 +604,8 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					$img_id   = $picked->get_image_id();
 					$img_url  = $img_id ? wp_get_attachment_image_url( (int) $img_id, 'woocommerce_thumbnail' ) : '';
 					if ( '' !== (string) $reg_raw ) {
-						$sample_price_num = max( 5.0, (float) ( $on_sale ? $sale_raw : $reg_raw ) );
+						$sample_reg_num   = max( 1.0, (float) $reg_raw );
+						$sample_price_num = max( 1.0, (float) ( $on_sale ? $sale_raw : $reg_raw ) );
 						$sample_product   = array(
 							'id'                => (int) $picked->get_id(),
 							'name'              => wp_strip_all_tags( (string) $picked->get_name() ),
@@ -588,12 +613,64 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 							'image_url'         => $img_url ? (string) $img_url : '',
 							'regular_price'     => $fmt_price( (float) $reg_raw ),
 							'sale_price'        => $on_sale ? $fmt_price( (float) $sale_raw ) : '',
+							'price_num'         => $sample_price_num,
+							'regular_num'       => $sample_reg_num,
 							'on_sale'           => (bool) $on_sale,
+							'is_variable'       => method_exists( $picked, 'is_type' ) && $picked->is_type( 'variable' ),
 							'has_sale_products' => $has_sale_products,
 						);
 					}
 				}
 			}
+
+			$published_products = (int) $wpdb->get_var(
+				"SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'product' AND post_status = 'publish'"
+			); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$downloadable_count = (int) $wpdb->get_var(
+				"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID WHERE p.post_type = 'product' AND p.post_status = 'publish' AND pm.meta_key IN ('_downloadable','_virtual') AND pm.meta_value = 'yes'"
+			); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+			$last_order_id = 0;
+			if ( function_exists( 'wc_get_orders' ) ) {
+				$latest_orders = wc_get_orders(
+					array(
+						'limit'   => 1,
+						'orderby' => 'ID',
+						'order'   => 'DESC',
+						'return'  => 'ids',
+					)
+				);
+				if ( ! empty( $latest_orders ) ) {
+					$last_order_id = (int) $latest_orders[0];
+				}
+			}
+
+			$user_counts = function_exists( 'count_users' ) ? count_users() : array( 'avail_roles' => array() );
+			$avail_roles = isset( $user_counts['avail_roles'] ) && is_array( $user_counts['avail_roles'] ) ? $user_counts['avail_roles'] : array();
+			$wp_roles    = function_exists( 'wp_roles' ) ? wp_roles()->get_names() : array( 'customer' => 'Customer' );
+			$custom_r    = (array) get_option( 'wcj_custom_roles', array() );
+			$roles_list  = array();
+			foreach ( $wp_roles as $r_slug => $r_name ) {
+				$roles_list[] = array(
+					'id'    => (string) $r_slug,
+					'name'  => wp_strip_all_tags( (string) translate_user_role( $r_name ) ),
+					'users' => isset( $avail_roles[ $r_slug ] ) ? (int) $avail_roles[ $r_slug ] : 0,
+				);
+			}
+			foreach ( $custom_r as $c_slug => $c_data ) {
+				if ( is_string( $c_slug ) && ! isset( $wp_roles[ $c_slug ] ) && is_array( $c_data ) ) {
+					$roles_list[] = array(
+						'id'    => $c_slug,
+						'name'  => wp_strip_all_tags( (string) ( $c_data['name'] ?? $c_slug ) ),
+						'users' => isset( $avail_roles[ $c_slug ] ) ? (int) $avail_roles[ $c_slug ] : 0,
+					);
+				}
+			}
+			$roles_list[] = array(
+				'id'    => 'guest',
+				'name'  => __( 'Guest (Logged-out)', 'woocommerce-jetpack' ),
+				'users' => 0,
+			);
 
 			$tier_low            = max( 10, (int) round( $sample_price_num / 5 ) * 5 );
 			$tier_mid            = max( $tier_low + 25, (int) round( ( $sample_price_num * 2 ) / 5 ) * 5 );
@@ -615,31 +692,56 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 
 			$checkout_id   = function_exists( 'wc_get_page_id' ) ? (int) wc_get_page_id( 'checkout' ) : 0;
 			$is_blocks_chk = ( $checkout_id > 0 && function_exists( 'has_block' ) ) ? has_block( 'woocommerce/checkout', $checkout_id ) : false;
+			$wc_version    = defined( 'WC_VERSION' ) ? (string) WC_VERSION : '0.0.0';
+			$has_cache     = defined( 'WP_ROCKET_VERSION' ) || defined( 'LSCWP_V' ) || defined( 'W3TC' ) || defined( 'WPCACHEHOME' ) || ( defined( 'WP_CACHE' ) && WP_CACHE );
+			$third_party   = array();
+			if ( defined( 'CFW_VERSION' ) ) {
+				$third_party[] = 'CheckoutWC';
+			}
+			if ( class_exists( 'WFACP_Core' ) ) {
+				$third_party[] = 'FunnelKit';
+			}
+			if ( defined( 'CARTFLOWS_VER' ) ) {
+				$third_party[] = 'CartFlows';
+			}
+			if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+				$third_party[] = 'Elementor Pro';
+			}
 
 			$ctx = array(
-				'currency_symbol'     => $currency,
-				'decimals'            => $decimals,
-				'sample_cart_amounts' => $sample_cart_amounts,
-				'product'             => $sample_product,
-				'store_defaults'      => array(
+				'currency_symbol'               => $currency,
+				'decimals'                      => $decimals,
+				'wc_version'                    => $wc_version,
+				'wc_blocks_supports_conditions' => version_compare( $wc_version, '9.9.0', '>=' ),
+				'has_page_cache'                => (bool) $has_cache,
+				'third_party_checkout'          => $third_party,
+				'sample_cart_amounts'           => $sample_cart_amounts,
+				'product'                       => $sample_product,
+				'product_counts'                => array(
+					'published'    => $published_products,
+					'downloadable' => $downloadable_count,
+				),
+				'last_order_id'                 => $last_order_id,
+				'roles'                         => $roles_list,
+				'store_defaults'                => array(
 					'name'     => (string) $store_name,
 					'address'  => $store_addr,
 					'logo_url' => $logo_url,
 				),
-				'checkout_url'        => function_exists( 'wc_get_checkout_url' ) ? (string) wc_get_checkout_url() : home_url( '/checkout/' ),
-				'orders_url'          => ( class_exists( '\Automattic\WooCommerce\Utilities\OrderUtil' ) && method_exists( '\Automattic\WooCommerce\Utilities\OrderUtil', 'custom_orders_table_usage_is_enabled' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled() )
+				'checkout_url'                  => function_exists( 'wc_get_checkout_url' ) ? (string) wc_get_checkout_url() : home_url( '/checkout/' ),
+				'orders_url'                    => ( class_exists( '\Automattic\WooCommerce\Utilities\OrderUtil' ) && method_exists( '\Automattic\WooCommerce\Utilities\OrderUtil', 'custom_orders_table_usage_is_enabled' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled() )
 					? admin_url( 'admin.php?page=wc-orders' )
 					: admin_url( 'edit.php?post_type=shop_order' ),
-				'is_blocks_checkout'  => (bool) $is_blocks_chk,
-				'is_block_theme'      => function_exists( 'wp_is_block_theme' ) && wp_is_block_theme(),
+				'is_blocks_checkout'            => (bool) $is_blocks_chk,
+				'is_block_theme'                => function_exists( 'wp_is_block_theme' ) && wp_is_block_theme(),
 			);
 
-			set_transient( 'wcj_v10_store_ctx_v1', $ctx, 60 );
+			set_transient( 'wcj_v10_store_ctx_v3', $ctx, 60 );
 			return $ctx;
 		}
 
 		/**
-		 * Load editor state, base_hashes, and (optionally) revisions via WCJ_V10_Registry.
+		 * Load editor state, base_hashes (excluding volatile runtime counters), and revisions.
 		 *
 		 * @param string $slug              Editor slug.
 		 * @param array  $context           Optional context params.
@@ -657,7 +759,9 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 
 			if ( $include_revisions ) {
 				$owned               = $editor_cls::owned_options( $context );
-				$data['base_hashes'] = WCJ_V10_Store::hashes_from_snapshot( WCJ_V10_Store::snapshot_options( $owned ) );
+				$volatile            = $editor_cls::volatile_options( $context );
+				$hash_keys           = array_values( array_diff( $owned, $volatile ) );
+				$data['base_hashes'] = WCJ_V10_Store::hashes_from_snapshot( WCJ_V10_Store::snapshot_options( $hash_keys ) );
 				$data['revisions']   = array_map(
 					static function ( $rev ) {
 						return array(
@@ -674,16 +778,37 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		}
 
 		/**
-		 * Human-readable field diffs with customer-facing impact grouping for Review & Publish modal.
+		 * Format scalar or array option diff values into plain human-readable text.
+		 *
+		 * @param mixed $val Field value.
+		 * @return string
+		 */
+		private static function stringify_diff_value( $val ) {
+			if ( is_array( $val ) ) {
+				$flat = array_map(
+					static function ( $item ) {
+						return is_scalar( $item ) ? wp_strip_all_tags( (string) $item ) : '';
+					},
+					$val
+				);
+				$flat = array_filter( $flat, static function ( $s ) { return '' !== $s; } );
+				return empty( $flat ) ? __( '(Empty)', 'woocommerce-jetpack' ) : implode( ', ', $flat );
+			}
+			$str = (string) $val;
+			return '' === $str ? __( '(Empty)', 'woocommerce-jetpack' ) : wp_strip_all_tags( $str );
+		}
+
+		/**
+		 * Human-readable field diffs with goes_live + stored_on_orders grouping for Review & Publish modal.
 		 *
 		 * @param string $editor_cls Editor class name.
 		 * @param array  $live       Live state.
 		 * @param array  $draft      Sanitized draft state.
-		 * @return array<int, array{key: string, label: string, from: string, to: string, summary: string, goes_live: bool, impact: string}>
+		 * @return array<int, array{key: string, label: string, from: string, to: string, summary: string, goes_live: bool, stored_on_orders: bool, impact: string}>
 		 */
 		private static function compute_diffs( $editor_cls, $live, $draft ) {
 			$map    = $editor_cls::diff_labels();
-			$impact = method_exists( $editor_cls, 'impact_groups' ) ? $editor_cls::impact_groups() : array();
+			$impact = $editor_cls::impact_groups();
 			$diffs  = array();
 			foreach ( $map as $key => $field_label ) {
 				$old = isset( $live[ $key ] ) ? $live[ $key ] : '';
@@ -694,22 +819,29 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					}
 					$from_str = $old ? __( 'On', 'woocommerce-jetpack' ) : __( 'Off', 'woocommerce-jetpack' );
 					$to_str   = $new ? __( 'On', 'woocommerce-jetpack' ) : __( 'Off', 'woocommerce-jetpack' );
+				} elseif ( is_array( $old ) || is_array( $new ) ) {
+					if ( $old === $new ) {
+						continue;
+					}
+					$from_str = self::stringify_diff_value( $old );
+					$to_str   = self::stringify_diff_value( $new );
 				} else {
 					if ( (string) $old === (string) $new ) {
 						continue;
 					}
-					$from_str = '' === (string) $old ? __( '(Empty)', 'woocommerce-jetpack' ) : wp_strip_all_tags( (string) $old );
-					$to_str   = '' === (string) $new ? __( '(Empty)', 'woocommerce-jetpack' ) : wp_strip_all_tags( (string) $new );
+					$from_str = self::stringify_diff_value( $old );
+					$to_str   = self::stringify_diff_value( $new );
 				}
 				$meta_imp = isset( $impact[ $key ] ) ? $impact[ $key ] : array();
 				$diffs[]  = array(
-					'key'       => $key,
-					'label'     => $field_label,
-					'from'      => $from_str,
-					'to'        => $to_str,
-					'summary'   => $field_label . ': ' . $from_str . ' -> ' . $to_str,
-					'goes_live' => ! empty( $meta_imp['goes_live'] ),
-					'impact'    => isset( $meta_imp['impact'] ) ? (string) $meta_imp['impact'] : '',
+					'key'              => $key,
+					'label'            => $field_label,
+					'from'             => $from_str,
+					'to'               => $to_str,
+					'summary'          => $field_label . ': ' . $from_str . ' -> ' . $to_str,
+					'goes_live'        => ! empty( $meta_imp['goes_live'] ),
+					'stored_on_orders' => ! empty( $meta_imp['stored_on_orders'] ),
+					'impact'           => isset( $meta_imp['impact'] ) ? (string) $meta_imp['impact'] : '',
 				);
 			}
 			return $diffs;

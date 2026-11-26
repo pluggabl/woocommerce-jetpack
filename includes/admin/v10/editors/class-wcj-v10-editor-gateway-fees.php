@@ -14,7 +14,7 @@ if ( ! class_exists( 'WCJ_V10_Editor_Gateway_Fees' ) ) :
 	/**
 	 * Gateway Fees guided editor implementation.
 	 */
-	class WCJ_V10_Editor_Gateway_Fees {
+	class WCJ_V10_Editor_Gateway_Fees extends WCJ_V10_Editor_Base {
 
 		/**
 		 * Unique editor slug.

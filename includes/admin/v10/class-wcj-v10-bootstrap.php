@@ -263,6 +263,12 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 			$v10_gateway = isset( $_GET['gateway'] ) ? sanitize_text_field( wp_unslash( $_GET['gateway'] ) ) : '';
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
 			$v10_doc_type = isset( $_GET['doc_type'] ) ? sanitize_key( wp_unslash( $_GET['doc_type'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
+			$v10_role = isset( $_GET['role'] ) ? sanitize_text_field( wp_unslash( $_GET['role'] ) ) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
+			$v10_field_index = isset( $_GET['field_index'] ) ? max( 1, absint( $_GET['field_index'] ) ) : 0;
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only UI boot parameters.
+			$v10_addon_index = isset( $_GET['addon_index'] ) ? max( 1, absint( $_GET['addon_index'] ) ) : 0;
 
 			$initial_editor = '' !== $v10_editor ? $v10_editor : self::map_section_to_editor( $section );
 			$initial_tab    = 'wcj-plugins' === $page ? 'all' : 'active';
@@ -319,6 +325,9 @@ if ( ! class_exists( 'WCJ_V10_Bootstrap' ) ) :
 					'initialEditor'     => $initial_editor,
 					'initialGateway'    => $v10_gateway,
 					'initialDocType'    => $v10_doc_type,
+					'initialRole'       => $v10_role,
+					'initialFieldIndex' => $v10_field_index,
+					'initialAddonIndex' => $v10_addon_index,
 					'initialTab'        => $initial_tab,
 					'classicBaseUrl'    => self::toggle_url( 'classic', $initial_editor ? $initial_editor : $section, $page ),
 					'classicToggleBase' => self::toggle_url( 'classic', '', $page ),

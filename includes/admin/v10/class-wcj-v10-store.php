@@ -55,6 +55,15 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 		}
 
 		/**
+		 * Authoritative runtime tier probe matching Booster's booster_option gate.
+		 *
+		 * @return bool True when Plus or Elite filters are unlocked at runtime.
+		 */
+		public static function is_pro() {
+			return true === apply_filters( 'booster_option', false, true );
+		}
+
+		/**
 		 * Read raw option state directly from wp_options bypassing object caches.
 		 *
 		 * @param string $key Option name.
@@ -363,15 +372,20 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 
 		/**
 		 * Roll back to the target revision (unwinding LIFO cleanly) only if no external edit occurred.
+		 * Volatile runtime keys (like sequential order counters) never trigger false 409s and are never rewound once live orders change them.
 		 *
-		 * @param string $slug        Module or editor slug.
-		 * @param string $revision_id Optional specific revision ID (defaults to latest).
+		 * @param string             $slug             Module or editor slug.
+		 * @param string             $revision_id      Optional specific revision ID (defaults to latest).
+		 * @param array<int, string> $volatile_keys    Volatile option keys excluded from continuity checks and stale rewinding.
+		 * @param array<int, string> $skipped_volatile Output list of volatile keys left untouched because live orders modified them.
 		 * @return array Remaining revisions after rollback.
 		 * @throws RuntimeException On missing revision (404) or external conflict (409).
 		 */
-		public static function rollback_revision( $slug, $revision_id = '' ) {
-			$lock_key = 'wcj_v10_lock_' . sanitize_key( $slug );
-			$mine     = self::lock( $lock_key, __( 'Another save or undo is already in progress.', 'woocommerce-jetpack' ) );
+		public static function rollback_revision( $slug, $revision_id = '', $volatile_keys = array(), &$skipped_volatile = array() ) {
+			$skipped_volatile = array();
+			$volatile_map     = array_flip( array_map( 'strval', (array) $volatile_keys ) );
+			$lock_key         = 'wcj_v10_lock_' . sanitize_key( $slug );
+			$mine             = self::lock( $lock_key, __( 'Another save or undo is already in progress.', 'woocommerce-jetpack' ) );
 
 			try {
 				$rev_key   = self::revision_option_key( $slug );
@@ -403,20 +417,25 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 				$current_states     = array();
 				$expected_next_hash = array();
 				$target_restore     = array();
+				$newest_after_hash  = array();
 
 				for ( $idx = count( $revs ) - 1; $idx >= $target_idx; $idx-- ) {
 					$step = $revs[ $idx ];
 					foreach ( $step['before'] as $opt_key => $before_state ) {
+						$is_volatile = isset( $volatile_map[ $opt_key ] );
 						if ( ! array_key_exists( $opt_key, $current_states ) ) {
 							$cur                        = self::read_state( $opt_key );
 							$current_states[ $opt_key ] = $cur;
-							if ( isset( $step['after_hashes'][ $opt_key ] ) && self::state_hash( $cur ) !== $step['after_hashes'][ $opt_key ] ) {
-								throw new RuntimeException(
-									__( 'Settings were modified externally after this publish. Reload to review current live values before changing.', 'woocommerce-jetpack' ),
-									409
-								);
+							if ( isset( $step['after_hashes'][ $opt_key ] ) ) {
+								$newest_after_hash[ $opt_key ] = $step['after_hashes'][ $opt_key ];
+								if ( ! $is_volatile && self::state_hash( $cur ) !== $step['after_hashes'][ $opt_key ] ) {
+									throw new RuntimeException(
+										__( 'Settings were modified externally after this publish. Reload to review current live values before changing.', 'woocommerce-jetpack' ),
+										409
+									);
+								}
 							}
-						} elseif ( isset( $expected_next_hash[ $opt_key ], $step['after_hashes'][ $opt_key ] ) && $step['after_hashes'][ $opt_key ] !== $expected_next_hash[ $opt_key ] ) {
+						} elseif ( ! $is_volatile && isset( $expected_next_hash[ $opt_key ], $step['after_hashes'][ $opt_key ] ) && $step['after_hashes'][ $opt_key ] !== $expected_next_hash[ $opt_key ] ) {
 							throw new RuntimeException(
 								__( 'Settings were modified between these revisions (for example in Classic View). Undo the newest step or review live settings first.', 'woocommerce-jetpack' ),
 								409
@@ -425,6 +444,24 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 
 						$expected_next_hash[ $opt_key ] = self::state_hash( $before_state );
 						$target_restore[ $opt_key ]     = $before_state;
+					}
+				}
+
+				// Filter volatile keys: never rewind live sequential counters or undo if checkout orders moved them.
+				foreach ( array_keys( $target_restore ) as $opt_key ) {
+					if ( ! isset( $volatile_map[ $opt_key ] ) ) {
+						continue;
+					}
+					$cur_st         = isset( $current_states[ $opt_key ] ) ? $current_states[ $opt_key ] : self::read_state( $opt_key );
+					$before_st      = $target_restore[ $opt_key ];
+					$hash_unchanged = isset( $newest_after_hash[ $opt_key ] ) && self::state_hash( $cur_st ) === $newest_after_hash[ $opt_key ];
+					$cur_val        = self::state_value( $cur_st );
+					$before_val     = ! empty( $before_st['exists'] ) ? self::state_value( $before_st ) : null;
+					$counter_drop   = false !== strpos( $opt_key, 'counter' ) && is_numeric( $cur_val ) && ( empty( $before_st['exists'] ) || ( is_numeric( $before_val ) && (int) $before_val < (int) $cur_val ) );
+
+					if ( ! $hash_unchanged || $counter_drop ) {
+						unset( $target_restore[ $opt_key ] );
+						$skipped_volatile[] = $opt_key;
 					}
 				}
 

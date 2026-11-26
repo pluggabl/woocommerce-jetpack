@@ -28,11 +28,13 @@
     selectedDiffKeys: [],
     localDirtyCount: 0,
     autoEnabled: {},
-    eliteSamplePrefix: false,
+    eliteSample: {},
     previewContext: {
       subtotal: 25,
       shipping: 10,
       invoicePreviewMode: 'split',
+      pricingRoleView: 'role',
+      addonPreviewIdx: 0,
     },
     banner: null,
     modalOpen: false,
@@ -206,7 +208,9 @@
     return JSON.stringify({
       slug: state.editorSlug,
       mode: state.previewContext.invoicePreviewMode,
-      eliteSample: !!state.eliteSamplePrefix,
+      roleView: state.previewContext.pricingRoleView,
+      addonIdx: state.previewContext.addonPreviewIdx,
+      eliteSample: state.eliteSample,
       preview: state.preview,
       enabled: state.draft ? !!state.draft.enabled : false,
       autoEnabled: state.autoEnabled,
@@ -311,7 +315,7 @@
     state.previewBusy = false;
     state.banner = null;
     state.autoEnabled = {};
-    state.eliteSamplePrefix = false;
+    state.eliteSample = {};
     state.diffs = [];
     state.selectedDiffKeys = [];
     state.localDirtyCount = 0;
@@ -352,6 +356,20 @@
     window.scrollTo(0, 0);
   }
 
+  function currentValidationError() {
+    const edMod = getEditor();
+    const meta = (state.editorData && state.editorData.meta) || {};
+    return edMod && edMod.getValidationError ? edMod.getValidationError(state.draft, meta) : '';
+  }
+
+  function submitDraftPayload() {
+    const edMod = getEditor();
+    if (edMod && edMod.transformDraftForSubmit && state.editorData && state.editorData.live) {
+      return edMod.transformDraftForSubmit(state.draft, state.editorData.live, state);
+    }
+    return state.draft;
+  }
+
   async function refreshPreview() {
     if (!state.editorSlug || !state.draft) {
       return false;
@@ -365,14 +383,16 @@
     state.previewBusy = true;
 
     try {
+      const edMod = getEditor();
       const res = await api('/preview/' + encodeURIComponent(state.editorSlug), {
         method: 'POST',
         signal: controller.signal,
         body: JSON.stringify({
-          draft: state.draft,
+          draft: submitDraftPayload(),
           context: {
             subtotal: state.previewContext.subtotal,
             shipping: state.previewContext.shipping,
+            addon_selected_idx: state.previewContext.addonPreviewIdx,
           },
         }),
       });
@@ -381,6 +401,10 @@
       }
       state.previewBusy = false;
       state.preview = { before: res.before, after: res.after };
+      const hasPreviewSample = Object.keys(state.eliteSample || {}).some((k) => k !== 'unlock_counter' && state.eliteSample[k]);
+      if (hasPreviewSample && edMod && edMod.computeLocalAfter) {
+        state.preview.after = edMod.computeLocalAfter(state.draft, (state.editorData && state.editorData.meta) || {}, state.previewContext, state);
+      }
       state.diffs = res.diffs || [];
       state.localDirtyCount = state.diffs.length;
       return true;
@@ -442,8 +466,14 @@
 
   async function publishDraft() {
     const edMod = getEditor();
-    const validationErr = edMod && edMod.getValidationError ? edMod.getValidationError(state.draft) : '';
-    if (validationErr || state.busy || !state.diffs.length || !state.selectedDiffKeys.length) {
+    const validationErr = currentValidationError();
+    if (validationErr) {
+      state.banner = { type: 'error', text: validationErr };
+      renderModalOnly();
+      renderBannerOnly();
+      return;
+    }
+    if (state.busy || !state.diffs.length || !state.selectedDiffKeys.length) {
       renderModalOnly();
       return;
     }
@@ -453,14 +483,14 @@
       const res = await api('/publish/' + encodeURIComponent(state.editorSlug), {
         method: 'POST',
         body: JSON.stringify({
-          draft: state.draft,
+          draft: submitDraftPayload(),
           base_hashes: state.baseHashes,
           selected_keys: state.selectedDiffKeys,
         }),
       });
       state.modalOpen = false;
       state.autoEnabled = {};
-      state.eliteSamplePrefix = false;
+      state.eliteSample = {};
       state.editorData.live = clone(res.live);
       state.editorData.meta = res.meta || state.editorData.meta;
       state.editorData.revisions = res.revisions || [];
@@ -477,8 +507,10 @@
         verifyUrl: (state.editorData.meta && state.editorData.meta.verify_url) || '',
         verifyLabel: (state.editorData.meta && state.editorData.meta.verify_label) || 'Verify on Live Store',
       };
-      await refreshPreview();
-      await loadCatalog();
+      try {
+        await refreshPreview();
+        await loadCatalog();
+      } catch (_) {}
     } catch (err) {
       state.modalOpen = false;
       state.banner = { type: 'error', text: err.message };
@@ -504,7 +536,7 @@
       });
       state.historyOpen = false;
       state.autoEnabled = {};
-      state.eliteSamplePrefix = false;
+      state.eliteSample = {};
       state.editorData.live = clone(res.live);
       state.editorData.meta = res.meta || state.editorData.meta;
       state.editorData.revisions = res.revisions || [];
@@ -513,14 +545,19 @@
       state.diffs = [];
       state.selectedDiffKeys = [];
       state.localDirtyCount = 0;
+      const skippedNote = (res.skipped_volatile && res.skipped_volatile.length)
+        ? ' Live order counters were left untouched because orders were placed.'
+        : '';
       state.banner = {
         type: 'success',
-        text: revisionId
+        text: (revisionId
           ? 'Restored store configuration to before the selected change.'
-          : 'Reverted to your previous saved settings via 1-Click Undo.',
+          : 'Reverted to your previous saved settings via 1-Click Undo.') + skippedNote,
       };
-      await refreshPreview();
-      await loadCatalog();
+      try {
+        await refreshPreview();
+        await loadCatalog();
+      } catch (_) {}
     } catch (err) {
       state.historyOpen = false;
       state.banner = { type: 'error', text: err.message };
@@ -534,19 +571,22 @@
     if (state.busy) {
       return;
     }
-    if (!window.confirm('Turn off this module on your live store immediately? A rollback snapshot will be saved so you can Undo anytime.')) {
+    const edMod = getEditor();
+    const confirmMsg = (edMod && edMod.getEmergencyOffConfirm && state.editorData)
+      ? edMod.getEmergencyOffConfirm(state.editorData.live)
+      : 'Turn off this module on your live store immediately? A rollback snapshot will be saved so you can Undo anytime.';
+    if (!window.confirm(confirmMsg)) {
       return;
     }
     state.busy = true;
     try {
-      const edMod = getEditor();
       const ctxPayload = edMod && edMod.buildContextPayload ? edMod.buildContextPayload(state.draft) : {};
       const res = await api('/emergency-off/' + encodeURIComponent(state.editorSlug), {
         method: 'POST',
         body: JSON.stringify(ctxPayload),
       });
       state.autoEnabled = {};
-      state.eliteSamplePrefix = false;
+      state.eliteSample = {};
       state.editorData.live = clone(res.live);
       state.editorData.meta = res.meta || state.editorData.meta;
       state.editorData.revisions = res.revisions || [];
@@ -561,8 +601,10 @@
           ? 'Turned off on your live store immediately. Use Undo Now anytime to re-enable.'
           : (res.message || 'Already inactive on your live store.'),
       };
-      await refreshPreview();
-      await loadCatalog();
+      try {
+        await refreshPreview();
+        await loadCatalog();
+      } catch (_) {}
     } catch (err) {
       state.banner = { type: 'error', text: err.message };
     } finally {
@@ -875,7 +917,7 @@
     return edMod.renderForm(state.draft, state.editorData.meta || {}, {
       esc,
       renderPresetsHtml,
-      eliteSamplePrefix: state.eliteSamplePrefix,
+      eliteSample: state.eliteSample,
       upgradeUrl: cfg.upgradeUrl || 'https://booster.io/buy-booster/',
     });
   }
@@ -956,9 +998,13 @@
       return '';
     }
     const edMod = getEditor();
-    const validationErr = edMod && edMod.getValidationError ? edMod.getValidationError(state.draft) : '';
-    const goesLive = state.diffs.filter((d) => d.goes_live);
-    const configOnly = state.diffs.filter((d) => !d.goes_live);
+    const validationErr = currentValidationError();
+    const storedNote = (edMod && edMod.getStoredOnOrdersNote)
+      ? edMod.getStoredOnOrdersNote()
+      : 'Orders placed while active keep their numbers/answers/add-ons even if you turn this off or Undo later.';
+    const goesLive = state.diffs.filter((d) => d.goes_live && !d.stored_on_orders);
+    const storedOnOrders = state.diffs.filter((d) => d.stored_on_orders);
+    const configOnly = state.diffs.filter((d) => !d.goes_live && !d.stored_on_orders);
     const selectedCount = state.selectedDiffKeys.length;
 
     return `
@@ -972,6 +1018,11 @@
             ${goesLive.length ? `
               <div class="wcj-v10-diff-group-title">Goes live for customers</div>
               ${renderDiffGroupRows(goesLive)}
+            ` : ''}
+            ${storedOnOrders.length ? `
+              <div class="wcj-v10-diff-group-title is-orders" style="margin-top:12px;">Stored on orders</div>
+              <div class="wcj-v10-diff-group-note">${esc(storedNote)}</div>
+              ${renderDiffGroupRows(storedOnOrders)}
             ` : ''}
             ${configOnly.length ? `
               <div class="wcj-v10-diff-group-title" style="margin-top:12px;">Configuration details</div>
@@ -1092,7 +1143,7 @@
         state.editorSlug = '';
         state.banner = null;
         state.autoEnabled = {};
-        state.eliteSamplePrefix = false;
+        state.eliteSample = {};
         state.diffs = [];
         state.selectedDiffKeys = [];
         state.localDirtyCount = 0;
@@ -1137,7 +1188,7 @@
         }
         if (act === 'discard') {
           state.autoEnabled = {};
-          state.eliteSamplePrefix = false;
+          state.eliteSample = {};
           state.draft = clone(state.editorData.live);
           state.diffs = [];
           state.selectedDiffKeys = [];
@@ -1271,6 +1322,9 @@
       if (edMod.onFieldChange) {
         edMod.onFieldChange(key, val, state);
       }
+      if (edMod.shouldRerenderForm && edMod.shouldRerenderForm(key)) {
+        form.innerHTML = renderEditorFormHtml();
+      }
       applyLocalPreviewImmediate();
       schedulePreviewUpdate();
     }
@@ -1307,8 +1361,7 @@
         }
         const confirmBtn = document.getElementById('wcj-v10-confirm-publish-btn');
         if (confirmBtn) {
-          const edMod = getEditor();
-          const validationErr = edMod && edMod.getValidationError ? edMod.getValidationError(state.draft) : '';
+          const validationErr = currentValidationError();
           confirmBtn.textContent = `Confirm & Publish (${state.selectedDiffKeys.length})`;
           confirmBtn.disabled = state.busy || !!validationErr || state.selectedDiffKeys.length === 0;
         }
