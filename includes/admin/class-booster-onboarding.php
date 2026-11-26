@@ -494,6 +494,9 @@ if ( ! class_exists( 'Booster_Onboarding' ) ) :
 		 * Check if modal should be shown
 		 */
 		private function should_show_modal() {
+			if ( class_exists( 'WCJ_V10_Bootstrap' ) && WCJ_V10_Bootstrap::is_v10_screen() ) {
+				return false;
+			}
 			$onboarding_state = get_option( $this->option_key, array() );
 			return empty( $onboarding_state['last_prompted_at'] );
 		}

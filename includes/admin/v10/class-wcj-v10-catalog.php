@@ -39,18 +39,21 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 		 */
 		private static function search_intents() {
 			return array(
-				'pdf_invoicing'         => 'invoice pdf packing slip logo branding header tax vat receipt email attachment',
-				'payment_gateways_fees' => 'fee surcharge discount paypal stripe gateway payment method checkout min max',
-				'add_to_cart'           => 'button label add to cart buy now product text wording',
-				'more_button_labels'    => 'place order checkout button wording text override',
-				'price_labels'          => 'price prefix suffix label text vat before after',
-				'sale_flash'            => 'sale badge flash discount tag wording',
-				'price_by_user_role'    => 'role wholesale vip customer tier price',
-				'checkout_custom_fields'=> 'checkout field gift note delivery message custom',
-				'product_addons'        => 'addon extra gift wrap paid option',
-				'shipping_options'      => 'hide shipping flat rate free shipping delivery',
-				'multicurrency'         => 'currency exchange rate switcher usd eur',
-				'returns'               => 'returns rma refund request window',
+				'pdf_invoicing'          => 'invoice pdf packing slip logo branding header tax vat receipt email attachment proforma credit note',
+				'payment_gateways_fees'  => 'fee surcharge discount paypal stripe credit card cod cash on delivery bacs bank transfer gateway payment method checkout min max',
+				'add_to_cart'            => 'button label add to cart buy now product text wording rename button',
+				'more_button_labels'     => 'place order checkout button wording text override rename button',
+				'price_labels'           => 'price prefix suffix label text vat gst tax before after excl incl',
+				'sale_flash'             => 'sale badge flash discount tag wording save off',
+				'price_by_user_role'     => 'role wholesale vip customer tier price b2b bulk',
+				'checkout_custom_fields' => 'checkout field gift note delivery message custom',
+				'product_addons'         => 'addon extra gift wrap paid option',
+				'shipping_options'       => 'hide shipping flat rate free shipping delivery',
+				'multicurrency'          => 'currency exchange rate switcher usd eur eu',
+				'returns'                => 'returns rma refund request window',
+				'cart_abandonment'       => 'abandoned cart recovery reminder email lost sales',
+				'order_numbers'          => 'order number sequential invoice prefix receipt',
+				'wholesale_price'        => 'wholesale bulk b2b quantity discount tier',
 			);
 		}
 

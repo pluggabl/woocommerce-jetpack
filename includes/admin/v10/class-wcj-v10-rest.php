@@ -99,12 +99,45 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		 */
 		public static function get_modules() {
 			$catalog = WCJ_V10_Catalog::get_catalog();
+			$nonce   = wp_create_nonce( 'wcj-cat-nonce' );
+			$recipes = array(
+				array(
+					'id'          => 'brand_invoices',
+					'title'       => __( 'Brand PDF Invoices', 'woocommerce-jetpack' ),
+					'description' => __( 'Add your business address, logo, and brand color to order PDFs.', 'woocommerce-jetpack' ),
+					'editor_slug' => 'pdf_invoicing',
+					'cta'         => __( 'Open Guided Preview', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'          => 'gateway_fees',
+					'title'       => __( 'Add Payment Gateway Fees or Discounts', 'woocommerce-jetpack' ),
+					'description' => __( 'Encourage bank/COD choices or cover card processing fees cleanly.', 'woocommerce-jetpack' ),
+					'editor_slug' => 'payment_gateways_fees',
+					'cta'         => __( 'Open Cart Simulator', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'          => 'storefront_labels',
+					'title'       => __( 'Boost Button, Price & Sale Labels', 'woocommerce-jetpack' ),
+					'description' => __( 'Customize Add to cart buttons, tax suffixes, and sale flash badges.', 'woocommerce-jetpack' ),
+					'editor_slug' => 'button_price_labels',
+					'cta'         => __( 'Preview Storefront Card', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'          => 'cart_recovery',
+					'title'       => __( 'Recover Lost Sales', 'woocommerce-jetpack' ),
+					'description' => __( 'Configure automated abandoned cart follow-ups in Classic settings.', 'woocommerce-jetpack' ),
+					'classic_url' => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=cart_and_checkout&section=cart_abandonment&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
+					'cta'         => __( 'Configure Cart Recovery', 'woocommerce-jetpack' ),
+				),
+			);
+
 			return rest_ensure_response(
 				array(
 					'edition'          => WCJ_V10_Store::edition(),
 					'ui_mode'          => WCJ_V10_Bootstrap::is_v10_mode() ? 'v10' : 'classic',
 					'categories'       => $catalog['categories'],
 					'modules'          => $catalog['modules'],
+					'recipes'          => $recipes,
 					'flagship_editors' => array(
 						array(
 							'slug'        => 'payment_gateways_fees',
@@ -320,6 +353,116 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		}
 
 		/**
+		 * Gather real read-only WooCommerce storefront context for realistic previews and checks.
+		 *
+		 * @return array<string, mixed>
+		 */
+		private static function get_store_sample_data() {
+			$currency  = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
+			$decimals  = (int) get_option( 'woocommerce_price_num_decimals', 2 );
+			$dec_sep   = function_exists( 'wc_get_price_decimal_separator' ) ? wc_get_price_decimal_separator() : '.';
+			$thou_sep  = function_exists( 'wc_get_price_thousand_separator' ) ? wc_get_price_thousand_separator() : ',';
+			$fmt_price = static function ( $amount ) use ( $currency, $decimals, $dec_sep, $thou_sep ) {
+				return $currency . number_format( (float) $amount, $decimals, $dec_sep, $thou_sep );
+			};
+
+			$sale_ids          = function_exists( 'wc_get_product_ids_on_sale' ) ? array_filter( (array) wc_get_product_ids_on_sale() ) : array();
+			$has_sale_products = ! empty( $sale_ids );
+			$sample_product    = array(
+				'id'                => 0,
+				'name'              => __( 'Sample Storefront Product', 'woocommerce-jetpack' ),
+				'permalink'         => home_url( '/' ),
+				'image_url'         => '',
+				'regular_price'     => $fmt_price( 95 ),
+				'sale_price'        => $fmt_price( 76 ),
+				'on_sale'           => true,
+				'has_sale_products' => $has_sale_products,
+			);
+
+			if ( function_exists( 'wc_get_product' ) ) {
+				$picked = null;
+				if ( $has_sale_products ) {
+					foreach ( $sale_ids as $sid ) {
+						$cand = wc_get_product( (int) $sid );
+						if ( $cand && 'publish' === $cand->get_status() && '' !== $cand->get_regular_price() ) {
+							$picked = $cand;
+							break;
+						}
+					}
+				}
+				if ( ! $picked && function_exists( 'wc_get_products' ) ) {
+					$recent = wc_get_products(
+						array(
+							'status'  => 'publish',
+							'limit'   => 1,
+							'orderby' => 'ID',
+							'order'   => 'DESC',
+						)
+					);
+					if ( ! empty( $recent ) && is_object( $recent[0] ) ) {
+						$picked = $recent[0];
+					}
+				}
+				if ( $picked && is_object( $picked ) ) {
+					$reg_raw = $picked->get_regular_price();
+					if ( '' === (string) $reg_raw ) {
+						$reg_raw = $picked->get_price();
+					}
+					$sale_raw = $picked->get_sale_price();
+					$on_sale  = $picked->is_on_sale() && '' !== (string) $sale_raw;
+					$img_id   = $picked->get_image_id();
+					$img_url  = $img_id ? wp_get_attachment_image_url( (int) $img_id, 'woocommerce_thumbnail' ) : '';
+					if ( '' !== (string) $reg_raw ) {
+						$sample_product = array(
+							'id'                => (int) $picked->get_id(),
+							'name'              => wp_strip_all_tags( (string) $picked->get_name() ),
+							'permalink'         => (string) $picked->get_permalink(),
+							'image_url'         => $img_url ? (string) $img_url : '',
+							'regular_price'     => $fmt_price( (float) $reg_raw ),
+							'sale_price'        => $on_sale ? $fmt_price( (float) $sale_raw ) : '',
+							'on_sale'           => (bool) $on_sale,
+							'has_sale_products' => $has_sale_products,
+						);
+					}
+				}
+			}
+
+			$addr_parts = array_filter(
+				array(
+					trim( (string) get_option( 'woocommerce_store_address', '' ) ),
+					trim( (string) get_option( 'woocommerce_store_address_2', '' ) ),
+					trim( implode( ' ', array_filter( array( (string) get_option( 'woocommerce_store_city', '' ), (string) get_option( 'woocommerce_store_postcode', '' ) ) ) ) ),
+					trim( (string) get_option( 'woocommerce_default_country', '' ) ),
+				)
+			);
+			$store_name = get_bloginfo( 'name' );
+			$store_addr = trim( $store_name . ( ! empty( $addr_parts ) ? "\n" . implode( "\n", $addr_parts ) : '' ) );
+			$logo_id    = (int) get_theme_mod( 'custom_logo', 0 );
+			$logo_url   = $logo_id ? (string) wp_get_attachment_image_url( $logo_id, 'medium' ) : '';
+
+			$checkout_id   = function_exists( 'wc_get_page_id' ) ? (int) wc_get_page_id( 'checkout' ) : 0;
+			$is_blocks_chk = ( $checkout_id > 0 && function_exists( 'has_block' ) ) ? has_block( 'woocommerce/checkout', $checkout_id ) : false;
+			$hpos_on       = class_exists( '\Automattic\WooCommerce\Utilities\OrderUtil' ) && method_exists( '\Automattic\WooCommerce\Utilities\OrderUtil', 'custom_orders_table_usage_is_enabled' )
+				? \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()
+				: false;
+
+			return array(
+				'currency_symbol'    => $currency,
+				'decimals'           => $decimals,
+				'product'            => $sample_product,
+				'store_defaults'     => array(
+					'name'     => (string) $store_name,
+					'address'  => $store_addr,
+					'logo_url' => $logo_url,
+				),
+				'checkout_url'       => function_exists( 'wc_get_checkout_url' ) ? (string) wc_get_checkout_url() : home_url( '/checkout/' ),
+				'orders_url'         => $hpos_on ? admin_url( 'admin.php?page=wc-orders' ) : admin_url( 'edit.php?post_type=shop_order' ),
+				'is_blocks_checkout' => (bool) $is_blocks_chk,
+				'is_block_theme'     => function_exists( 'wp_is_block_theme' ) && wp_is_block_theme(),
+			);
+		}
+
+		/**
 		 * Read current live state, metadata, and revision summaries for an editor.
 		 *
 		 * @param string $slug    Editor slug.
@@ -329,6 +472,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		private static function load_editor_state( $slug, $gateway = '' ) {
 			$edition   = WCJ_V10_Store::edition();
 			$nonce     = wp_create_nonce( 'wcj-cat-nonce' );
+			$store_ctx = self::get_store_sample_data();
 			$revisions = array_map(
 				static function ( $rev ) {
 					return array(
@@ -351,8 +495,37 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				$values   = (array) get_option( 'wcj_gateways_fees_value', array() );
 				$mins     = (array) get_option( 'wcj_gateways_fees_min_cart_amount', array() );
 				$maxs     = (array) get_option( 'wcj_gateways_fees_max_cart_amount', array() );
-				$currency = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
-				$decimals = (int) get_option( 'woocommerce_price_num_decimals', 2 );
+				$currency = $store_ctx['currency_symbol'];
+				$decimals = $store_ctx['decimals'];
+
+				$gw_enabled = true;
+				$gw_title   = $gateway;
+				foreach ( $gateways as $gw_item ) {
+					if ( $gw_item['id'] === $gateway ) {
+						$gw_enabled = ! empty( $gw_item['enabled'] );
+						$gw_title   = $gw_item['title'];
+						break;
+					}
+				}
+				$diagnostics = array();
+				if ( ! $gw_enabled ) {
+					$diagnostics[] = array(
+						'level'        => 'warning',
+						'text'         => sprintf(
+							/* translators: %s: Payment gateway title */
+							__( '%s is currently disabled in WooCommerce Payments, so customers will not see this fee at checkout yet.', 'woocommerce-jetpack' ),
+							$gw_title
+						),
+						'action_label' => __( 'Manage Woo Payments', 'woocommerce-jetpack' ),
+						'action_url'   => admin_url( 'admin.php?page=wc-settings&tab=checkout' ),
+					);
+				}
+				if ( ! empty( $store_ctx['is_blocks_checkout'] ) ) {
+					$diagnostics[] = array(
+						'level' => 'info',
+						'text'  => __( 'WooCommerce Blocks Checkout detected: gateway fees recalculate live when the shopper switches or selects a payment method.', 'woocommerce-jetpack' ),
+					);
+				}
 
 				return array(
 					'slug'        => $slug,
@@ -371,15 +544,25 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 						'gateways'        => $gateways,
 						'currency_symbol' => $currency,
 						'decimals'        => $decimals,
+						'verify_url'      => $store_ctx['checkout_url'],
+						'verify_label'    => __( 'Test on Live Checkout', 'woocommerce-jetpack' ),
+						'store_defaults'  => $store_ctx['store_defaults'],
+						'diagnostics'     => $diagnostics,
 					),
 					'revisions'   => $revisions,
 				);
 			}
 
 			if ( 'pdf_invoicing' === $slug ) {
-				$emails    = (array) get_option( 'wcj_invoicing_invoice_attach_to_emails', array() );
-				$create_on = (array) get_option( 'wcj_invoicing_invoice_create_on', array() );
-				$currency  = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
+				$emails      = (array) get_option( 'wcj_invoicing_invoice_attach_to_emails', array() );
+				$create_on   = (array) get_option( 'wcj_invoicing_invoice_create_on', array() );
+				$currency    = $store_ctx['currency_symbol'];
+				$diagnostics = array(
+					array(
+						'level' => 'info',
+						'text'  => __( 'Invoices render on real WooCommerce orders. Use a starter color and prefix matching your bookkeeping format.', 'woocommerce-jetpack' ),
+					),
+				);
 				return array(
 					'slug'        => $slug,
 					'edition'     => $edition,
@@ -398,16 +581,35 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					),
 					'meta'        => array(
 						'currency_symbol' => $currency,
-						'site_name'       => get_bloginfo( 'name' ),
+						'site_name'       => $store_ctx['store_defaults']['name'],
+						'verify_url'      => $store_ctx['orders_url'],
+						'verify_label'    => __( 'Open Orders to Generate Sample', 'woocommerce-jetpack' ),
+						'store_defaults'  => $store_ctx['store_defaults'],
+						'diagnostics'     => $diagnostics,
 					),
 					'revisions'   => $revisions,
 				);
 			}
 
 			if ( 'button_price_labels' === $slug ) {
-				$currency      = function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) : '$';
-				$raw_sale_html = (string) get_option( 'wcj_product_images_sale_flash_html', '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' );
-				$sale_text     = self::extract_sale_badge_text( $raw_sale_html );
+				$currency       = $store_ctx['currency_symbol'];
+				$sample_product = $store_ctx['product'];
+				$raw_sale_html  = (string) get_option( 'wcj_product_images_sale_flash_html', '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' );
+				$sale_text      = self::extract_sale_badge_text( $raw_sale_html );
+				$diagnostics    = array();
+				if ( empty( $sample_product['has_sale_products'] ) ) {
+					$diagnostics[] = array(
+						'level' => 'warning',
+						'text'  => __( 'No products currently have a Sale Price set, so custom Sale Badge text will appear once a product has a sale price.', 'woocommerce-jetpack' ),
+					);
+				}
+				if ( ! empty( $store_ctx['is_block_theme'] ) ) {
+					$diagnostics[] = array(
+						'level' => 'info',
+						'text'  => __( 'Block theme active: custom price labels apply across product & shop pages; custom Single Button and Sale Badge apply directly on product pages.', 'woocommerce-jetpack' ),
+					);
+				}
+
 				return array(
 					'slug'        => $slug,
 					'edition'     => $edition,
@@ -421,7 +623,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 						'price_labels_enabled'      => 'yes' === get_option( 'wcj_price_labels_enabled', 'no' ),
 						'price_prefix'              => (string) get_option( 'wcj_global_price_labels_add_before_text', '' ),
 						'price_suffix'              => (string) get_option( 'wcj_global_price_labels_add_after_text', '' ),
-						'sale_flash_enabled'        => 'yes' === get_option( 'wcj_sale_flash_enabled', 'no' ),
+						'sale_flash_enabled'        => 'yes' === get_option( 'wcj_sale_flash_enabled', 'no' ) && 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ),
 						'sale_flash_global_enabled' => 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ),
 						'sale_badge_text'           => $sale_text,
 						'sale_flash_html'           => $raw_sale_html,
@@ -429,6 +631,11 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'meta'        => array(
 						'currency_symbol'     => $currency,
 						'price_prefix_locked' => 'free' === $edition,
+						'sample_product'      => $sample_product,
+						'verify_url'          => $sample_product['permalink'],
+						'verify_label'        => __( 'View on Live Product Page', 'woocommerce-jetpack' ),
+						'store_defaults'      => $store_ctx['store_defaults'],
+						'diagnostics'         => $diagnostics,
 						'classic_sections'    => array(
 							'add_to_cart'        => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=labels&section=add_to_cart&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
 							'price_labels'       => admin_url( 'admin.php?page=wcj-plugins&wcj-cat=labels&section=price_labels&wcj_classic=1&wcj-cat-nonce=' . $nonce ),
@@ -486,16 +693,21 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			}
 
 			if ( 'pdf_invoicing' === $slug ) {
-				$text_color = isset( $draft['header_text_color'] ) ? sanitize_hex_color( (string) $draft['header_text_color'] ) : '';
-				$line_color = isset( $draft['header_line_color'] ) ? sanitize_hex_color( (string) $draft['header_line_color'] ) : '';
-				$image_url  = isset( $draft['header_image'] ) ? esc_url_raw( trim( (string) $draft['header_image'] ) ) : '';
+				$text_color   = isset( $draft['header_text_color'] ) ? sanitize_hex_color( (string) $draft['header_text_color'] ) : '';
+				$line_color   = isset( $draft['header_line_color'] ) ? sanitize_hex_color( (string) $draft['header_line_color'] ) : '';
+				$image_url    = isset( $draft['header_image'] ) ? esc_url_raw( trim( (string) $draft['header_image'] ) ) : '';
+				$header_title = isset( $draft['header_title'] ) ? sanitize_text_field( (string) $draft['header_title'] ) : '';
+				$header_text  = isset( $draft['header_text'] ) ? sanitize_textarea_field( (string) $draft['header_text'] ) : '';
+				$header_on    = array_key_exists( 'header_enabled', $draft )
+					? ! empty( $draft['header_enabled'] )
+					: ( '' !== $header_title || '' !== $header_text || '' !== $image_url || ! empty( $live['header_enabled'] ) );
 
 				return array(
 					'enabled'             => ! empty( $draft['enabled'] ),
-					'header_enabled'      => ! empty( $draft['header_enabled'] ),
+					'header_enabled'      => $header_on,
 					'header_image'        => $image_url,
-					'header_title'        => isset( $draft['header_title'] ) ? sanitize_text_field( (string) $draft['header_title'] ) : '',
-					'header_text'         => isset( $draft['header_text'] ) ? sanitize_textarea_field( (string) $draft['header_text'] ) : '',
+					'header_title'        => $header_title,
+					'header_text'         => $header_text,
 					'header_text_color'   => $text_color ? $text_color : '#cccccc',
 					'header_line_color'   => $line_color ? $line_color : ( $text_color ? $text_color : '#cccccc' ),
 					'numbering_prefix'    => isset( $draft['numbering_prefix'] ) ? sanitize_text_field( (string) $draft['numbering_prefix'] ) : '',
@@ -513,6 +725,14 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					$sale_html = isset( $draft['sale_flash_html'] ) ? wp_kses_post( (string) $draft['sale_flash_html'] ) : '';
 					$sale_text = self::extract_sale_badge_text( $sale_html );
 				}
+				$sale_enabled = ! empty( $draft['sale_flash_enabled'] );
+				if ( $sale_enabled && ! empty( $draft['sale_flash_global_enabled'] ) ) {
+					$sale_global = true;
+				} elseif ( $sale_enabled && empty( $live['sale_flash_enabled'] ) ) {
+					$sale_global = true;
+				} else {
+					$sale_global = $sale_enabled && ! empty( $draft['sale_flash_global_enabled'] );
+				}
 				return array(
 					'add_to_cart_enabled'       => ! empty( $draft['add_to_cart_enabled'] ),
 					'add_to_cart_single'        => isset( $draft['add_to_cart_single'] ) ? sanitize_text_field( (string) $draft['add_to_cart_single'] ) : '',
@@ -522,8 +742,8 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'price_labels_enabled'      => ! empty( $draft['price_labels_enabled'] ),
 					'price_prefix'              => 'free' === $edition ? $live['price_prefix'] : ( isset( $draft['price_prefix'] ) ? wp_kses_post( (string) $draft['price_prefix'] ) : '' ),
 					'price_suffix'              => isset( $draft['price_suffix'] ) ? wp_kses_post( (string) $draft['price_suffix'] ) : '',
-					'sale_flash_enabled'        => ! empty( $draft['sale_flash_enabled'] ),
-					'sale_flash_global_enabled' => ! empty( $draft['sale_flash_global_enabled'] ),
+					'sale_flash_enabled'        => $sale_enabled,
+					'sale_flash_global_enabled' => $sale_global,
 					'sale_badge_text'           => $sale_text,
 					'sale_flash_html'           => $sale_html,
 				);
@@ -549,14 +769,13 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				$decimals = isset( $meta['decimals'] ) ? (int) $meta['decimals'] : 2;
 
 				$calc = static function ( $cfg ) use ( $subtotal, $shipping, $decimals ) {
-					$base_total = $subtotal + $shipping;
-					$fee_amount = 0.0;
-					$reason     = 'applied';
+					$base_total  = $subtotal + $shipping;
+					$fee_amount  = 0.0;
+					$reason      = 'applied';
+					$needs_label = '' === trim( (string) $cfg['label'] );
 
 					if ( empty( $cfg['enabled'] ) ) {
 						$reason = 'module_disabled';
-					} elseif ( '' === trim( (string) $cfg['label'] ) ) {
-						$reason = 'no_label';
 					} else {
 						$min = (float) $cfg['min_cart'];
 						$max = (float) $cfg['max_cart'];
@@ -569,15 +788,24 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 							} else {
 								$fee_amount = round( $val, $decimals );
 							}
+							if ( $needs_label && 0.0 !== (float) $val ) {
+								$reason = 'needs_label';
+							} elseif ( $needs_label ) {
+								$reason = 'no_label';
+							}
 						}
 					}
+
+					$default_label = ( 'needs_label' === $reason )
+						? __( 'Gateway Fee (add label to publish)', 'woocommerce-jetpack' )
+						: __( 'Gateway Fee', 'woocommerce-jetpack' );
 
 					return array(
 						'module_enabled' => ! empty( $cfg['enabled'] ),
 						'gateway'        => $cfg['gateway'],
 						'subtotal'       => round( $subtotal, $decimals ),
 						'shipping'       => round( $shipping, $decimals ),
-						'fee_label'      => '' !== trim( (string) $cfg['label'] ) ? $cfg['label'] : __( 'Gateway Fee', 'woocommerce-jetpack' ),
+						'fee_label'      => ! $needs_label ? $cfg['label'] : $default_label,
 						'fee_amount'     => $fee_amount,
 						'total'          => round( $base_total + $fee_amount, $decimals ),
 						'reason'         => $reason,
@@ -615,7 +843,13 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 
 			if ( 'button_price_labels' === $slug ) {
 				$project = static function ( $cfg ) use ( $meta ) {
-					$sym = isset( $meta['currency_symbol'] ) ? $meta['currency_symbol'] : '$';
+					$sym    = isset( $meta['currency_symbol'] ) ? $meta['currency_symbol'] : '$';
+					$prod   = isset( $meta['sample_product'] ) && is_array( $meta['sample_product'] ) ? $meta['sample_product'] : array();
+					$s_name = ! empty( $prod['name'] ) ? $prod['name'] : __( 'Sample Storefront Product', 'woocommerce-jetpack' );
+					$s_img  = ! empty( $prod['image_url'] ) ? $prod['image_url'] : '';
+					$s_reg  = ! empty( $prod['regular_price'] ) ? $prod['regular_price'] : $sym . '95.00';
+					$s_sale = isset( $prod['sale_price'] ) ? $prod['sale_price'] : ( $sym . '76.00' );
+					$s_on   = array_key_exists( 'on_sale', $prod ) ? ! empty( $prod['on_sale'] ) : true;
 					return array(
 						'add_to_cart_enabled'       => ! empty( $cfg['add_to_cart_enabled'] ),
 						'more_button_enabled'       => ! empty( $cfg['more_button_enabled'] ),
@@ -633,8 +867,11 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 							: __( 'Place order', 'woocommerce-jetpack' ),
 						'price_prefix'              => ! empty( $cfg['price_labels_enabled'] ) ? $cfg['price_prefix'] : '',
 						'price_suffix'              => ! empty( $cfg['price_labels_enabled'] ) ? $cfg['price_suffix'] : '',
-						'sample_regular'            => $sym . '95.00',
-						'sample_sale'               => $sym . '76.00',
+						'sample_name'               => $s_name,
+						'sample_image'              => $s_img,
+						'sample_regular'            => $s_reg,
+						'sample_sale'               => $s_sale,
+						'sample_on_sale'            => $s_on,
 						'sale_badge_text'           => ( ! empty( $cfg['sale_flash_enabled'] ) && ! empty( $cfg['sale_flash_global_enabled'] ) && '' !== trim( (string) $cfg['sale_badge_text'] ) )
 							? $cfg['sale_badge_text']
 							: __( 'Sale!', 'woocommerce' ),
