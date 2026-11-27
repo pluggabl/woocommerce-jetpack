@@ -9,9 +9,45 @@ Stable tag: 9.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Supercharge WooCommerce with FREE Abandoned Cart Recovery, Product Variation Swatches, PDF Invoices & 100+ tools. Boost sales & save time.
+Payment fees, PDF invoices, cart recovery emails, checkout fields, currency switcher and 100+ WooCommerce tools. Preview changes before shoppers do.
 
 == Description ==
+
+### New in 10.1: Guided View
+
+Set up Booster's most-used features in plain language and see the result on your own store before your shoppers do.
+
+**Your store stays exactly as it is until you decide**
+
+* Updating keeps your store in Classic View, with every setting where you left it.
+* No new WooCommerce menus. No admin notices.
+* Switch between Guided View and Classic View any time with one click. All 100+ classic modules and settings are still there.
+* Exploring and drafting saves nothing. Changes go live only when you click **Review & Publish**, grouped by what they touch: Storefront, Orders and Outbound Emails.
+* Every guided editor has Undo, revision history and a **Turn Off Now** switch. Emails already sent and details already saved on orders stay as they are, and the review step tells you before a change does either.
+
+**11 guided editors for 16 of the most-used modules**
+
+Each editor shows a live **Before** (your live store) and **After** (your draft) preview using your real products, cart and checkout.
+
+* **Payment Gateway Fees & Discounts:** add a fee or discount to a payment method and preview it on your checkout before you publish.
+* **PDF Invoicing:** set up and preview your PDF invoice. Booster Plus and Elite add the full four-document PDF suite.
+* **Button & Price Labels:** Add to Cart text, price labels, sale flash and checkout button labels in one place.
+* **Sequential Order Numbers:** see your last order number and your next one before anything changes.
+* **Price by User Role & Wholesale Price:** role discounts and quantity discounts, with a clear breakdown of how they combine.
+* **Checkout Custom Fields:** add a field such as delivery instructions or a gift message and see where it appears on your checkout.
+* **Product Addons:** offer extras like gift wrapping and watch the price update in the preview.
+* **Shipping Options & Free Shipping Bar:** hide paid shipping when free shipping is available, and show shoppers how much more to spend. The cart bar is included free. Mini-cart and checkout messages come with Plus and Elite. The sticky bar and visual progress meter come with Elite.
+* **EU VAT Number:** collect and validate EU VAT numbers at checkout. In the free version, VAT is removed for every valid VAT number, including customers in your own country. Keeping VAT for your own country (base-country VAT) needs Plus or Elite.
+* **Cart Abandonment:** send one recovery email to shoppers who left items in their cart. Elite adds multi-step email sequences with automatic recovery coupons.
+* **Multicurrency (Currency Switcher):** let shoppers switch between two currencies at rates you set. Plus and Elite add more currencies, automatic daily exchange rates, and conversion of shipping costs and coupon amounts.
+
+**Works with your checkout**
+
+Each editor checks whether your store uses the classic checkout or WooCommerce Checkout blocks and tells you what will show before you publish. For example, Shipping Options rate hiding works with both, while EU VAT Number currently needs the classic checkout.
+
+**Security**
+
+This release includes a security fix (see the Changelog). We recommend updating.
 
 ### New in 9.0.0 - Handle returns and understand gateway fees
 
@@ -419,6 +455,16 @@ No. Onboarding analytics are local-only (apply/undo/mode views) to improve the e
 On Booster admin pages, WooCommerce managers may see a short, optional announcement from https://booster.io/announcements/booster-admin.json. The fixed HTTPS JSON feed is cached for 24 hours, including failures. Notices expire and can be permanently dismissed per user and announcement ID; edits to the same ID do not reset dismissal. Nothing is shown for an empty or unavailable feed. No remote code is executed. No user, order, license or site-URL data is sent, and links contain no tracking parameters. As with any HTTPS request, the server receives the requesting IP address. Privacy policy: https://booster.io/privacy-policy/.
 
 == Changelog ==
+
+= 10.1.0 - Upcoming =
+* New: Guided View, with 11 guided editors covering 16 modules: Payment Gateway Fees & Discounts, PDF Invoicing, Button & Price Labels (Add to Cart, Price Labels, Sale Flash, More Button Labels), Order Numbers, Price by User Role, Wholesale Price, Checkout Custom Fields, Product Addons, Shipping Options, Left to Free Shipping, EU VAT Number, Cart Abandonment and Multicurrency.
+* New: Live Before (live store) and After (your draft) previews on your own products, cart and checkout.
+* New: Review & Publish. Drafts save nothing until you publish, and changes are grouped into Storefront, Orders and Outbound Emails.
+* New: Undo, revision history and Turn Off Now in every guided editor.
+* New: Checkout compatibility checks for the classic checkout and WooCommerce Checkout blocks, shown inside each editor.
+* Changed: Existing stores stay in Classic View after updating. Switch views any time with one click.
+* Security: Fixed a stored cross-site scripting (XSS) issue in frontend Product by User submissions and in date and attribute shortcodes. We recommend updating.
+* Note: 10.1.0 replaces 10.0.0, which we withdrew after store owners told us it cluttered the admin menu and slowed things down. This release is rebuilt from 9.0.0 and adds no WooCommerce menus or admin notices.
 
 = 9.0.0 - 04/11/2026 =
 * Settings backups - Export saved Booster settings and restore them after reinstalling the same edition, including general options and grouped settings.
@@ -4533,6 +4579,9 @@ On Booster admin pages, WooCommerce managers may see a short, optional announcem
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 10.1.0 =
+Includes a security fix. Your store stays in Classic View with your current settings, and no menus or notices are added. Try Guided View any time to preview changes before shoppers see them.
 
 = 9.0.0 =
 Back up and test the exact package on staging before enabling new workflows. Review the PHP 7.3, 64-bit native-clock requirements and edition-specific limits.
