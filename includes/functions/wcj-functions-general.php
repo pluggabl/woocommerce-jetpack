@@ -1353,7 +1353,14 @@ if ( ! function_exists( 'wcj_sanitize_input_attribute_values' ) ) {
 					break;
 
 				case 'restrict_quotes':
-					$sanitize_field = ( ! empty( $field ) ? preg_replace( '/["\']/', '', $field ) : '' ); // Allow HTML tags and Restrict quotes.
+					$sanitize_field = ( ! empty( $field ) ? preg_replace( '/["\']/', '', $field ) : '' ); // Allow safe HTML tags and restrict quotes.
+					if ( is_string( $sanitize_field ) && false !== strpos( $sanitize_field, '<' ) ) {
+						$sanitize_field = wp_kses_post( $sanitize_field );
+					}
+					break;
+
+				case 'date_format':
+					$sanitize_field = ( ! empty( $field ) ? preg_replace( '/[<>"\']/', '', wp_strip_all_tags( $field ) ) : '' ); // Date-format characters only; backslash escapes kept.
 					break;
 
 				default:

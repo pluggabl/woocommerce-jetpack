@@ -86,7 +86,7 @@ if ( ! class_exists( 'WCJ_Invoices_Shortcodes' ) ) :
 			// phpcs:enable WordPress.Security.NonceVerification
 
 			$atts['order_id']     = wcj_sanitize_input_attribute_values( $atts['order_id'] );
-			$atts['date_format']  = wcj_sanitize_input_attribute_values( $atts['date_format'], 'restrict_quotes' );
+			$atts['date_format']  = wcj_sanitize_input_attribute_values( $atts['date_format'], 'date_format' );
 			$atts['days']         = wcj_sanitize_input_attribute_values( $atts['days'] );
 			$atts['invoice_type'] = wcj_sanitize_input_attribute_values( $atts['invoice_type'] );
 			$atts['doc_nr']       = wcj_sanitize_input_attribute_values( $atts['doc_nr'] );

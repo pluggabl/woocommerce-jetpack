@@ -379,7 +379,18 @@ if ( ! class_exists( 'WCJ_Products_Add_Form_Shortcodes' ) ) :
 			if ( ! is_string( $value ) ) {
 				return '';
 			}
-			return strtr( sanitize_text_field( $value ), array( '[' => '&#091;', ']' => '&#093;' ) );
+			$value = sanitize_text_field( $value );
+			for ( $i = 0; $i < 5; $i++ ) {
+				$stripped = strip_shortcodes( $value );
+				if ( $stripped === $value ) {
+					break;
+				}
+				$value = $stripped;
+			}
+			if ( strip_shortcodes( $value ) !== $value ) {
+				$value = str_replace( array( '[', ']' ), '', $value );
+			}
+			return strtr( $value, array( '[' => '&#091;', ']' => '&#093;' ) );
 		}
 
 		/**
