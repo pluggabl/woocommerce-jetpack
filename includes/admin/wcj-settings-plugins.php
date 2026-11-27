@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( class_exists( 'WCJ_V10_Bootstrap' ) && WCJ_V10_Bootstrap::maybe_render_app() ) {
+	return;
+}
+
 require WCJ_FREE_PLUGIN_PATH . '/includes/admin/wcj-settings-header.php'; ?>
 
 <div class="wcj-plugins">

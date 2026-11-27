@@ -216,7 +216,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			$atts['name']                        = wcj_sanitize_input_attribute_values( $atts['name'] );
 			$atts['key']                         = wcj_sanitize_input_attribute_values( $atts['key'] );
 			$atts['days']                        = wcj_sanitize_input_attribute_values( $atts['days'] );
-			$atts['date_format']                 = wcj_sanitize_input_attribute_values( $atts['date_format'], 'restrict_quotes' );
+			$atts['date_format']                 = wcj_sanitize_input_attribute_values( $atts['date_format'], 'date_format' );
 			$atts['function_name']               = wcj_sanitize_input_attribute_values( $atts['function_name'] );
 			$atts['field']                       = wcj_sanitize_input_attribute_values( $atts['field'] );
 			$atts['item_number']                 = wcj_sanitize_input_attribute_values( $atts['item_number'] );
@@ -243,7 +243,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 			$atts['tax_label_spaces']            = wcj_sanitize_input_attribute_values( $atts['tax_label_spaces'] );
 			$atts['show_label']                  = wcj_sanitize_input_attribute_values( $atts['show_label'] );
 			$atts['code']                        = wcj_sanitize_input_attribute_values( $atts['code'], 'restrict_quotes' );
-			$atts['time_format']                 = wcj_sanitize_input_attribute_values( $atts['time_format'], 'restrict_quotes' );
+			$atts['time_format']                 = wcj_sanitize_input_attribute_values( $atts['time_format'], 'date_format' );
 			$atts['display_refunded']            = wcj_sanitize_input_attribute_values( $atts['display_refunded'] );
 			$atts['whole']                       = wcj_sanitize_input_attribute_values( $atts['whole'] );
 			$atts['use_currency_symbol']         = wcj_sanitize_input_attribute_values( $atts['use_currency_symbol'] );
@@ -1322,7 +1322,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_order_date( $atts ) {
-			return date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) + $atts['days'] * 24 * 60 * 60 );
+			return esc_html( date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) + $atts['days'] * 24 * 60 * 60 ) );
 		}
 
 		/**
@@ -1333,7 +1333,7 @@ if ( ! class_exists( 'WCJ_Orders_Shortcodes' ) ) :
 		 */
 		public function wcj_order_time( $atts ) {
 			$order_date = wcj_get_order_date( $this->the_order )->format( 'Y-m-d H:i:s' );
-			return wcj_pretty_utc_date( $order_date, $atts['time_format'] );
+			return esc_html( wcj_pretty_utc_date( $order_date, $atts['time_format'] ) );
 		}
 
 		/**

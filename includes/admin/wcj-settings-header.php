@@ -81,6 +81,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<span><?php esc_html_e( 'Support', 'woocommerce-jetpack' ); ?></span>
 								</a>
 							</li>
+							<?php
+							if ( class_exists( 'WCJ_V10_Bootstrap' ) ) {
+								WCJ_V10_Bootstrap::render_header_toggle();
+							}
+							?>
 						</ul>
 					</nav>
 				</div>

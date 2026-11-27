@@ -153,12 +153,12 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 			$atts['countries']             = wcj_sanitize_input_attribute_values( $atts['countries'], 'restrict_quotes' );
 			$atts['replace_with_currency'] = wcj_sanitize_input_attribute_values( $atts['replace_with_currency'] );
 			$atts['slug']                  = wcj_sanitize_input_attribute_values( $atts['slug'] );
-			$atts['date_format']           = wcj_sanitize_input_attribute_values( $atts['date_format'], 'restrict_quotes' );
-			$atts['time_format']           = wcj_sanitize_input_attribute_values( $atts['time_format'], 'restrict_quotes' );
+			$atts['date_format']           = wcj_sanitize_input_attribute_values( $atts['date_format'], 'date_format' );
+			$atts['time_format']           = wcj_sanitize_input_attribute_values( $atts['time_format'], 'date_format' );
 			$atts['from']                  = wcj_sanitize_input_attribute_values( $atts['from'] );
 			$atts['to']                    = wcj_sanitize_input_attribute_values( $atts['to'] );
 			$atts['default']               = wcj_sanitize_input_attribute_values( $atts['default'] );
-			$atts['datetime_format']       = wcj_sanitize_input_attribute_values( $atts['datetime_format'], 'restrict_quotes' );
+			$atts['datetime_format']       = wcj_sanitize_input_attribute_values( $atts['datetime_format'], 'date_format' );
 			$atts['key']                   = wcj_sanitize_input_attribute_values( $atts['key'] );
 			$atts['multiply_by']           = wcj_sanitize_input_attribute_values( $atts['multiply_by'] );
 			$atts['content']               = wcj_sanitize_input_attribute_values( $atts['content'], 'restrict_quotes' );
@@ -716,7 +716,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_time( $atts ) {
-			return date_i18n( $atts['time_format'], wcj_get_timestamp_date_from_gmt() );
+			return esc_html( date_i18n( $atts['time_format'], wcj_get_timestamp_date_from_gmt() ) );
 		}
 
 		/**
@@ -727,7 +727,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_datetime( $atts ) {
-			return date_i18n( $atts['datetime_format'], wcj_get_timestamp_date_from_gmt() );
+			return esc_html( date_i18n( $atts['datetime_format'], wcj_get_timestamp_date_from_gmt() ) );
 		}
 
 		/**
@@ -1195,7 +1195,7 @@ if ( ! class_exists( 'WCJ_General_Shortcodes' ) ) :
 		 * @param array $atts The user defined shortcode attributes.
 		 */
 		public function wcj_current_date( $atts ) {
-			return date_i18n( $atts['date_format'], wcj_get_timestamp_date_from_gmt() );
+			return esc_html( date_i18n( $atts['date_format'], wcj_get_timestamp_date_from_gmt() ) );
 		}
 
 		/**

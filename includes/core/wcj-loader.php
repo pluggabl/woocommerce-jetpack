@@ -58,6 +58,25 @@ if ( is_admin() ) {
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-returns-summary-admin.php';
 	// Compatibility Status.
 	require_once WCJ_FREE_PLUGIN_PATH . '/includes/class-wcj-compatibility-status.php';
+	// Booster True V10 admin shell (zero frontend cost, zero WC submenus).
+	require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/v10/class-wcj-v10-bootstrap.php';
+	WCJ_V10_Bootstrap::init();
+} else {
+	add_action(
+		'rest_api_init',
+		static function () {
+			if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
+				return;
+			}
+			$req_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$rest_q  = isset( $_GET['rest_route'] ) ? (string) wp_unslash( $_GET['rest_route'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			if ( false === strpos( $req_uri, '/booster/v1' ) && false === strpos( $rest_q, '/booster/v1' ) ) {
+				return;
+			}
+			require_once WCJ_FREE_PLUGIN_PATH . '/includes/admin/v10/class-wcj-v10-bootstrap.php';
+			WCJ_V10_Bootstrap::register_rest();
+		}
+	);
 }
 
 // WordPress 6.9+ Abilities API. Older WordPress versions do not load these frontend classes.
