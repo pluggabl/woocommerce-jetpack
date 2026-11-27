@@ -19,6 +19,10 @@ require_once __DIR__ . '/editors/class-wcj-v10-editor-order-numbers.php';
 require_once __DIR__ . '/editors/class-wcj-v10-editor-pricing.php';
 require_once __DIR__ . '/editors/class-wcj-v10-editor-checkout-fields.php';
 require_once __DIR__ . '/editors/class-wcj-v10-editor-product-addons.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-shipping-free-bar.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-eu-vat.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-cart-abandonment.php';
+require_once __DIR__ . '/editors/class-wcj-v10-editor-multicurrency.php';
 
 if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 
@@ -41,6 +45,10 @@ if ( ! class_exists( 'WCJ_V10_Registry' ) ) :
 				'customer_bulk_pricing'  => 'WCJ_V10_Editor_Pricing',
 				'checkout_custom_fields' => 'WCJ_V10_Editor_Checkout_Fields',
 				'product_addons'         => 'WCJ_V10_Editor_Product_Addons',
+				'shipping_free_bar'      => 'WCJ_V10_Editor_Shipping_Free_Bar',
+				'eu_vat_number'          => 'WCJ_V10_Editor_EU_VAT',
+				'cart_abandonment'       => 'WCJ_V10_Editor_Cart_Abandonment',
+				'multicurrency'          => 'WCJ_V10_Editor_Multicurrency',
 			);
 			$filtered = apply_filters( 'wcj_v10_editors', $editors );
 			$valid    = array();

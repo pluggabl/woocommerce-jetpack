@@ -35,6 +35,11 @@
       invoicePreviewMode: 'split',
       pricingRoleView: 'role',
       addonPreviewIdx: 0,
+      shippingScenario: 'below',
+      shippingTab: 'cart',
+      vatScenario: 'eu_valid',
+      mcCurrency: '',
+      caShowRaw: false,
     },
     banner: null,
     modalOpen: false,
@@ -210,6 +215,11 @@
       mode: state.previewContext.invoicePreviewMode,
       roleView: state.previewContext.pricingRoleView,
       addonIdx: state.previewContext.addonPreviewIdx,
+      shippingScenario: state.previewContext.shippingScenario,
+      shippingTab: state.previewContext.shippingTab,
+      vatScenario: state.previewContext.vatScenario,
+      mcCurrency: state.previewContext.mcCurrency,
+      caShowRaw: state.previewContext.caShowRaw,
       eliteSample: state.eliteSample,
       preview: state.preview,
       enabled: state.draft ? !!state.draft.enabled : false,
@@ -436,6 +446,11 @@
             subtotal: state.previewContext.subtotal,
             shipping: state.previewContext.shipping,
             addon_selected_idx: state.previewContext.addonPreviewIdx,
+            shipping_scenario: state.previewContext.shippingScenario,
+            shipping_tab: state.previewContext.shippingTab,
+            vat_scenario: state.previewContext.vatScenario,
+            mc_currency: state.previewContext.mcCurrency,
+            ca_show_raw: state.previewContext.caShowRaw,
           },
         }),
       });
@@ -1045,9 +1060,13 @@
     const storedNote = (edMod && edMod.getStoredOnOrdersNote)
       ? edMod.getStoredOnOrdersNote()
       : 'Orders placed while active keep their numbers/answers/add-ons even if you turn this off or Undo later.';
-    const goesLive = state.diffs.filter((d) => d.goes_live && !d.stored_on_orders);
-    const storedOnOrders = state.diffs.filter((d) => d.stored_on_orders);
-    const configOnly = state.diffs.filter((d) => !d.goes_live && !d.stored_on_orders);
+    const emailsNote = (edMod && edMod.getSendsEmailsNote)
+      ? edMod.getSendsEmailsNote(state.draft, state.editorData && state.editorData.meta)
+      : 'Sends real recovery emails to customers. Emails already sent cannot be recalled by Undo or Turn Off Now.';
+    const sendsEmails = state.diffs.filter((d) => d.sends_emails);
+    const goesLive = state.diffs.filter((d) => d.goes_live && !d.stored_on_orders && !d.sends_emails);
+    const storedOnOrders = state.diffs.filter((d) => d.stored_on_orders && !d.sends_emails);
+    const configOnly = state.diffs.filter((d) => !d.goes_live && !d.stored_on_orders && !d.sends_emails);
     const selectedCount = state.selectedDiffKeys.length;
 
     return `
@@ -1058,14 +1077,19 @@
             <button type="button" class="wcj-v10-btn" data-action="close-modal">Close</button>
           </div>
           <div class="wcj-v10-modal-body">
-            ${goesLive.length ? `
-              <div class="wcj-v10-diff-group-title">Goes live for customers</div>
-              ${renderDiffGroupRows(goesLive)}
+            ${sendsEmails.length ? `
+              <div class="wcj-v10-diff-group-title is-emails">Sends emails to customers</div>
+              <div class="wcj-v10-diff-group-note">${esc(emailsNote)}</div>
+              ${renderDiffGroupRows(sendsEmails)}
             ` : ''}
             ${storedOnOrders.length ? `
-              <div class="wcj-v10-diff-group-title is-orders" style="margin-top:12px;">Stored on orders</div>
+              <div class="wcj-v10-diff-group-title is-orders" ${sendsEmails.length ? 'style="margin-top:12px;"' : ''}>Stored on orders</div>
               <div class="wcj-v10-diff-group-note">${esc(storedNote)}</div>
               ${renderDiffGroupRows(storedOnOrders)}
+            ` : ''}
+            ${goesLive.length ? `
+              <div class="wcj-v10-diff-group-title" ${(sendsEmails.length || storedOnOrders.length) ? 'style="margin-top:12px;"' : ''}>Goes live for customers</div>
+              ${renderDiffGroupRows(goesLive)}
             ` : ''}
             ${configOnly.length ? `
               <div class="wcj-v10-diff-group-title" style="margin-top:12px;">Configuration details</div>
@@ -1312,6 +1336,20 @@
       if (catBtn) {
         state.selectedCategory = catBtn.dataset.cat;
         updateCatalogBodyOnly();
+        return;
+      }
+
+      const copyBtn = target.closest('[data-copy-text]');
+      if (copyBtn) {
+        const txt = copyBtn.dataset.copyText || '';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).catch(() => {});
+        }
+        const orig = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = orig;
+        }, 1200);
         return;
       }
 

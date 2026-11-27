@@ -64,6 +64,15 @@ if ( ! class_exists( 'WCJ_V10_Store' ) ) :
 		}
 
 		/**
+		 * Detect Elite edition specifically (e.g. for Elite-only Cart Abandonment & Free Shipping Bar features).
+		 *
+		 * @return bool True when running Booster Elite.
+		 */
+		public static function is_elite() {
+			return self::is_pro() && 'elite' === self::edition();
+		}
+
+		/**
 		 * Read raw option state directly from wp_options bypassing object caches.
 		 *
 		 * @param string $key Option name.

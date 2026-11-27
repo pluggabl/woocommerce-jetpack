@@ -166,6 +166,20 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'editor_slug' => 'payment_gateways_fees',
 					'cta'         => __( 'Open Cart Simulator', 'woocommerce-jetpack' ),
 				),
+				array(
+					'id'          => 'shipping_free_bar',
+					'title'       => __( 'Boost AOV with Free Shipping Bar', 'woocommerce-jetpack' ),
+					'description' => __( 'Show shoppers how close they are to Free Shipping and hide extra paid rates once reached.', 'woocommerce-jetpack' ),
+					'editor_slug' => 'shipping_free_bar',
+					'cta'         => __( 'Preview Shipping Bar', 'woocommerce-jetpack' ),
+				),
+				array(
+					'id'          => 'multicurrency',
+					'title'       => __( 'Show Prices in Shopper Currencies', 'woocommerce-jetpack' ),
+					'description' => __( 'Add EUR, GBP, or CAD display currencies and rounding rules with a live storefront switcher.', 'woocommerce-jetpack' ),
+					'editor_slug' => 'multicurrency',
+					'cta'         => __( 'Open Currency Preview', 'woocommerce-jetpack' ),
+				),
 			);
 
 			return rest_ensure_response(
@@ -194,7 +208,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					$out[ $key ] = '';
 					continue;
 				}
-				if ( 'field_index' === $key || 'addon_index' === $key ) {
+				if ( 'field_index' === $key || 'addon_index' === $key || 'template_index' === $key ) {
 					$out[ $key ] = max( 1, absint( $source[ $key ] ) );
 				} elseif ( 'gateway' === $key || 'role' === $key ) {
 					$out[ $key ] = sanitize_text_field( (string) $source[ $key ] );
@@ -226,7 +240,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		}
 
 		/**
-		 * POST /booster/v1/preview/{slug} (zero DB writes, fast path skipping revisions).
+		 * POST /booster/v1/preview/{slug} (zero DB writes, fast path skipping revisions and heavy diagnostics).
 		 *
 		 * @param WP_REST_Request $request Request.
 		 * @return WP_REST_Response|WP_Error
@@ -241,7 +255,8 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			$params  = (array) $request->get_json_params();
 			$draft   = isset( $params['draft'] ) && is_array( $params['draft'] ) ? $params['draft'] : array();
 			$context = isset( $params['context'] ) && is_array( $params['context'] ) ? $params['context'] : array();
-			$state   = self::load_editor_state( $slug, self::extract_context( $slug, $draft ), false );
+			$ed_ctx  = self::extract_context( $slug, $draft );
+			$state   = self::load_editor_state( $slug, $ed_ctx, false, true );
 			if ( is_wp_error( $state ) ) {
 				return $state;
 			}
@@ -317,6 +332,13 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				$effective_draft = $draft;
 				if ( null !== $selected_keys ) {
 					$allowed         = array_flip( $selected_keys );
+					// Keep currency slot codes and exchange rates paired so partial selection never writes a currency without its rate.
+					foreach ( array( 1, 2, 3 ) as $mc_slot ) {
+						if ( isset( $allowed[ 'currency_' . $mc_slot ] ) || isset( $allowed[ 'rate_' . $mc_slot ] ) ) {
+							$allowed[ 'currency_' . $mc_slot ] = true;
+							$allowed[ 'rate_' . $mc_slot ]     = true;
+						}
+					}
 					$effective_draft = $state['live'];
 					foreach ( $ed_ctx as $ck => $cv ) {
 						if ( '' !== (string) $cv ) {
@@ -386,6 +408,8 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				$summary  = implode( '; ', wp_list_pluck( $diffs, 'summary' ) );
 				$revision = WCJ_V10_Store::record_revision( $slug, $summary, $before_states, $batch['after_states'] );
 
+				$editor_cls::on_after_write( array_keys( $option_writes ) );
+				delete_transient( 'wcj_v10_store_ctx_v4' );
 				do_action( 'wcj_v10_published', $slug, array_keys( $option_writes ) );
 
 				$updated = self::load_editor_state( $slug, $ed_ctx, true );
@@ -432,6 +456,10 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 				return new WP_Error( 'wcj_v10_rollback_error', $e->getMessage(), array( 'status' => $status ) );
 			}
 
+			if ( $editor_cls ) {
+				$editor_cls::on_after_write( $editor_cls::owned_options( $ed_ctx ) );
+			}
+			delete_transient( 'wcj_v10_store_ctx_v4' );
 			do_action( 'wcj_v10_rolled_back', $slug, $rev_id );
 			$updated = self::load_editor_state( $slug, $ed_ctx, true );
 			return rest_ensure_response(
@@ -510,6 +538,8 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					$batch['after_states']
 				);
 
+				$editor_cls::on_after_write( array_keys( $off_writes ) );
+				delete_transient( 'wcj_v10_store_ctx_v4' );
 				do_action( 'wcj_v10_published', $slug, array_keys( $off_writes ) );
 				$updated = self::load_editor_state( $slug, $ed_ctx, true );
 
@@ -538,8 +568,8 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		 * @return array<string, mixed>
 		 */
 		public static function get_store_sample_data() {
-			$cached = get_transient( 'wcj_v10_store_ctx_v3' );
-			if ( is_array( $cached ) && isset( $cached['product'], $cached['store_defaults'], $cached['roles'], $cached['third_party_checkout'] ) ) {
+			$cached = get_transient( 'wcj_v10_store_ctx_v4' );
+			if ( is_array( $cached ) && isset( $cached['product'], $cached['store_defaults'], $cached['roles'], $cached['store_currency'], $cached['cache_plugins'], $cached['mc_conflicts'] ) ) {
 				return $cached;
 			}
 
@@ -691,9 +721,49 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 			$logo_url   = $logo_id ? (string) wp_get_attachment_image_url( $logo_id, 'medium' ) : '';
 
 			$checkout_id   = function_exists( 'wc_get_page_id' ) ? (int) wc_get_page_id( 'checkout' ) : 0;
+			$cart_id       = function_exists( 'wc_get_page_id' ) ? (int) wc_get_page_id( 'cart' ) : 0;
 			$is_blocks_chk = ( $checkout_id > 0 && function_exists( 'has_block' ) ) ? has_block( 'woocommerce/checkout', $checkout_id ) : false;
+			$is_blocks_crt = ( $cart_id > 0 && function_exists( 'has_block' ) ) ? has_block( 'woocommerce/cart', $cart_id ) : false;
 			$wc_version    = defined( 'WC_VERSION' ) ? (string) WC_VERSION : '0.0.0';
-			$has_cache     = defined( 'WP_ROCKET_VERSION' ) || defined( 'LSCWP_V' ) || defined( 'W3TC' ) || defined( 'WPCACHEHOME' ) || ( defined( 'WP_CACHE' ) && WP_CACHE );
+			$cache_plugins = array();
+			if ( defined( 'WP_ROCKET_VERSION' ) ) {
+				$cache_plugins[] = 'WP Rocket';
+			}
+			if ( defined( 'LSCWP_V' ) ) {
+				$cache_plugins[] = 'LiteSpeed Cache';
+			}
+			if ( defined( 'W3TC' ) ) {
+				$cache_plugins[] = 'W3 Total Cache';
+			}
+			if ( defined( 'WPCACHEHOME' ) ) {
+				$cache_plugins[] = 'WP Super Cache';
+			}
+			if ( defined( 'CLOUDFLARE_PLUGIN_DIR' ) ) {
+				$cache_plugins[] = 'Cloudflare APO';
+			}
+			if ( empty( $cache_plugins ) && defined( 'WP_CACHE' ) && WP_CACHE ) {
+				$cache_plugins[] = 'WordPress Page Cache';
+			}
+			$has_cache     = ! empty( $cache_plugins );
+			$mc_conflicts  = array();
+			if ( class_exists( 'WC_Payments_Multi_Currency' ) || class_exists( '\WCPay\MultiCurrency\MultiCurrency' ) ) {
+				$mc_conflicts[] = 'WooPayments Multi-Currency';
+			}
+			if ( class_exists( 'WCML_Multi_Currency' ) ) {
+				$mc_conflicts[] = 'WPML / WCML Multi-Currency';
+			}
+			if ( class_exists( 'WOOMULTI_CURRENCY_Data' ) || class_exists( 'WOOMULTI_CURRENCY_F_Data' ) ) {
+				$mc_conflicts[] = 'CURCY Multi Currency';
+			}
+			if ( class_exists( 'WC_Aelia_CurrencySwitcher' ) ) {
+				$mc_conflicts[] = 'Aelia Currency Switcher';
+			}
+			$has_smtp      = defined( 'WPMS_PLUGIN_VER' ) || defined( 'FLUENTMAIL' ) || defined( 'POST_SMTP_VER' ) || defined( 'EASY_WP_SMTP_VERSION' ) || class_exists( 'WP_Mail_SMTP' );
+			$cron_disabled = defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON;
+			$base_loc      = function_exists( 'wc_get_base_location' ) ? wc_get_base_location() : array( 'country' => '' );
+			$base_country  = isset( $base_loc['country'] ) ? (string) $base_loc['country'] : '';
+			$store_cur     = function_exists( 'get_woocommerce_currency' ) ? (string) get_woocommerce_currency() : 'USD';
+			$taxes_enabled = function_exists( 'wc_tax_enabled' ) ? wc_tax_enabled() : false;
 			$third_party   = array();
 			if ( defined( 'CFW_VERSION' ) ) {
 				$third_party[] = 'CheckoutWC';
@@ -710,10 +780,17 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 
 			$ctx = array(
 				'currency_symbol'               => $currency,
+				'store_currency'                => $store_cur,
+				'base_country'                  => $base_country,
+				'taxes_enabled'                 => (bool) $taxes_enabled,
 				'decimals'                      => $decimals,
 				'wc_version'                    => $wc_version,
 				'wc_blocks_supports_conditions' => version_compare( $wc_version, '9.9.0', '>=' ),
 				'has_page_cache'                => (bool) $has_cache,
+				'cache_plugins'                 => $cache_plugins,
+				'mc_conflicts'                  => $mc_conflicts,
+				'has_smtp_plugin'               => (bool) $has_smtp,
+				'cron_disabled'                 => (bool) $cron_disabled,
 				'third_party_checkout'          => $third_party,
 				'sample_cart_amounts'           => $sample_cart_amounts,
 				'product'                       => $sample_product,
@@ -729,14 +806,19 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'logo_url' => $logo_url,
 				),
 				'checkout_url'                  => function_exists( 'wc_get_checkout_url' ) ? (string) wc_get_checkout_url() : home_url( '/checkout/' ),
+				'cart_url'                      => function_exists( 'wc_get_cart_url' ) ? (string) wc_get_cart_url() : home_url( '/cart/' ),
+				'shop_url'                      => function_exists( 'wc_get_page_permalink' ) ? (string) wc_get_page_permalink( 'shop' ) : home_url( '/shop/' ),
+				'shipping_zones_url'            => admin_url( 'admin.php?page=wc-settings&tab=shipping' ),
+				'tax_settings_url'              => admin_url( 'admin.php?page=wc-settings&tab=tax' ),
 				'orders_url'                    => ( class_exists( '\Automattic\WooCommerce\Utilities\OrderUtil' ) && method_exists( '\Automattic\WooCommerce\Utilities\OrderUtil', 'custom_orders_table_usage_is_enabled' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled() )
 					? admin_url( 'admin.php?page=wc-orders' )
 					: admin_url( 'edit.php?post_type=shop_order' ),
 				'is_blocks_checkout'            => (bool) $is_blocks_chk,
+				'is_blocks_cart'                => (bool) $is_blocks_crt,
 				'is_block_theme'                => function_exists( 'wp_is_block_theme' ) && wp_is_block_theme(),
 			);
 
-			set_transient( 'wcj_v10_store_ctx_v3', $ctx, 60 );
+			set_transient( 'wcj_v10_store_ctx_v4', $ctx, 60 );
 			return $ctx;
 		}
 
@@ -748,14 +830,15 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 		 * @param bool   $include_revisions Whether to load revisions + base_hashes.
 		 * @return array|WP_Error
 		 */
-		private static function load_editor_state( $slug, $context = array(), $include_revisions = true ) {
+		private static function load_editor_state( $slug, $context = array(), $include_revisions = true, $preview_mode = false ) {
 			$editor_cls = WCJ_V10_Registry::get( $slug );
 			if ( ! $editor_cls ) {
 				return new WP_Error( 'wcj_v10_unknown_editor', __( 'Unknown Booster editor.', 'woocommerce-jetpack' ), array( 'status' => 404 ) );
 			}
 
-			$store_ctx = self::get_store_sample_data();
-			$data      = $editor_cls::load_state( $context, $store_ctx );
+			$store_ctx                 = self::get_store_sample_data();
+			$store_ctx['preview_mode'] = (bool) $preview_mode;
+			$data                      = $editor_cls::load_state( $context, $store_ctx );
 
 			if ( $include_revisions ) {
 				$owned               = $editor_cls::owned_options( $context );
@@ -841,6 +924,7 @@ if ( ! class_exists( 'WCJ_V10_REST' ) ) :
 					'summary'          => $field_label . ': ' . $from_str . ' -> ' . $to_str,
 					'goes_live'        => ! empty( $meta_imp['goes_live'] ),
 					'stored_on_orders' => ! empty( $meta_imp['stored_on_orders'] ),
+					'sends_emails'     => ! empty( $meta_imp['sends_emails'] ),
 					'impact'           => isset( $meta_imp['impact'] ) ? (string) $meta_imp['impact'] : '',
 				);
 			}

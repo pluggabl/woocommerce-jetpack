@@ -142,12 +142,31 @@ if ( ! class_exists( 'WCJ_V10_Editor_Base' ) ) :
 		}
 
 		/**
+		 * Post-write side-effect hook called after atomic publish, rollback, or emergency-off.
+		 *
+		 * @param array<int, string> $written_keys Option keys written.
+		 * @return void
+		 */
+		public static function on_after_write( $written_keys ) {
+			unset( $written_keys );
+		}
+
+		/**
 		 * Runtime tier probe matching Booster's authoritative booster_option filter.
 		 *
 		 * @return bool
 		 */
 		protected static function is_pro() {
 			return WCJ_V10_Store::is_pro();
+		}
+
+		/**
+		 * Detect Booster Elite edition specifically.
+		 *
+		 * @return bool
+		 */
+		protected static function is_elite() {
+			return WCJ_V10_Store::is_elite();
 		}
 
 		/**

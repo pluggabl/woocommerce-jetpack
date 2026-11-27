@@ -51,10 +51,12 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 				'price_by_user_role'     => 'role wholesale vip customer tier price b2b bulk',
 				'checkout_custom_fields' => 'checkout field gift note delivery message custom additional information',
 				'product_addons'         => 'addon extra gift wrap paid option checkbox radio upsell',
-				'shipping_options'       => 'hide shipping flat rate free shipping delivery',
-				'multicurrency'          => 'currency exchange rate switcher usd eur eu',
+				'shipping_options'       => 'hide shipping flat rate free shipping delivery local pickup most expensive',
+				'left_to_free_shipping'  => 'free shipping bar threshold progress left amount cart notice',
+				'eu_vat_number'          => 'eu vat number vies tax exempt b2b reverse charge europe',
+				'multicurrency'          => 'currency exchange rate switcher usd eur gbp eu multicurrency',
 				'returns'                => 'returns rma refund request window',
-				'cart_abandonment'       => 'abandoned cart recovery reminder email lost sales',
+				'cart_abandonment'       => 'abandoned cart recovery reminder email coupon lost sales',
 				'order_numbers'          => 'order number sequential invoice prefix receipt custom counter',
 				'wholesale_price'        => 'wholesale bulk b2b quantity discount tier customer pricing',
 			);
@@ -121,6 +123,9 @@ if ( ! class_exists( 'WCJ_V10_Catalog' ) ) :
 				'checkout_custom_fields',
 				'checkout_files_upload',
 				'checkout_core_fields',
+				'eu_vat_number',
+				'cart_abandonment',
+				'left_to_free_shipping',
 			);
 
 			$modules = array();
